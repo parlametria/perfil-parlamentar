@@ -3,7 +3,7 @@ import React from "react";
 export default () => {
   return (
     <div>
-      <footer className="bg-dark text-white mt-0 p-0 text-center fixed-bottom">
+      <footer className="bg-dark text-white mt-0 p-0 text-center fixed-bottom footer">
         Copyright &copy; {new Date().getFullYear()} Voz Ativa
         <p className="icon-spacing">
           <a href="#">
