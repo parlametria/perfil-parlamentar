@@ -1,0 +1,10 @@
+.footer {
+  position: fixed;
+  height: 10px;
+  bottom: 0;
+  width: 100%;
+}
+
+.icon-spacing {
+  padding-left: 10em;
+}
