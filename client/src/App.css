@@ -1,3 +1,8 @@
+.App {
+  background: #e3ebe7;
+  height: 100vh;
+}
+
 .footer {
   position: fixed;
   bottom: 0;
@@ -12,8 +17,25 @@ p a + a {
 .perguntas-container {
   height: 75vh;
   overflow-y: scroll;
+  background: #e5e3eb;
+  border-radius: 15px;
+}
+
+.candidatos-container {
+  height: 75vh;
+  overflow-y: scroll;
+  background: #e5e3eb;
+  border-radius: 15px;
 }
 
 .pergunta {
   margin: 5px;
+}
+
+.candidato {
+  margin: 5px;
+}
+
+.avatar {
+  width: 140px;
 }
