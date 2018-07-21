@@ -1,10 +1,19 @@
 .footer {
   position: fixed;
-  height: 10px;
   bottom: 0;
+  height: 50px;
   width: 100%;
 }
 
-.icon-spacing {
-  padding-left: 10em;
+p a + a {
+  padding-left: 3em;
+}
+
+.perguntas-container {
+  height: 75vh;
+  overflow-y: scroll;
+}
+
+.pergunta {
+  margin: 5px;
 }
