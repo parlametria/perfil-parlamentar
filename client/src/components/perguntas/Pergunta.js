@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 
 class Votacao extends Component {
   render() {
@@ -18,5 +19,11 @@ class Votacao extends Component {
     );
   }
 }
+
+Votacao.propTypes = {
+  autor: PropTypes.string.isRequired,
+  pergunta: PropTypes.string.isRequired,
+  tema: PropTypes.string
+};
 
 export default Votacao;
