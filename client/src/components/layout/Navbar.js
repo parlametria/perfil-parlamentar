@@ -17,6 +17,20 @@ class Navbar extends Component {
             </button>
 
             <div className="collapse navbar-collapse" id="mobile-nav">
+              <ul className="navbar-nav mr-auto">
+                <li className="nav-item">
+                  <a className="nav-link">Candidatos</a>
+                </li>
+                <li className="nav-item">
+                  <a className="nav-link">Eleições 2018</a>
+                </li>
+                <li className="nav-item">
+                  <a className="nav-link">Como o cálculo é feito?</a>
+                </li>
+                <li className="nav-item">
+                  <a className="nav-link">Equipe</a>
+                </li>
+              </ul>
               <ul className="navbar-nav ml-auto">
                 <li className="nav-item">
                   <a className="nav-link">Sign in with Google</a>
