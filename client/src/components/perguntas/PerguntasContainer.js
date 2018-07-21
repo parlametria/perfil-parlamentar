@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import Pergunta from "./Pergunta";
 import jsonPerguntas from "../../data/perguntas.json";
 
-class VotacoesContainer extends Component {
+class PerguntasContainer extends Component {
   render() {
     const perguntas = jsonPerguntas.map((elem, i) => {
       let perguntasDoTema = elem.perguntas.map((elem, i) => (
@@ -10,10 +10,10 @@ class VotacoesContainer extends Component {
       ));
 
       return (
-        <div className="container">
+        <div key={i} className="container">
           <h4>{elem.tema}</h4>
           <div>{perguntasDoTema}</div>
-          <div class="dropdown-divider" />
+          <div className="dropdown-divider" />
         </div>
       );
     });
@@ -24,4 +24,4 @@ class VotacoesContainer extends Component {
   }
 }
 
-export default VotacoesContainer;
+export default PerguntasContainer;
