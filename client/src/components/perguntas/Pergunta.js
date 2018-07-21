@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 
-class Votacao extends Component {
+class Pergunta extends Component {
   render() {
     return (
       <div className="card pergunta">
@@ -20,10 +20,10 @@ class Votacao extends Component {
   }
 }
 
-Votacao.propTypes = {
+Pergunta.propTypes = {
   autor: PropTypes.string.isRequired,
   pergunta: PropTypes.string.isRequired,
   tema: PropTypes.string
 };
 
-export default Votacao;
+export default Pergunta;
