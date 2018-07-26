@@ -1,7 +1,52 @@
 import React, { Component } from "react";
 
+import PropTypes from "prop-types";
+
+import { connect } from "react-redux";
+import { loginUser, logoutUser } from "../../actions/authActions";
+
 class Navbar extends Component {
+  onSignInWithGoogle(e) {
+    e.preventDefault();
+
+    this.props.loginUser();
+  }
+
+  onSignOut(e) {
+    e.preventDefault();
+
+    this.props.logoutUser();
+  }
+
   render() {
+    const { isAuthenticated, user } = this.props.auth;
+
+    const loginButton = (
+      <li className="nav-item">
+        <a
+          href=""
+          onClick={this.onSignInWithGoogle.bind(this)}
+          className="navlink"
+        >
+          Sign in with Google
+        </a>
+      </li>
+    );
+
+    const loggedInBar = (
+      <li className="nav-item">
+        <a href="" onClick={this.onSignOut.bind(this)} className="navlink">
+          <img
+            className="rounded-circle"
+            src={user.photoURL}
+            alt={user.displayName}
+            style={{ width: "40px", marginRight: "5px" }}
+          />
+          Logout
+        </a>
+      </li>
+    );
+
     return (
       <div>
         <nav className="navbar navbar-expand-sm navbar-dark bg-dark mb-4">
@@ -32,9 +77,7 @@ class Navbar extends Component {
                 </li>
               </ul>
               <ul className="navbar-nav ml-auto">
-                <li className="nav-item">
-                  <a className="nav-link">Sign in with Google</a>
-                </li>
+                {!isAuthenticated ? loginButton : loggedInBar}
               </ul>
             </div>
           </div>
@@ -43,5 +86,17 @@ class Navbar extends Component {
     );
   }
 }
+Navbar.propTypes = {
+  loginUser: PropTypes.func.isRequired,
+  logoutUser: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired
+};
 
-export default Navbar;
+const mapStateToProps = state => ({
+  auth: state.auth
+});
+
+export default connect(
+  mapStateToProps,
+  { loginUser, logoutUser }
+)(Navbar);
