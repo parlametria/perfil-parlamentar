@@ -9,10 +9,12 @@ import { calculateScore } from "../../actions/candidatesActions";
 
 import PropTypes from "prop-types";
 
+import dadosCandidatos from "../../data/data.json";
+
 class CandidatosContainer extends Component {
   constructor(props) {
     super(props);
-    props.candidateVotings = {};
+    this.candidateVotings = {};
 
     this.state = {
       candidatesVotings: {},
@@ -28,11 +30,11 @@ class CandidatosContainer extends Component {
       return (
         <Candidato
           key={candidato.id}
-          nome={candidato.nome}
-          siglaPartido={candidato.siglaPartido}
-          estado={candidato.estado}
+          nome={"candidato.nome"}
+          siglaPartido={"candidato.siglaPartido"}
+          estado={"candidato.estado"}
           score={this.state.candidatesScore[candidato.id]}
-          votacoes={this.props.candidatesVotings[candidato.id]}
+          votacoes={this.candidatesVotings[candidato.id]}
         />
       );
     });
@@ -43,8 +45,15 @@ class CandidatosContainer extends Component {
   componentDidMount() {
     // Recuperar do BD as votações uma única vez.
     // firebase.database.get...
+    const votacoesCandidatos = {};
 
-    this.props.calculateScore(this.props.candidatesVotings);
+    dadosCandidatos.map(elem => {
+      votacoesCandidatos[elem.idCandidato] = elem.respostas;
+    });
+
+    this.setState({ candidatesVotings: votacoesCandidatos });
+
+    this.props.calculateScore(votacoesCandidatos);
   }
 
   componentWillReceiveProps(nextProps) {
