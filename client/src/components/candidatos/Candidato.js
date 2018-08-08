@@ -40,7 +40,9 @@ class Candidato extends Component {
 Candidato.propTypes = {
   nome: PropTypes.string.isRequired,
   siglaPartido: PropTypes.string.isRequired,
-  estado: PropTypes.string.isRequired
+  estado: PropTypes.string.isRequired,
+  score: PropTypes.number.isRequired,
+  votacoes: PropTypes.array.isRequired
 };
 
 export default Candidato;
