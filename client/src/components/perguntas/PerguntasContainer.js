@@ -18,8 +18,6 @@ class PerguntasContainer extends Component {
       );
     });
 
-    console.log(perguntas);
-
     return <div className="container perguntas-container">{perguntas}</div>;
   }
 }
