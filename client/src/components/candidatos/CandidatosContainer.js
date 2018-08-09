@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 
 import { withRouter } from "react-router-dom";
 
-import { calculateScore } from "../../actions/candidatesActions";
+import { calculaScore } from "../../actions/candidatosActions";
 
 import PropTypes from "prop-types";
 
@@ -14,27 +14,26 @@ import dadosCandidatos from "../../data/data.json";
 class CandidatosContainer extends Component {
   constructor(props) {
     super(props);
-    this.candidateVotings = {};
+    //this.respostasCandidatos = {};
 
     this.state = {
-      candidatesVotings: {},
-      candidatesScore: {},
-      candidatos: {}
+      scoreCandidatos: {},
+      candidatosAExibir: {}
     };
   }
 
   render() {
-    const candidatos = Object.keys(this.state.candidatos).map(elem => {
-      const candidato = this.state.candidatos[elem];
+    const candidatos = Object.keys(this.state.candidatosAExibir).map(elem => {
+      const candidato = this.state.candidatosAExibir[elem];
 
       return (
         <Candidato
-          key={candidato.id}
+          key={candidato.id_cand}
           nome={"candidato.nome"}
           siglaPartido={"candidato.siglaPartido"}
           estado={"candidato.estado"}
-          score={this.state.candidatesScore[candidato.id]}
-          votacoes={this.candidatesVotings[candidato.id]}
+          score={this.state.scoreCandidatos[candidato.id_cand]}
+          respostas={this.respostasCandidatos[candidato.id_cand]}
         />
       );
     });
@@ -45,33 +44,31 @@ class CandidatosContainer extends Component {
   componentDidMount() {
     // Recuperar do BD as votações uma única vez.
     // firebase.database.get...
-    const votacoesCandidatos = {};
+    const respostas = {};
 
     dadosCandidatos.map(elem => {
-      votacoesCandidatos[elem.idCandidato] = elem.respostas;
+      respostas[elem.idCandidato] = elem.respostas;
     });
 
-    this.setState({ candidatesVotings: votacoesCandidatos });
-
-    this.props.calculateScore(votacoesCandidatos);
+    this.props.calculaScore(respostas);
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.candidates.candidatesScore) {
-      console.log(nextProps.candidates.candidatesScore);
-      this.setState({ candidatesScore: nextProps.candidates.candidatesScore });
+    if (nextProps.candidatos.scoreCandidatos) {
+      console.log(nextProps.candidatos.scoreCandidatos);
+      this.setState({ scoreCandidatos: nextProps.candidatos.scoreCandidatos });
     }
   }
 }
 
 CandidatosContainer.propTypes = {
-  calculateScore: PropTypes.func.isRequired
+  calculaScore: PropTypes.func.isRequired
 };
 const mapStateToProps = state => ({
-  candidates: state.candidatesReducer
+  candidatos: state.candidatosReducer
 });
 
 export default connect(
   mapStateToProps,
-  { calculateScore }
+  { calculaScore }
 )(CandidatosContainer);

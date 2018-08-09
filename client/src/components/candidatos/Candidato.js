@@ -42,7 +42,7 @@ Candidato.propTypes = {
   siglaPartido: PropTypes.string.isRequired,
   estado: PropTypes.string.isRequired,
   score: PropTypes.number.isRequired,
-  votacoes: PropTypes.array.isRequired
+  respostas: PropTypes.array.isRequired
 };
 
 export default Candidato;

@@ -1,6 +1,6 @@
 // Users types
 export const SET_CURRENT_USER = "SET_CURRENT_USER";
-export const SET_USER_SCORE = "SET_USER_SCORE";
+export const SET_SCORE_USUARIO = "SET_SCORE_USUARIO";
 
 // Candidate types
-export const SET_CANDIDATE_SCORE = "SET_CANDIDATE_SCORE";
+export const SET_SCORE_CANDIDATO = "SET_SCORE_CANDIDATO";
