@@ -12,10 +12,9 @@ import store from "./store";
 // Layout imports
 import Navbar from "./components/layout/Navbar";
 import Footer from "./components/layout/Footer";
+import Home from "./components/layout/Home";
 
-// Containers imports
-import PerguntasContainer from "./components/perguntas/PerguntasContainer";
-import CandidatosContainer from "./components/candidatos/CandidatosContainer";
+
 
 // Login and logout actions
 import { setCurrentUser, logoutUser } from "./actions/authActions";
@@ -34,16 +33,7 @@ class App extends Component {
       <Provider store={store}>
         <div className="App">
           <Navbar />
-          <div className="container">
-            <div className="row">
-              <div className="col-md-6 col-sm-12">
-                <PerguntasContainer />
-              </div>
-              <div className="col-md-6 col-sm-12">
-                <CandidatosContainer />
-              </div>
-            </div>
-          </div>
+          <Home />
           <Footer />
         </div>
       </Provider>
