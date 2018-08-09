@@ -5,7 +5,10 @@ import { connect } from "react-redux";
 
 import { withRouter } from "react-router-dom";
 
-import { calculaScore } from "../../actions/candidatosActions";
+import {
+  calculaScore,
+  getTopNCandidatos
+} from "../../actions/candidatosActions";
 
 import PropTypes from "prop-types";
 
@@ -51,18 +54,19 @@ class CandidatosContainer extends Component {
     });
 
     this.props.calculaScore(respostas);
+    this.props.getTopNCandidatos(respostas);
   }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.candidatos.scoreCandidatos) {
-      console.log(nextProps.candidatos.scoreCandidatos);
       this.setState({ scoreCandidatos: nextProps.candidatos.scoreCandidatos });
     }
   }
 }
 
 CandidatosContainer.propTypes = {
-  calculaScore: PropTypes.func.isRequired
+  calculaScore: PropTypes.func.isRequired,
+  getTopNCandidatos: PropTypes.func.isRequired
 };
 const mapStateToProps = state => ({
   candidatos: state.candidatosReducer
@@ -70,5 +74,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { calculaScore }
+  { calculaScore, getTopNCandidatos }
 )(CandidatosContainer);
