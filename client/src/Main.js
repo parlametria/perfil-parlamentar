@@ -1,6 +1,6 @@
 import React from 'react'
-import { Switch, Route } from 'react-router-dom'
-import Calculo from './components/calculo/Calculo'
+import { Route, Router, Switch } from 'react-router-dom'
+import CalculoContainer from './components/calculo/CalculoContainer'
 import Equipe from './components/equipe/Equipe'
 import Home from './components/layout/Home';
 
@@ -10,8 +10,8 @@ import Home from './components/layout/Home';
 const Main = () => (
   <main>
     <Switch>
-      <Route exact path='/' component={Home}/>
-      <Route path='/calculo' component={Calculo}/>
+      <Route exact path="/" component={Home}/>
+      <Route path="/calculo" component={CalculoContainer}/>
       <Route path='/equipe' component={Equipe}/>
     </Switch>
   </main>

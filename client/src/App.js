@@ -2,9 +2,6 @@ import React, { Component } from "react";
 
 import "./App.css";
 
-// Router Stuff
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-
 // Redux imports
 import { Provider } from "react-redux";
 import store from "./store";
@@ -17,9 +14,10 @@ import Home from "./components/layout/Home";
 
 
 // Login and logout actions
-import { setCurrentUser, logoutUser } from "./actions/authActions";
+import { setCurrentUser } from "./actions/authActions";
+import Main from "./Main";
 
-import { firebaseImpl } from "./services/firebaseService";
+//import { firebaseImpl } from "./services/firebaseService";
 
 // Check token
 if (localStorage.accessToken) {
@@ -31,9 +29,9 @@ class App extends Component {
   render() {
     return (
       <Provider store={store}>
-        <div className="App">
+        <div className = "App">
           <Navbar />
-          <Home />
+          <Main />
           <Footer />
         </div>
       </Provider>

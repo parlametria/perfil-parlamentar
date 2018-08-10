@@ -2,7 +2,7 @@ import React, { Component } from "react";
 
 import PropTypes from "prop-types";
 
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { Link } from 'react-router-dom';
 
 import { connect } from "react-redux";
 import { loginUser, logoutUser } from "../../actions/authActions";
@@ -52,7 +52,6 @@ class Navbar extends Component {
 
     return (
       <div>
-        <Router>
         <nav className="navbar navbar-expand-sm navbar-dark bg-dark mb-4">
           <div className="container">
             <Link to="/" className="navbar-brand">Voz Ativa</Link>
@@ -64,8 +63,9 @@ class Navbar extends Component {
             >
               <span className="navbar-toggler-icon" />
             </button>
-
+            
             <div className="collapse navbar-collapse" id="mobile-nav">
+              
               <ul className="navbar-nav mr-auto">
                 <li className="nav-item">
                   <Link to="/" className="nav-link">Candidatos</Link>
@@ -74,20 +74,19 @@ class Navbar extends Component {
                   <Link to="/" className="nav-link">Eleições 2018</Link>
                 </li>
                 <li className="nav-item">
-                  <Link to="/calculo" a className="nav-link">Como o cálculo é feito?</Link>
+                  <Link to="/calculo" className="nav-link">Como o cálculo é feito?</Link>
                 </li>
                 <li className="nav-item">
-                  <Link to="/equipe" className="nav-link">Equipe</Link>
-                </li>
+                  <Link className="nav-link" to="/equipe" >Equipe</Link>
+                </li>              
               </ul>
+
               <ul className="navbar-nav ml-auto">
                 {!isAuthenticated ? loginButton : loggedInBar}
               </ul>
             </div>
           </div>
         </nav>
-
-        </Router>
       </div>
     );
   }
