@@ -1,16 +1,11 @@
 import { SET_SCORE_CANDIDATO } from "./types";
 
-import dadosCandidatos from "../data/data.json";
-
-const respostasCandidatos = {};
-
-dadosCandidatos.map(elem => {
-  respostasCandidatos[elem.idCandidato] = elem.respostas;
-});
-
 // Recebe um dicionário das respostas dos candidatos no formato {id_cand: [array_resp]} e retorna um dicionário no formato {id_cand: score}
 export const calculaScore = () => (dispatch, getState) => {
   const { arrayRespostasUsuario } = getState().usuarioReducer;
+  const respostasCandidatos = getState().candidatosReducer.dadosCandidatos;
+
+  console.log(respostasCandidatos);
 
   const quantZeros = arrayRespostasUsuario.filter(value => value !== 0).length;
   const numRespostasUsuario = quantZeros === 0 ? 1 : quantZeros;
@@ -29,7 +24,7 @@ export const calculaScore = () => (dispatch, getState) => {
 
   let scoreCandidatos = {};
   Object.keys(respostasCandidatos).map(elem => {
-    let score = comparaRespostas(respostasCandidatos[elem]);
+    let score = comparaRespostas(respostasCandidatos[elem].respostas);
     scoreCandidatos[elem] = score;
   });
 
