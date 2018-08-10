@@ -6,7 +6,7 @@ const TAM_PERGUNTAS = 50; // Deve ser substituído por um perguntas.size() depoi
 // arrayVotings: [0/1/-1]
 const initialState = {
   respostasUsuario: [].fill.call({ length: TAM_PERGUNTAS }, 0),
-  arrayRespostasUsuario: Array(TAM_PERGUNTAS).fill(1)
+  arrayRespostasUsuario: Array(TAM_PERGUNTAS).fill(0)
 };
 
 export default function(state = initialState, action) {
