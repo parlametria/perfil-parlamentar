@@ -2,8 +2,11 @@ import React, { Component } from "react";
 
 import PropTypes from "prop-types";
 
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+
 import { connect } from "react-redux";
 import { loginUser, logoutUser } from "../../actions/authActions";
+
 
 class Navbar extends Component {
   onSignInWithGoogle(e) {
@@ -49,9 +52,10 @@ class Navbar extends Component {
 
     return (
       <div>
+        <Router>
         <nav className="navbar navbar-expand-sm navbar-dark bg-dark mb-4">
           <div className="container">
-            <a className="navbar-brand">Voz Ativa</a>
+            <Link to="/" className="navbar-brand">Voz Ativa</Link>
             <button
               className="navbar-toggler"
               type="button"
@@ -64,16 +68,16 @@ class Navbar extends Component {
             <div className="collapse navbar-collapse" id="mobile-nav">
               <ul className="navbar-nav mr-auto">
                 <li className="nav-item">
-                  <a className="nav-link">Candidatos</a>
+                  <Link to="/" className="nav-link">Candidatos</Link>
                 </li>
                 <li className="nav-item">
-                  <a className="nav-link">Eleições 2018</a>
+                  <Link to="/" className="nav-link">Eleições 2018</Link>
                 </li>
                 <li className="nav-item">
-                  <a className="nav-link">Como o cálculo é feito?</a>
+                  <Link to="/calculo" a className="nav-link">Como o cálculo é feito?</Link>
                 </li>
                 <li className="nav-item">
-                  <a className="nav-link">Equipe</a>
+                  <Link to="/equipe" className="nav-link">Equipe</Link>
                 </li>
               </ul>
               <ul className="navbar-nav ml-auto">
@@ -82,6 +86,8 @@ class Navbar extends Component {
             </div>
           </div>
         </nav>
+
+        </Router>
       </div>
     );
   }
