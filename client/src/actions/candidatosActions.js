@@ -1,11 +1,19 @@
 import { SET_SCORE_CANDIDATO } from "./types";
 
+import dadosCandidatos from "../data/data.json";
+
+const respostasCandidatos = {};
+
+dadosCandidatos.map(elem => {
+  respostasCandidatos[elem.idCandidato] = elem.respostas;
+});
+
 // Recebe um dicionário das respostas dos candidatos no formato {id_cand: [array_resp]} e retorna um dicionário no formato {id_cand: score}
-export const calculaScore = respostasCandidatos => (dispatch, getState) => {
+export const calculaScore = () => (dispatch, getState) => {
   const { arrayRespostasUsuario } = getState().usuarioReducer;
 
-  const numRespostasUsuario = arrayRespostasUsuario.filter(value => value !== 0)
-    .length;
+  const quantZeros = arrayRespostasUsuario.filter(value => value !== 0).length;
+  const numRespostasUsuario = quantZeros === 0 ? 1 : quantZeros;
 
   function comparaRespostas(arrayRespostasCandidato) {
     let respostasIguais = 0;
@@ -31,11 +39,8 @@ export const calculaScore = respostasCandidatos => (dispatch, getState) => {
   });
 };
 
-// Pega o top n candidatos baseado na compatibilidade entre as respostas ordenado pelo score. Recebe um dicionário das respostas dos candidatos e retorna um array com os ids dos candidatos.
-export const getTopNCandidatos = (respostasCandidatos, n) => (
-  dispatch,
-  getState
-) => {
+// Pega o top n candidatos baseado na compatibilidade entre as respostas ordenado pelo score. Recebe um dicionário das respostas dos candidatos e retorna um array de arrays (tuplas) com os ids dos candidatos e seu score.
+export const getTopNCandidatos = n => (dispatch, getState) => {
   const { scoreCandidatos } = getState().candidatosReducer;
   let candidatos = Object.keys(scoreCandidatos).map(key => [
     key,
