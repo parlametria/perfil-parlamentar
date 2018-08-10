@@ -25,12 +25,12 @@ class CandidatosContainer extends Component {
   }
 
   render() {
-    console.log(this.props.candidatos);
+    //console.log(this.props.candidatos);
     const candidatos = this.state.candidatosAExibir.map(elem => {
       const candidato = this.props.candidatos.dadosCandidatos[elem[0]];
 
-      console.log(this.props.candidatos);
-      console.log(this.props.candidatos.dbStatus["carregando"]);
+      //console.log(this.props.candidatos);
+      //console.log(this.props.candidatos.dbStatus["carregando"]);
 
       return (
         <Candidato

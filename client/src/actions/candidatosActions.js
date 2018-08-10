@@ -5,7 +5,7 @@ export const calculaScore = () => (dispatch, getState) => {
   const { arrayRespostasUsuario } = getState().usuarioReducer;
   const respostasCandidatos = getState().candidatosReducer.dadosCandidatos;
 
-  console.log(respostasCandidatos);
+  //console.log(respostasCandidatos);
 
   const quantZeros = arrayRespostasUsuario.filter(value => value !== 0).length;
   const numRespostasUsuario = quantZeros === 0 ? 1 : quantZeros;
