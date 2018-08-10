@@ -8,9 +8,11 @@ class Candidato extends Component {
         <div className="row">
           <div className="col-4">
             <img
-              src="https://ep01.epimg.net/brasil/imagenes/2016/09/08/politica/1473343642_824880_1473343777_noticia_normal_recorte1.jpg"
+              src="http://www.luizaerundina.com.br/images/site/luiza.png"
               alt="..."
-              className="img-thumbnail avatar"
+              width="100px"
+              height="100px"
+              className="img-thumbnail avatar rounded-circle"
             />
           </div>
           <div className="col-8">
@@ -22,12 +24,12 @@ class Candidato extends Component {
               <div
                 className="progress-bar"
                 role="progressbar"
-                style={{ width: "100%" }}
-                aria-valuenow="100"
+                style={{ width: Math.round(this.props.score * 100) + "%" }}
+                aria-valuenow={this.props.score * 100}
                 aria-valuemin="0"
                 aria-valuemax="100"
               >
-                100%
+                {Math.round(this.props.score * 100)}%
               </div>
             </div>
           </div>
