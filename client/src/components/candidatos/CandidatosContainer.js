@@ -3,8 +3,6 @@ import Candidato from "./Candidato";
 
 import { connect } from "react-redux";
 
-import { withRouter } from "react-router-dom";
-
 import {
   calculaScore,
   getTopNCandidatos
@@ -14,29 +12,30 @@ import PropTypes from "prop-types";
 
 import dadosCandidatos from "../../data/data.json";
 
+const NUM_CANDIDATOS = 10;
+
 class CandidatosContainer extends Component {
   constructor(props) {
     super(props);
-    //this.respostasCandidatos = {};
 
     this.state = {
       scoreCandidatos: {},
-      candidatosAExibir: {}
+      candidatosAExibir: []
     };
   }
 
   render() {
-    const candidatos = Object.keys(this.state.candidatosAExibir).map(elem => {
-      const candidato = this.state.candidatosAExibir[elem];
+    const candidatos = this.state.candidatosAExibir.map(elem => {
+      const candidato = dadosCandidatos[elem[0]];
 
       return (
         <Candidato
-          key={candidato.id_cand}
-          nome={"candidato.nome"}
+          key={candidato.idCandidato}
+          nome={"Candidata " + candidato.idCandidato}
           siglaPartido={"candidato.siglaPartido"}
           estado={"candidato.estado"}
-          score={this.state.scoreCandidatos[candidato.id_cand]}
-          respostas={this.respostasCandidatos[candidato.id_cand]}
+          score={this.state.scoreCandidatos[candidato.idCandidato]}
+          respostas={candidato.respostas}
         />
       );
     });
@@ -44,22 +43,12 @@ class CandidatosContainer extends Component {
     return <div className="container candidatos-container">{candidatos}</div>;
   }
 
-  componentDidMount() {
-    // Recuperar do BD as votações uma única vez.
-    // firebase.database.get...
-    const respostas = {};
-
-    dadosCandidatos.map(elem => {
-      respostas[elem.idCandidato] = elem.respostas;
-    });
-
-    this.props.calculaScore(respostas);
-    this.props.getTopNCandidatos(respostas);
-  }
-
   componentWillReceiveProps(nextProps) {
     if (nextProps.candidatos.scoreCandidatos) {
-      this.setState({ scoreCandidatos: nextProps.candidatos.scoreCandidatos });
+      this.setState({
+        scoreCandidatos: nextProps.candidatos.scoreCandidatos,
+        candidatosAExibir: nextProps.getTopNCandidatos(NUM_CANDIDATOS)
+      });
     }
   }
 }
