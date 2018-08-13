@@ -7,10 +7,12 @@ import FlipMove from "react-flip-move";
 
 import {
   calculaScore,
-  getTopNCandidatos
+  getTopNCandidatos,
+  getDadosCandidatos
 } from "../../actions/candidatosActions";
 
 import PropTypes from "prop-types";
+import Spinner from "../common/Spinner";
 
 const NUM_CANDIDATOS = 10;
 
@@ -46,8 +48,10 @@ class CandidatosContainer extends Component {
 
     return (
       <div className="container candidatos-container">
-        {this.props.candidatos.dbStatus["carregando"] ? (
-          <div>carregando</div>
+        {this.props.candidatos.isCarregando ? (
+          <div style={{ paddingTop: "30vh" }}>
+            <Spinner />
+          </div>
         ) : (
           <FlipMove>{candidatos}</FlipMove>
         )}
@@ -63,11 +67,16 @@ class CandidatosContainer extends Component {
       });
     }
   }
+
+  componentDidMount() {
+    this.props.getDadosCandidatos();
+  }
 }
 
 CandidatosContainer.propTypes = {
   calculaScore: PropTypes.func.isRequired,
-  getTopNCandidatos: PropTypes.func.isRequired
+  getTopNCandidatos: PropTypes.func.isRequired,
+  getDadosCandidatos: PropTypes.func.isRequired
 };
 const mapStateToProps = state => ({
   candidatos: state.candidatosReducer
@@ -75,5 +84,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { calculaScore, getTopNCandidatos }
+  { calculaScore, getTopNCandidatos, getDadosCandidatos }
 )(CandidatosContainer);
