@@ -36,10 +36,10 @@ class App extends Component {
           <Navbar />
           <div className="container">
             <div className="row">
-              <div className="col-md-6 col-sm-12">
+              <div className="col-md-6 col-sm-6">
                 <PerguntasContainer />
               </div>
-              <div className="col-md-6 col-sm-12">
+              <div className="col-md-6 col-sm-6">
                 <CandidatosContainer />
               </div>
             </div>

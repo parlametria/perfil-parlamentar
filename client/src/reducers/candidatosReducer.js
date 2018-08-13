@@ -1,24 +1,41 @@
-import { SET_SCORE_CANDIDATO } from "../actions/types";
-
-const TAM_PERGUNTAS = 50; // Deve ser substituído por um perguntas.size() depois, quando tivermos acesso às perguntas.
-const TAM_CANDIDATOS = 8000;
+import {
+  SET_SCORE_CANDIDATOS,
+  CANDIDATOS_CARREGANDO,
+  CANDIDATOS_CARREGADOS,
+  SET_DADOS_CANDIDATOS
+} from "../actions/types";
 
 // candidatesVotings: {id_votacao: voto}
 // arrayVotings: [0/1/-1]
 // O estado inicial será definido a partir do banco de dados, uma chamada para preencher esses arrays e objetos.
 const initialState = {
-  respostasCandidatos: [].fill.call(
-    { length: TAM_CANDIDATOS },
-    Array(TAM_PERGUNTAS).fill(0)
-  )
+  dadosCandidatos: {},
+  isCarregando: false,
+  scoreCandidatos: {}
 };
 
 export default function(state = initialState, action) {
   switch (action.type) {
-    case SET_SCORE_CANDIDATO:
+    case SET_DADOS_CANDIDATOS:
+      return {
+        ...state,
+        dadosCandidatos: action.dadosCandidatos,
+        isCarregando: false
+      };
+    case SET_SCORE_CANDIDATOS:
       return {
         ...state,
         scoreCandidatos: action.scoreCandidatos
+      };
+    case CANDIDATOS_CARREGANDO:
+      return {
+        ...state,
+        isCarregando: true
+      };
+    case CANDIDATOS_CARREGADOS:
+      return {
+        ...state,
+        isCarregando: false
       };
     default:
       return state;
