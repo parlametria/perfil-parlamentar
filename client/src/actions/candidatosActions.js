@@ -44,7 +44,7 @@ export const calculaScore = () => (dispatch, getState) => {
 };
 
 // Pega o top n candidatos baseado na compatibilidade entre as respostas ordenado pelo score. Recebe um dicionário das respostas dos candidatos e retorna um array de arrays (tuplas) com os ids dos candidatos e seu score.
-export const getTopNCandidatos = n => getState => {
+export const getTopNCandidatos = n => (dispatch, getState) => {
   const { scoreCandidatos } = getState().candidatosReducer;
   let candidatos = Object.keys(scoreCandidatos).map(key => [
     key,
