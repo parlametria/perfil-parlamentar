@@ -1,0 +1,43 @@
+.grid-main {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row-reverse;
+}
+
+.grid-panel {
+}
+
+.panel-header {
+    padding: 1rem;
+}
+
+.panel-master {
+  background-color: #95a5a6;
+  width: 100vw;
+}
+
+.panel-detail {
+  background-color: #7f8c8d;
+  width: 100vw;
+}
+
+@media (min-width: 992px) {
+  .panel-master {
+    width: 50vw;
+  }
+
+  .panel-detail {
+    width: 50vw;
+  }
+}
+
+@media (max-width: 991.98px) {
+  .panel-master {
+    height: 100vh;
+  }
+
+  .panel-detail {
+    position: fixed;
+    bottom: 0;
+  }
+}
