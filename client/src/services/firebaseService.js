@@ -9,7 +9,9 @@ const config = {
   storageBucket: keys.storageBucket,
   messagingSenderId: keys.messagingSenderId
 };
+const settings = { timestampsInSnapshots: true };
 
 export const firebaseImpl = firebase.initializeApp(config);
 export const firebaseDatabase = firebase.database();
+export const firebaseFirestore = firebase.firestore();
 export const provider = new firebase.auth.GoogleAuthProvider();
