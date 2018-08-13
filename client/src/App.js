@@ -9,15 +9,10 @@ import store from "./store";
 // Layout imports
 import Navbar from "./components/layout/Navbar";
 import Footer from "./components/layout/Footer";
-import Home from "./components/layout/Home";
-
-
 
 // Login and logout actions
 import { setCurrentUser } from "./actions/authActions";
 import Main from "./Main";
-
-//import { firebaseImpl } from "./services/firebaseService";
 
 // Check token
 if (localStorage.accessToken) {
@@ -29,7 +24,7 @@ class App extends Component {
   render() {
     return (
       <Provider store={store}>
-        <div className = "App">
+        <div className="App">
           <Navbar />
           <Main />
           <Footer />

@@ -3,14 +3,16 @@ import Candidato from "./Candidato";
 
 import { connect } from "react-redux";
 
+import FlipMove from "react-flip-move";
+
 import {
   calculaScore,
-  getTopNCandidatos
+  getTopNCandidatos,
+  getDadosCandidatos
 } from "../../actions/candidatosActions";
 
 import PropTypes from "prop-types";
-
-import dadosCandidatos from "../../data/data.json";
+import Spinner from "../common/Spinner";
 
 const NUM_CANDIDATOS = 10;
 
@@ -25,22 +27,36 @@ class CandidatosContainer extends Component {
   }
 
   render() {
+    //console.log(this.props.candidatos);
     const candidatos = this.state.candidatosAExibir.map(elem => {
-      const candidato = dadosCandidatos[elem[0]];
+      const candidato = this.props.candidatos.dadosCandidatos[elem[0]];
+
+      //console.log(this.props.candidatos);
+      //console.log(this.props.candidatos.dbStatus["carregando"]);
 
       return (
         <Candidato
-          key={candidato.idCandidato}
-          nome={"Candidata " + candidato.idCandidato}
-          siglaPartido={"candidato.siglaPartido"}
-          estado={"candidato.estado"}
-          score={this.state.scoreCandidatos[candidato.idCandidato]}
+          key={candidato.id}
+          nome={candidato.nome}
+          siglaPartido={candidato.partido}
+          estado={candidato.uf}
+          score={this.state.scoreCandidatos[candidato.id]}
           respostas={candidato.respostas}
         />
       );
     });
 
-    return <div className="container candidatos-container">{candidatos}</div>;
+    return (
+      <div className="container candidatos-container">
+        {this.props.candidatos.isCarregando ? (
+          <div style={{ paddingTop: "30vh" }}>
+            <Spinner />
+          </div>
+        ) : (
+          <FlipMove>{candidatos}</FlipMove>
+        )}
+      </div>
+    );
   }
 
   componentWillReceiveProps(nextProps) {
@@ -51,11 +67,16 @@ class CandidatosContainer extends Component {
       });
     }
   }
+
+  componentDidMount() {
+    this.props.getDadosCandidatos();
+  }
 }
 
 CandidatosContainer.propTypes = {
   calculaScore: PropTypes.func.isRequired,
-  getTopNCandidatos: PropTypes.func.isRequired
+  getTopNCandidatos: PropTypes.func.isRequired,
+  getDadosCandidatos: PropTypes.func.isRequired
 };
 const mapStateToProps = state => ({
   candidatos: state.candidatosReducer
@@ -63,5 +84,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { calculaScore, getTopNCandidatos }
+  { calculaScore, getTopNCandidatos, getDadosCandidatos }
 )(CandidatosContainer);
