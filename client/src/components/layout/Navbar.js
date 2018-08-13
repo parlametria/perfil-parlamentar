@@ -2,8 +2,11 @@ import React, { Component } from "react";
 
 import PropTypes from "prop-types";
 
+import { Link } from 'react-router-dom';
+
 import { connect } from "react-redux";
 import { loginUser, logoutUser } from "../../actions/authActions";
+
 
 class Navbar extends Component {
   onSignInWithGoogle(e) {
@@ -51,7 +54,7 @@ class Navbar extends Component {
       <div>
         <nav className="navbar navbar-expand-sm navbar-dark bg-dark mb-4">
           <div className="container">
-            <a className="navbar-brand">Voz Ativa</a>
+            <Link to="/" className="navbar-brand">Voz Ativa</Link>
             <button
               className="navbar-toggler"
               type="button"
@@ -60,22 +63,24 @@ class Navbar extends Component {
             >
               <span className="navbar-toggler-icon" />
             </button>
-
+            
             <div className="collapse navbar-collapse" id="mobile-nav">
+              
               <ul className="navbar-nav mr-auto">
                 <li className="nav-item">
-                  <a className="nav-link">Candidatos</a>
+                  <Link to="/" className="nav-link">Candidatos</Link>
                 </li>
                 <li className="nav-item">
-                  <a className="nav-link">Eleições 2018</a>
+                  <Link to="/" className="nav-link">Eleições 2018</Link>
                 </li>
                 <li className="nav-item">
-                  <a className="nav-link">Como o cálculo é feito?</a>
+                  <Link to="/calculo" className="nav-link">Como o cálculo é feito?</Link>
                 </li>
                 <li className="nav-item">
-                  <a className="nav-link">Equipe</a>
-                </li>
+                  <Link className="nav-link" to="/equipe" >Equipe</Link>
+                </li>              
               </ul>
+
               <ul className="navbar-nav ml-auto">
                 {!isAuthenticated ? loginButton : loggedInBar}
               </ul>
