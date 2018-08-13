@@ -1,7 +1,8 @@
 import {
-  SET_SCORE_CANDIDATO,
+  SET_SCORE_CANDIDATOS,
   CANDIDATOS_CARREGANDO,
-  CANDIDATOS_CARREGADOS
+  CANDIDATOS_CARREGADOS,
+  SET_DADOS_CANDIDATOS
 } from "../actions/types";
 
 // candidatesVotings: {id_votacao: voto}
@@ -9,13 +10,19 @@ import {
 // O estado inicial será definido a partir do banco de dados, uma chamada para preencher esses arrays e objetos.
 const initialState = {
   dadosCandidatos: {},
-  dbStatus: {},
+  isCarregando: false,
   scoreCandidatos: {}
 };
 
 export default function(state = initialState, action) {
   switch (action.type) {
-    case SET_SCORE_CANDIDATO:
+    case SET_DADOS_CANDIDATOS:
+      return {
+        ...state,
+        dadosCandidatos: action.dadosCandidatos,
+        isCarregando: false
+      };
+    case SET_SCORE_CANDIDATOS:
       return {
         ...state,
         scoreCandidatos: action.scoreCandidatos
@@ -23,12 +30,12 @@ export default function(state = initialState, action) {
     case CANDIDATOS_CARREGANDO:
       return {
         ...state,
-        dbStatus: { carregando: true }
+        isCarregando: true
       };
     case CANDIDATOS_CARREGADOS:
       return {
         ...state,
-        dbStatus: { carregando: false }
+        isCarregando: false
       };
     default:
       return state;
