@@ -64,7 +64,6 @@ export const getDadosCandidatos = () => dispatch => {
   dispatch(setCandidatosCarregando());
 
   let dadosCandidatos = {};
-  let inicio = Date.now();
 
   // const firestore = firebaseFirestore.collection("/resultados");
 
@@ -90,7 +89,6 @@ export const getDadosCandidatos = () => dispatch => {
       keys.map(key => {
         dadosCandidatos[candidatos[key].id] = candidatos[key];
       });
-      console.log(Date.now() - inicio);
       dispatch({ type: SET_DADOS_CANDIDATOS, dadosCandidatos });
     })
     .catch(err => console.log(err));
