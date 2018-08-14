@@ -6,6 +6,7 @@ import PropTypes from "prop-types";
 
 import { salvaScoreUsuario } from "../../actions/usuarioActions";
 import { calculaScore } from "../../actions/candidatosActions";
+import { getDadosPerguntas } from "../../actions/perguntasActions";
 
 import jsonPerguntas from "../../data/perguntas.json";
 
@@ -25,26 +26,26 @@ class PerguntasContainer extends Component {
   }
 
   componentDidMount() {
-    const { respostasUsuario } = this.props.usuario;
-    const { arrayRespostasUsuario } = this.props.usuario;
-    this.setState({ respostasUsuario, arrayRespostasUsuario });
+    this.props.getDadosPerguntas();
   }
 
   render() {
-    const perguntas = jsonPerguntas.map((elem, i) => {
-      let perguntasDoTema = elem.perguntas.map((elem, i) => (
+    const { dadosPerguntas } = this.props.perguntas;
+
+    const perguntas = Object.keys(dadosPerguntas).map(tema => {
+      let perguntasDoTema = dadosPerguntas[tema].map(pergunta => (
         <Pergunta
-          key={i}
-          id={i}
-          pergunta={elem.pergunta}
-          autor={elem.autor}
+          key={pergunta.key}
+          id={pergunta.key}
+          pergunta={pergunta.pergunta}
+          autor={"elem.autor"}
           onVota={novaResposta => this.registraResposta(novaResposta)}
         />
       ));
 
       return (
-        <div key={i} className="container">
-          <h4>{elem.tema}</h4>
+        <div key={tema} className="container">
+          <h4>{tema}</h4>
           <div>{perguntasDoTema}</div>
           <div className="dropdown-divider" />
         </div>
@@ -56,14 +57,17 @@ class PerguntasContainer extends Component {
 }
 
 PerguntasContainer.propTypes = {
-  salvaScoreUsuario: PropTypes.func.isRequired
+  salvaScoreUsuario: PropTypes.func.isRequired,
+  calculaScore: PropTypes.func.isRequired,
+  getDadosPerguntas: PropTypes.func.isRequired
 };
 const mapStateToProps = state => ({
   usuario: state.usuarioReducer,
-  candidatos: state.candidatosReducer
+  candidatos: state.candidatosReducer,
+  perguntas: state.perguntasReducer
 });
 
 export default connect(
   mapStateToProps,
-  { salvaScoreUsuario, calculaScore }
+  { salvaScoreUsuario, calculaScore, getDadosPerguntas }
 )(PerguntasContainer);

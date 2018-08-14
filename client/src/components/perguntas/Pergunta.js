@@ -28,6 +28,7 @@ class Pergunta extends Component {
         <div className="card-body">
           <h6 className="card-subtitle mb-2 text-muted">{this.props.autor}</h6>
           <p className="card-text">{this.props.pergunta}</p>
+          <p className="card-text">{this.state.resposta}</p>
           <div className="btn btn-info">
             <a className="card-link" onClick={this.votaSim.bind(this)}>
               Concordo
