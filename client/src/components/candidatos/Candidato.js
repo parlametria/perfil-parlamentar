@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
+import MostraDetalhes from "../detalhes/detalhesActions";
 
 class Candidato extends Component {
   render() {
@@ -7,16 +8,10 @@ class Candidato extends Component {
       <div className="candidato">
         <div className="row">
           <div className="col-4">
-            <img
-              src="http://www.luizaerundina.com.br/images/site/luiza.png"
-              alt="..."
-              width="100px"
-              height="100px"
-              className="img-thumbnail avatar rounded-circle"
-            />
+          <MostraDetalhes />
           </div>
           <div className="col-8">
-            <h5>{this.props.nome}</h5>
+            <h5>{this.props.nome}  </h5>
             <h6>
               {this.props.siglaPartido}/{this.props.estado}
             </h6>

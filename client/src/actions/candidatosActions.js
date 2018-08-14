@@ -107,3 +107,4 @@ export const setCandidatosCarregados = () => {
     type: CANDIDATOS_CARREGADOS
   };
 };
+
