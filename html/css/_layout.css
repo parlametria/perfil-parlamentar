@@ -11,6 +11,17 @@
     padding: 1rem;
 }
 
+.panel-body {
+    padding: 1rem;
+    max-height: 50vh;
+    overflow-y: auto;
+}
+
+.panel-body-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
 .panel-master {
   background-color: #95a5a6;
   width: 100vw;

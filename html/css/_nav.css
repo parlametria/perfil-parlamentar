@@ -1,0 +1,18 @@
+.nav-horizontal {
+  overflow: auto;
+  word-wrap: normal;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+}
+
+@media (max-width: 1420px) {
+  .nav-horizontal-pills {
+    width: 800px;
+  }
+}
+
+@media (max-width: 1090px) {
+  .nav-horizontal-pills-sm {
+    width: 600px;
+  }
+}
