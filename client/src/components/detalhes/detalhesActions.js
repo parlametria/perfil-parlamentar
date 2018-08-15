@@ -1,56 +1,49 @@
-import React from "react";
-import Popup from "reactjs-popup";
-//
+/* eslint react/no-multi-comp: 0, react/prop-types: 0 */
+import React, {Component} from 'react';
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 
-const contentStyle = {
-  maxWidth: "600px",
-  width: "90%"
-};
+class MostraDetalhes extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      modal: false
+    };
 
-const MostraDetalhes = () => (
-  <Popup
-    trigger={<img
+    this.toggle = this.toggle.bind(this);
+  }
+
+  toggle() {
+    this.setState({
+      modal: !this.state.modal
+    });
+  }   
+
+  render() {
+    return (
+      <div>
+        <img
               src="http://www.luizaerundina.com.br/images/site/luiza.png"
               alt="..."
               width="100px"
               height="100px"
               className="img-thumbnail avatar rounded-circle"
-            />}
-    modal
-    contentStyle = {contentStyle}
-  >
-    {close => (
-      <div className="modal">
-        <a className="close" onClick={close}>
-          &times;
-        </a>
-        <div className="header"> Modal Title </div>
-        <div className="content" style={{width: "100%", padding: "10px 5px"}}>
-          {" "}
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque, a
-          nostrum. Dolorem, repellat quidem ut, minima sint vel eveniet
-          quibusdam voluptates delectus doloremque, explicabo tempore dicta
-          adipisci fugit amet dignissimos?
-          <br />
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequatur
-          sit commodi beatae optio voluptatum sed eius cumque, delectus saepe
-          repudiandae explicabo nemo nam libero ad, doloribus, voluptas rem
-          alias. Vitae?
-        </div>
-        <div className="actions">
-          <button
-            className="button"
-            onClick={() => {
-              console.log("modal closed ");
-              close();
-            }}
-          >
-            close modal
-          </button>
-        </div>
+              onClick={this.toggle}
+            />
+        
+        <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
+          <ModalHeader toggle={this.toggle}>Modal title</ModalHeader>
+          <ModalBody>
+            Partido:  
+            UF:
+            Histórico:
+          </ModalBody>
+          <ModalFooter>
+            <Button color="secondary" onClick={this.toggle}>Fechar</Button>
+          </ModalFooter>
+        </Modal>
       </div>
-    )}
-  </Popup>
-);
-export default MostraDetalhes;
+    );
+  }
+}
 
+export default MostraDetalhes;
