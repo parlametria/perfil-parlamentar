@@ -118,6 +118,6 @@ li::before {
   padding-top: 1rem;
 }
 
-.footer {
-  line-height: 24px;
+.copy {
+  padding-bottom: 11px;
 }
