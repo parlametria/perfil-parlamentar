@@ -1,14 +1,17 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types"; 
-import MostraDetalhes from "../detalhes/detalhesActions";
+import MostraDetalhes from "../../actions/detalhesActions";
+
 
 class Candidato extends Component {
   render() {
+    const dados = {'nome': this.props.nome, 'siglaPartido': this.props.siglaPartido, 'estado': this.props.estado, 'respostas': this.props.respostas}
     return (
+      
       <div className="candidato">
         <div className="row">
           <div className="col-4">
-          <MostraDetalhes />
+          <MostraDetalhes Dados={dados}/>
           </div>
           <div className="col-8">
             <h5>{this.props.nome}  </h5>
@@ -41,5 +44,6 @@ Candidato.propTypes = {
   score: PropTypes.number.isRequired,
   respostas: PropTypes.array.isRequired
 };
+
 
 export default Candidato;

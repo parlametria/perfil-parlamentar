@@ -1,12 +1,13 @@
 /* eslint react/no-multi-comp: 0, react/prop-types: 0 */
 import React, {Component} from 'react';
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter} from 'reactstrap';
 
 class MostraDetalhes extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      modal: false
+      modal: false,
+      tooltipOpen: false
     };
 
     this.toggle = this.toggle.bind(this);
@@ -14,12 +15,15 @@ class MostraDetalhes extends Component {
 
   toggle() {
     this.setState({
-      modal: !this.state.modal
+      modal: !this.state.modal,
+      tooltipOpen: !this.state.tooltipOpen
     });
   }   
 
   render() {
+    const dados = this.props.Dados;
     return (
+
       <div>
         <img
               src="http://www.luizaerundina.com.br/images/site/luiza.png"
@@ -29,13 +33,11 @@ class MostraDetalhes extends Component {
               className="img-thumbnail avatar rounded-circle"
               onClick={this.toggle}
             />
-        
         <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
-          <ModalHeader toggle={this.toggle}>Modal title</ModalHeader>
+          <ModalHeader toggle={this.toggle}> {dados.nome} </ModalHeader>
           <ModalBody>
-            Partido:  
-            UF:
-            Histórico:
+            Partido: {this.props.Dados.siglaPartido} <br />
+            UF: {this.props.Dados.estado}
           </ModalBody>
           <ModalFooter>
             <Button color="secondary" onClick={this.toggle}>Fechar</Button>
