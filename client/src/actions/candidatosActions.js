@@ -80,6 +80,20 @@ export const getDadosCandidatos = () => dispatch => {
   //     console.log(err);
   //   });
 
+console.time('order');  
+firebaseDatabase
+.ref("/resultados").orderByKey().on("value", function(snapshot) {
+    const candidatos = snapshot.toJSON();
+    const keys = Object.keys(candidatos);
+    keys.map(key => {
+      dadosCandidatos[candidatos[key].id] = candidatos[key];
+    });
+    dispatch({ type: SET_DADOS_CANDIDATOS, dadosCandidatos });
+    console.timeEnd('order');
+  });
+
+
+  console.time('snap');  
   firebaseDatabase
     .ref("/resultados")
     .once("value")
@@ -90,6 +104,7 @@ export const getDadosCandidatos = () => dispatch => {
         dadosCandidatos[candidatos[key].id] = candidatos[key];
       });
       dispatch({ type: SET_DADOS_CANDIDATOS, dadosCandidatos });
+      console.timeEnd('snap');
     })
     .catch(err => console.log(err));
 };

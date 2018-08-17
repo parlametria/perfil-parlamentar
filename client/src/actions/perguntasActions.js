@@ -11,11 +11,12 @@ export const getDadosPerguntas = () => dispatch => {
     .once("value")
     .then(snapshot => {
       const perguntas = snapshot.val();
+      console.log(perguntas);
       perguntas.map(elem => {
         let arrPerguntas = dadosPerguntas[elem.tema];
 
         if (arrPerguntas) {
-          arrPerguntas.push({ key: elem.key, pergunta: elem.pergunta });
+          arrPerguntas.push({ key: elem.id, pergunta: elem.texto });
           dadosPerguntas[elem.tema] = arrPerguntas;
         } else {
           let arrayInicial = [];
