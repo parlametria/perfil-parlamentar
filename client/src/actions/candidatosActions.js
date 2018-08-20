@@ -21,15 +21,12 @@ export const calculaScore = () => (dispatch, getState) => {
 
   function comparaRespostas(arrayRespostasCandidato) {
     let respostasIguais = 0;
-    for (let i = 0; i < arrayRespostasCandidato.length; i++) {
-      respostasIguais +=
-        arrayRespostasCandidato[i] === arrayRespostasUsuario[i] &&
-        arrayRespostasUsuario[i] !== 0
-          ? 1
-          : 0;
-    }
+    Object.keys(arrayRespostasCandidato).map((elem, i) => {
+      respostasIguais += arrayRespostasCandidato[elem] === arrayRespostasUsuario[i] && arrayRespostasUsuario[i] !== 0 ? 1 : 0;
+    });
     return respostasIguais / numRespostasUsuario;
-  }
+    }
+
 
   let scoreCandidatos = {};
   Object.keys(respostasCandidatos).map(elem => {
