@@ -42,6 +42,7 @@ class CandidatosContainer extends Component {
           estado={candidato.uf}
           score={this.state.scoreCandidatos[candidato.id]}
           respostas={candidato.respostas}
+          foto = {candidato.foto}
         />
       );
     });

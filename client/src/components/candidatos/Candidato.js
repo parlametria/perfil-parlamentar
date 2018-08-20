@@ -8,7 +8,7 @@ class Candidato extends Component {
         <div className="row">
           <div className="col-4">
             <img
-              src="http://www.luizaerundina.com.br/images/site/luiza.png"
+              src={this.props.foto}
               alt="..."
               width="100px"
               height="100px"
@@ -44,7 +44,8 @@ Candidato.propTypes = {
   siglaPartido: PropTypes.string.isRequired,
   estado: PropTypes.string.isRequired,
   score: PropTypes.number.isRequired,
-  respostas: PropTypes.any.isRequired
+  respostas: PropTypes.any.isRequired,
+  foto: PropTypes.string.isRequired
 };
 
 export default Candidato;
