@@ -44,7 +44,7 @@ Candidato.propTypes = {
   siglaPartido: PropTypes.string.isRequired,
   estado: PropTypes.string.isRequired,
   score: PropTypes.number.isRequired,
-  respostas: PropTypes.array.isRequired
+  respostas: PropTypes.any.isRequired
 };
 
 export default Candidato;

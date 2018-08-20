@@ -11,24 +11,23 @@ export const getDadosPerguntas = () => dispatch => {
     .once("value")
     .then(snapshot => {
       const perguntas = snapshot.val();
-      console.log(perguntas);
-      perguntas.map(elem => {
-        let arrPerguntas = dadosPerguntas[elem.tema];
-
+      Object.keys(perguntas).map((elem, i) => {
+        let arrPerguntas = dadosPerguntas[perguntas[elem].tema];
         if (arrPerguntas) {
-          arrPerguntas.push({ key: elem.id, pergunta: elem.texto });
-          dadosPerguntas[elem.tema] = arrPerguntas;
+          arrPerguntas.push({ key: perguntas[elem].id, pergunta: perguntas[elem].texto });
+          dadosPerguntas[perguntas[elem].tema] = arrPerguntas;
         } else {
           let arrayInicial = [];
-          arrayInicial.push({ key: elem.key, pergunta: elem.pergunta });
-          dadosPerguntas[elem.tema] = arrayInicial;
+          arrayInicial.push({ key: perguntas[elem].id, pergunta: perguntas[elem].texto });
+          dadosPerguntas[perguntas[elem].tema] = arrayInicial;
         }
       });
-
       dispatch({ type: SET_DADOS_PERGUNTAS, dadosPerguntas });
     })
     .catch(err => console.log(err));
 };
+
+
 
 export const setPerguntasCarregando = () => {
   return { type: PERGUNTAS_CARREGANDO };

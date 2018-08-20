@@ -65,21 +65,6 @@ export const getDadosCandidatos = () => dispatch => {
 
   let dadosCandidatos = {};
 
-  // const firestore = firebaseFirestore.collection("/resultados");
-
-  // firestore
-  //   .get()
-  //   .then(snapshot => {
-  //     snapshot.forEach(doc => {
-  //       //console.log(doc.data());
-  //       dadosCandidatos[doc.data().id] = doc.data();
-  //     });
-  //     console.log(Date.now() - inicio);
-  //   })
-  //   .catch(err => {
-  //     console.log(err);
-  //   });
-
 console.time('order');  
 firebaseDatabase
 .ref("/resultados").orderByKey().on("value", function(snapshot) {
@@ -93,20 +78,21 @@ firebaseDatabase
   });
 
 
-  console.time('snap');  
-  firebaseDatabase
-    .ref("/resultados")
-    .once("value")
-    .then(snapshot => {
-      const candidatos = snapshot.val();
-      const keys = Object.keys(candidatos);
-      keys.map(key => {
-        dadosCandidatos[candidatos[key].id] = candidatos[key];
-      });
-      dispatch({ type: SET_DADOS_CANDIDATOS, dadosCandidatos });
-      console.timeEnd('snap');
-    })
-    .catch(err => console.log(err));
+  // console.time('snap');  
+  // firebaseDatabase
+  //   .ref("/resultados")
+  //   .once("value")
+  //   .then(snapshot => {
+  //     const candidatos = snapshot.val();
+  //     const keys = Object.keys(candidatos);
+  //     keys.map(key => {
+  //       dadosCandidatos[candidatos[key].id] = candidatos[key];
+  //     });
+  //     dispatch({ type: SET_DADOS_CANDIDATOS, dadosCandidatos });
+  //     console.timeEnd('snap');
+  //     console.log(dadosCandidatos)
+  //   })
+  //   .catch(err => console.log(err));
 };
 
 export const setCandidatosCarregando = () => {
