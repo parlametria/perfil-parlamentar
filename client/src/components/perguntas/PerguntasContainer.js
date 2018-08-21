@@ -8,7 +8,7 @@ import { salvaScoreUsuario } from "../../actions/usuarioActions";
 import { calculaScore } from "../../actions/candidatosActions";
 import { getDadosPerguntas } from "../../actions/perguntasActions";
 
-import jsonPerguntas from "../../data/perguntas.json";
+import Spinner from "../common/Spinner";
 
 class PerguntasContainer extends Component {
   constructor(props) {
@@ -52,7 +52,11 @@ class PerguntasContainer extends Component {
       );
     });
 
-    return <div className="container perguntas-container">{perguntas}</div>;
+    return (
+      <div className="container perguntas-container">
+        {this.props.candidatos.isCarregando ? <Spinner /> : perguntas}
+      </div>
+    );
   }
 }
 
