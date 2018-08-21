@@ -16,6 +16,12 @@ class Pergunta extends Component {
     this.props.onVota({ id, resposta: 1 });
   }
 
+  votaNaoSei() {
+    let id = this.props.id;
+    this.setState({ resposta: 0 });
+    this.props.onVota({ id, resposta: 0 });
+  }
+
   votaNao() {
     let id = this.props.id;
     this.setState({ resposta: -1 });
@@ -27,13 +33,17 @@ class Pergunta extends Component {
       <div className="card pergunta">
         <div className="card-body">
           <p className="card-text">{this.props.pergunta}</p>
-          <p className="card-text">{this.state.resposta}</p>
-          <div className="btn btn-info" onClick={this.votaSim.bind(this)}>
-            <a className="card-link">Concordo</a>
-          </div>
-          <div className="btn btn-danger" onClick={this.votaNao.bind(this)}>
-            <a className="card-link">Discordo</a>
-          </div>
+          <div class="row">
+            <button type="button" className="btn btn-info" onClick={this.votaSim.bind(this)}>
+              <a className="card-link">Concordo</a>
+            </button>
+            <button type="button" className="btn btn-secondary" onClick={this.votaNaoSei.bind(this)}>
+              <a className="card-link">Não sei</a>
+            </button>
+            <button type="button" className="btn btn-danger" onClick={this.votaNao.bind(this)}>
+              <a className="card-link">Discordo</a>
+            </button>
+          </div>  
         </div>
       </div>
     );
