@@ -21,15 +21,12 @@ export const calculaScore = () => (dispatch, getState) => {
 
   function comparaRespostas(arrayRespostasCandidato) {
     let respostasIguais = 0;
-    for (let i = 0; i < arrayRespostasCandidato.length; i++) {
-      respostasIguais +=
-        arrayRespostasCandidato[i] === arrayRespostasUsuario[i] &&
-        arrayRespostasUsuario[i] !== 0
-          ? 1
-          : 0;
-    }
+    Object.keys(arrayRespostasCandidato).map((elem, i) => {
+      respostasIguais += arrayRespostasCandidato[elem] === arrayRespostasUsuario[i] && arrayRespostasUsuario[i] !== 0 ? 1 : 0;
+    });
     return respostasIguais / numRespostasUsuario;
-  }
+    }
+
 
   let scoreCandidatos = {};
   Object.keys(respostasCandidatos).map(elem => {
@@ -64,36 +61,58 @@ export const getDadosCandidatos = () => dispatch => {
   dispatch(setCandidatosCarregando());
 
   let dadosCandidatos = {};
-  let inicio = Date.now();
 
-  // const firestore = firebaseFirestore.collection("/resultados");
+console.time('order');  
+firebaseDatabase
+.ref("/resultados").orderByKey().limitToFirst(4000).on("value", function(snapshot) {
+    const candidatos = snapshot.toJSON();
+    const keys = Object.keys(candidatos);
+    keys.map(key => {
+      dadosCandidatos[candidatos[key].id] = candidatos[key];
+    });
+    dispatch({ type: SET_DADOS_CANDIDATOS, dadosCandidatos });
+    console.timeEnd('order');
+  });
 
-  // firestore
-  //   .get()
+console.time('order1');  
+firebaseDatabase
+.ref("/resultados").orderByKey().limitToLast(4000).on("value", function(snapshot) {
+    const candidatos = snapshot.toJSON();
+    const keys = Object.keys(candidatos);
+    keys.map(key => {
+      dadosCandidatos[candidatos[key].id] = candidatos[key];
+    });
+    dispatch({ type: SET_DADOS_CANDIDATOS, dadosCandidatos });
+    console.timeEnd('order1');
+  });
+
+  Object.size = function(obj) {
+    var size = 0, key;
+    for (key in obj) {
+        if (obj.hasOwnProperty(key)) size++;
+    }
+    return size;
+};
+
+  setTimeout(function(){
+    console.log(Object.size(dadosCandidatos));
+}, 7000);
+
+  // console.time('snap');  
+  // firebaseDatabase
+  //   .ref("/resultados")
+  //   .once("value")
   //   .then(snapshot => {
-  //     snapshot.forEach(doc => {
-  //       //console.log(doc.data());
-  //       dadosCandidatos[doc.data().id] = doc.data();
+  //     const candidatos = snapshot.val();
+  //     const keys = Object.keys(candidatos);
+  //     keys.map(key => {
+  //       dadosCandidatos[candidatos[key].id] = candidatos[key];
   //     });
-  //     console.log(Date.now() - inicio);
+  //     dispatch({ type: SET_DADOS_CANDIDATOS, dadosCandidatos });
+  //     console.timeEnd('snap');
+  //     console.log(dadosCandidatos)
   //   })
-  //   .catch(err => {
-  //     console.log(err);
-  //   });
-
-  firebaseDatabase
-    .ref("/resultados")
-    .once("value")
-    .then(snapshot => {
-      const candidatos = snapshot.val();
-      const keys = Object.keys(candidatos);
-      keys.map(key => {
-        dadosCandidatos[candidatos[key].id] = candidatos[key];
-      });
-      console.log(Date.now() - inicio);
-      dispatch({ type: SET_DADOS_CANDIDATOS, dadosCandidatos });
-    })
-    .catch(err => console.log(err));
+  //   .catch(err => console.log(err));
 };
 
 export const setCandidatosCarregando = () => {
