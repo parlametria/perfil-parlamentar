@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import DetalhesCandidato from "../detalhes/DetalhesCandidato";
+import DetalhesCandidato from "./DetalhesCandidato";
 
 class Candidato extends Component {
   render() {
@@ -8,8 +8,10 @@ class Candidato extends Component {
       nome: this.props.nome,
       siglaPartido: this.props.siglaPartido,
       estado: this.props.estado,
-      respostas: this.props.respostas
+      respostas: this.props.respostas,
+      foto: this.props.foto
     };
+
     return (
       <div className="candidato">
         <div className="row">
