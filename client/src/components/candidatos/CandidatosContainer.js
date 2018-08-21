@@ -6,6 +6,7 @@ import { connect } from "react-redux";
 import FlipMove from "react-flip-move";
 
 import { estados, partidos } from "../../constantes/filtrosSeletoresCandidatos";
+import isEmpty from "../../validation/is-empty";
 
 import {
   calculaScore,
@@ -24,7 +25,8 @@ class CandidatosContainer extends Component {
 
     this.state = {
       scoreCandidatos: {},
-      candidatosAExibir: [],
+      candidatosRanking: [],
+      candidatosFiltrados: [],
       filtro: { nome: "", partido: "", estado: "" }
     };
 
@@ -36,19 +38,29 @@ class CandidatosContainer extends Component {
   buscaNome(e) {
     e.preventDefault();
 
-    var filtro = {
+    let filtro = {
       nome: e.target.value,
       partido: this.state.filtro.partido,
       estado: this.state.filtro.estado
     };
 
-    this.setState({ filtro });
+    let keys = Object.keys(this.props.candidatos.dadosCandidatos);
+
+    let nomesFiltrados = keys.filter(candidato_id => {
+      return (
+        this.props.candidatos.dadosCandidatos[candidato_id].nome
+          .toLowerCase()
+          .indexOf(e.target.value.toLowerCase()) >= 0
+      );
+    });
+
+    this.setState({ filtro, candidatosFiltrados: nomesFiltrados });
   }
 
   buscaEstado(e) {
     e.preventDefault();
 
-    var filtro = {
+    let filtro = {
       nome: this.state.filtro.nome,
       partido: this.state.filtro.partido,
       estado: e.target.value
@@ -60,7 +72,7 @@ class CandidatosContainer extends Component {
   buscaPartido(e) {
     e.preventDefault();
 
-    var filtro = {
+    let filtro = {
       nome: this.state.filtro.nome,
       partido: e.target.value,
       estado: this.state.filtro.estado
@@ -70,8 +82,16 @@ class CandidatosContainer extends Component {
   }
 
   render() {
-    const candidatos = this.state.candidatosAExibir.map(elem => {
-      const candidato = this.props.candidatos.dadosCandidatos[elem[0]];
+    // Inviável fazer no front, tem que fazer nas funções de nuvens.
+    let candidatosMapeaveis;
+    if (this.state.filtro.nome != "") {
+      candidatosMapeaveis = this.state.candidatosFiltrados;
+    } else {
+      candidatosMapeaveis = this.state.candidatosRanking.map(cand => cand[0]);
+    }
+
+    const candidatos = candidatosMapeaveis.map(elem => {
+      const candidato = this.props.candidatos.dadosCandidatos[elem];
 
       return (
         <Candidato
@@ -134,13 +154,20 @@ class CandidatosContainer extends Component {
     if (nextProps.candidatos.scoreCandidatos) {
       this.setState({
         scoreCandidatos: nextProps.candidatos.scoreCandidatos,
-        candidatosAExibir: nextProps.getTopNCandidatos(NUM_CANDIDATOS)
+        candidatosRanking: nextProps.getTopNCandidatos(NUM_CANDIDATOS)
       });
     }
   }
 
   componentDidMount() {
-    this.props.getDadosCandidatos();
+    if (isEmpty(this.props.candidatos.dadosCandidatos))
+      this.props.getDadosCandidatos();
+    else {
+      this.setState({
+        scoreCandidatos: this.props.candidatos.scoreCandidatos,
+        candidatosRanking: this.props.getTopNCandidatos(NUM_CANDIDATOS)
+      });
+    }
   }
 }
 
