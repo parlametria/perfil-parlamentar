@@ -24,7 +24,7 @@ class DetalhesCandidato extends Component {
     return (
       <div className="detalhe-deputado">
         <img
-          src="http://www.luizaerundina.com.br/images/site/luiza.png"
+          src={dados.foto}
           alt="..."
           width="100px"
           height="100px"
