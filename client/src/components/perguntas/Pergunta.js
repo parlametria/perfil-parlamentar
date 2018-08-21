@@ -6,7 +6,7 @@ class Pergunta extends Component {
     super(props);
 
     this.state = {
-      resposta: 0
+      resposta: this.props.voto
     };
 
     this.votaSim = this.votaSim.bind(this);
@@ -47,7 +47,8 @@ Pergunta.propTypes = {
   id: PropTypes.number.isRequired,
   pergunta: PropTypes.string.isRequired,
   tema: PropTypes.string,
-  onVota: PropTypes.func.isRequired
+  onVota: PropTypes.func.isRequired,
+  voto: PropTypes.number.isRequired
 };
 
 export default Pergunta;

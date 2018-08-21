@@ -1,6 +1,6 @@
 import { SET_SCORE_USUARIO } from "../actions/types";
 
-const TAM_PERGUNTAS = 50; // Deve ser substituído por um perguntas.size() depois, quando tivermos acesso às perguntas.
+const TAM_PERGUNTAS = 43; // Deve ser substituído por um perguntas.size() depois, quando tivermos acesso às perguntas.
 
 // userVotings: {id_votacao: voto}
 // arrayVotings: [0/1/-1]

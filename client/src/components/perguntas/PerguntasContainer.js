@@ -26,21 +26,30 @@ class PerguntasContainer extends Component {
   }
 
   componentDidMount() {
+    const { respostasUsuario, arrayRespostasUsuario } = this.props.usuario;
     this.props.getDadosPerguntas();
+    this.setState({
+      respostasUsuario,
+      arrayRespostasUsuario
+    });
   }
 
   render() {
     const { dadosPerguntas } = this.props.perguntas;
 
     const perguntas = Object.keys(dadosPerguntas).map(tema => {
-      let perguntasDoTema = dadosPerguntas[tema].map(pergunta => (
-        <Pergunta
-          key={pergunta.key}
-          id={pergunta.key}
-          pergunta={pergunta.pergunta}
-          onVota={novaResposta => this.registraResposta(novaResposta)}
-        />
-      ));
+      let perguntasDoTema = dadosPerguntas[tema].map(pergunta => {
+        let { arrayRespostasUsuario } = this.props.usuario;
+        return (
+          <Pergunta
+            key={pergunta.key}
+            id={pergunta.key}
+            pergunta={pergunta.pergunta}
+            voto={arrayRespostasUsuario[pergunta.key]}
+            onVota={novaResposta => this.registraResposta(novaResposta)}
+          />
+        );
+      });
 
       return (
         <div key={tema} className="container">
