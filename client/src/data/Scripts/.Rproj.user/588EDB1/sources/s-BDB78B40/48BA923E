@@ -1,0 +1,22 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1532397437485.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "607833134",
+    "id" : "48BA923E",
+    "lastKnownWriteTime" : 1532397509,
+    "last_content_update" : 1532397509146,
+    "path" : "C:/Users/Dandara/Desktop/Repositorios/voz-ativa/client/src/data/Scripts/csvtojson.R",
+    "project_path" : "csvtojson.R",
+    "properties" : {
+        "cursorPosition" : "1,0",
+        "scrollLine" : "0"
+    },
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

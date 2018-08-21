@@ -2,7 +2,7 @@
 import React, {Component} from 'react';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter} from 'reactstrap';
 
-class MostraDetalhes extends Component {
+class DetalhesCandidato extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -48,4 +48,4 @@ class MostraDetalhes extends Component {
   }
 }
 
-export default MostraDetalhes;
+export default DetalhesCandidato;

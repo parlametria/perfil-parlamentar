@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types"; 
 import MostraDetalhes from "../../actions/detalhesActions";
+import DetalhesCandidato from "../detalhes/DetalhesCandidato";
 
 
 class Candidato extends Component {
@@ -11,7 +12,7 @@ class Candidato extends Component {
       <div className="candidato">
         <div className="row">
           <div className="col-4">
-          <MostraDetalhes Dados={dados}/>
+          <DetalhesCandidato dados={dados}/>
           </div>
           <div className="col-8">
             <h5>{this.props.nome}  </h5>
