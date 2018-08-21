@@ -22,11 +22,14 @@ export const calculaScore = () => (dispatch, getState) => {
   function comparaRespostas(arrayRespostasCandidato) {
     let respostasIguais = 0;
     Object.keys(arrayRespostasCandidato).map((elem, i) => {
-      respostasIguais += arrayRespostasCandidato[elem] === arrayRespostasUsuario[i] && arrayRespostasUsuario[i] !== 0 ? 1 : 0;
+      respostasIguais +=
+        arrayRespostasCandidato[elem] === arrayRespostasUsuario[i] &&
+        arrayRespostasUsuario[i] !== 0
+          ? 1
+          : 0;
     });
     return respostasIguais / numRespostasUsuario;
-    }
-
+  }
 
   let scoreCandidatos = {};
   Object.keys(respostasCandidatos).map(elem => {
@@ -62,43 +65,50 @@ export const getDadosCandidatos = () => dispatch => {
 
   let dadosCandidatos = {};
 
-console.time('order');  
-firebaseDatabase
-.ref("/resultados").orderByKey().limitToFirst(4000).on("value", function(snapshot) {
-    const candidatos = snapshot.toJSON();
-    const keys = Object.keys(candidatos);
-    keys.map(key => {
-      dadosCandidatos[candidatos[key].id] = candidatos[key];
+  console.time("order");
+  firebaseDatabase
+    .ref("/resultados")
+    .orderByKey()
+    .limitToFirst(4000)
+    .on("value", function(snapshot) {
+      const candidatos = snapshot.toJSON();
+      const keys = Object.keys(candidatos);
+      keys.map(key => {
+        dadosCandidatos[candidatos[key].id] = candidatos[key];
+      });
+      dispatch({ type: SET_DADOS_CANDIDATOS, dadosCandidatos });
+      console.timeEnd("order");
     });
-    dispatch({ type: SET_DADOS_CANDIDATOS, dadosCandidatos });
-    console.timeEnd('order');
-  });
 
-console.time('order1');  
-firebaseDatabase
-.ref("/resultados").orderByKey().limitToLast(4000).on("value", function(snapshot) {
-    const candidatos = snapshot.toJSON();
-    const keys = Object.keys(candidatos);
-    keys.map(key => {
-      dadosCandidatos[candidatos[key].id] = candidatos[key];
+  console.time("order1");
+  firebaseDatabase
+    .ref("/resultados")
+    .orderByKey()
+    .limitToLast(4000)
+    .on("value", function(snapshot) {
+      const candidatos = snapshot.toJSON();
+      const keys = Object.keys(candidatos);
+      keys.map(key => {
+        dadosCandidatos[candidatos[key].id] = candidatos[key];
+      });
+      dispatch({ type: SET_DADOS_CANDIDATOS, dadosCandidatos });
+      console.timeEnd("order1");
     });
-    dispatch({ type: SET_DADOS_CANDIDATOS, dadosCandidatos });
-    console.timeEnd('order1');
-  });
 
   Object.size = function(obj) {
-    var size = 0, key;
+    var size = 0,
+      key;
     for (key in obj) {
-        if (obj.hasOwnProperty(key)) size++;
+      if (obj.hasOwnProperty(key)) size++;
     }
     return size;
-};
+  };
 
-  setTimeout(function(){
+  setTimeout(function() {
     console.log(Object.size(dadosCandidatos));
-}, 7000);
+  }, 7000);
 
-  // console.time('snap');  
+  // console.time('snap');
   // firebaseDatabase
   //   .ref("/resultados")
   //   .once("value")
@@ -126,4 +136,3 @@ export const setCandidatosCarregados = () => {
     type: CANDIDATOS_CARREGADOS
   };
 };
-
