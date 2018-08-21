@@ -1,6 +1,5 @@
-/* eslint react/no-multi-comp: 0, react/prop-types: 0 */
-import React, {Component} from 'react';
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter} from 'reactstrap';
+import React, { Component } from "react";
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 
 class DetalhesCandidato extends Component {
   constructor(props) {
@@ -18,29 +17,34 @@ class DetalhesCandidato extends Component {
       modal: !this.state.modal,
       tooltipOpen: !this.state.tooltipOpen
     });
-  }   
+  }
 
   render() {
-    const dados = this.props.Dados;
+    const dados = this.props.dados;
     return (
-
-      <div>
+      <div className="detalhe-deputado">
         <img
-              src="http://www.luizaerundina.com.br/images/site/luiza.png"
-              alt="..."
-              width="100px"
-              height="100px"
-              className="img-thumbnail avatar rounded-circle"
-              onClick={this.toggle}
-            />
-        <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
+          src="http://www.luizaerundina.com.br/images/site/luiza.png"
+          alt="..."
+          width="100px"
+          height="100px"
+          className="img-thumbnail avatar rounded-circle"
+          onClick={this.toggle}
+        />
+        <Modal
+          isOpen={this.state.modal}
+          toggle={this.toggle}
+          className={this.props.className}
+        >
           <ModalHeader toggle={this.toggle}> {dados.nome} </ModalHeader>
           <ModalBody>
-            Partido: {this.props.Dados.siglaPartido} <br />
-            UF: {this.props.Dados.estado}
+            Partido: {this.props.dados.siglaPartido} <br />
+            UF: {this.props.dados.estado}
           </ModalBody>
           <ModalFooter>
-            <Button color="secondary" onClick={this.toggle}>Fechar</Button>
+            <Button color="secondary" onClick={this.toggle}>
+              Fechar
+            </Button>
           </ModalFooter>
         </Modal>
       </div>

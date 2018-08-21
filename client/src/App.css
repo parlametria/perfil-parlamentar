@@ -38,4 +38,5 @@ p a + a {
 
 .avatar {
   width: 140px;
+  cursor: pointer;
 }

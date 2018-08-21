@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types"; 
-import MostraDetalhes from "../../actions/detalhesActions";
 import DetalhesCandidato from "../detalhes/DetalhesCandidato";
 
 
