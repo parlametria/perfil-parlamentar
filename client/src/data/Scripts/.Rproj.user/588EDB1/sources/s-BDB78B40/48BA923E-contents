@@ -1,0 +1,1 @@
+respostas <- read.csv("respostas_simulacao.csv", fileEncoding = "UTF-8")

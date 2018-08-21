@@ -1,22 +1,23 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
+import DetalhesCandidato from "../detalhes/DetalhesCandidato";
 
 class Candidato extends Component {
   render() {
+    const dados = {
+      nome: this.props.nome,
+      siglaPartido: this.props.siglaPartido,
+      estado: this.props.estado,
+      respostas: this.props.respostas
+    };
     return (
       <div className="candidato">
         <div className="row">
           <div className="col-4">
-            <img
-              src={this.props.foto}
-              alt="..."
-              width="100px"
-              height="100px"
-              className="img-thumbnail avatar rounded-circle"
-            />
+            <DetalhesCandidato dados={dados} />
           </div>
           <div className="col-8">
-            <h5>{this.props.nome}</h5>
+            <h5>{this.props.nome} </h5>
             <h6>
               {this.props.siglaPartido}/{this.props.estado}
             </h6>
