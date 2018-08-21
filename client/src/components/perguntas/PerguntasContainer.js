@@ -38,7 +38,6 @@ class PerguntasContainer extends Component {
           key={pergunta.key}
           id={pergunta.key}
           pergunta={pergunta.pergunta}
-          autor={"elem.autor"}
           onVota={novaResposta => this.registraResposta(novaResposta)}
         />
       ));

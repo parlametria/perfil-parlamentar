@@ -26,7 +26,6 @@ class Pergunta extends Component {
     return (
       <div className="card pergunta">
         <div className="card-body">
-          <h6 className="card-subtitle mb-2 text-muted">{this.props.autor}</h6>
           <p className="card-text">{this.props.pergunta}</p>
           <p className="card-text">{this.state.resposta}</p>
           <div className="btn btn-info">
@@ -45,7 +44,6 @@ class Pergunta extends Component {
 
 Pergunta.propTypes = {
   id: PropTypes.number.isRequired,
-  autor: PropTypes.string.isRequired,
   pergunta: PropTypes.string.isRequired,
   tema: PropTypes.string,
   onVota: PropTypes.func.isRequired
