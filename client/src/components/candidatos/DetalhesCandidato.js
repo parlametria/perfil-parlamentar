@@ -19,6 +19,20 @@ class DetalhesCandidato extends Component {
     });
   }
 
+  fazTabelaComparacao(dados){
+    return (
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Pergunta</th>
+            <th scope="col">Votos de {dados.nome.substr(0,dados.nome.indexOf(' '))}</th>
+            <th scope="col">Seus votos</th>
+          </tr>
+        </thead>
+      </table>
+    );
+  }
+
   render() {
     const dados = this.props.dados;
     return (
@@ -38,8 +52,16 @@ class DetalhesCandidato extends Component {
         >
           <ModalHeader toggle={this.toggle}> {dados.nome} </ModalHeader>
           <ModalBody>
-            Partido: {this.props.dados.siglaPartido} <br />
-            UF: {this.props.dados.estado}
+            <div className="row">
+              <div className="col-md-6 col-sm-12 col-12">
+                Partido: {this.props.dados.siglaPartido} 
+              </div>
+              <div className="col-md-6 col-sm-12 col-12">
+                UF: {this.props.dados.estado}
+              </div>
+            </div>
+            {this.fazTabelaComparacao(dados)}
+            
           </ModalBody>
           <ModalFooter>
             <Button color="secondary" onClick={this.toggle}>
