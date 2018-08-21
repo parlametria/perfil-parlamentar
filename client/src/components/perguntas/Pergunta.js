@@ -8,6 +8,9 @@ class Pergunta extends Component {
     this.state = {
       resposta: 0
     };
+
+    this.votaSim = this.votaSim.bind(this);
+    this.votaNao = this.votaNao.bind(this);
   }
 
   votaSim() {
@@ -28,10 +31,10 @@ class Pergunta extends Component {
         <div className="card-body">
           <p className="card-text">{this.props.pergunta}</p>
           <p className="card-text">{this.state.resposta}</p>
-          <div className="btn btn-info" onClick={this.votaSim.bind(this)}>
+          <div className="btn btn-info" onClick={this.votaSim}>
             <a className="card-link">Concordo</a>
           </div>
-          <div className="btn btn-danger" onClick={this.votaNao.bind(this)}>
+          <div className="btn btn-danger" onClick={this.votaNao}>
             <a className="card-link">Discordo</a>
           </div>
         </div>
