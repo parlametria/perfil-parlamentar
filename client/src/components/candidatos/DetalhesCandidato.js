@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
+import TabelaVotacoes from "./TabelaVotacoes";
 
 class DetalhesCandidato extends Component {
   constructor(props) {
@@ -60,7 +61,7 @@ class DetalhesCandidato extends Component {
                 UF: {this.props.dados.estado}
               </div>
             </div>
-            {this.fazTabelaComparacao(dados)}
+            <TabelaVotacoes dados= {dados}/>
             
           </ModalBody>
           <ModalFooter>
