@@ -21,10 +21,12 @@ class PerguntasContainer extends Component {
     this.state = {
       respostasUsuario: {},
       arrayRespostasUsuario: [],
-      indexPerguntaAtual: 0
+      indexPerguntaAtual: 0,
+      categoriaPergunta: "Meio Ambiente"
     };
     this.passaPergunta = this.passaPergunta.bind(this);
     this.voltaPergunta = this.voltaPergunta.bind(this);
+    this.selecionaTema = this.selecionaTema.bind(this);
   }
 
   registraResposta(novaResposta) {
@@ -34,6 +36,7 @@ class PerguntasContainer extends Component {
     arrayRespostasUsuario[novaResposta.id] = novaResposta.resposta;
     this.props.salvaScoreUsuario(respostasUsuario, arrayRespostasUsuario);
     this.props.calculaScore();
+    this.passaPergunta();
   }
 
   passaPergunta() {
@@ -42,6 +45,13 @@ class PerguntasContainer extends Component {
 
   voltaPergunta() {
     this.props.voltaPergunta();
+  }
+
+  selecionaTema(e) {
+    e.preventDefault();
+    this.setState({
+      categoriaPergunta: e.target.id
+    });
   }
 
   componentDidMount() {
@@ -56,7 +66,11 @@ class PerguntasContainer extends Component {
   }
 
   render() {
-    const { dadosPerguntas, perguntaAtual } = this.props.perguntas;
+    const {
+      dadosPerguntas,
+      perguntaAtual,
+      isCarregando
+    } = this.props.perguntas;
 
     const perguntas = Object.keys(dadosPerguntas).map(tema => {
       let perguntasDoTema = dadosPerguntas[tema].map(pergunta => {
@@ -92,27 +106,45 @@ class PerguntasContainer extends Component {
       </div>
     );
 
-    const categoriaPergunta = "Meio Ambiente";
+    let pergunta;
+    let temas;
 
-    console.log(this.props.perguntas.dadosPerguntas);
-    //console.log(this.props.perguntas.dadosPerguntas["Meio Ambiente"][0]);
+    if (!isEmpty(dadosPerguntas)) {
+      const dadosPergunta = dadosPerguntas[this.state.categoriaPergunta];
+      const { arrayRespostasUsuario } = this.props.usuario;
+
+      temas = Object.keys(dadosPerguntas).map(elem => (
+        <div
+          className="btn btn-dark col"
+          key={elem}
+          id={elem}
+          onClick={this.selecionaTema}
+        >
+          {elem}
+        </div>
+      ));
+
+      pergunta = (
+        <Pergunta
+          key={dadosPergunta[perguntaAtual].key}
+          id={dadosPergunta[perguntaAtual].key}
+          pergunta={dadosPergunta[perguntaAtual].pergunta}
+          voto={arrayRespostasUsuario[dadosPergunta[perguntaAtual].key]}
+          onVota={novaResposta => this.registraResposta(novaResposta)}
+        />
+      );
+    }
 
     return (
       <div className="container perguntas-container">
-        {this.props.perguntas.isCarregando ||
-        isEmpty(this.props.perguntas.dadosPerguntas) ? (
+        {isCarregando || isEmpty(dadosPerguntas) ? (
           <Spinner />
         ) : (
           <div>
-            <div className="row">
-              {
-                this.props.perguntas.dadosPerguntas[categoriaPergunta][
-                  perguntaAtual
-                ].pergunta
-              }
-              {perguntaAtual}
-            </div>
-            <div>{botoesNavegacao}</div>
+            <div className="row">{temas}</div>
+            <div className="row">{pergunta}</div>
+            <div className="row">{pergunta.key}</div>
+            <div className="row">{botoesNavegacao}</div>
           </div>
         )}
       </div>
