@@ -27,10 +27,9 @@ class Pergunta extends Component {
 
   render() {
     return (
-      <div className="card pergunta">
-        <div className="card-body">
-          <p className="card-text">{this.props.pergunta}</p>
-          <p className="card-text">{this.state.resposta}</p>
+      <div className="pergunta">
+        <div>
+          <p>{this.props.pergunta}</p>
           <div className="btn btn-info" onClick={this.votaSim}>
             <a className="card-link">Concordo</a>
           </div>
