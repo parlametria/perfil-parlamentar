@@ -114,7 +114,7 @@ class CandidatosContainer extends Component {
           </div>
         ) : (
           <div className="candidatos">
-            <div className="row">
+            {/*<div className="row">
               <div className="col-8 col-xs-8 col-md-8 col-lg-8">
                 <input
                   className="barra-filtro-candidato form-control"
@@ -142,7 +142,7 @@ class CandidatosContainer extends Component {
                   {estados()}
                 </select>
               </div>
-            </div>
+        </div>*/}
             <FlipMove>{candidatos}</FlipMove>
           </div>
         )}
