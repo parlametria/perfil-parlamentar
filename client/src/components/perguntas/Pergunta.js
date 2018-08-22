@@ -18,8 +18,8 @@ class Pergunta extends Component {
 
   votaNaoSei() {
     let id = this.props.id;
-    this.setState({ resposta: 0 });
-    this.props.onVota({ id, resposta: 0 });
+    this.setState({ resposta: -2 });
+    this.props.onVota({ id, resposta: -2 });
   }
 
   votaNao() {
