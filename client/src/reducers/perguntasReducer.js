@@ -1,8 +1,13 @@
-import { PERGUNTAS_CARREGANDO, SET_DADOS_PERGUNTAS } from "../actions/types";
+import {
+  PERGUNTAS_CARREGANDO,
+  SET_DADOS_PERGUNTAS,
+  SET_INDEX_PERGUNTA
+} from "../actions/types";
 
 const initialState = {
   dadosPerguntas: {},
-  isCarregando: false
+  isCarregando: false,
+  perguntaAtual: 0
 };
 
 export default function(state = initialState, action) {
@@ -17,6 +22,11 @@ export default function(state = initialState, action) {
         ...state,
         dadosPerguntas: action.dadosPerguntas,
         isCarregando: false
+      };
+    case SET_INDEX_PERGUNTA:
+      return {
+        ...state,
+        perguntaAtual: action.newIndex
       };
     default:
       return state;
