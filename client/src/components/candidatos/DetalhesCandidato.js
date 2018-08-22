@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
-import TabelaVotacoes from "./TabelaVotacoes";
+import TabelaVotacoes from "../tabelaVotacao/TabelaVotacoes";
 
 class DetalhesCandidato extends Component {
   constructor(props) {
@@ -20,19 +20,6 @@ class DetalhesCandidato extends Component {
     });
   }
 
-  fazTabelaComparacao(dados){
-    return (
-      <table class="table">
-        <thead>
-          <tr>
-            <th scope="col">Pergunta</th>
-            <th scope="col">Votos de {dados.nome.substr(0,dados.nome.indexOf(' '))}</th>
-            <th scope="col">Seus votos</th>
-          </tr>
-        </thead>
-      </table>
-    );
-  }
 
   render() {
     const dados = this.props.dados;
@@ -61,7 +48,7 @@ class DetalhesCandidato extends Component {
                 UF: {this.props.dados.estado}
               </div>
             </div>
-            <TabelaVotacoes dados= {dados}/>
+            <TabelaVotacoes dadosCandidatos= {dados}/>
             
           </ModalBody>
           <ModalFooter>
