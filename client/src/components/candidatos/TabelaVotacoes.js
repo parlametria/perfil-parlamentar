@@ -15,6 +15,7 @@ import React, { Component } from "react";
     }
 ]
 */
+
 class TabelaVotacoes extends Comment{
     render(){
         const dados = this.props.dados;
