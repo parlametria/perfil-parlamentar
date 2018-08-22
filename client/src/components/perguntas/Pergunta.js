@@ -33,7 +33,7 @@ class Pergunta extends Component {
       <div className="card pergunta">
         <div className="card-body">
           <p className="card-text">{this.props.pergunta}</p>
-          <div class="row">
+          <div className="row">
             <button type="button" className="btn btn-info" onClick={this.votaSim.bind(this)}>
               <a className="card-link">Concordo</a>
             </button>

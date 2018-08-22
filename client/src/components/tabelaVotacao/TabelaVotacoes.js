@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import {Table} from 'reactstrap';
-
+import isEmpty from '../../validation/is-empty';
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 
@@ -13,7 +13,7 @@ class TabelaVotacoes extends Component{
         const perguntas = []
         Object.keys(dadosPerguntas).map(tema => (
             dadosPerguntas[tema].map(p => {
-                return perguntas.push(p.pergunta)
+                return perguntas.push(p.pergunta);
             })
         ))
 
@@ -35,8 +35,19 @@ class TabelaVotacoes extends Component{
                     break;
             }
           }
-
-
+        
+        let rows;
+        if (!isEmpty(perguntas)){
+            rows = perguntas.map((elem, i )=>(
+                <tr key={i}>
+                    <td>{perguntas[i]}</td>
+                    <td>{getValorVotacao(votacoesCandidato[i])}</td>
+                    <td>{getValorVotacao(arrayRespostasUsuario[i])}</td>
+                </tr>
+            ));
+        }
+        
+        
         return(
             <Table>
                 <thead>
@@ -47,12 +58,7 @@ class TabelaVotacoes extends Component{
                 </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        {}
-                        <td>{perguntas[0]}</td>
-                        <td>{getValorVotacao(votacoesCandidato[0])}</td>
-                        <td>{getValorVotacao(arrayRespostasUsuario[0])}</td>
-                    </tr>
+                    {rows}
                 </tbody>
             </Table>
         )
