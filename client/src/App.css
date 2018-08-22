@@ -14,6 +14,11 @@ p a + a {
   padding-left: 3em;
 }
 
+.barra-filtro-candidato {
+  border-radius: 15px;
+  background-color: white;
+}
+
 @media only screen and (max-width: 600px), only screen and (min-width: 600px) {
   .perguntas-container {
     height: 50vh;
