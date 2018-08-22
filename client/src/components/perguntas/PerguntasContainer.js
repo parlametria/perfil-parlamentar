@@ -6,14 +6,24 @@ import PropTypes from "prop-types";
 
 import { salvaScoreUsuario } from "../../actions/usuarioActions";
 import { calculaScore } from "../../actions/candidatosActions";
-import { getDadosPerguntas } from "../../actions/perguntasActions";
+import {
+  getDadosPerguntas,
+  voltaPergunta,
+  passaPergunta
+} from "../../actions/perguntasActions";
 
 import Spinner from "../common/Spinner";
 
 class PerguntasContainer extends Component {
   constructor(props) {
     super(props);
-    this.state = { respostasUsuario: {}, arrayRespostasUsuario: [] };
+    this.state = {
+      respostasUsuario: {},
+      arrayRespostasUsuario: [],
+      indexPerguntaAtual: 0
+    };
+    this.passaPergunta = this.passaPergunta.bind(this);
+    this.voltaPergunta = this.voltaPergunta.bind(this);
   }
 
   registraResposta(novaResposta) {
@@ -25,17 +35,27 @@ class PerguntasContainer extends Component {
     this.props.calculaScore();
   }
 
+  passaPergunta() {
+    this.props.passaPergunta();
+  }
+
+  voltaPergunta() {
+    this.props.voltaPergunta();
+  }
+
   componentDidMount() {
     const { respostasUsuario, arrayRespostasUsuario } = this.props.usuario;
+    const { perguntaAtual } = this.props.perguntas;
     this.props.getDadosPerguntas();
     this.setState({
       respostasUsuario,
-      arrayRespostasUsuario
+      arrayRespostasUsuario,
+      indexPerguntaAtual: perguntaAtual
     });
   }
 
   render() {
-    const { dadosPerguntas } = this.props.perguntas;
+    const { dadosPerguntas, perguntaAtual } = this.props.perguntas;
 
     const perguntas = Object.keys(dadosPerguntas).map(tema => {
       let perguntasDoTema = dadosPerguntas[tema].map(pergunta => {
@@ -60,9 +80,23 @@ class PerguntasContainer extends Component {
       );
     });
 
+    const botoesNavegacao = (
+      <div>
+        <div onClick={this.passaPergunta}>avançar</div>
+        <div onClick={this.voltaPergunta}>voltar</div>
+      </div>
+    );
+
     return (
       <div className="container perguntas-container">
-        {this.props.candidatos.isCarregando ? <Spinner /> : perguntas}
+        {this.props.candidatos.isCarregando ? (
+          <Spinner />
+        ) : (
+          <div>
+            <div className="row">{perguntaAtual}</div>
+            <div>{botoesNavegacao}</div>
+          </div>
+        )}
       </div>
     );
   }
@@ -81,5 +115,11 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { salvaScoreUsuario, calculaScore, getDadosPerguntas }
+  {
+    salvaScoreUsuario,
+    calculaScore,
+    getDadosPerguntas,
+    passaPergunta,
+    voltaPergunta
+  }
 )(PerguntasContainer);
