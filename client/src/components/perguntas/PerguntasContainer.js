@@ -13,6 +13,7 @@ import {
 } from "../../actions/perguntasActions";
 
 import Spinner from "../common/Spinner";
+import isEmpty from "../../validation/is-empty";
 
 class PerguntasContainer extends Component {
   constructor(props) {
@@ -82,18 +83,35 @@ class PerguntasContainer extends Component {
 
     const botoesNavegacao = (
       <div>
-        <div onClick={this.passaPergunta}>avançar</div>
-        <div onClick={this.voltaPergunta}>voltar</div>
+        <div className="btn btn-danger" onClick={this.voltaPergunta}>
+          Voltar
+        </div>
+        <div className="btn btn-primary" onClick={this.passaPergunta}>
+          Avançar
+        </div>
       </div>
     );
 
+    const categoriaPergunta = "Meio Ambiente";
+
+    console.log(this.props.perguntas.dadosPerguntas);
+    //console.log(this.props.perguntas.dadosPerguntas["Meio Ambiente"][0]);
+
     return (
       <div className="container perguntas-container">
-        {this.props.candidatos.isCarregando ? (
+        {this.props.perguntas.isCarregando ||
+        isEmpty(this.props.perguntas.dadosPerguntas) ? (
           <Spinner />
         ) : (
           <div>
-            <div className="row">{perguntaAtual}</div>
+            <div className="row">
+              {
+                this.props.perguntas.dadosPerguntas[categoriaPergunta][
+                  perguntaAtual
+                ].pergunta
+              }
+              {perguntaAtual}
+            </div>
             <div>{botoesNavegacao}</div>
           </div>
         )}
