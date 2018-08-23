@@ -84,7 +84,7 @@ class CandidatosContainer extends Component {
   render() {
     // Inviável fazer no front, tem que fazer nas funções de nuvens.
     let candidatosMapeaveis;
-    if (this.state.filtro.nome != "") {
+    if (this.state.filtro.nome !== "") {
       candidatosMapeaveis = this.state.candidatosFiltrados;
     } else {
       candidatosMapeaveis = this.state.candidatosRanking.map(cand => cand[0]);
