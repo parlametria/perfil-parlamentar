@@ -1,14 +1,27 @@
 import React, { Component } from "react";
-import {Table} from 'reactstrap';
+import { Table } from 'reactstrap';
 import isEmpty from '../../validation/is-empty';
 import { connect } from "react-redux";
-import PropTypes from "prop-types";
+import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table';
 
-class TabelaVotacoes extends Component{
-    render(){
-        const {dadosCandidatos} = this.props;
-        const {dadosPerguntas} = this.props.perguntas;
-        const {arrayRespostasUsuario} = this.props.usuario;
+class TabelaVotacoes extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            activePage: 1
+        };
+        this.handlePageChange = this.handlePageChange.bind(this);
+    }
+
+    handlePageChange(pageNumber) {
+        console.log(`active page is ${pageNumber}`);
+        this.setState({ activePage: pageNumber });
+    }
+
+    render() {
+        const { dadosCandidatos } = this.props;
+        const { dadosPerguntas } = this.props.perguntas;
+        const { arrayRespostasUsuario } = this.props.usuario;
 
         const perguntas = []
         Object.keys(dadosPerguntas).map(tema => (
@@ -34,44 +47,60 @@ class TabelaVotacoes extends Component{
                     return "Não sabe";
                     break;
             }
-          }
-        
-        let rows;
-        if (!isEmpty(perguntas)){
-            rows = perguntas.map((elem, i )=>(
-                <tr key={i}>
+        }
+
+        var rows = [];
+        if (!isEmpty(perguntas)) {
+            perguntas.map((elem, i) => (
+                /*<tr key={i}>
                     <td>{perguntas[i]}</td>
                     <td>{getValorVotacao(votacoesCandidato[i])}</td>
                     <td>{getValorVotacao(arrayRespostasUsuario[i])}</td>
-                </tr>
+                </tr>*/
+                rows.push({
+                    id: i,
+                    pergunta: perguntas[i],
+                    votoCandidato: getValorVotacao(votacoesCandidato[i]),
+                    votoUsuario: getValorVotacao(arrayRespostasUsuario[i])
+                })
             ));
         }
-        
-        
-        return(
-            <Table>
-                <thead>
-                <tr>
-                    <th>Tema</th>
-                    <th>Votos de {dadosCandidatos.nome.substr(0,dadosCandidatos.nome.indexOf(' '))}</th>
-                    <th>Seus votos</th>
-                </tr>
-                </thead>
-                <tbody>
-                    {rows}
-                </tbody>
-            </Table>
+        console.log(rows);
+
+
+        return (
+            <div>
+                <Table size="sm" responsive hover pagination={{ pageSize: 5 }}>
+                    <thead>
+                        <tr>
+                            <th>Tema</th>
+                            <th>Votos de {dadosCandidatos.nome.substr(0, dadosCandidatos.nome.indexOf(' '))}</th>
+                            <th>Seus votos</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                    </tbody>
+                </Table>
+                <BootstrapTable
+                    data={rows}
+                    pagination>
+                    <TableHeaderColumn dataField='pergunta' isKey>Product ID</TableHeaderColumn>
+                    <TableHeaderColumn dataField='votoCandidato'>Product Name</TableHeaderColumn>
+                    <TableHeaderColumn dataField='votoUsuario'>Product Price</TableHeaderColumn>
+                </BootstrapTable>
+            </div>
         )
     }
 }
 TabelaVotacoes.propTypes = {
-  };
-  const mapStateToProps = state => ({
+};
+const mapStateToProps = state => ({
     usuario: state.usuarioReducer,
     perguntas: state.perguntasReducer
-  });
-  
-  export default connect(
+});
+
+export default connect(
     mapStateToProps,
-    { }
-  )(TabelaVotacoes);
+    {}
+)(TabelaVotacoes);
