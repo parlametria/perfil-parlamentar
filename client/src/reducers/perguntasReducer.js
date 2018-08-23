@@ -1,13 +1,15 @@
 import {
   PERGUNTAS_CARREGANDO,
   SET_DADOS_PERGUNTAS,
-  SET_INDEX_PERGUNTA
+  SET_INDEX_PERGUNTA,
+  SET_TEMA
 } from "../actions/types";
 
 const initialState = {
   dadosPerguntas: {},
   isCarregando: false,
-  perguntaAtual: 0
+  indexPergunta: 0,
+  tema: "Meio Ambiente"
 };
 
 export default function(state = initialState, action) {
@@ -26,7 +28,12 @@ export default function(state = initialState, action) {
     case SET_INDEX_PERGUNTA:
       return {
         ...state,
-        perguntaAtual: action.newIndex
+        indexPergunta: action.indexPergunta
+      };
+    case SET_TEMA:
+      return {
+        ...state,
+        tema: action.tema
       };
     default:
       return state;
