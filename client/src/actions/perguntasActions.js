@@ -6,25 +6,20 @@ import {
 } from "./types";
 import { firebaseDatabase } from "../services/firebaseService";
 
-var TAM_PERGUNTAS = 46;
+import perguntas from "../data/perguntas.json";
+
+var TAM_PERGUNTAS = Object.keys(perguntas).length;
 
 export const getDadosPerguntas = () => dispatch => {
   dispatch(setPerguntasCarregando());
 
-  let dadosPerguntas = Array(TAM_PERGUNTAS).fill(0);
+  let dadosPerguntas = [];
 
-  firebaseDatabase
-    .ref("/perguntas")
-    .once("value")
-    .then(snapshot => {
-      const perguntas = snapshot.toJSON();
-      TAM_PERGUNTAS = Object.keys(perguntas).length;
-      Object.keys(perguntas).map(key => {
-        dadosPerguntas[perguntas[key].id] = perguntas[key];
-      });
-      dispatch({ type: SET_DADOS_PERGUNTAS, dadosPerguntas });
-    })
-    .catch(err => console.log(err));
+  Object.keys(perguntas).map(key => {
+    dadosPerguntas[perguntas[key].id] = perguntas[key];
+  });
+
+  dispatch({ type: SET_DADOS_PERGUNTAS, dadosPerguntas });
 };
 
 export const setPerguntasCarregando = () => {
