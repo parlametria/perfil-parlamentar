@@ -24,10 +24,12 @@ class PerguntasContainer extends Component {
     this.passaPergunta = this.passaPergunta.bind(this);
     this.voltaPergunta = this.voltaPergunta.bind(this);
     this.selecionaTema = this.selecionaTema.bind(this);
+    this.escolhePergunta = this.escolhePergunta.bind(this);
   }
 
   registraResposta(novaResposta) {
     const { respostasUsuario, arrayRespostasUsuario } = this.props.usuario;
+
     respostasUsuario[novaResposta.id] = novaResposta.resposta;
     arrayRespostasUsuario[novaResposta.id] = novaResposta.resposta;
     this.props.salvaScoreUsuario(respostasUsuario, arrayRespostasUsuario);
@@ -41,6 +43,11 @@ class PerguntasContainer extends Component {
 
   voltaPergunta() {
     this.props.voltaPergunta();
+  }
+
+  escolhePergunta(e) {
+    e.preventDefault();
+    this.props.escolhePergunta(parseInt(e.target.id));
   }
 
   selecionaTema(e) {
@@ -76,6 +83,7 @@ class PerguntasContainer extends Component {
     );
 
     let pergunta;
+    let indicadorPergunta;
     let temas = [];
 
     if (!isEmpty(dadosPerguntas)) {
@@ -92,6 +100,7 @@ class PerguntasContainer extends Component {
       Array.from(nomeTemas).map((tema, i) => {
         temas.push(
           <div
+            style={{ width: "100vw", overflowX: "auto", whiteSpace: "nowrap" }}
             id={tema}
             onClick={this.selecionaTema}
             key={i + ". " + tema}
@@ -111,6 +120,23 @@ class PerguntasContainer extends Component {
           onVota={novaResposta => this.registraResposta(novaResposta)}
         />
       );
+
+      indicadorPergunta = (
+        <div
+          style={{ width: "100vw", overflowX: "auto", whiteSpace: "nowrap" }}
+        >
+          {dadosPerguntas.map((pergunta, index) => (
+            <div
+              className="btn btn-primary"
+              key={index + ". " + pergunta.id}
+              id={pergunta.id}
+              onClick={this.escolhePergunta}
+            >
+              {index + 1}
+            </div>
+          ))}
+        </div>
+      );
     }
 
     return (
@@ -120,6 +146,7 @@ class PerguntasContainer extends Component {
         ) : (
           <div>
             <div className="row">{temas}</div>
+            <div className="row">{indicadorPergunta}</div>
             <div className="row">{pergunta}</div>
             <div className="row">{botoesNavegacao}</div>
           </div>
