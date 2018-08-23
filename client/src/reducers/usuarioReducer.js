@@ -1,6 +1,6 @@
 import { SET_SCORE_USUARIO } from "../actions/types";
 
-const TAM_PERGUNTAS = 60; // Esse tamanho é calculado em perguntasActions, mas não sei como inicializá-lo aqui e em que momento isso seria viável porque esse reducer é chamado antes da chamada ao banco. Então, acho melhor inicializar o array com um tamanho máximo. Defini 60 porque nunca haverá mais que 60 perguntas.
+const TAM_PERGUNTAS = 46; // Esse tamanho é calculado em perguntasActions, mas não sei como inicializá-lo aqui e em que momento isso seria viável porque esse reducer é chamado antes da chamada ao banco. Então, acho melhor inicializar o array com um tamanho máximo.
 
 // userVotings: {id_votacao: voto}
 // arrayVotings: [0/1/-1]

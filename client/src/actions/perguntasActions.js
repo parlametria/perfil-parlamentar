@@ -6,12 +6,12 @@ import {
 } from "./types";
 import { firebaseDatabase } from "../services/firebaseService";
 
-var TAM_PERGUNTAS;
+var TAM_PERGUNTAS = 46;
 
 export const getDadosPerguntas = () => dispatch => {
   dispatch(setPerguntasCarregando());
 
-  let dadosPerguntas = Array(60).fill(0);
+  let dadosPerguntas = Array(TAM_PERGUNTAS).fill(0);
 
   firebaseDatabase
     .ref("/perguntas")
