@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
+import sanitizeHtml from "sanitize-html";
 
 class Pergunta extends Component {
   constructor(props) {
@@ -26,10 +27,12 @@ class Pergunta extends Component {
   }
 
   render() {
+    const clean = sanitizeHtml(this.props.id + 1 + ". " + this.props.pergunta);
+
     return (
       <div className="pergunta">
         <div>
-          <p>{this.props.id + 1 + ". " + this.props.pergunta}</p>
+          <p dangerouslySetInnerHTML={{ __html: clean }} />
           <div className="btn btn-info" onClick={this.votaSim}>
             <a className="card-link">Concordo</a>
           </div>
