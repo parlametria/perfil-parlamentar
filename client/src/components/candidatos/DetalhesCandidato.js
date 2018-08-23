@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
-import TabelaVotacoes from "../tabelaVotacao/TabelaVotacoes";
+import TabelaPerguntas from "../tabelaPerguntas/TabelaPerguntas";
 
 class DetalhesCandidato extends Component {
   constructor(props) {
@@ -42,14 +42,14 @@ class DetalhesCandidato extends Component {
           <ModalBody>
             <div className="row">
               <div className="col-md-6 col-sm-12 col-12">
-                Partido: {this.props.dados.siglaPartido} 
+                Partido: {this.props.dados.siglaPartido}
               </div>
               <div className="col-md-6 col-sm-12 col-12">
                 UF: {this.props.dados.estado}
               </div>
             </div>
-            <TabelaVotacoes dadosCandidatos= {dados}/>
-            
+            <TabelaPerguntas dadosCandidatos={dados} />
+
           </ModalBody>
           <ModalFooter>
             <Button color="secondary" onClick={this.toggle}>
