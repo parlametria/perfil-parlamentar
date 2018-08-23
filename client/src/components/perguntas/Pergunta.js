@@ -29,7 +29,7 @@ class Pergunta extends Component {
     return (
       <div className="pergunta">
         <div>
-          <p>{this.props.pergunta}</p>
+          <p>{this.props.id + 1 + ". " + this.props.pergunta}</p>
           <div className="btn btn-info" onClick={this.votaSim}>
             <a className="card-link">Concordo</a>
           </div>
