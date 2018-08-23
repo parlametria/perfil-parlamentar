@@ -1,36 +1,26 @@
 import {
   PERGUNTAS_CARREGANDO,
   SET_DADOS_PERGUNTAS,
-  SET_INDEX_PERGUNTA
+  SET_INDEX_PERGUNTA,
+  SET_TEMA
 } from "./types";
 import { firebaseDatabase } from "../services/firebaseService";
+
+var TAM_PERGUNTAS;
 
 export const getDadosPerguntas = () => dispatch => {
   dispatch(setPerguntasCarregando());
 
-  let dadosPerguntas = {};
+  let dadosPerguntas = Array(60).fill(0);
 
   firebaseDatabase
     .ref("/perguntas")
     .once("value")
     .then(snapshot => {
-      const perguntas = snapshot.val();
-      Object.keys(perguntas).map((elem, i) => {
-        let arrPerguntas = dadosPerguntas[perguntas[elem].tema];
-        if (arrPerguntas) {
-          arrPerguntas.push({
-            key: perguntas[elem].id,
-            pergunta: perguntas[elem].texto
-          });
-          dadosPerguntas[perguntas[elem].tema] = arrPerguntas;
-        } else {
-          let arrayInicial = [];
-          arrayInicial.push({
-            key: perguntas[elem].id,
-            pergunta: perguntas[elem].texto
-          });
-          dadosPerguntas[perguntas[elem].tema] = arrayInicial;
-        }
+      const perguntas = snapshot.toJSON();
+      TAM_PERGUNTAS = Object.keys(perguntas).length;
+      Object.keys(perguntas).map(key => {
+        dadosPerguntas[perguntas[key].id] = perguntas[key];
       });
       dispatch({ type: SET_DADOS_PERGUNTAS, dadosPerguntas });
     })
@@ -42,17 +32,26 @@ export const setPerguntasCarregando = () => {
 };
 
 export const passaPergunta = () => (dispatch, getState) => {
-  const { perguntaAtual } = getState().perguntasReducer;
+  const { indexPergunta } = getState().perguntasReducer;
 
-  let newIndex = perguntaAtual < 42 ? perguntaAtual + 1 : perguntaAtual;
+  let newIndex =
+    indexPergunta < TAM_PERGUNTAS - 1 ? indexPergunta + 1 : indexPergunta;
 
-  dispatch({ type: SET_INDEX_PERGUNTA, newIndex });
+  dispatch({ type: SET_INDEX_PERGUNTA, indexPergunta: newIndex });
 };
 
 export const voltaPergunta = () => (dispatch, getState) => {
-  const { perguntaAtual } = getState().perguntasReducer;
+  const { indexPergunta } = getState().perguntasReducer;
 
-  let newIndex = perguntaAtual > 0 ? perguntaAtual - 1 : perguntaAtual;
+  let newIndex = indexPergunta > 0 ? indexPergunta - 1 : indexPergunta;
 
-  dispatch({ type: SET_INDEX_PERGUNTA, newIndex });
+  dispatch({ type: SET_INDEX_PERGUNTA, indexPergunta: newIndex });
+};
+
+export const escolhePergunta = indexPergunta => dispatch => {
+  dispatch({ type: SET_INDEX_PERGUNTA, indexPergunta });
+};
+
+export const escolheTema = tema => dispatch => {
+  dispatch({ type: SET_TEMA, tema });
 };
