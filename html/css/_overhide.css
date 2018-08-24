@@ -3,7 +3,7 @@ a {
 }
 .nav-pills .nav-link.active,
 .nav-pills .show > .nav-link {
-  color: #fff;
+  color: #5b2762;
   background: transparent;
-  border-bottom: solid 6px #fff;
+  border-bottom: solid 6px #5b2762;
 }
