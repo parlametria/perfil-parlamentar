@@ -4,8 +4,7 @@
   flex-direction: row-reverse;
 }
 
-.grid-panel {
-}
+.grid-panel { }
 
 .panel-header {
   padding: 1rem;
@@ -13,7 +12,7 @@
 
 .panel-body {
   padding: 1rem;
-  max-height: 50vh;
+  max-height: 445px;
   overflow-y: auto;
 }
 
@@ -33,7 +32,6 @@
 }
 
 .panel-detail {
-  padding: 1rem;
 }
 
 @media (min-width: 992px) {
@@ -43,6 +41,7 @@
 
   .panel-detail {
     width: 50vw;
+    padding: 1rem;
   }
 }
 
@@ -54,5 +53,6 @@
   .panel-detail {
     position: fixed;
     bottom: 0;
+    width: 100%;
   }
 }
