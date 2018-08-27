@@ -7,3 +7,12 @@ a {
   background: transparent;
   border-bottom: solid 6px #5b2762;
 }
+.card-header {
+  padding: 0;
+  background-color: #ffffff;
+  border: none;
+  border-bottom: solid 2px #a963b3;
+}
+.card-body {
+  padding: 0;
+}
