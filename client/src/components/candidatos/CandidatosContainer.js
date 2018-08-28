@@ -96,8 +96,8 @@ class CandidatosContainer extends Component {
       return (
         <Candidato
           key={candidato.id}
-          nome={candidato.nome}
-          siglaPartido={candidato.partido}
+          nome={candidato.nome_urna}
+          siglaPartido={candidato.sg_partido}
           estado={candidato.uf}
           score={this.state.scoreCandidatos[candidato.id]}
           respostas={candidato.respostas}
