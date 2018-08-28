@@ -10,7 +10,7 @@ import {
   firebaseFirestore
 } from "../services/firebaseService";
 
-import axios from 'axios';
+import axios from "axios";
 
 // Recebe um dicionário das respostas dos candidatos no formato {id_cand: [array_resp]} e retorna um dicionário no formato {id_cand: score}
 export const calculaScore = () => (dispatch, getState) => {
@@ -27,7 +27,7 @@ export const calculaScore = () => (dispatch, getState) => {
     Object.keys(arrayRespostasCandidato).map((elem, i) => {
       respostasIguais +=
         arrayRespostasCandidato[elem] === arrayRespostasUsuario[i] &&
-          arrayRespostasUsuario[i] !== 0
+        arrayRespostasUsuario[i] !== 0
           ? 1
           : 0;
     });
@@ -68,12 +68,13 @@ export const getDadosCandidatos = () => dispatch => {
 
   let dadosCandidatos = {};
 
+  console.time("getBD");
+
   axios.get("/api/resultados").then(candidatos => {
-    console.log(candidatos);
+    console.timeEnd("getBD");
 
     dispatch({ type: SET_DADOS_CANDIDATOS, dadosCandidatos });
   });
-
 };
 
 export const setCandidatosCarregando = () => {
