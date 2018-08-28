@@ -29,15 +29,13 @@ class TabelaPerguntas extends Component {
         const { arrayRespostasUsuario } = this.props.usuario;
 
         const perguntas = [];
+        Object.keys(dadosPerguntas).map(p => {
+            return perguntas.push({
+                key: dadosPerguntas[p].id,
+                pergunta: dadosPerguntas[p].texto
+            });
+        })
 
-        Object.keys(dadosPerguntas).map(tema => (
-            dadosPerguntas[tema].map(p => {
-                return perguntas.push({
-                    key: p.key,
-                    pergunta: p.pergunta
-                });
-            })
-        ))
 
         let votacoesCandidato = dadosCandidatos.respostas;
 
@@ -59,7 +57,7 @@ class TabelaPerguntas extends Component {
         }
 
         let rows, indicePrimeiro, indiceUltimo, perguntasExibidas, renderNumeroPaginas;
-        
+
         if (!isEmpty(perguntas)) {
             indiceUltimo = paginaAtual * perguntasPorPagina;
             indicePrimeiro = indiceUltimo - perguntasPorPagina;
@@ -109,16 +107,16 @@ class TabelaPerguntas extends Component {
                     </tbody>
                 </Table>
                 <Pagination aria-label="Navegação da tabela" size="sm">
-                    <PaginationItem disabled = {paginaAtual <= 1}>
+                    <PaginationItem disabled={paginaAtual <= 1}>
                         <PaginationLink previous id={paginaAtual - 1} onClick={e => this.handleClick(e, paginaAtual - 1)} />
                     </PaginationItem>
 
                     {renderNumeroPaginas}
 
-                    <PaginationItem disabled = {paginaAtual >= this.qntPaginas}>
+                    <PaginationItem disabled={paginaAtual >= this.qntPaginas}>
                         <PaginationLink next id={paginaAtual + 1} onClick={e => this.handleClick(e, paginaAtual + 1)} />
                     </PaginationItem>
-                    
+
                 </Pagination>
 
             </div>
