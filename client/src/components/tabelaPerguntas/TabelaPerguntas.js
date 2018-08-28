@@ -10,13 +10,14 @@ class TabelaPerguntas extends Component {
             paginaAtual: 1,
             perguntasPorPagina: 10
         };
+        this.qntPaginas = 0;
         this.handleClick = this.handleClick.bind(this);
     }
 
-    handleClick(event) {
+    handleClick(event, index) {
         event.preventDefault();
         this.setState({
-            paginaAtual: Number(event.target.id)
+            paginaAtual: index
         });
     }
 
@@ -28,6 +29,7 @@ class TabelaPerguntas extends Component {
         const { arrayRespostasUsuario } = this.props.usuario;
 
         const perguntas = [];
+
         Object.keys(dadosPerguntas).map(tema => (
             dadosPerguntas[tema].map(p => {
                 return perguntas.push({
@@ -57,6 +59,7 @@ class TabelaPerguntas extends Component {
         }
 
         let rows, indicePrimeiro, indiceUltimo, perguntasExibidas, renderNumeroPaginas;
+        
         if (!isEmpty(perguntas)) {
             indiceUltimo = paginaAtual * perguntasPorPagina;
             indicePrimeiro = indiceUltimo - perguntasPorPagina;
@@ -80,19 +83,20 @@ class TabelaPerguntas extends Component {
                     <PaginationLink
                         key={num}
                         id={num}
-                        onClick={this.handleClick}
+                        onClick={e => this.handleClick(e, num)}
                     >
 
                         {num}
                     </PaginationLink>
                 );
             });
+            this.qntPaginas = numeroPaginas.length;
 
 
         }
 
-        const indiceAnterior = paginaAtual > 1 ? ((paginaAtual - 1) + "") : (paginaAtual + "");
-        const indiceProximo = paginaAtual < 5 ? ((paginaAtual + 1) + "") : (paginaAtual + "");
+        const indiceAnterior = (paginaAtual - 1 );
+        const indiceProximo = (paginaAtual  + 1 );
 
 
         return (
@@ -109,14 +113,21 @@ class TabelaPerguntas extends Component {
                         {rows}
                     </tbody>
                 </Table>
-                <Pagination aria-label="Page navigation example" size="sm">
-                    <PaginationLink previous id={indiceAnterior} onClick={this.handleClick} />
+                <Pagination aria-label="Navegação da tabela" size="sm">
+                    <PaginationItem disabled = {paginaAtual <= 1}>
+                        <PaginationLink previous id={indiceAnterior} onClick={e => this.handleClick(e, paginaAtual - 1)} />
+                    </PaginationItem>
+
                     {renderNumeroPaginas}
-                    <PaginationLink next id={indiceProximo} onClick={this.handleClick} />
+
+                    <PaginationItem disabled = {paginaAtual >= this.qntPaginas -1}>
+                        <PaginationLink next id={indiceProximo} onClick={e => this.handleClick(e, paginaAtual + 1)} />
+                    </PaginationItem>
+                    
                 </Pagination>
 
             </div>
-        )
+        );
     }
 }
 TabelaPerguntas.propTypes = {
