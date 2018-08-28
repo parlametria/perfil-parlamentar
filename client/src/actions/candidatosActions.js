@@ -5,10 +5,10 @@ import {
   SET_DADOS_CANDIDATOS
 } from "./types";
 
-import {
-  firebaseDatabase,
-  firebaseFirestore
-} from "../services/firebaseService";
+// import {
+//   firebaseDatabase,
+//   firebaseFirestore
+// } from "../services/firebaseService";
 
 import axios from "axios";
 
@@ -17,7 +17,7 @@ export const calculaScore = () => (dispatch, getState) => {
   const { arrayRespostasUsuario } = getState().usuarioReducer;
   const respostasCandidatos = getState().candidatosReducer.dadosCandidatos;
 
-  //console.log(respostasCandidatos);
+  console.log(respostasCandidatos);
 
   const quantZeros = arrayRespostasUsuario.filter(value => value !== 0).length;
   const numRespostasUsuario = quantZeros === 0 ? 1 : quantZeros;
@@ -36,7 +36,7 @@ export const calculaScore = () => (dispatch, getState) => {
 
   let scoreCandidatos = {};
   Object.keys(respostasCandidatos).map(elem => {
-    let score = comparaRespostas(respostasCandidatos[elem].respostas);
+    let score = comparaRespostas(respostasCandidatos[elem].respostasArr);
     scoreCandidatos[elem] = score;
   });
 
@@ -70,8 +70,25 @@ export const getDadosCandidatos = () => dispatch => {
 
   console.time("getBD");
 
-  axios.get("/api/resultados").then(candidatos => {
+  axios.get("/api/respostas").then(respostas => {
     console.timeEnd("getBD");
+
+    console.log(respostas.data);
+
+    respostas.data.map(resp => {
+      let respostas = Array(46).fill(0);
+      dadosCandidatos[resp.id] = resp;
+      let indexRespostas = Object.keys(dadosCandidatos[resp.id].respostas);
+      dadosCandidatos[resp.id].respostasArr = respostas;
+      indexRespostas.map(i => {
+        if (Number(i) < 46)
+          dadosCandidatos[resp.id].respostasArr[Number(i)] = Number(
+            dadosCandidatos[resp.id].respostas[i]
+          );
+      });
+    });
+
+    console.log(dadosCandidatos);
 
     dispatch({ type: SET_DADOS_CANDIDATOS, dadosCandidatos });
   });
