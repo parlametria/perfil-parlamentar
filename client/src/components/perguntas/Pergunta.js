@@ -1,13 +1,18 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
+import sanitizeHtml from "sanitize-html";
 
 class Pergunta extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      resposta: 0
+      resposta: this.props.voto
     };
+
+    this.votaSim = this.votaSim.bind(this);
+    this.votaNaoSei = this.votaNaoSei.bind(this);
+    this.votaNao = this.votaNao.bind(this);
   }
 
   votaSim() {
@@ -29,21 +34,21 @@ class Pergunta extends Component {
   }
 
   render() {
+    const clean = sanitizeHtml(this.props.id + 1 + ". " + this.props.pergunta);
+
     return (
-      <div className="card pergunta">
-        <div className="card-body">
-          <p className="card-text">{this.props.pergunta}</p>
-          <div className="row">
-            <button type="button" className="btn btn-info" onClick={this.votaSim.bind(this)}>
-              <a className="card-link">Concordo</a>
-            </button>
-            <button type="button" className="btn btn-secondary" onClick={this.votaNaoSei.bind(this)}>
-              <a className="card-link">Não sei</a>
-            </button>
-            <button type="button" className="btn btn-danger" onClick={this.votaNao.bind(this)}>
-              <a className="card-link">Discordo</a>
-            </button>
-          </div>  
+      <div className="pergunta">
+        <div>
+          <p dangerouslySetInnerHTML={{ __html: clean }} />
+          <div className="btn btn-info" onClick={this.votaSim}>
+            <a className="card-link">Concordo</a>
+          </div>
+          <div className="btn btn-seconday" onClick={this.votaNaoSei}>
+            <a className="card-link">Não sei</a>
+          </div>
+          <div className="btn btn-danger" onClick={this.votaNao}>
+            <a className="card-link">Discordo</a>
+          </div>
         </div>
       </div>
     );
@@ -54,7 +59,8 @@ Pergunta.propTypes = {
   id: PropTypes.number.isRequired,
   pergunta: PropTypes.string.isRequired,
   tema: PropTypes.string,
-  onVota: PropTypes.func.isRequired
+  onVota: PropTypes.func.isRequired,
+  voto: PropTypes.number.isRequired
 };
 
 export default Pergunta;

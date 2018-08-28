@@ -1,700 +1,277 @@
-[
-  {
-    "tema": "Meio Ambiente (foco clima)",
-    "perguntas": [
-      {
-        "key": 1,
-        "pergunta":
-          "1. Você acha que o Brasil deve ter metas mais ambiciosas que as atuais no que se refere aos cortes de emissões\nde gases de efeito estufa, registradas junto ao Acordo de Paris?",
-        "autor": "OC"
-      },
-      {
-        "key": 2,
-        "pergunta":
-          "2. A Lei nº 9.985/2000 instituiu o Sistema Nacional de Unidades de Conservação da Natureza, que engloba unidades de conservação federais, estaduais e municipais. Você é a favor da criação de novas unidades de conservação no Brasil, além das previstas na lei?",
-        "autor": "OC"
-      },
-      {
-        "key": 3,
-        "pergunta":
-          "3. Você protagonizaria iniciativas eficazes para acabar com o desmatamento no Brasil?",
-        "autor": "OC"
-      },
-      {
-        "key": 4,
-        "pergunta":
-          "4. Você é a favor da demarcação e homologação de terras indígenas e titulação de territórios quilombolas no país?",
-        "autor": "OC"
-      },
-      {
-        "key": 5,
-        "pergunta":
-          "5. Você acha que o atual Código Florestal deve ser aplicado tal como está sendo aplicado hoje?",
-        "autor": "OC"
-      },
-      {
-        "key": 6,
-        "pergunta":
-          "6. Você é a favor de priorizar os recursos do plano Safra no Plano ABC - Plano Setorial de Mitigação e de Adaptação às Mudanças Climáticas, com vistas a consolidar uma economia de baixa emissão de carbono na agricultura?",
-        "autor": "OC"
-      }
-    ]
-  },
-  {
+{
+  "-LKYravRc1e5DnZvRWDz": {
+    "_id_survey": "120398585",
+    "id": 0,
     "tema": "Meio Ambiente",
-    "perguntas": [
-      {
-        "key": 7,
-        "pergunta":
-          "7. Você é a favor da concessão de incentivos fiscais e tributários para a fabricação e aquisição de painéis solares no país?",
-        "autor": "OC"
-      },
-      {
-        "key": 8,
-        "pergunta":
-          "8. Você é a favor da concessão de incentivos e subsídios para a fabricação e aquisição de carros elétricos no Brasil?",
-        "autor": "OC"
-      },
-      {
-        "key": 9,
-        "pergunta":
-          "9. Você é a favor do aperfeiçoamento do licenciamento ambiental, com redução de prazos, mas sem afrouxamento de regras para setores específicos? (Interessante enumerar alguns setores)",
-        "autor": "OC"
-      },
-      {
-        "key": 10,
-        "pergunta":
-          "10. Você votará a favor do projeto de lei que flexibiliza o registro e o uso de agrotóxicos no Brasil?",
-        "autor": "OC"
-      },
-      {
-        "key": 11,
-        "pergunta":
-          "11. Você é a favor do fortalecimento dos órgãos ambientais para dar-lhes maior independência para o cumprimento de suas funções?",
-        "autor": "OC"
-      },
-      {
-        "key": 12,
-        "pergunta":
-          "12. Você é a favor da proibição de indicações políticas para a ocupação de cargos técnicos e diretivos dos órgãos ambientais?",
-        "autor": "OC"
-      },
-      {
-        "key": 13,
-        "pergunta":
-          "13. Você é a favor de eliminar todos os subsídios concedidos aos combustíveis fósseis?",
-        "autor": "OC"
-      },
-      {
-        "key": 14,
-        "pergunta":
-          "14. Você se compromete a trabalhar para diversificar a matriz energética brasileira, de forma que fontes renováveis não convencionais ocupem um maior espaço?",
-        "autor": "OC/Engaja-mundo"
-      },
-      {
-        "key": 15,
-        "pergunta":
-          "15. Você acredita na importância da criação de uma estratégia de longo prazo para descarbonizar a economia brasileira até 2050?",
-        "autor": "OC/Engaja-mundo"
-      },
-      {
-        "key": 16,
-        "pergunta":
-          "16. Você concorda com a necessidade de inserir a educação sobre mudanças climáticas no currículo base do ensino público?",
-        "autor": "OC /Engaja-mundo"
-      }
-    ]
+    "texto": "Metas mais ambiciosas do que as atualmente comprometidas pelo Brasil junto ao Acordo de Paris, no sentido de reduzir as emissões de gases de efeito estufa"
   },
-  {
+  "-LKYravfMURktib1s32r": {
+    "_id_survey": "120398589",
+    "id": 1,
+    "tema": "Meio Ambiente",
+    "texto": "Garantias da manutenção, demarcação e homologação de terras indígenas e titulação de territórios quilombolas no país"
+  },
+  "-LKYraviF_QfrSOD8IeN": {
+    "_id_survey": "120398593",
+    "id": 2,
+    "tema": "Meio Ambiente",
+    "texto": "Incentivos fiscais e tributários para a fabricação e aquisição de painéis solares no país"
+  },
+  "-LKYravjbyHIbyyD1Xla": {
+    "_id_survey": "120398595",
+    "id": 3,
+    "tema": "Meio Ambiente",
+    "texto": "Incentivos e subsídios para a fabricação e aquisição de carros elétricos no Brasil"
+  },
+  "-LKYravkb-f5IYfNCCrE": {
+    "_id_survey": "120398597",
+    "id": 4,
+    "tema": "Meio Ambiente",
+    "texto": "Flexibilização do registro e uso de agrotóxicos no Brasil (PL nº 6.299/2002, em debate no Congresso)"
+  },
+  "-LKYravkb-f5IYfNCCrF": {
+    "_id_survey": "120398599",
+    "id": 5,
+    "tema": "Meio Ambiente",
+    "texto": "Proibição da ocupação de cargos técnicos e diretivos dos órgãos ambientais por indicações políticas"
+  },
+  "-LKYravl7XDAWNhK5B5Q": {
+    "_id_survey": "120398602",
+    "id": 6,
+    "tema": "Meio Ambiente",
+    "texto": "Eliminação de todos os subsídios concedidos aos combustíveis fósseis"
+  },
+  "-LKYravnwUx5qeXVy_bV": {
+    "_id_survey": "120398616",
+    "id": 7,
+    "tema": "Meio Ambiente",
+    "texto": "Priorização de políticas públicas para energias renováveis modernas, como a eólica e a solar"
+  },
+  "-LKYravo6wqC5AS8oioQ": {
+    "_id_survey": "120398618",
+    "id": 8,
+    "tema": "Meio Ambiente",
+    "texto": "Meta de descarbonização da economia brasileira até 2050"
+  },
+  "-LKYravplo-28rf4R10b": {
+    "_id_survey": "120398619",
+    "id": 9,
+    "tema": "Meio Ambiente",
+    "texto": "Inserção da educação sobre mudanças climáticas no currículo base do ensino público"
+  },
+  "-LKYravqMElKs1pPNvJS": {
+    "_id_survey": "120398693",
+    "id": 10,
     "tema": "Direitos Humanos",
-    "perguntas": [
-      {
-        "key": 17,
-        "pergunta":
-          "1. Você é a favor da EC 95/2016, que estabelece um teto de gastos para os setores da saúde e da educação por 20 anos?",
-        "autor": "Aprendiz"
-      },
-      {
-        "key": 18,
-        "pergunta":
-          "2. Você é a favor do PL nº 7180/2014, conhecido como Escola sem Partido e que visa garantir o pluralismo de ideias no ensino e evitar que estudantes sejam prejudicados em razão de suas convicções políticas, ideológicas, morais ou religiosas?",
-        "autor": "Aprendiz"
-      },
-      {
-        "key": 19,
-        "pergunta":
-          "3. Você fará cumprir a Lei do Piso Salarial dos Professores, sancionada há dez anos e até hoje carente de regulamentação?",
-        "autor": "Aprendiz"
-      },
-      {
-        "key": 20,
-        "pergunta": "4. Você é a favor da redução da idade penal?",
-        "autor": "Aprendiz"
-      },
-      {
-        "key": 21,
-        "pergunta":
-          "5. Você é a favor da redução do limite mínimo de idade para o trabalho para 12 anos? (Ver pergunta 15)",
-        "autor": "Aprendiz"
-      },
-      {
-        "key": 22,
-        "pergunta":
-          "6. Você é a favor da manutenção da Lei do Aprendiz, que obriga empresas de médio e grande porte a possuir uma porcentagem equivalente a 5% e 15% de jovens aprendizes em trabalho e/ou estágio?",
-        "autor": "Aprendiz"
-      },
-      {
-        "key": 23,
-        "pergunta":
-          "7. Você se compromete com a defesa da diversidade e da equidade de gênero durante seu mandato? (Ver pergunta 16)",
-        "autor": "Update"
-      },
-      {
-        "key": 24,
-        "pergunta":
-          "8. Você é a favor da manutenção da política nacional de combate ao trabalho escravo e seus instrumentos (legislação, Grupo Móvel do Trabalho Escravo, Cadastro dos empregadores que se utilizam de trabalho escravo (Lista Suja)?",
-        "autor": "InPACTO"
-      },
-      {
-        "key": 25,
-        "pergunta":
-          "9. Você é favor da divulgação das informações de empresas e pessoas que são processadas administrativamente por ferirem a dignidade humana e explorar trabalhadores como se fossem escravos?",
-        "autor": "InPACTO"
-      },
-      {
-        "key": 26,
-        "pergunta":
-          "10. Você é a favor de que as propriedades, onde forem encontrados trabalhadores sendo explorados como escravos, sejam desapropriadas, conforme processo criminal legalmente instaurado?",
-        "autor": "InPACTO"
-      },
-      {
-        "key": 27,
-        "pergunta":
-          "11. Você reconhece que todas as empresas (fornecedores) sejam responsáveis, de forma solidária, para combater o trabalho escravo em suas cadeias produtivas?",
-        "autor": "InPACTO"
-      },
-      {
-        "key": 28,
-        "pergunta":
-          "12. Você defende a política nacional de combate ao trabalho infantil e proteção de crianças e adolescentes? (legislação, políticas públicas, etc) (Ver pergunta 47)",
-        "autor": "InPACTO"
-      },
-      {
-        "key": 29,
-        "pergunta":
-          "13. Você é a favor de escolas em tempo integral no Brasil, como uma obrigação do Estado?",
-        "autor": "InPACTO"
-      },
-      {
-        "key": 30,
-        "pergunta":
-          "14. Você é a favor de que famílias muito pobres recebam ajuda financeira do Estado para manter seus filhos na escola?",
-        "autor": "InPACTO"
-      },
-      {
-        "key": 31,
-        "pergunta":
-          "15. Você é a favor de que crianças, menores de 18 anos, trabalhem em formas perigosas e pesadas de trabalho, tais como agricultura, mineração e construção civil? (Ver pergunta 5)",
-        "autor": "InPACTO"
-      },
-      {
-        "key": 32,
-        "pergunta":
-          "16.Você defende as políticas públicas brasileiras de combate ao racismo e discriminação étnico-racial (legislação, programas de defesa de direitos das populações vulneráveis, políticas e programas de ações afirmativas, etc)? (Ver pergunta 7)",
-        "autor": "InPACTO"
-      },
-      {
-        "key": 33,
-        "pergunta":
-          "17. Você considera que uma política de ações afirmativas pode ajudar a mudar o quadro de desigualdades no Brasil? (Pergunta 16 aborda o tema)",
-        "autor": "InPACTO"
-      },
-      {
-        "key": 34,
-        "pergunta":
-          "18. Você é a favor da adoção de cotas em universidades públicas e privadas como estratégia de reverter as desigualdades no Brasil?",
-        "autor": "InPACTO"
-      },
-      {
-        "key": 35,
-        "pergunta":
-          "19. Você é favorável à adoção de cotas em concursos públicos, em especial naqueles que formam representantes do Brasil, tal como a carreira de diplomata?",
-        "autor": "InPACTO"
-      },
-      {
-        "key": 36,
-        "pergunta":
-          "20. Você considera que o Brasil deveria adotar políticas de reparação para vítimas de violações de direitos humanos?",
-        "autor": "InPACTO"
-      },
-      {
-        "key": 37,
-        "pergunta":
-          "21. Você considera que o Congresso Brasileiro deveria ter no mínimo 54% de negros, visto que cerca de 46% da população é parda e 8% é preta?",
-        "autor": "InPACTO"
-      },
-      {
-        "key": 38,
-        "pergunta":
-          "22. Você considera importante que empresas adotem políticas de ações afirmativas para garantir a diversidade dentre seus funcionários? (Talvez formular pergunta única sobre a defesa ou não de ações afirmativas – ver perguntas 16 e 17)",
-        "autor": "InPACTO"
-      },
-      {
-        "key": 39,
-        "pergunta":
-          "23. Você considera que instituições públicas, como hospitais, fóruns e órgãos públicos devem eliminar qualquer referência a opções religiosas (como por exemplo a presença de crucifixos, cruzes, fotos do Papa, imagens de Jesus e outras) uma vez que o estado é laico e não deveria propagar nenhuma religião?",
-        "autor": "InPACTO"
-      },
-      {
-        "key": 40,
-        "pergunta":
-          "24. Você considera que todas as religiões praticadas no Brasil deveriam obter os mesmos benefícios fiscais e proteção do Estado para exercer seu credo com liberdade?",
-        "autor": "InPACTO"
-      },
-      {
-        "key": 41,
-        "pergunta":
-          "25. Você conhece as políticas de promoção da igualdade de gênero em vigor no Brasil?",
-        "autor": "InPACTO"
-      },
-      {
-        "key": 42,
-        "pergunta":
-          "26. Você concorda com a ideia de que as mulheres podem decidir sobre assuntos que se referem à sua decisão de ser mãe ou não, em especial se devem ou não interromper uma gravidez indesejada?",
-        "autor": "InPACTO"
-      },
-      {
-        "key": 43,
-        "pergunta":
-          "27. Você considera que as empresas devem adotar políticas transparentes de remuneração salarial, pagando salários iguais a homens e mulheres que estejam desempenhando as mesmas funções?",
-        "autor": "InPACTO"
-      },
-      {
-        "key": 44,
-        "pergunta":
-          "28. Você considera que a licença maternidade deveria ser de 6 meses obrigatoriamente?",
-        "autor": "InPACTO"
-      },
-      {
-        "key": 45,
-        "pergunta":
-          "29. Você considera que a licença paternidade deveria ser de 6 meses obrigatoriamente?",
-        "autor": "InPACTO"
-      },
-      {
-        "key": 46,
-        "pergunta":
-          "30. Você concorda que o Congresso do Brasil deveria ter no mínimo 50% de mulheres, visto que essa é a quantidade de mulheres na população?",
-        "autor": "InPACTO"
-      },
-      {
-        "key": 47,
-        "pergunta":
-          "31. Você considera que os homens devem dividir com as mulheres, em igual proporção, os cuidados com a família e com a casa?",
-        "autor": "InPACTO"
-      },
-      {
-        "key": 48,
-        "pergunta":
-          "32. O investimento em políticas públicas contra o trabalho análogo à escravidão deve ser considerado fundamental?",
-        "autor": "Ethos"
-      },
-      {
-        "key": 49,
-        "pergunta":
-          "33. Você é a favor da flexibilização dos direitos trabalhistas?",
-        "autor": "Ethos"
-      },
-      {
-        "key": 50,
-        "pergunta":
-          "34. Devemos promover políticas voltadas à equidade de representatividade, acesso e oportunidades a todas as mulheres, bem como à plena garantia de seus direitos sociais, políticos, econômicos e reprodutivos? (Ver pergunta 44)",
-        "autor": "Ethos"
-      },
-      {
-        "key": 51,
-        "pergunta":
-          "35. Devemos promover políticas de respeito e garantia de equidade de direitos a todos os transgêneros?",
-        "autor": "Ethos"
-      },
-      {
-        "key": 52,
-        "pergunta":
-          "36. Imigrantes e refugiados merecem ser tratados igualmente aos nacionalizados?",
-        "autor": "Ethos"
-      },
-      {
-        "key": 53,
-        "pergunta":
-          "37. Deve o Estado investir para erradicar exploração, tráfico e todas as formas de violência e tortura e maus tratos contra as pessoas?",
-        "autor": "Ethos"
-      },
-      {
-        "key": 54,
-        "pergunta":
-          "38. Investimentos para reduzir pelo menos à metade a proporção de homens, mulheres e crianças que vivem na pobreza, em todas as suas dimensões, são importantes? (Ver pergunta 46)",
-        "autor": "Ethos"
-      },
-      {
-        "key": 55,
-        "pergunta":
-          "39. Considera fundamental conhecer e defender a luta dos trabalhadores e das populações historicamente excluídas? (Creio que a pergunta deveria ser no sentido de assegurar ações efetivas para a solução do problema)",
-        "autor": "Ethos"
-      },
-      {
-        "key": 56,
-        "pergunta":
-          "40. Devemos defender liberdade individual de crença e de não-crença?",
-        "autor": "Ethos"
-      },
-      {
-        "key": 57,
-        "pergunta":
-          "41. É importante assegurar o acesso universal aos serviços de saúde sexual e reprodutiva?",
-        "autor": "Ethos"
-      },
-      {
-        "key": 58,
-        "pergunta": "42. Pessoas do mesmo sexo podem se casar?",
-        "autor": "Ethos"
-      },
-      {
-        "key": 59,
-        "pergunta":
-          "43. Políticas de ação afirmativa étnico- raciais são mecanismos fundamentais para o enfrentamento do racismo? (Ver perguntas 16 e 52)",
-        "autor": "Ethos"
-      },
-      {
-        "key": 60,
-        "pergunta":
-          "44. É fundamental acabar com todas as formas de discriminação contra todas as mulheres e meninas em toda parte? (Ver pergunta 34)",
-        "autor": "Ethos"
-      },
-      {
-        "key": 61,
-        "pergunta":
-          "45. Devemos adotar os princípios do bem-viver como estratégia de superação dos modelos de produção que exploram tanto a natureza quanto as pessoas – sejam eles capitalistas, neoliberais ou neo-desenvolvimentistas? (A pergunta poderia ser simplificada, talvez apenas perguntando se devemos adotar os princípios do bem-viver e enumerá-los)",
-        "autor": "Ethos"
-      },
-      {
-        "key": 62,
-        "pergunta":
-          "46. É importante criar marcos políticos sólidos em níveis nacional, regional e internacional, com base em estratégias de desenvolvimento a favor dos pobres e sensíveis a gênero, para apoiar investimentos acelerados nas ações de erradicação da pobreza? (Ver pergunta 38)",
-        "autor": "Ethos"
-      },
-      {
-        "key": 63,
-        "pergunta":
-          "47. Devemos assegurar a proibição e eliminação das piores formas de trabalho infantil em todas as suas formas? (Ver pergunta 12)",
-        "autor": "Ethos"
-      },
-      {
-        "key": 64,
-        "pergunta": "48. Representatividade racial é importante?",
-        "autor": "Ethos"
-      },
-      {
-        "key": 65,
-        "pergunta":
-          "49. Devemos garantir a manutenção de terras aos povos originários – indígenas e quilombolas?",
-        "autor": "Ethos"
-      },
-      {
-        "key": 66,
-        "pergunta":
-          "50. É necessário investir em políticas públicas focadas na eliminação de todas as formas de violência contra todas as mulheres e meninas nas esferas públicas e privadas, incluindo o tráfico e exploração sexual e de outros tipos?",
-        "autor": "Ethos"
-      },
-      {
-        "key": 67,
-        "pergunta":
-          "51. Devemos investir para que haja emprego pleno e produtivo e trabalho decente para todas as mulheres e homens, inclusive para os jovens e as pessoas com deficiência, e remuneração igual para trabalho de igual valor?",
-        "autor": "Ethos"
-      },
-      {
-        "key": 68,
-        "pergunta":
-          "52. Devemos enfrentar todas as formas de reprodução do racismo? (Ver perguntas 16 e 43)",
-        "autor": "Ethos"
-      },
-      {
-        "key": 69,
-        "pergunta":
-          "53. Para eliminar as disparidades de gênero na educação é fundamental garantir a igualdade de acesso a todos os níveis de educação e formação profissional para os mais vulneráveis, incluindo as pessoas com deficiência, povos indígenas e as crianças em situação de vulnerabilidade?",
-        "autor": "Ethos"
-      },
-      {
-        "key": 70,
-        "pergunta":
-          "54. Devemos criar políticas públicas focadas na inclusão da juventude no mercado de trabalho?",
-        "autor": "Ethos"
-      },
-      {
-        "key": 71,
-        "pergunta":
-          "55. Considera importante o cumprimento da legislação da aprendizagem profissional?",
-        "autor": "Ethos"
-      },
-      {
-        "key": 72,
-        "pergunta":
-          "56. É a favor da cota para a reserva de assentos para mulheres parlamentares, objeto da PEC 134?",
-        "autor": "Avina"
-      },
-      {
-        "key": 73,
-        "pergunta":
-          "57.Posiciona-se a favor de políticas públicas afirmativas para sanar desigualdades, a exemplo das cotas de gênero?",
-        "autor": "Avina"
-      },
-      {
-        "key": 74,
-        "pergunta":
-          "58. É a favor da inserção curricular obrigatória de educação anti sexista, anti racismo, política, empreendedora e sexual?\n(Pergunta poderia ser simplificada para viabilizar a resposta SIM ou NÃO)",
-        "autor": "Avina"
-      },
-      {
-        "key": 75,
-        "pergunta":
-          "59. É a favor do Projeto de Lei nº 7.180/2014, que proíbe a discussão sobre diversidade de gêneros nas escolas, afasta a possibilidade de oferta de disciplinas com o conteúdo de “gênero” ou orientação sexual” em nome em nome de “princípios do ensino o respeito às convicções do aluno, de seus pais ou responsáveis, dando precedência aos valores de ordem familiar sobre a educação escolar nos aspectos relacionados à educação moral, sexual e religiosa”?",
-        "autor": "Avina"
-      },
-      {
-        "key": 76,
-        "pergunta":
-          "60. Você é a favor da legalização do aborto e consequente diminuição do risco de mortalidade de 500 mil mulheres por ano?\n(A pergunta foi reformulada com o intuito de adequá-la ao padrão das demais perguntas)",
-        "autor": "Avina"
-      },
-      {
-        "key": 77,
-        "pergunta":
-          "61. É a favor da legalização do aborto nos casos de mulheres contaminadas com o zyca vírus e gestantes de fetos anencéfalos?",
-        "autor": "Avina"
-      },
-      {
-        "key": 78,
-        "pergunta":
-          "62. Está de acordo com a necessidade de ampliação do atendimento de mulheres vítimas de violência e capacitação de policiais sobre o tema, considerando que apenas em aproximadamente 500 dos 5.600 municípios há rede de atendimento específico para mulheres?",
-        "autor": "Avina"
-      },
-      {
-        "key": 79,
-        "pergunta":
-          "63. Considera importantes as ações que envolvam o aumento de vagas em creches e a criação de mecanismos de avaliação sistemática e melhoria da qualidade das instituições de educação infantil?\n(A pergunta foi reformulada com o intuito de adequá-la ao padrão das demais perguntas)",
-        "autor": "Avina"
-      }
-    ]
+    "texto": "Redução da maioriade penal"
   },
-  {
+  "-LKYravrfA1HpXgiUM49": {
+    "_id_survey": "120398695",
+    "id": 11,
+    "tema": "Direitos Humanos",
+    "texto": "Medidas afirmativas para defender a diversidade e a equidade de gênero nas esferas pública e privada do mercado de trabalho"
+  },
+  "-LKYravsnaW8KWg4UTpA": {
+    "_id_survey": "120398697",
+    "id": 12,
+    "tema": "Direitos Humanos",
+    "texto": "Manutenção da Política Nacional de Combate ao Trabalho Escravo e seus instrumentos, incluindo o Grupo Móvel do Trabalho Escravo e a Lista Suja"
+  },
+  "-LKYravtcbjOZHJBxwo_": {
+    "_id_survey": "121123287",
+    "id": 13,
+    "tema": "Direitos Humanos",
+    "texto": "Manutenção da Política Nacional de Combate ao Trabalho Infantil e proteção de crianças e adolescentes"
+  },
+  "-LKYravtcbjOZHJBxwoa": {
+    "_id_survey": "121123289",
+    "id": 14,
+    "tema": "Direitos Humanos",
+    "texto": "Empresas devem adotar políticas transparentes de remuneração salarial, pagando salários iguais a homens e mulheres que estejam desempenhando as mesmas funções"
+  },
+  "-LKYravuliYB4VhKMEkq": {
+    "_id_survey": "121123292",
+    "id": 15,
+    "tema": "Direitos Humanos",
+    "texto": "Refugiados e imigrantes devem ter os mesmos direitos dos nacionalizados"
+  },
+  "-LKYravuliYB4VhKMEkr": {
+    "_id_survey": "121123297",
+    "id": 16,
+    "tema": "Direitos Humanos",
+    "texto": "Revogação da Emenda Constitucional que estabelece o teto de gastos públicos"
+  },
+  "-LKYravv7LsVOkQnAaEc": {
+    "_id_survey": "121123299",
+    "id": 17,
+    "tema": "Direitos Humanos",
+    "texto": "Iniciativas legislativas que visem o enfrentamento de todas as formas de reprodução do racismo"
+  },
+  "-LKYravy6DAr3rilJMR2": {
+    "_id_survey": "121123300",
+    "id": 18,
+    "tema": "Direitos Humanos",
+    "texto": "Cota para mulheres no Poder Legislativo, nos âmbitos federal, estadual e municipal"
+  },
+  "-LKYravzBYGL7IdEsnrC": {
+    "_id_survey": "121123302",
+    "id": 19,
+    "tema": "Direitos Humanos",
+    "texto": "Legalização do aborto até 12 semanas de gestação"
+  },
+  "-LKYraw-OkEcGJjpK1JB": {
+    "_id_survey": "121123303",
+    "id": 20,
     "tema": "Integridade e Transparência",
-    "perguntas": [
-      {
-        "key": 80,
-        "pergunta":
-          "Você é a favor da tipificação de crimes de caixa 2, enriquecimento ilícito e corrupção entre entes privados na legislação penal?",
-        "autor": "TI/Ethos"
-      },
-      {
-        "key": 81,
-        "pergunta":
-          "Você é a favor da regulamentação dos acordos de leniência, viabilizando a participação de todos os órgãos públicos interessados no assunto, de modo a promover efetividade e segurança jurídica?",
-        "autor": "TI/Ethos"
-      },
-      {
-        "key": 82,
-        "pergunta":
-          "Você é a favor da regulamentação do lobby para conferir a esta atividade maior transparência e, assim, criar mecanismos adicionais de controle social?",
-        "autor": "TI/Ethos"
-      },
-      {
-        "key": 83,
-        "pergunta":
-          "Você é a favor da criação de um novo marco regulatório de compras e contratações públicas com base em princípios de transparência e integridade?",
-        "autor": "TI/Ethos"
-      },
-      {
-        "key": 84,
-        "pergunta":
-          "Você é a favor da implementação de programas de integridade na administração pública direta e indireta e nas agências reguladoras?",
-        "autor": "TI/Ethos"
-      },
-      {
-        "key": 85,
-        "pergunta":
-          "Você é a favor da regulamentação de mecanismos de proteção ao denunciante?",
-        "autor": "TI/Ethos"
-      },
-      {
-        "key": 86,
-        "pergunta":
-          "Você é a favor de uma revisão dos critérios para o foro por prerrogativa de função, de forma a reduzir as autoridades que podem se beneficiar do foro privilegiado?",
-        "autor": "TI/Ethos"
-      },
-      {
-        "key": 87,
-        "pergunta":
-          "Você é a favor de mudanças no processo de escolha e nomeação de ministros do STF e Tribunais de Contas, tornando os critérios mais objetivos e técnicos?",
-        "autor": "TI/Ethos"
-      },
-      {
-        "key": 88,
-        "pergunta":
-          "Você é a favor da extinção da aposentadoria compulsória como pena para membros do Judiciário?",
-        "autor": "TI/Ethos"
-      },
-      {
-        "key": 89,
-        "pergunta":
-          "Você é a favor de que sejam adotados requisitos e penalidades equivalentes aos da Lei da Ficha Limpa para servidores públicos?",
-        "autor": "TI/Ethos"
-      },
-      {
-        "key": 90,
-        "pergunta":
-          "Você apoia a adoção de um Política Nacional de Dados Abertos para conferir maior transparência às informações públicas e incentivar o controle social?",
-        "autor": "TI/Ethos"
-      },
-      {
-        "key": 91,
-        "pergunta":
-          "Você apoia a criação de um Programa Nacional que proteja e incentive pessoas que denunciem suspeitas de irregularidades? (pergunta poderia ser complementada com exemplos de tipos de irregularidades)",
-        "autor": "TI/Ethos"
-      },
-      {
-        "key": 92,
-        "pergunta":
-          "Você apoia a exigência de que toda empresa participante de uma grande licitação tenha um efetivo programa de integridade para prevenir e combater a corrupção?",
-        "autor": "TI/Ethos"
-      },
-      {
-        "key": 93,
-        "pergunta":
-          "Você se comprometeria com a Campanha #NãoValeTudo, que defende o uso ético de tecnologias nas eleições?",
-        "autor": "Update"
-      },
-      {
-        "key": 94,
-        "pergunta":
-          "Você se compromete em colocar em prática os pilares do Governo Aberto (transparência, prestação de contas e participação cidadã)?",
-        "autor": "Update"
-      },
-      {
-        "key": 95,
-        "pergunta":
-          "Você se compromete a abrir os dados financeiros da sua campanha política e de seu mandato de forma transparente?",
-        "autor": "Update"
-      }
-    ]
+    "texto": "Crimes de caixa 2, enriquecimento ilícito e corrupção entre entes privados devem ser tipificados na legislação penal"
   },
-  {
+  "-LKYraw-OkEcGJjpK1JC": {
+    "_id_survey": "121123304",
+    "id": 21,
+    "tema": "Integridade e Transparência",
+    "texto": "Regulamentação de acordos de leniência, viabilizando a participação dos órgãos públicos interessados no tema, de modo a promover a efetividade e a segurança jurídica"
+  },
+  "-LKYraw0AYLBPsyuVJEF": {
+    "_id_survey": "121134163",
+    "id": 22,
+    "tema": "Integridade e Transparência",
+    "texto": "Criação de um novo marco regulatório de compras e contratações públicas com base em princípios de transparência e integridade"
+  },
+  "-LKYraw10Qj_HJc55xcQ": {
+    "_id_survey": "121123305",
+    "id": 23,
+    "tema": "Integridade e Transparência",
+    "texto": "Mecanismos de incentivo e proteção ao denunciante devem ser regulamentados"
+  },
+  "-LKYraw10Qj_HJc55xcR": {
+    "_id_survey": "121123317",
+    "id": 24,
+    "tema": "Integridade e Transparência",
+    "texto": "Revisão dos critérios de acesso ao foro privilegiado, para restringir o número de beneficiados"
+  },
+  "-LKYraw25laQ5Io7pKln": {
+    "_id_survey": "121123318",
+    "id": 25,
+    "tema": "Integridade e Transparência",
+    "texto": "Modificação do processo de <strong>escolha e nomeação de ministros do STF e Tribunais de Contas</strong>, com a adoção de critérios mais objetivos e técnicos"
+  },
+  "-LKYraw374QRfljPxcvG": {
+    "_id_survey": "121123328",
+    "id": 26,
+    "tema": "Integridade e Transparência",
+    "texto": "Extinção da aposentadoria compulsória como pena para membros do Judiciário"
+  },
+  "-LKYraw374QRfljPxcvH": {
+    "_id_survey": "121123329",
+    "id": 27,
+    "tema": "Integridade e Transparência",
+    "texto": "Partidos políticos devem estar sujeitos a regras que os tornem mais democráticos e transparentes em relação aos seus processos decisórios e ao uso dos recursos públicos que recebem"
+  },
+  "-LKYraw47Tyc6DLUlgl0": {
+    "_id_survey": "121123330",
+    "id": 28,
+    "tema": "Integridade e Transparência",
+    "texto": "Iniciativas legislativas para assegurar a prática da transparência, da prestação de contas e da participação cidadã, pilares do Governo Aberto"
+  },
+  "-LKYraw5daIXiukAtq2w": {
+    "_id_survey": "121123333",
+    "id": 29,
+    "tema": "Integridade e Transparência",
+    "texto": "Transparência dos dados financeiros das campanhas políticas e mandatos eleitorais"
+  },
+  "-LKYraw5daIXiukAtq2x": {
+    "_id_survey": "121123334",
+    "id": 30,
     "tema": "Nova Economia",
-    "perguntas": [
-      {
-        "key": 96,
-        "pergunta":
-          "1. Você dará seguimento à implementação da ENIMPACTO (Estratégia Nacional de Investimentos e Negócios de Impacto)?",
-        "autor": "Impact Hub"
-      },
-      {
-        "key": 97,
-        "pergunta":
-          "2. Pretende fazer do governo um agente investidor direto em negócios de impacto?",
-        "autor": "Impact Hub"
-      },
-      {
-        "key": 98,
-        "pergunta":
-          "3. Considera importante atribuir ao seu governo o papel de criar políticas de acesso a capital para negócios de impacto?",
-        "autor": "Impact Hub"
-      },
-      {
-        "key": 99,
-        "pergunta":
-          "4. Você acha que as empresas devem se transformar para serem melhores para o mundo?",
-        "autor": "Sistema B"
-      },
-      {
-        "key": 100,
-        "pergunta":
-          "5. É preciso enfrentar, com urgência, os grandes desafios da sociedade. Você acha que a previsão de uma nova estrutura jurídica para as empresas, que preveja o comprometimento com a geração de impacto positivo, regras de governança que assegurem o autocumprimento desse objetivo e transparência é um caminho possível?",
-        "autor": "Sistema B"
-      },
-      {
-        "key": 101,
-        "pergunta":
-          "6. Você está disposto/a a desenvolver atividades em seu mandato que favoreçam uma nova economia?",
-        "autor": "Sistema B"
-      },
-      {
-        "key": 102,
-        "pergunta":
-          "7. Você está disposto a assegurar um ambiente jurídico favorável para o desenvolvimento das finanças sociais?",
-        "autor": "Sistema B"
-      },
-      {
-        "key": 103,
-        "pergunta":
-          "8. Você conhece ou já ouviu falar das Empresas de Benefício e Interesse Coletivo?",
-        "autor": "Sistema B"
-      },
-      {
-        "key": 104,
-        "pergunta": "9. Você conhece ou já ouviu falar das Empresas B?",
-        "autor": "Sistema B"
-      },
-      {
-        "key": 105,
-        "pergunta":
-          "10.Você se identifica com a pauta empresarial de criação de um novo marco legal para facilitar a criação de empresas com impacto social em sua iniciativa?",
-        "autor": "Sistema B"
-      },
-      {
-        "key": 106,
-        "pergunta":
-          "11. Você entende que o sucesso de um negócio pode ser medido por outras formas além do lucro?",
-        "autor": "Sistema B"
-      },
-      {
-        "key": 107,
-        "pergunta":
-          "12.Você concorda que a responsabilidade das empresas deve ir além da mitigação de danos?",
-        "autor": "Sistema B"
-      },
-      {
-        "key": 108,
-        "pergunta":
-          "13. Você teria interesse em auxiliar na criação do marco legal empresarial das empresas de impacto?",
-        "autor": "Sistema B"
-      },
-      {
-        "key": 109,
-        "pergunta":
-          "14. Você concorda que as empresas têm um papel fundamental na implementação dos objetivos de desenvolvimento sustentável tratados na Agenda 2030, com a qual o Brasil se comprometeu perante a ONU?",
-        "autor": "Sistema B"
-      },
-      {
-        "key": 110,
-        "pergunta":
-          "15. Você acredita que o Brasil pode ser um país de referência no desenvolvimento de tecnologias e inovações voltadas para a resolução de problemas sociais, em áreas como saúde, moradia, microfinanças, educação, água, saneamento etc.?",
-        "autor": "ICE"
-      },
-      {
-        "key": 111,
-        "pergunta":
-          "16. Você fomentará e impulsionará tecnologias e inovações voltadas para a resolução de problemas sociais em áreas como saúde, moradia, microfinanças, educação, água, saneamento etc.?",
-        "autor": "ICE"
-      }
-    ]
+    "texto": "Prioridade na implementação da ENIMPACTO, uma articulação da sociedade civil com os setores público e privado, para gerar impacto sócio-ambiental e resultado financeiro positivo de forma sustentável"
   },
-  {
+  "-LKYraw8gDuKx3ifrJkw": {
+    "_id_survey": "121123338",
+    "id": 31,
+    "tema": "Nova Economia",
+    "texto": "O marco regulatório brasileiro deve favorecer o acesso a capital para negócios com impacto positivo social e ambiental"
+  },
+  "-LKYraw91AEVgBjZOAJC": {
+    "_id_survey": "121123341",
+    "id": 32,
+    "tema": "Nova Economia",
+    "texto": "Iniciativas legislativas para estimular as empresas a implementar ações concretas de preservação do meio ambiente e redução de desigualdades"
+  },
+  "-LKYraw91AEVgBjZOAJD": {
+    "_id_survey": "121123383",
+    "id": 33,
+    "tema": "Nova Economia",
+    "texto": "Políticas públicas e regulamentação para desenvolver as finanças sociais e ambiente institucional e normativo favorável aos negócios de impacto"
+  },
+  "-LKYrawATHDMJY_BHeBl": {
+    "_id_survey": "121123385",
+    "id": 34,
+    "tema": "Nova Economia",
+    "texto": "Estímulo à utilização de outros indicadores, além do resultado econômico, para medir o êxito de um negócio, tais como os benefícios gerados à sociedade e ao meio ambiente"
+  },
+  "-LKYrawBEWaougb3qeJe": {
+    "_id_survey": "121123386",
+    "id": 35,
+    "tema": "Nova Economia",
+    "texto": "Norma específica para estabelecer requisitos de qualificação de empresas que integram suas atividades lucrativas com a promoção de bem-estar social e ambiental"
+  },
+  "-LKYrawCqgISUPQsbob0": {
+    "_id_survey": "121123410",
+    "id": 36,
+    "tema": "Nova Economia",
+    "texto": "As empresas devem desempenhar papel fundamental na implementação dos objetivos de desenvolvimento sustentável tratados na Agenda 2030, com a qual o Brasil se comprometeu perante a ONU"
+  },
+  "-LKYrawCqgISUPQsbob1": {
+    "_id_survey": "121123414",
+    "id": 37,
+    "tema": "Nova Economia",
+    "texto": "Regulamentação para estimular o desenvolvimento de tecnologias e inovações voltadas à resolução de problemas sociais em áreas como saúde, moradia, microfinanças, educação, água e saneamento"
+  },
+  "-LKYrawDr1wjV-FRZlLu": {
+    "_id_survey": "121123416",
+    "id": 38,
     "tema": "Transversal",
-    "perguntas": [
-      {
-        "key": 112,
-        "pergunta":
-          "1. Você doaria parte do seu salário para organizações da sociedade civil?",
-        "autor": "Update"
-      }
-    ]
+    "texto": "Revogação da reforma Trabalhista aprovada no Congresso Nacional em 2017"
+  },
+  "-LKYrawF9iCfBfy3fVer": {
+    "_id_survey": "121123417",
+    "id": 39,
+    "tema": "Transversal",
+    "texto": "Revogação da lei da terceirização"
+  },
+  "-LKYrawGa8uvJjeMMoCA": {
+    "_id_survey": "121123419",
+    "id": 40,
+    "tema": "Transversal",
+    "texto": "Fim da reeleição"
+  },
+  "-LKYrawHxHIyU6KB18_-": {
+    "_id_survey": "121123425",
+    "id": 41,
+    "tema": "Transversal",
+    "texto": "Implantação do “Distritão” para eleger os candidatos com maior número de votos, alterando as regras atuais, em que os mais votados ajudam a eleger candidatos menos votados na coligação"
+  },
+  "-LKYrawJGS_3_dYn-uCA": {
+    "_id_survey": "121123511",
+    "id": 42,
+    "tema": "Transversal",
+    "texto": "Voto Facultativo"
+  },
+  "-LKYrawKbYB6QtgFQh62": {
+    "_id_survey": "125015606",
+    "id": 43,
+    "tema": "Transversal",
+    "texto": "Doações direcionadas às organizações de interesse público devem ser tributadas"
+  },
+  "-LKYrawLWKO5aQml2fw4": {
+    "_id_survey": "125015919",
+    "id": 44,
+    "tema": "Transversal",
+    "texto": "Reforma tributária deverá considerar as especificidades das organizações sem fins lucrativos e de interesse público, além de estimular a ampliação de doações por pessoas físicas"
+  },
+  "-LKYrawMNubi9-trDvlS": {
+    "_id_survey": "128401248",
+    "id": 45,
+    "texto": "Reforma da previdência como proposta na PEC 287/16 atualmente tramita no congresso"
   }
-]
+}
