@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const ResultadoSchema = new Schema({
+const RespostaSchema = new Schema({
   id: {
     type: String,
     required: true
@@ -29,7 +29,7 @@ const ResultadoSchema = new Schema({
   respostas: {
     type: [Number],
     required: true
-  },
+  }
 });
 
-module.exports = Resultado = mongoose.model("resultado", ResultadoSchema);
+module.exports = Resposta = mongoose.model("resposta", RespostaSchema);
