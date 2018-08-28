@@ -11,6 +11,9 @@
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
   },
+  "engines": {
+    "node": "^9.2.0"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/paul0vinicius/voz-ativa.git"
