@@ -2,6 +2,9 @@ const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 
+const perguntas = require("./routes/api/perguntas");
+const candidatos = require("./routes/api/candidatos");
+
 const app = express();
 
 // Body parser middleware
@@ -20,8 +23,20 @@ mongoose
   .then(() => console.log("Banco de dados conectado!"))
   .catch(err => console.log(err));
 
-app.get('/', (req, res) => res.send("hello"));
+// Usar as rotas
+app.use("/api/perguntas", perguntas);
+app.use("/api/candidatos", candidatos);
+
+// Server static assets if in production
+if (process.env.NODE_ENV === "production") {
+  // Set static folder
+  app.use(express.static("client/build"));
+
+  app.get("*", (req, res) => {
+    res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
+  });
+}
 
 const port = process.env.PORT || 5000;
 
-app.listen(port, () => console.log("Rodando"));
+app.listen(port, () => console.log(`Servidor rodando na porta ${port}`));
