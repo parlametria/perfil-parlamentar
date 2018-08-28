@@ -12,13 +12,8 @@
 
 .panel-body {
   padding: 1rem;
-  max-height: 170px;
+  max-height: calc(100vh - 323px);
   overflow-y: auto;
-}
-
-.panel-body-title {
-  font-size: 1.1rem;
-  font-weight: 700;
 }
 
 .panel-detail-in {

@@ -5,18 +5,21 @@ roxo claro:   #ddc1e1
 verde:        #41c083
 */
 @import url('https://unpkg.com/normalize.css@7.0.0/normalize.css');
-@import url('https://fonts.googleapis.com/css?family=Montserrat:600,700');
+@import url('https://fonts.googleapis.com/css?family=Montserrat:400,700');
 
+@import '_icons.css';
 @import '_overhide.css';
 @import '_layout.css';
 @import '_navbar.css';
 @import '_nav.css';
 @import '_accordion.css';
 
+@import '_question.css';
+
 body {
   font-family: 'Montserrat', sans-serif;
-  font-weight: 600;
+  font-weight: 400;
   font-size: 15px;
-  background-color: #5b2762;
-  color: #fff;
+  background-color: #ffffff;
+  color: #000000;
 }

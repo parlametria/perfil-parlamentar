@@ -1,0 +1,35 @@
+.question {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #5b2762;
+}
+
+@media (min-width: 992px) {
+  .question {
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+  }
+}
+
+.icon-current-question {
+  display: block;
+  font-size: 1.5rem;
+  opacity: 0;
+}
+
+.nav-pills .nav-link.active > .icon-current-question {
+  opacity: 1;
+}
+
+.question-help-content {
+  padding: 1rem;
+  border: solid 1px #41c083;
+}
+
+.btn-in-favor {
+  padding-left: 1.5rem;
+}
+
+.btn-against {
+  padding-right: 1.5rem;
+}
