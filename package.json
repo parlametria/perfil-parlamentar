@@ -1,0 +1,28 @@
+{
+  "name": "voz-ativa",
+  "version": "1.0.0",
+  "description": "Compatibilidade entre eleitor e os candidatos a Deputado Federal com base na Agenda Brasil Sustentável",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "server": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/paul0vinicius/voz-ativa.git"
+  },
+  "author": "Analytics UFCG",
+  "license": "AGPL-3.0",
+  "bugs": {
+    "url": "https://github.com/paul0vinicius/voz-ativa/issues"
+  },
+  "homepage": "https://github.com/paul0vinicius/voz-ativa#readme",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.3",
+    "mongoose": "^5.2.10"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.3"
+  }
+}
