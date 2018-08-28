@@ -43,7 +43,7 @@ class Pergunta extends Component {
           <div className="btn btn-info" onClick={this.votaSim}>
             <a className="card-link">Concordo</a>
           </div>
-          <div className="btn btn-seconday" onClick={this.votaNaoSei}>
+          <div className="btn btn-secondary" onClick={this.votaNaoSei}>
             <a className="card-link">Não sei</a>
           </div>
           <div className="btn btn-danger" onClick={this.votaNao}>
