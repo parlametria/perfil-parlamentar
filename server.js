@@ -4,6 +4,7 @@ const bodyParser = require("body-parser");
 
 const perguntas = require("./routes/api/perguntas");
 const candidatos = require("./routes/api/candidatos");
+const resultados = require("./routes/api/resultados");
 
 const app = express();
 
@@ -26,6 +27,7 @@ mongoose
 // Usar as rotas
 app.use("/api/perguntas", perguntas);
 app.use("/api/candidatos", candidatos);
+app.use("/api/resultados", resultados);
 
 // Server static assets if in production
 if (process.env.NODE_ENV === "production") {
