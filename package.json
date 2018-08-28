@@ -16,14 +16,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/paul0vinicius/voz-ativa.git"
+    "url": "git+https://github.com/analytics-ufcg/voz-ativa.git"
   },
   "author": "Analytics UFCG",
   "license": "AGPL-3.0",
   "bugs": {
-    "url": "https://github.com/paul0vinicius/voz-ativa/issues"
+    "url": "https://github.com/analytics-ufcg/voz-ativa/issues"
   },
-  "homepage": "https://github.com/paul0vinicius/voz-ativa#readme",
+  "homepage": "https://github.com/analytics-ufcg/voz-ativa#readme",
   "dependencies": {
     "body-parser": "^1.18.3",
     "concurrently": "^4.0.1",
