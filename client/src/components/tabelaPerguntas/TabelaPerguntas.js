@@ -90,14 +90,9 @@ class TabelaPerguntas extends Component {
                     </PaginationLink>
                 );
             });
+
             this.qntPaginas = numeroPaginas.length;
-
-
         }
-
-        const indiceAnterior = (paginaAtual - 1 );
-        const indiceProximo = (paginaAtual  + 1 );
-
 
         return (
             <div>
@@ -115,13 +110,13 @@ class TabelaPerguntas extends Component {
                 </Table>
                 <Pagination aria-label="Navegação da tabela" size="sm">
                     <PaginationItem disabled = {paginaAtual <= 1}>
-                        <PaginationLink previous id={indiceAnterior} onClick={e => this.handleClick(e, paginaAtual - 1)} />
+                        <PaginationLink previous id={paginaAtual - 1} onClick={e => this.handleClick(e, paginaAtual - 1)} />
                     </PaginationItem>
 
                     {renderNumeroPaginas}
 
-                    <PaginationItem disabled = {paginaAtual >= this.qntPaginas -1}>
-                        <PaginationLink next id={indiceProximo} onClick={e => this.handleClick(e, paginaAtual + 1)} />
+                    <PaginationItem disabled = {paginaAtual >= this.qntPaginas}>
+                        <PaginationLink next id={paginaAtual + 1} onClick={e => this.handleClick(e, paginaAtual + 1)} />
                     </PaginationItem>
                     
                 </Pagination>
