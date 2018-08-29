@@ -1,0 +1,13 @@
+.intro-title {
+  max-width: 920px;
+  margin-top: 0;
+  margin-bottom: 2rem;
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 1.6rem;
+  font-weight: 700;
+}
+
+.intro-title > strong {
+  color: #41c083;
+}

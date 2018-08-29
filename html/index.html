@@ -30,36 +30,63 @@
     </div>
   </nav>
 
+  <section class="intro">
+    <div class="container">
+      <h2 class="intro-title text-center">Nos diga o que você <strong>defende</strong> e a gente apresenta candidatos alinhados com seu perfil</h2>
+      <div class="d-flex justify-content-center">
+        <form>
+          <div class="form-group">
+            <select class="form-control">
+              <option selected>Em que Estado você vota?</option>
+              <option>Acre</option>
+              <option>Acre 2</option>
+              <option>Acre 3</option>
+              <option>Acre 4</option>
+              <option>Acre 5 </option>
+            </select>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+
   <div class="grid-main">
     <section class="grid-panel panel-master">
-      <div class="panel-detail-in">
+      <div class="container">
         <header class="panel-header">
-          Candidatos que mais
+          <h2 class="panel-title text-center">Vamos começar?</h2>
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text input-group-text-secondary" id="search-candidate"><span class="icon-search"></span></span>
+            </div>
+            <input type="text" class="form-control form-control-secondary" placeholder="Pesquisar candidato..." aria-label="Pesquisar candidato" aria-describedby="search-candidate">
+          </div>
         </header>
 
-        <div class="panel-body">
+        <p><strong>Vote</strong> nos temas propostos e veja aqui os candidatos que mais se alinham com você.</p>
+        <p><strong>Filtre</strong> o resultado segundo seus critérios.</p>
+        <p><strong>Informe-se</strong> sobre os 5 temas. Quanto mais perguntas você responder, mas preciso é o resultado.</p>
 
-          <div class="card-person">
-            Candidata Presidencial
-          </div>
-
+        <div class="text-center">
+          <button class="btn btn-primary">Mostre-me todos</button>
         </div>
+
       </div>
     </section>
+    <div class="grid-separator"></div>
     <section class="grid-panel panel-detail">
-      <div class="panel-detail-in">
 
         <div class="accordion" id="eixos">
 
           <div class="card">
-            <div class="card-header" id="eixoA" data-toggle="collapse" data-target="#content-eixoA" aria-expanded="true" aria-controls="content-eixoA">
+            <div class="card-header" id="eixoA" data-toggle="collapse" data-target="#content-eixoA" aria-expanded="false" aria-controls="content-eixoA">
               <div class="card-header-number">1</div>
               <button class="btn-accordion" type="button">
-                Meio Ambiente
+                Meio Ambiente <span class="icon-checkmark icon-secondary"></span>
               </button>
             </div>
 
-            <div id="content-eixoA" class="collapse show" aria-labelledby="eixoA" data-parent="#eixos">
+            <div id="content-eixoA" class="collapse" aria-labelledby="eixoA" data-parent="#eixos">
               <div class="card-body">
 
                 <div class="nav-horizontal">
@@ -105,7 +132,7 @@
             <div class="card-header" id="eixoB" data-toggle="collapse" data-target="#content-eixoB" aria-expanded="true" aria-controls="content-eixoB">
               <div class="card-header-number">2</div>
               <button class="btn-accordion" type="button">
-                Direitos Humanos
+                Direitos Humanos <span class="icon-checkmark icon-secondary"></span>
               </button>
             </div>
 
@@ -155,7 +182,7 @@
             <div class="card-header" id="eixoC" data-toggle="collapse" data-target="#content-eixoC" aria-expanded="true" aria-controls="content-eixoC">
               <div class="card-header-number">3</div>
               <button class="btn-accordion" type="button">
-                Integridade e Transparência
+                Integridade e Transparência <span class="icon-checkmark icon-secondary"></span>
               </button>
             </div>
 
@@ -255,7 +282,7 @@
             <div class="card-header" id="eixoE" data-toggle="collapse" data-target="#content-eixoE" aria-expanded="true" aria-controls="content-eixoE">
               <div class="card-header-number">5</div>
               <button class="btn-accordion" type="button">
-                Transversal
+                Transversal <span class="icon-checkmark icon-secondary"></span>
               </button>
             </div>
 
@@ -303,7 +330,6 @@
 
         </div>
 
-      </div>
     </section>
   </div>
 
