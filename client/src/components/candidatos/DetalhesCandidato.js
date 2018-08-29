@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
+import TabelaPerguntas from "../tabelaPerguntas/TabelaPerguntas";
 
 class DetalhesCandidato extends Component {
   constructor(props) {
@@ -18,6 +19,7 @@ class DetalhesCandidato extends Component {
       tooltipOpen: !this.state.tooltipOpen
     });
   }
+
 
   render() {
     const dados = this.props.dados;
@@ -38,8 +40,16 @@ class DetalhesCandidato extends Component {
         >
           <ModalHeader toggle={this.toggle}> {dados.nome} </ModalHeader>
           <ModalBody>
-            Partido: {this.props.dados.siglaPartido} <br />
-            UF: {this.props.dados.estado}
+            <div className="row">
+              <div className="col-md-6 col-sm-12 col-12">
+                Partido: {this.props.dados.siglaPartido}
+              </div>
+              <div className="col-md-6 col-sm-12 col-12">
+                UF: {this.props.dados.estado}
+              </div>
+            </div>
+            <TabelaPerguntas dadosCandidatos={dados} />
+
           </ModalBody>
           <ModalFooter>
             <Button color="secondary" onClick={this.toggle}>
