@@ -16,3 +16,19 @@
     width: 600px;
   }
 }
+
+.icon-current {
+  display: block;
+  font-size: 1.5rem;
+  opacity: 0;
+}
+
+.nav-pills .nav-link.active > .icon-current {
+  opacity: 1;
+}
+
+.nav-pills .nav-link.done {
+  color: #41c083;
+  background: transparent;
+  border-bottom: solid 6px rgba(65, 192, 131, 0.2);
+}
