@@ -27,7 +27,7 @@ const RespostaSchema = new Schema({
     required: true
   },
   respostas: {
-    type: [Number],
+    type: Map,
     required: true
   }
 });
