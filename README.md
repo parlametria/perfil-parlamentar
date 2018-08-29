@@ -1,45 +1,58 @@
-# [Voz Ativa](#)
+# [Voz Ativa](http://vozativa.org)
 
 # Requisitos
 
-O projeto é majoritariamente _frontend_ e o _backend_ advém do firebase necessitando dos seguintes requisitos:
+O projeto foi desenvolvido utilizando a arquitetura MERN (Mongo Express React/Redux e Node). Os requisitos para rodar a aplicação são:
 
 ```
   NodeJS >= 4.0
 ```
 
-Opcionalmente, as seguintes extensões podem ser instaladas para facilitar o trabalho de desenvolvimento:
+Opcionalmente, as seguintes ferramentas podem ser instaladas para facilitar o trabalho de desenvolvimento:
 
 - [React Developer Tools](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi)
 
 - [Redux DevTools](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi)
 
-O _frontend_ da aplicação é desenvolvido utilizando [React](https://reactjs.org/) e [Redux](https://redux.js.org/).
+- [Robo Mongo](https://robomongo.org/)
 
 # Desenvolvimento
 
-O banco de dados utilizado é o firebase, então antes de iniciar o desenvolvimento, crie uma [conta](https://firebase.google.com/?hl=pt-br) e inicialize um novo projeto. Você pode utilizar o script disponível no diretório `script` para povoar o banco de dados (Ainda a ser disponibilizado).
+Antes de iniciar o projeto é necessário integrar o MongoDB e instalar as dependências.
 
-## Integrando o projeto com o firebase
+## Integrando o projeto com o MongoDB
 
-Crie um arquivo `keys_dev.js` no diretório `client/src/config` e adicione sua variável de configuração no seguinte formato:
+Crie um arquivo `keys_dev.js` no diretório `config` e adicione sua variável de configuração no seguinte formato:
 
 ```
-const keys_dev = {
-    apiKey: "<API_KEY>",
-    authDomain: "<PROJECT_ID>.firebaseapp.com",
-    databaseURL: "https://<DATABASE_NAME>.firebaseio.com",
-    storageBucket: "<BUCKET>.appspot.com",
-    messagingSenderId: "<SENDER_ID>",
-  }
+module.exports = {
+  mongoURI: "ENDERECO_MONGO"
+};
+```
 
-export default keys_dev;
+## Instalando dependências:
+
+```
+npm install
+npm run client-install
 ```
 
 ## Rodando o projeto:
 
+Somente o servidor:
+
 ```
-cd client
-npm install
-npm start
+npm run server
+```
+
+Somente o cliente:
+
+```
+npm run client
+```
+
+Servidor e cliente:
+
+```
+npm run dev
 ```
