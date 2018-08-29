@@ -4,7 +4,8 @@ import {
   SET_INDEX_PERGUNTA,
   SET_TEMA
 } from "./types";
-import { firebaseDatabase } from "../services/firebaseService";
+
+//import { firebaseDatabase } from "../services/firebaseService";
 
 import perguntas from "../data/perguntas.json";
 

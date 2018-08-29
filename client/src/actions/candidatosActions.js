@@ -4,36 +4,49 @@ import {
   CANDIDATOS_CARREGADOS,
   SET_DADOS_CANDIDATOS
 } from "./types";
-import {
-  firebaseDatabase,
-  firebaseFirestore
-} from "../services/firebaseService";
+
+// import {
+//   firebaseDatabase,
+//   firebaseFirestore
+// } from "../services/firebaseService";
+
+import axios from "axios";
+
+const comparaRespostas = (
+  respostasCandidatos,
+  respostasUsuario,
+  numRespostasUsuario
+) => {
+  let respostasIguais = 0;
+  const chaves = Object.keys(respostasUsuario);
+  chaves.pop();
+  chaves.map(idPergunta => {
+    respostasIguais +=
+      respostasCandidatos[idPergunta] !== undefined &&
+      respostasCandidatos[idPergunta] === respostasUsuario[idPergunta] &&
+      respostasUsuario[idPergunta] !== 0
+        ? 1
+        : 0;
+  });
+  return respostasIguais / numRespostasUsuario;
+};
 
 // Recebe um dicionário das respostas dos candidatos no formato {id_cand: [array_resp]} e retorna um dicionário no formato {id_cand: score}
 export const calculaScore = () => (dispatch, getState) => {
+  const { respostasUsuario } = getState().usuarioReducer;
   const { arrayRespostasUsuario } = getState().usuarioReducer;
   const respostasCandidatos = getState().candidatosReducer.dadosCandidatos;
-
-  //console.log(respostasCandidatos);
 
   const quantZeros = arrayRespostasUsuario.filter(value => value !== 0).length;
   const numRespostasUsuario = quantZeros === 0 ? 1 : quantZeros;
 
-  function comparaRespostas(arrayRespostasCandidato) {
-    let respostasIguais = 0;
-    Object.keys(arrayRespostasCandidato).map((elem, i) => {
-      respostasIguais +=
-        arrayRespostasCandidato[elem] === arrayRespostasUsuario[i] &&
-        arrayRespostasUsuario[i] !== 0
-          ? 1
-          : 0;
-    });
-    return respostasIguais / numRespostasUsuario;
-  }
-
   let scoreCandidatos = {};
   Object.keys(respostasCandidatos).map(elem => {
-    let score = comparaRespostas(respostasCandidatos[elem].respostas);
+    let score = comparaRespostas(
+      respostasCandidatos[elem].respostas,
+      respostasUsuario,
+      numRespostasUsuario
+    );
     scoreCandidatos[elem] = score;
   });
 
@@ -65,64 +78,17 @@ export const getDadosCandidatos = () => dispatch => {
 
   let dadosCandidatos = {};
 
-  console.time("order");
-  firebaseDatabase
-    .ref("/resultados")
-    .orderByKey()
-    .limitToFirst(4000)
-    .on("value", function(snapshot) {
-      const candidatos = snapshot.toJSON();
-      const keys = Object.keys(candidatos);
-      keys.map(key => {
-        dadosCandidatos[candidatos[key].id] = candidatos[key];
-      });
-      dispatch({ type: SET_DADOS_CANDIDATOS, dadosCandidatos });
-      console.timeEnd("order");
+  console.time("getBD");
+
+  axios.get("/api/respostas").then(respostas => {
+    console.timeEnd("getBD");
+
+    respostas.data.map(resp => {
+      dadosCandidatos[resp.cpf] = resp;
     });
 
-  console.time("order1");
-  firebaseDatabase
-    .ref("/resultados")
-    .orderByKey()
-    .limitToLast(4000)
-    .on("value", function(snapshot) {
-      const candidatos = snapshot.toJSON();
-      const keys = Object.keys(candidatos);
-      keys.map(key => {
-        dadosCandidatos[candidatos[key].id] = candidatos[key];
-      });
-      dispatch({ type: SET_DADOS_CANDIDATOS, dadosCandidatos });
-      console.timeEnd("order1");
-    });
-
-  Object.size = function(obj) {
-    var size = 0,
-      key;
-    for (key in obj) {
-      if (obj.hasOwnProperty(key)) size++;
-    }
-    return size;
-  };
-
-  setTimeout(function() {
-    console.log(Object.size(dadosCandidatos));
-  }, 7000);
-
-  // console.time('snap');
-  // firebaseDatabase
-  //   .ref("/resultados")
-  //   .once("value")
-  //   .then(snapshot => {
-  //     const candidatos = snapshot.val();
-  //     const keys = Object.keys(candidatos);
-  //     keys.map(key => {
-  //       dadosCandidatos[candidatos[key].id] = candidatos[key];
-  //     });
-  //     dispatch({ type: SET_DADOS_CANDIDATOS, dadosCandidatos });
-  //     console.timeEnd('snap');
-  //     console.log(dadosCandidatos)
-  //   })
-  //   .catch(err => console.log(err));
+    dispatch({ type: SET_DADOS_CANDIDATOS, dadosCandidatos });
+  });
 };
 
 export const setCandidatosCarregando = () => {

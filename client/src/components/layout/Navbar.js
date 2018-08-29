@@ -2,11 +2,10 @@ import React, { Component } from "react";
 
 import PropTypes from "prop-types";
 
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
 import { connect } from "react-redux";
 import { loginUser, logoutUser } from "../../actions/authActions";
-
 
 class Navbar extends Component {
   onSignInWithGoogle(e) {
@@ -30,9 +29,7 @@ class Navbar extends Component {
           href=""
           onClick={this.onSignInWithGoogle.bind(this)}
           className="navlink"
-        >
-          Sign in with Google
-        </a>
+        />
       </li>
     );
 
@@ -54,7 +51,9 @@ class Navbar extends Component {
       <div>
         <nav className="navbar navbar-expand-sm navbar-dark bg-dark mb-4">
           <div className="container">
-            <Link to="/" className="navbar-brand">Voz Ativa</Link>
+            <Link to="/" className="navbar-brand">
+              Voz Ativa
+            </Link>
             <button
               className="navbar-toggler"
               type="button"
@@ -63,22 +62,29 @@ class Navbar extends Component {
             >
               <span className="navbar-toggler-icon" />
             </button>
-            
+
             <div className="collapse navbar-collapse" id="mobile-nav">
-              
               <ul className="navbar-nav mr-auto">
                 <li className="nav-item">
-                  <Link to="/" className="nav-link">Candidatos</Link>
+                  <Link to="/" className="nav-link">
+                    Candidatos
+                  </Link>
                 </li>
                 <li className="nav-item">
-                  <Link to="/" className="nav-link">Eleições 2018</Link>
+                  <Link to="/" className="nav-link">
+                    Eleições 2018
+                  </Link>
                 </li>
                 <li className="nav-item">
-                  <Link to="/calculo" className="nav-link">Como o cálculo é feito?</Link>
+                  <Link to="/calculo" className="nav-link">
+                    Como o cálculo é feito?
+                  </Link>
                 </li>
                 <li className="nav-item">
-                  <Link className="nav-link" to="/equipe" >Equipe</Link>
-                </li>              
+                  <Link className="nav-link" to="/equipe">
+                    Equipe
+                  </Link>
+                </li>
               </ul>
 
               <ul className="navbar-nav ml-auto">
