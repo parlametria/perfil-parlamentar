@@ -12,36 +12,41 @@ import {
 
 import axios from "axios";
 
+const comparaRespostas = (
+  respostasCandidatos,
+  respostasUsuario,
+  numRespostasUsuario
+) => {
+  let respostasIguais = 0;
+  const chaves = Object.keys(respostasUsuario);
+  chaves.pop();
+  chaves.map(idPergunta => {
+    respostasIguais +=
+      respostasCandidatos[idPergunta] !== undefined &&
+      respostasCandidatos[idPergunta] === respostasUsuario[idPergunta] &&
+      respostasUsuario[idPergunta] !== 0
+        ? 1
+        : 0;
+  });
+  return respostasIguais / numRespostasUsuario;
+};
+
 // Recebe um dicionário das respostas dos candidatos no formato {id_cand: [array_resp]} e retorna um dicionário no formato {id_cand: score}
 export const calculaScore = () => (dispatch, getState) => {
   const { respostasUsuario } = getState().usuarioReducer;
   const { arrayRespostasUsuario } = getState().usuarioReducer;
   const respostasCandidatos = getState().candidatosReducer.dadosCandidatos;
 
-  console.log(respostasCandidatos);
-
   const quantZeros = arrayRespostasUsuario.filter(value => value !== 0).length;
   const numRespostasUsuario = quantZeros === 0 ? 1 : quantZeros;
 
-  const comparaRespostas = respostasCandidatos => {
-    let respostasIguais = 0;
-    const chaves = Object.keys(respostasUsuario);
-    chaves.pop();
-    chaves.map(idPergunta => {
-      respostasIguais +=
-        respostasCandidatos[idPergunta] !== undefined &&
-        respostasCandidatos[idPergunta] === respostasUsuario[idPergunta] &&
-        respostasUsuario[idPergunta] !== 0
-          ? 1
-          : 0;
-    });
-    return respostasIguais / numRespostasUsuario;
-  };
-
   let scoreCandidatos = {};
   Object.keys(respostasCandidatos).map(elem => {
-    let score = comparaRespostas(respostasCandidatos[elem].respostas);
-    console.log(score);
+    let score = comparaRespostas(
+      respostasCandidatos[elem].respostas,
+      respostasUsuario,
+      numRespostasUsuario
+    );
     scoreCandidatos[elem] = score;
   });
 
@@ -78,13 +83,9 @@ export const getDadosCandidatos = () => dispatch => {
   axios.get("/api/respostas").then(respostas => {
     console.timeEnd("getBD");
 
-    console.log(respostas.data);
-
     respostas.data.map(resp => {
       dadosCandidatos[resp.cpf] = resp;
     });
-
-    console.log(dadosCandidatos);
 
     dispatch({ type: SET_DADOS_CANDIDATOS, dadosCandidatos });
   });
