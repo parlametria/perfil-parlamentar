@@ -30,24 +30,43 @@ a {
 a:hover {
     color: #a963b3;
 }
+footer {
+  padding-top: 2rem;
+  padding-bottom: 20rem;
+  border-top: solid 5px #a963b3;
+}
+
+.footer-title {
+  display: inline-block;
+  padding: 0.5rem;
+  background-color: #41c083;
+  color: #ffffff;
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.footer-logo {
+  margin-bottom: 2rem;
+}
+
 .icon-secondary {
   color: #41c083;
 }
 
 .form-control-secondary {
-    color: #fff;
-    background-color: #41c083;
-    border: 1px solid #41c083;
-    border-radius: 24px;
+  color: #fff;
+  background-color: #41c083;
+  border: 1px solid #41c083;
+  border-radius: 24px;
 }
 .form-control-secondary:focus {
-    color: #ffffff;
-    background-color: #41c083;
-    border-color: #41c083;
-    outline: 0;
-    box-shadow: none;
+  color: #ffffff;
+  background-color: #41c083;
+  border-color: #41c083;
+  outline: 0;
+  box-shadow: none;
 }
 .input-group-text-secondary {
-    background-color: #41c083;
-    border: 1px solid #41c083;
+  background-color: #41c083;
+  border: 1px solid #41c083;
 }
