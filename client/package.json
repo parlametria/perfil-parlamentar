@@ -31,7 +31,6 @@
     "deploy": "npm run build&&gh-pages -d build"
   },
   "proxy": "http://localhost:5000",
-  "homepage": "http://paul0vinicius.github.io/voz-ativa",
   "devDependencies": {
     "gh-pages": "^1.2.0"
   }
