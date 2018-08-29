@@ -14,6 +14,7 @@ import axios from "axios";
 
 // Recebe um dicionário das respostas dos candidatos no formato {id_cand: [array_resp]} e retorna um dicionário no formato {id_cand: score}
 export const calculaScore = () => (dispatch, getState) => {
+  const { respostasUsuario } = getState().usuarioReducer;
   const { arrayRespostasUsuario } = getState().usuarioReducer;
   const respostasCandidatos = getState().candidatosReducer.dadosCandidatos;
 
@@ -22,21 +23,25 @@ export const calculaScore = () => (dispatch, getState) => {
   const quantZeros = arrayRespostasUsuario.filter(value => value !== 0).length;
   const numRespostasUsuario = quantZeros === 0 ? 1 : quantZeros;
 
-  function comparaRespostas(arrayRespostasCandidato) {
+  const comparaRespostas = respostasCandidatos => {
     let respostasIguais = 0;
-    Object.keys(arrayRespostasCandidato).map((elem, i) => {
+    const chaves = Object.keys(respostasUsuario);
+    chaves.pop();
+    chaves.map(idPergunta => {
       respostasIguais +=
-        arrayRespostasCandidato[elem] === arrayRespostasUsuario[i] &&
-        arrayRespostasUsuario[i] !== 0
+        respostasCandidatos[idPergunta] !== undefined &&
+        respostasCandidatos[idPergunta] === respostasUsuario[idPergunta] &&
+        respostasUsuario[idPergunta] !== 0
           ? 1
           : 0;
     });
     return respostasIguais / numRespostasUsuario;
-  }
+  };
 
   let scoreCandidatos = {};
   Object.keys(respostasCandidatos).map(elem => {
-    let score = comparaRespostas(respostasCandidatos[elem].respostasArr);
+    let score = comparaRespostas(respostasCandidatos[elem].respostas);
+    console.log(score);
     scoreCandidatos[elem] = score;
   });
 
@@ -76,16 +81,7 @@ export const getDadosCandidatos = () => dispatch => {
     console.log(respostas.data);
 
     respostas.data.map(resp => {
-      let respostas = Array(46).fill(0);
-      dadosCandidatos[resp.id] = resp;
-      let indexRespostas = Object.keys(dadosCandidatos[resp.id].respostas);
-      dadosCandidatos[resp.id].respostasArr = respostas;
-      indexRespostas.map(i => {
-        if (Number(i) < 46)
-          dadosCandidatos[resp.id].respostasArr[Number(i)] = Number(
-            dadosCandidatos[resp.id].respostas[i]
-          );
-      });
+      dadosCandidatos[resp.cpf] = resp;
     });
 
     console.log(dadosCandidatos);
