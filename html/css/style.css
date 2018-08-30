@@ -71,3 +71,6 @@ footer {
   background-color: #41c083;
   border: 1px solid #41c083;
 }
+.btn-square {
+  border-radius: 0;
+}
