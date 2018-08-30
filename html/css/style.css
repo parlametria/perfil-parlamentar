@@ -16,6 +16,7 @@ verde:        #41c083
 
 @import 'type.css';
 @import 'question.css';
+@import 'person.css';
 
 body {
   font-family: 'Montserrat', sans-serif;

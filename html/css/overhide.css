@@ -129,3 +129,10 @@
 .form-control:-moz-placeholder { /* Firefox 18- */
   color: #ffffff;
 }
+
+.progress {
+  border-radius: 0;
+}
+.progress-bar {
+    background-color: #a963b3;
+}
