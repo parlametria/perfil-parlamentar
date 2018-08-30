@@ -116,6 +116,11 @@ li::before {
   color: #41c083;
 }
 
+.stronger {
+  background-color: #41c083;
+  color: #fff;
+}
+
 .ul {
   border-left: solid 2px #41c083;
   padding-top: 1rem;
