@@ -1,0 +1,34 @@
+.nav-horizontal {
+  overflow: auto;
+  word-wrap: normal;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+}
+
+@media (max-width: 1420px) {
+  .nav-horizontal-pills {
+    width: 800px;
+  }
+}
+
+@media (max-width: 1090px) {
+  .nav-horizontal-pills-sm {
+    width: 600px;
+  }
+}
+
+.icon-current {
+  display: block;
+  font-size: 1.5rem;
+  opacity: 0;
+}
+
+.nav-pills .nav-link.active > .icon-current {
+  opacity: 1;
+}
+
+.nav-pills .nav-link.done {
+  color: #41c083;
+  background: transparent;
+  border-bottom: solid 6px rgba(65, 192, 131, 0.2);
+}

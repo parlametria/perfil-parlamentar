@@ -1,0 +1,24 @@
+.question {
+  font-size: 1.1rem;
+  color: #5b2762;
+}
+
+@media (min-width: 992px) {
+  .question {
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+  }
+}
+
+.question-help-content {
+  padding: 1rem;
+  border: solid 1px #41c083;
+}
+
+.btn-in-favor {
+  padding-left: 1.5rem;
+}
+
+.btn-against {
+  padding-right: 1.5rem;
+}
