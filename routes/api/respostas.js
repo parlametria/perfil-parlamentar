@@ -17,8 +17,9 @@ router.get("/test", (req, res) =>
 // @desc    Pega todos os respostas de uma vez
 // @access  Public
 router.get("/", (req, res) => {
+  console.log("pedido para todos");
   Resposta.find()
-    .then(respostas => res.json(respostas))
+    .then(respostas => {console.log("recebi do bd"); res.json(respostas); console.log("acabei o encode");})
     .catch(err => res.status(BAD_REQUEST).json({ err }));
 });
 
@@ -28,7 +29,7 @@ router.get("/", (req, res) => {
 router.get("/estados/:id", (req, res) => {
   console.log("pedido para um estado");
   var paraRetornar = Resposta.find({ uf: req.params.id })
-    .then(respostas => {console.log("Obtive do BD"); res.json(respostas)})
+    .then(respostas => {console.log("Obtive do BD"); res.json(respostas); console.log("acabei o encode");})
     .catch(err => res.status(BAD_REQUEST).json({ err }));
   paraRetornar
 });
