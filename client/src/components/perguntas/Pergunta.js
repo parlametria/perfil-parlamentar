@@ -34,7 +34,7 @@ class Pergunta extends Component {
   }
 
   render() {
-    const clean = sanitizeHtml(this.props.id + 1 + ". " + this.props.pergunta);
+    const clean = sanitizeHtml(this.props.pergunta);
 
     return (
       <div>
@@ -56,7 +56,7 @@ class Pergunta extends Component {
               class="collapse question-help-content"
               aria-labelledby="help-eixoA"
             >
-              Lorem ipsum
+              {this.props.ajuda}
             </div>
           </div>
           <div
@@ -95,6 +95,7 @@ class Pergunta extends Component {
 Pergunta.propTypes = {
   id: PropTypes.number.isRequired,
   pergunta: PropTypes.string.isRequired,
+  ajuda: PropTypes.string.isRequired,
   tema: PropTypes.string,
   onVota: PropTypes.func.isRequired,
   voto: PropTypes.number.isRequired
