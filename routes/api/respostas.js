@@ -9,6 +9,7 @@ const BAD_REQUEST = 400;
 const tudo =  Resposta.find()
     .then(respostas => respostas.toArray())
     .catch(err => console.err(BAD_REQUEST).json({ err }));
+});
 
 // @route   GET api/respostas/test
 // @desc    Testa a rota de respostas
