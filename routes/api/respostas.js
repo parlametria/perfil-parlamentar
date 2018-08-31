@@ -28,9 +28,8 @@ router.get("/", (req, res) => {
 router.get("/estados/:id", (req, res) => {
   console.log("pedido para um estado");
   var paraRetornar = Resposta.find({ uf: req.params.id })
-    .then(respostas => res.json(respostas))
+    .then(respostas => {console.log("Obtive do BD"); res.json(respostas)})
     .catch(err => res.status(BAD_REQUEST).json({ err }));
-  console.log("Obtive do BD");
   paraRetornar
 });
 
