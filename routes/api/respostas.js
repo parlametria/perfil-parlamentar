@@ -26,9 +26,12 @@ router.get("/", (req, res) => {
 // @desc    Pega as respostas por estado
 // @access  Public
 router.get("/estados/:id", (req, res) => {
-  Resposta.find({ uf: req.params.id })
+  console.log("pedido para um estado");
+  var paraRetornar = Resposta.find({ uf: req.params.id })
     .then(respostas => res.json(respostas))
     .catch(err => res.status(BAD_REQUEST).json({ err }));
+  console.log("Obtive do BD");
+  paraRetornar
 });
 
 // @route   GET api/respostas/candidatos/<cpf>
