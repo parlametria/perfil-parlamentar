@@ -11,23 +11,18 @@ O projeto foi desenvolvido utilizando a arquitetura MERN (Mongo Express React/Re
 Opcionalmente, as seguintes ferramentas podem ser instaladas para facilitar o trabalho de desenvolvimento:
 
 - [React Developer Tools](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi)
-
 - [Redux DevTools](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi)
-
 - [Robo Mongo](https://robomongo.org/)
 
 # Desenvolvimento
 
-Antes de iniciar o projeto é necessário integrar o MongoDB e instalar as dependências.
+## Conexão com o banco de dados
 
-## Integrando o projeto com o MongoDB
-
-Crie um arquivo `keys_dev.js` no diretório `config` e adicione sua variável de configuração no seguinte formato:
+É necessária a configuração variável de ambiente `MONGODB_URI` para realizar a conexão,
+por exemplo:
 
 ```
-module.exports = {
-  mongoURI: "ENDERECO_MONGO"
-};
+export MONGODB_URI=mongodb://localhost:27017/voz-ativa
 ```
 
 ## Instalando dependências:
