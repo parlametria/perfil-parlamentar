@@ -37,17 +37,54 @@ class Pergunta extends Component {
     const clean = sanitizeHtml(this.props.id + 1 + ". " + this.props.pergunta);
 
     return (
-      <div className="pergunta">
-        <div>
-          <p dangerouslySetInnerHTML={{ __html: clean }} />
-          <div className="btn btn-info" onClick={this.votaSim}>
-            <a className="card-link">Concordo</a>
+      <div>
+        <div class="panel-body">
+          <h2 class="question" dangerouslySetInnerHTML={{ __html: clean }} />
+          <div class="my-3">
+            <button
+              type="button"
+              class="btn btn-outline-primary btn-sm"
+              data-toggle="collapse"
+              data-target="#help-eixoA"
+              aria-expanded="false"
+              aria-controls="help-eixoA"
+            >
+              O que é isso? <span class="icon-cursor" />
+            </button>
+            <div
+              id="help-eixoA"
+              class="collapse question-help-content"
+              aria-labelledby="help-eixoA"
+            >
+              Lorem ipsum
+            </div>
           </div>
-          <div className="btn btn-secondary" onClick={this.votaNaoSei}>
-            <a className="card-link">Não sei</a>
-          </div>
-          <div className="btn btn-danger" onClick={this.votaNao}>
-            <a className="card-link">Discordo</a>
+          <div
+            class="btn-group d-flex justify-content-center my-3"
+            role="group"
+            aria-label="Resposta"
+          >
+            <button
+              type="button"
+              class="btn btn-primary btn-in-favor"
+              onClick={this.votaSim}
+            >
+              A favor
+            </button>
+            <button
+              type="button"
+              class="btn btn-primary"
+              onClick={this.votaNaoSei}
+            >
+              Não sei
+            </button>
+            <button
+              type="button"
+              class="btn btn-primary btn-against"
+              onClick={this.votaNao}
+            >
+              Contra
+            </button>
           </div>
         </div>
       </div>

@@ -5,7 +5,9 @@ import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 
 import { connect } from "react-redux";
-import { loginUser, logoutUser } from "../../actions/authActions";
+import { loginUser, logoutUser } from "../../../actions/authActions";
+
+import "./navbar.css";
 
 class Navbar extends Component {
   onSignInWithGoogle(e) {
@@ -52,14 +54,19 @@ class Navbar extends Component {
         <nav className="navbar navbar-expand-lg navbar-light bg-light">
           <div className="container">
             <Link to="/" className="navbar-brand">
-              Voz Ativa
+              <img
+                src={require("../../../data/img/logo.png")}
+                alt="Voz Ativa"
+                width="100px"
+              />
             </Link>
             <button
               className="navbar-toggler"
               type="button"
               data-toggle="collapse"
               data-target="#mainNavbar"
-              aria-expanded="false" aria-label="Menu"
+              aria-expanded="false"
+              aria-label="Menu"
             >
               <span className="navbar-toggler-icon" />
             </button>

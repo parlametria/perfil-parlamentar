@@ -20,9 +20,12 @@ const comparaRespostas = (
   let respostasIguais = 0;
   const chaves = Object.keys(respostasUsuario);
   chaves.pop();
+  //console.log(chaves);
+  //console.log(Object.keys(respostasCandidatos));
   chaves.map(idPergunta => {
     respostasIguais +=
       respostasCandidatos[idPergunta] !== undefined &&
+      respostasCandidatos[idPergunta] !== null &&
       respostasCandidatos[idPergunta] === respostasUsuario[idPergunta] &&
       respostasUsuario[idPergunta] !== 0
         ? 1

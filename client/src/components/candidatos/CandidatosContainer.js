@@ -107,7 +107,45 @@ class CandidatosContainer extends Component {
     });
 
     return (
-      <div className="container candidatos-container">
+      <div className="container">
+        <header className="panel-header">
+          <h2 className="panel-title text-center">Vamos começar?</h2>
+          <div>
+            <p>
+              <strong>Vote</strong> nos temas propostos e veja aqui os
+              candidatos que mais se alinham com você.
+            </p>
+            <p>
+              <strong>Filtre</strong> o resultado segundo seus critérios.
+            </p>
+            <p>
+              <strong>Informe-se</strong> sobre os 5 temas. Quanto mais
+              perguntas você responder, mas preciso é o resultado.
+            </p>
+
+            <div className="text-center">
+              <button className="btn btn-primary">Mostre-me todos</button>
+            </div>
+          </div>
+          <div className="input-group mb-3">
+            <div className="input-group-prepend">
+              <span
+                className="input-group-text input-group-text-secondary"
+                id="search-candidate"
+              >
+                <span className="icon-search" />
+              </span>
+            </div>
+            <input
+              type="text"
+              className="form-control form-control-secondary"
+              placeholder="Pesquisar candidato..."
+              aria-label="Pesquisar candidato"
+              aria-describedby="search-candidate"
+            />
+          </div>
+        </header>
+
         {this.props.candidatos.isCarregando ? (
           <div style={{ paddingTop: "30vh" }}>
             <Spinner />

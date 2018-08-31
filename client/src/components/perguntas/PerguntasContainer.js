@@ -17,6 +17,8 @@ import {
 import Spinner from "../common/Spinner";
 import isEmpty from "../../validation/is-empty";
 
+import "./perguntas.css";
+
 class PerguntasContainer extends Component {
   constructor(props) {
     super(props);
@@ -99,15 +101,11 @@ class PerguntasContainer extends Component {
 
       Array.from(nomeTemas).map((tema, i) => {
         temas.push(
-          <div
-            style={{ width: "100vw", overflowX: "auto", whiteSpace: "nowrap" }}
-            id={tema}
-            onClick={this.selecionaTema}
-            key={i + ". " + tema}
-            className="btn btn-dark col"
-          >
-            {tema}
-          </div>
+          <li class="nav-item">
+            <a class="nav-link done" onClick={this.selecionaTema} id={tema}>
+              {tema}
+            </a>
+          </li>
         );
       });
 
@@ -121,36 +119,51 @@ class PerguntasContainer extends Component {
         />
       );
 
-      indicadorPergunta = (
-        <div
-          style={{ width: "100vw", overflowX: "auto", whiteSpace: "nowrap" }}
-        >
-          {dadosPerguntas.map((pergunta, index) => (
-            <div
-              className="btn btn-primary"
-              key={index + ". " + pergunta.id}
-              id={pergunta.id}
-              onClick={this.escolhePergunta}
-            >
-              {index + 1}
-            </div>
-          ))}
-        </div>
-      );
+      indicadorPergunta = dadosPerguntas.map((pergunta, index) => (
+        // done -> o usuario já respondeu essa pergunta
+        // active -> o usuário está respondendo
+        <li className="nav-item">
+          <a
+            className="nav-link"
+            key={index + ". " + pergunta.id}
+            id={pergunta.id}
+            onClick={this.escolhePergunta}
+          >
+            <span className="icon-cursor icon-current" />
+            {index + 1}
+          </a>
+        </li>
+      ));
     }
 
     return (
-      <div className="container perguntas-container">
-        {isCarregando || isEmpty(dadosPerguntas) ? (
-          <Spinner />
-        ) : (
-          <div>
-            <div className="row">{temas}</div>
-            <div className="row">{indicadorPergunta}</div>
-            <div className="row">{pergunta}</div>
-            <div className="row">{botoesNavegacao}</div>
+      <div>
+        <div className="panel-detail-header">
+          <div className="nav-horizontal">
+            <ul className="nav nav-tabs nav-fill nav-horizontal-pills">
+              {temas}
+            </ul>
           </div>
-        )}
+        </div>
+        <div className="card">
+          <div class="card-body">
+            <div class="nav-horizontal">
+              <ul class="nav nav-pills nav-fill nav-horizontal-pills-sm">
+                {indicadorPergunta}
+              </ul>
+            </div>
+            {pergunta}
+          </div>
+        </div>
+        <div className="container perguntas-container">
+          {isCarregando || isEmpty(dadosPerguntas) ? (
+            <Spinner />
+          ) : (
+            <div>
+              <div className="row">{botoesNavegacao}</div>
+            </div>
+          )}
+        </div>
       </div>
     );
   }
