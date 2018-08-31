@@ -34,53 +34,57 @@ class Pergunta extends Component {
   }
 
   render() {
-    const clean = sanitizeHtml(this.props.id + 1 + ". " + this.props.pergunta);
+    const clean = sanitizeHtml(this.props.pergunta);
+    console.log(this.props.index);
 
     return (
       <div>
-        <div class="panel-body">
-          <h2 class="question" dangerouslySetInnerHTML={{ __html: clean }} />
-          <div class="my-3">
+        <div className="panel-body">
+          <h2
+            className="question"
+            dangerouslySetInnerHTML={{ __html: clean }}
+          />
+          <div className="my-3">
             <button
               type="button"
-              class="btn btn-outline-primary btn-sm"
+              className="btn btn-outline-primary btn-sm"
               data-toggle="collapse"
               data-target="#help-eixoA"
               aria-expanded="false"
               aria-controls="help-eixoA"
             >
-              O que é isso? <span class="icon-cursor" />
+              O que é isso? <span className="icon-cursor" />
             </button>
             <div
               id="help-eixoA"
-              class="collapse question-help-content"
+              className="collapse question-help-content"
               aria-labelledby="help-eixoA"
             >
               Lorem ipsum
             </div>
           </div>
           <div
-            class="btn-group d-flex justify-content-center my-3"
+            className="btn-group d-flex justify-content-center my-3"
             role="group"
             aria-label="Resposta"
           >
             <button
               type="button"
-              class="btn btn-primary btn-in-favor"
+              className="btn btn-primary btn-in-favor"
               onClick={this.votaSim}
             >
               A favor
             </button>
             <button
               type="button"
-              class="btn btn-primary"
+              className="btn btn-primary"
               onClick={this.votaNaoSei}
             >
               Não sei
             </button>
             <button
               type="button"
-              class="btn btn-primary btn-against"
+              className="btn btn-primary btn-against"
               onClick={this.votaNao}
             >
               Contra
