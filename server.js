@@ -9,7 +9,7 @@ const respostas = require("./routes/api/respostas");
 
 const app = express();
 
-app.use(compression())
+// app.use(compression())
 
 // Body parser middleware
 app.use(bodyParser.urlencoded({ extended: false }));
