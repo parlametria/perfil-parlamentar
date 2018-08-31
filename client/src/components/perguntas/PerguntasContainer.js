@@ -23,6 +23,8 @@ class PerguntasContainer extends Component {
   constructor(props) {
     super(props);
 
+    this.state = { indexIndicadorPergunta: 0 };
+
     this.passaPergunta = this.passaPergunta.bind(this);
     this.voltaPergunta = this.voltaPergunta.bind(this);
     this.selecionaTema = this.selecionaTema.bind(this);
@@ -41,10 +43,22 @@ class PerguntasContainer extends Component {
 
   passaPergunta() {
     this.props.passaPergunta();
+    const { indexPergunta, dadosPerguntas } = this.props.perguntas;
+
+    if (indexPergunta + 1 < 45) {
+      this.props.escolheTema(dadosPerguntas[indexPergunta + 1].tema);
+    }
+
+    console.log(this.state.indexIndicadorPergunta);
   }
 
   voltaPergunta() {
     this.props.voltaPergunta();
+    const { indexPergunta, dadosPerguntas } = this.props.perguntas;
+
+    if (indexPergunta - 1 > 0) {
+      this.props.escolheTema(dadosPerguntas[indexPergunta - 1].tema);
+    }
   }
 
   escolhePergunta(e) {
@@ -70,8 +84,11 @@ class PerguntasContainer extends Component {
     const {
       dadosPerguntas,
       indexPergunta,
-      isCarregando
+      isCarregando,
+      filtroTema
     } = this.props.perguntas;
+
+    console.log(filtroTema);
 
     const botoesNavegacao = (
       <div>
@@ -101,39 +118,60 @@ class PerguntasContainer extends Component {
 
       Array.from(nomeTemas).map((tema, i) => {
         temas.push(
-          <li class="nav-item">
-            <a class="nav-link done" onClick={this.selecionaTema} id={tema}>
+          <li className="nav-item" key={i}>
+            <a className="nav-link done" onClick={this.selecionaTema} id={tema}>
               {tema}
             </a>
           </li>
         );
       });
 
+      indicadorPergunta = dadosPerguntas
+        .filter(pergunta => pergunta.tema === filtroTema)
+        .map((perguntaFiltrada, index) => (
+          // done -> o usuario já respondeu essa pergunta
+          // active -> o usuário está respondendo
+          <li className="nav-item" key={index}>
+            <a
+              className="nav-link"
+              key={index + ". " + perguntaFiltrada.id}
+              id={perguntaFiltrada.id}
+              onClick={this.escolhePergunta}
+            >
+              <span className="icon-cursor icon-current" />
+              {index + 1}
+            </a>
+          </li>
+        ));
+
+      console.log(indicadorPergunta.length);
+
       pergunta = (
         <Pergunta
           key={dadosPergunta.id}
           id={dadosPergunta.id}
+          index={dadosPergunta.id}
           pergunta={dadosPergunta.texto}
           voto={arrayRespostasUsuario[dadosPergunta.id]}
           onVota={novaResposta => this.registraResposta(novaResposta)}
         />
       );
 
-      indicadorPergunta = dadosPerguntas.map((pergunta, index) => (
-        // done -> o usuario já respondeu essa pergunta
-        // active -> o usuário está respondendo
-        <li className="nav-item">
-          <a
-            className="nav-link"
-            key={index + ". " + pergunta.id}
-            id={pergunta.id}
-            onClick={this.escolhePergunta}
-          >
-            <span className="icon-cursor icon-current" />
-            {index + 1}
-          </a>
-        </li>
-      ));
+      // indicadorPergunta = dadosPerguntas.map((pergunta, index) => (
+      //   // done -> o usuario já respondeu essa pergunta
+      //   // active -> o usuário está respondendo
+      //   <li className="nav-item">
+      //     <a
+      //       className="nav-link"
+      //       key={index + ". " + pergunta.id}
+      //       id={pergunta.id}
+      //       onClick={this.escolhePergunta}
+      //     >
+      //       <span className="icon-cursor icon-current" />
+      //       {index + 1}
+      //     </a>
+      //   </li>
+      // ));
     }
 
     return (
@@ -146,9 +184,9 @@ class PerguntasContainer extends Component {
           </div>
         </div>
         <div className="card">
-          <div class="card-body">
-            <div class="nav-horizontal">
-              <ul class="nav nav-pills nav-fill nav-horizontal-pills-sm">
+          <div className="card-body">
+            <div className="nav-horizontal">
+              <ul className="nav nav-pills nav-fill nav-horizontal-pills-sm">
                 {indicadorPergunta}
               </ul>
             </div>
