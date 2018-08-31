@@ -6,6 +6,11 @@ const Resposta = require("../../models/Resposta");
 
 const BAD_REQUEST = 400;
 
+const tudo =  Resposta.find()
+    .then(respostas => respostas.toArray())
+    .catch(err => console.err(BAD_REQUEST).json({ err }));
+});
+
 // @route   GET api/respostas/test
 // @desc    Testa a rota de respostas
 // @access  Public
@@ -16,11 +21,14 @@ router.get("/test", (req, res) =>
 // @route   GET api/respostas
 // @desc    Pega todos os respostas de uma vez
 // @access  Public
-router.get("/", (req, res) => {
-  Resposta.find()
-    .then(respostas => res.json(respostas))
-    .catch(err => res.status(BAD_REQUEST).json({ err }));
-});
+// router.get("/", (req, res) => {
+//   Resposta.find()
+//     .then(respostas => res.json(respostas))
+//     .catch(err => res.status(BAD_REQUEST).json({ err }));
+// });
+
+router.get("/", (req, res) => { tudo });
+
 
 // @route   GET api/respostas/estados/<id>
 // @desc    Pega as respostas por estado
