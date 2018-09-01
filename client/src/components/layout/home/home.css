@@ -33,7 +33,7 @@
 }
 
 .panel-detail-header {
-  border-bottom: solid 5px #5b2762;
+  /* border-bottom: solid 5px #5b2762; */
 }
 
 @media (min-width: 992px) {
