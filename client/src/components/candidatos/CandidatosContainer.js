@@ -111,33 +111,43 @@ class CandidatosContainer extends Component {
     });
 
     return (
-      <div className="container">
-        <header className="panel-header">
-          {false ? <Apresentacao /> : null}
-          <div className="input-group mb-3">
-            <div className="input-group-prepend">
-              <span
-                className="input-group-text input-group-text-secondary"
-                id="search-candidate"
-              >
-                <span className="icon-search" />
-              </span>
+      <div>
+        <div className="panel-master-header">
+          <ul className="nav nav-tabs nav-tabs-secondary">
+            <li className="nav-item">
+              <a className="nav-link active" href="#">
+                Candidatos
+              </a>
+            </li>
+          </ul>
+        </div>
+        <div className="container">
+          <header className="panel-header">
+            {false ? <Apresentacao /> : null}
+            <div className="input-group mb-3">
+              <div className="input-group-prepend">
+                <span
+                  className="input-group-text input-group-text-secondary"
+                  id="search-candidate"
+                >
+                  <span className="icon-search" />
+                </span>
+              </div>
+              <input
+                type="text"
+                className="form-control form-control-secondary"
+                placeholder="Pesquisar candidato..."
+                aria-label="Pesquisar candidato"
+                aria-describedby="search-candidate"
+              />
             </div>
-            <input
-              type="text"
-              className="form-control form-control-secondary"
-              placeholder="Pesquisar candidato..."
-              aria-label="Pesquisar candidato"
-              aria-describedby="search-candidate"
-            />
-          </div>
-        </header>
+          </header>
 
-        {this.props.candidatos.isCarregando ? (
-          <div style={{ paddingTop: "30vh" }}>
-            <Spinner />
-          </div>
-        ) : (
+          {this.props.candidatos.isCarregando ? (
+            <div style={{ paddingTop: "30vh" }}>
+              <Spinner />
+            </div>
+          ) : (
             <div className="candidatos">
               {/*<div className="row">
               <div className="col-8 col-xs-8 col-md-8 col-lg-8">
@@ -171,6 +181,7 @@ class CandidatosContainer extends Component {
               <FlipMove>{candidatos}</FlipMove>
             </div>
           )}
+        </div>
       </div>
     );
   }
