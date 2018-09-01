@@ -99,19 +99,17 @@ export const getDadosCandidato = idCandidato => dispatch => {
 
   let dadosCandidato = {};
 
-  console.time("getBD");
+  console.time("pega1Candidato");
 
-  axios
-    .get("/api/respostas/candidatos", { params: { cpf: idCandidato } })
-    .then(respostas => {
-      console.timeEnd("getBD");
+  axios.get("/api/respostas/candidatos" + "/" + idCandidato).then(respostas => {
+    console.timeEnd("pega1Candidato");
 
-      respostas.data.map(resp => {
-        dadosCandidato = resp;
-      });
+    console.log(respostas.data);
 
-      return dadosCandidato;
-    });
+    dispatch(setCandidatosCarregados());
+
+    return dadosCandidato;
+  });
 };
 
 export const setCandidatosCarregando = () => {
