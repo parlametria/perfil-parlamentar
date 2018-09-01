@@ -21,18 +21,20 @@ import isEmpty from "../../validation/is-empty";
 
 import "./perguntas.css";
 
-const sleep = (ms) => (new Promise(resolve => setTimeout(resolve, ms)));
+const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 
 class PerguntasContainer extends Component {
   constructor(props) {
     super(props);
 
-    this.state = { indexIndicadorPergunta: 0 };
+    this.state = { indexIndicadorPergunta: 0, show: true };
 
     this.passaPergunta = this.passaPergunta.bind(this);
     this.voltaPergunta = this.voltaPergunta.bind(this);
     this.selecionaTema = this.selecionaTema.bind(this);
     this.escolhePergunta = this.escolhePergunta.bind(this);
+    this.showPerguntaContainer = this.showPerguntaContainer.bind(this);
+    this.hidePerguntaContainer = this.hidePerguntaContainer.bind(this);
   }
 
   registraResposta(novaResposta) {
@@ -125,9 +127,13 @@ class PerguntasContainer extends Component {
       Array.from(nomeTemas).map((tema, i) => {
         temas.push(
           <li className="nav-item" key={i}>
-            <a className={classnames("nav-link done", {
-              "active": filtroTema === tema
-            })} onClick={this.selecionaTema} id={tema}>
+            <a
+              className={classnames("nav-link done", {
+                active: filtroTema === tema
+              })}
+              onClick={this.selecionaTema}
+              id={tema}
+            >
               {tema}
             </a>
           </li>
@@ -142,13 +148,16 @@ class PerguntasContainer extends Component {
           <li className="nav-item" key={index}>
             <a
               className={classnames("nav-link", {
-                "active": perguntaFiltrada.id === indexPergunta
+                active: perguntaFiltrada.id === indexPergunta
               })}
               key={index + ". " + perguntaFiltrada.id}
               id={perguntaFiltrada.id}
               onClick={this.escolhePergunta}
             >
-              <span className="icon-cursor icon-current" id={perguntaFiltrada.id} />
+              <span
+                className="icon-cursor icon-current"
+                id={perguntaFiltrada.id}
+              />
               {index + 1}
             </a>
           </li>
@@ -186,15 +195,21 @@ class PerguntasContainer extends Component {
     }
 
     return (
-      <div>
+      <div className="pergunta-container">
         <div className="panel-detail-header">
-          <div className="nav-horizontal">
+          <div className="nav-horizontal" onClick={this.showPerguntaContainer}>
             <ul className="nav nav-tabs nav-fill nav-horizontal-pills">
               {temas}
             </ul>
           </div>
         </div>
-        <div className="card">
+        <div
+          id="perguntaContainer"
+          className={classnames("card collapse", {
+            show: this.state.show
+          })}
+          aria-labelledby="perguntaContainer"
+        >
           <div className="card-body">
             <div className="nav-horizontal">
               <ul className="nav nav-pills nav-fill nav-horizontal-pills-sm">
@@ -202,6 +217,13 @@ class PerguntasContainer extends Component {
               </ul>
             </div>
             {pergunta}
+            <button
+              type="button"
+              className="btn btn-block btn-outline-primary d-lg-none"
+              onClick={this.hidePerguntaContainer}
+            >
+              Esconder
+            </button>
           </div>
         </div>
         {/*
@@ -217,6 +239,16 @@ class PerguntasContainer extends Component {
         */}
       </div>
     );
+  }
+
+  showPerguntaContainer(event) {
+    event.preventDefault();
+    this.setState({ show: true });
+  }
+
+  hidePerguntaContainer(event) {
+    event.preventDefault();
+    this.setState({ show: false });
   }
 }
 
