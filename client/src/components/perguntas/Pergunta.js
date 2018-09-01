@@ -34,20 +34,60 @@ class Pergunta extends Component {
   }
 
   render() {
-    const clean = sanitizeHtml(this.props.id + 1 + ". " + this.props.pergunta);
+    const clean = sanitizeHtml(this.props.pergunta);
 
     return (
-      <div className="pergunta">
-        <div>
-          <p dangerouslySetInnerHTML={{ __html: clean }} />
-          <div className="btn btn-info" onClick={this.votaSim}>
-            <a className="card-link">Concordo</a>
+      <div>
+        <div className="panel-body">
+          <h2
+            className="question"
+            dangerouslySetInnerHTML={{ __html: clean }}
+          />
+          <div className="my-3">
+            <button
+              type="button"
+              className="btn btn-outline-primary btn-sm"
+              data-toggle="collapse"
+              data-target="#help-eixoA"
+              aria-expanded="false"
+              aria-controls="help-eixoA"
+            >
+              O que é isso? <span className="icon-cursor" />
+            </button>
+            <div
+              id="help-eixoA"
+              className="collapse question-help-content"
+              aria-labelledby="help-eixoA"
+            >
+              {this.props.ajuda}
+            </div>
           </div>
-          <div className="btn btn-secondary" onClick={this.votaNaoSei}>
-            <a className="card-link">Não sei</a>
-          </div>
-          <div className="btn btn-danger" onClick={this.votaNao}>
-            <a className="card-link">Discordo</a>
+          <div
+            className="btn-group d-flex justify-content-center my-3"
+            role="group"
+            aria-label="Resposta"
+          >
+            <button
+              type="button"
+              className="btn btn-primary btn-in-favor"
+              onClick={this.votaSim}
+            >
+              A favor
+            </button>
+            <button
+              type="button"
+              className="btn btn-primary"
+              onClick={this.votaNaoSei}
+            >
+              Não sei
+            </button>
+            <button
+              type="button"
+              className="btn btn-primary btn-against"
+              onClick={this.votaNao}
+            >
+              Contra
+            </button>
           </div>
         </div>
       </div>
@@ -58,6 +98,7 @@ class Pergunta extends Component {
 Pergunta.propTypes = {
   id: PropTypes.number.isRequired,
   pergunta: PropTypes.string.isRequired,
+  ajuda: PropTypes.string.isRequired,
   tema: PropTypes.string,
   onVota: PropTypes.func.isRequired,
   voto: PropTypes.number.isRequired

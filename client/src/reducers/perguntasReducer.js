@@ -9,7 +9,7 @@ const initialState = {
   dadosPerguntas: {},
   isCarregando: false,
   indexPergunta: 0,
-  tema: "Meio Ambiente"
+  filtroTema: "Meio Ambiente"
 };
 
 export default function(state = initialState, action) {
@@ -33,7 +33,7 @@ export default function(state = initialState, action) {
     case SET_TEMA:
       return {
         ...state,
-        tema: action.tema
+        filtroTema: action.tema
       };
     default:
       return state;

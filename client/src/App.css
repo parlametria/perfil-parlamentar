@@ -1,68 +1,78 @@
-.App {
-  background: #e3ebe7;
-  height: 100vh;
+/*
+roxo base:    #a963b3
+roxo escuro:  #5b2762
+roxo claro:   #ddc1e1
+verde:        #41c083
+*/
+@import url("https://unpkg.com/normalize.css@7.0.0/normalize.css");
+@import url("https://fonts.googleapis.com/css?family=Montserrat:400,700");
+
+@import "styles/icons.css";
+@import "styles/overhide.css";
+@import "styles/nav.css";
+/*
+@import 'layout.css';
+@import 'navbar.css';
+@import 'nav.css';
+@import 'accordion.css';
+
+@import 'type.css';
+@import 'question.css';
+@import 'person.css';*/
+
+body {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 400;
+  font-size: 15px;
+  background-color: #ffffff;
+  color: #5b2762;
+}
+a {
+  color: #000;
+}
+a:hover {
+  color: #a963b3;
+}
+footer {
+  padding-top: 2rem;
+  padding-bottom: 20rem;
+  border-top: solid 5px #a963b3;
 }
 
-.footer {
-  position: fixed;
-  bottom: 0;
-  height: 50px;
-  width: 100%;
+.footer-title {
+  display: inline-block;
+  padding: 0.5rem;
+  background-color: #41c083;
+  color: #ffffff;
+  font-size: 1rem;
+  font-weight: 700;
 }
 
-p a + a {
-  padding-left: 3em;
+.footer-logo {
+  margin-bottom: 2rem;
 }
 
-.barra-filtro-candidato {
-  border-radius: 15px;
-  background-color: white;
+.icon-secondary {
+  color: #41c083;
 }
 
-@media only screen and (max-width: 600px), only screen and (min-width: 600px) {
-  .perguntas-container {
-    height: 50vh;
-    overflow-y: scroll;
-    background: #e5e3eb;
-    border-radius: 15px;
-    margin-bottom: 1em;
-  }
-
-  .candidatos-container {
-    height: 25vh;
-    overflow-y: scroll;
-    background: #e5e3eb;
-    border-radius: 15px;
-  }
+.form-control-secondary {
+  color: #fff;
+  background-color: #41c083;
+  border: 1px solid #41c083;
+  border-radius: 24px;
 }
-
-@media only screen and (min-width: 992px),
-  only screen and (min-width: 768px),
-  only screen and (min-width: 1200px) {
-  .perguntas-container {
-    height: 75vh;
-    overflow-y: scroll;
-    background: #e5e3eb;
-    border-radius: 15px;
-  }
-
-  .candidatos-container {
-    height: 75vh;
-    overflow-y: scroll;
-    background: #e5e3eb;
-    border-radius: 15px;
-  }
+.form-control-secondary:focus {
+  color: #ffffff;
+  background-color: #41c083;
+  border-color: #41c083;
+  outline: 0;
+  box-shadow: none;
 }
-
-.pergunta {
-  margin: 5px;
+.input-group-text-secondary {
+  background-color: #41c083;
+  border: 1px solid #41c083;
 }
-
-.candidato {
-  margin: 5px;
-}
-
-.avatar {
-  width: 140px;
-  cursor: pointer;
+.btn-square {
+  border-radius: 0;
 }

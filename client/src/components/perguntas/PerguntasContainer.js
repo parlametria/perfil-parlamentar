@@ -17,9 +17,13 @@ import {
 import Spinner from "../common/Spinner";
 import isEmpty from "../../validation/is-empty";
 
+import "./perguntas.css";
+
 class PerguntasContainer extends Component {
   constructor(props) {
     super(props);
+
+    this.state = { indexIndicadorPergunta: 0 };
 
     this.passaPergunta = this.passaPergunta.bind(this);
     this.voltaPergunta = this.voltaPergunta.bind(this);
@@ -39,10 +43,22 @@ class PerguntasContainer extends Component {
 
   passaPergunta() {
     this.props.passaPergunta();
+    const { indexPergunta, dadosPerguntas } = this.props.perguntas;
+
+    if (indexPergunta + 1 < 45) {
+      this.props.escolheTema(dadosPerguntas[indexPergunta + 1].tema);
+    }
+
+    console.log(this.state.indexIndicadorPergunta);
   }
 
   voltaPergunta() {
     this.props.voltaPergunta();
+    const { indexPergunta, dadosPerguntas } = this.props.perguntas;
+
+    if (indexPergunta - 1 > 0) {
+      this.props.escolheTema(dadosPerguntas[indexPergunta - 1].tema);
+    }
   }
 
   escolhePergunta(e) {
@@ -68,8 +84,11 @@ class PerguntasContainer extends Component {
     const {
       dadosPerguntas,
       indexPergunta,
-      isCarregando
+      isCarregando,
+      filtroTema
     } = this.props.perguntas;
+
+    console.log(filtroTema);
 
     const botoesNavegacao = (
       <div>
@@ -99,58 +118,93 @@ class PerguntasContainer extends Component {
 
       Array.from(nomeTemas).map((tema, i) => {
         temas.push(
-          <div
-            style={{ width: "100vw", overflowX: "auto", whiteSpace: "nowrap" }}
-            id={tema}
-            onClick={this.selecionaTema}
-            key={i + ". " + tema}
-            className="btn btn-dark col"
-          >
-            {tema}
-          </div>
+          <li className="nav-item" key={i}>
+            <a className="nav-link done" onClick={this.selecionaTema} id={tema}>
+              {tema}
+            </a>
+          </li>
         );
       });
+
+      indicadorPergunta = dadosPerguntas
+        .filter(pergunta => pergunta.tema === filtroTema)
+        .map((perguntaFiltrada, index) => (
+          // done -> o usuario já respondeu essa pergunta
+          // active -> o usuário está respondendo
+          <li className="nav-item" key={index}>
+            <a
+              className="nav-link"
+              key={index + ". " + perguntaFiltrada.id}
+              id={perguntaFiltrada.id}
+              onClick={this.escolhePergunta}
+            >
+              <span className="icon-cursor icon-current" />
+              {index + 1}
+            </a>
+          </li>
+        ));
+
+      console.log(indicadorPergunta.length);
 
       pergunta = (
         <Pergunta
           key={dadosPergunta.id}
           id={dadosPergunta.id}
+          index={dadosPergunta.id}
           pergunta={dadosPergunta.texto}
+          ajuda={dadosPergunta.ajuda}
           voto={arrayRespostasUsuario[dadosPergunta.id]}
           onVota={novaResposta => this.registraResposta(novaResposta)}
         />
       );
 
-      indicadorPergunta = (
-        <div
-          style={{ width: "100vw", overflowX: "auto", whiteSpace: "nowrap" }}
-        >
-          {dadosPerguntas.map((pergunta, index) => (
-            <div
-              className="btn btn-primary"
-              key={index + ". " + pergunta.id}
-              id={pergunta.id}
-              onClick={this.escolhePergunta}
-            >
-              {index + 1}
-            </div>
-          ))}
-        </div>
-      );
+      // indicadorPergunta = dadosPerguntas.map((pergunta, index) => (
+      //   // done -> o usuario já respondeu essa pergunta
+      //   // active -> o usuário está respondendo
+      //   <li className="nav-item">
+      //     <a
+      //       className="nav-link"
+      //       key={index + ". " + pergunta.id}
+      //       id={pergunta.id}
+      //       onClick={this.escolhePergunta}
+      //     >
+      //       <span className="icon-cursor icon-current" />
+      //       {index + 1}
+      //     </a>
+      //   </li>
+      // ));
     }
 
     return (
-      <div className="container perguntas-container">
-        {isCarregando || isEmpty(dadosPerguntas) ? (
-          <Spinner />
-        ) : (
-          <div>
-            <div className="row">{temas}</div>
-            <div className="row">{indicadorPergunta}</div>
-            <div className="row">{pergunta}</div>
-            <div className="row">{botoesNavegacao}</div>
+      <div>
+        <div className="panel-detail-header">
+          <div className="nav-horizontal">
+            <ul className="nav nav-tabs nav-fill nav-horizontal-pills">
+              {temas}
+            </ul>
           </div>
-        )}
+        </div>
+        <div className="card">
+          <div className="card-body">
+            <div className="nav-horizontal">
+              <ul className="nav nav-pills nav-fill nav-horizontal-pills-sm">
+                {indicadorPergunta}
+              </ul>
+            </div>
+            {pergunta}
+          </div>
+        </div>
+        {/*
+        <div className="container perguntas-container">
+          {isCarregando || isEmpty(dadosPerguntas) ? (
+            <Spinner />
+          ) : (
+            <div>
+              <div className="row">{botoesNavegacao}</div>
+            </div>
+          )}
+        </div>
+        */}
       </div>
     );
   }

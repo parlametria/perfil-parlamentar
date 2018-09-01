@@ -5,7 +5,9 @@ import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 
 import { connect } from "react-redux";
-import { loginUser, logoutUser } from "../../actions/authActions";
+import { loginUser, logoutUser } from "../../../actions/authActions";
+
+import "./navbar.css";
 
 class Navbar extends Component {
   onSignInWithGoogle(e) {
@@ -49,46 +51,43 @@ class Navbar extends Component {
 
     return (
       <div>
-        <nav className="navbar navbar-expand-sm navbar-dark bg-dark mb-4">
+        <nav className="navbar navbar-expand-lg navbar-light bg-light">
           <div className="container">
             <Link to="/" className="navbar-brand">
-              Voz Ativa
+              <img
+                src={require("../../../data/img/logo.png")}
+                alt="Voz Ativa"
+                width="100px"
+              />
             </Link>
             <button
               className="navbar-toggler"
               type="button"
               data-toggle="collapse"
-              data-target="#mobile-nav"
+              data-target="#mainNavbar"
+              aria-expanded="false"
+              aria-label="Menu"
             >
               <span className="navbar-toggler-icon" />
             </button>
 
-            <div className="collapse navbar-collapse" id="mobile-nav">
-              <ul className="navbar-nav mr-auto">
-                <li className="nav-item">
-                  <Link to="/" className="nav-link">
-                    Candidatos
-                  </Link>
-                </li>
-                <li className="nav-item">
-                  <Link to="/" className="nav-link">
-                    Eleições 2018
-                  </Link>
-                </li>
+            <div className="collapse navbar-collapse" id="mainNavbar">
+              <ul className="navbar-nav ml-auto">
                 <li className="nav-item">
                   <Link to="/calculo" className="nav-link">
-                    Como o cálculo é feito?
+                    Método
+                  </Link>
+                </li>
+                <li className="nav-item">
+                  <Link to="/" className="nav-link">
+                    Sobre
                   </Link>
                 </li>
                 <li className="nav-item">
                   <Link className="nav-link" to="/equipe">
-                    Equipe
+                    Contato
                   </Link>
                 </li>
-              </ul>
-
-              <ul className="navbar-nav ml-auto">
-                {!isAuthenticated ? loginButton : loggedInBar}
               </ul>
             </div>
           </div>

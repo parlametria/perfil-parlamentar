@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import DetalhesCandidato from "./DetalhesCandidato";
 
+import "./candidato.css";
+
 class Candidato extends Component {
   render() {
     const dados = {
@@ -13,26 +15,49 @@ class Candidato extends Component {
     };
 
     return (
-      <div className="candidato">
-        <div className="row">
-          <div className="col-4">
-            <DetalhesCandidato dados={dados} />
-          </div>
-          <div className="col-8">
-            <h5>{this.props.nome} </h5>
-            <h6>
-              {this.props.siglaPartido}/{this.props.estado}
-            </h6>
-            <div className="progress" style={{ height: "15px" }}>
-              <div
-                className="progress-bar"
-                role="progressbar"
-                style={{ width: Math.round(this.props.score * 100) + "%" }}
-                aria-valuenow={this.props.score * 100}
-                aria-valuemin="0"
-                aria-valuemax="100"
-              >
-                {Math.round(this.props.score * 100)}%
+      <div>
+        <div className="person mb-4">
+          <div className="row no-gutters">
+            <div className="col-2">
+              <a href="#">
+                <img
+                  src="http://divulgacandcontas.tse.jus.br/candidaturas/oficial/2018/BR/PB/2022802018/150000608817/foto_1534008805701.jpg"
+                  alt="Candidata da Silva"
+                  width="100%"
+                  className="person-img"
+                />
+              </a>
+            </div>
+            <div className="col-10">
+              <div className="person-data">
+                <h5 className="person-name">
+                  {this.props.nome}{" "}
+                  <small>
+                    {this.props.siglaPartido}/{this.props.estado}
+                  </small>
+                </h5>
+                <div className="score-progress">
+                  <div className="progress" style={{ height: "15px" }}>
+                    <div
+                      className="progress-bar"
+                      role="progressbar"
+                      style={{
+                        width: Math.round(this.props.score * 100) + "%"
+                      }}
+                      aria-valuenow={this.props.score * 100}
+                      aria-valuemin="0"
+                      aria-valuemax="100"
+                    />
+                  </div>
+                  <div className="score-number">
+                    <span className="score">
+                      {Math.round(this.props.score * 100)}%
+                    </span>
+                  </div>
+                </div>
+                <a href="#" className="person-link">
+                  Compare
+                </a>
               </div>
             </div>
           </div>

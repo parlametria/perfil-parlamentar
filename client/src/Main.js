@@ -2,7 +2,7 @@ import React from "react";
 import { Route, Switch } from "react-router-dom";
 import CalculoContainer from "./components/calculo/CalculoContainer";
 import Equipe from "./components/equipe/Equipe";
-import Home from "./components/layout/Home";
+import Home from "./components/layout/home/Home";
 
 // The Main component renders one of provided
 // Routes (provided that one matches). The / route will only match

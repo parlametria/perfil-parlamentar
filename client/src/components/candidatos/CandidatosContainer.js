@@ -17,6 +17,8 @@ import {
 import PropTypes from "prop-types";
 import Spinner from "../common/Spinner";
 
+import Apresentacao from "./apresentacao";
+
 const NUM_CANDIDATOS = 10;
 
 class CandidatosContainer extends Component {
@@ -107,7 +109,28 @@ class CandidatosContainer extends Component {
     });
 
     return (
-      <div className="container candidatos-container">
+      <div className="container">
+        <header className="panel-header">
+          {false ? <Apresentacao /> : null}
+          <div className="input-group mb-3">
+            <div className="input-group-prepend">
+              <span
+                className="input-group-text input-group-text-secondary"
+                id="search-candidate"
+              >
+                <span className="icon-search" />
+              </span>
+            </div>
+            <input
+              type="text"
+              className="form-control form-control-secondary"
+              placeholder="Pesquisar candidato..."
+              aria-label="Pesquisar candidato"
+              aria-describedby="search-candidate"
+            />
+          </div>
+        </header>
+
         {this.props.candidatos.isCarregando ? (
           <div style={{ paddingTop: "30vh" }}>
             <Spinner />
@@ -160,9 +183,9 @@ class CandidatosContainer extends Component {
   }
 
   componentDidMount() {
-    if (isEmpty(this.props.candidatos.dadosCandidatos))
+    if (isEmpty(this.props.candidatos.dadosCandidatos)) {
       this.props.getDadosCandidatos();
-    else {
+    } else {
       this.setState({
         scoreCandidatos: this.props.candidatos.scoreCandidatos,
         candidatosRanking: this.props.getTopNCandidatos(NUM_CANDIDATOS)

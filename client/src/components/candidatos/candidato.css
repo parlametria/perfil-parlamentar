@@ -1,0 +1,51 @@
+.person-data {
+  margin-left: 1rem;
+}
+
+.person-name {
+  margin: 0;
+  font-weight: 700;
+}
+
+.person-name > small {
+  border-left: solid 1px #a963b3;
+  margin-left: 0.5rem;
+  padding-left: 0.5rem;
+}
+
+.score-progress {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 50px;
+}
+
+.score-progress > .progress {
+  width: 70%;
+}
+
+@media (min-width: 768px) {
+  .score-progress > .progress {
+    width: 80%;
+  }
+}
+
+.score-number {
+  width: 30%;
+  text-align: right;
+  font-weight: 700;
+  font-size: 1.7rem;
+  color: #a963b3;
+}
+
+@media (min-width: 768px) {
+  .score-number {
+    width: 20%;
+  }
+}
+
+.person-link {
+  color: #41c083;
+  font-weight: 700;
+  text-transform: lowercase;
+}

@@ -14,10 +14,28 @@ router.get("/test", (req, res) =>
 );
 
 // @route   GET api/respostas
-// @desc    Pega todos os respostas de uma vez
+// @desc    Pega todos as respostas de uma vez
 // @access  Public
 router.get("/", (req, res) => {
   Resposta.find()
+    .then(respostas => res.json(respostas))
+    .catch(err => res.status(BAD_REQUEST).json({ err }));
+});
+
+// @route   GET api/respostas
+// @desc    Pega todos as respostas de uma vez de quem respondeu
+// @access  Public
+router.get("/candidatos/responderam", (req, res) => {
+  Resposta.find({ "respostas.1": { $in: [-2, -1, 1] } })
+    .then(respostas => res.json(respostas))
+    .catch(err => res.status(BAD_REQUEST).json({ err }));
+});
+
+// @route   GET api/respostas
+// @desc    Pega todos os respostas de uma vez de quem NÃO respondeu
+// @access  Public
+router.get("/candidatos/naoresponderam", (req, res) => {
+  Resposta.find({ "respostas.1": { $nin: [-2, -1, 1] } })
     .then(respostas => res.json(respostas))
     .catch(err => res.status(BAD_REQUEST).json({ err }));
 });
@@ -27,6 +45,24 @@ router.get("/", (req, res) => {
 // @access  Public
 router.get("/estados/:id", (req, res) => {
   Resposta.find({ uf: req.params.id })
+    .then(respostas => res.json(respostas))
+    .catch(err => res.status(BAD_REQUEST).json({ err }));
+});
+
+// @route   GET api/respostas/estados/<id>
+// @desc    Pega as respostas por estado de quem respondeu
+// @access  Public
+router.get("/estados/:id/responderam", (req, res) => {
+  Resposta.find({ uf: req.params.id, "respostas.1": { $in: [-2, -1, 1] } })
+    .then(respostas => res.json(respostas))
+    .catch(err => res.status(BAD_REQUEST).json({ err }));
+});
+
+// @route   GET api/respostas/estados/<id>
+// @desc    Pega as respostas por estado de quem NÃO respondeu
+// @access  Public
+router.get("/estados/:id/naoresponderam", (req, res) => {
+  Resposta.find({ uf: req.params.id, "respostas.1": { $nin: [-2, -1, 1] } })
     .then(respostas => res.json(respostas))
     .catch(err => res.status(BAD_REQUEST).json({ err }));
 });
