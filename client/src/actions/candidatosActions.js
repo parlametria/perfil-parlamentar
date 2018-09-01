@@ -94,6 +94,26 @@ export const getDadosCandidatos = () => dispatch => {
   });
 };
 
+export const getDadosCandidato = idCandidato => dispatch => {
+  dispatch(setCandidatosCarregando());
+
+  let dadosCandidato = {};
+
+  console.time("getBD");
+
+  axios
+    .get("/api/respostas/candidatos", { params: { cpf: idCandidato } })
+    .then(respostas => {
+      console.timeEnd("getBD");
+
+      respostas.data.map(resp => {
+        dadosCandidato = resp;
+      });
+
+      return dadosCandidato;
+    });
+};
+
 export const setCandidatosCarregando = () => {
   return {
     type: CANDIDATOS_CARREGANDO
