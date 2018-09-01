@@ -1,8 +1,9 @@
 import {
   SET_SCORE_CANDIDATOS,
+  SET_DADOS_CANDIDATOS,
+  SET_FILTRO_CANDIDATOS,
   CANDIDATOS_CARREGANDO,
-  CANDIDATOS_CARREGADOS,
-  SET_DADOS_CANDIDATOS
+  CANDIDATOS_CARREGADOS
 } from "../actions/types";
 
 // candidatesVotings: {id_votacao: voto}
@@ -11,7 +12,8 @@ import {
 const initialState = {
   dadosCandidatos: {},
   isCarregando: false,
-  scoreCandidatos: {}
+  scoreCandidatos: {},
+  filtro: { nome: "", partido: "", estado: "" }
 };
 
 export default function(state = initialState, action) {
@@ -36,6 +38,11 @@ export default function(state = initialState, action) {
       return {
         ...state,
         isCarregando: false
+      };
+    case SET_FILTRO_CANDIDATOS:
+      return {
+        ...state,
+        filtro: action.filtro
       };
     default:
       return state;

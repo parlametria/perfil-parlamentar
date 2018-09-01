@@ -11,7 +11,8 @@ import isEmpty from "../../validation/is-empty";
 import {
   calculaScore,
   getTopNCandidatos,
-  getDadosCandidatos
+  getDadosCandidatos,
+  setFiltroCandidatos
 } from "../../actions/candidatosActions";
 
 import PropTypes from "prop-types";
@@ -22,6 +23,7 @@ import Apresentacao from "./apresentacao";
 import "../../styles/style.css";
 
 const NUM_CANDIDATOS = 10;
+const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
 
 class CandidatosContainer extends Component {
   constructor(props) {
@@ -48,17 +50,19 @@ class CandidatosContainer extends Component {
       estado: this.state.filtro.estado
     };
 
-    let keys = Object.keys(this.props.candidatos.dadosCandidatos);
+    const { dadosCandidatos } = this.props.candidatos;
 
-    let nomesFiltrados = keys.filter(candidato_id => {
-      return (
-        this.props.candidatos.dadosCandidatos[candidato_id].nome
+    let keys = Object.keys(dadosCandidatos);
+
+    let nomesFiltrados = keys.filter(
+      cpf =>
+        dadosCandidatos[cpf].nome_urna
           .toLowerCase()
           .indexOf(e.target.value.toLowerCase()) >= 0
-      );
-    });
+    );
 
     this.setState({ filtro, candidatosFiltrados: nomesFiltrados });
+    this.props.setFiltroCandidatos(filtro);
   }
 
   buscaEstado(e) {
@@ -71,6 +75,7 @@ class CandidatosContainer extends Component {
     };
 
     this.setState({ filtro });
+    this.props.setFiltroCandidatos(filtro);
   }
 
   buscaPartido(e) {
@@ -83,6 +88,7 @@ class CandidatosContainer extends Component {
     };
 
     this.setState({ filtro });
+    this.props.setFiltroCandidatos(filtro);
   }
 
   render() {
@@ -129,6 +135,7 @@ class CandidatosContainer extends Component {
               placeholder="Pesquisar candidato..."
               aria-label="Pesquisar candidato"
               aria-describedby="search-candidate"
+              onChange={this.buscaNome}
             />
           </div>
         </header>
@@ -138,8 +145,8 @@ class CandidatosContainer extends Component {
             <Spinner />
           </div>
         ) : (
-            <div className="candidatos">
-              {/*<div className="row">
+          <div className="candidatos">
+            {/*<div className="row">
               <div className="col-8 col-xs-8 col-md-8 col-lg-8">
                 <input
                   className="barra-filtro-candidato form-control"
@@ -168,9 +175,9 @@ class CandidatosContainer extends Component {
                 </select>
               </div>
         </div>*/}
-              <FlipMove>{candidatos}</FlipMove>
-            </div>
-          )}
+            <FlipMove>{candidatos}</FlipMove>
+          </div>
+        )}
       </div>
     );
   }
@@ -199,7 +206,8 @@ class CandidatosContainer extends Component {
 CandidatosContainer.propTypes = {
   calculaScore: PropTypes.func.isRequired,
   getTopNCandidatos: PropTypes.func.isRequired,
-  getDadosCandidatos: PropTypes.func.isRequired
+  getDadosCandidatos: PropTypes.func.isRequired,
+  setFiltroCandidatos: PropTypes.func.isRequired
 };
 const mapStateToProps = state => ({
   candidatos: state.candidatosReducer
@@ -207,5 +215,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { calculaScore, getTopNCandidatos, getDadosCandidatos }
+  { calculaScore, getTopNCandidatos, getDadosCandidatos, setFiltroCandidatos }
 )(CandidatosContainer);
