@@ -65,6 +65,7 @@ class PerguntasContainer extends Component {
 
   escolhePergunta(e) {
     e.preventDefault();
+    console.log(e.target);
     this.props.escolhePergunta(parseInt(e.target.id));
   }
 
@@ -144,7 +145,7 @@ class PerguntasContainer extends Component {
               id={perguntaFiltrada.id}
               onClick={this.escolhePergunta}
             >
-              <span className="icon-cursor icon-current" />
+              <span className="icon-cursor icon-current" id={perguntaFiltrada.id} />
               {index + 1}
             </a>
           </li>
