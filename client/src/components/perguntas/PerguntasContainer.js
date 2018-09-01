@@ -21,6 +21,8 @@ import isEmpty from "../../validation/is-empty";
 
 import "./perguntas.css";
 
+const sleep = (ms) => (new Promise(resolve => setTimeout(resolve, ms)));
+
 class PerguntasContainer extends Component {
   constructor(props) {
     super(props);
@@ -43,7 +45,8 @@ class PerguntasContainer extends Component {
     this.passaPergunta();
   }
 
-  passaPergunta() {
+  async passaPergunta() {
+    await sleep(400);
     this.props.passaPergunta();
     const { indexPergunta, dadosPerguntas } = this.props.perguntas;
 
