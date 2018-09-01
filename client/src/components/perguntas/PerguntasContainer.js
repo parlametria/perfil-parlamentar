@@ -14,6 +14,8 @@ import {
   escolheTema
 } from "../../actions/perguntasActions";
 
+import classnames from "classnames";
+
 import Spinner from "../common/Spinner";
 import isEmpty from "../../validation/is-empty";
 
@@ -119,7 +121,9 @@ class PerguntasContainer extends Component {
       Array.from(nomeTemas).map((tema, i) => {
         temas.push(
           <li className="nav-item" key={i}>
-            <a className="nav-link done" onClick={this.selecionaTema} id={tema}>
+            <a className={classnames("nav-link done", {
+              "active": filtroTema === tema
+            })} onClick={this.selecionaTema} id={tema}>
               {tema}
             </a>
           </li>
@@ -133,7 +137,9 @@ class PerguntasContainer extends Component {
           // active -> o usuário está respondendo
           <li className="nav-item" key={index}>
             <a
-              className="nav-link"
+              className={classnames("nav-link", {
+                "active": perguntaFiltrada.id === indexPergunta
+              })}
               key={index + ". " + perguntaFiltrada.id}
               id={perguntaFiltrada.id}
               onClick={this.escolhePergunta}
