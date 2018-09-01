@@ -83,7 +83,7 @@ export const getDadosCandidatos = () => dispatch => {
 
   console.time("getBD");
 
-  axios.get("/api/respostas").then(respostas => {
+  axios.get("/api/respostas/candidatos/responderam").then(respostas => {
     console.timeEnd("getBD");
 
     respostas.data.map(resp => {

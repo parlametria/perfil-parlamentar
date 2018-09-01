@@ -111,7 +111,7 @@ class CandidatosContainer extends Component {
     return (
       <div className="container">
         <header className="panel-header">
-          {false ? <Apresentacao /> : null }
+          {false ? <Apresentacao /> : null}
           <div className="input-group mb-3">
             <div className="input-group-prepend">
               <span
@@ -184,7 +184,7 @@ class CandidatosContainer extends Component {
 
   componentDidMount() {
     if (isEmpty(this.props.candidatos.dadosCandidatos)) {
-      // this.props.getDadosCandidatos();
+      this.props.getDadosCandidatos();
     } else {
       this.setState({
         scoreCandidatos: this.props.candidatos.scoreCandidatos,
