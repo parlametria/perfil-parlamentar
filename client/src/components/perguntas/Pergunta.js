@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import sanitizeHtml from "sanitize-html";
+import classnames from "classnames";
 
 class Pergunta extends Component {
   constructor(props) {
@@ -69,21 +70,27 @@ class Pergunta extends Component {
           >
             <button
               type="button"
-              className="btn btn-primary btn-in-favor"
+              className={classnames("btn btn-primary btn-in-favor", {
+                "btn-secondary": this.state.resposta === 1
+              })}
               onClick={this.votaSim}
             >
               A favor
             </button>
             <button
               type="button"
-              className="btn btn-primary"
+              className={classnames("btn btn-primary", {
+                "btn-secondary": this.state.resposta === 0
+              })}
               onClick={this.votaNaoSei}
             >
               Não sei
             </button>
             <button
               type="button"
-              className="btn btn-primary btn-against"
+              className={classnames("btn btn-primary btn-against", {
+                "btn-secondary": this.state.resposta === -1
+              })}
               onClick={this.votaNao}
             >
               Contra
