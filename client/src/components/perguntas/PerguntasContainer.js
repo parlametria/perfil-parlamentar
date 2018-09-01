@@ -19,9 +19,11 @@ import classnames from "classnames";
 import Spinner from "../common/Spinner";
 import isEmpty from "../../validation/is-empty";
 
+//import { delay } from "../../utils/funcoes";
+
 import "./perguntas.css";
 
-const sleep = (ms) => (new Promise(resolve => setTimeout(resolve, ms)));
+const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
 
 class PerguntasContainer extends Component {
   constructor(props) {
@@ -46,7 +48,7 @@ class PerguntasContainer extends Component {
   }
 
   async passaPergunta() {
-    await sleep(400);
+    await delay(400);
     this.props.passaPergunta();
     const { indexPergunta, dadosPerguntas } = this.props.perguntas;
 
@@ -125,9 +127,13 @@ class PerguntasContainer extends Component {
       Array.from(nomeTemas).map((tema, i) => {
         temas.push(
           <li className="nav-item" key={i}>
-            <a className={classnames("nav-link done", {
-              "active": filtroTema === tema
-            })} onClick={this.selecionaTema} id={tema}>
+            <a
+              className={classnames("nav-link done", {
+                active: filtroTema === tema
+              })}
+              onClick={this.selecionaTema}
+              id={tema}
+            >
               {tema}
             </a>
           </li>
@@ -142,19 +148,20 @@ class PerguntasContainer extends Component {
           <li className="nav-item" key={index}>
             <a
               className={classnames("nav-link", {
-                "active": perguntaFiltrada.id === indexPergunta
+                active: perguntaFiltrada.id === indexPergunta
               })}
               key={index + ". " + perguntaFiltrada.id}
               id={perguntaFiltrada.id}
               onClick={this.escolhePergunta}
             >
-              <span className="icon-cursor icon-current" id={perguntaFiltrada.id} />
+              <span
+                className="icon-cursor icon-current"
+                id={perguntaFiltrada.id}
+              />
               {index + 1}
             </a>
           </li>
         ));
-
-      console.log(indicadorPergunta.length);
 
       pergunta = (
         <Pergunta
