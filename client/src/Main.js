@@ -19,6 +19,7 @@ const Main = () => (
         path="/compare/:candidato/:votos"
         component={CompareContainer}
       />
+      <Route exact path="/compare/:candidato/" component={CompareContainer} />
     </Switch>
   </main>
 );
