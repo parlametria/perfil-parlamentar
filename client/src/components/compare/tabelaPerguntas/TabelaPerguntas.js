@@ -28,7 +28,6 @@ class TabelaPerguntas extends Component {
   render() {
     const { paginaAtual, perguntasPorPagina } = this.state;
 
-    const { dadosCandidatos } = this.props;
     const { dadosPerguntas } = this.props.perguntas;
     const { arrayRespostasUsuario } = this.props.usuario;
 
@@ -40,7 +39,7 @@ class TabelaPerguntas extends Component {
       });
     });
 
-    let votacoesCandidato = dadosCandidatos.respostas;
+    let votacoesCandidato = this.props.respostas;
 
     function getValorVotacao(num) {
       switch (num) {
@@ -110,10 +109,7 @@ class TabelaPerguntas extends Component {
               <th>Tema</th>
               <th>
                 Votos de{" "}
-                {dadosCandidatos.nome.substr(
-                  0,
-                  dadosCandidatos.nome.indexOf(" ")
-                )}
+                {this.props.nome.substr(0, this.props.nome.indexOf(" "))}
               </th>
               <th>Seus votos</th>
             </tr>

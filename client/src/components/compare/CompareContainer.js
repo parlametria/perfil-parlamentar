@@ -11,15 +11,33 @@ import { getDadosCandidato } from "../../actions/candidatosActions";
 class CompareContainer extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = { candidato: {} };
   }
   render() {
-    const candidato = this.props.getDadosCandidato("90472004700");
+    const respostas =
+      this.props.candidatos.isCarregando &&
+      this.state.candidato.respostas !== undefined
+        ? this.state.candidato.respostas
+        : null;
+
+    const nome =
+      this.props.candidatos.isCarregando &&
+      this.state.candidato.respostas !== undefined
+        ? this.state.candidato.nome_urna
+        : null;
+
     return (
       <div className="container">
-        <TabelaPerguntas respostas={candidato.respostas} />
+        <TabelaPerguntas respostas={respostas} nome={nome} />
       </div>
     );
+  }
+
+  componentDidMount() {
+    const candidato = this.props.getDadosCandidato("90472004700");
+    console.log(candidato);
+
+    this.setState({ candidato });
   }
 }
 
