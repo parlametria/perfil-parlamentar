@@ -26,7 +26,7 @@ router.get("/", (req, res) => {
 // @desc    Pega todos as respostas de uma vez de quem respondeu
 // @access  Public
 router.get("/candidatos/responderam", (req, res) => {
-  Resposta.find({ "respostas.1" : { $in: [-2, -1, 1] } })
+  Resposta.find({ "respostas.1": { $in: [-2, -1, 1] } })
     .then(respostas => res.json(respostas))
     .catch(err => res.status(BAD_REQUEST).json({ err }));
 });
@@ -35,7 +35,7 @@ router.get("/candidatos/responderam", (req, res) => {
 // @desc    Pega todos os respostas de uma vez de quem NÃO respondeu
 // @access  Public
 router.get("/candidatos/naoresponderam", (req, res) => {
-  Resposta.find({ "respostas.1" : { $nin: [-2, -1, 1] } })
+  Resposta.find({ "respostas.1": { $nin: [-2, -1, 1] } })
     .then(respostas => res.json(respostas))
     .catch(err => res.status(BAD_REQUEST).json({ err }));
 });
@@ -44,7 +44,7 @@ router.get("/candidatos/naoresponderam", (req, res) => {
 // @desc    Pega as respostas por estado
 // @access  Public
 router.get("/estados/:id", (req, res) => {
-  Resposta.find({ uf: req.params.id)
+  Resposta.find({ uf: req.params.id })
     .then(respostas => res.json(respostas))
     .catch(err => res.status(BAD_REQUEST).json({ err }));
 });
@@ -53,7 +53,7 @@ router.get("/estados/:id", (req, res) => {
 // @desc    Pega as respostas por estado de quem respondeu
 // @access  Public
 router.get("/estados/:id/responderam", (req, res) => {
-  Resposta.find({ uf: req.params.id, "respostas.1" : { $in: [-2, -1, 1] }  })
+  Resposta.find({ uf: req.params.id, "respostas.1": { $in: [-2, -1, 1] } })
     .then(respostas => res.json(respostas))
     .catch(err => res.status(BAD_REQUEST).json({ err }));
 });
@@ -62,7 +62,7 @@ router.get("/estados/:id/responderam", (req, res) => {
 // @desc    Pega as respostas por estado de quem NÃO respondeu
 // @access  Public
 router.get("/estados/:id/naoresponderam", (req, res) => {
-  Resposta.find({ uf: req.params.id, "respostas.1" : { $nin: [-2, -1, 1] }  })
+  Resposta.find({ uf: req.params.id, "respostas.1": { $nin: [-2, -1, 1] } })
     .then(respostas => res.json(respostas))
     .catch(err => res.status(BAD_REQUEST).json({ err }));
 });
