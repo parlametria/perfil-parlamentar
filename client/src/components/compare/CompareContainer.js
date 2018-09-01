@@ -7,6 +7,7 @@ import PropTypes from "prop-types";
 import TabelaPerguntas from "./tabelaPerguntas/TabelaPerguntas";
 
 import { getDadosCandidato } from "../../actions/candidatosActions";
+import isEmpty from "../../validation/is-empty";
 
 class CompareContainer extends Component {
   constructor(props) {
@@ -14,30 +15,25 @@ class CompareContainer extends Component {
     this.state = { candidato: {} };
   }
   render() {
-    const respostas =
-      this.props.candidatos.isCarregando &&
-      this.state.candidato.respostas !== undefined
-        ? this.state.candidato.respostas
-        : null;
-
-    const nome =
-      this.props.candidatos.isCarregando &&
-      this.state.candidato.respostas !== undefined
-        ? this.state.candidato.nome_urna
-        : null;
+    console.log(this.state.candidato);
 
     return (
       <div className="container">
-        <TabelaPerguntas respostas={respostas} nome={nome} />
+        {this.props.candidatos.isCarregando || isEmpty(this.state.candidato)
+          ? null
+          : /*<TabelaPerguntas
+            respostas={this.state.candidato.respostas}
+            nome={this.state.candidato.nome_exibicao}
+          />*/ console.log(
+              this.state.candidato
+            )}
       </div>
     );
   }
 
   componentDidMount() {
-    const candidato = this.props.getDadosCandidato("90472004700");
-    console.log(candidato);
-
-    this.setState({ candidato });
+    const cand = this.props.getDadosCandidato("90472004700");
+    this.setState({ candidato: cand });
   }
 }
 

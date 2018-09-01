@@ -97,18 +97,30 @@ export const getDadosCandidatos = () => dispatch => {
 export const getDadosCandidato = idCandidato => dispatch => {
   dispatch(setCandidatosCarregando());
 
-  let dadosCandidato = {};
+  // console.time("pega1Candidato");
 
-  console.time("pega1Candidato");
+  // axios.get("/api/respostas/candidatos" + "/" + idCandidato).then(respostas => {
+  //   console.timeEnd("pega1Candidato");
 
-  axios.get("/api/respostas/candidatos" + "/" + idCandidato).then(respostas => {
-    console.timeEnd("pega1Candidato");
+  //   console.log(respostas.data[0]);
 
-    console.log(respostas.data);
+  //   dispatch(setCandidatosCarregados());
 
-    dispatch(setCandidatosCarregados());
+  //   return respostas.data[0];
+  // });
 
-    return dadosCandidato;
+  return new Promise(resolve => {
+    axios
+      .get("/api/respostas/candidatos" + "/" + idCandidato)
+      .then(respostas => {
+        console.timeEnd("pega1Candidato");
+
+        console.log(respostas.data[0]);
+
+        dispatch(setCandidatosCarregados());
+
+        return respostas.data[0];
+      });
   });
 };
 
