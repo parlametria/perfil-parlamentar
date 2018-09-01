@@ -152,6 +152,7 @@ class PerguntasContainer extends Component {
           id={dadosPergunta.id}
           index={dadosPergunta.id}
           pergunta={dadosPergunta.texto}
+          ajuda={dadosPergunta.ajuda}
           voto={arrayRespostasUsuario[dadosPergunta.id]}
           onVota={novaResposta => this.registraResposta(novaResposta)}
         />
@@ -193,6 +194,7 @@ class PerguntasContainer extends Component {
             {pergunta}
           </div>
         </div>
+        {/*
         <div className="container perguntas-container">
           {isCarregando || isEmpty(dadosPerguntas) ? (
             <Spinner />
@@ -202,6 +204,7 @@ class PerguntasContainer extends Component {
             </div>
           )}
         </div>
+        */}
       </div>
     );
   }
