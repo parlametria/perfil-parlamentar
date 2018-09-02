@@ -21,7 +21,7 @@ class Candidato extends Component {
             <div className="col-2">
               <a href="#">
                 <img
-                  src="http://divulgacandcontas.tse.jus.br/candidaturas/oficial/2018/BR/PB/2022802018/150000608817/foto_1534008805701.jpg"
+                  src= {this.props.foto}
                   alt="Candidata da Silva"
                   width="100%"
                   className="person-img"

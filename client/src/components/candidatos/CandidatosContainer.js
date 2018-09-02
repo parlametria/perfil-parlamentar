@@ -105,7 +105,7 @@ class CandidatosContainer extends Component {
           estado={candidato.uf}
           score={this.state.scoreCandidatos[candidato.cpf]}
           respostas={candidato.respostas}
-          foto={candidato.foto}
+          foto={"https://s3-sa-east-1.amazonaws.com/fotoscandidatos2018/fotos_tratadas/img_" + candidato.cpf + ".jpg"}
         />
       );
     });
