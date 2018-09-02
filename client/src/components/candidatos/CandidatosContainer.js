@@ -22,7 +22,23 @@ import Apresentacao from "./apresentacao";
 
 import "../../styles/style.css";
 
+import { Observable } from 'rxjs/Observable';
+import { Subject } from 'rxjs/Subject';
+
+import 'rxjs/add/observable/of';
+import 'rxjs/add/observable/fromPromise';
+
+import 'rxjs/add/operator/catch';
+import 'rxjs/add/operator/switchMap';
+import 'rxjs/add/operator/debounceTime';
+import 'rxjs/add/operator/distinctUntilChanged';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/filter';
+
 const NUM_CANDIDATOS = 10;
+const MAX_CAND_FILTRADOS = 20;
+const DEBOUNCE_TIME = 650; //ms
+
 const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
 
 class CandidatosContainer extends Component {
@@ -33,9 +49,12 @@ class CandidatosContainer extends Component {
       scoreCandidatos: {},
       candidatosRanking: [],
       candidatosFiltrados: [],
-      filtro: { nome: "", partido: "", estado: "" }
+      filtro: { nome: "", partido: "", estado: "" },
+      debounced: '',
+      isPesquisando: false
     };
 
+    this.onSearch$ = new Subject();
     this.buscaNome = this.buscaNome.bind(this);
     this.buscaEstado = this.buscaEstado.bind(this);
     this.buscaPartido = this.buscaPartido.bind(this);
@@ -50,19 +69,9 @@ class CandidatosContainer extends Component {
       estado: this.state.filtro.estado
     };
 
-    const { dadosCandidatos } = this.props.candidatos;
-
-    let keys = Object.keys(dadosCandidatos);
-
-    let nomesFiltrados = keys.filter(
-      cpf =>
-        dadosCandidatos[cpf].nome_urna
-          .toLowerCase()
-          .indexOf(e.target.value.toLowerCase()) >= 0
-    );
-
-    this.setState({ filtro, candidatosFiltrados: nomesFiltrados });
+    this.setState({ filtro, isPesquisando: true });
     this.props.setFiltroCandidatos(filtro);
+    this.onSearch$.next(filtro.nome);
   }
 
   buscaEstado(e) {
@@ -96,6 +105,8 @@ class CandidatosContainer extends Component {
     let candidatosMapeaveis;
     if (this.state.filtro.nome !== "") {
       candidatosMapeaveis = this.state.candidatosFiltrados;
+      console.log(candidatosMapeaveis);
+
     } else {
       candidatosMapeaveis = this.state.candidatosRanking.map(cand => cand[0]);
     }
@@ -115,6 +126,8 @@ class CandidatosContainer extends Component {
         />
       );
     });
+
+    const { debounced } = this.state;
 
     return (
       <div className="container">
@@ -136,48 +149,20 @@ class CandidatosContainer extends Component {
               aria-label="Pesquisar candidato"
               aria-describedby="search-candidate"
               onChange={this.buscaNome}
+              value={this.state.filtro.nome}
             />
           </div>
         </header>
 
-        {this.props.candidatos.isCarregando ? (
+        {this.props.candidatos.isCarregando || this.state.isPesquisando ? (
           <div style={{ paddingTop: "30vh" }}>
             <Spinner />
           </div>
         ) : (
-          <div className="candidatos">
-            {/*<div className="row">
-              <div className="col-8 col-xs-8 col-md-8 col-lg-8">
-                <input
-                  className="barra-filtro-candidato form-control"
-                  id="myInput"
-                  type="text"
-                  placeholder="Nome"
-                  onChange={this.buscaNome}
-                />
-              </div>
-              <div className="col-2 col-xs-2 col-md-2 col-lg-2">
-                <select
-                  className="form-control barra-filtro-candidato"
-                  placeholder="Partidos"
-                  onChange={this.buscaPartido}
-                >
-                  {partidos()}
-                </select>
-              </div>
-              <div className="col-2 col-xs-2 col-md-2 col-lg-2">
-                <select
-                  className="form-control barra-filtro-candidato"
-                  placeholder="Estados"
-                  onChange={this.buscaEstado}
-                >
-                  {estados()}
-                </select>
-              </div>
-        </div>*/}
-            <FlipMove>{candidatos}</FlipMove>
-          </div>
-        )}
+            <div className="candidatos">
+              <FlipMove>{candidatos}</FlipMove>
+            </div>
+          )}
       </div>
     );
   }
@@ -192,6 +177,22 @@ class CandidatosContainer extends Component {
   }
 
   componentDidMount() {
+    this.subscription = this.onSearch$
+      .debounceTime(DEBOUNCE_TIME)
+      .subscribe(debounced => {
+        const { dadosCandidatos } = this.props.candidatos;
+
+        let keys = Object.keys(dadosCandidatos);
+
+        let nomesFiltrados = keys.filter(
+          cpf =>
+            dadosCandidatos[cpf].nome_urna
+              .toLowerCase()
+              .indexOf(debounced.toLowerCase()) >= 0
+        ).slice(0, MAX_CAND_FILTRADOS);
+        this.setState({ debounced, candidatosFiltrados: nomesFiltrados, isPesquisando: false })
+      });
+
     if (isEmpty(this.props.candidatos.dadosCandidatos)) {
       this.props.getDadosCandidatos();
     } else {
@@ -199,6 +200,12 @@ class CandidatosContainer extends Component {
         scoreCandidatos: this.props.candidatos.scoreCandidatos,
         candidatosRanking: this.props.getTopNCandidatos(NUM_CANDIDATOS)
       });
+    }
+  }
+
+  componentWillUnmount() {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
     }
   }
 }

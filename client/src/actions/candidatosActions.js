@@ -26,9 +26,9 @@ const comparaRespostas = (
   chaves.map(idPergunta => {
     respostasIguais +=
       respostasCandidatos[idPergunta] !== undefined &&
-      respostasCandidatos[idPergunta] !== null &&
-      respostasCandidatos[idPergunta] === respostasUsuario[idPergunta] &&
-      respostasUsuario[idPergunta] !== 0
+        respostasCandidatos[idPergunta] !== null &&
+        respostasCandidatos[idPergunta] === respostasUsuario[idPergunta] &&
+        respostasUsuario[idPergunta] !== 0
         ? 1
         : 0;
   });
