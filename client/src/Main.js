@@ -14,12 +14,12 @@ const Main = () => (
       <Route exact path="/" component={Home} />
       <Route exact path="/calculo" component={CalculoContainer} />
       <Route exact path="/equipe" component={Equipe} />
+      <Route exact path="/compare/:candidato/" render={(props) => <CompareContainer {...props} />} />
       <Route
         exact
         path="/compare/:candidato/:votos"
         component={CompareContainer}
       />
-      <Route exact path="/compare/:candidato/" component={CompareContainer} />
     </Switch>
   </main>
 );
