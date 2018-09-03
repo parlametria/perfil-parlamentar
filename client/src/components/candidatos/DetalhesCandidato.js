@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
-import TabelaPerguntas from "../tabelaPerguntas/TabelaPerguntas";
+import TabelaPerguntas from "../compare/tabelaPerguntas/TabelaPerguntas";
 
 class DetalhesCandidato extends Component {
   constructor(props) {
@@ -19,7 +19,6 @@ class DetalhesCandidato extends Component {
       tooltipOpen: !this.state.tooltipOpen
     });
   }
-
 
   render() {
     const dados = this.props.dados;
@@ -49,7 +48,6 @@ class DetalhesCandidato extends Component {
               </div>
             </div>
             <TabelaPerguntas dadosCandidatos={dados} />
-
           </ModalBody>
           <ModalFooter>
             <Button color="secondary" onClick={this.toggle}>

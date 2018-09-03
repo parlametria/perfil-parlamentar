@@ -45,6 +45,9 @@ class Home extends Component {
   }
 
   render() {
+
+    const { filtro } = this.props.candidatos;
+
     return (
       <div>
         <section className="intro">
@@ -56,7 +59,7 @@ class Home extends Component {
             <div className="d-flex justify-content-center">
               <form>
                 <div className="form-group">
-                  <select className="form-control" onChange={this.selecionaEstado}>
+                  <select className="form-control" onChange={this.selecionaEstado} value={filtro.estado}>
                     <option selected>Em que Estado você vota?</option>
                     {estados()}
                   </select>
