@@ -3,10 +3,14 @@ import { Table, Pagination, PaginationItem, PaginationLink } from "reactstrap";
 import isEmpty from "../../../validation/is-empty";
 import { connect } from "react-redux";
 
+import classnames from "classnames";
+
 import { getDadosCandidato } from "../../../actions/candidatosActions";
 import { getDadosPerguntas } from "../../../actions/perguntasActions";
 
 import PropTypes from "prop-types";
+
+import "./tabelaPerguntas.css";
 
 class TabelaPerguntas extends Component {
   constructor(props) {
@@ -52,13 +56,30 @@ class TabelaPerguntas extends Component {
           return "Sim";
           break;
         case 0:
-          return "Não respondeu";
+          return "--";
           break;
         case -1:
           return "Não";
           break;
         case -2:
           return "Não sabe";
+          break;
+      }
+    }
+
+    function getClassVotacao(num) {
+      switch (num) {
+        case 1:
+          return "in-favor";
+          break;
+        case 0:
+          return "";
+          break;
+        case -1:
+          return "against";
+          break;
+        case -2:
+          return "dont-know";
           break;
       }
     }
@@ -77,8 +98,22 @@ class TabelaPerguntas extends Component {
       rows = perguntasExibidas.map(elem => (
         <tr key={elem.key}>
           <td>{perguntasExibidas[elem.key % perguntasPorPagina].pergunta}</td>
-          <td>{getValorVotacao(votacoesCandidato[elem.key])}</td>
-          <td>{getValorVotacao(arrayRespostasUsuario[elem.key])}</td>
+          <td
+            className={
+              "text-center table-row-center " +
+              getClassVotacao(votacoesCandidato[elem.key])
+            }
+          >
+            {getValorVotacao(votacoesCandidato[elem.key])}
+          </td>
+          <td
+            className={
+              "text-center table-row-center " +
+              getClassVotacao(arrayRespostasUsuario[elem.key])
+            }
+          >
+            {getValorVotacao(arrayRespostasUsuario[elem.key])}
+          </td>
         </tr>
       ));
 
@@ -107,16 +142,16 @@ class TabelaPerguntas extends Component {
     }
 
     return (
-      <div>
-        <Table size="sm" responsive hover pagination={{ pageSize: 5 }}>
-          <thead>
+      <div className="table-responsive">
+        <Table className="table-bordered" hover pagination={{ pageSize: 5 }}>
+          <thead className="thead-dark">
             <tr>
-              <th>Tema</th>
-              <th>
+              <th className="table-th-question">Perguntas</th>
+              <th className="table-th-candidate">
                 Votos de{" "}
                 {this.props.nome.substr(0, this.props.nome.indexOf(" "))}
               </th>
-              <th>Seus votos</th>
+              <th className="table-th-yours">Seus votos</th>
             </tr>
           </thead>
           <tbody>{rows}</tbody>
@@ -146,7 +181,7 @@ class TabelaPerguntas extends Component {
 }
 TabelaPerguntas.propTypes = {
   getDadosCandidato: PropTypes.func.isRequired,
-  getDadosPerguntas: PropTypes.func.isRequired,
+  getDadosPerguntas: PropTypes.func.isRequired
 };
 const mapStateToProps = state => ({
   usuario: state.usuarioReducer,

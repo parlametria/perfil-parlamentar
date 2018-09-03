@@ -4,8 +4,8 @@ roxo escuro:  #5b2762
 roxo claro:   #ddc1e1
 verde:        #41c083
 */
-@import url('https://unpkg.com/normalize.css@7.0.0/normalize.css');
-@import url('https://fonts.googleapis.com/css?family=Montserrat:400,700');
+@import url("https://unpkg.com/normalize.css@7.0.0/normalize.css");
+@import url("https://fonts.googleapis.com/css?family=Montserrat:400,700");
 
 /* @import 'icons.css';
 @import 'overhide.css';
@@ -19,17 +19,17 @@ verde:        #41c083
 @import 'person.css'; */
 
 body {
-  font-family: 'Montserrat', sans-serif;
+  font-family: "Montserrat", sans-serif;
   font-weight: 400;
   font-size: 15px;
   background-color: #ffffff;
   color: #5b2762;
 }
 a {
-    color: #000;
+  color: #000;
 }
 a:hover {
-    color: #a963b3;
+  color: #a963b3;
 }
 footer {
   padding-top: 2rem;

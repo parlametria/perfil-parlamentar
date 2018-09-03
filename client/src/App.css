@@ -52,6 +52,7 @@ footer {
   margin-bottom: 2rem;
 }
 
+.strong,
 .icon-secondary {
   color: #41c083;
 }
@@ -75,6 +76,9 @@ footer {
 }
 .btn-square {
   border-radius: 0;
+}
+.table-row-center {
+  vertical-align: middle;
 }
 
 /* width */

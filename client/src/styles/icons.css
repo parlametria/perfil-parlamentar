@@ -1,17 +1,18 @@
 @font-face {
-  font-family: 'icomoon';
-  src:  url('fonts/icomoon.eot?uyod52');
-  src:  url('fonts/icomoon.eot?uyod52#iefix') format('embedded-opentype'),
-    url('fonts/icomoon.ttf?uyod52') format('truetype'),
-    url('fonts/icomoon.woff?uyod52') format('woff'),
-    url('fonts/icomoon.svg?uyod52#icomoon') format('svg');
+  font-family: "icomoon";
+  src: url("fonts/icomoon.eot?fo4ofw");
+  src: url("fonts/icomoon.eot?fo4ofw#iefix") format("embedded-opentype"),
+    url("fonts/icomoon.ttf?fo4ofw") format("truetype"),
+    url("fonts/icomoon.woff?fo4ofw") format("woff"),
+    url("fonts/icomoon.svg?fo4ofw#icomoon") format("svg");
   font-weight: normal;
   font-style: normal;
 }
 
-[class^="icon-"], [class*=" icon-"] {
+[class^="icon-"],
+[class*=" icon-"] {
   /* use !important to prevent issues with browser extensions that change fonts */
-  font-family: 'icomoon' !important;
+  font-family: "icomoon" !important;
   speak: none;
   font-style: normal;
   font-weight: normal;
@@ -24,12 +25,18 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-minus:before {
+  content: "\e903";
+}
 .icon-search:before {
   content: "\e902";
 }
 .icon-checkmark:before {
   content: "\e901";
 }
-.icon-cursor:before {
+.icon-back:before {
   content: "\e900";
+}
+.icon-cursor:before {
+  content: "\e904";
 }

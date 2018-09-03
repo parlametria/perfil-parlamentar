@@ -1,0 +1,10 @@
+.table-th-question {
+  min-width: 500px;
+}
+
+.table-th-candidate {
+  min-width: 180px;
+}
+.table-th-yours {
+  min-width: 130px;
+}
