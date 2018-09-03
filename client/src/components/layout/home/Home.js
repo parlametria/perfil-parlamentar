@@ -40,13 +40,8 @@ class Home extends Component {
       estado: e.target.value
     };
 
-    console.log(
-      novoFiltroEstado
-    );
-
     this.props.setFiltroCandidatos(novoFiltroEstado);
     this.props.getDadosCandidatos();
-    this.props.calculaScore();
   }
 
   render() {

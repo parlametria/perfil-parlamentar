@@ -82,9 +82,6 @@ class CandidatosContainer extends Component {
       estado: this.props.candidatos.filtro.estado
     };
 
-    console.log(filtro);
-
-
     this.setState({ filtro });
     this.props.setFiltroCandidatos(filtro);
   }
@@ -96,8 +93,6 @@ class CandidatosContainer extends Component {
     let candidatosMapeaveis;
     if (this.state.filtro.nome !== "" && this.state.filtro.partido !== "TODOS") {
       candidatosMapeaveis = this.state.candidatosFiltrados.filter(cpf => dadosCandidatos[cpf].sg_partido === this.state.filtro.partido);
-      console.log(candidatosMapeaveis);
-      console.log(this.props.candidatos.filtro.partido);
     }
     else if (this.state.filtro.partido !== "TODOS") {
       let cpfs = Object.keys(dadosCandidatos);
@@ -106,12 +101,8 @@ class CandidatosContainer extends Component {
     else if (this.state.filtro.nome !== "") {
       candidatosMapeaveis = this.state.candidatosFiltrados;
     } else {
-      //candidatosMapeaveis = this.state.candidatosRanking.map(cand => cand[0]);
-      candidatosMapeaveis = this.props.getTopNCandidatos(NUM_CANDIDATOS).map(cand => cand[0]);
+      candidatosMapeaveis = this.state.candidatosRanking.map(cand => cand[0]);
     }
-
-    console.log(candidatosMapeaveis);
-    console.log(dadosCandidatos);
 
     const candidatos = candidatosMapeaveis.map(cpf => {
       const candidato = this.props.candidatos.dadosCandidatos[cpf];
@@ -190,9 +181,6 @@ class CandidatosContainer extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log(nextProps.candidatos.dadosCandidatos);
-    console.log(nextProps.getTopNCandidatos(NUM_CANDIDATOS));
-
     if (nextProps.candidatos.scoreCandidatos) {
       this.setState({
         scoreCandidatos: nextProps.candidatos.scoreCandidatos,
@@ -219,7 +207,7 @@ class CandidatosContainer extends Component {
       });
 
     if (isEmpty(this.props.candidatos.dadosCandidatos)) {
-      //this.props.getDadosCandidatos();
+      //this.props.calculaScore();
     } else {
       this.setState({
         scoreCandidatos: this.props.candidatos.scoreCandidatos,

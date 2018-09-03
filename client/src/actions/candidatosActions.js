@@ -21,8 +21,6 @@ const comparaRespostas = (
   let respostasIguais = 0;
   const chaves = Object.keys(respostasUsuario);
   chaves.pop();
-  //console.log(chaves);
-  //console.log(Object.keys(respostasCandidatos));
   chaves.map(idPergunta => {
     respostasIguais +=
       respostasCandidatos[idPergunta] !== undefined &&
@@ -94,6 +92,7 @@ export const getDadosCandidatos = () => (dispatch, getState) => {
     });
 
     dispatch({ type: SET_DADOS_CANDIDATOS, dadosCandidatos });
+    dispatch(calculaScore());
   });
 };
 
