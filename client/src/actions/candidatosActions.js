@@ -2,7 +2,8 @@ import {
   SET_SCORE_CANDIDATOS,
   CANDIDATOS_CARREGANDO,
   CANDIDATOS_CARREGADOS,
-  SET_DADOS_CANDIDATOS
+  SET_DADOS_CANDIDATOS,
+  SET_FILTRO_CANDIDATOS
 } from "./types";
 
 // import {
@@ -20,14 +21,12 @@ const comparaRespostas = (
   let respostasIguais = 0;
   const chaves = Object.keys(respostasUsuario);
   chaves.pop();
-  //console.log(chaves);
-  //console.log(Object.keys(respostasCandidatos));
   chaves.map(idPergunta => {
     respostasIguais +=
       respostasCandidatos[idPergunta] !== undefined &&
-      respostasCandidatos[idPergunta] !== null &&
-      respostasCandidatos[idPergunta] === respostasUsuario[idPergunta] &&
-      respostasUsuario[idPergunta] !== 0
+        respostasCandidatos[idPergunta] !== null &&
+        respostasCandidatos[idPergunta] === respostasUsuario[idPergunta] &&
+        respostasUsuario[idPergunta] !== 0
         ? 1
         : 0;
   });
@@ -76,14 +75,16 @@ export const getTopNCandidatos = n => (dispatch, getState) => {
   return candidatos.slice(0, n);
 };
 
-export const getDadosCandidatos = () => dispatch => {
+export const getDadosCandidatos = () => (dispatch, getState) => {
   dispatch(setCandidatosCarregando());
+
+  const { filtro } = getState().candidatosReducer;
 
   let dadosCandidatos = {};
 
   console.time("getBD");
 
-  axios.get("/api/respostas/candidatos/responderam").then(respostas => {
+  axios.get("/api/respostas/estados/" + filtro.estado + "/responderam").then(respostas => {
     console.timeEnd("getBD");
 
     respostas.data.map(resp => {
@@ -91,6 +92,7 @@ export const getDadosCandidatos = () => dispatch => {
     });
 
     dispatch({ type: SET_DADOS_CANDIDATOS, dadosCandidatos });
+    dispatch(calculaScore());
   });
 };
 
@@ -104,4 +106,8 @@ export const setCandidatosCarregados = () => {
   return {
     type: CANDIDATOS_CARREGADOS
   };
+};
+
+export const setFiltroCandidatos = filtro => dispatch => {
+  dispatch({ type: SET_FILTRO_CANDIDATOS, filtro });
 };
