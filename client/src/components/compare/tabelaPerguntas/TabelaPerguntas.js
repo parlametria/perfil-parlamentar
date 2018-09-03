@@ -44,7 +44,8 @@ class TabelaPerguntas extends Component {
     Object.keys(dadosPerguntas).map(p => {
       return perguntas.push({
         key: dadosPerguntas[p].id,
-        pergunta: dadosPerguntas[p].texto
+        pergunta: dadosPerguntas[p].texto,
+        tema: dadosPerguntas[p].tema
       });
     });
 
@@ -148,10 +149,9 @@ class TabelaPerguntas extends Component {
             <tr>
               <th className="table-th-question">Perguntas</th>
               <th className="table-th-candidate">
-                Votos de{" "}
                 {this.props.nome.substr(0, this.props.nome.indexOf(" "))}
               </th>
-              <th className="table-th-yours">Seus votos</th>
+              <th className="table-th-yours">Você</th>
             </tr>
           </thead>
           <tbody>{rows}</tbody>

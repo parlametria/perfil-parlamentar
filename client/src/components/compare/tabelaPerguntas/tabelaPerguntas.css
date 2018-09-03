@@ -1,10 +1,8 @@
 .table-th-question {
-  min-width: 500px;
+  min-width: 230px;
 }
 
 .table-th-candidate {
-  min-width: 180px;
 }
 .table-th-yours {
-  min-width: 130px;
 }
