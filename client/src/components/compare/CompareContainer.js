@@ -19,10 +19,12 @@ class CompareContainer extends Component {
       <div className="container">
         {this.props.candidatos.isCarregando || isEmpty(dadosCandidato)
           ? null
-          : <TabelaPerguntas
+          :
+          <TabelaPerguntas
             respostas={dadosCandidato.respostas}
             nome={dadosCandidato.nome_exibicao}
-          />}
+          />
+        }
       </div>
     );
   }

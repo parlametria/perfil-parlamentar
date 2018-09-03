@@ -58,7 +58,7 @@ class PerguntasContainer extends Component {
       this.props.escolheTema(dadosPerguntas[indexPergunta + 1].tema);
     }
 
-    console.log(this.state.indexIndicadorPergunta);
+    //console.log(this.state.indexIndicadorPergunta);
   }
 
   voltaPergunta() {
@@ -72,7 +72,7 @@ class PerguntasContainer extends Component {
 
   escolhePergunta(e) {
     e.preventDefault();
-    console.log(e.target);
+    //console.log(e.target);
     this.props.escolhePergunta(parseInt(e.target.id));
   }
 
@@ -98,7 +98,7 @@ class PerguntasContainer extends Component {
       filtroTema
     } = this.props.perguntas;
 
-    console.log(filtroTema);
+    //console.log(filtroTema);
 
     const botoesNavegacao = (
       <div>

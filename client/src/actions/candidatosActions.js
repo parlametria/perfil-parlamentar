@@ -26,12 +26,26 @@ const comparaRespostas = (
     respostasIguais +=
       respostasCandidatos[idPergunta] !== undefined &&
         respostasCandidatos[idPergunta] !== null &&
-        respostasCandidatos[idPergunta] === respostasUsuario[idPergunta] &&
-        respostasUsuario[idPergunta] !== 0
+        respostasUsuario[idPergunta] !== 0 &&
+        respostasCandidatos[idPergunta] === respostasUsuario[idPergunta]
         ? 1
-        : 0;
+        : respostasCandidatos[idPergunta] === -2 ? -1
+          : 0;
+    //numVotosValidos += respostasCandidatos[idPergunta] === 1 || respostasCandidatos[idPergunta] === -1 ? 1 : 0;
   });
-  return respostasIguais / numRespostasUsuario;
+  let valorRealComparacao = respostasIguais / numRespostasUsuario;
+
+  return valorRealComparacao;
+};
+
+const comparaRespostasPorTema = (
+  respostasCandidatos,
+  respostasUsuario,
+  tema
+) => {
+  let respostasIguais = 0;
+  let numVotosValidos = 0;
+
 };
 
 // Recebe um dicionário das respostas dos candidatos no formato {id_cand: [array_resp]} e retorna um dicionário no formato {id_cand: score}
@@ -40,8 +54,8 @@ export const calculaScore = () => (dispatch, getState) => {
   const { arrayRespostasUsuario } = getState().usuarioReducer;
   const respostasCandidatos = getState().candidatosReducer.dadosCandidatos;
 
-  const quantZeros = arrayRespostasUsuario.filter(value => value !== 0).length;
-  const numRespostasUsuario = quantZeros === 0 ? 1 : quantZeros;
+  const quantValidos = arrayRespostasUsuario.filter(value => value !== 0).length;
+  const numRespostasUsuario = quantValidos === 0 ? 1 : quantValidos;
 
   let scoreCandidatos = {};
   Object.keys(respostasCandidatos).map(elem => {
@@ -107,7 +121,7 @@ export const getDadosCandidato = idCandidato => dispatch => {
 
     const dadosCandidato = respostas.data[0];
 
-    console.log(dadosCandidato);
+    // console.log(dadosCandidato);
 
     dispatch({ type: SET_DADOS_CANDIDATO, dadosCandidato });
   });
