@@ -4,8 +4,9 @@ import {
   CANDIDATOS_CARREGANDO,
   CANDIDATOS_CARREGADOS,
   SET_DADOS_CANDIDATOS,
-  SET_DADOS_CANDIDATO,
   SET_FILTRO_CANDIDATOS,
+  SET_NUM_RESPOSTAS,
+  SET_DADOS_CANDIDATO
 } from "./types";
 
 // import {
@@ -24,7 +25,7 @@ const comparaRespostas = (
   let respostasIguais = 0;
   const chaves = Object.keys(respostasUsuario);
   chaves.pop();
-  chaves.map(idPergunta => {
+  chaves.forEach(idPergunta => {
     respostasIguais +=
       respostasCandidatos[idPergunta] !== undefined &&
         respostasCandidatos[idPergunta] !== null &&
@@ -45,7 +46,7 @@ export const calculaScore = () => (dispatch, getState) => {
   const numRespostasUsuario = quantValidos === 0 ? 1 : quantValidos;
 
   let scoreCandidatos = {};
-  Object.keys(respostasCandidatos).map(elem => {
+  Object.keys(respostasCandidatos).forEach(elem => {
     let score = comparaRespostas(
       respostasCandidatos[elem].respostas,
       respostasUsuario,
@@ -137,19 +138,41 @@ export const getDadosCandidatos = () => (dispatch, getState) => {
   const { filtro } = getState().candidatosReducer;
 
   let dadosCandidatos = {};
+  let numResponderam = 0;
+  let numSemResposta = 0;
 
-  console.time("getBD");
+  console.time("getResponderam");
+  console.time("getNaoResponderam");
 
-  axios.get("/api/respostas/estados/" + filtro.estado + "/responderam").then(respostas => {
-    console.timeEnd("getBD");
+  axios
+    .get("/api/respostas/estados/" + filtro.estado + "/responderam")
+    .then(respostas => {
+      console.timeEnd("getResponderam");
 
-    respostas.data.map(resp => {
-      dadosCandidatos[resp.cpf] = resp;
+      respostas.data.forEach(resp => {
+        dadosCandidatos[resp.cpf] = resp;
+        numResponderam++;
+      });
+
+      dispatch({ type: SET_DADOS_CANDIDATOS, dadosCandidatos });
+      dispatch(calculaScore());
+    })
+    .then(res => {
+      axios
+        .get("/api/respostas/estados/" + filtro.estado + "/naoresponderam")
+        .then(respostas => {
+          console.timeEnd("getNaoResponderam");
+
+          respostas.data.forEach(resp => {
+            dadosCandidatos[resp.cpf] = resp;
+            numSemResposta++;
+          });
+
+          dispatch({ type: SET_DADOS_CANDIDATOS, dadosCandidatos });
+          dispatch(calculaScore());
+          dispatch({ type: SET_NUM_RESPOSTAS, numResponderam, numSemResposta });
+        });
     });
-
-    dispatch({ type: SET_DADOS_CANDIDATOS, dadosCandidatos });
-    dispatch(calculaScore());
-  });
 };
 
 export const getDadosCandidato = idCandidato => dispatch => {
