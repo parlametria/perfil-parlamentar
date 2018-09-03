@@ -2,8 +2,6 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 
-import HorizontalScroll from "react-scroll-horizontal";
-
 import Pergunta from "./Pergunta";
 import { salvaScoreUsuario } from "../../actions/usuarioActions";
 import { calculaScore } from "../../actions/candidatosActions";
