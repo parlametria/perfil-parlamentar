@@ -2,7 +2,6 @@ import React from "react";
 
 export const estados = () => {
   return [
-    "TODOS",
     "AC",
     "AL",
     "AM",
