@@ -13,10 +13,10 @@ const initialState = {
   dadosCandidatos: {},
   isCarregando: false,
   scoreCandidatos: {},
-  filtro: { nome: "", partido: "", estado: "" }
+  filtro: { nome: "", partido: "TODOS", estado: "" }
 };
 
-export default function(state = initialState, action) {
+export default function (state = initialState, action) {
   switch (action.type) {
     case SET_DADOS_CANDIDATOS:
       return {
