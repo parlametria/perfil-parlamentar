@@ -7,13 +7,12 @@ import DetalhesCandidato from "./DetalhesCandidato";
 import "./candidato.css";
 
 class Candidato extends Component {
-  
-  criaURL(arrayVotos){
+  criaURL(arrayVotos) {
     let urlVotos = "";
-    arrayVotos.forEach(voto =>{
+    arrayVotos.forEach(voto => {
       urlVotos = urlVotos + voto;
     });
-    return(urlVotos);
+    return urlVotos;
   }
 
   render() {
@@ -30,14 +29,22 @@ class Candidato extends Component {
         <div className="person mb-4">
           <div className="row no-gutters">
             <div className="col-2">
-              <a href="#">
+              <Link
+                className="person-link"
+                to={
+                  "compare/" +
+                  this.props.id +
+                  "/" +
+                  this.criaURL(this.props.arrayRespostasUsuario)
+                }
+              >
                 <img
                   src={this.props.foto}
                   alt="Candidata da Silva"
                   width="100%"
                   className="person-img"
                 />
-              </a>
+              </Link>
             </div>
             <div className="col-10">
               <div className="person-data">
@@ -66,7 +73,12 @@ class Candidato extends Component {
                 </div>
                 <Link
                   className="person-link"
-                  to={"compare/" + this.props.id + "/" + this.criaURL(this.props.arrayRespostasUsuario)}
+                  to={
+                    "compare/" +
+                    this.props.id +
+                    "/" +
+                    this.criaURL(this.props.arrayRespostasUsuario)
+                  }
                 >
                   Compare
                 </Link>

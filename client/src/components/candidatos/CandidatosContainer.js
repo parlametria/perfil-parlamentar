@@ -91,9 +91,14 @@ class CandidatosContainer extends Component {
 
   render() {
     // Inviável fazer no front, tem que fazer nas funções de nuvens.
-    const { dadosCandidatos, scoreCandidatos, numResponderam, numSemResposta } = this.props.candidatos;
-    const {arrayRespostasUsuario} = this.props.usuario;
-    
+    const {
+      dadosCandidatos,
+      scoreCandidatos,
+      numResponderam,
+      numSemResposta
+    } = this.props.candidatos;
+    const { arrayRespostasUsuario } = this.props.usuario;
+
     let candidatosMapeaveis;
     let numRepPartido = 0;
     let numNaoRepPartido = 0;
@@ -149,7 +154,7 @@ class CandidatosContainer extends Component {
                   ".jpg"
                 : "http://pontosdevista.pt/static/uploads/2016/05/sem-fotoABC.jpg"
             }
-            arrayRespostasUsuario = {arrayRespostasUsuario}
+            arrayRespostasUsuario={arrayRespostasUsuario}
           />
         );
       }
@@ -205,18 +210,24 @@ class CandidatosContainer extends Component {
                 </div>
               </div>
             </div>
-            <div>
-              Nesse estado {numResponderam} candidatos responderam ao
-              questionário, de um total de {numResponderam + numSemResposta}{" "}
-              candidatos.
-            </div>
+            <h5>
+              Nesse Estado, <strong className="strong">{numResponderam}</strong>{" "}
+              de{" "}
+              <strong className="strong">
+                {numResponderam + numSemResposta}
+              </strong>{" "}
+              candidatos responderam ao questionário.
+            </h5>
 
             {this.state.filtro.partido !== "TODOS" ? (
-              <div>
-                Para esse partido {numRepPartido} candidatos responderam ao
-                questionário, de um total de {numRepPartido + numNaoRepPartido}{" "}
-                candidatos.
-              </div>
+              <h5>
+                Para esse partido,{" "}
+                <strong className="strong">{numRepPartido}</strong> de{" "}
+                <strong className="strong">
+                  {numRepPartido + numNaoRepPartido}
+                </strong>{" "}
+                candidatos responderam ao questionário.
+              </h5>
             ) : null}
           </header>
 
