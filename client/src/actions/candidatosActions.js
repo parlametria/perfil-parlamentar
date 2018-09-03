@@ -3,7 +3,8 @@ import {
   CANDIDATOS_CARREGANDO,
   CANDIDATOS_CARREGADOS,
   SET_DADOS_CANDIDATOS,
-  SET_FILTRO_CANDIDATOS
+  SET_DADOS_CANDIDATO,
+  SET_FILTRO_CANDIDATOS,
 } from "./types";
 
 // import {
@@ -99,30 +100,16 @@ export const getDadosCandidatos = () => (dispatch, getState) => {
 export const getDadosCandidato = idCandidato => dispatch => {
   dispatch(setCandidatosCarregando());
 
-  // console.time("pega1Candidato");
+  console.time("pega1Candidato");
 
-  // axios.get("/api/respostas/candidatos" + "/" + idCandidato).then(respostas => {
-  //   console.timeEnd("pega1Candidato");
+  axios.get("/api/respostas/candidatos" + "/" + idCandidato).then(respostas => {
+    console.timeEnd("pega1Candidato");
 
-  //   console.log(respostas.data[0]);
+    const dadosCandidato = respostas.data[0];
 
-  //   dispatch(setCandidatosCarregados());
+    console.log(dadosCandidato);
 
-  //   return respostas.data[0];
-  // });
-
-  return new Promise(resolve => {
-    axios
-      .get("/api/respostas/candidatos" + "/" + idCandidato)
-      .then(respostas => {
-        console.timeEnd("pega1Candidato");
-
-        console.log(respostas.data[0]);
-
-        dispatch(setCandidatosCarregados());
-
-        return respostas.data[0];
-      });
+    dispatch({ type: SET_DADOS_CANDIDATO, dadosCandidato });
   });
 };
 
