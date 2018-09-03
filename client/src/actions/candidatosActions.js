@@ -206,8 +206,6 @@ export const getDadosCandidato = (
       numRespostasUsuario
     );
 
-    console.log(score);
-
     dadosCandidato.score = score;
 
     dispatch({ type: SET_DADOS_CANDIDATO, dadosCandidato });

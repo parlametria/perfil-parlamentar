@@ -43,18 +43,9 @@ class CompareContainer extends Component {
   }
 
   render() {
-    const {
-      dadosCandidato,
-      scoreTema,
-      scoreCandidatos
-    } = this.props.candidatos;
+    const { dadosCandidato, scoreTema } = this.props.candidatos;
 
-    if (!isEmpty(dadosCandidato)) {
-      console.log(dadosCandidato);
-    }
-
-    console.log(dadosCandidato.score);
-    console.log(this.getArrayUrl(this.state.votos));
+    console.log(scoreTema);
 
     return (
       <div className="container">
