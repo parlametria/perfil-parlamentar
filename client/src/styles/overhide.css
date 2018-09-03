@@ -199,3 +199,20 @@
   color: #ffffff;
   font-weight: 700;
 }
+
+.pagination-sm {
+  justify-content: center;
+}
+
+.page-link {
+  color: #5b2762;
+  font-weight: 700;
+}
+.page-link:hover {
+  background-color: #a963b3;
+  color: #ffffff;
+}
+
+.pagination-sm .page-link {
+  padding: 0.25rem 0.75rem;
+}
