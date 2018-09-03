@@ -21,12 +21,12 @@ const comparaRespostas = (
   let respostasIguais = 0;
   const chaves = Object.keys(respostasUsuario);
   chaves.pop();
-  chaves.map(idPergunta => {
+  chaves.forEach(idPergunta => {
     respostasIguais +=
       respostasCandidatos[idPergunta] !== undefined &&
-        respostasCandidatos[idPergunta] !== null &&
-        respostasCandidatos[idPergunta] === respostasUsuario[idPergunta] &&
-        respostasUsuario[idPergunta] !== 0
+      respostasCandidatos[idPergunta] !== null &&
+      respostasCandidatos[idPergunta] === respostasUsuario[idPergunta] &&
+      respostasUsuario[idPergunta] !== 0
         ? 1
         : 0;
   });
@@ -43,7 +43,7 @@ export const calculaScore = () => (dispatch, getState) => {
   const numRespostasUsuario = quantZeros === 0 ? 1 : quantZeros;
 
   let scoreCandidatos = {};
-  Object.keys(respostasCandidatos).map(elem => {
+  Object.keys(respostasCandidatos).forEach(elem => {
     let score = comparaRespostas(
       respostasCandidatos[elem].respostas,
       respostasUsuario,
@@ -84,16 +84,18 @@ export const getDadosCandidatos = () => (dispatch, getState) => {
 
   console.time("getBD");
 
-  axios.get("/api/respostas/estados/" + filtro.estado + "/responderam").then(respostas => {
-    console.timeEnd("getBD");
+  axios
+    .get("/api/respostas/estados/" + filtro.estado + "/responderam")
+    .then(respostas => {
+      console.timeEnd("getBD");
 
-    respostas.data.map(resp => {
-      dadosCandidatos[resp.cpf] = resp;
+      respostas.data.forEach(resp => {
+        dadosCandidatos[resp.cpf] = resp;
+      });
+
+      dispatch({ type: SET_DADOS_CANDIDATOS, dadosCandidatos });
+      dispatch(calculaScore());
     });
-
-    dispatch({ type: SET_DADOS_CANDIDATOS, dadosCandidatos });
-    dispatch(calculaScore());
-  });
 };
 
 export const setCandidatosCarregando = () => {
