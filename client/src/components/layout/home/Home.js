@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component } from "react";
 
 // Containers imports
 import PerguntasContainer from "../../perguntas/PerguntasContainer";
@@ -15,6 +15,8 @@ import {
   calculaScore
 } from "../../../actions/candidatosActions";
 
+import FlipMove from "react-flip-move";
+
 // CSS imports
 import "./home.css";
 
@@ -22,10 +24,10 @@ import "./home.css";
 import { estados } from "../../../constantes/filtrosSeletoresCandidatos";
 
 class Home extends Component {
-
   constructor(props) {
     super(props);
 
+    this.state = { selecionouEstado: false };
     this.selecionaEstado = this.selecionaEstado.bind(this);
   }
 
@@ -42,10 +44,10 @@ class Home extends Component {
 
     this.props.setFiltroCandidatos(novoFiltroEstado);
     this.props.getDadosCandidatos();
+    this.setState({ selecionouEstado: true });
   }
 
   render() {
-
     const { filtro } = this.props.candidatos;
 
     return (
@@ -55,11 +57,15 @@ class Home extends Component {
             <h2 className="intro-title text-center">
               Nos diga o que você <strong>defende</strong> e a gente apresenta
               candidatos alinhados com seu perfil
-        </h2>
+            </h2>
             <div className="d-flex justify-content-center">
               <form>
                 <div className="form-group">
-                  <select className="form-control" onChange={this.selecionaEstado} value={filtro.estado}>
+                  <select
+                    className="form-control"
+                    onChange={this.selecionaEstado}
+                    value={filtro.estado}
+                  >
                     <option selected>Em que Estado você vota?</option>
                     {estados()}
                   </select>
@@ -68,18 +74,21 @@ class Home extends Component {
             </div>
           </div>
         </section>
-
-        <div className="grid-main">
-          <section className="grid-panel panel-master">
-            <CandidatosContainer />
-          </section>
-          <div className="grid-separator" />
-          <section className="grid-panel panel-detail">
-            <PerguntasContainer />
-          </section>
-        </div>
+        <FlipMove>
+          {filtro.estado !== "" ? (
+            <div className="grid-main">
+              <section className="grid-panel panel-master">
+                <CandidatosContainer />
+              </section>
+              <div className="grid-separator" />
+              <section className="grid-panel panel-detail">
+                <PerguntasContainer />
+              </section>
+            </div>
+          ) : null}
+        </FlipMove>
       </div>
-    )
+    );
   }
 }
 

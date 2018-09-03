@@ -150,7 +150,10 @@ class PerguntasContainer extends Component {
           <li className="nav-item" key={index}>
             <a
               className={classnames("nav-link", {
-                active: perguntaFiltrada.id === indexPergunta
+                active: perguntaFiltrada.id === indexPergunta,
+                done:
+                  arrayRespostasUsuario[Number(perguntaFiltrada.id)] !== 0 &&
+                  perguntaFiltrada.id !== indexPergunta
               })}
               key={index + ". " + perguntaFiltrada.id}
               id={perguntaFiltrada.id}

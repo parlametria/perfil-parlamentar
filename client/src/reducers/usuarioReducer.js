@@ -6,7 +6,12 @@ const TAM_PERGUNTAS = 46; // Esse tamanho é calculado em perguntasActions, mas 
 // arrayVotings: [0/1/-1]
 const initialState = {
   respostasUsuario: [].fill.call({ length: TAM_PERGUNTAS }, 0),
-  arrayRespostasUsuario: Array(TAM_PERGUNTAS).fill(0)
+  arrayRespostasUsuario: Array(TAM_PERGUNTAS).fill(0),
+  quantidadeVotos: 0
+};
+
+const contaVotos = arrayRespostasUsuario => {
+  return arrayRespostasUsuario.filter(res => res !== 0).length;
 };
 
 export default function(state = initialState, action) {
@@ -15,7 +20,8 @@ export default function(state = initialState, action) {
       return {
         ...state,
         respostasUsuario: action.respostasUsuario,
-        arrayRespostasUsuario: action.arrayRespostasUsuario
+        arrayRespostasUsuario: action.arrayRespostasUsuario,
+        quantidadeVotos: contaVotos(action.arrayRespostasUsuario)
       };
     default:
       return state;

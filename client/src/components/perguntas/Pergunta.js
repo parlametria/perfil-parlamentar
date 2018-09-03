@@ -82,7 +82,7 @@ class Pergunta extends Component {
             <button
               type="button"
               className={classnames("btn btn-primary", {
-                "btn-secondary": this.state.resposta === 0
+                "btn-secondary": this.state.resposta === -2
               })}
               onClick={this.votaNaoSei}
             >
