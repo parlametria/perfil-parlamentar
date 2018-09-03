@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 
 import { salvaScoreUsuario } from "../../actions/usuarioActions";
-import { calculaScore } from "../../actions/candidatosActions";
+import { calculaScore, calculaScorePorTema } from "../../actions/candidatosActions";
 import {
   getDadosPerguntas,
   voltaPergunta,
@@ -58,7 +58,7 @@ class PerguntasContainer extends Component {
       this.props.escolheTema(dadosPerguntas[indexPergunta + 1].tema);
     }
 
-    console.log(this.state.indexIndicadorPergunta);
+    //console.log(this.state.indexIndicadorPergunta);
   }
 
   voltaPergunta() {
@@ -72,7 +72,7 @@ class PerguntasContainer extends Component {
 
   escolhePergunta(e) {
     e.preventDefault();
-    console.log(e.target);
+    //console.log(e.target);
     this.props.escolhePergunta(parseInt(e.target.id));
   }
 
@@ -98,7 +98,7 @@ class PerguntasContainer extends Component {
       filtroTema
     } = this.props.perguntas;
 
-    console.log(filtroTema);
+    //console.log(filtroTema);
 
     const botoesNavegacao = (
       <div>
@@ -258,6 +258,7 @@ class PerguntasContainer extends Component {
 PerguntasContainer.propTypes = {
   salvaScoreUsuario: PropTypes.func.isRequired,
   calculaScore: PropTypes.func.isRequired,
+  calculaScorePorTema: PropTypes.func.isRequired,
   getDadosPerguntas: PropTypes.func.isRequired,
   passaPergunta: PropTypes.func.isRequired,
   voltaPergunta: PropTypes.func.isRequired,
@@ -275,6 +276,7 @@ export default connect(
   {
     salvaScoreUsuario,
     calculaScore,
+    calculaScorePorTema,
     getDadosPerguntas,
     passaPergunta,
     voltaPergunta,

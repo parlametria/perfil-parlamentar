@@ -4,34 +4,40 @@ import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 
 import TabelaPerguntas from "./tabelaPerguntas/TabelaPerguntas";
+import PontuacaoPorTema from "./pontuacaoPorTema/PontuacaoTema";
 
-import { getDadosCandidato } from "../../actions/candidatosActions";
+import {
+  getDadosCandidato,
+  calculaScorePorTema
+} from "../../actions/candidatosActions";
 import isEmpty from "../../validation/is-empty";
 
 import "./CompareContainer.css";
 
 class CompareContainer extends Component {
-
-  constructor(props){
+  constructor(props) {
     super(props);
-    this.state = {votos: ""};
+    this.state = { votos: "" };
   }
 
-  getArrayUrl(url){
-    let arrayUrl = []
-    for(var i = 0; i < url.length; i++){
-      if(url[i]==="-"){
-        arrayUrl.push(Number(url[i]+url[i+1]));
+  getArrayUrl(url) {
+    let arrayUrl = [];
+    for (var i = 0; i < url.length; i++) {
+      if (url[i] === "-") {
+        arrayUrl.push(Number(url[i] + url[i + 1]));
         i++;
-      }else{
+      } else {
         arrayUrl.push(Number(url[i]));
       }
     }
-    return(arrayUrl);
+    return arrayUrl;
   }
   render() {
-    const { dadosCandidato } = this.props.candidatos;
-    console.log(dadosCandidato);
+    const { dadosCandidato, scoreTema } = this.props.candidatos;
+
+    if (!isEmpty(dadosCandidato)) {
+      console.log(scoreTema);
+    }
 
     return (
       <div className="container">
@@ -49,11 +55,13 @@ class CompareContainer extends Component {
           <div className="col-md-3">
             <div className="compare-person-profile row no-gutters">
               <div className="col-4">
-                <img 
-                  src={dadosCandidato.tem_foto ?
-                    "https://s3-sa-east-1.amazonaws.com/fotoscandidatos2018/fotos_tratadas/img_" +
-                    dadosCandidato.cpf +
-                    ".jpg" : "http://pontosdevista.pt/static/uploads/2016/05/sem-fotoABC.jpg"
+                <img
+                  src={
+                    dadosCandidato.tem_foto
+                      ? "https://s3-sa-east-1.amazonaws.com/fotoscandidatos2018/fotos_tratadas/img_" +
+                        dadosCandidato.cpf +
+                        ".jpg"
+                      : "http://pontosdevista.pt/static/uploads/2016/05/sem-fotoABC.jpg"
                   }
                   alt={dadosCandidato.nome_exibicao}
                   width="100%"
@@ -74,6 +82,11 @@ class CompareContainer extends Component {
             <h4 className="compare-title">
               Como vocês <strong className="strong">votaram</strong> nos temas:
             </h4>
+            <div className="row">
+              <div className="col-md-3">
+                <PontuacaoPorTema scoreTema={scoreTema} />
+              </div>
+            </div>
           </div>
           <div className="col-md-9">
             {this.props.candidatos.isCarregando ||
@@ -82,7 +95,6 @@ class CompareContainer extends Component {
                 respostas={dadosCandidato.respostas}
                 nome={dadosCandidato.nome_exibicao}
                 votos={this.getArrayUrl(this.state.votos)}
-                
               />
             )}
           </div>
@@ -99,12 +111,13 @@ class CompareContainer extends Component {
   componentDidMount() {
     const { candidato, votos } = this.props.match.params;
     const cand = this.props.getDadosCandidato(candidato);
-    this.setState({votos});
+    this.setState({ votos });
   }
 }
 
 TabelaPerguntas.propTypes = {
-  getDadosCandidato: PropTypes.func.isRequired
+  getDadosCandidato: PropTypes.func.isRequired,
+  calculaScorePorTema: PropTypes.func.isRequired
 };
 const mapStateToProps = state => ({
   candidatos: state.candidatosReducer
@@ -112,5 +125,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { getDadosCandidato }
+  { getDadosCandidato, calculaScorePorTema }
 )(CompareContainer);
