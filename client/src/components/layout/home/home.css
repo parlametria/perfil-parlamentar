@@ -2,6 +2,12 @@
   padding-top: 2rem;
   padding-bottom: 2rem;
 }
+.intro-title {
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 3rem;
+  max-width: 720px;
+}
 .grid-main {
   display: flex;
   flex-wrap: wrap;
@@ -16,7 +22,6 @@
 
 .panel-body {
   padding: 1rem;
-  max-height: calc(100vh - 323px);
   overflow-y: auto;
 }
 
@@ -30,10 +35,6 @@
 
 .panel-detail {
   z-index: 9;
-}
-
-.panel-detail-header {
-  /* border-bottom: solid 5px #5b2762; */
 }
 
 @media (min-width: 992px) {

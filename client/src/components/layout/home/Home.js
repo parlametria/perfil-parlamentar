@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component } from "react";
 
 // Containers imports
 import PerguntasContainer from "../../perguntas/PerguntasContainer";
@@ -22,7 +22,6 @@ import "./home.css";
 import { estados } from "../../../constantes/filtrosSeletoresCandidatos";
 
 class Home extends Component {
-
   constructor(props) {
     super(props);
 
@@ -45,7 +44,6 @@ class Home extends Component {
   }
 
   render() {
-
     const { filtro } = this.props.candidatos;
 
     return (
@@ -53,13 +51,18 @@ class Home extends Component {
         <section className="intro">
           <div className="container">
             <h2 className="intro-title text-center">
-              Nos diga o que você <strong>defende</strong> e a gente apresenta
-              candidatos alinhados com seu perfil
-        </h2>
+              Nos diga o que você <strong className="strong">defende</strong> e
+              em <strong className="strong">oito minutos</strong> a gente
+              apresenta candidatos alinhados com você
+            </h2>
             <div className="d-flex justify-content-center">
               <form>
                 <div className="form-group">
-                  <select className="form-control" onChange={this.selecionaEstado} value={filtro.estado}>
+                  <select
+                    className="form-control"
+                    onChange={this.selecionaEstado}
+                    value={filtro.estado}
+                  >
                     <option selected>Em que Estado você vota?</option>
                     {estados()}
                   </select>
@@ -79,7 +82,7 @@ class Home extends Component {
           </section>
         </div>
       </div>
-    )
+    );
   }
 }
 

@@ -82,18 +82,18 @@ footer {
 }
 
 /* width */
-::-webkit-scrollbar {
+.custom-scroll-bar::-webkit-scrollbar {
   width: 7px;
   height: 5px;
   margin: 1px;
 }
 
 /* Track */
-::-webkit-scrollbar-track {
+.custom-scroll-bar::-webkit-scrollbar-track {
   background-color: #5b2762;
 }
 
 /* Handle */
-::-webkit-scrollbar-thumb {
+.custom-scroll-bar::-webkit-scrollbar-thumb {
   background: #a963b3;
 }

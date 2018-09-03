@@ -130,7 +130,7 @@ class PerguntasContainer extends Component {
         temas.push(
           <li className="nav-item" key={i}>
             <a
-              className={classnames("nav-link done", {
+              className={classnames("nav-link", {
                 active: filtroTema === tema
               })}
               onClick={this.selecionaTema}
@@ -197,7 +197,10 @@ class PerguntasContainer extends Component {
     return (
       <div className="pergunta-container">
         <div className="panel-detail-header">
-          <div className="nav-horizontal" onClick={this.showPerguntaContainer}>
+          <div
+            className="nav-horizontal custom-scroll-bar"
+            onClick={this.showPerguntaContainer}
+          >
             <ul className="nav nav-tabs nav-fill nav-horizontal-pills">
               {temas}
             </ul>
@@ -211,6 +214,9 @@ class PerguntasContainer extends Component {
           aria-labelledby="perguntaContainer"
         >
           <div className="card-body">
+            <div className="container">
+              <h2 className="question-theme">{filtroTema}</h2>
+            </div>
             <div className="nav-horizontal">
               <ul className="nav nav-pills nav-fill nav-horizontal-pills-sm">
                 {indicadorPergunta}
