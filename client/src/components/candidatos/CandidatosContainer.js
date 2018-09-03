@@ -91,7 +91,6 @@ class CandidatosContainer extends Component {
 
   render() {
     // Inviável fazer no front, tem que fazer nas funções de nuvens.
-
     const { dadosCandidatos } = this.props.candidatos;
 
     let candidatosMapeaveis;
@@ -107,23 +106,30 @@ class CandidatosContainer extends Component {
     else if (this.state.filtro.nome !== "") {
       candidatosMapeaveis = this.state.candidatosFiltrados;
     } else {
-      candidatosMapeaveis = this.state.candidatosRanking.map(cand => cand[0]);
+      //candidatosMapeaveis = this.state.candidatosRanking.map(cand => cand[0]);
+      candidatosMapeaveis = this.props.getTopNCandidatos(NUM_CANDIDATOS).map(cand => cand[0]);
     }
 
-    const candidatos = candidatosMapeaveis.map(elem => {
-      const candidato = this.props.candidatos.dadosCandidatos[elem];
+    console.log(candidatosMapeaveis);
+    console.log(dadosCandidatos);
 
-      return (
-        <Candidato
-          key={candidato.cpf}
-          nome={candidato.nome_urna}
-          siglaPartido={candidato.sg_partido}
-          estado={candidato.uf}
-          score={this.state.scoreCandidatos[candidato.cpf]}
-          respostas={candidato.respostas}
-          foto={candidato.foto}
-        />
-      );
+    const candidatos = candidatosMapeaveis.map(cpf => {
+      const candidato = this.props.candidatos.dadosCandidatos[cpf];
+
+      if (!isEmpty(candidato)) {
+        return (
+          <Candidato
+            key={candidato.cpf}
+            nome={candidato.nome_urna}
+            siglaPartido={candidato.sg_partido}
+            estado={candidato.uf}
+            score={this.state.scoreCandidatos[candidato.cpf]}
+            respostas={candidato.respostas}
+            foto={candidato.foto}
+          />
+        );
+      }
+      return null;
     });
 
     return (
@@ -172,6 +178,9 @@ class CandidatosContainer extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    console.log(nextProps.candidatos.dadosCandidatos);
+    console.log(nextProps.getTopNCandidatos(NUM_CANDIDATOS));
+
     if (nextProps.candidatos.scoreCandidatos) {
       this.setState({
         scoreCandidatos: nextProps.candidatos.scoreCandidatos,

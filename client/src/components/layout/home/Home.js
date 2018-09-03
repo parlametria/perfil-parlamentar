@@ -11,7 +11,8 @@ import PropTypes from "prop-types";
 // Actions
 import {
   getDadosCandidatos,
-  setFiltroCandidatos
+  setFiltroCandidatos,
+  calculaScore
 } from "../../../actions/candidatosActions";
 
 // CSS imports
@@ -32,12 +33,11 @@ class Home extends Component {
     e.preventDefault();
 
     const { filtro } = this.props.candidatos;
-    const estado = e.target.value;
 
     const novoFiltroEstado = {
       nome: filtro.nome,
       partido: filtro.partido,
-      estado
+      estado: e.target.value
     };
 
     console.log(
@@ -46,7 +46,7 @@ class Home extends Component {
 
     this.props.setFiltroCandidatos(novoFiltroEstado);
     this.props.getDadosCandidatos();
-
+    this.props.calculaScore();
   }
 
   render() {
@@ -87,7 +87,8 @@ class Home extends Component {
 
 Home.propTypes = {
   getDadosCandidatos: PropTypes.func.isRequired,
-  setFiltroCandidatos: PropTypes.func.isRequired
+  setFiltroCandidatos: PropTypes.func.isRequired,
+  calculaScore: PropTypes.func.isRequired
 };
 const mapStateToProps = state => ({
   candidatos: state.candidatosReducer
@@ -95,5 +96,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { getDadosCandidatos, setFiltroCandidatos }
+  { getDadosCandidatos, setFiltroCandidatos, calculaScore }
 )(Home);
