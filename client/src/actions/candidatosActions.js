@@ -1,5 +1,6 @@
 import {
   SET_SCORE_CANDIDATOS,
+  SET_SCORE_CANDIDATO_POR_TEMA,
   CANDIDATOS_CARREGANDO,
   CANDIDATOS_CARREGADOS,
   SET_DADOS_CANDIDATOS,
@@ -13,6 +14,7 @@ import {
 // } from "../services/firebaseService";
 
 import axios from "axios";
+import isEmpty from "../validation/is-empty";
 
 const comparaRespostas = (
   respostasCandidatos,
@@ -27,25 +29,11 @@ const comparaRespostas = (
       respostasCandidatos[idPergunta] !== undefined &&
         respostasCandidatos[idPergunta] !== null &&
         respostasUsuario[idPergunta] !== 0 &&
+        respostasUsuario[idPergunta] !== -2 &&
         respostasCandidatos[idPergunta] === respostasUsuario[idPergunta]
-        ? 1
-        : respostasCandidatos[idPergunta] === -2 ? -1
-          : 0;
-    //numVotosValidos += respostasCandidatos[idPergunta] === 1 || respostasCandidatos[idPergunta] === -1 ? 1 : 0;
+        ? 1 : 0;
   });
-  let valorRealComparacao = respostasIguais / numRespostasUsuario;
-
-  return valorRealComparacao;
-};
-
-const comparaRespostasPorTema = (
-  respostasCandidatos,
-  respostasUsuario,
-  tema
-) => {
-  let respostasIguais = 0;
-  let numVotosValidos = 0;
-
+  return respostasIguais / numRespostasUsuario;
 };
 
 // Recebe um dicionário das respostas dos candidatos no formato {id_cand: [array_resp]} e retorna um dicionário no formato {id_cand: score}
@@ -53,8 +41,7 @@ export const calculaScore = () => (dispatch, getState) => {
   const { respostasUsuario } = getState().usuarioReducer;
   const { arrayRespostasUsuario } = getState().usuarioReducer;
   const respostasCandidatos = getState().candidatosReducer.dadosCandidatos;
-
-  const quantValidos = arrayRespostasUsuario.filter(value => value !== 0).length;
+  const quantValidos = arrayRespostasUsuario.filter(value => value !== 0 && value !== -2).length;
   const numRespostasUsuario = quantValidos === 0 ? 1 : quantValidos;
 
   let scoreCandidatos = {};
@@ -70,6 +57,60 @@ export const calculaScore = () => (dispatch, getState) => {
   dispatch({
     type: SET_SCORE_CANDIDATOS,
     scoreCandidatos
+  });
+};
+
+export const calculaScorePorTema = (idCandidato) => (dispatch, getState) => {
+  const { respostasUsuario } = getState().usuarioReducer;
+  const { arrayRespostasUsuario } = getState().usuarioReducer;
+  const respostasCandidatos = getState().candidatosReducer.dadosCandidatos;
+  const perguntas = getState().perguntasReducer.dadosPerguntas;
+  console.log(respostasCandidatos[idCandidato].respostas)
+  const quantValidos = arrayRespostasUsuario.filter(value => value !== 0 && value !== -2).length;
+  const numRespostasUsuario = quantValidos === 0 ? 1 : quantValidos;
+
+  let nomeTemas = new Set();
+  perguntas.forEach(elem => {
+    nomeTemas.add(elem.tema);
+  });
+
+  let temas = {};
+  perguntas.forEach(pergunta => {
+    if (isEmpty(temas[pergunta.tema])) {
+      temas[pergunta.tema] = [];
+      temas[pergunta.tema].push(pergunta);
+    }
+    else {
+      temas[pergunta.tema].push(pergunta);
+    }
+  });
+
+  let scoreTema = {};
+  nomeTemas.forEach(nomeTema => {
+    scoreTema[nomeTema] = 0;
+  });
+
+  Object.keys(temas).forEach(tema => {
+    let score = 0;
+    let respostasCandidatosTema = {};
+    perguntas.forEach(pergunta => {
+      if (pergunta.tema === tema) {
+        respostasCandidatosTema[pergunta.id] = respostasCandidatos[idCandidato].respostas[pergunta.id];
+      }
+    })
+    temas[tema].forEach(pergunta => {
+      score = comparaRespostas(
+        respostasCandidatosTema,
+        respostasUsuario,
+        numRespostasUsuario
+      );
+    });
+    scoreTema[tema] = score;
+  });
+
+  dispatch({
+    type: SET_SCORE_CANDIDATO_POR_TEMA,
+    scoreTema
   });
 };
 
@@ -142,3 +183,4 @@ export const setCandidatosCarregados = () => {
 export const setFiltroCandidatos = filtro => dispatch => {
   dispatch({ type: SET_FILTRO_CANDIDATOS, filtro });
 };
+

@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 
 import { salvaScoreUsuario } from "../../actions/usuarioActions";
-import { calculaScore } from "../../actions/candidatosActions";
+import { calculaScore, calculaScorePorTema } from "../../actions/candidatosActions";
 import {
   getDadosPerguntas,
   voltaPergunta,
@@ -46,6 +46,7 @@ class PerguntasContainer extends Component {
     arrayRespostasUsuario[novaResposta.id] = novaResposta.resposta;
     this.props.salvaScoreUsuario(respostasUsuario, arrayRespostasUsuario);
     this.props.calculaScore();
+    this.props.calculaScorePorTema("56606940206");
     this.passaPergunta();
   }
 
@@ -255,6 +256,7 @@ class PerguntasContainer extends Component {
 PerguntasContainer.propTypes = {
   salvaScoreUsuario: PropTypes.func.isRequired,
   calculaScore: PropTypes.func.isRequired,
+  calculaScorePorTema: PropTypes.func.isRequired,
   getDadosPerguntas: PropTypes.func.isRequired,
   passaPergunta: PropTypes.func.isRequired,
   voltaPergunta: PropTypes.func.isRequired,
@@ -272,6 +274,7 @@ export default connect(
   {
     salvaScoreUsuario,
     calculaScore,
+    calculaScorePorTema,
     getDadosPerguntas,
     passaPergunta,
     voltaPergunta,
