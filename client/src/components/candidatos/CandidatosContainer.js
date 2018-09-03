@@ -90,6 +90,7 @@ class CandidatosContainer extends Component {
   render() {
     // Inviável fazer no front, tem que fazer nas funções de nuvens.
     const { dadosCandidatos, scoreCandidatos, numResponderam, numSemResposta } = this.props.candidatos;
+    const {arrayRespostasUsuario} = this.props.usuario;
 
     let candidatosMapeaveis;
     let numRepPartido = 0; 
@@ -145,6 +146,7 @@ class CandidatosContainer extends Component {
               candidato.cpf +
               ".jpg" : "http://pontosdevista.pt/static/uploads/2016/05/sem-fotoABC.jpg"
             }
+            arrayRespostasUsuario = {arrayRespostasUsuario}
           />
         );
       }
@@ -288,7 +290,8 @@ CandidatosContainer.propTypes = {
   setFiltroCandidatos: PropTypes.func.isRequired
 };
 const mapStateToProps = state => ({
-  candidatos: state.candidatosReducer
+  candidatos: state.candidatosReducer,
+  usuario: state.usuarioReducer
 });
 
 export default connect(

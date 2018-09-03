@@ -11,6 +11,24 @@ import isEmpty from "../../validation/is-empty";
 import "./CompareContainer.css";
 
 class CompareContainer extends Component {
+
+  constructor(props){
+    super(props);
+    this.state = {votos: ""};
+  }
+
+  getArrayUrl(url){
+    let arrayUrl = []
+    for(var i = 0; i < url.length; i++){
+      if(url[i]==="-"){
+        arrayUrl.push(Number(url[i]+url[i+1]));
+        i++;
+      }else{
+        arrayUrl.push(Number(url[i]));
+      }
+    }
+    return(arrayUrl);
+  }
   render() {
     const { dadosCandidato } = this.props.candidatos;
     console.log(dadosCandidato);
@@ -31,11 +49,11 @@ class CompareContainer extends Component {
           <div className="col-md-3">
             <div className="compare-person-profile row no-gutters">
               <div className="col-4">
-                <img
-                  src={
+                <img 
+                  src={dadosCandidato.tem_foto ?
                     "https://s3-sa-east-1.amazonaws.com/fotoscandidatos2018/fotos_tratadas/img_" +
                     dadosCandidato.cpf +
-                    ".jpg"
+                    ".jpg" : "http://pontosdevista.pt/static/uploads/2016/05/sem-fotoABC.jpg"
                   }
                   alt={dadosCandidato.nome_exibicao}
                   width="100%"
@@ -63,6 +81,8 @@ class CompareContainer extends Component {
               <TabelaPerguntas
                 respostas={dadosCandidato.respostas}
                 nome={dadosCandidato.nome_exibicao}
+                votos={this.getArrayUrl(this.state.votos)}
+                
               />
             )}
           </div>
@@ -77,8 +97,9 @@ class CompareContainer extends Component {
   }
 
   componentDidMount() {
-    const { candidato } = this.props.match.params;
+    const { candidato, votos } = this.props.match.params;
     const cand = this.props.getDadosCandidato(candidato);
+    this.setState({votos});
   }
 }
 

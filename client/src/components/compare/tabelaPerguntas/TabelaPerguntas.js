@@ -38,8 +38,9 @@ class TabelaPerguntas extends Component {
     const { paginaAtual, perguntasPorPagina } = this.state;
 
     const { dadosPerguntas } = this.props.perguntas;
-    const { arrayRespostasUsuario } = this.props.usuario;
-
+    const arrayRespostasUsuario = this.props.votos;
+    console.log(arrayRespostasUsuario);
+    
     const perguntas = [];
     Object.keys(dadosPerguntas).map(p => {
       return perguntas.push({
