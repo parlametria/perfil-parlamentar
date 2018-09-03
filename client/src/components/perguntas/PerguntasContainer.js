@@ -19,9 +19,11 @@ import classnames from "classnames";
 import Spinner from "../common/Spinner";
 import isEmpty from "../../validation/is-empty";
 
+//import { delay } from "../../utils/funcoes";
+
 import "./perguntas.css";
 
-const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
+const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
 
 class PerguntasContainer extends Component {
   constructor(props) {
@@ -48,7 +50,7 @@ class PerguntasContainer extends Component {
   }
 
   async passaPergunta() {
-    await sleep(400);
+    await delay(400);
     this.props.passaPergunta();
     const { indexPergunta, dadosPerguntas } = this.props.perguntas;
 
@@ -162,8 +164,6 @@ class PerguntasContainer extends Component {
             </a>
           </li>
         ));
-
-      console.log(indicadorPergunta.length);
 
       pergunta = (
         <Pergunta
