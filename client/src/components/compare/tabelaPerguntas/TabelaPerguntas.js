@@ -4,6 +4,7 @@ import isEmpty from "../../../validation/is-empty";
 import { connect } from "react-redux";
 
 import { getDadosCandidato } from "../../../actions/candidatosActions";
+import { getDadosPerguntas } from "../../../actions/perguntasActions";
 
 import PropTypes from "prop-types";
 
@@ -23,6 +24,10 @@ class TabelaPerguntas extends Component {
     this.setState({
       paginaAtual: index
     });
+  }
+
+  componentDidMount() {
+    this.props.getDadosPerguntas();
   }
 
   render() {
@@ -140,7 +145,8 @@ class TabelaPerguntas extends Component {
   }
 }
 TabelaPerguntas.propTypes = {
-  getDadosCandidato: PropTypes.func.isRequired
+  getDadosCandidato: PropTypes.func.isRequired,
+  getDadosPerguntas: PropTypes.func.isRequired,
 };
 const mapStateToProps = state => ({
   usuario: state.usuarioReducer,
@@ -149,5 +155,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { getDadosCandidato }
+  { getDadosCandidato, getDadosPerguntas }
 )(TabelaPerguntas);
