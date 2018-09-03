@@ -19,7 +19,7 @@ class CompareContainer extends Component {
       <div className="container">
         <h4 className="compare-title text-center">
           Calculamos um match eleitoral de{" "}
-          <strong className="strong">95%</strong> entre você e{" "}
+          <strong className="strong">(score)</strong> entre você e{" "}
           {dadosCandidato.nome_exibicao}
         </h4>
         <div className="my-3">
