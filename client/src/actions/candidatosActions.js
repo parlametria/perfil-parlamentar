@@ -82,12 +82,13 @@ export const getDadosCandidatos = () => (dispatch, getState) => {
 
   let dadosCandidatos = {};
 
-  console.time("getBD");
+  console.time("getResponderam");
+  console.time("getNaoResponderam");
 
   axios
     .get("/api/respostas/estados/" + filtro.estado + "/responderam")
     .then(respostas => {
-      console.timeEnd("getBD");
+      console.timeEnd("getResponderam");
 
       respostas.data.forEach(resp => {
         dadosCandidatos[resp.cpf] = resp;
@@ -95,6 +96,20 @@ export const getDadosCandidatos = () => (dispatch, getState) => {
 
       dispatch({ type: SET_DADOS_CANDIDATOS, dadosCandidatos });
       dispatch(calculaScore());
+    })
+    .then(res => {
+      axios
+        .get("/api/respostas/estados/" + filtro.estado + "/naoresponderam")
+        .then(respostas => {
+          console.timeEnd("getNaoResponderam");
+
+          respostas.data.forEach(resp => {
+            dadosCandidatos[resp.cpf] = resp;
+          });
+
+          dispatch({ type: SET_DADOS_CANDIDATOS, dadosCandidatos });
+          dispatch(calculaScore());
+        });
     });
 };
 
