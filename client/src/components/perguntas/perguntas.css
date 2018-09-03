@@ -1,3 +1,14 @@
+.pergunta-container {
+  background-color: #ffffff;
+}
+.question-wrapper {
+  min-height: 100px;
+}
+@media (min-width: 992px) {
+  .question-wrapper {
+    min-height: 120px;
+  }
+}
 .question {
   font-size: 1rem;
   color: #5b2762;

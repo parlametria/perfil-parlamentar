@@ -125,7 +125,7 @@ class CandidatosContainer extends Component {
             estado={candidato.uf}
             score={this.state.scoreCandidatos[candidato.cpf]}
             respostas={candidato.respostas}
-            foto={candidato.foto}
+            foto={"https://s3-sa-east-1.amazonaws.com/fotoscandidatos2018/fotos_tratadas/img_" + candidato.cpf + ".jpg"}
           />
         );
       }
@@ -133,46 +133,58 @@ class CandidatosContainer extends Component {
     });
 
     return (
-      <div className="container">
-        <header className="panel-header">
-          {false ? <Apresentacao /> : null}
-          <div className="input-group mb-3">
-            <div className="input-group-prepend">
-              <span
-                className="input-group-text input-group-text-secondary"
-                id="search-candidate"
+      <div>
+        <div className="panel-master-header">
+          <ul className="nav nav-tabs nav-tabs-secondary">
+            <li className="nav-item">
+              <a className="nav-link active" href="#">
+                Candidatos
+              </a>
+            </li>
+          </ul>
+        </div>
+        <div className="container">
+          <header className="panel-header">
+            {false ? <Apresentacao /> : null}
+            <div className="input-group mb-3">
+              <div className="input-group-prepend">
+                <span
+                  className="input-group-text input-group-text-secondary"
+                  id="search-candidate"
+                >
+                  <span className="icon-search" />
+                </span>
+              </div>
+              <input
+                type="text"
+                className="form-control form-control-secondary"
+                placeholder="Pesquisar candidato..."
+                aria-label="Pesquisar candidato"
+                aria-describedby="search-candidate"
+                onChange={this.buscaNome}
+                value={this.state.filtro.nome}
+              />
+              <select
+                className="form-control barra-filtro-candidato"
+                placeholder="Partidos"
+                onChange={this.buscaPartido}
               >
-                <span className="icon-search" />
-              </span>
-            </div>
-            <input
-              type="text"
-              className="form-control form-control-secondary"
-              placeholder="Pesquisar candidato..."
-              aria-label="Pesquisar candidato"
-              aria-describedby="search-candidate"
-              onChange={this.buscaNome}
-              value={this.state.filtro.nome}
-            />
-            <select
-              className="form-control barra-filtro-candidato"
-              placeholder="Partidos"
-              onChange={this.buscaPartido}
-            >
-              {partidos()}
-            </select>
-          </div>
-        </header>
+                {partidos()}
+              </select>
 
-        {this.props.candidatos.isCarregando || this.state.isPesquisando ? (
-          <div style={{ paddingTop: "30vh" }}>
-            <Spinner />
-          </div>
-        ) : (
-            <div className="candidatos">
-              <FlipMove>{candidatos}</FlipMove>
             </div>
-          )}
+          </header>
+
+          {this.props.candidatos.isCarregando || this.state.isPesquisando ? (
+            <div style={{ paddingTop: "30vh" }}>
+              <Spinner />
+            </div>
+          ) : (
+              <div className="candidatos">
+                <FlipMove>{candidatos}</FlipMove>
+              </div>
+            )}
+        </div>
       </div>
     );
   }

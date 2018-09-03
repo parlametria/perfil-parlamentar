@@ -1,6 +1,9 @@
 .nav-link {
   font-weight: 700;
 }
+.nav-link:hover {
+  cursor: pointer;
+}
 .nav-pills .nav-link {
   padding: 0;
   padding-bottom: 0.5rem;
