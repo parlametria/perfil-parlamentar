@@ -49,14 +49,13 @@ class CandidatosContainer extends Component {
       scoreCandidatos: {},
       candidatosRanking: [],
       candidatosFiltrados: [],
-      filtro: { nome: "", partido: "", estado: "" },
+      filtro: { nome: "", partido: "TODOS", estado: "" },
       debounced: '',
       isPesquisando: false
     };
 
     this.onSearch$ = new Subject();
     this.buscaNome = this.buscaNome.bind(this);
-    this.buscaEstado = this.buscaEstado.bind(this);
     this.buscaPartido = this.buscaPartido.bind(this);
   }
 
@@ -65,8 +64,8 @@ class CandidatosContainer extends Component {
 
     let filtro = {
       nome: e.target.value,
-      partido: this.state.filtro.partido,
-      estado: this.state.filtro.estado
+      partido: this.props.candidatos.filtro.partido,
+      estado: this.props.candidatos.filtro.estado
     };
 
     this.setState({ filtro, isPesquisando: true });
@@ -74,27 +73,17 @@ class CandidatosContainer extends Component {
     this.onSearch$.next(filtro.nome);
   }
 
-  buscaEstado(e) {
-    e.preventDefault();
-
-    let filtro = {
-      nome: this.state.filtro.nome,
-      partido: this.state.filtro.partido,
-      estado: e.target.value
-    };
-
-    this.setState({ filtro });
-    this.props.setFiltroCandidatos(filtro);
-  }
-
   buscaPartido(e) {
     e.preventDefault();
 
     let filtro = {
-      nome: this.state.filtro.nome,
+      nome: this.props.candidatos.filtro.nome,
       partido: e.target.value,
-      estado: this.state.filtro.estado
+      estado: this.props.candidatos.filtro.estado
     };
+
+    console.log(filtro);
+
 
     this.setState({ filtro });
     this.props.setFiltroCandidatos(filtro);
@@ -102,11 +91,21 @@ class CandidatosContainer extends Component {
 
   render() {
     // Inviável fazer no front, tem que fazer nas funções de nuvens.
-    let candidatosMapeaveis;
-    if (this.state.filtro.nome !== "") {
-      candidatosMapeaveis = this.state.candidatosFiltrados;
-      console.log(candidatosMapeaveis);
 
+    const { dadosCandidatos } = this.props.candidatos;
+
+    let candidatosMapeaveis;
+    if (this.state.filtro.nome !== "" && this.state.filtro.partido !== "TODOS") {
+      candidatosMapeaveis = this.state.candidatosFiltrados.filter(cpf => dadosCandidatos[cpf].sg_partido === this.state.filtro.partido);
+      console.log(candidatosMapeaveis);
+      console.log(this.props.candidatos.filtro.partido);
+    }
+    else if (this.state.filtro.partido !== "TODOS") {
+      let cpfs = Object.keys(dadosCandidatos);
+      candidatosMapeaveis = cpfs.filter(cpf => dadosCandidatos[cpf].sg_partido === this.state.filtro.partido);
+    }
+    else if (this.state.filtro.nome !== "") {
+      candidatosMapeaveis = this.state.candidatosFiltrados;
     } else {
       candidatosMapeaveis = this.state.candidatosRanking.map(cand => cand[0]);
     }
@@ -126,8 +125,6 @@ class CandidatosContainer extends Component {
         />
       );
     });
-
-    const { debounced } = this.state;
 
     return (
       <div className="container">
@@ -151,6 +148,13 @@ class CandidatosContainer extends Component {
               onChange={this.buscaNome}
               value={this.state.filtro.nome}
             />
+            <select
+              className="form-control barra-filtro-candidato"
+              placeholder="Partidos"
+              onChange={this.buscaPartido}
+            >
+              {partidos()}
+            </select>
           </div>
         </header>
 
@@ -194,11 +198,12 @@ class CandidatosContainer extends Component {
       });
 
     if (isEmpty(this.props.candidatos.dadosCandidatos)) {
-      this.props.getDadosCandidatos();
+      //this.props.getDadosCandidatos();
     } else {
       this.setState({
         scoreCandidatos: this.props.candidatos.scoreCandidatos,
-        candidatosRanking: this.props.getTopNCandidatos(NUM_CANDIDATOS)
+        candidatosRanking: this.props.getTopNCandidatos(NUM_CANDIDATOS),
+        filtro: this.props.candidatos.filtro
       });
     }
   }
