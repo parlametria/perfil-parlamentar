@@ -5,7 +5,7 @@ roxo claro:   #ddc1e1
 verde:        #41c083
 */
 @import url("https://unpkg.com/normalize.css@7.0.0/normalize.css");
-@import url("https://fonts.googleapis.com/css?family=Montserrat:400,700");
+@import url("https://fonts.googleapis.com/css?family=Montserrat:600,700");
 
 @import "styles/icons.css";
 @import "styles/overhide.css";
@@ -22,7 +22,7 @@ verde:        #41c083
 
 body {
   font-family: "Montserrat", sans-serif;
-  font-weight: 400;
+  font-weight: 600;
   font-size: 15px;
   background-color: #ffffff;
   color: #5b2762;
@@ -52,6 +52,7 @@ footer {
   margin-bottom: 2rem;
 }
 
+.strong,
 .icon-secondary {
   color: #41c083;
 }
@@ -75,6 +76,9 @@ footer {
 }
 .btn-square {
   border-radius: 0;
+}
+.table-row-center {
+  vertical-align: middle;
 }
 
 /* width */

@@ -3,7 +3,9 @@ import {
   CANDIDATOS_CARREGANDO,
   CANDIDATOS_CARREGADOS,
   SET_DADOS_CANDIDATOS,
-  SET_FILTRO_CANDIDATOS
+  SET_FILTRO_CANDIDATOS,
+  SET_NUM_RESPOSTAS,
+  SET_DADOS_CANDIDATO
 } from "./types";
 
 // import {
@@ -81,6 +83,8 @@ export const getDadosCandidatos = () => (dispatch, getState) => {
   const { filtro } = getState().candidatosReducer;
 
   let dadosCandidatos = {};
+  let numResponderam = 0;
+  let numSemResposta = 0;
 
   console.time("getResponderam");
   console.time("getNaoResponderam");
@@ -92,6 +96,7 @@ export const getDadosCandidatos = () => (dispatch, getState) => {
 
       respostas.data.forEach(resp => {
         dadosCandidatos[resp.cpf] = resp;
+        numResponderam++;
       });
 
       dispatch({ type: SET_DADOS_CANDIDATOS, dadosCandidatos });
@@ -105,12 +110,30 @@ export const getDadosCandidatos = () => (dispatch, getState) => {
 
           respostas.data.forEach(resp => {
             dadosCandidatos[resp.cpf] = resp;
+            numSemResposta++;
           });
 
           dispatch({ type: SET_DADOS_CANDIDATOS, dadosCandidatos });
           dispatch(calculaScore());
+          dispatch( {type: SET_NUM_RESPOSTAS, numResponderam, numSemResposta});
         });
     });
+};
+
+export const getDadosCandidato = idCandidato => dispatch => {
+  dispatch(setCandidatosCarregando());
+
+  console.time("pega1Candidato");
+
+  axios.get("/api/respostas/candidatos" + "/" + idCandidato).then(respostas => {
+    console.timeEnd("pega1Candidato");
+
+    const dadosCandidato = respostas.data[0];
+
+    console.log(dadosCandidato);
+
+    dispatch({ type: SET_DADOS_CANDIDATO, dadosCandidato });
+  });
 };
 
 export const setCandidatosCarregando = () => {

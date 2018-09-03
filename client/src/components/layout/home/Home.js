@@ -48,6 +48,8 @@ class Home extends Component {
   }
 
   render() {
+    const { filtro } = this.props.candidatos;
+
     return (
       <div>
         <section className="intro">
@@ -62,6 +64,7 @@ class Home extends Component {
                   <select
                     className="form-control"
                     onChange={this.selecionaEstado}
+                    value={filtro.estado}
                   >
                     <option selected>Em que Estado você vota?</option>
                     {estados()}
@@ -72,7 +75,7 @@ class Home extends Component {
           </div>
         </section>
         <FlipMove>
-          {this.state.selecionouEstado ? (
+          {filtro.estado !== "" ? (
             <div className="grid-main">
               <section className="grid-panel panel-master">
                 <CandidatosContainer />
