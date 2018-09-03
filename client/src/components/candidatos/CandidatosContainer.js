@@ -89,9 +89,12 @@ class CandidatosContainer extends Component {
 
   render() {
     // Inviável fazer no front, tem que fazer nas funções de nuvens.
-    const { dadosCandidatos, scoreCandidatos } = this.props.candidatos;
+    const { dadosCandidatos, scoreCandidatos, numResponderam, numSemResposta } = this.props.candidatos;
 
     let candidatosMapeaveis;
+    let numRepPartido = 0; 
+    let numNaoRepPartido = 0;
+    
     if (
       this.state.filtro.nome !== "" &&
       this.state.filtro.partido !== "TODOS"
@@ -110,14 +113,22 @@ class CandidatosContainer extends Component {
           else if (scoreCandidatos[a] < scoreCandidatos[b]) return 1;
           else return 0;
         });
+        candidatosMapeaveis.forEach(cpf => {
+          if(dadosCandidatos[cpf].respostas["0"] === 0){
+            numNaoRepPartido++
+        }else{
+            numRepPartido++
+        }
+        });
+        
     } else if (this.state.filtro.nome !== "") {
       candidatosMapeaveis = this.state.candidatosFiltrados;
     } else {
       candidatosMapeaveis = this.state.candidatosRanking.map(cand => cand[0]);
     }
 
-    const candidatos = candidatosMapeaveis.map(cpf => {
-      const candidato = this.props.candidatos.dadosCandidatos[cpf];
+    const candidatos = candidatosMapeaveis.map(cpf => {    
+    const candidato = this.props.candidatos.dadosCandidatos[cpf];
 
       if (!isEmpty(candidato)) {
         return (
@@ -180,6 +191,14 @@ class CandidatosContainer extends Component {
                 {this.state.partidos}
               </select>
             </div>
+            <div>
+             Nesse estado {numResponderam} candidatos responderam ao questionário, de um total de {numResponderam + numSemResposta} candidatos. 
+            </div>
+
+          {this.state.filtro.partido !== "TODOS" ? <div>
+             Para esse partido {numRepPartido} candidatos responderam ao questionário, de um total de {numRepPartido + numNaoRepPartido} candidatos. 
+            </div>:null}
+            
           </header>
 
           {this.props.candidatos.isCarregando || this.state.isPesquisando ? (
