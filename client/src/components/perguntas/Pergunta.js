@@ -40,10 +40,12 @@ class Pergunta extends Component {
     return (
       <div>
         <div className="panel-body">
-          <h2
-            className="question"
-            dangerouslySetInnerHTML={{ __html: clean }}
-          />
+          <div className="question-wrapper">
+            <h2
+              className="question"
+              dangerouslySetInnerHTML={{ __html: clean }}
+            />
+          </div>
           <div className="my-3">
             <button
               type="button"
