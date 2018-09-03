@@ -75,7 +75,7 @@ class Home extends Component {
           </div>
         </section>
         <FlipMove>
-          {this.state.selecionouEstado ? (
+          {filtro.estado !== "" ? (
             <div className="grid-main">
               <section className="grid-panel panel-master">
                 <CandidatosContainer />
