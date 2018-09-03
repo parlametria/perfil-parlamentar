@@ -1,9 +1,10 @@
 import React, { Component } from "react";
-import Pergunta from "./Pergunta";
-
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 
+import HorizontalScroll from "react-scroll-horizontal";
+
+import Pergunta from "./Pergunta";
 import { salvaScoreUsuario } from "../../actions/usuarioActions";
 import { calculaScore } from "../../actions/candidatosActions";
 import {
@@ -72,7 +73,6 @@ class PerguntasContainer extends Component {
 
   escolhePergunta(e) {
     e.preventDefault();
-    console.log(e.target);
     this.props.escolhePergunta(parseInt(e.target.id));
   }
 
@@ -97,8 +97,6 @@ class PerguntasContainer extends Component {
       isCarregando,
       filtroTema
     } = this.props.perguntas;
-
-    console.log(filtroTema);
 
     const botoesNavegacao = (
       <div>
@@ -198,7 +196,7 @@ class PerguntasContainer extends Component {
       <div className="pergunta-container">
         <div className="panel-detail-header">
           <div
-            className="nav-horizontal custom-scroll-bar"
+            className="nav-horizontal nav-horizontal-lg custom-scroll-bar"
             onClick={this.showPerguntaContainer}
           >
             <ul className="nav nav-tabs nav-fill nav-horizontal-pills">

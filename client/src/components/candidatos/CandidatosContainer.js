@@ -129,10 +129,12 @@ class CandidatosContainer extends Component {
             estado={candidato.uf}
             score={this.state.scoreCandidatos[candidato.cpf]}
             respostas={candidato.respostas}
-            foto= {candidato.tem_foto ?
-              "https://s3-sa-east-1.amazonaws.com/fotoscandidatos2018/fotos_tratadas/img_" +
-              candidato.cpf +
-              ".jpg" : "http://pontosdevista.pt/static/uploads/2016/05/sem-fotoABC.jpg"
+            foto={
+              candidato.tem_foto
+                ? "https://s3-sa-east-1.amazonaws.com/fotoscandidatos2018/fotos_tratadas/img_" +
+                  candidato.cpf +
+                  ".jpg"
+                : "http://pontosdevista.pt/static/uploads/2016/05/sem-fotoABC.jpg"
             }
           />
         );
@@ -146,7 +148,7 @@ class CandidatosContainer extends Component {
           <ul className="nav nav-tabs nav-tabs-secondary">
             <li className="nav-item">
               <a className="nav-link active" href="#">
-                Candidatos
+                Candidatos/as
               </a>
             </li>
           </ul>
@@ -154,32 +156,40 @@ class CandidatosContainer extends Component {
         <div className="container">
           <header className="panel-header">
             {false ? <Apresentacao /> : null}
-            <div className="input-group mb-3">
-              <div className="input-group-prepend">
-                <span
-                  className="input-group-text input-group-text-secondary"
-                  id="search-candidate"
-                >
-                  <span className="icon-search" />
-                </span>
+            <div className="form-row">
+              <div className="col-7">
+                <div className="input-group mb-3">
+                  <div className="input-group-prepend">
+                    <span
+                      className="input-group-text input-group-text-secondary"
+                      id="search-candidate"
+                    >
+                      <span className="icon-search" />
+                    </span>
+                  </div>
+                  <input
+                    type="text"
+                    className="form-control form-control-secondary"
+                    placeholder="Pesquisar candidato/a..."
+                    aria-label="Pesquisar candidato/a"
+                    aria-describedby="search-candidate"
+                    onChange={this.buscaNome}
+                    value={this.state.filtro.nome}
+                  />
+                </div>
               </div>
-              <input
-                type="text"
-                className="form-control form-control-secondary"
-                placeholder="Pesquisar candidato..."
-                aria-label="Pesquisar candidato"
-                aria-describedby="search-candidate"
-                onChange={this.buscaNome}
-                value={this.state.filtro.nome}
-              />
-              <select
-                className="form-control barra-filtro-candidato"
-                placeholder="Partidos"
-                onChange={this.buscaPartido}
-                value={this.state.filtro.partido}
-              >
-                {this.state.partidos}
-              </select>
+              <div className="col-5">
+                <div className="form-group">
+                  <select
+                    className="form-control form-control-secondary barra-filtro-candidato"
+                    placeholder="Partidos"
+                    onChange={this.buscaPartido}
+                    value={this.state.filtro.partido}
+                  >
+                    {this.state.partidos}
+                  </select>
+                </div>
+              </div>
             </div>
           </header>
 

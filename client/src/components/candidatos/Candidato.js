@@ -23,7 +23,7 @@ class Candidato extends Component {
             <div className="col-2">
               <a href="#">
                 <img
-                  src= {this.props.foto}
+                  src={this.props.foto}
                   alt="Candidata da Silva"
                   width="100%"
                   className="person-img"
@@ -32,12 +32,10 @@ class Candidato extends Component {
             </div>
             <div className="col-10">
               <div className="person-data">
-                <h5 className="person-name">
-                  {this.props.nome}{" "}
-                  <small>
-                    {this.props.siglaPartido}/{this.props.estado}
-                  </small>
-                </h5>
+                <h5 className="person-name">{this.props.nome} </h5>
+                <div>
+                  {this.props.siglaPartido}/{this.props.estado}
+                </div>
                 <div className="score-progress">
                   <div className="progress" style={{ height: "15px" }}>
                     <div

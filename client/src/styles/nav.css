@@ -9,11 +9,11 @@
   width: 900px;
 }
 
-/*@media (max-width: 1420px) {
+@media (min-width: 992px) {
   .nav-horizontal-pills {
-    width: 900px;
+    width: auto;
   }
-}*/
+}
 
 @media (max-width: 1090px) {
   .nav-horizontal-pills-sm {
