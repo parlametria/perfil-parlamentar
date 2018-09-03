@@ -8,6 +8,9 @@ import FlipMove from "react-flip-move";
 import { estados, partidos } from "../../constantes/filtrosSeletoresCandidatos";
 import isEmpty from "../../validation/is-empty";
 
+import BoasVindas from "./BoasVindas";
+import ContinueVotando from "./ContinueVotando";
+
 import {
   calculaScore,
   getTopNCandidatos,
@@ -37,9 +40,8 @@ import "rxjs/add/operator/filter";
 
 const NUM_CANDIDATOS = 10;
 const MAX_CAND_FILTRADOS = 20;
+const MIN_VOTOS = 3;
 const DEBOUNCE_TIME = 500; //ms
-
-const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
 
 class CandidatosContainer extends Component {
   constructor(props) {
@@ -139,7 +141,7 @@ class CandidatosContainer extends Component {
       return null;
     });
 
-    return (
+    const exibeCandidatos = (
       <div>
         <div className="panel-master-header">
           <ul className="nav nav-tabs nav-tabs-secondary">
@@ -194,6 +196,31 @@ class CandidatosContainer extends Component {
         </div>
       </div>
     );
+
+    const isMinimoVotosOuMostreTodos =
+      this.props.usuario.quantidadeVotos >= MIN_VOTOS;
+
+    let componenteExibicao;
+    if (isMinimoVotosOuMostreTodos) {
+      componenteExibicao = <FlipMove>{exibeCandidatos}</FlipMove>;
+    } else if (
+      this.props.usuario.quantidadeVotos > 0 &&
+      this.props.usuario.quantidadeVotos < MIN_VOTOS
+    ) {
+      componenteExibicao = (
+        <FlipMove>
+          <ContinueVotando />
+        </FlipMove>
+      );
+    } else {
+      componenteExibicao = (
+        <FlipMove>
+          <BoasVindas />
+        </FlipMove>
+      );
+    }
+
+    return <div>{componenteExibicao}</div>;
   }
 
   componentWillReceiveProps(nextProps) {
@@ -268,7 +295,8 @@ CandidatosContainer.propTypes = {
   setFiltroCandidatos: PropTypes.func.isRequired
 };
 const mapStateToProps = state => ({
-  candidatos: state.candidatosReducer
+  candidatos: state.candidatosReducer,
+  usuario: state.usuarioReducer
 });
 
 export default connect(
