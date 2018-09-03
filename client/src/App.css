@@ -85,6 +85,34 @@ footer {
   background-color: #ffffff;
 }
 
+.section {
+  padding-bottom: 2rem;
+}
+
+.section-inverse {
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+  background-color: #5b2762;
+  color: #ffffff;
+}
+
+.highlight-box {
+  border: solid 2px #ffffff;
+  padding: 1.5rem;
+  color: #ffffff;
+}
+
+.featured-box {
+  border-left: solid 8px #41c083;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.float-title {
+  margin-top: -45px;
+  margin-bottom: 30px;
+}
+
 /*
 .custom-scroll-bar::-webkit-scrollbar {
   width: 7px;
