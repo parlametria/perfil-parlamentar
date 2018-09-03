@@ -8,6 +8,9 @@ import FlipMove from "react-flip-move";
 import { estados, partidos } from "../../constantes/filtrosSeletoresCandidatos";
 import isEmpty from "../../validation/is-empty";
 
+import BoasVindas from "./BoasVindas";
+import ContinueVotando from "./ContinueVotando";
+
 import {
   calculaScore,
   getTopNCandidatos,
@@ -37,9 +40,8 @@ import "rxjs/add/operator/filter";
 
 const NUM_CANDIDATOS = 10;
 const MAX_CAND_FILTRADOS = 20;
+const MIN_VOTOS = 3;
 const DEBOUNCE_TIME = 500; //ms
-
-const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
 
 class CandidatosContainer extends Component {
   constructor(props) {
@@ -91,11 +93,11 @@ class CandidatosContainer extends Component {
     // Inviável fazer no front, tem que fazer nas funções de nuvens.
     const { dadosCandidatos, scoreCandidatos, numResponderam, numSemResposta } = this.props.candidatos;
     const {arrayRespostasUsuario} = this.props.usuario;
-
-    let candidatosMapeaveis;
-    let numRepPartido = 0; 
-    let numNaoRepPartido = 0;
     
+    let candidatosMapeaveis;
+    let numRepPartido = 0;
+    let numNaoRepPartido = 0;
+
     if (
       this.state.filtro.nome !== "" &&
       this.state.filtro.partido !== "TODOS"
@@ -114,22 +116,21 @@ class CandidatosContainer extends Component {
           else if (scoreCandidatos[a] < scoreCandidatos[b]) return 1;
           else return 0;
         });
-        candidatosMapeaveis.forEach(cpf => {
-          if(dadosCandidatos[cpf].respostas["0"] === 0){
-            numNaoRepPartido++
-        }else{
-            numRepPartido++
+      candidatosMapeaveis.forEach(cpf => {
+        if (dadosCandidatos[cpf].respostas["0"] === 0) {
+          numNaoRepPartido++;
+        } else {
+          numRepPartido++;
         }
-        });
-        
+      });
     } else if (this.state.filtro.nome !== "") {
       candidatosMapeaveis = this.state.candidatosFiltrados;
     } else {
       candidatosMapeaveis = this.state.candidatosRanking.map(cand => cand[0]);
     }
 
-    const candidatos = candidatosMapeaveis.map(cpf => {    
-    const candidato = this.props.candidatos.dadosCandidatos[cpf];
+    const candidatos = candidatosMapeaveis.map(cpf => {
+      const candidato = this.props.candidatos.dadosCandidatos[cpf];
 
       if (!isEmpty(candidato)) {
         return (
@@ -141,10 +142,12 @@ class CandidatosContainer extends Component {
             estado={candidato.uf}
             score={this.state.scoreCandidatos[candidato.cpf]}
             respostas={candidato.respostas}
-            foto= {candidato.tem_foto ?
-              "https://s3-sa-east-1.amazonaws.com/fotoscandidatos2018/fotos_tratadas/img_" +
-              candidato.cpf +
-              ".jpg" : "http://pontosdevista.pt/static/uploads/2016/05/sem-fotoABC.jpg"
+            foto={
+              candidato.tem_foto
+                ? "https://s3-sa-east-1.amazonaws.com/fotoscandidatos2018/fotos_tratadas/img_" +
+                  candidato.cpf +
+                  ".jpg"
+                : "http://pontosdevista.pt/static/uploads/2016/05/sem-fotoABC.jpg"
             }
             arrayRespostasUsuario = {arrayRespostasUsuario}
           />
@@ -153,7 +156,7 @@ class CandidatosContainer extends Component {
       return null;
     });
 
-    return (
+    const exibeCandidatos = (
       <div>
         <div className="panel-master-header">
           <ul className="nav nav-tabs nav-tabs-secondary">
@@ -195,13 +198,18 @@ class CandidatosContainer extends Component {
               </select>
             </div>
             <div>
-             Nesse estado {numResponderam} candidatos responderam ao questionário, de um total de {numResponderam + numSemResposta} candidatos. 
+              Nesse estado {numResponderam} candidatos responderam ao
+              questionário, de um total de {numResponderam + numSemResposta}{" "}
+              candidatos.
             </div>
 
-          {this.state.filtro.partido !== "TODOS" ? <div>
-             Para esse partido {numRepPartido} candidatos responderam ao questionário, de um total de {numRepPartido + numNaoRepPartido} candidatos. 
-            </div>:null}
-            
+            {this.state.filtro.partido !== "TODOS" ? (
+              <div>
+                Para esse partido {numRepPartido} candidatos responderam ao
+                questionário, de um total de {numRepPartido + numNaoRepPartido}{" "}
+                candidatos.
+              </div>
+            ) : null}
           </header>
 
           {this.props.candidatos.isCarregando || this.state.isPesquisando ? (
@@ -216,6 +224,31 @@ class CandidatosContainer extends Component {
         </div>
       </div>
     );
+
+    const isMinimoVotosOuMostreTodos =
+      this.props.usuario.quantidadeVotos >= MIN_VOTOS;
+
+    let componenteExibicao;
+    if (isMinimoVotosOuMostreTodos) {
+      componenteExibicao = <FlipMove>{exibeCandidatos}</FlipMove>;
+    } else if (
+      this.props.usuario.quantidadeVotos > 0 &&
+      this.props.usuario.quantidadeVotos < MIN_VOTOS
+    ) {
+      componenteExibicao = (
+        <FlipMove>
+          <ContinueVotando />
+        </FlipMove>
+      );
+    } else {
+      componenteExibicao = (
+        <FlipMove>
+          <BoasVindas />
+        </FlipMove>
+      );
+    }
+
+    return <div>{componenteExibicao}</div>;
   }
 
   componentWillReceiveProps(nextProps) {
@@ -243,11 +276,23 @@ class CandidatosContainer extends Component {
   }
 
   componentDidMount() {
+    let partidosSet = new Set();
+    const { dadosCandidatos } = this.props.candidatos;
+
+    partidosSet.add("TODOS");
+    Object.keys(dadosCandidatos).forEach(candidato =>
+      partidosSet.add(dadosCandidatos[candidato].sg_partido)
+    );
+
+    let partidos = Array.from(partidosSet).map(partido => (
+      <option key={partido} value={partido}>
+        {partido}
+      </option>
+    ));
+
     this.subscription = this.onSearch$
       .debounceTime(DEBOUNCE_TIME)
       .subscribe(debounced => {
-        const { dadosCandidatos } = this.props.candidatos;
-
         let keys = Object.keys(dadosCandidatos);
 
         let nomesFiltrados = keys
@@ -261,7 +306,8 @@ class CandidatosContainer extends Component {
         this.setState({
           debounced,
           candidatosFiltrados: nomesFiltrados,
-          isPesquisando: false
+          isPesquisando: false,
+          partidos
         });
       });
 
@@ -271,7 +317,8 @@ class CandidatosContainer extends Component {
       this.setState({
         scoreCandidatos: this.props.candidatos.scoreCandidatos,
         candidatosRanking: this.props.getTopNCandidatos(NUM_CANDIDATOS),
-        filtro: this.props.candidatos.filtro
+        filtro: this.props.candidatos.filtro,
+        partidos
       });
     }
   }
