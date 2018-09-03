@@ -46,7 +46,6 @@ class PerguntasContainer extends Component {
     arrayRespostasUsuario[novaResposta.id] = novaResposta.resposta;
     this.props.salvaScoreUsuario(respostasUsuario, arrayRespostasUsuario);
     this.props.calculaScore();
-    this.props.calculaScorePorTema("56606940206");
     this.passaPergunta();
   }
 
