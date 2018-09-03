@@ -77,14 +77,16 @@ export const getTopNCandidatos = n => (dispatch, getState) => {
   return candidatos.slice(0, n);
 };
 
-export const getDadosCandidatos = () => dispatch => {
+export const getDadosCandidatos = () => (dispatch, getState) => {
   dispatch(setCandidatosCarregando());
+
+  const { filtro } = getState().candidatosReducer;
 
   let dadosCandidatos = {};
 
   console.time("getBD");
 
-  axios.get("/api/respostas/candidatos/responderam").then(respostas => {
+  axios.get("/api/respostas/estados/" + filtro.estado + "/responderam").then(respostas => {
     console.timeEnd("getBD");
 
     respostas.data.map(resp => {
