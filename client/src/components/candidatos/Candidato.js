@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
+
 import DetalhesCandidato from "./DetalhesCandidato";
 
 import "./candidato.css";
@@ -55,9 +57,12 @@ class Candidato extends Component {
                     </span>
                   </div>
                 </div>
-                <a href="#" className="person-link">
+                <Link
+                  className="person-link"
+                  to={"compare/" + this.props.id + "/" + "123456789"}
+                >
                   Compare
-                </a>
+                </Link>
               </div>
             </div>
           </div>
@@ -68,6 +73,7 @@ class Candidato extends Component {
 }
 
 Candidato.propTypes = {
+  id: PropTypes.string.isRequired,
   nome: PropTypes.string.isRequired,
   siglaPartido: PropTypes.string.isRequired,
   estado: PropTypes.string.isRequired,

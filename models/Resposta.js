@@ -2,9 +2,15 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const RespostaSchema = new Schema({
-  id: {
+  cpf: {
     type: String,
     required: true
+  },
+  date_modified: {
+    type: Date
+  },
+  date_created: {
+    type: Date
   },
   email: {
     type: String,
@@ -14,11 +20,15 @@ const RespostaSchema = new Schema({
     type: String,
     required: true
   },
-  nome: {
+  nome_urna: {
     type: String,
     required: true
   },
-  partido: {
+  nome_exibicao: {
+    type: String,
+    required: true
+  },
+  sg_partido: {
     type: String,
     required: true
   },

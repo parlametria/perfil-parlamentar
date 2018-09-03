@@ -96,6 +96,36 @@ export const getDadosCandidatos = () => (dispatch, getState) => {
   });
 };
 
+export const getDadosCandidato = idCandidato => dispatch => {
+  dispatch(setCandidatosCarregando());
+
+  // console.time("pega1Candidato");
+
+  // axios.get("/api/respostas/candidatos" + "/" + idCandidato).then(respostas => {
+  //   console.timeEnd("pega1Candidato");
+
+  //   console.log(respostas.data[0]);
+
+  //   dispatch(setCandidatosCarregados());
+
+  //   return respostas.data[0];
+  // });
+
+  return new Promise(resolve => {
+    axios
+      .get("/api/respostas/candidatos" + "/" + idCandidato)
+      .then(respostas => {
+        console.timeEnd("pega1Candidato");
+
+        console.log(respostas.data[0]);
+
+        dispatch(setCandidatosCarregados());
+
+        return respostas.data[0];
+      });
+  });
+};
+
 export const setCandidatosCarregando = () => {
   return {
     type: CANDIDATOS_CARREGANDO
