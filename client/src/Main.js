@@ -18,7 +18,7 @@ const Main = () => (
       <Route
         exact
         path="/compare/:candidato/:votos"
-        component={CompareContainer}
+        render={(props) => <CompareContainer {...props} />}
       />
     </Switch>
   </main>

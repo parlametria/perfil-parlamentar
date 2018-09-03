@@ -6,12 +6,32 @@ import PropTypes from "prop-types";
 import TabelaPerguntas from "./tabelaPerguntas/TabelaPerguntas";
 import PontuacaoPorTema from "./pontuacaoPorTema/PontuacaoTema";
 
-import { getDadosCandidato, calculaScorePorTema } from "../../actions/candidatosActions";
+import {
+  getDadosCandidato,
+  calculaScorePorTema
+} from "../../actions/candidatosActions";
 import isEmpty from "../../validation/is-empty";
 
 import "./CompareContainer.css";
 
 class CompareContainer extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { votos: "" };
+  }
+
+  getArrayUrl(url) {
+    let arrayUrl = [];
+    for (var i = 0; i < url.length; i++) {
+      if (url[i] === "-") {
+        arrayUrl.push(Number(url[i] + url[i + 1]));
+        i++;
+      } else {
+        arrayUrl.push(Number(url[i]));
+      }
+    }
+    return arrayUrl;
+  }
   render() {
     const { dadosCandidato, scoreTema } = this.props.candidatos;
 
@@ -37,9 +57,11 @@ class CompareContainer extends Component {
               <div className="col-4">
                 <img
                   src={
-                    "https://s3-sa-east-1.amazonaws.com/fotoscandidatos2018/fotos_tratadas/img_" +
-                    dadosCandidato.cpf +
-                    ".jpg"
+                    dadosCandidato.tem_foto
+                      ? "https://s3-sa-east-1.amazonaws.com/fotoscandidatos2018/fotos_tratadas/img_" +
+                        dadosCandidato.cpf +
+                        ".jpg"
+                      : "http://pontosdevista.pt/static/uploads/2016/05/sem-fotoABC.jpg"
                   }
                   alt={dadosCandidato.nome_exibicao}
                   width="100%"
@@ -68,12 +90,13 @@ class CompareContainer extends Component {
           </div>
           <div className="col-md-9">
             {this.props.candidatos.isCarregando ||
-              isEmpty(dadosCandidato) ? null : (
-                <TabelaPerguntas
-                  respostas={dadosCandidato.respostas}
-                  nome={dadosCandidato.nome_exibicao}
-                />
-              )}
+            isEmpty(dadosCandidato) ? null : (
+              <TabelaPerguntas
+                respostas={dadosCandidato.respostas}
+                nome={dadosCandidato.nome_exibicao}
+                votos={this.getArrayUrl(this.state.votos)}
+              />
+            )}
           </div>
         </div>
         <div className="my-3">
@@ -86,10 +109,10 @@ class CompareContainer extends Component {
   }
 
   componentDidMount() {
-    const { candidato } = this.props.match.params;
+    const { candidato, votos } = this.props.match.params;
     const cand = this.props.getDadosCandidato(candidato);
+    this.setState({ votos });
   }
-
 }
 
 TabelaPerguntas.propTypes = {

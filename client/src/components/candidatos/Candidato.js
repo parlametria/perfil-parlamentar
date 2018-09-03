@@ -7,6 +7,15 @@ import DetalhesCandidato from "./DetalhesCandidato";
 import "./candidato.css";
 
 class Candidato extends Component {
+  
+  criaURL(arrayVotos){
+    let urlVotos = "";
+    arrayVotos.forEach(voto =>{
+      urlVotos = urlVotos + voto;
+    });
+    return(urlVotos);
+  }
+
   render() {
     const dados = {
       nome: this.props.nome,
@@ -59,7 +68,7 @@ class Candidato extends Component {
                 </div>
                 <Link
                   className="person-link"
-                  to={"compare/" + this.props.id + "/" + "123456789"}
+                  to={"compare/" + this.props.id + "/" + this.criaURL(this.props.arrayRespostasUsuario)}
                 >
                   Compare
                 </Link>
@@ -79,7 +88,8 @@ Candidato.propTypes = {
   estado: PropTypes.string.isRequired,
   score: PropTypes.number.isRequired,
   respostas: PropTypes.any.isRequired,
-  foto: PropTypes.string.isRequired
+  foto: PropTypes.string.isRequired,
+  arrayRespostasUsuario: PropTypes.array.isRequired
 };
 
 export default Candidato;
