@@ -22,6 +22,15 @@ router.get("/", (req, res) => {
     .catch(err => res.status(BAD_REQUEST).json({ err }));
 });
 
+// @route   GET api/respostas/candidatos/<cpf>
+// @desc    Pega as respostas de um candidato dado o seu cpf
+// @access  Public
+router.get("/candidatos/:cpf", (req, res) => {
+  Resposta.find({ cpf: req.params.cpf })
+    .then(respostas => res.json(respostas))
+    .catch(err => res.status(BAD_REQUEST).json({ err }));
+});
+
 // @route   GET api/respostas
 // @desc    Pega todos as respostas de uma vez de quem respondeu
 // @access  Public
@@ -63,15 +72,6 @@ router.get("/estados/:id/responderam", (req, res) => {
 // @access  Public
 router.get("/estados/:id/naoresponderam", (req, res) => {
   Resposta.find({ uf: req.params.id, "respostas.1": { $nin: [-2, -1, 1] } })
-    .then(respostas => res.json(respostas))
-    .catch(err => res.status(BAD_REQUEST).json({ err }));
-});
-
-// @route   GET api/respostas/candidatos/<cpf>
-// @desc    Pega as respostas de um candidato dado o seu cpf
-// @access  Public
-router.get("/candidatos/:cpf", (req, res) => {
-  Resposta.find({ id: req.params.cpf })
     .then(respostas => res.json(respostas))
     .catch(err => res.status(BAD_REQUEST).json({ err }));
 });

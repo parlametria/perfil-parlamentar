@@ -134,6 +134,7 @@ class CandidatosContainer extends Component {
         return (
           <Candidato
             key={candidato.cpf}
+            id={candidato.cpf}
             nome={candidato.nome_urna}
             siglaPartido={candidato.sg_partido}
             estado={candidato.uf}
