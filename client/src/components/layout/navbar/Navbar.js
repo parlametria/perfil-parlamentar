@@ -74,18 +74,13 @@ class Navbar extends Component {
             <div className="collapse navbar-collapse" id="mainNavbar">
               <ul className="navbar-nav ml-auto">
                 <li className="nav-item">
-                  <Link to="/calculo" className="nav-link">
-                    Método
-                  </Link>
-                </li>
-                <li className="nav-item">
-                  <Link to="/" className="nav-link">
+                  <Link to="/sobre" className="nav-link">
                     Sobre
                   </Link>
                 </li>
                 <li className="nav-item">
-                  <Link className="nav-link" to="/equipe">
-                    Contato
+                  <Link className="nav-link" to="/envie">
+                    Envie pro seu candidato
                   </Link>
                 </li>
               </ul>

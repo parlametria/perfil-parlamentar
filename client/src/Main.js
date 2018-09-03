@@ -1,7 +1,7 @@
 import React from "react";
 import { Route, Switch } from "react-router-dom";
 import CalculoContainer from "./components/calculo/CalculoContainer";
-import Equipe from "./components/equipe/Equipe";
+import Sobre from "./components/sobre/Sobre";
 import Home from "./components/layout/home/Home";
 import CompareContainer from "./components/compare/CompareContainer";
 
@@ -13,8 +13,12 @@ const Main = () => (
     <Switch>
       <Route exact path="/" component={Home} />
       <Route exact path="/calculo" component={CalculoContainer} />
-      <Route exact path="/equipe" component={Equipe} />
-      <Route exact path="/compare/:candidato/" render={(props) => <CompareContainer {...props} />} />
+      <Route exact path="/sobre" component={Sobre} />
+      <Route
+        exact
+        path="/compare/:candidato/"
+        render={props => <CompareContainer {...props} />}
+      />
       <Route
         exact
         path="/compare/:candidato/:votos"

@@ -149,9 +149,7 @@ class TabelaPerguntas extends Component {
           <thead className="thead-dark">
             <tr>
               <th className="table-th-question">Perguntas</th>
-              <th className="table-th-candidate">
-                {this.props.nome.substr(0, this.props.nome.indexOf(" "))}
-              </th>
+              <th className="table-th-candidate">Candidato/a</th>
               <th className="table-th-yours">Você</th>
             </tr>
           </thead>

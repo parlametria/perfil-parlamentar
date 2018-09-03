@@ -4,16 +4,19 @@
   padding-left: 0.5rem;
   padding-right: 0.5rem;
 }
+.nav-horizontal-lg {
+  border-bottom: solid 4px #a963b3;
+}
 
 .nav-horizontal-pills {
   width: 900px;
 }
 
-/*@media (max-width: 1420px) {
+@media (min-width: 992px) {
   .nav-horizontal-pills {
-    width: 900px;
+    width: auto;
   }
-}*/
+}
 
 @media (max-width: 1090px) {
   .nav-horizontal-pills-sm {

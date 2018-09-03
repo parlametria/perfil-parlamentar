@@ -38,7 +38,7 @@ class CompareContainer extends Component {
         <h4 className="compare-title text-center">
           Calculamos um match eleitoral de{" "}
           <strong className="strong">(score)</strong> entre você e{" "}
-          {dadosCandidato.nome_exibicao}
+          {dadosCandidato.nome_urna}
         </h4>
         <div className="my-3">
           <Link to="/" className="btn btn-link">
@@ -55,7 +55,7 @@ class CompareContainer extends Component {
                     dadosCandidato.cpf +
                     ".jpg" : "http://pontosdevista.pt/static/uploads/2016/05/sem-fotoABC.jpg"
                   }
-                  alt={dadosCandidato.nome_exibicao}
+                  alt={dadosCandidato.nome_urna}
                   width="100%"
                   className="person-img"
                 />
@@ -63,7 +63,7 @@ class CompareContainer extends Component {
               <div className="col-8">
                 <div className="compare-person-data">
                   <h3 className="compare-person-name">
-                    {dadosCandidato.nome_exibicao}
+                    {dadosCandidato.nome_urna}
                   </h3>
                   <p>
                     {dadosCandidato.sg_partido}/{dadosCandidato.uf}

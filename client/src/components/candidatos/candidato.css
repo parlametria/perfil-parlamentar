@@ -22,6 +22,7 @@
 
 .score-progress > .progress {
   width: 70%;
+  margin-right: 0.5rem;
 }
 
 @media (min-width: 768px) {
@@ -48,4 +49,10 @@
   color: #41c083;
   font-weight: 700;
   text-transform: lowercase;
+}
+
+.candidatos {
+  max-width: 415px;
+  margin-left: auto;
+  margin-right: auto;
 }

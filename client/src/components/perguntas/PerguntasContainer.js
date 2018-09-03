@@ -1,9 +1,10 @@
 import React, { Component } from "react";
-import Pergunta from "./Pergunta";
-
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 
+import HorizontalScroll from "react-scroll-horizontal";
+
+import Pergunta from "./Pergunta";
 import { salvaScoreUsuario } from "../../actions/usuarioActions";
 import { calculaScore } from "../../actions/candidatosActions";
 import {
@@ -72,7 +73,6 @@ class PerguntasContainer extends Component {
 
   escolhePergunta(e) {
     e.preventDefault();
-    console.log(e.target);
     this.props.escolhePergunta(parseInt(e.target.id));
   }
 
@@ -97,8 +97,6 @@ class PerguntasContainer extends Component {
       isCarregando,
       filtroTema
     } = this.props.perguntas;
-
-    console.log(filtroTema);
 
     const botoesNavegacao = (
       <div>
@@ -130,7 +128,7 @@ class PerguntasContainer extends Component {
         temas.push(
           <li className="nav-item" key={i}>
             <a
-              className={classnames("nav-link done", {
+              className={classnames("nav-link", {
                 active: filtroTema === tema
               })}
               onClick={this.selecionaTema}
@@ -200,7 +198,10 @@ class PerguntasContainer extends Component {
     return (
       <div className="pergunta-container">
         <div className="panel-detail-header">
-          <div className="nav-horizontal" onClick={this.showPerguntaContainer}>
+          <div
+            className="nav-horizontal nav-horizontal-lg custom-scroll-bar"
+            onClick={this.showPerguntaContainer}
+          >
             <ul className="nav nav-tabs nav-fill nav-horizontal-pills">
               {temas}
             </ul>
@@ -214,6 +215,9 @@ class PerguntasContainer extends Component {
           aria-labelledby="perguntaContainer"
         >
           <div className="card-body">
+            <div className="container">
+              <h2 className="question-theme">{filtroTema}</h2>
+            </div>
             <div className="nav-horizontal">
               <ul className="nav nav-pills nav-fill nav-horizontal-pills-sm">
                 {indicadorPergunta}
@@ -222,10 +226,10 @@ class PerguntasContainer extends Component {
             {pergunta}
             <button
               type="button"
-              className="btn btn-block btn-outline-primary d-lg-none"
+              className="btn btn-block btn-primary btn-square d-lg-none"
               onClick={this.hidePerguntaContainer}
             >
-              Esconder
+              <span className="icon-cursor" /> Esconder
             </button>
           </div>
         </div>

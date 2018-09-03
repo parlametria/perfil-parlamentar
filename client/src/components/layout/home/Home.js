@@ -55,8 +55,9 @@ class Home extends Component {
         <section className="intro">
           <div className="container">
             <h2 className="intro-title text-center">
-              Nos diga o que você <strong>defende</strong> e a gente apresenta
-              candidatos alinhados com seu perfil
+              Nos diga o que você <strong className="strong">defende</strong> e
+              em <strong className="strong">oito minutos</strong> a gente
+              apresenta candidatos alinhados com você
             </h2>
             <div className="d-flex justify-content-center">
               <form>
