@@ -4,16 +4,20 @@ import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 
 import TabelaPerguntas from "./tabelaPerguntas/TabelaPerguntas";
+import PontuacaoPorTema from "./pontuacaoPorTema/PontuacaoTema";
 
-import { getDadosCandidato } from "../../actions/candidatosActions";
+import { getDadosCandidato, calculaScorePorTema } from "../../actions/candidatosActions";
 import isEmpty from "../../validation/is-empty";
 
 import "./CompareContainer.css";
 
 class CompareContainer extends Component {
   render() {
-    const { dadosCandidato } = this.props.candidatos;
-    console.log(dadosCandidato);
+    const { dadosCandidato, scoreTema } = this.props.candidatos;
+
+    if (!isEmpty(dadosCandidato)) {
+      console.log(scoreTema);
+    }
 
     return (
       <div className="container">
@@ -56,6 +60,11 @@ class CompareContainer extends Component {
             <h4 className="compare-title">
               Como vocês <strong className="strong">votaram</strong> nos temas:
             </h4>
+            <div className="row">
+              <div className="col-md-3">
+                <PontuacaoPorTema scoreTema={scoreTema} />
+              </div>
+            </div>
           </div>
           <div className="col-md-9">
             {this.props.candidatos.isCarregando ||
@@ -80,10 +89,12 @@ class CompareContainer extends Component {
     const { candidato } = this.props.match.params;
     const cand = this.props.getDadosCandidato(candidato);
   }
+
 }
 
 TabelaPerguntas.propTypes = {
-  getDadosCandidato: PropTypes.func.isRequired
+  getDadosCandidato: PropTypes.func.isRequired,
+  calculaScorePorTema: PropTypes.func.isRequired
 };
 const mapStateToProps = state => ({
   candidatos: state.candidatosReducer
@@ -91,5 +102,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { getDadosCandidato }
+  { getDadosCandidato, calculaScorePorTema }
 )(CompareContainer);

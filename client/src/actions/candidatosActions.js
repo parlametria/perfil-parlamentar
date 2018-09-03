@@ -61,12 +61,13 @@ export const calculaScore = () => (dispatch, getState) => {
   });
 };
 
-export const calculaScorePorTema = (idCandidato) => (dispatch, getState) => {
+export const calculaScorePorTema = () => (dispatch, getState) => {
   const { respostasUsuario } = getState().usuarioReducer;
   const { arrayRespostasUsuario } = getState().usuarioReducer;
   const respostasCandidatos = getState().candidatosReducer.dadosCandidatos;
+  const { dadosCandidato } = getState().candidatosReducer;
   const perguntas = getState().perguntasReducer.dadosPerguntas;
-  console.log(respostasCandidatos[idCandidato].respostas)
+  console.log(dadosCandidato.cpf);
   const quantValidos = arrayRespostasUsuario.filter(value => value !== 0 && value !== -2).length;
   const numRespostasUsuario = quantValidos === 0 ? 1 : quantValidos;
 
@@ -96,7 +97,7 @@ export const calculaScorePorTema = (idCandidato) => (dispatch, getState) => {
     let respostasCandidatosTema = {};
     perguntas.forEach(pergunta => {
       if (pergunta.tema === tema) {
-        respostasCandidatosTema[pergunta.id] = respostasCandidatos[idCandidato].respostas[pergunta.id];
+        respostasCandidatosTema[pergunta.id] = respostasCandidatos[dadosCandidato.respostas[pergunta.id]];
       }
     })
     temas[tema].forEach(pergunta => {
@@ -188,6 +189,7 @@ export const getDadosCandidato = idCandidato => dispatch => {
     // console.log(dadosCandidato);
 
     dispatch({ type: SET_DADOS_CANDIDATO, dadosCandidato });
+    dispatch(calculaScorePorTema());
   });
 };
 
