@@ -128,10 +128,10 @@ class CandidatosContainer extends Component {
             estado={candidato.uf}
             score={this.state.scoreCandidatos[candidato.cpf]}
             respostas={candidato.respostas}
-            foto={
+            foto= {candidato.tem_foto ?
               "https://s3-sa-east-1.amazonaws.com/fotoscandidatos2018/fotos_tratadas/img_" +
               candidato.cpf +
-              ".jpg"
+              ".jpg" : "http://pontosdevista.pt/static/uploads/2016/05/sem-fotoABC.jpg"
             }
           />
         );
