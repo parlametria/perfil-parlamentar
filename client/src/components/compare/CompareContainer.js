@@ -8,7 +8,8 @@ import PontuacaoPorTema from "./pontuacaoPorTema/PontuacaoTema";
 
 import {
   getDadosCandidato,
-  calculaScorePorTema
+  calculaScorePorTema,
+  setFiltroCandidatos
 } from "../../actions/candidatosActions";
 import isEmpty from "../../validation/is-empty";
 
@@ -32,19 +33,37 @@ class CompareContainer extends Component {
     }
     return arrayUrl;
   }
+
+  getDict(arrayUrl) {
+    let dictUrl = {};
+    arrayUrl.forEach((voto, i) => {
+      dictUrl[i] = voto;
+    });
+    return dictUrl;
+  }
+
   render() {
-    const { dadosCandidato, scoreTema } = this.props.candidatos;
+    const {
+      dadosCandidato,
+      scoreTema,
+      scoreCandidatos
+    } = this.props.candidatos;
 
     if (!isEmpty(dadosCandidato)) {
-      console.log(scoreTema);
+      console.log(dadosCandidato);
     }
+
+    console.log(dadosCandidato.score);
+    console.log(this.getArrayUrl(this.state.votos));
 
     return (
       <div className="container">
         <h4 className="compare-title text-center">
           Calculamos um match eleitoral de{" "}
-          <strong className="strong">(score)</strong> entre você e{" "}
-          {dadosCandidato.nome_exibicao}
+          <strong className="strong">
+            {Math.round(dadosCandidato.score * 100)}%
+          </strong>{" "}
+          entre você e {dadosCandidato.nome_exibicao}
         </h4>
         <div className="my-3">
           <Link to="/" className="btn btn-link">
@@ -110,7 +129,14 @@ class CompareContainer extends Component {
 
   componentDidMount() {
     const { candidato, votos } = this.props.match.params;
-    const cand = this.props.getDadosCandidato(candidato);
+    const respostasUsuario = this.getDict(this.getArrayUrl(votos));
+    const arrayRespostasUsuario = this.getArrayUrl(votos);
+    this.props.getDadosCandidato(
+      candidato,
+      respostasUsuario,
+      arrayRespostasUsuario
+    );
+
     this.setState({ votos });
   }
 }
@@ -125,5 +151,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { getDadosCandidato, calculaScorePorTema }
+  { getDadosCandidato, calculaScorePorTema, setFiltroCandidatos }
 )(CompareContainer);

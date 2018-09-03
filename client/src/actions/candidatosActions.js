@@ -28,11 +28,12 @@ const comparaRespostas = (
   chaves.forEach(idPergunta => {
     respostasIguais +=
       respostasCandidatos[idPergunta] !== undefined &&
-        respostasCandidatos[idPergunta] !== null &&
-        respostasUsuario[idPergunta] !== 0 &&
-        respostasUsuario[idPergunta] !== -2 &&
-        respostasCandidatos[idPergunta] === respostasUsuario[idPergunta]
-        ? 1 : 0;
+      respostasCandidatos[idPergunta] !== null &&
+      respostasUsuario[idPergunta] !== 0 &&
+      respostasUsuario[idPergunta] !== -2 &&
+      respostasCandidatos[idPergunta] === respostasUsuario[idPergunta]
+        ? 1
+        : 0;
   });
   return respostasIguais / numRespostasUsuario;
 };
@@ -42,7 +43,9 @@ export const calculaScore = () => (dispatch, getState) => {
   const { respostasUsuario } = getState().usuarioReducer;
   const { arrayRespostasUsuario } = getState().usuarioReducer;
   const respostasCandidatos = getState().candidatosReducer.dadosCandidatos;
-  const quantValidos = arrayRespostasUsuario.filter(value => value !== 0 && value !== -2).length;
+  const quantValidos = arrayRespostasUsuario.filter(
+    value => value !== 0 && value !== -2
+  ).length;
   const numRespostasUsuario = quantValidos === 0 ? 1 : quantValidos;
 
   let scoreCandidatos = {};
@@ -68,7 +71,9 @@ export const calculaScorePorTema = () => (dispatch, getState) => {
   const { dadosCandidato } = getState().candidatosReducer;
   const perguntas = getState().perguntasReducer.dadosPerguntas;
   console.log(dadosCandidato.cpf);
-  const quantValidos = arrayRespostasUsuario.filter(value => value !== 0 && value !== -2).length;
+  const quantValidos = arrayRespostasUsuario.filter(
+    value => value !== 0 && value !== -2
+  ).length;
   const numRespostasUsuario = quantValidos === 0 ? 1 : quantValidos;
 
   let nomeTemas = new Set();
@@ -81,8 +86,7 @@ export const calculaScorePorTema = () => (dispatch, getState) => {
     if (isEmpty(temas[pergunta.tema])) {
       temas[pergunta.tema] = [];
       temas[pergunta.tema].push(pergunta);
-    }
-    else {
+    } else {
       temas[pergunta.tema].push(pergunta);
     }
   });
@@ -97,9 +101,10 @@ export const calculaScorePorTema = () => (dispatch, getState) => {
     let respostasCandidatosTema = {};
     perguntas.forEach(pergunta => {
       if (pergunta.tema === tema) {
-        respostasCandidatosTema[pergunta.id] = respostasCandidatos[dadosCandidato.respostas[pergunta.id]];
+        respostasCandidatosTema[pergunta.id] =
+          respostasCandidatos[dadosCandidato.respostas[pergunta.id]];
       }
-    })
+    });
     temas[tema].forEach(pergunta => {
       score = comparaRespostas(
         respostasCandidatosTema,
@@ -176,8 +181,17 @@ export const getDadosCandidatos = () => (dispatch, getState) => {
     });
 };
 
-export const getDadosCandidato = idCandidato => dispatch => {
+export const getDadosCandidato = (
+  idCandidato,
+  respostasUsuario,
+  arrayRespostasUsuario
+) => (dispatch, getState) => {
   dispatch(setCandidatosCarregando());
+
+  const quantValidos = arrayRespostasUsuario.filter(
+    value => value !== 0 && value !== -2
+  ).length;
+  const numRespostasUsuario = quantValidos === 0 ? 1 : quantValidos;
 
   console.time("pega1Candidato");
 
@@ -186,7 +200,15 @@ export const getDadosCandidato = idCandidato => dispatch => {
 
     const dadosCandidato = respostas.data[0];
 
-    // console.log(dadosCandidato);
+    const score = comparaRespostas(
+      dadosCandidato.respostas,
+      respostasUsuario,
+      numRespostasUsuario
+    );
+
+    console.log(score);
+
+    dadosCandidato.score = score;
 
     dispatch({ type: SET_DADOS_CANDIDATO, dadosCandidato });
     dispatch(calculaScorePorTema());
@@ -208,4 +230,3 @@ export const setCandidatosCarregados = () => {
 export const setFiltroCandidatos = filtro => dispatch => {
   dispatch({ type: SET_FILTRO_CANDIDATOS, filtro });
 };
-
