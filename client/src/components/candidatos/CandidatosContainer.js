@@ -37,7 +37,7 @@ import "rxjs/add/operator/filter";
 
 const NUM_CANDIDATOS = 10;
 const MAX_CAND_FILTRADOS = 20;
-const DEBOUNCE_TIME = 650; //ms
+const DEBOUNCE_TIME = 500; //ms
 
 const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
 
