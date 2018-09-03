@@ -225,10 +225,10 @@ class PerguntasContainer extends Component {
             {pergunta}
             <button
               type="button"
-              className="btn btn-block btn-outline-primary d-lg-none"
+              className="btn btn-block btn-primary btn-square d-lg-none"
               onClick={this.hidePerguntaContainer}
             >
-              Esconder
+              <span className="icon-cursor" /> Esconder
             </button>
           </div>
         </div>

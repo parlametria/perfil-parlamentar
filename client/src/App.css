@@ -81,6 +81,10 @@ footer {
   vertical-align: middle;
 }
 
+.bg-light {
+  background-color: #ffffff;
+}
+
 /* width */
 .custom-scroll-bar::-webkit-scrollbar {
   width: 7px;
@@ -90,7 +94,7 @@ footer {
 
 /* Track */
 .custom-scroll-bar::-webkit-scrollbar-track {
-  background-color: #5b2762;
+  background-color: #a963b3;
 }
 
 /* Handle */
