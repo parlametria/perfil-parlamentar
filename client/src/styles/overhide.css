@@ -144,6 +144,11 @@ a.nav-link.done:not([href]):not([tabindex]) {
   border-color: #ffffff;
 }
 
+.btn-group-lg > .btn,
+.btn-lg {
+  border-radius: 24px;
+}
+
 .form-control {
   color: #fff;
   background-color: #ddc1e1;

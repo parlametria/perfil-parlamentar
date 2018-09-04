@@ -41,11 +41,10 @@
   border: solid 1px #41c083;
   color: #41c083;
 }
-
-.btn-in-favor {
-  padding-left: 1.5rem;
+.btn-group-lg > .btn-in-favor {
+  padding-left: 1.7rem;
 }
 
-.btn-against {
-  padding-right: 1.5rem;
+.btn-group-lg > .btn-against {
+  padding-right: 1.7rem;
 }

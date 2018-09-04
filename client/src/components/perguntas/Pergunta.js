@@ -67,7 +67,7 @@ class Pergunta extends Component {
           </div>
 
           <div
-            className="btn-group d-flex justify-content-center my-3"
+            className="btn-group btn-group-lg d-flex justify-content-center my-3"
             role="group"
             aria-label="Resposta"
           >
