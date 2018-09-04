@@ -5,6 +5,8 @@ import { connect } from "react-redux";
 
 import { getDadosPerguntas } from "../../../actions/perguntasActions";
 
+import sanitizeHtml from "sanitize-html";
+
 import PropTypes from "prop-types";
 
 import "./tabelaPerguntas.css";
@@ -89,27 +91,32 @@ class TabelaPerguntas extends Component {
       indicePrimeiro = indiceUltimo - perguntasPorPagina;
       perguntasExibidas = perguntas.slice(indicePrimeiro, indiceUltimo);
 
-      rows = perguntasExibidas.map(elem => (
-        <tr key={elem.key}>
-          <td>{perguntasExibidas[elem.key % perguntasPorPagina].pergunta}</td>
-          <td
-            className={
-              "text-center table-row-center " +
-              getClassVotacao(votacoesCandidato[elem.key])
-            }
-          >
-            {getValorVotacao(votacoesCandidato[elem.key])}
-          </td>
-          <td
-            className={
-              "text-center table-row-center " +
-              getClassVotacao(arrayRespostasUsuario[elem.key])
-            }
-          >
-            {getValorVotacao(arrayRespostasUsuario[elem.key])}
-          </td>
-        </tr>
-      ));
+      rows = perguntasExibidas.map(elem => {
+        const clean = sanitizeHtml(
+          perguntasExibidas[elem.key % perguntasPorPagina].pergunta
+        );
+        return (
+          <tr key={elem.key}>
+            <td dangerouslySetInnerHTML={{ __html: clean }} />
+            <td
+              className={
+                "text-center table-row-center " +
+                getClassVotacao(votacoesCandidato[elem.key])
+              }
+            >
+              {getValorVotacao(votacoesCandidato[elem.key])}
+            </td>
+            <td
+              className={
+                "text-center table-row-center " +
+                getClassVotacao(arrayRespostasUsuario[elem.key])
+              }
+            >
+              {getValorVotacao(arrayRespostasUsuario[elem.key])}
+            </td>
+          </tr>
+        );
+      });
 
       const numeroPaginas = [];
       for (
