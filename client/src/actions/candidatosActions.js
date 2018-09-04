@@ -6,7 +6,8 @@ import {
   SET_DADOS_CANDIDATOS,
   SET_FILTRO_CANDIDATOS,
   SET_NUM_RESPOSTAS,
-  SET_DADOS_CANDIDATO
+  SET_DADOS_CANDIDATO,
+  SET_MOSTRAR_TODOS_CANDIDATOS
 } from "./types";
 
 // import {
@@ -227,4 +228,8 @@ export const setCandidatosCarregados = () => {
 
 export const setFiltroCandidatos = filtro => dispatch => {
   dispatch({ type: SET_FILTRO_CANDIDATOS, filtro });
+};
+
+export const mostrarTodosCandidatos = () => dispatch => {
+  dispatch({ type: SET_MOSTRAR_TODOS_CANDIDATOS });
 };

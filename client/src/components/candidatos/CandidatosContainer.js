@@ -239,7 +239,8 @@ class CandidatosContainer extends Component {
     );
 
     const isMinimoVotosOuMostreTodos =
-      this.props.usuario.quantidadeVotos >= MIN_VOTOS;
+      this.props.usuario.quantidadeVotos >= MIN_VOTOS ||
+      this.props.candidatos.mostrarTodos;
 
     let componenteExibicao;
     if (isMinimoVotosOuMostreTodos) {

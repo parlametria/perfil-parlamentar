@@ -6,24 +6,26 @@ import {
   CANDIDATOS_CARREGANDO,
   CANDIDATOS_CARREGADOS,
   SET_NUM_RESPOSTAS,
-  SET_DADOS_CANDIDATO
+  SET_DADOS_CANDIDATO,
+  SET_MOSTRAR_TODOS_CANDIDATOS
 } from "../actions/types";
 
 // candidatesVotings: {id_votacao: voto}
 // arrayVotings: [0/1/-1]
 // O estado inicial será definido a partir do banco de dados, uma chamada para preencher esses arrays e objetos.
 const initialState = {
-  numResponderam : 0,
-  numSemResposta : 0,
+  numResponderam: 0,
+  numSemResposta: 0,
   dadosCandidatos: {},
   isCarregando: false,
   scoreCandidatos: {},
   filtro: { nome: "", partido: "TODOS", estado: "" },
   dadosCandidato: {},
   scoreTema: {},
+  mostrarTodos: false
 };
 
-export default function (state = initialState, action) {
+export default function(state = initialState, action) {
   switch (action.type) {
     case SET_DADOS_CANDIDATOS:
       return {
@@ -63,11 +65,16 @@ export default function (state = initialState, action) {
         filtro: action.filtro
       };
     case SET_NUM_RESPOSTAS:
-    return {
-      ...state,
-      numResponderam: action.numResponderam,
-      numSemResposta: action.numSemResposta,
-    };
+      return {
+        ...state,
+        numResponderam: action.numResponderam,
+        numSemResposta: action.numSemResposta
+      };
+    case SET_MOSTRAR_TODOS_CANDIDATOS:
+      return {
+        ...state,
+        mostrarTodos: true
+      };
     default:
       return state;
   }
