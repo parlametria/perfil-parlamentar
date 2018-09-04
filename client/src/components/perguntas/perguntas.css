@@ -11,7 +11,7 @@
 @media (min-width: 992px) {
   .question-theme {
     margin-top: 3rem;
-    margin-bottom: 3rem;
+    margin-bottom: 0;
     font-size: 1.7rem;
   }
 }
@@ -32,7 +32,6 @@
 @media (min-width: 992px) {
   .question {
     font-size: 1.2rem;
-    margin-top: 2rem;
     margin-bottom: 2rem;
   }
 }

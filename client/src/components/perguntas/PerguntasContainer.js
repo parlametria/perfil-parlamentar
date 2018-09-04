@@ -197,13 +197,13 @@ class PerguntasContainer extends Component {
           aria-labelledby="perguntaContainer"
         >
           <div className="card-body">
-            <div className="container">
-              <h2 className="question-theme">{filtroTema}</h2>
-            </div>
             <div className="nav-horizontal">
               <ul className="nav nav-pills nav-fill nav-horizontal-pills-sm">
                 {indicadorPergunta}
               </ul>
+            </div>
+            <div className="container">
+              <h2 className="question-theme">{filtroTema}</h2>
             </div>
             {pergunta}
             <button

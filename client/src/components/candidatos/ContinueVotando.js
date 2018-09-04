@@ -13,12 +13,15 @@ class ContinueVotando extends Component {
     return (
       <div className="container tutorial pb-3">
         <h2 className="panel-title text-center">
-          Responda mais um pouco para um resultado mais preciso.
+          Responda mais um pouco para um resultado mais preciso
         </h2>
 
         <div className="text-center">
-          <button className="btn btn-primary" onClick={this.mostrarTodos}>
-            Mostre-me todos
+          <button
+            className="btn btn-outline-primary"
+            onClick={this.mostrarTodos}
+          >
+            Ver agora
           </button>
         </div>
       </div>

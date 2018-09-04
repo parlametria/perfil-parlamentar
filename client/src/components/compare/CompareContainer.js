@@ -95,7 +95,8 @@ class CompareContainer extends Component {
               perfilCandidato
             )}
             <h4 className="compare-title">
-              Como vocês <strong className="strong">votaram</strong> nos temas:
+              O quanto vocês <strong className="strong">concordam</strong> nos
+              temas:
             </h4>
             <PontuacaoPorTema scoreTema={scoreTema} />
           </div>
