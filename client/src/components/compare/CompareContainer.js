@@ -46,6 +46,33 @@ class CompareContainer extends Component {
   render() {
     const { dadosCandidato, scoreTema } = this.props.candidatos;
 
+    const perfilCandidato = (
+      <div className="compare-person-profile row no-gutters">
+        <div className="col-4">
+          <img
+            src={
+              dadosCandidato.tem_foto
+                ? "https://s3-sa-east-1.amazonaws.com/fotoscandidatos2018/fotos_tratadas/img_" +
+                  dadosCandidato.cpf +
+                  ".jpg"
+                : "http://pontosdevista.pt/static/uploads/2016/05/sem-fotoABC.jpg"
+            }
+            alt={dadosCandidato.nome_urna}
+            width="100%"
+            className="person-img"
+          />
+        </div>
+        <div className="col-8">
+          <div className="compare-person-data">
+            <h3 className="compare-person-name">{dadosCandidato.nome_urna}</h3>
+            <p>
+              {dadosCandidato.sg_partido}/{dadosCandidato.uf}
+            </p>
+          </div>
+        </div>
+      </div>
+    );
+
     return (
       <div className="container">
         <h4 className="compare-title text-center">
@@ -62,32 +89,11 @@ class CompareContainer extends Component {
         </div>
         <div className="row">
           <div className="col-md-3">
-            <div className="compare-person-profile row no-gutters">
-              <div className="col-4">
-                <img
-                  src={
-                    dadosCandidato.tem_foto
-                      ? "https://s3-sa-east-1.amazonaws.com/fotoscandidatos2018/fotos_tratadas/img_" +
-                        dadosCandidato.cpf +
-                        ".jpg"
-                      : "http://pontosdevista.pt/static/uploads/2016/05/sem-fotoABC.jpg"
-                  }
-                  alt={dadosCandidato.nome_urna}
-                  width="100%"
-                  className="person-img"
-                />
-              </div>
-              <div className="col-8">
-                <div className="compare-person-data">
-                  <h3 className="compare-person-name">
-                    {dadosCandidato.nome_urna}
-                  </h3>
-                  <p>
-                    {dadosCandidato.sg_partido}/{dadosCandidato.uf}
-                  </p>
-                </div>
-              </div>
-            </div>
+            {this.props.candidatos.isCarregando || isEmpty(dadosCandidato) ? (
+              <Spinner />
+            ) : (
+              perfilCandidato
+            )}
             <h4 className="compare-title">
               Como vocês <strong className="strong">votaram</strong> nos temas:
             </h4>

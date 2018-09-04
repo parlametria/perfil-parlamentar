@@ -36,7 +36,6 @@ class TabelaPerguntas extends Component {
 
     const { dadosPerguntas } = this.props.perguntas;
     const arrayRespostasUsuario = this.props.votos;
-    console.log(arrayRespostasUsuario);
 
     const perguntas = [];
     Object.keys(dadosPerguntas).map(p => {
