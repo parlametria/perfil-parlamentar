@@ -55,11 +55,9 @@ class PerguntasContainer extends Component {
     this.props.passaPergunta();
     const { indexPergunta, dadosPerguntas } = this.props.perguntas;
 
-    if (indexPergunta + 1 < 45) {
-      this.props.escolheTema(dadosPerguntas[indexPergunta + 1].tema);
+    if (indexPergunta <= 45) {
+      this.props.escolheTema(dadosPerguntas[indexPergunta].tema);
     }
-
-    //console.log(this.state.indexIndicadorPergunta);
   }
 
   voltaPergunta() {
