@@ -21,6 +21,37 @@
 
 .score-theme {
   font-weight: 700;
-  font-size: 1.7rem;
+  font-size: 2.5rem;
   color: #a963b3;
+}
+@media (min-width: 768px) {
+  .score-theme {
+    font-size: 1.2rem;
+    margin-left: 0.5rem;
+  }
+}
+@media (min-width: 992px) {
+  .score-theme {
+    font-size: 1.7rem;
+  }
+}
+
+.score-pie-chart {
+  padding: 1rem;
+}
+
+@media (min-width: 576px) {
+  .score-pie-chart {
+    padding: 2rem;
+  }
+}
+@media (min-width: 768px) {
+  .score-pie-chart {
+    padding: 0;
+  }
+}
+@media (min-width: 992px) {
+  .score-pie-chart {
+    padding: 1rem;
+  }
 }
