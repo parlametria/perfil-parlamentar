@@ -88,7 +88,6 @@ class CandidatosContainer extends Component {
   }
 
   render() {
-    // Inviável fazer no front, tem que fazer nas funções de nuvens.
     const {
       dadosCandidatos,
       scoreCandidatos,
@@ -204,15 +203,6 @@ class CandidatosContainer extends Component {
                 </div>
               </div>
             </div>
-            <h5>
-              Nesse Estado, <strong className="strong">{numResponderam}</strong>{" "}
-              de{" "}
-              <strong className="strong">
-                {numResponderam + numSemResposta}
-              </strong>{" "}
-              candidatos responderam ao questionário.
-            </h5>
-
             {this.state.filtro.partido !== "TODOS" ? (
               <h5>
                 Para esse partido,{" "}
@@ -222,7 +212,15 @@ class CandidatosContainer extends Component {
                 </strong>{" "}
                 candidatos responderam ao questionário.
               </h5>
-            ) : null}
+            ) : 
+            <h5>
+            Nesse Estado, <strong className="strong">{numResponderam}</strong>{" "}
+            de{" "}
+            <strong className="strong">
+              {numResponderam + numSemResposta}
+            </strong>{" "}
+            candidatos responderam ao questionário.
+          </h5>}
           </header>
 
           {this.props.candidatos.isCarregando || this.state.isPesquisando ? (
