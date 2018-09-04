@@ -8,6 +8,9 @@
   margin-bottom: 3rem;
   max-width: 720px;
 }
+.grid-wrapper {
+  min-height: 60vh;
+}
 .grid-main {
   display: flex;
   flex-wrap: wrap;

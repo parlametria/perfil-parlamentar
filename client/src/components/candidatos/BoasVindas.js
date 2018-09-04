@@ -27,11 +27,6 @@ class BoasVindas extends Component {
             Quanto mais perguntas você responder, mais preciso é o resultado.
           </p>
         </div>
-        <div className="text-center">
-          <button className="btn btn-primary" onClick={this.mostrarTodos}>
-            Mostre-me todos
-          </button>
-        </div>
       </div>
     );
   }

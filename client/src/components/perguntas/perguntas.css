@@ -11,7 +11,7 @@
 @media (min-width: 992px) {
   .question-theme {
     margin-top: 3rem;
-    margin-bottom: 3rem;
+    margin-bottom: 0;
     font-size: 1.7rem;
   }
 }
@@ -21,7 +21,7 @@
 }
 @media (min-width: 992px) {
   .question-wrapper {
-    min-height: 120px;
+    min-height: 180px;
   }
 }
 .question {
@@ -32,7 +32,6 @@
 @media (min-width: 992px) {
   .question {
     font-size: 1.2rem;
-    margin-top: 2rem;
     margin-bottom: 2rem;
   }
 }
@@ -42,11 +41,10 @@
   border: solid 1px #41c083;
   color: #41c083;
 }
-
-.btn-in-favor {
-  padding-left: 1.5rem;
+.btn-group-lg > .btn-in-favor {
+  padding-left: 1.7rem;
 }
 
-.btn-against {
-  padding-right: 1.5rem;
+.btn-group-lg > .btn-against {
+  padding-right: 1.7rem;
 }

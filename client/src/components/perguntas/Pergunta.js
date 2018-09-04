@@ -41,32 +41,33 @@ class Pergunta extends Component {
       <div>
         <div className="panel-body">
           <div className="question-wrapper">
-            <h2
-              className="question"
-              dangerouslySetInnerHTML={{ __html: clean }}
-            />
-          </div>
-          <div className="my-3">
-            <button
-              type="button"
-              className="btn btn-outline-primary btn-sm"
-              data-toggle="collapse"
-              data-target="#help-eixoA"
-              aria-expanded="false"
-              aria-controls="help-eixoA"
-            >
-              O que é isso? <span className="icon-cursor" />
-            </button>
-            <div
-              id="help-eixoA"
-              className="collapse question-help-content"
-              aria-labelledby="help-eixoA"
-            >
-              {this.props.ajuda}
+            <div>
+              <span
+                className="question"
+                dangerouslySetInnerHTML={{ __html: clean }}
+              />{" "}
+              <button
+                type="button"
+                className="btn btn-link btn-sm"
+                data-toggle="collapse"
+                data-target="#help-eixoA"
+                aria-expanded="false"
+                aria-controls="help-eixoA"
+              >
+                O que é isso? <span className="icon-cursor" />
+              </button>
+              <div
+                id="help-eixoA"
+                className="collapse question-help-content"
+                aria-labelledby="help-eixoA"
+              >
+                {this.props.ajuda}
+              </div>
             </div>
           </div>
+
           <div
-            className="btn-group d-flex justify-content-center my-3"
+            className="btn-group btn-group-lg d-flex justify-content-center my-3"
             role="group"
             aria-label="Resposta"
           >

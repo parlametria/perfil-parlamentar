@@ -75,19 +75,21 @@ class Home extends Component {
             </div>
           </div>
         </section>
-        <FlipMove>
-          {filtro.estado !== "" ? (
-            <div className="grid-main">
-              <section className="grid-panel panel-master">
-                <CandidatosContainer />
-              </section>
-              <div className="grid-separator" />
-              <section className="grid-panel panel-detail">
-                <PerguntasContainer />
-              </section>
-            </div>
-          ) : null}
-        </FlipMove>
+        <div className="grid-wrapper">
+          <FlipMove>
+            {filtro.estado !== "" ? (
+              <div className="grid-main">
+                <section className="grid-panel panel-master">
+                  <CandidatosContainer />
+                </section>
+                <div className="grid-separator" />
+                <section className="grid-panel panel-detail">
+                  <PerguntasContainer />
+                </section>
+              </div>
+            ) : null}
+          </FlipMove>
+        </div>
       </div>
     );
   }
