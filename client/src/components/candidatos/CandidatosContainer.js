@@ -306,8 +306,6 @@ class CandidatosContainer extends Component {
     let partidosSet = new Set();
     const { dadosCandidatos } = this.props.candidatos;
 
-    console.log(dadosCandidatos);
-
     partidosSet.add("TODOS");
     Object.keys(dadosCandidatos).forEach(candidato =>
       partidosSet.add(dadosCandidatos[candidato].sg_partido)
