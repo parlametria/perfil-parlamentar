@@ -14,6 +14,38 @@ class Candidato extends Component {
   }
 
   render() {
+    const naoRespondeu = (<div><h6>Não Respondeu</h6></div>)
+    const barraScore = (<div><div className="score-progress">
+    <div className="progress" style={{ height: "15px" }}>
+      <div
+        className="progress-bar"
+        role="progressbar"
+        style={{
+          width: Math.round(this.props.score * 100) + "%"
+        }}
+        aria-valuenow={this.props.score * 100}
+        aria-valuemin="0"
+        aria-valuemax="100"
+      />
+    </div>
+    <div className="score-number">
+      <span className="score">
+        {Math.round(this.props.score * 100)}%
+      </span>
+    </div>
+  </div>
+  <Link
+    className="person-link"
+    to={
+      "compare/" +
+      this.props.id +
+      "/" +
+      this.criaURL(this.props.arrayRespostasUsuario)
+    }
+  >
+    Compare
+  </Link>
+</div>);
     return (
       <div>
         <div className="person mb-4">
@@ -42,37 +74,8 @@ class Candidato extends Component {
                 <div>
                   {this.props.siglaPartido}/{this.props.estado}
                 </div>
-                <div className="score-progress">
-                  <div className="progress" style={{ height: "15px" }}>
-                    <div
-                      className="progress-bar"
-                      role="progressbar"
-                      style={{
-                        width: Math.round(this.props.score * 100) + "%"
-                      }}
-                      aria-valuenow={this.props.score * 100}
-                      aria-valuemin="0"
-                      aria-valuemax="100"
-                    />
-                  </div>
-                  <div className="score-number">
-                    <span className="score">
-                      {Math.round(this.props.score * 100)}%
-                    </span>
-                  </div>
-                </div>
-                <Link
-                  className="person-link"
-                  to={
-                    "compare/" +
-                    this.props.id +
-                    "/" +
-                    this.criaURL(this.props.arrayRespostasUsuario)
-                  }
-                >
-                  Compare
-                </Link>
-              </div>
+                {this.props.respondeu ? barraScore : naoRespondeu}
+                              </div>
             </div>
           </div>
         </div>
@@ -82,6 +85,7 @@ class Candidato extends Component {
 }
 
 Candidato.propTypes = {
+  respondeu: PropTypes.bool.isRequired,
   id: PropTypes.string.isRequired,
   nome: PropTypes.string.isRequired,
   siglaPartido: PropTypes.string.isRequired,

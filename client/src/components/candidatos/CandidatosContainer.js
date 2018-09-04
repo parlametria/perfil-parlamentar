@@ -135,6 +135,7 @@ class CandidatosContainer extends Component {
       if (!isEmpty(candidato)) {
         return (
           <Candidato
+            respondeu = {candidato.respondeu}
             key={candidato.cpf}
             id={candidato.cpf}
             nome={candidato.nome_urna}
