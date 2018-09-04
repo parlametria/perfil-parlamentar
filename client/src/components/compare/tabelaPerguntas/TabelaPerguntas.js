@@ -89,9 +89,26 @@ class TabelaPerguntas extends Component {
       indicePrimeiro = indiceUltimo - perguntasPorPagina;
       perguntasExibidas = perguntas.slice(indicePrimeiro, indiceUltimo);
 
-      rows = perguntasExibidas.map(elem => (
+    let temaExibido = "";
+    let change = false;
+    rows = perguntasExibidas.map(elem => {
+      
+      if(temaExibido !== elem.tema){
+        temaExibido = elem.tema;
+        change = true;
+      }else{
+        change = false;
+      }
+
+      return(
+        <tbody>
+        <tr key={"tema" + temaExibido}>
+          {change?
+            <td colSpan="3">{temaExibido}</td> : null
+          }
+        </tr>
         <tr key={elem.key}>
-          <td>{perguntasExibidas[elem.key % perguntasPorPagina].pergunta}</td>
+        <td>{perguntasExibidas[elem.key % perguntasPorPagina].pergunta}</td>
           <td
             className={
               "text-center table-row-center " +
@@ -109,7 +126,9 @@ class TabelaPerguntas extends Component {
             {getValorVotacao(arrayRespostasUsuario[elem.key])}
           </td>
         </tr>
-      ));
+        </tbody>
+      )
+    });
 
       const numeroPaginas = [];
       for (
@@ -145,7 +164,7 @@ class TabelaPerguntas extends Component {
               <th className="table-th-yours">Você</th>
             </tr>
           </thead>
-          <tbody>{rows}</tbody>
+          {rows}
         </Table>
         <Pagination aria-label="Navegação da tabela" size="sm">
           <PaginationItem disabled={paginaAtual <= 1}>
