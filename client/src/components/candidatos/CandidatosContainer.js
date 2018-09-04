@@ -95,7 +95,8 @@ class CandidatosContainer extends Component {
       dadosCandidatos,
       scoreCandidatos,
       numResponderam,
-      numSemResposta
+      numSemResposta,
+      filtro
     } = this.props.candidatos;
     const { arrayRespostasUsuario } = this.props.usuario;
 
@@ -103,10 +104,7 @@ class CandidatosContainer extends Component {
     let numRepPartido = 0;
     let numNaoRepPartido = 0;
 
-    if (
-      this.state.filtro.nome !== "" &&
-      this.state.filtro.partido !== "TODOS"
-    ) {
+    if (filtro.nome !== "" && filtro.partido !== "TODOS") {
       candidatosMapeaveis = this.state.candidatosFiltrados.filter(
         cpf => dadosCandidatos[cpf].sg_partido === this.state.filtro.partido
       );
@@ -286,9 +284,31 @@ class CandidatosContainer extends Component {
         </option>
       ));
 
+      this.subscription = this.onSearch$
+        .debounceTime(DEBOUNCE_TIME)
+        .subscribe(debounced => {
+          let keys = Object.keys(dadosCandidatos);
+
+          let nomesFiltrados = keys
+            .filter(
+              cpf =>
+                dadosCandidatos[cpf].nome_urna
+                  .toLowerCase()
+                  .indexOf(debounced.toLowerCase()) >= 0
+            )
+            .slice(0, MAX_CAND_FILTRADOS);
+          this.setState({
+            debounced,
+            candidatosFiltrados: nomesFiltrados,
+            isPesquisando: false,
+            partidos
+          });
+        });
+
       this.setState({
         scoreCandidatos: nextProps.candidatos.scoreCandidatos,
         candidatosRanking: nextProps.getTopNCandidatos(NUM_CANDIDATOS),
+        filtro: nextProps.candidatos.filtro,
         partidos
       });
     }
@@ -297,6 +317,8 @@ class CandidatosContainer extends Component {
   componentDidMount() {
     let partidosSet = new Set();
     const { dadosCandidatos } = this.props.candidatos;
+
+    console.log(dadosCandidatos);
 
     partidosSet.add("TODOS");
     Object.keys(dadosCandidatos).forEach(candidato =>
@@ -308,27 +330,6 @@ class CandidatosContainer extends Component {
         {partido}
       </option>
     ));
-
-    this.subscription = this.onSearch$
-      .debounceTime(DEBOUNCE_TIME)
-      .subscribe(debounced => {
-        let keys = Object.keys(dadosCandidatos);
-
-        let nomesFiltrados = keys
-          .filter(
-            cpf =>
-              dadosCandidatos[cpf].nome_urna
-                .toLowerCase()
-                .indexOf(debounced.toLowerCase()) >= 0
-          )
-          .slice(0, MAX_CAND_FILTRADOS);
-        this.setState({
-          debounced,
-          candidatosFiltrados: nomesFiltrados,
-          isPesquisando: false,
-          partidos
-        });
-      });
 
     if (isEmpty(this.props.candidatos.dadosCandidatos)) {
       //this.props.calculaScore();
