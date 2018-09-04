@@ -97,11 +97,7 @@ class CompareContainer extends Component {
             <h4 className="compare-title">
               Como vocês <strong className="strong">votaram</strong> nos temas:
             </h4>
-            <div className="row">
-              <div className="col-md-3">
-                <PontuacaoPorTema scoreTema={scoreTema} />
-              </div>
-            </div>
+            <PontuacaoPorTema scoreTema={scoreTema} />
           </div>
           <div className="col-md-9">
             {this.props.candidatos.isCarregando || isEmpty(dadosCandidato) ? (
