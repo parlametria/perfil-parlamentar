@@ -162,7 +162,7 @@ class CandidatosContainer extends Component {
         <div className="panel-master-header">
           <ul className="nav nav-tabs nav-tabs-secondary">
             <li className="nav-item">
-              <a className="nav-link active">Candidatos/as</a>
+              <a className="nav-link nav-link-a active">Candidatos/as</a>
             </li>
           </ul>
         </div>
