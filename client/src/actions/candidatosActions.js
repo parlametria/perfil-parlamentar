@@ -35,6 +35,7 @@ const comparaRespostas = (
         ? 1
         : 0;
   });
+
   return respostasIguais / numRespostasUsuario;
 };
 
@@ -102,9 +103,10 @@ export const calculaScorePorTema = (
     });
     const primeiroID = temas[tema][0].id;
     const ultimoID = temas[tema][temas[tema].length - 1].id;
+
     temas[tema].forEach(pergunta => {
       const quantValidos = arrayRespostasUsuario
-        .slice(primeiroID, ultimoID)
+        .slice(primeiroID, ultimoID + 1)
         .filter(value => value !== 0 && value !== -2).length;
       const numRespostasUsuario = quantValidos === 0 ? 1 : quantValidos;
       score = comparaRespostas(
