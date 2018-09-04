@@ -156,6 +156,27 @@ class CandidatosContainer extends Component {
       }
       return null;
     });
+    const mostraPartido = ( <div>
+      <h5>
+        Para esse partido,{" "}
+        <strong className="strong">{numRepPartido}</strong> de{" "}
+        <strong className="strong">
+          {numRepPartido + numNaoRepPartido}
+        </strong>{" "}
+        candidatos responderam ao questionário.
+      </h5>
+      </div>
+    );
+    
+    const mostraEstado = (<div>
+      <h5>
+      Nesse Estado, <strong className="strong">{numResponderam}</strong>{" "}
+      de{" "}
+      <strong className="strong">
+        {numResponderam + numSemResposta}
+      </strong>{" "}
+      candidatos responderam ao questionário.
+    </h5></div>);
 
     const exibeCandidatos = (
       <div>
@@ -204,24 +225,7 @@ class CandidatosContainer extends Component {
                 </div>
               </div>
             </div>
-            {this.state.filtro.partido !== "TODOS" ? (
-              <h5>
-                Para esse partido,{" "}
-                <strong className="strong">{numRepPartido}</strong> de{" "}
-                <strong className="strong">
-                  {numRepPartido + numNaoRepPartido}
-                </strong>{" "}
-                candidatos responderam ao questionário.
-              </h5>
-            ) : 
-            <h5>
-            Nesse Estado, <strong className="strong">{numResponderam}</strong>{" "}
-            de{" "}
-            <strong className="strong">
-              {numResponderam + numSemResposta}
-            </strong>{" "}
-            candidatos responderam ao questionário.
-          </h5>}
+            {this.state.filtro.partido !== "TODOS" ? mostraPartido : mostraEstado }
           </header>
 
           {this.props.candidatos.isCarregando || this.state.isPesquisando ? (
