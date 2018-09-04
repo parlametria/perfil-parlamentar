@@ -24,7 +24,7 @@ class BoasVindas extends Component {
           </p>
           <p>
             <strong className="strong">Informe-se</strong> sobre os 5 temas.
-            Quanto mais perguntas você responder, mas preciso é o resultado.
+            Quanto mais perguntas você responder, mais preciso é o resultado.
           </p>
         </div>
         <div className="text-center">
