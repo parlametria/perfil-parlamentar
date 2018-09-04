@@ -37,8 +37,8 @@ class Home extends Component {
     const { filtro } = this.props.candidatos;
 
     const novoFiltroEstado = {
-      nome: filtro.nome,
-      partido: filtro.partido,
+      nome: "",
+      partido: "TODOS",
       estado: e.target.value
     };
 
