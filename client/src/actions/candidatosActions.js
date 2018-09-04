@@ -158,6 +158,7 @@ export const getDadosCandidatos = () => (dispatch, getState) => {
 
       respostas.data.forEach(resp => {
         dadosCandidatos[resp.cpf] = resp;
+        dadosCandidatos[resp.cpf].respondeu = true;
         numResponderam++;
       });
 
@@ -172,6 +173,7 @@ export const getDadosCandidatos = () => (dispatch, getState) => {
 
           respostas.data.forEach(resp => {
             dadosCandidatos[resp.cpf] = resp;
+            dadosCandidatos[resp.cpf].respondeu = false;
             numSemResposta++;
           });
 
