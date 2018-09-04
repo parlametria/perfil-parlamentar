@@ -2,8 +2,6 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 
-import DetalhesCandidato from "./DetalhesCandidato";
-
 import "./candidato.css";
 
 class Candidato extends Component {
@@ -16,14 +14,6 @@ class Candidato extends Component {
   }
 
   render() {
-    const dados = {
-      nome: this.props.nome,
-      siglaPartido: this.props.siglaPartido,
-      estado: this.props.estado,
-      respostas: this.props.respostas,
-      foto: this.props.foto
-    };
-
     return (
       <div>
         <div className="person mb-4">

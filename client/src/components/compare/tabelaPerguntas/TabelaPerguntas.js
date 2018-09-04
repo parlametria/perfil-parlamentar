@@ -3,9 +3,6 @@ import { Table, Pagination, PaginationItem, PaginationLink } from "reactstrap";
 import isEmpty from "../../../validation/is-empty";
 import { connect } from "react-redux";
 
-import classnames from "classnames";
-
-import { getDadosCandidato } from "../../../actions/candidatosActions";
 import { getDadosPerguntas } from "../../../actions/perguntasActions";
 
 import PropTypes from "prop-types";
@@ -40,7 +37,7 @@ class TabelaPerguntas extends Component {
     const { dadosPerguntas } = this.props.perguntas;
     const arrayRespostasUsuario = this.props.votos;
     console.log(arrayRespostasUsuario);
-    
+
     const perguntas = [];
     Object.keys(dadosPerguntas).map(p => {
       return perguntas.push({
@@ -56,16 +53,14 @@ class TabelaPerguntas extends Component {
       switch (num) {
         case 1:
           return "Sim";
-          break;
         case 0:
           return "--";
-          break;
         case -1:
           return "Não";
-          break;
         case -2:
           return "Não sabe";
-          break;
+        default:
+          return "--";
       }
     }
 
@@ -73,16 +68,14 @@ class TabelaPerguntas extends Component {
       switch (num) {
         case 1:
           return "in-favor";
-          break;
         case 0:
           return "";
-          break;
         case -1:
           return "against";
-          break;
         case -2:
           return "dont-know";
-          break;
+        default:
+          return "--";
       }
     }
 
@@ -179,7 +172,6 @@ class TabelaPerguntas extends Component {
   }
 }
 TabelaPerguntas.propTypes = {
-  getDadosCandidato: PropTypes.func.isRequired,
   getDadosPerguntas: PropTypes.func.isRequired
 };
 const mapStateToProps = state => ({
@@ -189,5 +181,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { getDadosCandidato, getDadosPerguntas }
+  { getDadosPerguntas }
 )(TabelaPerguntas);

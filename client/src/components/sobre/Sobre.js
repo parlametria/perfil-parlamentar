@@ -130,7 +130,7 @@ class Sobre extends Component {
 
             <div className="row">
               <div className="col-4">
-                <ul class="ul">
+                <ul className="ul">
                   <li>Cidade Escola Aprendiz</li>
                   <li>ClimaInfo</li>
                   <li>Conectas</li>
@@ -140,7 +140,7 @@ class Sobre extends Component {
                 </ul>
               </div>
               <div className="col-4">
-                <ul class="ul">
+                <ul className="ul">
                   <li>ICE</li>
                   <li>Idesam</li>
                   <li>Impact Hub</li>
@@ -150,7 +150,7 @@ class Sobre extends Component {
                 </ul>
               </div>
               <div className="col-4">
-                <ul class="ul">
+                <ul className="ul">
                   <li>Instituto Ethos</li>
                   <li>Instituto Terroá </li>
                   <li>Observatório do Clima</li>

@@ -5,7 +5,6 @@ import { connect } from "react-redux";
 
 import FlipMove from "react-flip-move";
 
-import { estados, partidos } from "../../constantes/filtrosSeletoresCandidatos";
 import isEmpty from "../../validation/is-empty";
 
 import BoasVindas from "./BoasVindas";
@@ -25,7 +24,6 @@ import Apresentacao from "./apresentacao";
 
 import "../../styles/style.css";
 
-import { Observable } from "rxjs/Observable";
 import { Subject } from "rxjs/Subject";
 
 import "rxjs/add/observable/of";
@@ -166,9 +164,7 @@ class CandidatosContainer extends Component {
         <div className="panel-master-header">
           <ul className="nav nav-tabs nav-tabs-secondary">
             <li className="nav-item">
-              <a className="nav-link active" href="#">
-                Candidatos/as
-              </a>
+              <a className="nav-link active">Candidatos/as</a>
             </li>
           </ul>
         </div>
@@ -254,17 +250,9 @@ class CandidatosContainer extends Component {
       this.props.usuario.quantidadeVotos > 0 &&
       this.props.usuario.quantidadeVotos < MIN_VOTOS
     ) {
-      componenteExibicao = (
-        <FlipMove>
-          <ContinueVotando />
-        </FlipMove>
-      );
+      componenteExibicao = <ContinueVotando />;
     } else {
-      componenteExibicao = (
-        <FlipMove>
-          <BoasVindas />
-        </FlipMove>
-      );
+      componenteExibicao = <BoasVindas />;
     }
 
     return <div>{componenteExibicao}</div>;

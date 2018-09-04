@@ -4,7 +4,10 @@ import PropTypes from "prop-types";
 
 import Pergunta from "./Pergunta";
 import { salvaScoreUsuario } from "../../actions/usuarioActions";
-import { calculaScore } from "../../actions/candidatosActions";
+import {
+  calculaScore,
+  calculaScorePorTema
+} from "../../actions/candidatosActions";
 import {
   getDadosPerguntas,
   voltaPergunta,
@@ -15,7 +18,6 @@ import {
 
 import classnames from "classnames";
 
-import Spinner from "../common/Spinner";
 import isEmpty from "../../validation/is-empty";
 
 //import { delay } from "../../utils/funcoes";
@@ -57,7 +59,7 @@ class PerguntasContainer extends Component {
       this.props.escolheTema(dadosPerguntas[indexPergunta + 1].tema);
     }
 
-    console.log(this.state.indexIndicadorPergunta);
+    //console.log(this.state.indexIndicadorPergunta);
   }
 
   voltaPergunta() {
@@ -71,7 +73,7 @@ class PerguntasContainer extends Component {
 
   escolhePergunta(e) {
     e.preventDefault();
-    this.props.escolhePergunta(parseInt(e.target.id));
+    this.props.escolhePergunta(Number(e.target.id));
   }
 
   selecionaTema(e) {
@@ -89,23 +91,7 @@ class PerguntasContainer extends Component {
   }
 
   render() {
-    const {
-      dadosPerguntas,
-      indexPergunta,
-      isCarregando,
-      filtroTema
-    } = this.props.perguntas;
-
-    const botoesNavegacao = (
-      <div>
-        <div className="btn btn-danger" onClick={this.voltaPergunta}>
-          Voltar
-        </div>
-        <div className="btn btn-primary" onClick={this.passaPergunta}>
-          Avançar
-        </div>
-      </div>
-    );
+    const { dadosPerguntas, indexPergunta, filtroTema } = this.props.perguntas;
 
     let pergunta;
     let indicadorPergunta;
@@ -118,11 +104,11 @@ class PerguntasContainer extends Component {
 
       // Constrói os eixos (isso idealmente deve vir de um bd, algo assim)
       let nomeTemas = new Set();
-      dadosPerguntas.map(pergunta => {
+      dadosPerguntas.forEach(pergunta => {
         nomeTemas.add(pergunta.tema);
       });
 
-      Array.from(nomeTemas).map((tema, i) => {
+      Array.from(nomeTemas).forEach((tema, i) => {
         temas.push(
           <li className="nav-item" key={i}>
             <a
@@ -260,6 +246,7 @@ class PerguntasContainer extends Component {
 PerguntasContainer.propTypes = {
   salvaScoreUsuario: PropTypes.func.isRequired,
   calculaScore: PropTypes.func.isRequired,
+  calculaScorePorTema: PropTypes.func.isRequired,
   getDadosPerguntas: PropTypes.func.isRequired,
   passaPergunta: PropTypes.func.isRequired,
   voltaPergunta: PropTypes.func.isRequired,
@@ -277,6 +264,7 @@ export default connect(
   {
     salvaScoreUsuario,
     calculaScore,
+    calculaScorePorTema,
     getDadosPerguntas,
     passaPergunta,
     voltaPergunta,

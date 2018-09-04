@@ -67,7 +67,7 @@ class Home extends Component {
                     onChange={this.selecionaEstado}
                     value={filtro.estado}
                   >
-                    <option selected>Em que Estado você vota?</option>
+                    <option defaultValue="--">Em que Estado você vota?</option>
                     {estados()}
                   </select>
                 </div>

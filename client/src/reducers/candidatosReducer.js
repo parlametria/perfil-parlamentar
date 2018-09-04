@@ -1,5 +1,6 @@
 import {
   SET_SCORE_CANDIDATOS,
+  SET_SCORE_CANDIDATO_POR_TEMA,
   SET_DADOS_CANDIDATOS,
   SET_FILTRO_CANDIDATOS,
   CANDIDATOS_CARREGANDO,
@@ -18,7 +19,8 @@ const initialState = {
   isCarregando: false,
   scoreCandidatos: {},
   filtro: { nome: "", partido: "TODOS", estado: "" },
-  dadosCandidato: {}
+  dadosCandidato: {},
+  scoreTema: {},
 };
 
 export default function (state = initialState, action) {
@@ -39,6 +41,11 @@ export default function (state = initialState, action) {
       return {
         ...state,
         scoreCandidatos: action.scoreCandidatos
+      };
+    case SET_SCORE_CANDIDATO_POR_TEMA:
+      return {
+        ...state,
+        scoreTema: action.scoreTema
       };
     case CANDIDATOS_CARREGANDO:
       return {

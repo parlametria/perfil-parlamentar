@@ -1,11 +1,8 @@
 import React, { Component } from "react";
 
-import PropTypes from "prop-types";
-
 import { Link } from "react-router-dom";
 
 import { connect } from "react-redux";
-import { loginUser, logoutUser } from "../../../actions/authActions";
 
 import "./navbar.css";
 
@@ -23,32 +20,6 @@ class Navbar extends Component {
   }
 
   render() {
-    const { isAuthenticated, user } = this.props.auth;
-
-    const loginButton = (
-      <li className="nav-item">
-        <a
-          href=""
-          onClick={this.onSignInWithGoogle.bind(this)}
-          className="navlink"
-        />
-      </li>
-    );
-
-    const loggedInBar = (
-      <li className="nav-item">
-        <a href="" onClick={this.onSignOut.bind(this)} className="navlink">
-          <img
-            className="rounded-circle"
-            src={user.photoURL}
-            alt={user.displayName}
-            style={{ width: "40px", marginRight: "5px" }}
-          />
-          Logout
-        </a>
-      </li>
-    );
-
     return (
       <div>
         <nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -91,11 +62,6 @@ class Navbar extends Component {
     );
   }
 }
-Navbar.propTypes = {
-  loginUser: PropTypes.func.isRequired,
-  logoutUser: PropTypes.func.isRequired,
-  auth: PropTypes.object.isRequired
-};
 
 const mapStateToProps = state => ({
   auth: state.auth
@@ -103,5 +69,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { loginUser, logoutUser }
+  {}
 )(Navbar);
