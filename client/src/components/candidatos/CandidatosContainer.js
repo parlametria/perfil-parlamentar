@@ -214,6 +214,31 @@ class CandidatosContainer extends Component {
       return null;
     });
 
+    const btnFirst = (
+      <button className="btn btn-primary" onClick={this.pegaPrimeiraPagina}>
+        First
+      </button>
+    );
+
+    const btnMaisCandidatos = (
+      <button className="btn btn-primary" onClick={this.pegaProximosCandidatos}>
+        Mostrar os próximos{" "}
+        {this.state.indexPaginacao.final + TAM_PAGINA <=
+        this.state.indexPaginacao.numeroCandidatos
+          ? TAM_PAGINA
+          : this.state.indexPaginacao.numeroCandidatos % TAM_PAGINA}
+      </button>
+    );
+
+    const btnMenosCandidatos = (
+      <button
+        className="btn btn-primary"
+        onClick={this.pegaCandidatosAnteriores}
+      >
+        Mostrar 10 anteriores
+      </button>
+    );
+
     const exibeCandidatos = (
       <div>
         <div className="panel-master-header">
@@ -299,28 +324,7 @@ class CandidatosContainer extends Component {
                   className="container text-center"
                   style={{ marginBottom: "20px" }}
                 >
-                  <button
-                    className="btn btn-primary"
-                    onClick={this.pegaPrimeiraPagina}
-                  >
-                    First
-                  </button>
-                  <button
-                    className="btn btn-primary"
-                    onClick={this.pegaCandidatosAnteriores}
-                  >
-                    Mostrar 10 anteriores
-                  </button>
-                  <button
-                    className="btn btn-primary"
-                    onClick={this.pegaProximosCandidatos}
-                  >
-                    Mostrar os próximos{" "}
-                    {this.state.indexPaginacao.final + TAM_PAGINA <=
-                    this.state.indexPaginacao.numeroCandidatos
-                      ? TAM_PAGINA
-                      : this.state.indexPaginacao.numeroCandidatos % TAM_PAGINA}
-                  </button>
+                  {}
                 </div>
               </FlipMove>
             </div>
