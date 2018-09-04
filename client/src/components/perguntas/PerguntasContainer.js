@@ -110,7 +110,7 @@ class PerguntasContainer extends Component {
         temas.push(
           <li className="nav-item" key={i}>
             <a
-              className={classnames("nav-link", {
+              className={classnames("nav-link nav-link-a", {
                 active: filtroTema === tema
               })}
               onClick={this.selecionaTema}
@@ -129,7 +129,7 @@ class PerguntasContainer extends Component {
           // active -> o usuário está respondendo
           <li className="nav-item" key={index}>
             <a
-              className={classnames("nav-link", {
+              className={classnames("nav-link nav-link-b", {
                 active: perguntaFiltrada.id === indexPergunta,
                 done:
                   arrayRespostasUsuario[Number(perguntaFiltrada.id)] !== 0 &&

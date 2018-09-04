@@ -21,7 +21,7 @@
 }
 @media (min-width: 992px) {
   .question-wrapper {
-    min-height: 120px;
+    min-height: 180px;
   }
 }
 .question {
