@@ -129,7 +129,6 @@ class CompareContainer extends Component {
       respostasUsuario,
       arrayRespostasUsuario
     );
-
     this.setState({ votos });
   }
 }
