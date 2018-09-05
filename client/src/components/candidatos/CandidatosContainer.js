@@ -206,6 +206,7 @@ class CandidatosContainer extends Component {
                 : "http://pontosdevista.pt/static/uploads/2016/05/sem-fotoABC.jpg"
             }
             arrayRespostasUsuario={arrayRespostasUsuario}
+            email={candidato.email}
           />
         );
       }

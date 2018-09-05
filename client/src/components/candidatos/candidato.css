@@ -66,3 +66,7 @@
 .btn-pag {
   padding: 0 0.5rem;
 }
+
+.progress-none {
+  background-color: #ffffff;
+}
