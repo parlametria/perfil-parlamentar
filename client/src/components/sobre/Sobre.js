@@ -162,19 +162,6 @@ class Sobre extends Component {
             </div>
           </div>
         </section>
-        <section className="intro">
-          <div className="container">
-            <div className="d-flex justify-content-center">
-              <h4 className="footer-title">Politica de Privacidade</h4>
-            </div>
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Modi nemo
-              deserunt et maiores dolorem, laboriosam animi, facilis laborum
-              obcaecati ipsa earum exercitationem neque. Molestiae cupiditate
-              quibusdam mollitia quae molestias temporibus.
-            </p>
-          </div>
-        </section>
       </div>
     );
   }

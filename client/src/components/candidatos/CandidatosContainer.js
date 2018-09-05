@@ -172,10 +172,10 @@ class CandidatosContainer extends Component {
           else return 0;
         });
       candidatosMapeaveis.forEach(cpf => {
-        if (dadosCandidatos[cpf].respostas["0"] === 0) {
-          numNaoRepPartido++;
-        } else {
+        if (dadosCandidatos[cpf].respondeu) {
           numRepPartido++;
+        } else {
+          numNaoRepPartido++;
         }
       });
     } else if (this.state.filtro.nome !== "") {

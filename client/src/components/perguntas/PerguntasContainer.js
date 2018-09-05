@@ -16,6 +16,8 @@ import {
   escolheTema
 } from "../../actions/perguntasActions";
 
+import { Collapse } from "reactstrap";
+
 import classnames from "classnames";
 
 import isEmpty from "../../validation/is-empty";
@@ -189,32 +191,32 @@ class PerguntasContainer extends Component {
             </ul>
           </div>
         </div>
-        <div
-          id="perguntaContainer"
-          className={classnames("card collapse", {
-            show: this.state.show
-          })}
-          aria-labelledby="perguntaContainer"
-        >
-          <div className="card-body">
-            <div className="nav-horizontal">
-              <ul className="nav nav-pills nav-fill nav-horizontal-pills-sm">
-                {indicadorPergunta}
-              </ul>
+        <Collapse isOpen={this.state.show}>
+          <div
+            id="perguntaContainer"
+            className="card"
+            aria-labelledby="perguntaContainer"
+          >
+            <div className="card-body">
+              <div className="nav-horizontal">
+                <ul className="nav nav-pills nav-fill nav-horizontal-pills-sm">
+                  {indicadorPergunta}
+                </ul>
+              </div>
+              <div className="container">
+                <h2 className="question-theme">{filtroTema}</h2>
+              </div>
+              {pergunta}
+              <button
+                type="button"
+                className="btn btn-block btn-primary btn-square d-lg-none"
+                onClick={this.hidePerguntaContainer}
+              >
+                <span className="icon-cursor" /> Esconder
+              </button>
             </div>
-            <div className="container">
-              <h2 className="question-theme">{filtroTema}</h2>
-            </div>
-            {pergunta}
-            <button
-              type="button"
-              className="btn btn-block btn-primary btn-square d-lg-none"
-              onClick={this.hidePerguntaContainer}
-            >
-              <span className="icon-cursor" /> Esconder
-            </button>
           </div>
-        </div>
+        </Collapse>
         {/*
         <div className="container perguntas-container">
           {isCarregando || isEmpty(dadosPerguntas) ? (
