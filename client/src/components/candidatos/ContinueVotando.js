@@ -12,6 +12,12 @@ class ContinueVotando extends Component {
   render() {
     return (
       <div className="container tutorial pb-3">
+        <div className="text-center">
+          <img
+            src={require("../../data/img/choices.jpg")}
+            alt="Imagem de um questionário com algumas perguntas respondidas"
+          />
+        </div>
         <h2 className="panel-title text-center">
           Responda mais um pouco para um resultado mais preciso
         </h2>

@@ -13,6 +13,11 @@
   padding-left: 0.5rem;
 }
 
+.person-img {
+  -webkit-filter: grayscale(100%);
+  filter: grayscale(100%);
+}
+
 .score-progress {
   display: flex;
   justify-content: space-between;
