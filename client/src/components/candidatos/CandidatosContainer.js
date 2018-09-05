@@ -324,7 +324,14 @@ class CandidatosContainer extends Component {
                   className="container text-center"
                   style={{ marginBottom: "20px" }}
                 >
-                  {}
+                  {this.state.indexPaginacao.inicio !== 0 ? btnFirst : null}
+                  {this.state.indexPaginacao.inicio > 0
+                    ? btnMenosCandidatos
+                    : null}
+                  {this.state.indexPaginacao.final <
+                  this.state.indexPaginacao.numeroCandidatos
+                    ? btnMaisCandidatos
+                    : null}
                 </div>
               </FlipMove>
             </div>
