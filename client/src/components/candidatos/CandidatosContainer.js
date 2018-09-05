@@ -337,19 +337,29 @@ class CandidatosContainer extends Component {
       this.props.usuario.quantidadeVotos >= MIN_VOTOS ||
       this.props.candidatos.mostrarTodos;
 
-    let componenteExibicao;
+    let isExibeBoasVindas = false;
+    let isExibeContinueVotando = false;
+    let isExibeCandidatos = false;
     if (isMinimoVotosOuMostreTodos) {
-      componenteExibicao = <FlipMove>{exibeCandidatos}</FlipMove>;
+      isExibeCandidatos = true;
     } else if (
       this.props.usuario.quantidadeVotos > 0 &&
       this.props.usuario.quantidadeVotos < MIN_VOTOS
     ) {
-      componenteExibicao = <ContinueVotando />;
+      isExibeContinueVotando = true;
     } else {
-      componenteExibicao = <BoasVindas />;
+      isExibeBoasVindas = true;
     }
 
-    return <div>{componenteExibicao}</div>;
+    return (
+      <div>
+        <FlipMove>
+          {isExibeCandidatos ? exibeCandidatos : null}
+          {isExibeContinueVotando ? <ContinueVotando /> : null}
+          {isExibeBoasVindas ? <BoasVindas /> : null}
+        </FlipMove>
+      </div>
+    );
   }
 
   componentWillReceiveProps(nextProps) {
