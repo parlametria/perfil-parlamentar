@@ -1,0 +1,31 @@
+.card-header-number {
+  display: inline-block;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  width: 2.5rem;
+  background-color: #a963b3;
+  color: #ffffff;
+  text-align: center;
+}
+
+.btn-accordion {
+  display: inline-block;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+  text-align: left;
+  white-space: nowrap;
+  vertical-align: middle;
+  user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+  border: none;
+  padding: 0.2rem;
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.5;
+  border-radius: 0;
+  transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+  background: none;
+  color: #a963b3;
+}

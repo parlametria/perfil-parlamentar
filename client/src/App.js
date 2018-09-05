@@ -7,8 +7,8 @@ import { Provider } from "react-redux";
 import store from "./store";
 
 // Layout imports
-import Navbar from "./components/layout/Navbar";
-import Footer from "./components/layout/Footer";
+import Navbar from "./components/layout/navbar/Navbar";
+import Footer from "./components/layout/footer/Footer";
 
 // Login and logout actions
 import { setCurrentUser } from "./actions/authActions";

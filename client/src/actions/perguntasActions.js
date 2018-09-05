@@ -16,7 +16,7 @@ export const getDadosPerguntas = () => dispatch => {
 
   let dadosPerguntas = [];
 
-  Object.keys(perguntas).map(key => {
+  Object.keys(perguntas).forEach(key => {
     dadosPerguntas[perguntas[key].id] = perguntas[key];
   });
 

@@ -11,6 +11,10 @@
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
   },
+  "engines": {
+    "node": "8.11.4",
+    "npm": "5.6.0"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/analytics-ufcg/voz-ativa.git"
@@ -26,7 +30,8 @@
     "compression": "^1.7.3",
     "concurrently": "^4.0.1",
     "express": "^4.16.3",
-    "mongoose": "^5.2.10"
+    "mongoose": "^5.2.10",
+    "react-device-detect": "^1.5.9"
   },
   "devDependencies": {
     "nodemon": "^1.18.3"
