@@ -34,8 +34,6 @@ class Home extends Component {
   selecionaEstado(e) {
     e.preventDefault();
 
-    const { filtro } = this.props.candidatos;
-
     const novoFiltroEstado = {
       nome: "",
       partido: "TODOS",
