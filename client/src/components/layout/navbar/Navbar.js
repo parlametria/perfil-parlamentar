@@ -4,8 +4,7 @@ import { Link } from "react-router-dom";
 
 import { connect } from "react-redux";
 
-import { BrowserView, MobileView } from 'react-device-detect';
-
+import { BrowserView, MobileView } from "react-device-detect";
 
 import "./navbar.css";
 
@@ -54,23 +53,49 @@ class Navbar extends Component {
                 </li>
                 <li className="nav-item">
                   <Link className="nav-link" to="/envie">
-                    Envie pro seu candidato
+                    Sou candidato
                   </Link>
                 </li>
                 <li className="nav-item">
-                  <a href="https://twitter.com/intent/tweet/?text=Nos diga o que você defende e em oito minutos a gente apresenta candidatos alinhados com você. http://vozativa.org/" data-show-count="false" className="nav-link" target="_blank" >Tweet</a>
+                  <a
+                    href="https://twitter.com/intent/tweet/?text=Nos diga o que você defende e em oito minutos a gente apresenta candidatos alinhados com você. http://vozativa.org/"
+                    data-show-count="false"
+                    className="nav-link"
+                    target="_blank"
+                  >
+                    <span className="icon-twitter" />
+                  </a>
                 </li>
                 <li className="nav-item">
-                  <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fvozativa.org%2F&amp;src=sdkpreparse" data-show-count="false" className="nav-link" target="_blank">Facebook</a>
+                  <a
+                    href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fvozativa.org%2F&amp;src=sdkpreparse"
+                    data-show-count="false"
+                    className="nav-link"
+                    target="_blank"
+                  >
+                    <span className="icon-facebook" />
+                  </a>
                 </li>
                 <BrowserView>
                   <li className="nav-item">
-                    <a href="https://web.whatsapp.com/send?text=Nos diga o que você defende e em oito minutos a gente apresenta candidatos alinhados com você. http://vozativa.org/" data-show-count="false" className="nav-link" target="_blank" >Whatsapp</a>
+                    <a
+                      href="https://web.whatsapp.com/send?text=Nos diga o que você defende e em oito minutos a gente apresenta candidatos alinhados com você. http://vozativa.org/"
+                      data-show-count="false"
+                      className="nav-link"
+                      target="_blank"
+                    >
+                      <span className="icon-whatsapp" />
+                    </a>
                   </li>
                 </BrowserView>
                 <MobileView>
                   <li className="nav-item">
-                    <a href="whatsapp://send" data-text="Nos diga o que você defende e em oito minutos a gente apresenta candidatos alinhados com você." data-href="http://vozativa.org/" className="nav-link"  >Whatsapp</a>
+                    <a
+                      href="whatsapp://send?text=Nos diga o que você defende e em oito minutos a gente apresenta candidatos alinhados com você. http://vozativa.org/"
+                      className="nav-link"
+                    >
+                      <span className="icon-whatsapp" />
+                    </a>
                   </li>
                 </MobileView>
               </ul>
