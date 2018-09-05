@@ -56,3 +56,17 @@
   margin-left: auto;
   margin-right: auto;
 }
+
+@media (min-width: 768px) {
+  .candidatos {
+    min-height: 600px;
+  }
+}
+
+.btn-pag {
+  padding: 0 0.5rem;
+}
+
+.progress-none {
+  background-color: #ffffff;
+}

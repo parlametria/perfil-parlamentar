@@ -36,7 +36,7 @@ import "rxjs/add/operator/distinctUntilChanged";
 import "rxjs/add/operator/map";
 import "rxjs/add/operator/filter";
 
-const TAM_PAGINA = 10;
+const TAM_PAGINA = 5;
 const MAX_CAND_FILTRADOS = 10;
 const MIN_VOTOS = 3;
 const DEBOUNCE_TIME = 500; //ms
@@ -206,6 +206,7 @@ class CandidatosContainer extends Component {
                 : "http://pontosdevista.pt/static/uploads/2016/05/sem-fotoABC.jpg"
             }
             arrayRespostasUsuario={arrayRespostasUsuario}
+            email={candidato.email}
           />
         );
       }
@@ -233,27 +234,34 @@ class CandidatosContainer extends Component {
     );
 
     const btnFirst = (
-      <button className="btn btn-primary" onClick={this.pegaPrimeiraPagina}>
-        First
+      <button
+        className="btn btn-link btn-pag"
+        onClick={this.pegaPrimeiraPagina}
+      >
+        <span className="icon-back" /> Início
       </button>
     );
 
     const btnMaisCandidatos = (
-      <button className="btn btn-primary" onClick={this.pegaProximosCandidatos}>
-        Mostrar os próximos{" "}
+      <button
+        className="btn btn-link btn-pag"
+        onClick={this.pegaProximosCandidatos}
+      >
+        Ver próximos{" "}
         {this.state.indexPaginacao.final + TAM_PAGINA <=
         this.state.indexPaginacao.numeroCandidatos
           ? TAM_PAGINA
-          : this.state.indexPaginacao.numeroCandidatos % TAM_PAGINA}
+          : this.state.indexPaginacao.numeroCandidatos % TAM_PAGINA}{" "}
+        <span className="icon-forward" />
       </button>
     );
 
     const btnMenosCandidatos = (
       <button
-        className="btn btn-primary"
+        className="btn btn-link btn-pag"
         onClick={this.pegaCandidatosAnteriores}
       >
-        Mostrar 10 anteriores
+        <span className="icon-back" /> Ver {TAM_PAGINA} anteriores
       </button>
     );
 
@@ -314,19 +322,25 @@ class CandidatosContainer extends Component {
               <Spinner />
             </div>
           ) : (
-            <div className="candidatos">
-              <FlipMove>
-                {candidatos.slice(
-                  this.state.indexPaginacao.inicio,
-                  this.state.indexPaginacao.final
-                )}
-              </FlipMove>
-              {this.state.indexPaginacao.inicio !== 0 ? btnFirst : null}
-              {this.state.indexPaginacao.inicio > 0 ? btnMenosCandidatos : null}
-              {this.state.indexPaginacao.final <
-              this.state.indexPaginacao.numeroCandidatos
-                ? btnMaisCandidatos
-                : null}
+            <div>
+              <div className="candidatos">
+                <FlipMove>
+                  {candidatos.slice(
+                    this.state.indexPaginacao.inicio,
+                    this.state.indexPaginacao.final
+                  )}
+                </FlipMove>
+              </div>
+              <div className="candidatos-pagination d-flex justify-content-center flex-wrap mb-3">
+                {this.state.indexPaginacao.inicio !== 0 ? btnFirst : null}
+                {this.state.indexPaginacao.inicio > 0
+                  ? btnMenosCandidatos
+                  : null}
+                {this.state.indexPaginacao.final <
+                this.state.indexPaginacao.numeroCandidatos
+                  ? btnMaisCandidatos
+                  : null}
+              </div>
             </div>
           )}
         </div>
