@@ -151,22 +151,22 @@ a.nav-link.done:not([href]):not([tabindex]) {
 
 .form-control {
   color: #fff;
-  background-color: #ddc1e1;
-  border: 1px solid #ddc1e1;
+  background-color: #a963b3;
+  border: 1px solid #a963b3;
   border-radius: 24px;
   font-weight: 700;
 }
 .form-control:focus {
   color: #ffffff;
-  background-color: #ddc1e1;
-  border-color: #ddc1e1;
+  background-color: #a963b3;
+  border-color: #a963b3;
   outline: 0;
   box-shadow: none;
 }
 .input-group-text {
   color: #fff;
-  background-color: #ddc1e1;
-  border: 1px solid #ddc1e1;
+  background-color: #a963b3;
+  border: 1px solid #a963b3;
   border-radius: 24px;
   padding: 0.375rem 0 0.375rem 0.75rem;
 }
