@@ -4,6 +4,9 @@ import { Link } from "react-router-dom";
 
 import { connect } from "react-redux";
 
+import { BrowserView, MobileView } from 'react-device-detect';
+
+
 import "./navbar.css";
 
 class Navbar extends Component {
@@ -60,9 +63,16 @@ class Navbar extends Component {
                 <li className="nav-item">
                   <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fvozativa.org%2F&amp;src=sdkpreparse" data-show-count="false" className="nav-link" target="_blank">Facebook</a>
                 </li>
-                <li className="nav-item">
-                  <a href="whatsapp://send" data-text="Nos diga o que você defende e em oito minutos a gente apresenta candidatos alinhados com você." data-href="http://vozativa.org/" className="nav-link"  >Whatsapp</a>
-                </li>
+                <BrowserView>
+                  <li className="nav-item">
+                    <a href="https://web.whatsapp.com/send?text=Nos diga o que você defende e em oito minutos a gente apresenta candidatos alinhados com você. http://vozativa.org/" data-show-count="false" className="nav-link" target="_blank" >Whatsapp</a>
+                  </li>
+                </BrowserView>
+                <MobileView>
+                  <li className="nav-item">
+                    <a href="whatsapp://send" data-text="Nos diga o que você defende e em oito minutos a gente apresenta candidatos alinhados com você." data-href="http://vozativa.org/" className="nav-link"  >Whatsapp</a>
+                  </li>
+                </MobileView>
               </ul>
             </div>
           </div>
