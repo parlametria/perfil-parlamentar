@@ -54,6 +54,15 @@ class Navbar extends Component {
                     Envie pro seu candidato
                   </Link>
                 </li>
+                <li className="nav-item">
+                  <a href="https://twitter.com/intent/tweet/?text=Nos diga o que você defende e em oito minutos a gente apresenta candidatos alinhados com você. http://vozativa.org/" data-show-count="false" className="nav-link" target="_blank" >Tweet</a>
+                </li>
+                <li className="nav-item">
+                  <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fvozativa.org%2F&amp;src=sdkpreparse" data-show-count="false" className="nav-link" target="_blank">Facebook</a>
+                </li>
+                <li className="nav-item">
+                  <a href="whatsapp://send" data-text="Nos diga o que você defende e em oito minutos a gente apresenta candidatos alinhados com você." data-href="http://vozativa.org/" className="nav-link"  >Whatsapp</a>
+                </li>
               </ul>
             </div>
           </div>
