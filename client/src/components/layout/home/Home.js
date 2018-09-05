@@ -3,6 +3,7 @@ import React, { Component } from "react";
 // Containers imports
 import PerguntasContainer from "../../perguntas/PerguntasContainer";
 import CandidatosContainer from "../../candidatos/CandidatosContainer";
+import { isMobile } from "react-device-detect";
 
 // Redux stuff
 import { connect } from "react-redux";
@@ -27,8 +28,9 @@ class Home extends Component {
   constructor(props) {
     super(props);
 
-    this.state = { selecionouEstado: false };
+    this.state = { selecionouEstado: false, mostraPerguntas: false };
     this.selecionaEstado = this.selecionaEstado.bind(this);
+    this.mostraPerguntas = this.mostraPerguntas.bind(this);
   }
 
   selecionaEstado(e) {
@@ -42,7 +44,12 @@ class Home extends Component {
 
     this.props.setFiltroCandidatos(novoFiltroEstado);
     this.props.getDadosCandidatos();
-    this.setState({ selecionouEstado: true });
+    this.setState({ selecionouEstado: true, mostraPerguntas: !isMobile });
+  }
+
+  mostraPerguntas(e) {
+    e.preventDefault();
+    this.setState({ mostraPerguntas: true });
   }
 
   render() {
@@ -74,19 +81,33 @@ class Home extends Component {
           </div>
         </section>
         <div className="grid-wrapper">
-          <FlipMove>
-            {filtro.estado !== "" ? (
-              <div className="grid-main">
-                <section className="grid-panel panel-master">
-                  <CandidatosContainer />
-                </section>
-                <div className="grid-separator" />
-                <section className="grid-panel panel-detail">
+          <div className="grid-main">
+            <section className="grid-panel panel-master">
+              <FlipMove>
+                {filtro.estado !== "" ? <CandidatosContainer /> : null}
+                {isMobile &&
+                !this.state.mostraPerguntas &&
+                filtro.estado !== "" ? (
+                  <div className="text-center mb-3">
+                    <button
+                      className="btn btn-secondary"
+                      onClick={this.mostraPerguntas}
+                    >
+                      Vamos Começar!
+                    </button>
+                  </div>
+                ) : null}
+              </FlipMove>
+            </section>
+            <div className="grid-separator" />
+            <section className="grid-panel panel-detail">
+              <FlipMove>
+                {filtro.estado !== "" && this.state.mostraPerguntas ? (
                   <PerguntasContainer />
-                </section>
-              </div>
-            ) : null}
-          </FlipMove>
+                ) : null}
+              </FlipMove>
+            </section>
+          </div>
         </div>
       </div>
     );
