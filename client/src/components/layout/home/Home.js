@@ -13,7 +13,8 @@ import PropTypes from "prop-types";
 import {
   getDadosCandidatos,
   setFiltroCandidatos,
-  calculaScore
+  calculaScore,
+  mostraPerguntas
 } from "../../../actions/candidatosActions";
 
 import FlipMove from "react-flip-move";
@@ -44,12 +45,16 @@ class Home extends Component {
 
     this.props.setFiltroCandidatos(novoFiltroEstado);
     this.props.getDadosCandidatos();
-    this.setState({ selecionouEstado: true, mostraPerguntas: !isMobile });
+    this.setState({ selecionouEstado: true });
   }
 
   mostraPerguntas(e) {
     e.preventDefault();
-    this.setState({ mostraPerguntas: true });
+    this.props.mostraPerguntas();
+  }
+
+  componentDidMount() {
+    if (!isMobile) this.props.mostraPerguntas();
   }
 
   render() {
@@ -86,7 +91,7 @@ class Home extends Component {
               <FlipMove>
                 {filtro.estado !== "" ? <CandidatosContainer /> : null}
                 {isMobile &&
-                !this.state.mostraPerguntas &&
+                !this.props.candidatos.mostraPerguntas &&
                 filtro.estado !== "" ? (
                   <div className="text-center mb-3">
                     <button
@@ -102,7 +107,8 @@ class Home extends Component {
             <div className="grid-separator" />
             <section className="grid-panel panel-detail">
               <FlipMove>
-                {filtro.estado !== "" && this.state.mostraPerguntas ? (
+                {filtro.estado !== "" &&
+                this.props.candidatos.mostraPerguntas ? (
                   <PerguntasContainer />
                 ) : null}
               </FlipMove>
@@ -125,5 +131,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { getDadosCandidatos, setFiltroCandidatos, calculaScore }
+  { getDadosCandidatos, setFiltroCandidatos, calculaScore, mostraPerguntas }
 )(Home);
