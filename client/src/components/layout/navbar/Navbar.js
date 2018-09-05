@@ -52,11 +52,6 @@ class Navbar extends Component {
                   </Link>
                 </li>
                 <li className="nav-item">
-                  <Link className="nav-link" to="/envie">
-                    Sou candidato
-                  </Link>
-                </li>
-                <li className="nav-item">
                   <a
                     href="https://twitter.com/intent/tweet/?text=Nos diga o que você defende e em oito minutos a gente apresenta candidatos alinhados com você. http://vozativa.org/"
                     data-show-count="false"
