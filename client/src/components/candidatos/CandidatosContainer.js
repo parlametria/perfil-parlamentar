@@ -316,26 +316,17 @@ class CandidatosContainer extends Component {
           ) : (
             <div className="candidatos">
               <FlipMove>
-                <div>
-                  {candidatos.slice(
-                    this.state.indexPaginacao.inicio,
-                    this.state.indexPaginacao.final
-                  )}
-                </div>
-                <div
-                  className="container text-center"
-                  style={{ marginBottom: "20px" }}
-                >
-                  {this.state.indexPaginacao.inicio !== 0 ? btnFirst : null}
-                  {this.state.indexPaginacao.inicio > 0
-                    ? btnMenosCandidatos
-                    : null}
-                  {this.state.indexPaginacao.final <
-                  this.state.indexPaginacao.numeroCandidatos
-                    ? btnMaisCandidatos
-                    : null}
-                </div>
+                {candidatos.slice(
+                  this.state.indexPaginacao.inicio,
+                  this.state.indexPaginacao.final
+                )}
               </FlipMove>
+              {this.state.indexPaginacao.inicio !== 0 ? btnFirst : null}
+              {this.state.indexPaginacao.inicio > 0 ? btnMenosCandidatos : null}
+              {this.state.indexPaginacao.final <
+              this.state.indexPaginacao.numeroCandidatos
+                ? btnMaisCandidatos
+                : null}
             </div>
           )}
         </div>
