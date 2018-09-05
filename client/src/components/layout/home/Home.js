@@ -88,7 +88,7 @@ class Home extends Component {
                 {isMobile &&
                 !this.state.mostraPerguntas &&
                 filtro.estado !== "" ? (
-                  <div className="text-center">
+                  <div className="text-center mb-3">
                     <button
                       className="btn btn-secondary"
                       onClick={this.mostraPerguntas}
