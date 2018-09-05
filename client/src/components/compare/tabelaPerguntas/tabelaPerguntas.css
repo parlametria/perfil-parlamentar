@@ -6,3 +6,10 @@
 }
 .table-th-yours {
 }
+
+.table-bordered td.table-title,
+.table-bordered th.table-title {
+  background-color: #ffffff;
+  font-size: 1rem;
+  font-weight: 700;
+}

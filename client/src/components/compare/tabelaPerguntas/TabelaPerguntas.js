@@ -100,16 +100,21 @@ class TabelaPerguntas extends Component {
         } else {
           change = false;
         }
+        const clean = sanitizeHtml(
+          perguntasExibidas[elem.key % perguntasPorPagina].pergunta
+        );
 
         return (
           <tbody>
             <tr key={"tema" + temaExibido}>
-              {change ? <td colSpan="3">{temaExibido}</td> : null}
+              {change ? (
+                <td colSpan="3" className="table-title">
+                  {temaExibido}
+                </td>
+              ) : null}
             </tr>
             <tr key={elem.key}>
-              <td>
-                {perguntasExibidas[elem.key % perguntasPorPagina].pergunta}
-              </td>
+              <td dangerouslySetInnerHTML={{ __html: clean }} />
               <td
                 className={
                   "text-center table-row-center " +
