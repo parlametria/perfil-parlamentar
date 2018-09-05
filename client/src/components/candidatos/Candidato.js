@@ -35,29 +35,16 @@ class Candidato extends Component {
             "," +
             "%0D%0A" +
             "%0D%0A" +
-            "A Plataforma Voz Ativa te convida a participar " +
-            "de um projeto inovador de democracia digital e " +
-            "colaborativa, aliando ciência de dados e " +
-            "inteligência regulatória. Somos uma rede " +
-            "formada por mais de 60 organizações " +
-            "não-governamentais que pretendem oferecer " +
-            "aos eleitores e eleitoras informações confiáveis " +
-            "sobre as candidaturas à Câmara dos Deputados. " +
+            "Quer tornar sua candidatura conhecida e garantir mais votos? Participe da plataforma Voz Ativa respondendo as perguntas sobre temas como direitos humanos, meio ambiente,  nova economia e transparência." +
             "%0D%0A" +
             "%0D%0A" +
-            "Para que sua trajetória e propostas estejam mais " +
-            "acessíveis ao eleitorado, pedimos que você " +
-            "preencha o questionário contido nesta " +
-            "plataforma e que contempla quatro eixos de " +
-            "debate: Meio Ambiente, Direitos Humanos, " +
-            "Integridade e Transparência, e Nova Economia. " +
-            "As suas respostas estarão disponíveis para " +
-            "eleitores e eleitoras interessados/das em tomar " +
-            "a decisão de voto a partir de temas de " +
-            "fundamental importância para o Brasil. " +
+            "O  questionário já foi enviado para o seu e-mail que está registrado no TSE  pelo remetente 'contato@vozativa.org'" +
             "%0D%0A" +
             "%0D%0A" +
-            "Agradecemos sua participação!"
+            "Os eleitores e eleitoras de todo o Brasil poderão acessar as respostas e escolher as candidaturas que mais se aproximam de suas expectativas. " +
+            "%0D%0A" +
+            "%0D%0A" +
+            "Fortaleça esta iniciativa de match eleitoral e contribua para uma nova cultura de voto consciente. "
           }
         >
           Cobre a participação
