@@ -22,6 +22,8 @@ class Navbar extends Component {
   }
 
   render() {
+    let linkCompartilhamento = "http://vozativa.org/compare/"
+    let textoCompartilhamento = "Nos diga o que você defende e em oito minutos a gente apresenta candidatos alinhados com você. " + linkCompartilhamento;
     return (
       <div>
         <nav className="navbar navbar-expand-lg navbar-light">
@@ -58,17 +60,17 @@ class Navbar extends Component {
               <ul className="navbar-nav navbar-inline">
                 <li className="nav-item">
                   <a
-                    href="https://twitter.com/intent/tweet/?text=Nos diga o que você defende e em oito minutos a gente apresenta candidatos alinhados com você. http://vozativa.org/"
+                    href={"https://twitter.com/intent/tweet/?text="+textoCompartilhamento}
                     data-show-count="false"
                     className="nav-link"
-                    target="_blank"
+                    target="_blank" 
                   >
                     <span className="icon-twitter" />
                   </a>
                 </li>
                 <li className="nav-item">
                   <a
-                    href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fvozativa.org%2F&amp;src=sdkpreparse"
+                    href={"https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fvozativa.org%2F&amp;src=sdkpreparse"}
                     data-show-count="false"
                     className="nav-link"
                     target="_blank"
@@ -79,7 +81,7 @@ class Navbar extends Component {
                 <BrowserView>
                   <li className="nav-item">
                     <a
-                      href="https://web.whatsapp.com/send?text=Nos diga o que você defende e em oito minutos a gente apresenta candidatos alinhados com você. http://vozativa.org/"
+                      href={"https://web.whatsapp.com/send?text="+textoCompartilhamento}
                       data-show-count="false"
                       className="nav-link"
                       target="_blank"
@@ -91,7 +93,7 @@ class Navbar extends Component {
                 <MobileView>
                   <li className="nav-item">
                     <a
-                      href="whatsapp://send?text=Nos diga o que você defende e em oito minutos a gente apresenta candidatos alinhados com você. http://vozativa.org/"
+                      href={"whatsapp://send?text="+textoCompartilhamento}
                       className="nav-link"
                     >
                       <span className="icon-whatsapp" />
