@@ -46,6 +46,7 @@ class Candidato extends Component {
             "%0D%0A" +
             "Fortaleça esta iniciativa de match eleitoral e contribua para uma nova cultura de voto consciente. "
           }
+          target="_blank"
         >
           Cobre a participação
         </a>
