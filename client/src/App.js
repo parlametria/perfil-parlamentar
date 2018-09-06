@@ -14,6 +14,10 @@ import Footer from "./components/layout/footer/Footer";
 import { setCurrentUser } from "./actions/authActions";
 import Main from "./Main";
 
+import ReactGA from 'react-ga';
+ReactGA.initialize('UA-124057258-1');
+ReactGA.pageview(window.location.pathname + window.location.search);
+
 // Check token
 if (localStorage.accessToken) {
   const user = JSON.parse(localStorage.user);
