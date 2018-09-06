@@ -16,6 +16,7 @@
     "react-device-detect": "^1.5.9",
     "react-dom": "^16.4.2",
     "react-flip-move": "^3.0.2",
+    "react-ga": "^2.5.3",
     "react-js-pagination": "^3.0.2",
     "react-minimal-pie-chart": "^3.3.0",
     "react-popup": "^0.9.3",

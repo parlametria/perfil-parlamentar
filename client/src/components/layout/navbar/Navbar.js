@@ -51,6 +51,11 @@ class Navbar extends Component {
                     Sobre
                   </Link>
                 </li>
+              </ul>
+              <span class="navbar-text">
+                compartilhe:
+              </span>
+              <ul className="navbar-nav navbar-inline">
                 <li className="nav-item">
                   <a
                     href="https://twitter.com/intent/tweet/?text=Nos diga o que você defende e em oito minutos a gente apresenta candidatos alinhados com você. http://vozativa.org/"

@@ -266,3 +266,17 @@ a.nav-link.done:not([href]):not([tabindex]) {
 .navbar-light {
   border-bottom: solid 4px #a963b3;
 }
+
+.navbar-light .navbar-text {
+  color: #a963b3;
+}
+
+@media (max-width: 991.98px) {
+  .navbar-inline {
+    flex-direction: row;
+    justify-content: space-around;
+  }
+  .navbar-light .navbar-inline .nav-link {
+    font-size: 1.7rem;
+  }
+}
