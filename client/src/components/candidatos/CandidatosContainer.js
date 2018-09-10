@@ -101,7 +101,7 @@ class CandidatosContainer extends Component {
       this.setState({ indexPaginacao: indexPaginacao });
     } else if (
       this.state.indexPaginacao.final +
-        (this.state.indexPaginacao.numeroCandidatos % TAM_PAGINA) <=
+      (this.state.indexPaginacao.numeroCandidatos % TAM_PAGINA) <=
       this.state.indexPaginacao.numeroCandidatos
     ) {
       const indexPaginacao = {
@@ -201,8 +201,8 @@ class CandidatosContainer extends Component {
             foto={
               candidato.tem_foto
                 ? "https://s3-sa-east-1.amazonaws.com/fotoscandidatos2018/fotos_tratadas/img_" +
-                  candidato.cpf +
-                  ".jpg"
+                candidato.cpf +
+                ".jpg"
                 : "http://pontosdevista.pt/static/uploads/2016/05/sem-fotoABC.jpg"
             }
             arrayRespostasUsuario={arrayRespostasUsuario}
@@ -249,7 +249,7 @@ class CandidatosContainer extends Component {
       >
         Ver próximos{" "}
         {this.state.indexPaginacao.final + TAM_PAGINA <=
-        this.state.indexPaginacao.numeroCandidatos
+          this.state.indexPaginacao.numeroCandidatos
           ? TAM_PAGINA
           : this.state.indexPaginacao.numeroCandidatos % TAM_PAGINA}{" "}
         <span className="icon-forward" />
@@ -322,27 +322,27 @@ class CandidatosContainer extends Component {
               <Spinner />
             </div>
           ) : (
-            <div>
-              <div className="candidatos">
-                <FlipMove>
-                  {candidatos.slice(
-                    this.state.indexPaginacao.inicio,
-                    this.state.indexPaginacao.final
-                  )}
-                </FlipMove>
+              <div>
+                <div className="candidatos">
+                  <FlipMove>
+                    {candidatos.slice(
+                      this.state.indexPaginacao.inicio,
+                      this.state.indexPaginacao.final
+                    )}
+                  </FlipMove>
+                </div>
+                <div className="candidatos-pagination d-flex justify-content-center flex-wrap mb-3">
+                  {this.state.indexPaginacao.inicio !== 0 ? btnFirst : null}
+                  {this.state.indexPaginacao.inicio > 0
+                    ? btnMenosCandidatos
+                    : null}
+                  {this.state.indexPaginacao.final <
+                    this.state.indexPaginacao.numeroCandidatos
+                    ? btnMaisCandidatos
+                    : null}
+                </div>
               </div>
-              <div className="candidatos-pagination d-flex justify-content-center flex-wrap mb-3">
-                {this.state.indexPaginacao.inicio !== 0 ? btnFirst : null}
-                {this.state.indexPaginacao.inicio > 0
-                  ? btnMenosCandidatos
-                  : null}
-                {this.state.indexPaginacao.final <
-                this.state.indexPaginacao.numeroCandidatos
-                  ? btnMaisCandidatos
-                  : null}
-              </div>
-            </div>
-          )}
+            )}
         </div>
       </div>
     );
@@ -474,6 +474,7 @@ class CandidatosContainer extends Component {
     }
   }
 }
+
 
 CandidatosContainer.propTypes = {
   calculaScore: PropTypes.func.isRequired,

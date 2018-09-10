@@ -29,10 +29,10 @@ const comparaRespostas = (
   chaves.forEach(idPergunta => {
     respostasIguais +=
       respostasCandidatos[idPergunta] !== undefined &&
-      respostasCandidatos[idPergunta] !== null &&
-      respostasUsuario[idPergunta] !== 0 &&
-      respostasUsuario[idPergunta] !== -2 &&
-      respostasCandidatos[idPergunta] === respostasUsuario[idPergunta]
+        respostasCandidatos[idPergunta] !== null &&
+        respostasUsuario[idPergunta] !== 0 &&
+        respostasUsuario[idPergunta] !== -2 &&
+        respostasCandidatos[idPergunta] === respostasUsuario[idPergunta]
         ? 1
         : 0;
   });
@@ -150,9 +150,6 @@ export const getDadosCandidatos = () => (dispatch, getState) => {
   let dadosCandidatos = {};
   let numResponderam = 0;
   let numSemResposta = 0;
-
-  console.time("getResponderam");
-  console.time("getNaoResponderam");
 
   axios
     .get("/api/respostas/estados/" + filtro.estado + "/responderam")
