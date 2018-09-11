@@ -8,6 +8,8 @@ import {
   SET_NUM_RESPOSTAS,
   SET_DADOS_CANDIDATO,
   SET_MOSTRAR_TODOS_CANDIDATOS,
+  SET_CANDIDATOS_FILTRADOS,
+  SET_CANDIDATOS_RANQUEADOS,
   SET_MOSTRA_PERGUNTAS
 } from "../actions/types";
 
@@ -21,6 +23,8 @@ const initialState = {
   isCarregando: false,
   scoreCandidatos: {},
   filtro: { nome: "", partido: "TODOS", estado: "" },
+  candidatosFiltrados: [],
+  candidatosRanqueados: [],
   dadosCandidato: {},
   scoreTema: {},
   mostrarTodos: false,
@@ -81,6 +85,16 @@ export default function(state = initialState, action) {
       return {
         ...state,
         mostraPerguntas: true
+      };
+    case SET_CANDIDATOS_FILTRADOS:
+      return {
+        ...state,
+        candidatosFiltrados: action.candidatosFiltrados
+      };
+    case SET_CANDIDATOS_RANQUEADOS:
+      return {
+        ...state,
+        candidatosRanqueados: action.candidatosRanqueados
       };
     default:
       return state;

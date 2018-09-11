@@ -415,7 +415,8 @@ class CandidatosContainer extends Component {
           });
         });
 
-      let candidatosRanking = nextProps.getTopNCandidatos(totalCandidatos);
+      //let candidatosRanking = this.props.getTopNCandidatos(totalCandidatos);
+      let candidatosRanking = nextProps.candidatos.candidatosRanqueados;
 
       let indexPaginacao = {
         inicio: 0,
@@ -452,7 +453,7 @@ class CandidatosContainer extends Component {
     if (isEmpty(this.props.candidatos.dadosCandidatos)) {
       //this.props.calculaScore();
     } else {
-      let candidatosRanking = this.props.getTopNCandidatos(totalCandidatos);
+      let candidatosRanking = this.props.candidatos.candidatosRanqueados;
       let indexPaginacao = {
         inicio: 0,
         final: TAM_PAGINA,

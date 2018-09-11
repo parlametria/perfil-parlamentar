@@ -8,7 +8,8 @@ import {
   SET_NUM_RESPOSTAS,
   SET_DADOS_CANDIDATO,
   SET_MOSTRAR_TODOS_CANDIDATOS,
-  SET_MOSTRA_PERGUNTAS
+  SET_MOSTRA_PERGUNTAS,
+  SET_CANDIDATOS_RANQUEADOS
 } from "./types";
 
 // import {
@@ -64,6 +65,7 @@ export const calculaScore = () => (dispatch, getState) => {
     type: SET_SCORE_CANDIDATOS,
     scoreCandidatos
   });
+  dispatch(getTopNCandidatos(Object.keys(scoreCandidatos).length));
 };
 
 export const calculaScorePorTema = (
@@ -139,7 +141,10 @@ export const getTopNCandidatos = n => (dispatch, getState) => {
     else return 1;
   });
 
-  return candidatos.slice(0, n);
+  dispatch({
+    type: SET_CANDIDATOS_RANQUEADOS,
+    candidatosRanqueados: candidatos.slice(0, n)
+  });
 };
 
 export const getDadosCandidatos = () => (dispatch, getState) => {
@@ -230,6 +235,8 @@ export const setCandidatosCarregados = () => {
     type: CANDIDATOS_CARREGADOS
   };
 };
+
+export const setCandidatosFiltrados = () => (dispatch, getState) => {};
 
 export const setFiltroCandidatos = filtro => dispatch => {
   dispatch({ type: SET_FILTRO_CANDIDATOS, filtro });
