@@ -51,6 +51,11 @@ class Navbar extends Component {
                     Sobre
                   </Link>
                 </li>
+                <li className="nav-item">
+                  <Link to="/soucandidato" className="nav-link">
+                    Sou candidato
+                  </Link>
+                </li>
               </ul>
               <span class="navbar-text">
                 compartilhe:
