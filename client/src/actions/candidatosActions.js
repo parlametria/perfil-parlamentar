@@ -9,7 +9,8 @@ import {
   SET_DADOS_CANDIDATO,
   SET_MOSTRAR_TODOS_CANDIDATOS,
   SET_MOSTRA_PERGUNTAS,
-  SET_CANDIDATOS_RANQUEADOS
+  SET_CANDIDATOS_RANQUEADOS,
+  SET_CANDIDATOS_FILTRADOS
 } from "./types";
 
 // import {
@@ -130,16 +131,18 @@ export const calculaScorePorTema = (
 // Pega o top n candidatos baseado na compatibilidade entre as respostas ordenado pelo score. Recebe um dicionário das respostas dos candidatos e retorna um array de arrays (tuplas) com os ids dos candidatos e seu score.
 export const getTopNCandidatos = n => (dispatch, getState) => {
   const { scoreCandidatos } = getState().candidatosReducer;
-  let candidatos = Object.keys(scoreCandidatos).map(key => [
+  let matrizScores = Object.keys(scoreCandidatos).map(key => [
     key,
     scoreCandidatos[key]
   ]);
 
-  candidatos.sort((a, b) => {
-    if (a[1] > b[1]) return -1;
-    else if (a[1] === b[1]) return 0;
-    else return 1;
-  });
+  const candidatos = matrizScores
+    .sort((a, b) => {
+      if (a[1] > b[1]) return -1;
+      else if (a[1] === b[1]) return 0;
+      else return 1;
+    })
+    .map(candidato => candidato[0]);
 
   dispatch({
     type: SET_CANDIDATOS_RANQUEADOS,
@@ -236,7 +239,40 @@ export const setCandidatosCarregados = () => {
   };
 };
 
-export const setCandidatosFiltrados = () => (dispatch, getState) => {};
+export const setCandidatosFiltrados = () => (dispatch, getState) => {
+  const {
+    dadosCandidatos,
+    filtro,
+    scoreCandidatos
+  } = getState().candidatosReducer;
+
+  const candidatos = Object.keys(dadosCandidatos)
+    .filter(cpf => {
+      if (filtro.partido !== "TODOS" && filtro.nome !== "") {
+        return (
+          dadosCandidatos[cpf].sg_partido === filtro.partido &&
+          dadosCandidatos[cpf].nome_urna
+            .toLowerCase()
+            .indexOf(filtro.nome.toLowerCase()) >= 0
+        );
+      } else if (filtro.partido !== "TODOS") {
+        return dadosCandidatos[cpf].sg_partido === filtro.partido;
+      } else if (filtro.nome !== "") {
+        return (
+          dadosCandidatos[cpf].nome_urna
+            .toLowerCase()
+            .indexOf(filtro.nome.toLowerCase()) >= 0
+        );
+      } else return false;
+    })
+    .sort((a, b) => {
+      if (scoreCandidatos[a] > scoreCandidatos[b]) return -1;
+      else if (scoreCandidatos[a] < scoreCandidatos[b]) return 1;
+      else return 0;
+    });
+
+  dispatch({ type: SET_CANDIDATOS_FILTRADOS, candidatosFiltrados: candidatos });
+};
 
 export const setFiltroCandidatos = filtro => dispatch => {
   dispatch({ type: SET_FILTRO_CANDIDATOS, filtro });
