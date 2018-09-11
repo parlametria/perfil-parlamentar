@@ -14,7 +14,8 @@ import {
   calculaScore,
   getTopNCandidatos,
   getDadosCandidatos,
-  setFiltroCandidatos
+  setFiltroCandidatos,
+  setCandidatosFiltrados
 } from "../../actions/candidatosActions";
 
 import PropTypes from "prop-types";
@@ -140,6 +141,7 @@ class CandidatosContainer extends Component {
 
     this.setState({ filtro });
     this.props.setFiltroCandidatos(filtro);
+    this.props.setCandidatosFiltrados();
   }
 
   render() {
@@ -152,37 +154,13 @@ class CandidatosContainer extends Component {
     } = this.props.candidatos;
     const { arrayRespostasUsuario } = this.props.usuario;
 
-    let candidatosMapeaveis;
+    const candidatosMapeaveis =
+      this.props.candidatos.filtro.nome !== "" ||
+      this.props.candidatos.filtro.partido !== "TODOS"
+        ? this.props.candidatos.candidatosFiltrados
+        : this.props.candidatos.candidatosRanqueados;
     let numRepPartido = 0;
     let numNaoRepPartido = 0;
-
-    if (filtro.nome !== "" && filtro.partido !== "TODOS") {
-      candidatosMapeaveis = this.state.candidatosFiltrados.filter(
-        cpf => dadosCandidatos[cpf].sg_partido === this.state.filtro.partido
-      );
-    } else if (this.state.filtro.partido !== "TODOS") {
-      let cpfs = Object.keys(dadosCandidatos);
-      candidatosMapeaveis = cpfs
-        .filter(
-          cpf => dadosCandidatos[cpf].sg_partido === this.state.filtro.partido
-        )
-        .sort((a, b) => {
-          if (scoreCandidatos[a] > scoreCandidatos[b]) return -1;
-          else if (scoreCandidatos[a] < scoreCandidatos[b]) return 1;
-          else return 0;
-        });
-      candidatosMapeaveis.forEach(cpf => {
-        if (dadosCandidatos[cpf].respondeu) {
-          numRepPartido++;
-        } else {
-          numNaoRepPartido++;
-        }
-      });
-    } else if (this.state.filtro.nome !== "") {
-      candidatosMapeaveis = this.state.candidatosFiltrados;
-    } else {
-      candidatosMapeaveis = this.state.candidatosRanking.map(cand => cand[0]);
-    }
 
     const candidatos = candidatosMapeaveis.map(cpf => {
       const candidato = this.props.candidatos.dadosCandidatos[cpf];
@@ -397,19 +375,10 @@ class CandidatosContainer extends Component {
       this.subscription = this.onSearch$
         .debounceTime(DEBOUNCE_TIME)
         .subscribe(debounced => {
-          let keys = Object.keys(dadosCandidatos);
-
-          let nomesFiltrados = keys
-            .filter(
-              cpf =>
-                dadosCandidatos[cpf].nome_urna
-                  .toLowerCase()
-                  .indexOf(debounced.toLowerCase()) >= 0
-            )
-            .slice(0, MAX_CAND_FILTRADOS);
+          this.props.setCandidatosFiltrados();
           this.setState({
             debounced,
-            candidatosFiltrados: nomesFiltrados,
+            candidatosFiltrados: this.props.candidatos.candidatosFiltrados,
             isPesquisando: false,
             partidos
           });
@@ -480,7 +449,8 @@ CandidatosContainer.propTypes = {
   calculaScore: PropTypes.func.isRequired,
   getTopNCandidatos: PropTypes.func.isRequired,
   getDadosCandidatos: PropTypes.func.isRequired,
-  setFiltroCandidatos: PropTypes.func.isRequired
+  setFiltroCandidatos: PropTypes.func.isRequired,
+  setCandidatosFiltrados: PropTypes.func.isRequired
 };
 const mapStateToProps = state => ({
   candidatos: state.candidatosReducer,
@@ -489,5 +459,11 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { calculaScore, getTopNCandidatos, getDadosCandidatos, setFiltroCandidatos }
+  {
+    calculaScore,
+    getTopNCandidatos,
+    getDadosCandidatos,
+    setFiltroCandidatos,
+    setCandidatosFiltrados
+  }
 )(CandidatosContainer);
