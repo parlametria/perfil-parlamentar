@@ -52,9 +52,7 @@ class Navbar extends Component {
                   </Link>
                 </li>
               </ul>
-              <span class="navbar-text">
-                compartilhe:
-              </span>
+              <span className="navbar-text">compartilhe:</span>
               <ul className="navbar-nav navbar-inline">
                 <li className="nav-item">
                   <a
@@ -62,6 +60,7 @@ class Navbar extends Component {
                     data-show-count="false"
                     className="nav-link"
                     target="_blank"
+                    rel="noopener noreferrer"
                   >
                     <span className="icon-twitter" />
                   </a>
@@ -72,6 +71,7 @@ class Navbar extends Component {
                     data-show-count="false"
                     className="nav-link"
                     target="_blank"
+                    rel="noopener noreferrer"
                   >
                     <span className="icon-facebook" />
                   </a>
@@ -83,6 +83,7 @@ class Navbar extends Component {
                       data-show-count="false"
                       className="nav-link"
                       target="_blank"
+                      rel="noopener noreferrer"
                     >
                       <span className="icon-whatsapp" />
                     </a>

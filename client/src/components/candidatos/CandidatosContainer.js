@@ -37,7 +37,7 @@ import "rxjs/add/operator/map";
 import "rxjs/add/operator/filter";
 
 const TAM_PAGINA = 5;
-const MAX_CAND_FILTRADOS = 10;
+const MAX_CAND_FILTRADOS = 5;
 const MIN_VOTOS = 3;
 const DEBOUNCE_TIME = 500; //ms
 
