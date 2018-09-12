@@ -29,7 +29,7 @@ class SouCandidato extends Component {
     let candidato;
     return (
       <div className="container">
-        <section className="intro-candidato">
+        <section className="sou-candidato">
           <div className="container">
             <h2 className="intro-title text-center">
               É candidato e quer participar?
@@ -42,36 +42,47 @@ class SouCandidato extends Component {
           </div>
         </section>
 
-        <div className="col-md-4">
-          <input
-            type="text"
-            className="form-control form-control-secondary"
-            placeholder="Pesquisar CPF do/a candidato/a"
-            aria-label="Pesquisar CPF do/a candidato/a"
-            aria-describedby="search-candidate"
-          //onChange={this.buscaNome}
-          //value={this.state.filtro.nome}
-          />
-        </div>
-
         <div className="container">
+          <div className="col-md-4">
+            <input
+              type="text  "
+              pattern="\d{11}"
+              maxLength="11" size="11"
+              className="form-control form-control-secondary"
+              placeholder="Pesquisar CPF do/a candidato/a"
+              aria-label="Pesquisar CPF do/a candidato/a"
+              aria-describedby="search-candidate"
+            //onChange={this.buscaCPF}
+            //value={this.state.filtro.cpf}
+            />
+            <font size="1">*apenas números</font>
+          </div>
+
+
           <section className="sou-candidato">
             <div className="grid-wrapper">
               <div className="grid-main">
                 <section className="grid-panel panel-master">
-                  <div>
-                    Se você é um candidato e por algum motivo não recebeu o nosso e-mail entre em contato conosco
-                <a href="mailto:'contato@vozativa.org'"
-                      target="_blank"> através de uma mensagem.</a>
+                  <div className="email-board">
+
+                    Se você é um candidato e por algum motivo não recebeu o nosso e-mail entre em contato conosco através de uma mensagem.
+
+                    <div align="right">
+                      <a href="mailto:'contato@vozativa.org'" >
+                        <b>enviar e-mail</b>
+                      </a>
+                    </div>
                   </div>
                 </section>
-                <div className="grid-separator" />
-                <section className="grid-panel panel-detail">
-                  {candidato = this.candidato ? (this.candidato) : (
-                    <div>
-                      Pesquise pelo seu cpf
-                    </div>
-                  )}
+
+                <section className="grid-panel panel-master">
+                  {candidato = this.candidato ? (
+                    this.candidato
+                  ) : (
+                      <div>
+                        Consulte acima o seu CPF e veja as suas informações.
+                      </div>
+                    )}
                 </section>
               </div>
 

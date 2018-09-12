@@ -57,7 +57,7 @@ class Navbar extends Component {
                   </Link>
                 </li>
               </ul>
-              <span class="navbar-text">
+              <span className="navbar-text">
                 compartilhe:
               </span>
               <ul className="navbar-nav navbar-inline">

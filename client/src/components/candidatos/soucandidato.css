@@ -1,8 +1,19 @@
-.intro-candidato {
-  padding-top: 2rem;
-}
-
 .sou-candidato{
   padding-top: 2rem;
 
+}
+
+.email-board{
+  background: linear-gradient(180deg, #a963b3, #a963b3);
+  background-repeat: repeat-y;
+  background-size:  auto;
+  color: #ffffff;
+  padding-left: 2rem;
+  padding-right: 2rem;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
+
+a:hover{
+  color:#5b2762;
 }
