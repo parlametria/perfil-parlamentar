@@ -65,7 +65,7 @@ class SouCandidato extends Component {
                 <section className="grid-panel panel-master">
                   <div className="email-board">
 
-                    Se você é um candidato e por algum motivo não recebeu o nosso e-mail entre em contato conosco através de uma mensagem.
+                    Se você é um candidato e por algum motivo não recebeu o nosso e-mail entre em contato conosco através de uma mensagem no <font color="#41c083">contato@vozativa.org</font>.
 
                     <div align="right">
                       <a href="mailto:'contato@vozativa.org'" >
@@ -77,10 +77,17 @@ class SouCandidato extends Component {
 
                 <section className="grid-panel panel-master">
                   {candidato = this.candidato ? (
-                    this.candidato
+                    //perfil do candidato: nome, partido/UF, cpf, e-mail, recebeu/respondeu
+                    <div>
+                      {this.candidato} +
+
+                       Um email com o link para participação foi enviado por contato@vozativa.org para o endereço xxx@yyy.zzz.  Caso você queira receber esse link em outro email ou tenha outra dúvida, manda um email pra a gente em contato@vozativa.org que providenciamos.
+
+                       Nós não conseguimos lhe contactar através do endereço xxx@yyy.zzz que está cadastrado no TSE. Para que possamos lhe enviar o link que serve como convite para a plataforma, precisamos de um e-mail que você tenha acesso. Para nos informar esse email, por favor nos contacte informando seu CPF e nome de urna no endereço contato@vozativa.org.
+                    </div>
                   ) : (
                       <div>
-                        Consulte acima o seu CPF e veja as suas informações.
+                        A Voz Ativa enviou um e-mail para todos os candidato/as a deputado federal usando os endereços cadastrados no TSE. Para confirmar para que endereço de e-mail enviamos, digite seu CPF.
                       </div>
                     )}
                 </section>
