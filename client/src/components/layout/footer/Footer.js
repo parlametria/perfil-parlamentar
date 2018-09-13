@@ -9,8 +9,7 @@ export default () => {
             <div className="col-md-4">
               <h4 className="footer-title">O que é a Rede Advocacy?</h4>
               <p>
-                Somos uma rede de 30 organizações da sociedade civil que atuam
-                para uma nova economia.
+                Somos uma rede de 30 organizações da sociedade civil que atuam de forma colaborativa para inovar a participação da sociedade no processo de elaboração de políticas públicas no Brasil.
               </p>
               <p>O Voz ativa não divulga seus dados</p>
             </div>

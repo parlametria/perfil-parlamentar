@@ -357,7 +357,7 @@ class CandidatosContainer extends Component {
     this.subscription = this.onSearch$
       .debounceTime(DEBOUNCE_TIME)
       .subscribe(debounced => {
-        this.props.setCandidatosFiltrados();
+        nextProps.setCandidatosFiltrados();
         this.setState({
           debounced,
           isPesquisando: false
