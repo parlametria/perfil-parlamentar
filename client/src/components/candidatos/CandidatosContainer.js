@@ -14,7 +14,10 @@ import {
   calculaScore,
   getTopNCandidatos,
   getDadosCandidatos,
-  setFiltroCandidatos
+  setFiltroCandidatos,
+  setCandidatosFiltrados,
+  setPartidos,
+  setPaginacao
 } from "../../actions/candidatosActions";
 
 import PropTypes from "prop-types";
@@ -36,28 +39,19 @@ import "rxjs/add/operator/distinctUntilChanged";
 import "rxjs/add/operator/map";
 import "rxjs/add/operator/filter";
 
-const TAM_PAGINA = 5;
-const MAX_CAND_FILTRADOS = 5;
-const MIN_VOTOS = 3;
-const DEBOUNCE_TIME = 500; //ms
+import {
+  TAM_PAGINA,
+  MIN_VOTOS,
+  DEBOUNCE_TIME
+} from "../../constantes/constantesCandidatos";
 
 class CandidatosContainer extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      scoreCandidatos: {},
-      candidatosRanking: [],
-      candidatosFiltrados: [],
-      filtro: {
-        nome: "",
-        partido: "TODOS",
-        estado: ""
-      },
-      partidos: [],
       debounced: "",
-      isPesquisando: false,
-      indexPaginacao: { inicio: 0, final: TAM_PAGINA, numeroCandidatos: 0 }
+      isPesquisando: false
     };
 
     this.onSearch$ = new Subject();
@@ -69,77 +63,80 @@ class CandidatosContainer extends Component {
   }
 
   pegaPrimeiraPagina() {
-    const indexPaginacao = {
+    const { totalCandidatos } = this.props.candidatos.paginacao;
+
+    const paginacao = {
       inicio: 0,
       final: TAM_PAGINA,
-      numeroCandidatos: this.state.indexPaginacao.numeroCandidatos
+      totalCandidatos: totalCandidatos
     };
-    this.setState({ indexPaginacao: indexPaginacao });
+    this.props.setPaginacao(paginacao);
   }
 
   pegaCandidatosAnteriores() {
-    if (this.state.indexPaginacao.inicio > 0) {
-      const indexPaginacao = {
-        inicio: this.state.indexPaginacao.inicio - TAM_PAGINA,
-        final: this.state.indexPaginacao.inicio,
-        numeroCandidatos: this.state.indexPaginacao.numeroCandidatos
+    const { paginacao } = this.props.candidatos;
+
+    if (paginacao.inicio > 0) {
+      const novaPaginacao = {
+        inicio: paginacao.inicio - TAM_PAGINA,
+        final: paginacao.inicio,
+        totalCandidatos: paginacao.totalCandidatos
       };
-      this.setState({ indexPaginacao: indexPaginacao });
+      this.props.setPaginacao(novaPaginacao);
     }
   }
 
   pegaProximosCandidatos() {
-    if (
-      this.state.indexPaginacao.final + TAM_PAGINA <=
-      this.state.indexPaginacao.numeroCandidatos
-    ) {
-      const indexPaginacao = {
-        inicio: this.state.indexPaginacao.final,
-        final: this.state.indexPaginacao.final + TAM_PAGINA,
-        numeroCandidatos: this.state.indexPaginacao.numeroCandidatos
+    const { paginacao } = this.props.candidatos;
+    if (paginacao.final + TAM_PAGINA <= paginacao.totalCandidatos) {
+      const novaPaginacao = {
+        inicio: paginacao.final,
+        final: paginacao.final + TAM_PAGINA,
+        totalCandidatos: paginacao.totalCandidatos
       };
-      this.setState({ indexPaginacao: indexPaginacao });
+      this.props.setPaginacao(novaPaginacao);
     } else if (
-      this.state.indexPaginacao.final +
-        (this.state.indexPaginacao.numeroCandidatos % TAM_PAGINA) <=
-      this.state.indexPaginacao.numeroCandidatos
+      paginacao.final + (paginacao.totalCandidatos % TAM_PAGINA) <=
+      paginacao.totalCandidatos
     ) {
-      const indexPaginacao = {
-        inicio: this.state.indexPaginacao.final,
-        final:
-          this.state.indexPaginacao.final +
-          (this.state.indexPaginacao.numeroCandidatos % TAM_PAGINA),
-        numeroCandidatos: this.state.indexPaginacao.numeroCandidatos
+      const novaPaginacao = {
+        inicio: paginacao.final,
+        final: paginacao.final + (paginacao.totalCandidatos % TAM_PAGINA),
+        totalCandidatos: paginacao.totalCandidatos
       };
-      this.setState({ indexPaginacao: indexPaginacao });
+      this.props.setPaginacao(novaPaginacao);
     }
   }
 
   buscaNome(e) {
     e.preventDefault();
 
-    let filtro = {
+    const { filtro } = this.props.candidatos;
+
+    let novoFiltro = {
       nome: e.target.value,
-      partido: this.props.candidatos.filtro.partido,
-      estado: this.props.candidatos.filtro.estado
+      partido: filtro.partido,
+      estado: filtro.estado
     };
 
-    this.setState({ filtro, isPesquisando: true });
-    this.props.setFiltroCandidatos(filtro);
-    this.onSearch$.next(filtro.nome);
+    this.setState({ isPesquisando: true });
+    this.props.setFiltroCandidatos(novoFiltro);
+    this.onSearch$.next(novoFiltro.nome);
   }
 
   buscaPartido(e) {
     e.preventDefault();
 
-    let filtro = {
-      nome: this.props.candidatos.filtro.nome,
+    const { filtro } = this.props.candidatos;
+
+    let novoFiltro = {
+      nome: filtro.nome,
       partido: e.target.value,
-      estado: this.props.candidatos.filtro.estado
+      estado: filtro.estado
     };
 
-    this.setState({ filtro });
-    this.props.setFiltroCandidatos(filtro);
+    this.props.setFiltroCandidatos(novoFiltro);
+    this.props.setCandidatosFiltrados();
   }
 
   render() {
@@ -148,44 +145,30 @@ class CandidatosContainer extends Component {
       scoreCandidatos,
       numResponderam,
       numSemResposta,
-      filtro
+      isCarregando,
+      mostrarTodos,
+      partidos
     } = this.props.candidatos;
-    const { arrayRespostasUsuario } = this.props.usuario;
 
-    let candidatosMapeaveis;
+    const {
+      filtro,
+      candidatosFiltrados,
+      candidatosRanqueados
+    } = this.props.candidatos;
+
+    const { paginacao } = this.props.candidatos;
+
+    const { arrayRespostasUsuario, quantidadeVotos } = this.props.usuario;
+
+    const candidatosMapeaveis =
+      filtro.nome !== "" || filtro.partido !== "TODOS"
+        ? candidatosFiltrados
+        : candidatosRanqueados;
     let numRepPartido = 0;
     let numNaoRepPartido = 0;
 
-    if (filtro.nome !== "" && filtro.partido !== "TODOS") {
-      candidatosMapeaveis = this.state.candidatosFiltrados.filter(
-        cpf => dadosCandidatos[cpf].sg_partido === this.state.filtro.partido
-      );
-    } else if (this.state.filtro.partido !== "TODOS") {
-      let cpfs = Object.keys(dadosCandidatos);
-      candidatosMapeaveis = cpfs
-        .filter(
-          cpf => dadosCandidatos[cpf].sg_partido === this.state.filtro.partido
-        )
-        .sort((a, b) => {
-          if (scoreCandidatos[a] > scoreCandidatos[b]) return -1;
-          else if (scoreCandidatos[a] < scoreCandidatos[b]) return 1;
-          else return 0;
-        });
-      candidatosMapeaveis.forEach(cpf => {
-        if (dadosCandidatos[cpf].respondeu) {
-          numRepPartido++;
-        } else {
-          numNaoRepPartido++;
-        }
-      });
-    } else if (this.state.filtro.nome !== "") {
-      candidatosMapeaveis = this.state.candidatosFiltrados;
-    } else {
-      candidatosMapeaveis = this.state.candidatosRanking.map(cand => cand[0]);
-    }
-
     const candidatos = candidatosMapeaveis.map(cpf => {
-      const candidato = this.props.candidatos.dadosCandidatos[cpf];
+      const candidato = dadosCandidatos[cpf];
 
       if (!isEmpty(candidato)) {
         return (
@@ -196,7 +179,7 @@ class CandidatosContainer extends Component {
             nome={candidato.nome_urna}
             siglaPartido={candidato.sg_partido}
             estado={candidato.uf}
-            score={this.state.scoreCandidatos[candidato.cpf]}
+            score={scoreCandidatos[candidato.cpf]}
             respostas={candidato.respostas}
             foto={
               candidato.tem_foto
@@ -212,6 +195,13 @@ class CandidatosContainer extends Component {
       }
       return null;
     });
+
+    const listaSelectPartidos = partidos.map(partido => (
+      <option key={partido} value={partido}>
+        {partido}
+      </option>
+    ));
+
     const mostraPartido = (
       <div>
         <h5>
@@ -248,10 +238,9 @@ class CandidatosContainer extends Component {
         onClick={this.pegaProximosCandidatos}
       >
         Ver próximos{" "}
-        {this.state.indexPaginacao.final + TAM_PAGINA <=
-        this.state.indexPaginacao.numeroCandidatos
+        {paginacao.final + TAM_PAGINA <= paginacao.totalCandidatos
           ? TAM_PAGINA
-          : this.state.indexPaginacao.numeroCandidatos % TAM_PAGINA}{" "}
+          : paginacao.totalCandidatos % TAM_PAGINA}{" "}
         <span className="icon-forward" />
       </button>
     );
@@ -295,7 +284,7 @@ class CandidatosContainer extends Component {
                     aria-label="Pesquisar candidato/a"
                     aria-describedby="search-candidate"
                     onChange={this.buscaNome}
-                    value={this.state.filtro.nome}
+                    value={filtro.nome}
                   />
                 </div>
               </div>
@@ -305,19 +294,17 @@ class CandidatosContainer extends Component {
                     className="form-control form-control-secondary barra-filtro-candidato"
                     placeholder="Partidos"
                     onChange={this.buscaPartido}
-                    value={this.state.filtro.partido}
+                    value={filtro.partido}
                   >
-                    {this.state.partidos}
+                    {listaSelectPartidos}
                   </select>
                 </div>
               </div>
             </div>
-            {this.state.filtro.partido !== "TODOS"
-              ? mostraPartido
-              : mostraEstado}
+            {filtro.partido !== "TODOS" ? mostraPartido : mostraEstado}
           </header>
 
-          {this.props.candidatos.isCarregando || this.state.isPesquisando ? (
+          {isCarregando || this.state.isPesquisando ? (
             <div style={{ paddingTop: "30vh" }}>
               <Spinner />
             </div>
@@ -325,19 +312,13 @@ class CandidatosContainer extends Component {
             <div>
               <div className="candidatos">
                 <FlipMove>
-                  {candidatos.slice(
-                    this.state.indexPaginacao.inicio,
-                    this.state.indexPaginacao.final
-                  )}
+                  {candidatos.slice(paginacao.inicio, paginacao.final)}
                 </FlipMove>
               </div>
               <div className="candidatos-pagination d-flex justify-content-center flex-wrap mb-3">
-                {this.state.indexPaginacao.inicio !== 0 ? btnFirst : null}
-                {this.state.indexPaginacao.inicio > 0
-                  ? btnMenosCandidatos
-                  : null}
-                {this.state.indexPaginacao.final <
-                this.state.indexPaginacao.numeroCandidatos
+                {paginacao.inicio !== 0 ? btnFirst : null}
+                {paginacao.inicio > 0 ? btnMenosCandidatos : null}
+                {paginacao.final < paginacao.totalCandidatos
                   ? btnMaisCandidatos
                   : null}
               </div>
@@ -348,18 +329,14 @@ class CandidatosContainer extends Component {
     );
 
     const isMinimoVotosOuMostreTodos =
-      this.props.usuario.quantidadeVotos >= MIN_VOTOS ||
-      this.props.candidatos.mostrarTodos;
+      quantidadeVotos >= MIN_VOTOS || mostrarTodos;
 
     let isExibeBoasVindas = false;
     let isExibeContinueVotando = false;
     let isExibeCandidatos = false;
     if (isMinimoVotosOuMostreTodos) {
       isExibeCandidatos = true;
-    } else if (
-      this.props.usuario.quantidadeVotos > 0 &&
-      this.props.usuario.quantidadeVotos < MIN_VOTOS
-    ) {
+    } else if (quantidadeVotos > 0 && quantidadeVotos < MIN_VOTOS) {
       isExibeContinueVotando = true;
     } else {
       isExibeBoasVindas = true;
@@ -377,95 +354,27 @@ class CandidatosContainer extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.candidatos.scoreCandidatos) {
-      let partidosSet = new Set();
-      const { dadosCandidatos } = nextProps.candidatos;
-
-      const totalCandidatos = Object.keys(dadosCandidatos).length;
-
-      partidosSet.add("TODOS");
-      Object.keys(dadosCandidatos).forEach(candidato =>
-        partidosSet.add(dadosCandidatos[candidato].sg_partido)
-      );
-
-      let partidos = Array.from(partidosSet).map(partido => (
-        <option key={partido} value={partido}>
-          {partido}
-        </option>
-      ));
-
-      this.subscription = this.onSearch$
-        .debounceTime(DEBOUNCE_TIME)
-        .subscribe(debounced => {
-          let keys = Object.keys(dadosCandidatos);
-
-          let nomesFiltrados = keys
-            .filter(
-              cpf =>
-                dadosCandidatos[cpf].nome_urna
-                  .toLowerCase()
-                  .indexOf(debounced.toLowerCase()) >= 0
-            )
-            .slice(0, MAX_CAND_FILTRADOS);
-          this.setState({
-            debounced,
-            candidatosFiltrados: nomesFiltrados,
-            isPesquisando: false,
-            partidos
-          });
+    this.subscription = this.onSearch$
+      .debounceTime(DEBOUNCE_TIME)
+      .subscribe(debounced => {
+        nextProps.setCandidatosFiltrados();
+        this.setState({
+          debounced,
+          isPesquisando: false
         });
-
-      let candidatosRanking = nextProps.getTopNCandidatos(totalCandidatos);
-
-      let indexPaginacao = {
-        inicio: 0,
-        final: TAM_PAGINA,
-        numeroCandidatos: candidatosRanking.length
-      };
-
-      this.setState({
-        scoreCandidatos: nextProps.candidatos.scoreCandidatos,
-        candidatosRanking: candidatosRanking,
-        filtro: nextProps.candidatos.filtro,
-        partidos,
-        indexPaginacao: indexPaginacao
       });
-    }
   }
 
   componentDidMount() {
-    let partidosSet = new Set();
-    const { dadosCandidatos } = this.props.candidatos;
-    const totalCandidatos = Object.keys(dadosCandidatos).length;
-
-    partidosSet.add("TODOS");
-    Object.keys(dadosCandidatos).forEach(candidato =>
-      partidosSet.add(dadosCandidatos[candidato].sg_partido)
-    );
-
-    let partidos = Array.from(partidosSet).map(partido => (
-      <option key={partido} value={partido}>
-        {partido}
-      </option>
-    ));
-
-    if (isEmpty(this.props.candidatos.dadosCandidatos)) {
-      //this.props.calculaScore();
-    } else {
-      let candidatosRanking = this.props.getTopNCandidatos(totalCandidatos);
-      let indexPaginacao = {
-        inicio: 0,
-        final: TAM_PAGINA,
-        numeroCandidatos: candidatosRanking.length
-      };
-      this.setState({
-        scoreCandidatos: this.props.candidatos.scoreCandidatos,
-        candidatosRanking: candidatosRanking,
-        filtro: this.props.candidatos.filtro,
-        partidos,
-        indexPaginacao: indexPaginacao
+    this.subscription = this.onSearch$
+      .debounceTime(DEBOUNCE_TIME)
+      .subscribe(debounced => {
+        this.props.setCandidatosFiltrados();
+        this.setState({
+          debounced,
+          isPesquisando: false
+        });
       });
-    }
   }
 
   componentWillUnmount() {
@@ -479,7 +388,10 @@ CandidatosContainer.propTypes = {
   calculaScore: PropTypes.func.isRequired,
   getTopNCandidatos: PropTypes.func.isRequired,
   getDadosCandidatos: PropTypes.func.isRequired,
-  setFiltroCandidatos: PropTypes.func.isRequired
+  setFiltroCandidatos: PropTypes.func.isRequired,
+  setCandidatosFiltrados: PropTypes.func.isRequired,
+  setPartidos: PropTypes.func.isRequired,
+  setPaginacao: PropTypes.func.isRequired
 };
 const mapStateToProps = state => ({
   candidatos: state.candidatosReducer,
@@ -488,5 +400,13 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { calculaScore, getTopNCandidatos, getDadosCandidatos, setFiltroCandidatos }
+  {
+    calculaScore,
+    getTopNCandidatos,
+    getDadosCandidatos,
+    setFiltroCandidatos,
+    setCandidatosFiltrados,
+    setPartidos,
+    setPaginacao
+  }
 )(CandidatosContainer);

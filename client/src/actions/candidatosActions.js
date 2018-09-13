@@ -8,8 +8,15 @@ import {
   SET_NUM_RESPOSTAS,
   SET_DADOS_CANDIDATO,
   SET_MOSTRAR_TODOS_CANDIDATOS,
-  SET_MOSTRA_PERGUNTAS
+  SET_MOSTRA_PERGUNTAS,
+  SET_CANDIDATOS_RANQUEADOS,
+  SET_CANDIDATOS_FILTRADOS,
+  SET_PARTIDOS,
+  SET_PAGINACAO,
+  SET_CANDIDATOS_FILTRANDO
 } from "./types";
+
+import { TAM_PAGINA } from "../constantes/constantesCandidatos";
 
 // import {
 //   firebaseDatabase,
@@ -64,6 +71,7 @@ export const calculaScore = () => (dispatch, getState) => {
     type: SET_SCORE_CANDIDATOS,
     scoreCandidatos
   });
+  dispatch(getTopNCandidatos(Object.keys(scoreCandidatos).length));
 };
 
 export const calculaScorePorTema = (
@@ -130,31 +138,41 @@ export const calculaScorePorTema = (
 // A função de ordenação prioriza os candidatos que responderam ao questionário. Caso os dois tenham respondido ou ambos não tenham respondido, a ordenação será dada alfabeticamente.
 export const getTopNCandidatos = n => (dispatch, getState) => {
   const { scoreCandidatos, dadosCandidatos } = getState().candidatosReducer;
-  let candidatos = Object.keys(scoreCandidatos).map(key => [
+  let matrizScores = Object.keys(scoreCandidatos).map(key => [
     key,
     scoreCandidatos[key]
   ]);
 
-  candidatos.sort((a, b) => {
-    if (a[1] > b[1]) return -1;
-    else if (a[1] === b[1]) {
-      if (!isEmpty(dadosCandidatos[a[0]]) && !isEmpty(dadosCandidatos[b[0]])) {
+  const candidatos = matrizScores
+    .sort((a, b) => {
+      if (a[1] > b[1]) return -1;
+      else if (a[1] === b[1]) {
         if (
-          (dadosCandidatos[a[0]].respondeu &&
-            dadosCandidatos[b[0]].respondeu) ||
-          (!dadosCandidatos[a[0]].respondeu && !dadosCandidatos[b[0]].respondeu)
-        )
-          return dadosCandidatos[a[0]].nome_urna.localeCompare(
-            dadosCandidatos[b[0]].nome_urna
-          );
-        else if (dadosCandidatos[b[0]].respondeu) return 1;
-        else return -1;
-      }
-      return 0;
-    } else return 1;
-  });
+          !isEmpty(dadosCandidatos[a[0]]) &&
+          !isEmpty(dadosCandidatos[b[0]])
+        ) {
+          if (
+            (dadosCandidatos[a[0]].respondeu &&
+              dadosCandidatos[b[0]].respondeu) ||
+            (!dadosCandidatos[a[0]].respondeu &&
+              !dadosCandidatos[b[0]].respondeu)
+          )
+            return dadosCandidatos[a[0]].nome_urna.localeCompare(
+              dadosCandidatos[b[0]].nome_urna
+            );
+          else if (dadosCandidatos[b[0]].respondeu) return 1;
+          else return -1;
+        }
+        return 0;
+      } else return 1;
+    })
+    .map(candidato => candidato[0]);
 
-  return candidatos.slice(0, n);
+  dispatch({
+    type: SET_CANDIDATOS_RANQUEADOS,
+    candidatosRanqueados: candidatos.slice(0, n)
+  });
+  dispatch(setPaginacao({ inicio: 0, final: TAM_PAGINA, totalCandidatos: n }));
 };
 
 export const getDadosCandidatos = () => (dispatch, getState) => {
@@ -196,6 +214,7 @@ export const getDadosCandidatos = () => (dispatch, getState) => {
           });
 
           dispatch({ type: SET_DADOS_CANDIDATOS, dadosCandidatos });
+          dispatch(setPartidos());
           dispatch({ type: SET_NUM_RESPOSTAS, numResponderam, numSemResposta });
           dispatch(calculaScore());
         });
@@ -246,6 +265,51 @@ export const setCandidatosCarregados = () => {
   };
 };
 
+export const setCandidatosFiltrados = () => (dispatch, getState) => {
+  const {
+    dadosCandidatos,
+    filtro,
+    scoreCandidatos,
+    candidatosRanqueados
+  } = getState().candidatosReducer;
+
+  dispatch(setCandidatosFiltrando());
+
+  const candidatos = Object.keys(dadosCandidatos).filter(cpf => {
+    if (filtro.partido !== "TODOS" && filtro.nome !== "") {
+      return (
+        dadosCandidatos[cpf].sg_partido === filtro.partido &&
+        dadosCandidatos[cpf].nome_urna
+          .toLowerCase()
+          .indexOf(filtro.nome.toLowerCase()) >= 0
+      );
+    } else if (filtro.partido !== "TODOS") {
+      return dadosCandidatos[cpf].sg_partido === filtro.partido;
+    } else if (filtro.nome !== "") {
+      return (
+        dadosCandidatos[cpf].nome_urna
+          .toLowerCase()
+          .indexOf(filtro.nome.toLowerCase()) >= 0
+      );
+    } else return false;
+  });
+
+  dispatch({
+    type: SET_CANDIDATOS_FILTRADOS,
+    candidatosFiltrados: candidatos
+  });
+  dispatch(
+    setPaginacao({
+      inicio: 0,
+      final: TAM_PAGINA,
+      totalCandidatos:
+        filtro.partido !== "TODOS" || filtro.nome !== ""
+          ? candidatos.length
+          : candidatosRanqueados.length
+    })
+  );
+};
+
 export const setFiltroCandidatos = filtro => dispatch => {
   dispatch({ type: SET_FILTRO_CANDIDATOS, filtro });
 };
@@ -256,4 +320,29 @@ export const mostrarTodosCandidatos = () => dispatch => {
 
 export const mostraPerguntas = () => dispatch => {
   dispatch({ type: SET_MOSTRA_PERGUNTAS });
+};
+
+export const setPartidos = () => (dispatch, getState) => {
+  const { dadosCandidatos } = getState().candidatosReducer;
+  let partidosSet = new Set();
+
+  Object.keys(dadosCandidatos).forEach(candidato =>
+    partidosSet.add(dadosCandidatos[candidato].sg_partido)
+  );
+
+  let partidos = Array.from(partidosSet).sort((a, b) => a.localeCompare(b));
+
+  partidos.splice(0, 0, "TODOS");
+
+  dispatch({ type: SET_PARTIDOS, partidos: partidos });
+};
+
+export const setPaginacao = paginacao => dispatch => {
+  dispatch({ type: SET_PAGINACAO, paginacao: paginacao });
+};
+
+export const setCandidatosFiltrando = () => {
+  return {
+    type: SET_CANDIDATOS_FILTRANDO
+  };
 };

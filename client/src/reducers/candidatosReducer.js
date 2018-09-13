@@ -8,7 +8,12 @@ import {
   SET_NUM_RESPOSTAS,
   SET_DADOS_CANDIDATO,
   SET_MOSTRAR_TODOS_CANDIDATOS,
-  SET_MOSTRA_PERGUNTAS
+  SET_CANDIDATOS_FILTRADOS,
+  SET_CANDIDATOS_RANQUEADOS,
+  SET_MOSTRA_PERGUNTAS,
+  SET_PARTIDOS,
+  SET_PAGINACAO,
+  SET_CANDIDATOS_FILTRANDO
 } from "../actions/types";
 
 // candidatesVotings: {id_votacao: voto}
@@ -19,12 +24,17 @@ const initialState = {
   numSemResposta: 0,
   dadosCandidatos: {},
   isCarregando: false,
+  isFiltrandoPorNome: false,
   scoreCandidatos: {},
   filtro: { nome: "", partido: "TODOS", estado: "" },
+  candidatosFiltrados: [],
+  candidatosRanqueados: [],
+  partidos: [],
   dadosCandidato: {},
   scoreTema: {},
   mostrarTodos: false,
-  mostraPerguntas: false
+  mostraPerguntas: false,
+  paginacao: { inicio: 0, final: 0, totalCandidatos: 0 }
 };
 
 export default function(state = initialState, action) {
@@ -81,6 +91,32 @@ export default function(state = initialState, action) {
       return {
         ...state,
         mostraPerguntas: true
+      };
+    case SET_CANDIDATOS_FILTRADOS:
+      return {
+        ...state,
+        candidatosFiltrados: action.candidatosFiltrados,
+        isFiltrandoPorNome: false
+      };
+    case SET_CANDIDATOS_RANQUEADOS:
+      return {
+        ...state,
+        candidatosRanqueados: action.candidatosRanqueados
+      };
+    case SET_PARTIDOS:
+      return {
+        ...state,
+        partidos: action.partidos
+      };
+    case SET_PAGINACAO:
+      return {
+        ...state,
+        paginacao: action.paginacao
+      };
+    case SET_CANDIDATOS_FILTRANDO:
+      return {
+        ...state,
+        isFiltrandoPorNome: true
       };
     default:
       return state;
