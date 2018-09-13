@@ -36,10 +36,10 @@ const comparaRespostas = (
   chaves.forEach(idPergunta => {
     respostasIguais +=
       respostasCandidatos[idPergunta] !== undefined &&
-      respostasCandidatos[idPergunta] !== null &&
-      respostasUsuario[idPergunta] !== 0 &&
-      respostasUsuario[idPergunta] !== -2 &&
-      respostasCandidatos[idPergunta] === respostasUsuario[idPergunta]
+        respostasCandidatos[idPergunta] !== null &&
+        respostasUsuario[idPergunta] !== 0 &&
+        respostasUsuario[idPergunta] !== -2 &&
+        respostasCandidatos[idPergunta] === respostasUsuario[idPergunta]
         ? 1
         : 0;
   });
@@ -280,16 +280,14 @@ export const setCandidatosFiltrados = () => (dispatch, getState) => {
       return (
         dadosCandidatos[cpf].sg_partido === filtro.partido &&
         dadosCandidatos[cpf].nome_urna
-          .toLowerCase()
-          .indexOf(filtro.nome.toLowerCase()) >= 0
+          .indexOf(filtro.nome.toUpperCase()) >= 0
       );
     } else if (filtro.partido !== "TODOS") {
       return dadosCandidatos[cpf].sg_partido === filtro.partido;
     } else if (filtro.nome !== "") {
       return (
         dadosCandidatos[cpf].nome_urna
-          .toLowerCase()
-          .indexOf(filtro.nome.toLowerCase()) >= 0
+          .indexOf(filtro.nome.toUpperCase()) >= 0
       );
     } else return false;
   });
