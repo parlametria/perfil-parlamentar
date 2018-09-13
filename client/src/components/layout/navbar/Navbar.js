@@ -67,6 +67,7 @@ class Navbar extends Component {
                     data-show-count="false"
                     className="nav-link"
                     target="_blank"
+                    rel="noopener noreferrer"
                   >
                     <span className="icon-twitter" />
                   </a>
@@ -77,6 +78,7 @@ class Navbar extends Component {
                     data-show-count="false"
                     className="nav-link"
                     target="_blank"
+                    rel="noopener noreferrer"
                   >
                     <span className="icon-facebook" />
                   </a>
@@ -88,6 +90,7 @@ class Navbar extends Component {
                       data-show-count="false"
                       className="nav-link"
                       target="_blank"
+                      rel="noopener noreferrer"
                     >
                       <span className="icon-whatsapp" />
                     </a>

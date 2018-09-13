@@ -2,6 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const path = require("path");
+const logger = require("heroku-logger");
 
 const perguntas = require("./routes/api/perguntas");
 const candidatos = require("./routes/api/candidatos");
@@ -22,8 +23,8 @@ mongoose
     db,
     { useNewUrlParser: true }
   )
-  .then(() => console.log("Banco de dados conectado!"))
-  .catch(err => console.log(err));
+  .then(() => logger.info("Banco de dados conectado!"))
+  .catch(err => logger.error(err));
 
 // Usar as rotas
 app.use("/api/perguntas", perguntas);
@@ -39,4 +40,4 @@ app.get("*", (req, res) => {
 
 const port = process.env.PORT || 5000;
 
-app.listen(port, () => console.log(`Servidor rodando na porta ${port}`));
+app.listen(port, () => logger.info(`Servidor rodando na porta ${port}`));
