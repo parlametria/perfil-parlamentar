@@ -10,7 +10,8 @@ import {
   SET_MOSTRAR_TODOS_CANDIDATOS,
   SET_MOSTRA_PERGUNTAS,
   SET_CANDIDATOS_RANQUEADOS,
-  SET_CANDIDATOS_FILTRADOS
+  SET_CANDIDATOS_FILTRADOS,
+  SET_PARTIDOS
 } from "./types";
 
 // import {
@@ -284,4 +285,16 @@ export const mostrarTodosCandidatos = () => dispatch => {
 
 export const mostraPerguntas = () => dispatch => {
   dispatch({ type: SET_MOSTRA_PERGUNTAS });
+};
+
+export const setPartidos = () => (dispatch, getState) => {
+  const { dadosCandidatos } = getState().candidatosReducer;
+  let partidosSet = new Set();
+
+  partidosSet.add("TODOS");
+  Object.keys(dadosCandidatos).forEach(candidato =>
+    partidosSet.add(dadosCandidatos[candidato].sg_partido)
+  );
+
+  dispatch({ type: SET_PARTIDOS, partidos: Array.from(partidosSet) });
 };
