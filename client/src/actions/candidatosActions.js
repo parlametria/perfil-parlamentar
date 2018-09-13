@@ -126,8 +126,10 @@ export const calculaScorePorTema = (
 };
 
 // Pega o top n candidatos baseado na compatibilidade entre as respostas ordenado pelo score. Recebe um dicionário das respostas dos candidatos e retorna um array de arrays (tuplas) com os ids dos candidatos e seu score.
+
+// A função de ordenação prioriza os candidatos que responderam ao questionário. Caso os dois tenham respondido ou ambos não tenham respondido, a ordenação será dada alfabeticamente.
 export const getTopNCandidatos = n => (dispatch, getState) => {
-  const { scoreCandidatos } = getState().candidatosReducer;
+  const { scoreCandidatos, dadosCandidatos } = getState().candidatosReducer;
   let candidatos = Object.keys(scoreCandidatos).map(key => [
     key,
     scoreCandidatos[key]
@@ -135,8 +137,21 @@ export const getTopNCandidatos = n => (dispatch, getState) => {
 
   candidatos.sort((a, b) => {
     if (a[1] > b[1]) return -1;
-    else if (a[1] === b[1]) return 0;
-    else return 1;
+    else if (a[1] === b[1]) {
+      if (!isEmpty(dadosCandidatos[a[0]]) && !isEmpty(dadosCandidatos[b[0]])) {
+        if (
+          (dadosCandidatos[a[0]].respondeu &&
+            dadosCandidatos[b[0]].respondeu) ||
+          (!dadosCandidatos[a[0]].respondeu && !dadosCandidatos[b[0]].respondeu)
+        )
+          return dadosCandidatos[a[0]].nome_urna.localeCompare(
+            dadosCandidatos[b[0]].nome_urna
+          );
+        else if (dadosCandidatos[b[0]].respondeu) return 1;
+        else return -1;
+      }
+      return 0;
+    } else return 1;
   });
 
   return candidatos.slice(0, n);
