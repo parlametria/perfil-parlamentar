@@ -17,10 +17,7 @@ import {
 
 import { TAM_PAGINA } from "../constantes/constantesCandidatos";
 
-// import {
-//   firebaseDatabase,
-//   firebaseFirestore
-// } from "../services/firebaseService";
+import FiltroService from "../services/FiltroService";
 
 import axios from "axios";
 import isEmpty from "../validation/is-empty";
@@ -253,7 +250,7 @@ export const setCandidatosFiltrados = () => (dispatch, getState) => {
     candidatosRanqueados
   } = getState().candidatosReducer;
 
-  const candidatos = Object.keys(dadosCandidatos)
+  /*const candidatos = Object.keys(dadosCandidatos)
     .filter(cpf => {
       if (filtro.partido !== "TODOS" && filtro.nome !== "") {
         return (
@@ -276,7 +273,16 @@ export const setCandidatosFiltrados = () => (dispatch, getState) => {
       if (scoreCandidatos[a] > scoreCandidatos[b]) return -1;
       else if (scoreCandidatos[a] < scoreCandidatos[b]) return 1;
       else return 0;
-    });
+    });*/
+
+  let candidatos;
+  if (filtro.partido !== "TODOS" && filtro.nome !== "") {
+    candidatos = FiltroService.filtraNomeEPartido(filtro.nome, filtro.partido);
+  } else if (filtro.partido !== "TODOS") {
+    candidatos = FiltroService.filtraPartido(filtro.partido);
+  } else if (filtro.nome !== "") {
+    candidatos = FiltroService.filtraNome(filtro.nome);
+  } else candidatos = [];
 
   dispatch({ type: SET_CANDIDATOS_FILTRADOS, candidatosFiltrados: candidatos });
   dispatch(
