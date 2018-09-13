@@ -14,7 +14,8 @@ import {
   getDadosCandidatos,
   setFiltroCandidatos,
   calculaScore,
-  mostraPerguntas
+  mostraPerguntas,
+  setPartidos
 } from "../../../actions/candidatosActions";
 
 import FlipMove from "react-flip-move";
@@ -123,7 +124,8 @@ class Home extends Component {
 Home.propTypes = {
   getDadosCandidatos: PropTypes.func.isRequired,
   setFiltroCandidatos: PropTypes.func.isRequired,
-  calculaScore: PropTypes.func.isRequired
+  calculaScore: PropTypes.func.isRequired,
+  setPartidos: PropTypes.func.isRequired
 };
 const mapStateToProps = state => ({
   candidatos: state.candidatosReducer
@@ -131,5 +133,11 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { getDadosCandidatos, setFiltroCandidatos, calculaScore, mostraPerguntas }
+  {
+    getDadosCandidatos,
+    setFiltroCandidatos,
+    calculaScore,
+    mostraPerguntas,
+    setPartidos
+  }
 )(Home);

@@ -11,8 +11,11 @@ import {
   SET_MOSTRA_PERGUNTAS,
   SET_CANDIDATOS_RANQUEADOS,
   SET_CANDIDATOS_FILTRADOS,
-  SET_PARTIDOS
+  SET_PARTIDOS,
+  SET_PAGINACAO
 } from "./types";
+
+import { TAM_PAGINA } from "../constantes/constantesCandidatos";
 
 // import {
 //   firebaseDatabase,
@@ -149,6 +152,7 @@ export const getTopNCandidatos = n => (dispatch, getState) => {
     type: SET_CANDIDATOS_RANQUEADOS,
     candidatosRanqueados: candidatos.slice(0, n)
   });
+  dispatch(setPaginacao({ inicio: 0, final: TAM_PAGINA, totalCandidatos: n }));
 };
 
 export const getDadosCandidatos = () => (dispatch, getState) => {
@@ -190,6 +194,7 @@ export const getDadosCandidatos = () => (dispatch, getState) => {
           });
 
           dispatch({ type: SET_DADOS_CANDIDATOS, dadosCandidatos });
+          dispatch(setPartidos());
           dispatch({ type: SET_NUM_RESPOSTAS, numResponderam, numSemResposta });
           dispatch(calculaScore());
         });
@@ -244,7 +249,8 @@ export const setCandidatosFiltrados = () => (dispatch, getState) => {
   const {
     dadosCandidatos,
     filtro,
-    scoreCandidatos
+    scoreCandidatos,
+    candidatosRanqueados
   } = getState().candidatosReducer;
 
   const candidatos = Object.keys(dadosCandidatos)
@@ -273,6 +279,16 @@ export const setCandidatosFiltrados = () => (dispatch, getState) => {
     });
 
   dispatch({ type: SET_CANDIDATOS_FILTRADOS, candidatosFiltrados: candidatos });
+  dispatch(
+    setPaginacao({
+      inicio: 0,
+      final: TAM_PAGINA,
+      totalCandidatos:
+        filtro.partido !== "TODOS" || filtro.nome !== ""
+          ? candidatos.length
+          : candidatosRanqueados.length
+    })
+  );
 };
 
 export const setFiltroCandidatos = filtro => dispatch => {
@@ -291,10 +307,17 @@ export const setPartidos = () => (dispatch, getState) => {
   const { dadosCandidatos } = getState().candidatosReducer;
   let partidosSet = new Set();
 
-  partidosSet.add("TODOS");
   Object.keys(dadosCandidatos).forEach(candidato =>
     partidosSet.add(dadosCandidatos[candidato].sg_partido)
   );
 
-  dispatch({ type: SET_PARTIDOS, partidos: Array.from(partidosSet) });
+  let partidos = Array.from(partidosSet).sort((a, b) => a.localeCompare(b));
+
+  partidos.splice(0, 0, "TODOS");
+
+  dispatch({ type: SET_PARTIDOS, partidos: partidos });
+};
+
+export const setPaginacao = paginacao => dispatch => {
+  dispatch({ type: SET_PAGINACAO, paginacao: paginacao });
 };
