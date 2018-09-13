@@ -15,7 +15,8 @@ import {
   getTopNCandidatos,
   getDadosCandidatos,
   setFiltroCandidatos,
-  setCandidatosFiltrados
+  setCandidatosFiltrados,
+  setPartidos
 } from "../../actions/candidatosActions";
 
 import PropTypes from "prop-types";
@@ -150,20 +151,27 @@ class CandidatosContainer extends Component {
       scoreCandidatos,
       numResponderam,
       numSemResposta,
-      filtro
+      isCarregando,
+      mostrarTodos
     } = this.props.candidatos;
-    const { arrayRespostasUsuario } = this.props.usuario;
+
+    const {
+      filtro,
+      candidatosFiltrados,
+      candidatosRanqueados
+    } = this.props.candidatos;
+
+    const { arrayRespostasUsuario, quantidadeVotos } = this.props.usuario;
 
     const candidatosMapeaveis =
-      this.props.candidatos.filtro.nome !== "" ||
-      this.props.candidatos.filtro.partido !== "TODOS"
-        ? this.props.candidatos.candidatosFiltrados
-        : this.props.candidatos.candidatosRanqueados;
+      filtro.nome !== "" || filtro.partido !== "TODOS"
+        ? candidatosFiltrados
+        : candidatosRanqueados;
     let numRepPartido = 0;
     let numNaoRepPartido = 0;
 
     const candidatos = candidatosMapeaveis.map(cpf => {
-      const candidato = this.props.candidatos.dadosCandidatos[cpf];
+      const candidato = dadosCandidatos[cpf];
 
       if (!isEmpty(candidato)) {
         return (
@@ -174,7 +182,7 @@ class CandidatosContainer extends Component {
             nome={candidato.nome_urna}
             siglaPartido={candidato.sg_partido}
             estado={candidato.uf}
-            score={this.state.scoreCandidatos[candidato.cpf]}
+            score={scoreCandidatos[candidato.cpf]}
             respostas={candidato.respostas}
             foto={
               candidato.tem_foto
@@ -290,12 +298,10 @@ class CandidatosContainer extends Component {
                 </div>
               </div>
             </div>
-            {this.state.filtro.partido !== "TODOS"
-              ? mostraPartido
-              : mostraEstado}
+            {filtro.partido !== "TODOS" ? mostraPartido : mostraEstado}
           </header>
 
-          {this.props.candidatos.isCarregando || this.state.isPesquisando ? (
+          {isCarregando || this.state.isPesquisando ? (
             <div style={{ paddingTop: "30vh" }}>
               <Spinner />
             </div>
@@ -326,18 +332,14 @@ class CandidatosContainer extends Component {
     );
 
     const isMinimoVotosOuMostreTodos =
-      this.props.usuario.quantidadeVotos >= MIN_VOTOS ||
-      this.props.candidatos.mostrarTodos;
+      quantidadeVotos >= MIN_VOTOS || mostrarTodos;
 
     let isExibeBoasVindas = false;
     let isExibeContinueVotando = false;
     let isExibeCandidatos = false;
     if (isMinimoVotosOuMostreTodos) {
       isExibeCandidatos = true;
-    } else if (
-      this.props.usuario.quantidadeVotos > 0 &&
-      this.props.usuario.quantidadeVotos < MIN_VOTOS
-    ) {
+    } else if (quantidadeVotos > 0 && quantidadeVotos < MIN_VOTOS) {
       isExibeContinueVotando = true;
     } else {
       isExibeBoasVindas = true;
@@ -356,17 +358,12 @@ class CandidatosContainer extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.candidatos.scoreCandidatos) {
-      let partidosSet = new Set();
-      const { dadosCandidatos } = nextProps.candidatos;
-
+      const { dadosCandidatos } = this.props.candidatos;
       const totalCandidatos = Object.keys(dadosCandidatos).length;
 
-      partidosSet.add("TODOS");
-      Object.keys(dadosCandidatos).forEach(candidato =>
-        partidosSet.add(dadosCandidatos[candidato].sg_partido)
-      );
+      const { partidos } = this.props.candidatos;
 
-      let partidos = Array.from(partidosSet).map(partido => (
+      let listaSelectPartidos = partidos.map(partido => (
         <option key={partido} value={partido}>
           {partido}
         </option>
@@ -380,7 +377,7 @@ class CandidatosContainer extends Component {
             debounced,
             candidatosFiltrados: this.props.candidatos.candidatosFiltrados,
             isPesquisando: false,
-            partidos
+            partidos: listaSelectPartidos
           });
         });
 
@@ -404,16 +401,12 @@ class CandidatosContainer extends Component {
   }
 
   componentDidMount() {
-    let partidosSet = new Set();
     const { dadosCandidatos } = this.props.candidatos;
     const totalCandidatos = Object.keys(dadosCandidatos).length;
 
-    partidosSet.add("TODOS");
-    Object.keys(dadosCandidatos).forEach(candidato =>
-      partidosSet.add(dadosCandidatos[candidato].sg_partido)
-    );
+    const { partidos } = this.props.candidatos;
 
-    let partidos = Array.from(partidosSet).map(partido => (
+    let listaSelectPartidos = partidos.map(partido => (
       <option key={partido} value={partido}>
         {partido}
       </option>
@@ -432,7 +425,7 @@ class CandidatosContainer extends Component {
         scoreCandidatos: this.props.candidatos.scoreCandidatos,
         candidatosRanking: candidatosRanking,
         filtro: this.props.candidatos.filtro,
-        partidos,
+        partidos: listaSelectPartidos,
         indexPaginacao: indexPaginacao
       });
     }
@@ -450,7 +443,8 @@ CandidatosContainer.propTypes = {
   getTopNCandidatos: PropTypes.func.isRequired,
   getDadosCandidatos: PropTypes.func.isRequired,
   setFiltroCandidatos: PropTypes.func.isRequired,
-  setCandidatosFiltrados: PropTypes.func.isRequired
+  setCandidatosFiltrados: PropTypes.func.isRequired,
+  setPartidos: PropTypes.func.isRequired
 };
 const mapStateToProps = state => ({
   candidatos: state.candidatosReducer,
@@ -464,6 +458,7 @@ export default connect(
     getTopNCandidatos,
     getDadosCandidatos,
     setFiltroCandidatos,
-    setCandidatosFiltrados
+    setCandidatosFiltrados,
+    setPartidos
   }
 )(CandidatosContainer);
