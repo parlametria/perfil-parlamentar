@@ -35,10 +35,10 @@ const comparaRespostas = (
   chaves.forEach(idPergunta => {
     respostasIguais +=
       respostasCandidatos[idPergunta] !== undefined &&
-      respostasCandidatos[idPergunta] !== null &&
-      respostasUsuario[idPergunta] !== 0 &&
-      respostasUsuario[idPergunta] !== -2 &&
-      respostasCandidatos[idPergunta] === respostasUsuario[idPergunta]
+        respostasCandidatos[idPergunta] !== null &&
+        respostasUsuario[idPergunta] !== 0 &&
+        respostasUsuario[idPergunta] !== -2 &&
+        respostasCandidatos[idPergunta] === respostasUsuario[idPergunta]
         ? 1
         : 0;
   });
