@@ -51,8 +51,15 @@ class Navbar extends Component {
                     Sobre
                   </Link>
                 </li>
+                <li className="nav-item">
+                  <Link to="/soucandidato" className="nav-link">
+                    Sou candidato
+                  </Link>
+                </li>
               </ul>
-              <span className="navbar-text">compartilhe:</span>
+              <span className="navbar-text">
+                compartilhe:
+              </span>
               <ul className="navbar-nav navbar-inline">
                 <li className="nav-item">
                   <a

@@ -53,8 +53,8 @@ class CompareContainer extends Component {
             src={
               dadosCandidato.tem_foto
                 ? "https://s3-sa-east-1.amazonaws.com/fotoscandidatos2018/fotos_tratadas/img_" +
-                  dadosCandidato.cpf +
-                  ".jpg"
+                dadosCandidato.cpf +
+                ".jpg"
                 : "http://pontosdevista.pt/static/uploads/2016/05/sem-fotoABC.jpg"
             }
             alt={dadosCandidato.nome_urna}
@@ -92,8 +92,8 @@ class CompareContainer extends Component {
             {this.props.candidatos.isCarregando || isEmpty(dadosCandidato) ? (
               <Spinner />
             ) : (
-              perfilCandidato
-            )}
+                perfilCandidato
+              )}
             <h4 className="compare-title">
               O quanto vocês <strong className="strong">concordam</strong> nos
               temas:
@@ -104,11 +104,11 @@ class CompareContainer extends Component {
             {this.props.candidatos.isCarregando || isEmpty(dadosCandidato) ? (
               <Spinner />
             ) : (
-              <TabelaPerguntas
-                respostas={dadosCandidato.respostas}
-                votos={this.getArrayUrl(this.state.votos)}
-              />
-            )}
+                <TabelaPerguntas
+                  respostas={dadosCandidato.respostas}
+                  votos={this.getArrayUrl(this.state.votos)}
+                />
+              )}
           </div>
         </div>
         <div className="my-3">

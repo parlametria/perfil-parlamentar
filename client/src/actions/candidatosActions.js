@@ -18,10 +18,7 @@ import {
 
 import { TAM_PAGINA } from "../constantes/constantesCandidatos";
 
-// import {
-//   firebaseDatabase,
-//   firebaseFirestore
-// } from "../services/firebaseService";
+import { filtraPorNome, filtraPorPartido, filtraPorNomeEPartido } from "../services/FiltroService";
 
 import axios from "axios";
 import isEmpty from "../validation/is-empty";
@@ -199,6 +196,7 @@ export const getDadosCandidatos = () => (dispatch, getState) => {
       });
 
       dispatch({ type: SET_DADOS_CANDIDATOS, dadosCandidatos });
+      dispatch(setPartidos());
       dispatch(calculaScore());
     })
     .then(res => {
@@ -275,22 +273,15 @@ export const setCandidatosFiltrados = () => (dispatch, getState) => {
 
   dispatch(setCandidatosFiltrando());
 
-  const candidatos = Object.keys(dadosCandidatos).filter(cpf => {
-    if (filtro.partido !== "TODOS" && filtro.nome !== "") {
-      return (
-        dadosCandidatos[cpf].sg_partido === filtro.partido &&
-        dadosCandidatos[cpf].nome_urna
-          .indexOf(filtro.nome.toUpperCase()) >= 0
-      );
-    } else if (filtro.partido !== "TODOS") {
-      return dadosCandidatos[cpf].sg_partido === filtro.partido;
-    } else if (filtro.nome !== "") {
-      return (
-        dadosCandidatos[cpf].nome_urna
-          .indexOf(filtro.nome.toUpperCase()) >= 0
-      );
-    } else return false;
-  });
+  let candidatos;
+  if (filtro.nome === "" && filtro.partido === "TODOS") candidatos = [];
+  else if (filtro.partido !== "TODOS" && filtro.nome !== "") {
+    candidatos = filtraPorNomeEPartido(filtro.nome, filtro.partido, dadosCandidatos);
+  } else if (filtro.partido !== "TODOS") {
+    candidatos = filtraPorPartido(filtro.partido, dadosCandidatos, scoreCandidatos);
+  } else if (filtro.nome !== "") {
+    candidatos = filtraPorNome(filtro.nome, dadosCandidatos);
+  } else candidatos = [];
 
   dispatch({
     type: SET_CANDIDATOS_FILTRADOS,
