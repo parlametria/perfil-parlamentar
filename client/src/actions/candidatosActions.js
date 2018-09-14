@@ -19,7 +19,11 @@ import {
 
 import { TAM_PAGINA } from "../constantes/constantesCandidatos";
 
-import { filtraPorNome, filtraPorPartido, filtraPorNomeEPartido } from "../services/FiltroService";
+import {
+  filtraPorNome,
+  filtraPorPartido,
+  filtraPorNomeEPartido
+} from "../services/FiltroService";
 
 import { buscaCPF } from "../services/BuscaService";
 
@@ -36,10 +40,10 @@ const comparaRespostas = (
   chaves.forEach(idPergunta => {
     respostasIguais +=
       respostasCandidatos[idPergunta] !== undefined &&
-        respostasCandidatos[idPergunta] !== null &&
-        respostasUsuario[idPergunta] !== 0 &&
-        respostasUsuario[idPergunta] !== -2 &&
-        respostasCandidatos[idPergunta] === respostasUsuario[idPergunta]
+      respostasCandidatos[idPergunta] !== null &&
+      respostasUsuario[idPergunta] !== 0 &&
+      respostasUsuario[idPergunta] !== -2 &&
+      respostasCandidatos[idPergunta] === respostasUsuario[idPergunta]
         ? 1
         : 0;
   });
@@ -133,17 +137,14 @@ export const calculaScorePorTema = (
   });
 };
 
-export const buscaPorCPF = (cpf) => (dispatch, getState) => {
-  let candidato = {};
+export const buscaPorCPF = cpf => (dispatch, getState) => {
+  let candidato;
   dispatch(setCandidatosCarregando());
 
-  buscaCPF(cpf).then(
-    dados => {
-      candidato = dados.data[0];
-      console.log(candidato);
-      dispatch({ type: SET_DADOS_CANDIDATO_POR_CPF, candidato: candidato });
-    }
-  );
+  buscaCPF(cpf).then(dados => {
+    candidato = isEmpty(dados.data[0]) ? null : dados.data[0];
+    dispatch({ type: SET_DADOS_CANDIDATO_POR_CPF, candidato: candidato });
+  });
 };
 
 // Pega o top n candidatos baseado na compatibilidade entre as respostas ordenado pelo score. Recebe um dicionário das respostas dos candidatos e retorna um array de arrays (tuplas) com os ids dos candidatos e seu score.
@@ -292,9 +293,17 @@ export const setCandidatosFiltrados = () => (dispatch, getState) => {
   let candidatos;
   if (filtro.nome === "" && filtro.partido === "TODOS") candidatos = [];
   else if (filtro.partido !== "TODOS" && filtro.nome !== "") {
-    candidatos = filtraPorNomeEPartido(filtro.nome, filtro.partido, dadosCandidatos);
+    candidatos = filtraPorNomeEPartido(
+      filtro.nome,
+      filtro.partido,
+      dadosCandidatos
+    );
   } else if (filtro.partido !== "TODOS") {
-    candidatos = filtraPorPartido(filtro.partido, dadosCandidatos, scoreCandidatos);
+    candidatos = filtraPorPartido(
+      filtro.partido,
+      dadosCandidatos,
+      scoreCandidatos
+    );
   } else if (filtro.nome !== "") {
     candidatos = filtraPorNome(filtro.nome, dadosCandidatos);
   } else candidatos = [];
