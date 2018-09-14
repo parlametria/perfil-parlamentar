@@ -146,6 +146,7 @@ class CandidatosContainer extends Component {
       numResponderam,
       numSemResposta,
       isCarregando,
+      isFiltrandoPorNome,
       mostrarTodos,
       partidos
     } = this.props.candidatos;
@@ -304,7 +305,7 @@ class CandidatosContainer extends Component {
             {filtro.partido !== "TODOS" ? mostraPartido : mostraEstado}
           </header>
 
-          {isCarregando || this.state.isPesquisando ? (
+          {isCarregando || this.state.isPesquisando || isFiltrandoPorNome ? (
             <div style={{ paddingTop: "30vh" }}>
               <Spinner />
             </div>
@@ -315,13 +316,13 @@ class CandidatosContainer extends Component {
                     {candidatos.slice(paginacao.inicio, paginacao.final)}
                   </FlipMove>
                 </div>
-                <div className="candidatos-pagination d-flex justify-content-center flex-wrap mb-3">
+                {!isFiltrandoPorNome ? <div className="candidatos-pagination d-flex justify-content-center flex-wrap mb-3">
                   {paginacao.inicio !== 0 ? btnFirst : null}
                   {paginacao.inicio > 0 ? btnMenosCandidatos : null}
                   {paginacao.final < paginacao.totalCandidatos
                     ? btnMaisCandidatos
                     : null}
-                </div>
+                </div> : null}
               </div>
             )}
         </div>
@@ -352,18 +353,6 @@ class CandidatosContainer extends Component {
         </FlipMove>
       </div>
     );
-  }
-
-  componentWillReceiveProps(nextProps) {
-    this.subscription = this.onSearch$
-      .debounceTime(DEBOUNCE_TIME)
-      .subscribe(debounced => {
-        this.props.setCandidatosFiltrados();
-        this.setState({
-          debounced,
-          isPesquisando: false
-        });
-      });
   }
 
   componentDidMount() {
