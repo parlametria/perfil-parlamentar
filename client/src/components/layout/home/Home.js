@@ -14,9 +14,10 @@ import {
   getDadosCandidatos,
   setFiltroCandidatos,
   calculaScore,
-  mostraPerguntas,
   setPartidos
 } from "../../../actions/candidatosActions";
+
+import { mostraPerguntas } from "../../../actions/perguntasActions";
 
 import FlipMove from "react-flip-move";
 
@@ -92,26 +93,26 @@ class Home extends Component {
               <FlipMove>
                 {filtro.estado !== "" ? <CandidatosContainer /> : null}
                 {isMobile &&
-                !this.props.candidatos.mostraPerguntas &&
-                filtro.estado !== "" ? (
-                  <div className="text-center mb-3">
-                    <button
-                      className="btn btn-secondary"
-                      onClick={this.mostraPerguntas}
-                    >
-                      Vamos Começar!
+                  !this.props.perguntas.mostraPerguntas &&
+                  filtro.estado !== "" ? (
+                    <div className="text-center mb-3">
+                      <button
+                        className="btn btn-secondary"
+                        onClick={this.mostraPerguntas}
+                      >
+                        Vamos Começar!
                     </button>
-                  </div>
-                ) : null}
+                    </div>
+                  ) : null}
               </FlipMove>
             </section>
             <div className="grid-separator" />
             <section className="grid-panel panel-detail">
               <FlipMove>
                 {filtro.estado !== "" &&
-                this.props.candidatos.mostraPerguntas ? (
-                  <PerguntasContainer />
-                ) : null}
+                  this.props.perguntas.mostraPerguntas ? (
+                    <PerguntasContainer />
+                  ) : null}
               </FlipMove>
             </section>
           </div>
@@ -128,7 +129,8 @@ Home.propTypes = {
   setPartidos: PropTypes.func.isRequired
 };
 const mapStateToProps = state => ({
-  candidatos: state.candidatosReducer
+  candidatos: state.candidatosReducer,
+  perguntas: state.perguntasReducer
 });
 
 export default connect(

@@ -2,17 +2,20 @@ import {
   PERGUNTAS_CARREGANDO,
   SET_DADOS_PERGUNTAS,
   SET_INDEX_PERGUNTA,
-  SET_TEMA
+  SET_TEMA,
+  MOSTRA_PERGUNTAS,
+  ESCONDE_PERGUNTAS
 } from "../actions/types";
 
 const initialState = {
   dadosPerguntas: {},
   isCarregando: false,
   indexPergunta: 0,
-  filtroTema: "Meio Ambiente"
+  filtroTema: "Meio Ambiente",
+  mostraPerguntas: false
 };
 
-export default function(state = initialState, action) {
+export default function (state = initialState, action) {
   switch (action.type) {
     case PERGUNTAS_CARREGANDO:
       return {
@@ -34,6 +37,16 @@ export default function(state = initialState, action) {
       return {
         ...state,
         filtroTema: action.tema
+      };
+    case MOSTRA_PERGUNTAS:
+      return {
+        ...state,
+        mostraPerguntas: true
+      };
+    case ESCONDE_PERGUNTAS:
+      return {
+        ...state,
+        mostraPerguntas: false
       };
     default:
       return state;

@@ -13,7 +13,9 @@ import {
   voltaPergunta,
   passaPergunta,
   escolhePergunta,
-  escolheTema
+  escolheTema,
+  mostraPerguntas,
+  escondePerguntas
 } from "../../actions/perguntasActions";
 
 import { Collapse } from "reactstrap";
@@ -31,8 +33,6 @@ const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
 class PerguntasContainer extends Component {
   constructor(props) {
     super(props);
-
-    this.state = { indexIndicadorPergunta: 0, show: true };
 
     this.passaPergunta = this.passaPergunta.bind(this);
     this.voltaPergunta = this.voltaPergunta.bind(this);
@@ -191,7 +191,7 @@ class PerguntasContainer extends Component {
             </ul>
           </div>
         </div>
-        <Collapse isOpen={this.state.show}>
+        <Collapse isOpen={this.props.perguntas.mostraPerguntas}>
           <div
             id="perguntaContainer"
             className="card"
@@ -234,12 +234,12 @@ class PerguntasContainer extends Component {
 
   showPerguntaContainer(event) {
     event.preventDefault();
-    this.setState({ show: true });
+    this.props.mostraPerguntas();
   }
 
   hidePerguntaContainer(event) {
     event.preventDefault();
-    this.setState({ show: false });
+    this.props.escondePerguntas();
   }
 }
 
@@ -251,7 +251,9 @@ PerguntasContainer.propTypes = {
   passaPergunta: PropTypes.func.isRequired,
   voltaPergunta: PropTypes.func.isRequired,
   escolhePergunta: PropTypes.func.isRequired,
-  escolheTema: PropTypes.func.isRequired
+  escolheTema: PropTypes.func.isRequired,
+  mostraPerguntas: PropTypes.func.isRequired,
+  escondePerguntas: PropTypes.func.isRequired
 };
 const mapStateToProps = state => ({
   usuario: state.usuarioReducer,
@@ -269,6 +271,8 @@ export default connect(
     passaPergunta,
     voltaPergunta,
     escolhePergunta,
-    escolheTema
+    escolheTema,
+    mostraPerguntas,
+    escondePerguntas
   }
 )(PerguntasContainer);
