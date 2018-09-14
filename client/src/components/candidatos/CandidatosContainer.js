@@ -146,6 +146,7 @@ class CandidatosContainer extends Component {
       numResponderam,
       numSemResposta,
       isCarregando,
+      isFiltrandoPorNome,
       mostrarTodos,
       partidos
     } = this.props.candidatos;
@@ -304,7 +305,7 @@ class CandidatosContainer extends Component {
             {filtro.partido !== "TODOS" ? mostraPartido : mostraEstado}
           </header>
 
-          {isCarregando || this.state.isPesquisando ? (
+          {isCarregando || this.state.isPesquisando || isFiltrandoPorNome ? (
             <div style={{ paddingTop: "30vh" }}>
               <Spinner />
             </div>
@@ -358,7 +359,7 @@ class CandidatosContainer extends Component {
     this.subscription = this.onSearch$
       .debounceTime(DEBOUNCE_TIME)
       .subscribe(debounced => {
-        this.props.setCandidatosFiltrados();
+        nextProps.setCandidatosFiltrados();
         this.setState({
           debounced,
           isPesquisando: false
