@@ -7,6 +7,7 @@ import {
   SET_FILTRO_CANDIDATOS,
   SET_NUM_RESPOSTAS,
   SET_DADOS_CANDIDATO,
+  SET_DADOS_CANDIDATO_POR_CPF,
   SET_MOSTRAR_TODOS_CANDIDATOS,
   SET_MOSTRA_PERGUNTAS,
   SET_CANDIDATOS_RANQUEADOS,
@@ -19,6 +20,8 @@ import {
 import { TAM_PAGINA } from "../constantes/constantesCandidatos";
 
 import { filtraPorNome, filtraPorPartido, filtraPorNomeEPartido } from "../services/FiltroService";
+
+import { buscaCPF } from "../services/BuscaService";
 
 import axios from "axios";
 import isEmpty from "../validation/is-empty";
@@ -128,6 +131,19 @@ export const calculaScorePorTema = (
     type: SET_SCORE_CANDIDATO_POR_TEMA,
     scoreTema
   });
+};
+
+export const buscaPorCPF = (cpf) => (dispatch, getState) => {
+  let candidato = {};
+  dispatch(setCandidatosCarregando());
+
+  buscaCPF(cpf).then(
+    dados => {
+      candidato = dados.data[0];
+      console.log(candidato);
+      dispatch({ type: SET_DADOS_CANDIDATO_POR_CPF, candidato: candidato });
+    }
+  );
 };
 
 // Pega o top n candidatos baseado na compatibilidade entre as respostas ordenado pelo score. Recebe um dicionário das respostas dos candidatos e retorna um array de arrays (tuplas) com os ids dos candidatos e seu score.
