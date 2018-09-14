@@ -17,21 +17,21 @@ export const filtraPorPartido = (partido, dadosCandidatos, scoreCandidatos) => {
     .sort((a, b) => {
       if (scoreCandidatos[a] > scoreCandidatos[b]) return -1;
       else if (scoreCandidatos[a] < scoreCandidatos[b]) return 1;
-      else {
+      else if (scoreCandidatos[a] === scoreCandidatos[b]) {
         if (
-          !isEmpty(dadosCandidatos[a[0]]) &&
-          !isEmpty(dadosCandidatos[b[0]])
+          !isEmpty(dadosCandidatos[a]) &&
+          !isEmpty(dadosCandidatos[b])
         ) {
           if (
-            (dadosCandidatos[a[0]].respondeu &&
-              dadosCandidatos[b[0]].respondeu) ||
-            (!dadosCandidatos[a[0]].respondeu &&
-              !dadosCandidatos[b[0]].respondeu)
+            (dadosCandidatos[a].respondeu &&
+              dadosCandidatos[b].respondeu) ||
+            (!dadosCandidatos[a].respondeu &&
+              !dadosCandidatos[b].respondeu)
           )
-            return dadosCandidatos[a[0]].nome_urna.localeCompare(
-              dadosCandidatos[b[0]].nome_urna
+            return dadosCandidatos[a].nome_urna.localeCompare(
+              dadosCandidatos[b].nome_urna
             );
-          else if (dadosCandidatos[b[0]].respondeu) return 1;
+          else if (dadosCandidatos[b].respondeu) return 1;
           else return -1;
         }
         return 0;
