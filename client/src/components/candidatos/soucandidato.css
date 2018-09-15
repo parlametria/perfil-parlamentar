@@ -1,17 +1,30 @@
-.sou-candidato{
+.sou-candidato-board{
   padding-top: 2rem;
-
 }
+
 
 .email-board{
   background: linear-gradient(180deg, #a963b3, #a963b3);
   background-repeat: repeat-y;
-  background-size:  auto;
+  background-size: auto;
   color: #ffffff;
   padding-left: 2rem;
   padding-right: 2rem;
   padding-top: 2rem;
   padding-bottom: 2rem;
+}
+
+.profile-board{
+  background-size: auto;
+  padding-right: 2rem;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
+
+.search-person-profile {
+  padding-bottom: 2rem;
+  margin-bottom: 2rem;
+  border-bottom: solid #5b2762;
 }
  
 a:hover{

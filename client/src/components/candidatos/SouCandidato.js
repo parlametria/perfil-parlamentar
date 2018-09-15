@@ -28,7 +28,7 @@ class SouCandidato extends Component {
   }
 
   perfilCandidato = dadosCandidatoBusca => (
-    <div>
+    <div className = "search-person-profile row">
       <div className="col-4">
         <img
           src={
@@ -126,7 +126,6 @@ class SouCandidato extends Component {
               <label>
                 <input
                   type="text  "
-                  pattern="\d{11}"
                   maxLength="11"
                   size="11"
                   className="form-control form-control-secondary"
@@ -137,12 +136,11 @@ class SouCandidato extends Component {
                   onChange={this.handleChange}
                 />
               </label>
-              <input type="submit" value="Submit" id="myBtn" />
             </form>
             <font size="1">*apenas números</font>
           </div>
 
-          <section className="sou-candidato">
+          <section className="sou-candidato-board">
             <div className="grid-wrapper">
               <div className="grid-main">
                 <section className="grid-panel panel-master">
@@ -150,7 +148,7 @@ class SouCandidato extends Component {
                 </section>
 
                 <section className="grid-panel panel-master">
-                  {gridCandidato}
+                  <div className="profile-board"> {gridCandidato} </div>
                 </section>
               </div>
             </div>
