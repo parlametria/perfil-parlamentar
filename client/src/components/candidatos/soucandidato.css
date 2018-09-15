@@ -1,20 +1,10 @@
-.sou-candidato-board{
-  padding-top: 2rem;
-}
-
-
-.email-board{
-  background: linear-gradient(180deg, #a963b3, #a963b3);
-  background-repeat: repeat-y;
-  background-size: auto;
+.email-board {
+  background-color: #a963b3;
   color: #ffffff;
-  padding-left: 2rem;
-  padding-right: 2rem;
-  padding-top: 2rem;
-  padding-bottom: 2rem;
+  padding: 2rem;
 }
 
-.profile-board{
+.profile-board {
   background-size: auto;
   padding-right: 2rem;
   padding-top: 2rem;
@@ -22,11 +12,6 @@
 }
 
 .search-person-profile {
-  padding-bottom: 2rem;
-  margin-bottom: 2rem;
-  border-bottom: solid #5b2762;
-}
- 
-a:hover{
-  color:#5b2762;
+  padding-bottom: 1rem;
+  margin-bottom: 1rem;
 }

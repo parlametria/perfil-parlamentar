@@ -44,12 +44,11 @@ class SouCandidato extends Component {
         />
       </div>
       <div className="col-8">
-        <p>Nome: {dadosCandidatoBusca.nome_urna}</p>
-        <p>
-          Partido: {dadosCandidatoBusca.sg_partido}/{dadosCandidatoBusca.uf}
-        </p>
-        <p>CPF: {dadosCandidatoBusca.cpf}</p>
-        <p>E-mail: {dadosCandidatoBusca.email}</p>
+        <h5 className="person-name">{dadosCandidatoBusca.nome_urna}</h5>
+        <div>{dadosCandidatoBusca.sg_partido}/{dadosCandidatoBusca.uf}</div>
+        <div>CPF {dadosCandidatoBusca.cpf}</div>
+        <br />
+        <div>E-mail <strong>{dadosCandidatoBusca.email}</strong></div>
       </div>
     </div>
   );
@@ -58,30 +57,24 @@ class SouCandidato extends Component {
   );
 
   textoDefaultCandidato = (
-    <div>
-      A Voz Ativa enviou um e-mail para todos os candidato/as a deputado federal
-      usando os endereços cadastrados no TSE. Para confirmar para que endereço
-      de e-mail enviamos, digite seu CPF.
-    </div>
+    <div></div>
   );
 
   textoDefaultEmail = (
-    <div>
-      Se você é um candidato e por algum motivo não recebeu o nosso e-mail entre
-      em contato conosco através de uma mensagem no contato@vozativa.org.{" "}
-    </div>
+    <div></div>
   );
 
   emailCandidato = dadosCandidatoBusca => (
-    <div>
+    <div className="email-board">
       <p>
-        Um email com o link para participação foi enviado por
-        contato@vozativa.org para o endereço de e-mail{" "}
-        {dadosCandidatoBusca.email}.{" "}
+        Um email com o link para participação foi enviado de{" "}
+        <strong className="strong"><a href="mailto:contato@vozativa.org" className="link-inverse">contato@vozativa.org</a></strong> para o endereço de e-mail:
       </p>
+      <h5>{dadosCandidatoBusca.email}</h5>
+      <br />
       <p>
-        Caso você queira receber esse link em outro email ou tenha outra dúvida,
-        manda um email pra a gente em contato@vozativa.org que providenciamos.{" "}
+        Caso você queira receber esse link em outro e-mail ou tenha qualquer dúvida,
+        escreve pra gente em <a href="mailto:contato@vozativa.org" className="link-inverse">contato@vozativa.org</a>.
       </p>
     </div>
   );
@@ -107,53 +100,46 @@ class SouCandidato extends Component {
 
     return (
       <div className="container">
-        <section className="sou-candidato">
-          <div className="container">
-            <h2 className="intro-title text-center">
-              É candidato e quer participar?
-            </h2>
-            <div className="my-3">
-              <Link to="/" className="btn btn-link">
-                <span className="icon-back" /> Voltar para o quiz
-              </Link>
-            </div>
-          </div>
-        </section>
-
-        <div className="container">
-          <div className="col-md-6">
-            <form onSubmit={this.handleSubmit}>
-              <label>
-                <input
-                  type="text  "
-                  maxLength="11"
-                  size="11"
-                  className="form-control form-control-secondary"
-                  placeholder="cpf"
-                  aria-label="Pesquisar CPF do/a candidato/a"
-                  aria-describedby="search-candidate"
-                  value={this.state.cpf}
-                  onChange={this.handleChange}
-                />
-              </label>
-            </form>
-            <font size="1">*apenas números</font>
-          </div>
-
-          <section className="sou-candidato-board">
-            <div className="grid-wrapper">
-              <div className="grid-main">
-                <section className="grid-panel panel-master">
-                  <div className="email-board">{gridEmail}</div>
-                </section>
-
-                <section className="grid-panel panel-master">
-                  <div className="profile-board"> {gridCandidato} </div>
-                </section>
+        <h4 className="compare-title text-center">É candidato e quer participar?</h4>
+          <div className="d-flex justify-content-center py-3">
+              <div className="col-md-8">
+                <p>A Voz Ativa enviou um e-mail para todos os candidato/as a deputado federal
+        usando os endereços cadastrados no TSE.</p>
+                <p>Para confirmar para qual endereço de e-mail enviamos, digite seu CPF.</p>
               </div>
+          </div>
+          
+          <div className="d-flex justify-content-center py-3">
+            <div className="col-md-5">
+              <form onSubmit={this.handleSubmit}>
+                <div className="form-group">
+                  <input
+                    type="text  "
+                    maxLength="11"
+                    size="11"
+                    className="form-control form-control-secondary"
+                    placeholder="cpf"
+                    aria-label="Pesquisar CPF do/a candidato/a"
+                    aria-describedby="search-candidate"
+                    value={this.state.cpf}
+                    onChange={this.handleChange}
+                  />
+                  <small className="form-text text-muted">
+                    * apenas números
+                  </small>
+                </div>
+              </form>
             </div>
-          </section>
-        </div>
+          </div>
+          <div className="row mb-3">
+            <div className="col-md-6">
+              {gridCandidato}
+            </div>
+            <div className="col-md-6">
+              {gridEmail}
+            </div>
+          </div>
+
       </div>
     );
   }
