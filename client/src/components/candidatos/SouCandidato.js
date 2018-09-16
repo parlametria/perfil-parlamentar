@@ -48,7 +48,7 @@ class SouCandidato extends Component {
         <div>{dadosCandidatoBusca.sg_partido}/{dadosCandidatoBusca.uf}</div>
         <div>CPF {dadosCandidatoBusca.cpf}</div>
         <br />
-        <div>E-mail <strong>{dadosCandidatoBusca.email}</strong></div>
+        <div>E-mail <strong>{dadosCandidatoBusca.email === "#NULO#" ? "Indisponível" : dadosCandidatoBusca.email}</strong></div>
       </div>
     </div>
   );
@@ -78,6 +78,26 @@ class SouCandidato extends Component {
       </p>
     </div>
   );
+  
+  naoRecebeu = dadosCandidatoBusca => (
+    <div className="email-board">
+      <p>
+      Nós não conseguimos lhe contactar através do endereço {dadosCandidatoBusca.email} que está cadastrado no TSE. </p>
+      <p> Para que possamos lhe enviar o link que serve como convite para a plataforma, precisamos de um e-mail que você tenha acesso. Para nos informar esse email, por favor nos contacte informando seu CPF e nome de urna no endereço <a href="mailto:contato@vozativa.org" className="link-inverse">contato@vozativa.org</a>.
+      </p>
+    </div>
+  );
+
+  emailNulo = dadosCandidatoBusca => (
+    <div className="email-board">
+      <p>
+      Nós não conseguimos encontrar um e-mail válido para lhe contactar. Para que possamos lhe enviar o link que serve como convite para a plataforma, precisamos de um e-mail que você tenha acesso.
+      </p> 
+      <p>Para nos informar esse email, por favor nos contacte informando seu CPF e nome de urna no endereço <a href="mailto:contato@vozativa.org" className="link-inverse">contato@vozativa.org</a>.
+      </p>
+    </div>
+  );
+ 
   render() {
     const { dadosCandidatoBusca, isCarregando } = this.props.candidatos;
 
@@ -95,8 +115,12 @@ class SouCandidato extends Component {
       gridEmail = this.textoDefaultEmail;
     } else if (Object.keys(dadosCandidatoBusca).length !== 0) {
       gridCandidato = this.perfilCandidato(dadosCandidatoBusca);
-      gridEmail = this.emailCandidato(dadosCandidatoBusca);
+      if (dadosCandidatoBusca.email === "#NULO#"){
+        gridEmail = this.emailNulo(dadosCandidatoBusca);
+    } else{
+      gridEmail = dadosCandidatoBusca.recebeu ? this.emailCandidato(dadosCandidatoBusca) : this.naoRecebeu(dadosCandidatoBusca);
     }
+  }
 
     return (
       <div className="container">
