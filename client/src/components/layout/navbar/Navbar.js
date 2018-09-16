@@ -45,35 +45,42 @@ class Navbar extends Component {
             </button>
 
             <div className="collapse navbar-collapse" id="mainNavbar">
-              <ul className="navbar-nav ml-auto">
+              <ul className="navbar-nav ml-auto pr-3">
                 <li className="nav-item">
                   <Link to="/sobre" className="nav-link">
                     Sobre
                   </Link>
                 </li>
+                <li className="nav-item">
+                  <Link to="/soucandidato" className="nav-link">
+                    Sou candidato
+                  </Link>
+                </li>
               </ul>
-              <span className="navbar-text">compartilhe:</span>
+              <span className="navbar-text navbar-text-strong">
+                compartilhe
+              </span>
               <ul className="navbar-nav navbar-inline">
                 <li className="nav-item">
                   <a
                     href="https://twitter.com/intent/tweet/?text=Nos diga o que você defende e em oito minutos a gente apresenta candidatos alinhados com você. http://vozativa.org/"
                     data-show-count="false"
-                    className="nav-link"
+                    className="nav-link nav-strong"
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    <span className="icon-twitter" />
+                    <span className="icon-twitter share-icon" />
                   </a>
                 </li>
                 <li className="nav-item">
                   <a
                     href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fvozativa.org%2F&amp;src=sdkpreparse"
                     data-show-count="false"
-                    className="nav-link"
+                    className="nav-link nav-strong"
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    <span className="icon-facebook" />
+                    <span className="icon-facebook share-icon" />
                   </a>
                 </li>
                 <BrowserView>
@@ -81,11 +88,11 @@ class Navbar extends Component {
                     <a
                       href="https://web.whatsapp.com/send?text=Nos diga o que você defende e em oito minutos a gente apresenta candidatos alinhados com você. http://vozativa.org/"
                       data-show-count="false"
-                      className="nav-link"
+                      className="nav-link nav-strong"
                       target="_blank"
                       rel="noopener noreferrer"
                     >
-                      <span className="icon-whatsapp" />
+                      <span className="icon-whatsapp share-icon" />
                     </a>
                   </li>
                 </BrowserView>
@@ -93,9 +100,9 @@ class Navbar extends Component {
                   <li className="nav-item">
                     <a
                       href="whatsapp://send?text=Nos diga o que você defende e em oito minutos a gente apresenta candidatos alinhados com você. http://vozativa.org/"
-                      className="nav-link"
+                      className="nav-link nav-strong"
                     >
-                      <span className="icon-whatsapp" />
+                      <span className="icon-whatsapp share-icon" />
                     </a>
                   </li>
                 </MobileView>

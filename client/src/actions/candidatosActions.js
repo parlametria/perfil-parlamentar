@@ -7,14 +7,25 @@ import {
   SET_FILTRO_CANDIDATOS,
   SET_NUM_RESPOSTAS,
   SET_DADOS_CANDIDATO,
+  SET_DADOS_CANDIDATO_POR_CPF,
   SET_MOSTRAR_TODOS_CANDIDATOS,
-  SET_MOSTRA_PERGUNTAS
+  SET_MOSTRA_PERGUNTAS,
+  SET_CANDIDATOS_RANQUEADOS,
+  SET_CANDIDATOS_FILTRADOS,
+  SET_PARTIDOS,
+  SET_PAGINACAO,
+  SET_CANDIDATOS_FILTRANDO
 } from "./types";
 
-// import {
-//   firebaseDatabase,
-//   firebaseFirestore
-// } from "../services/firebaseService";
+import { TAM_PAGINA } from "../constantes/constantesCandidatos";
+
+import {
+  filtraPorNome,
+  filtraPorPartido,
+  filtraPorNomeEPartido
+} from "../services/FiltroService";
+
+import { buscaCPF } from "../services/BuscaService";
 
 import axios from "axios";
 import isEmpty from "../validation/is-empty";
@@ -64,6 +75,7 @@ export const calculaScore = () => (dispatch, getState) => {
     type: SET_SCORE_CANDIDATOS,
     scoreCandidatos
   });
+  dispatch(getTopNCandidatos(Object.keys(scoreCandidatos).length));
 };
 
 export const calculaScorePorTema = (
@@ -125,36 +137,56 @@ export const calculaScorePorTema = (
   });
 };
 
+export const buscaPorCPF = cpf => (dispatch, getState) => {
+  let candidato;
+  dispatch(setCandidatosCarregando());
+
+  buscaCPF(cpf).then(dados => {
+    candidato = isEmpty(dados.data[0]) ? null : dados.data[0];
+    dispatch({ type: SET_DADOS_CANDIDATO_POR_CPF, candidato: candidato });
+  });
+};
+
 // Pega o top n candidatos baseado na compatibilidade entre as respostas ordenado pelo score. Recebe um dicionário das respostas dos candidatos e retorna um array de arrays (tuplas) com os ids dos candidatos e seu score.
 
 // A função de ordenação prioriza os candidatos que responderam ao questionário. Caso os dois tenham respondido ou ambos não tenham respondido, a ordenação será dada alfabeticamente.
 export const getTopNCandidatos = n => (dispatch, getState) => {
   const { scoreCandidatos, dadosCandidatos } = getState().candidatosReducer;
-  let candidatos = Object.keys(scoreCandidatos).map(key => [
+  let matrizScores = Object.keys(scoreCandidatos).map(key => [
     key,
     scoreCandidatos[key]
   ]);
 
-  candidatos.sort((a, b) => {
-    if (a[1] > b[1]) return -1;
-    else if (a[1] === b[1]) {
-      if (!isEmpty(dadosCandidatos[a[0]]) && !isEmpty(dadosCandidatos[b[0]])) {
+  const candidatos = matrizScores
+    .sort((a, b) => {
+      if (a[1] > b[1]) return -1;
+      else if (a[1] === b[1]) {
         if (
-          (dadosCandidatos[a[0]].respondeu &&
-            dadosCandidatos[b[0]].respondeu) ||
-          (!dadosCandidatos[a[0]].respondeu && !dadosCandidatos[b[0]].respondeu)
-        )
-          return dadosCandidatos[a[0]].nome_urna.localeCompare(
-            dadosCandidatos[b[0]].nome_urna
-          );
-        else if (dadosCandidatos[b[0]].respondeu) return 1;
-        else return -1;
-      }
-      return 0;
-    } else return 1;
-  });
+          !isEmpty(dadosCandidatos[a[0]]) &&
+          !isEmpty(dadosCandidatos[b[0]])
+        ) {
+          if (
+            (dadosCandidatos[a[0]].respondeu &&
+              dadosCandidatos[b[0]].respondeu) ||
+            (!dadosCandidatos[a[0]].respondeu &&
+              !dadosCandidatos[b[0]].respondeu)
+          )
+            return dadosCandidatos[a[0]].nome_urna.localeCompare(
+              dadosCandidatos[b[0]].nome_urna
+            );
+          else if (dadosCandidatos[b[0]].respondeu) return 1;
+          else return -1;
+        }
+        return 0;
+      } else return 1;
+    })
+    .map(candidato => candidato[0]);
 
-  return candidatos.slice(0, n);
+  dispatch({
+    type: SET_CANDIDATOS_RANQUEADOS,
+    candidatosRanqueados: candidatos.slice(0, n)
+  });
+  dispatch(setPaginacao({ inicio: 0, final: TAM_PAGINA, totalCandidatos: n }));
 };
 
 export const getDadosCandidatos = () => (dispatch, getState) => {
@@ -181,6 +213,7 @@ export const getDadosCandidatos = () => (dispatch, getState) => {
       });
 
       dispatch({ type: SET_DADOS_CANDIDATOS, dadosCandidatos });
+      dispatch(setPartidos());
       dispatch(calculaScore());
     })
     .then(res => {
@@ -196,6 +229,7 @@ export const getDadosCandidatos = () => (dispatch, getState) => {
           });
 
           dispatch({ type: SET_DADOS_CANDIDATOS, dadosCandidatos });
+          dispatch(setPartidos());
           dispatch({ type: SET_NUM_RESPOSTAS, numResponderam, numSemResposta });
           dispatch(calculaScore());
         });
@@ -246,6 +280,50 @@ export const setCandidatosCarregados = () => {
   };
 };
 
+export const setCandidatosFiltrados = () => (dispatch, getState) => {
+  const {
+    dadosCandidatos,
+    filtro,
+    scoreCandidatos,
+    candidatosRanqueados
+  } = getState().candidatosReducer;
+
+  dispatch(setCandidatosFiltrando());
+
+  let candidatos;
+  if (filtro.nome === "" && filtro.partido === "TODOS") candidatos = [];
+  else if (filtro.partido !== "TODOS" && filtro.nome !== "") {
+    candidatos = filtraPorNomeEPartido(
+      filtro.nome,
+      filtro.partido,
+      dadosCandidatos
+    );
+  } else if (filtro.partido !== "TODOS") {
+    candidatos = filtraPorPartido(
+      filtro.partido,
+      dadosCandidatos,
+      scoreCandidatos
+    );
+  } else if (filtro.nome !== "") {
+    candidatos = filtraPorNome(filtro.nome, dadosCandidatos);
+  } else candidatos = [];
+
+  dispatch({
+    type: SET_CANDIDATOS_FILTRADOS,
+    candidatosFiltrados: candidatos
+  });
+  dispatch(
+    setPaginacao({
+      inicio: 0,
+      final: TAM_PAGINA,
+      totalCandidatos:
+        filtro.partido !== "TODOS" || filtro.nome !== ""
+          ? candidatos.length
+          : candidatosRanqueados.length
+    })
+  );
+};
+
 export const setFiltroCandidatos = filtro => dispatch => {
   dispatch({ type: SET_FILTRO_CANDIDATOS, filtro });
 };
@@ -256,4 +334,29 @@ export const mostrarTodosCandidatos = () => dispatch => {
 
 export const mostraPerguntas = () => dispatch => {
   dispatch({ type: SET_MOSTRA_PERGUNTAS });
+};
+
+export const setPartidos = () => (dispatch, getState) => {
+  const { dadosCandidatos } = getState().candidatosReducer;
+  let partidosSet = new Set();
+
+  Object.keys(dadosCandidatos).forEach(candidato =>
+    partidosSet.add(dadosCandidatos[candidato].sg_partido)
+  );
+
+  let partidos = Array.from(partidosSet).sort((a, b) => a.localeCompare(b));
+
+  partidos.splice(0, 0, "TODOS");
+
+  dispatch({ type: SET_PARTIDOS, partidos: partidos });
+};
+
+export const setPaginacao = paginacao => dispatch => {
+  dispatch({ type: SET_PAGINACAO, paginacao: paginacao });
+};
+
+export const setCandidatosFiltrando = () => {
+  return {
+    type: SET_CANDIDATOS_FILTRANDO
+  };
 };
