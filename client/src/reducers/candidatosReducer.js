@@ -7,6 +7,7 @@ import {
   CANDIDATOS_CARREGADOS,
   SET_NUM_RESPOSTAS,
   SET_DADOS_CANDIDATO,
+  SET_DADOS_CANDIDATO_POR_CPF,
   SET_MOSTRAR_TODOS_CANDIDATOS,
   SET_CANDIDATOS_FILTRADOS,
   SET_CANDIDATOS_RANQUEADOS,
@@ -34,10 +35,11 @@ const initialState = {
   scoreTema: {},
   mostrarTodos: false,
   mostraPerguntas: false,
-  paginacao: { inicio: 0, final: 0, totalCandidatos: 0 }
+  paginacao: { inicio: 0, final: 0, totalCandidatos: 0 },
+  dadosCandidatoBusca: {}
 };
 
-export default function(state = initialState, action) {
+export default function (state = initialState, action) {
   switch (action.type) {
     case SET_DADOS_CANDIDATOS:
       return {
@@ -49,6 +51,12 @@ export default function(state = initialState, action) {
       return {
         ...state,
         dadosCandidato: action.dadosCandidato,
+        isCarregando: false
+      };
+    case SET_DADOS_CANDIDATO_POR_CPF:
+      return {
+        ...state,
+        dadosCandidatoBusca: action.candidato,
         isCarregando: false
       };
     case SET_SCORE_CANDIDATOS:

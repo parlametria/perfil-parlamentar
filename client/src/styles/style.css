@@ -74,3 +74,13 @@ footer {
 .btn-square {
   border-radius: 0;
 }
+
+a.link-inverse:link,
+a.link-inverse:visited {
+  color: #5b2762;
+}
+
+a.link-inverse:hover,
+a.link-inverse:active {
+  color: #5b2762;
+}
