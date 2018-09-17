@@ -5,8 +5,6 @@ import {
   CANDIDATOS_CARREGADOS,
   SET_DADOS_CANDIDATOS,
   SET_FILTRO_CANDIDATOS,
-  SET_TOTAL_RESPONDERAM,
-  SET_TOTAL_RESPOSTAS,
   SET_DADOS_CANDIDATO,
   SET_DADOS_CANDIDATO_POR_CPF,
   SET_MOSTRAR_TODOS_CANDIDATOS,
@@ -15,7 +13,11 @@ import {
   SET_CANDIDATOS_FILTRADOS,
   SET_PARTIDOS,
   SET_PAGINACAO,
-  SET_CANDIDATOS_FILTRANDO
+  SET_CANDIDATOS_FILTRANDO,
+  SET_TOTAL_RESPONDERAM_ESTADO,
+  SET_TOTAL_RESPOSTAS_ESTADO,
+  SET_TOTAL_RESPONDERAM_PARTIDO,
+  SET_TOTAL_RESPOSTAS_PARTIDO
 } from "./types";
 
 import { TAM_PAGINA } from "../constantes/constantesCandidatos";
@@ -203,7 +205,7 @@ export const getDadosCandidatos = () => (dispatch, getState) => {
     )
     .then(totalCandidatos => {
       dispatch({
-        type: SET_TOTAL_RESPONDERAM,
+        type: SET_TOTAL_RESPONDERAM_ESTADO,
         totalResponderam: totalCandidatos.data
       });
     });
@@ -212,7 +214,7 @@ export const getDadosCandidatos = () => (dispatch, getState) => {
     .get("/api/respostas/estados/" + filtro.estado + "/totalcandidatos")
     .then(totalCandidatos => {
       dispatch({
-        type: SET_TOTAL_RESPOSTAS,
+        type: SET_TOTAL_RESPOSTAS_ESTADO,
         totalRespostas: totalCandidatos.data
       });
     });
@@ -305,6 +307,36 @@ export const setCandidatosFiltrados = () => (dispatch, getState) => {
   } = getState().candidatosReducer;
 
   dispatch(setCandidatosFiltrando());
+
+  axios
+    .get(
+      "api/respostas/estados/" +
+        filtro.estado +
+        "/partidos/" +
+        filtro.partido +
+        "/totalcandidatos"
+    )
+    .then(totalCandidatos =>
+      dispatch({
+        type: SET_TOTAL_RESPOSTAS_PARTIDO,
+        totalRespostas: totalCandidatos.data
+      })
+    );
+
+  axios
+    .get(
+      "api/respostas/estados/" +
+        filtro.estado +
+        "/partidos/" +
+        filtro.partido +
+        "/responderam/totalcandidatos"
+    )
+    .then(totalCandidatos =>
+      dispatch({
+        type: SET_TOTAL_RESPONDERAM_PARTIDO,
+        totalResponderam: totalCandidatos.data
+      })
+    );
 
   let candidatos;
   if (filtro.nome === "" && filtro.partido === "TODOS") candidatos = [];

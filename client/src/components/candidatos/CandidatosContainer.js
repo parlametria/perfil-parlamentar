@@ -143,8 +143,10 @@ class CandidatosContainer extends Component {
     const {
       dadosCandidatos,
       scoreCandidatos,
-      totalResponderam,
-      totalRespostas,
+      totalResponderamEstado,
+      totalRespostasEstado,
+      totalResponderamPartido,
+      totalRespostasPartido,
       isCarregando,
       isFiltrandoPorNome,
       mostrarTodos,
@@ -165,8 +167,6 @@ class CandidatosContainer extends Component {
       filtro.nome !== "" || filtro.partido !== "TODOS"
         ? candidatosFiltrados
         : candidatosRanqueados;
-    let numRepPartido = 0;
-    let numNaoRepPartido = 0;
 
     const candidatos = candidatosMapeaveis.map(cpf => {
       const candidato = dadosCandidatos[cpf];
@@ -206,10 +206,10 @@ class CandidatosContainer extends Component {
     const mostraPartido = (
       <div>
         <h5>
-          Para esse partido, <strong className="strong">{numRepPartido}</strong>{" "}
-          de{" "}
-          <strong className="strong">{numRepPartido + numNaoRepPartido}</strong>{" "}
-          candidatos responderam ao questionário.
+          Para esse partido,{" "}
+          <strong className="strong">{totalResponderamPartido}</strong> de{" "}
+          <strong className="strong">{totalRespostasPartido}</strong> candidatos
+          responderam ao questionário.
         </h5>
       </div>
     );
@@ -217,8 +217,9 @@ class CandidatosContainer extends Component {
     const mostraEstado = (
       <div>
         <h5>
-          Nesse Estado, <strong className="strong">{totalResponderam}</strong>{" "}
-          de <strong className="strong">{totalRespostas}</strong> candidatos
+          Nesse Estado,{" "}
+          <strong className="strong">{totalResponderamEstado}</strong> de{" "}
+          <strong className="strong">{totalRespostasEstado}</strong> candidatos
           responderam ao questionário.
         </h5>
       </div>
