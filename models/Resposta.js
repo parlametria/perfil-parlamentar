@@ -41,5 +41,6 @@ const RespostaSchema = new Schema({
     required: true
   }
 });
-
+console.log("acessando Resposta.js");
 module.exports = Resposta = mongoose.model("resposta", RespostaSchema);
+console.log("fim do acesso a Resposta.js");

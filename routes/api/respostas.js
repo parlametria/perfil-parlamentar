@@ -10,8 +10,9 @@ const BAD_REQUEST = 400;
 // @desc    Pega todos as respostas de uma vez
 // @access  Public
 router.get("/", (req, res) => {
+  console.log("pedido para todos");
   Resposta.find()
-    .then(respostas => res.json(respostas))
+    .then(respostas => {console.log("recebi do bd"); res.json(respostas); console.log("acabei o encode");})
     .catch(err => res.status(BAD_REQUEST).json({ err }));
 });
 
@@ -49,6 +50,7 @@ router.get("/estados/:uf", (req, res) => {
   Resposta.find({ uf: req.params.uf })
     .then(respostas => res.json(respostas))
     .catch(err => res.status(BAD_REQUEST).json({ err }));
+  paraRetornar
 });
 
 // @route   GET api/respostas/estados/<uf>/responderam
