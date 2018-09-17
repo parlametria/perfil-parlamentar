@@ -5,14 +5,47 @@ const mongoose = require("mongoose");
 const Resposta = require("../../models/Resposta");
 
 const BAD_REQUEST = 400;
+const SUCCESS = 200;
 
 // @route   GET api/respostas
 // @desc    Pega todos as respostas de uma vez
 // @access  Public
 router.get("/", (req, res) => {
-  Resposta.find()
-    .then(respostas => res.json(respostas))
-    .catch(err => res.status(BAD_REQUEST).json({ err }));
+  const pageNo = Number(req.query.pageNo);
+  const size = Number(req.query.size);
+  const uf = req.params.uf;
+  let query = {};
+
+  if (pageNo < 0 || pageNo === 0) {
+    response = {
+      error: true,
+      message: "invalid page number, should start with 1"
+    };
+    return res.json(response);
+  }
+
+  query.skip = size * (pageNo - 1);
+  query.limit = size;
+
+  Resposta.countDocuments({}, (err, totalCount) => {
+    let response;
+    if (err) response = { error: true, message: "Error fetching data" };
+
+    Resposta.find({}, {}, query, (err, data) => {
+      response = err
+        ? { status: BAD_REQUEST, message: "Error fetching data" }
+        : {
+            data,
+            total: totalCount,
+            itensPorPagina: size,
+            pagina: pageNo,
+            paginas: Math.ceil(totalCount / size),
+            status: SUCCESS
+          };
+
+      res.status(response.status).json(response);
+    });
+  });
 });
 
 // @route   GET api/respostas/candidatos/<cpf>
@@ -49,6 +82,7 @@ router.get("/estados/:uf", (req, res) => {
   Resposta.find({ uf: req.params.uf })
     .then(respostas => res.json(respostas))
     .catch(err => res.status(BAD_REQUEST).json({ err }));
+  paraRetornar;
 });
 
 // @route   GET api/respostas/estados/<uf>/responderam
@@ -68,7 +102,7 @@ router.get("/estados/:uf/responderam/totalcandidatos", (req, res) => {
     { uf: req.params.uf, respondeu: true },
     (err, totalCount) => {
       if (!err) res.json(totalCount);
-      else res.status(400).json(err);
+      else res.status(BAD_REQUEST).json(err);
     }
   );
 });
@@ -79,7 +113,7 @@ router.get("/estados/:uf/responderam/totalcandidatos", (req, res) => {
 router.get("/estados/:uf/totalcandidatos", (req, res) => {
   Resposta.countDocuments({ uf: req.params.uf }, (err, totalCount) => {
     if (!err) res.json(totalCount);
-    else res.status(400).json(err);
+    else res.status(BAD_REQUEST).json(err);
   });
 });
 
@@ -91,7 +125,7 @@ router.get("/estados/:uf/partidos/:sigla/totalcandidatos", (req, res) => {
     { uf: req.params.uf, sg_partido: req.params.sigla },
     (err, totalCount) => {
       if (!err) res.json(totalCount);
-      else res.status(400).json(err);
+      else res.status(BAD_REQUEST).json(err);
     }
   );
 });
@@ -106,7 +140,7 @@ router.get(
       { uf: req.params.uf, sg_partido: req.params.sigla, respondeu: true },
       (err, totalCount) => {
         if (!err) res.json(totalCount);
-        else res.status(400).json(err);
+        else res.status(BAD_REQUEST).json(err);
       }
     );
   }
@@ -138,13 +172,45 @@ router.get("/estados/:uf/partidos/:sigla/naoresponderam", (req, res) => {
     .catch(err => res.status(BAD_REQUEST).json({ err }));
 });
 
-// @route   GET api/respostas/estados/<id>
+// @route   GET api/respostas/estados/<uf>/naoresponderam
 // @desc    Pega as respostas por estado de quem NÃO respondeu
 // @access  Public
 router.get("/estados/:uf/naoresponderam", (req, res) => {
-  Resposta.find({ uf: req.params.uf, respondeu: false })
-    .then(respostas => res.json(respostas))
-    .catch(err => res.status(BAD_REQUEST).json({ err }));
+  const pageNo = Number(req.query.pageNo);
+  const size = Number(req.query.size);
+  const uf = req.params.uf;
+  let query = {};
+
+  if (pageNo < 0 || pageNo === 0) {
+    response = {
+      error: true,
+      message: "invalid page number, should start with 1"
+    };
+    return res.json(response);
+  }
+
+  query.skip = size * (pageNo - 1);
+  query.limit = size;
+
+  Resposta.countDocuments({ uf, respondeu: false }, (err, totalCount) => {
+    let response;
+    if (err) response = { error: true, message: "Error fetching data" };
+
+    Resposta.find({ uf, respondeu: false }, {}, query, (err, data) => {
+      response = err
+        ? { status: BAD_REQUEST, message: "Error fetching data" }
+        : {
+            data,
+            total: totalCount,
+            itensPorPagina: size,
+            pagina: pageNo,
+            paginas: Math.ceil(totalCount / size),
+            status: SUCCESS
+          };
+
+      res.status(response.status).json(response);
+    });
+  });
 });
 
 module.exports = router;

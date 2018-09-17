@@ -242,7 +242,7 @@ export const getDadosCandidatos = () => (dispatch, getState) => {
         .then(respostas => {
           console.timeEnd("getNaoResponderam");
 
-          respostas.data.forEach(resp => {
+          respostas.data.data.forEach(resp => {
             dadosCandidatos[resp.cpf] = resp;
             dadosCandidatos[resp.cpf].respondeu = false;
           });
