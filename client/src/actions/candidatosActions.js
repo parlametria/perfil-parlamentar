@@ -5,7 +5,8 @@ import {
   CANDIDATOS_CARREGADOS,
   SET_DADOS_CANDIDATOS,
   SET_FILTRO_CANDIDATOS,
-  SET_NUM_RESPOSTAS,
+  SET_TOTAL_RESPONDERAM,
+  SET_TOTAL_RESPOSTAS,
   SET_DADOS_CANDIDATO,
   SET_DADOS_CANDIDATO_POR_CPF,
   SET_MOSTRAR_TODOS_CANDIDATOS,
@@ -195,8 +196,26 @@ export const getDadosCandidatos = () => (dispatch, getState) => {
   const { filtro } = getState().candidatosReducer;
 
   let dadosCandidatos = {};
-  let numResponderam = 0;
-  let numSemResposta = 0;
+
+  axios
+    .get(
+      "/api/respostas/estados/" + filtro.estado + "/responderam/totalcandidatos"
+    )
+    .then(totalCandidatos => {
+      dispatch({
+        type: SET_TOTAL_RESPONDERAM,
+        totalResponderam: totalCandidatos.data
+      });
+    });
+
+  axios
+    .get("/api/respostas/estados/" + filtro.estado + "/totalcandidatos")
+    .then(totalCandidatos => {
+      dispatch({
+        type: SET_TOTAL_RESPOSTAS,
+        totalRespostas: totalCandidatos.data
+      });
+    });
 
   console.time("getResponderam");
   console.time("getNaoResponderam");
@@ -209,7 +228,6 @@ export const getDadosCandidatos = () => (dispatch, getState) => {
       respostas.data.forEach(resp => {
         dadosCandidatos[resp.cpf] = resp;
         dadosCandidatos[resp.cpf].respondeu = true;
-        numResponderam++;
       });
 
       dispatch({ type: SET_DADOS_CANDIDATOS, dadosCandidatos });
@@ -225,12 +243,10 @@ export const getDadosCandidatos = () => (dispatch, getState) => {
           respostas.data.forEach(resp => {
             dadosCandidatos[resp.cpf] = resp;
             dadosCandidatos[resp.cpf].respondeu = false;
-            numSemResposta++;
           });
 
           dispatch({ type: SET_DADOS_CANDIDATOS, dadosCandidatos });
           dispatch(setPartidos());
-          dispatch({ type: SET_NUM_RESPOSTAS, numResponderam, numSemResposta });
           dispatch(calculaScore());
         });
     });
