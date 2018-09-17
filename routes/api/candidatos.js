@@ -22,4 +22,12 @@ router.get("/", (req, res) => {
     );
 });
 
+router.get("/:cpf", (req, res) => {
+  Candidato.find({ cpf: req.params.cpf })
+    .then(candidatos => res.json(candidatos))
+    .catch(err =>
+      res.status(400).json({ err })
+    );
+});
+
 module.exports = router;
