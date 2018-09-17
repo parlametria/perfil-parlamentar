@@ -143,8 +143,10 @@ class CandidatosContainer extends Component {
     const {
       dadosCandidatos,
       scoreCandidatos,
-      numResponderam,
-      numSemResposta,
+      totalResponderamEstado,
+      totalRespostasEstado,
+      totalResponderamPartido,
+      totalRespostasPartido,
       isCarregando,
       isFiltrandoPorNome,
       mostrarTodos,
@@ -165,8 +167,6 @@ class CandidatosContainer extends Component {
       filtro.nome !== "" || filtro.partido !== "TODOS"
         ? candidatosFiltrados
         : candidatosRanqueados;
-    let numRepPartido = 0;
-    let numNaoRepPartido = 0;
 
     const candidatos = candidatosMapeaveis.map(cpf => {
       const candidato = dadosCandidatos[cpf];
@@ -185,8 +185,8 @@ class CandidatosContainer extends Component {
             foto={
               candidato.tem_foto
                 ? "https://s3-sa-east-1.amazonaws.com/fotoscandidatos2018/fotos_tratadas/img_" +
-                candidato.cpf +
-                ".jpg"
+                  candidato.cpf +
+                  ".jpg"
                 : "http://pontosdevista.pt/static/uploads/2016/05/sem-fotoABC.jpg"
             }
             arrayRespostasUsuario={arrayRespostasUsuario}
@@ -206,10 +206,10 @@ class CandidatosContainer extends Component {
     const mostraPartido = (
       <div>
         <h5>
-          Para esse partido, <strong className="strong">{numRepPartido}</strong>{" "}
-          de{" "}
-          <strong className="strong">{numRepPartido + numNaoRepPartido}</strong>{" "}
-          candidatos responderam ao questionário.
+          Para esse partido,{" "}
+          <strong className="strong">{totalResponderamPartido}</strong> de{" "}
+          <strong className="strong">{totalRespostasPartido}</strong> candidatos
+          responderam ao questionário.
         </h5>
       </div>
     );
@@ -217,9 +217,10 @@ class CandidatosContainer extends Component {
     const mostraEstado = (
       <div>
         <h5>
-          Nesse Estado, <strong className="strong">{numResponderam}</strong> de{" "}
-          <strong className="strong">{numResponderam + numSemResposta}</strong>{" "}
-          candidatos responderam ao questionário.
+          Nesse Estado,{" "}
+          <strong className="strong">{totalResponderamEstado}</strong> de{" "}
+          <strong className="strong">{totalRespostasEstado}</strong> candidatos
+          responderam ao questionário.
         </h5>
       </div>
     );
@@ -310,25 +311,26 @@ class CandidatosContainer extends Component {
               <Spinner />
             </div>
           ) : (
-              <div>
-                <div className="candidatos">
-                  <FlipMove>
-                    {candidatos.slice(paginacao.inicio, paginacao.final)}
-                  </FlipMove>
-                </div>
-                {!isFiltrandoPorNome ? <div className="candidatos-pagination d-flex justify-content-center flex-wrap mb-3">
+            <div>
+              <div className="candidatos">
+                <FlipMove>
+                  {candidatos.slice(paginacao.inicio, paginacao.final)}
+                </FlipMove>
+              </div>
+              {!isFiltrandoPorNome ? (
+                <div className="candidatos-pagination d-flex justify-content-center flex-wrap mb-3">
                   {paginacao.inicio !== 0 ? btnFirst : null}
                   {paginacao.inicio > 0 ? btnMenosCandidatos : null}
                   {paginacao.final < paginacao.totalCandidatos
                     ? btnMaisCandidatos
                     : null}
-                </div> : null}
-              </div>
-            )}
+                </div>
+              ) : null}
+            </div>
+          )}
         </div>
       </div>
     );
-
 
     const isMinimoVotosOuMostreTodos =
       quantidadeVotos >= MIN_VOTOS || mostrarTodos;
@@ -373,7 +375,6 @@ class CandidatosContainer extends Component {
     }
   }
 }
-
 
 CandidatosContainer.propTypes = {
   calculaScore: PropTypes.func.isRequired,

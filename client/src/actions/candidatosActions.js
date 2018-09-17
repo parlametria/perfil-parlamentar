@@ -5,7 +5,6 @@ import {
   CANDIDATOS_CARREGADOS,
   SET_DADOS_CANDIDATOS,
   SET_FILTRO_CANDIDATOS,
-  SET_NUM_RESPOSTAS,
   SET_DADOS_CANDIDATO,
   SET_DADOS_CANDIDATO_POR_CPF,
   SET_MOSTRAR_TODOS_CANDIDATOS,
@@ -14,7 +13,11 @@ import {
   SET_CANDIDATOS_FILTRADOS,
   SET_PARTIDOS,
   SET_PAGINACAO,
-  SET_CANDIDATOS_FILTRANDO
+  SET_CANDIDATOS_FILTRANDO,
+  SET_TOTAL_RESPONDERAM_ESTADO,
+  SET_TOTAL_RESPOSTAS_ESTADO,
+  SET_TOTAL_RESPONDERAM_PARTIDO,
+  SET_TOTAL_RESPOSTAS_PARTIDO
 } from "./types";
 
 import { TAM_PAGINA } from "../constantes/constantesCandidatos";
@@ -195,8 +198,26 @@ export const getDadosCandidatos = () => (dispatch, getState) => {
   const { filtro } = getState().candidatosReducer;
 
   let dadosCandidatos = {};
-  let numResponderam = 0;
-  let numSemResposta = 0;
+
+  axios
+    .get(
+      "/api/respostas/estados/" + filtro.estado + "/responderam/totalcandidatos"
+    )
+    .then(totalCandidatos => {
+      dispatch({
+        type: SET_TOTAL_RESPONDERAM_ESTADO,
+        totalResponderam: totalCandidatos.data
+      });
+    });
+
+  axios
+    .get("/api/respostas/estados/" + filtro.estado + "/totalcandidatos")
+    .then(totalCandidatos => {
+      dispatch({
+        type: SET_TOTAL_RESPOSTAS_ESTADO,
+        totalRespostas: totalCandidatos.data
+      });
+    });
 
   console.time("getResponderam");
   console.time("getNaoResponderam");
@@ -209,7 +230,6 @@ export const getDadosCandidatos = () => (dispatch, getState) => {
       respostas.data.forEach(resp => {
         dadosCandidatos[resp.cpf] = resp;
         dadosCandidatos[resp.cpf].respondeu = true;
-        numResponderam++;
       });
 
       dispatch({ type: SET_DADOS_CANDIDATOS, dadosCandidatos });
@@ -225,12 +245,10 @@ export const getDadosCandidatos = () => (dispatch, getState) => {
           respostas.data.forEach(resp => {
             dadosCandidatos[resp.cpf] = resp;
             dadosCandidatos[resp.cpf].respondeu = false;
-            numSemResposta++;
           });
 
           dispatch({ type: SET_DADOS_CANDIDATOS, dadosCandidatos });
           dispatch(setPartidos());
-          dispatch({ type: SET_NUM_RESPOSTAS, numResponderam, numSemResposta });
           dispatch(calculaScore());
         });
     });
@@ -289,6 +307,36 @@ export const setCandidatosFiltrados = () => (dispatch, getState) => {
   } = getState().candidatosReducer;
 
   dispatch(setCandidatosFiltrando());
+
+  axios
+    .get(
+      "api/respostas/estados/" +
+        filtro.estado +
+        "/partidos/" +
+        filtro.partido +
+        "/totalcandidatos"
+    )
+    .then(totalCandidatos =>
+      dispatch({
+        type: SET_TOTAL_RESPOSTAS_PARTIDO,
+        totalRespostas: totalCandidatos.data
+      })
+    );
+
+  axios
+    .get(
+      "api/respostas/estados/" +
+        filtro.estado +
+        "/partidos/" +
+        filtro.partido +
+        "/responderam/totalcandidatos"
+    )
+    .then(totalCandidatos =>
+      dispatch({
+        type: SET_TOTAL_RESPONDERAM_PARTIDO,
+        totalResponderam: totalCandidatos.data
+      })
+    );
 
   let candidatos;
   if (filtro.nome === "" && filtro.partido === "TODOS") candidatos = [];
