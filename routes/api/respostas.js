@@ -11,11 +11,41 @@ const SUCCESS = 200;
 // @desc    Pega todos as respostas de uma vez
 // @access  Public
 router.get("/", (req, res) => {
-  Resposta.find()
-    .then(respostas => {
-      res.json(respostas);
-    })
-    .catch(err => res.status(BAD_REQUEST).json({ err }));
+  const pageNo = Number(req.query.pageNo);
+  const size = Number(req.query.size);
+  const uf = req.params.uf;
+  let query = {};
+
+  if (pageNo < 0 || pageNo === 0) {
+    response = {
+      error: true,
+      message: "invalid page number, should start with 1"
+    };
+    return res.json(response);
+  }
+
+  query.skip = size * (pageNo - 1);
+  query.limit = size;
+
+  Resposta.countDocuments({}, (err, totalCount) => {
+    let response;
+    if (err) response = { error: true, message: "Error fetching data" };
+
+    Resposta.find({}, {}, query, (err, data) => {
+      response = err
+        ? { status: BAD_REQUEST, message: "Error fetching data" }
+        : {
+            data,
+            total: totalCount,
+            itensPorPagina: size,
+            pagina: pageNo,
+            paginas: Math.ceil(totalCount / size),
+            status: SUCCESS
+          };
+
+      res.status(response.status).json(response);
+    });
+  });
 });
 
 // @route   GET api/respostas/candidatos/<cpf>
