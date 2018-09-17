@@ -5,7 +5,10 @@ import {
   SET_FILTRO_CANDIDATOS,
   CANDIDATOS_CARREGANDO,
   CANDIDATOS_CARREGADOS,
-  SET_NUM_RESPOSTAS,
+  SET_TOTAL_RESPONDERAM_ESTADO,
+  SET_TOTAL_RESPOSTAS_ESTADO,
+  SET_TOTAL_RESPOSTAS_PARTIDO,
+  SET_TOTAL_RESPONDERAM_PARTIDO,
   SET_DADOS_CANDIDATO,
   SET_DADOS_CANDIDATO_POR_CPF,
   SET_MOSTRAR_TODOS_CANDIDATOS,
@@ -21,8 +24,10 @@ import {
 // arrayVotings: [0/1/-1]
 // O estado inicial será definido a partir do banco de dados, uma chamada para preencher esses arrays e objetos.
 const initialState = {
-  numResponderam: 0,
-  numSemResposta: 0,
+  totalResponderamEstado: 0,
+  totalRespostasEstado: 0,
+  totalResponderamPartido: 0,
+  totalRespostasPartido: 0,
   dadosCandidatos: {},
   isCarregando: false,
   isFiltrandoPorNome: false,
@@ -39,7 +44,7 @@ const initialState = {
   dadosCandidatoBusca: {}
 };
 
-export default function (state = initialState, action) {
+export default function(state = initialState, action) {
   switch (action.type) {
     case SET_DADOS_CANDIDATOS:
       return {
@@ -84,11 +89,25 @@ export default function (state = initialState, action) {
         ...state,
         filtro: action.filtro
       };
-    case SET_NUM_RESPOSTAS:
+    case SET_TOTAL_RESPONDERAM_ESTADO:
       return {
         ...state,
-        numResponderam: action.numResponderam,
-        numSemResposta: action.numSemResposta
+        totalResponderamEstado: action.totalResponderam
+      };
+    case SET_TOTAL_RESPOSTAS_ESTADO:
+      return {
+        ...state,
+        totalRespostasEstado: action.totalRespostas
+      };
+    case SET_TOTAL_RESPONDERAM_PARTIDO:
+      return {
+        ...state,
+        totalResponderamPartido: action.totalResponderam
+      };
+    case SET_TOTAL_RESPOSTAS_PARTIDO:
+      return {
+        ...state,
+        totalRespostasPartido: action.totalRespostas
       };
     case SET_MOSTRAR_TODOS_CANDIDATOS:
       return {
