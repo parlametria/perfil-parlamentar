@@ -5,6 +5,7 @@ const mongoose = require("mongoose");
 const Resposta = require("../../models/Resposta");
 
 const BAD_REQUEST = 400;
+const SUCCESS = 200;
 
 // @route   GET api/respostas/test
 // @desc    Testa a rota de respostas
@@ -93,14 +94,14 @@ router.get("/estados/:id/naoresponderam", (req, res) => {
 
     Resposta.find({ uf, respondeu: false }, {}, query, (err, data) => {
       response = err
-        ? { status: 400, message: "Error fetching data" }
+        ? { status: BAD_REQUEST, message: "Error fetching data" }
         : {
             data,
             total: totalCount,
             itensPorPagina: size,
             pagina: pageNo,
             paginas: Math.ceil(totalCount / size),
-            status: 200
+            status: SUCCESS
           };
 
       res.status(response.status).json(response);
