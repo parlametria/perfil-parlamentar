@@ -20,7 +20,7 @@ class BoasVindas extends Component {
               alt="Imagem de um questionário com algumas perguntas respondidas"
             />
           </div>
-          <div className="pl-2">
+          <div className="tutorial-text pl-2">
             <strong className="strong">Vote</strong> nos temas propostos e veja aqui os
               candidatos que mais se alinham com você.
           </div>
@@ -32,7 +32,7 @@ class BoasVindas extends Component {
               alt="Imagem de um questionário com algumas perguntas respondidas"
             />
           </div>
-          <div className="pl-2">
+          <div className="tutorial-text pl-2">
             <strong className="strong">Filtre</strong> o resultado segundo seus critérios.
           </div>
         </div>
@@ -43,7 +43,7 @@ class BoasVindas extends Component {
               alt="Imagem de um questionário com algumas perguntas respondidas"
             />
           </div>
-          <div className="pl-2">
+          <div className="tutorial-text pl-2">
             <strong className="strong">Informe-se</strong> sobre os 5 temas. Quanto mais
             perguntas você responder, mas preciso é o resultado.
           </div>
