@@ -2,12 +2,12 @@
  * @module routes/candidatos
  * @requires express
  */
+const express = require("express");
 
 /**
- * express module
- * @const
+ * Rotas para funções relacionadas aos candidatos.
+ * @namespace module:routes/candidatos
  */
-const express = require("express");
 const router = express.Router();
 const mongoose = require("mongoose");
 

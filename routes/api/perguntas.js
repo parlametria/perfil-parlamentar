@@ -1,5 +1,15 @@
+/** Express router
+ * @module routes/perguntas
+ * @requires express
+ */
 const express = require("express");
+
+/**
+ * Rotas para funções relacionadas às perguntas.
+ * @namespace module:routes/perguntas
+ */
 const router = express.Router();
+
 const mongoose = require("mongoose");
 
 const Pergunta = require("../../models/Pergunta");

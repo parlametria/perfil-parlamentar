@@ -1,4 +1,14 @@
+/** Express router
+ * @module routes/respostas
+ * @requires express
+ */
+
 const express = require("express");
+
+/**
+ * Rotas para funções relacionadas às respostas.
+ * @namespace module:routes/respostas
+ */
 const router = express.Router();
 const mongoose = require("mongoose");
 
