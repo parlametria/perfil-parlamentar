@@ -20,7 +20,7 @@ import {
   SET_TOTAL_RESPOSTAS_PARTIDO
 } from "./types";
 
-import { TAM_PAGINA } from "../constantes/constantesCandidatos";
+import { TAM_PAGINA, ITENS_POR_REQ } from "../constantes/constantesCandidatos";
 
 import {
   filtraPorNome,
@@ -43,10 +43,10 @@ const comparaRespostas = (
   chaves.forEach(idPergunta => {
     respostasIguais +=
       respostasCandidatos[idPergunta] !== undefined &&
-      respostasCandidatos[idPergunta] !== null &&
-      respostasUsuario[idPergunta] !== 0 &&
-      respostasUsuario[idPergunta] !== -2 &&
-      respostasCandidatos[idPergunta] === respostasUsuario[idPergunta]
+        respostasCandidatos[idPergunta] !== null &&
+        respostasUsuario[idPergunta] !== 0 &&
+        respostasUsuario[idPergunta] !== -2 &&
+        respostasCandidatos[idPergunta] === respostasUsuario[idPergunta]
         ? 1
         : 0;
   });
@@ -237,7 +237,7 @@ export const getDadosCandidatos = () => (dispatch, getState) => {
     })
     .then(res => {
       axios
-        .get("/api/respostas/estados/" + filtro.estado + "/naoresponderam")
+        .get("/api/respostas/estados/" + filtro.estado + "/naoresponderam?pageNo=1&size=" + ITENS_POR_REQ)
         .then(respostas => {
           console.timeEnd("getNaoResponderam");
 
@@ -309,10 +309,10 @@ export const setCandidatosFiltrados = () => (dispatch, getState) => {
   axios
     .get(
       "api/respostas/estados/" +
-        filtro.estado +
-        "/partidos/" +
-        filtro.partido +
-        "/totalcandidatos"
+      filtro.estado +
+      "/partidos/" +
+      filtro.partido +
+      "/totalcandidatos"
     )
     .then(totalCandidatos =>
       dispatch({
@@ -324,10 +324,10 @@ export const setCandidatosFiltrados = () => (dispatch, getState) => {
   axios
     .get(
       "api/respostas/estados/" +
-        filtro.estado +
-        "/partidos/" +
-        filtro.partido +
-        "/responderam/totalcandidatos"
+      filtro.estado +
+      "/partidos/" +
+      filtro.partido +
+      "/responderam/totalcandidatos"
     )
     .then(totalCandidatos =>
       dispatch({
