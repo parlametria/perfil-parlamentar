@@ -82,7 +82,6 @@ router.get("/estados/:uf", (req, res) => {
   Resposta.find({ uf: req.params.uf })
     .then(respostas => res.json(respostas))
     .catch(err => res.status(BAD_REQUEST).json({ err }));
-  paraRetornar;
 });
 
 // @route   GET api/respostas/estados/<uf>/responderam
