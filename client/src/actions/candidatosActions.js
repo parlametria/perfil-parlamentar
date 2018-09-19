@@ -229,7 +229,6 @@ export const getDadosCandidatos = () => (dispatch, getState) => {
 
       respostas.data.forEach(resp => {
         dadosCandidatos[resp.cpf] = resp;
-        dadosCandidatos[resp.cpf].respondeu = true;
       });
 
       dispatch({ type: SET_DADOS_CANDIDATOS, dadosCandidatos });
@@ -244,7 +243,6 @@ export const getDadosCandidatos = () => (dispatch, getState) => {
 
           respostas.data.data.forEach(resp => {
             dadosCandidatos[resp.cpf] = resp;
-            dadosCandidatos[resp.cpf].respondeu = false;
           });
 
           dispatch({ type: SET_DADOS_CANDIDATOS, dadosCandidatos });
