@@ -43,10 +43,10 @@ const comparaRespostas = (
   chaves.forEach(idPergunta => {
     respostasIguais +=
       respostasCandidatos[idPergunta] !== undefined &&
-        respostasCandidatos[idPergunta] !== null &&
-        respostasUsuario[idPergunta] !== 0 &&
-        respostasUsuario[idPergunta] !== -2 &&
-        respostasCandidatos[idPergunta] === respostasUsuario[idPergunta]
+      respostasCandidatos[idPergunta] !== null &&
+      respostasUsuario[idPergunta] !== 0 &&
+      respostasUsuario[idPergunta] !== -2 &&
+      respostasCandidatos[idPergunta] === respostasUsuario[idPergunta]
         ? 1
         : 0;
   });
@@ -194,6 +194,7 @@ export const getTopNCandidatos = n => (dispatch, getState) => {
 
 export const getDadosCandidatos = () => (dispatch, getState) => {
   dispatch(setCandidatosCarregando());
+  console.log("carregando");
 
   const { filtro } = getState().candidatosReducer;
 
@@ -234,21 +235,25 @@ export const getDadosCandidatos = () => (dispatch, getState) => {
       dispatch({ type: SET_DADOS_CANDIDATOS, dadosCandidatos });
       dispatch(setPartidos());
       dispatch(calculaScore());
-    })
-    .then(res => {
-      axios
-        .get("/api/respostas/estados/" + filtro.estado + "/naoresponderam?pageNo=1&size=" + ITENS_POR_REQ)
-        .then(respostas => {
-          console.timeEnd("getNaoResponderam");
+    });
 
-          respostas.data.data.forEach(resp => {
-            dadosCandidatos[resp.cpf] = resp;
-          });
+  axios
+    .get(
+      "/api/respostas/estados/" +
+        filtro.estado +
+        "/naoresponderam?pageNo=1&size=" +
+        ITENS_POR_REQ
+    )
+    .then(respostas => {
+      console.timeEnd("getNaoResponderam");
 
-          dispatch({ type: SET_DADOS_CANDIDATOS, dadosCandidatos });
-          dispatch(setPartidos());
-          dispatch(calculaScore());
-        });
+      respostas.data.data.forEach(resp => {
+        dadosCandidatos[resp.cpf] = resp;
+      });
+
+      dispatch({ type: SET_DADOS_CANDIDATOS, dadosCandidatos });
+      dispatch(setPartidos());
+      dispatch(calculaScore());
     });
 };
 
@@ -309,10 +314,10 @@ export const setCandidatosFiltrados = () => (dispatch, getState) => {
   axios
     .get(
       "api/respostas/estados/" +
-      filtro.estado +
-      "/partidos/" +
-      filtro.partido +
-      "/totalcandidatos"
+        filtro.estado +
+        "/partidos/" +
+        filtro.partido +
+        "/totalcandidatos"
     )
     .then(totalCandidatos =>
       dispatch({
@@ -324,10 +329,10 @@ export const setCandidatosFiltrados = () => (dispatch, getState) => {
   axios
     .get(
       "api/respostas/estados/" +
-      filtro.estado +
-      "/partidos/" +
-      filtro.partido +
-      "/responderam/totalcandidatos"
+        filtro.estado +
+        "/partidos/" +
+        filtro.partido +
+        "/responderam/totalcandidatos"
     )
     .then(totalCandidatos =>
       dispatch({
