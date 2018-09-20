@@ -154,7 +154,11 @@ export const buscaPorCPF = cpf => (dispatch, getState) => {
 
 // A função de ordenação prioriza os candidatos que responderam ao questionário. Caso os dois tenham respondido ou ambos não tenham respondido, a ordenação será dada alfabeticamente.
 export const getTopNCandidatos = n => (dispatch, getState) => {
-  const { scoreCandidatos, dadosCandidatos } = getState().candidatosReducer;
+  const {
+    scoreCandidatos,
+    dadosCandidatos,
+    totalRespostasEstado
+  } = getState().candidatosReducer;
   let matrizScores = Object.keys(scoreCandidatos).map(key => [
     key,
     scoreCandidatos[key]
@@ -189,7 +193,14 @@ export const getTopNCandidatos = n => (dispatch, getState) => {
     type: SET_CANDIDATOS_RANQUEADOS,
     candidatosRanqueados: candidatos.slice(0, n)
   });
-  dispatch(setPaginacao({ inicio: 0, final: TAM_PAGINA, totalCandidatos: n }));
+  dispatch(
+    setPaginacao({
+      inicio: 0,
+      final: TAM_PAGINA,
+      totalCandidatos: totalRespostasEstado,
+      paginaAtual: 1
+    })
+  );
 };
 
 export const getDadosCandidatos = () => (dispatch, getState) => {
@@ -410,4 +421,35 @@ export const setCandidatosFiltrando = () => {
   return {
     type: SET_CANDIDATOS_FILTRANDO
   };
+};
+
+export const getProximaPaginaCandidatos = () => (dispatch, getState) => {
+  const {
+    paginacao,
+    filtro,
+    candidatosRanqueados
+  } = getState().candidatosReducer;
+
+  axios
+    .get(
+      "/api/respostas/estados/" +
+        filtro.estado +
+        "/naoresponderam?pageNo=" +
+        paginacao.paginaAtual +
+        "&size=" +
+        ITENS_POR_REQ
+    )
+    .then(respostas => {
+      console.log(paginacao.paginaAtual);
+
+      respostas.data.data.forEach(resposta =>
+        candidatosRanqueados.push(resposta.cpf)
+      );
+
+      console.log(candidatosRanqueados);
+      dispatch({
+        type: SET_CANDIDATOS_RANQUEADOS,
+        candidatosRanqueados: candidatosRanqueados
+      });
+    });
 };

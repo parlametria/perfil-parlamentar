@@ -17,7 +17,8 @@ import {
   setFiltroCandidatos,
   setCandidatosFiltrados,
   setPartidos,
-  setPaginacao
+  setPaginacao,
+  getProximaPaginaCandidatos
 } from "../../actions/candidatosActions";
 
 import PropTypes from "prop-types";
@@ -68,7 +69,8 @@ class CandidatosContainer extends Component {
     const paginacao = {
       inicio: 0,
       final: TAM_PAGINA,
-      totalCandidatos: totalCandidatos
+      totalCandidatos: totalCandidatos,
+      paginaAtual: 1
     };
     this.props.setPaginacao(paginacao);
   }
@@ -80,7 +82,8 @@ class CandidatosContainer extends Component {
       const novaPaginacao = {
         inicio: paginacao.inicio - TAM_PAGINA,
         final: paginacao.inicio,
-        totalCandidatos: paginacao.totalCandidatos
+        totalCandidatos: paginacao.totalCandidatos,
+        paginaAtual: paginacao.paginaAtual - 1
       };
       this.props.setPaginacao(novaPaginacao);
     }
@@ -88,11 +91,15 @@ class CandidatosContainer extends Component {
 
   pegaProximosCandidatos() {
     const { paginacao } = this.props.candidatos;
+
+    this.props.getProximaPaginaCandidatos();
+
     if (paginacao.final + TAM_PAGINA <= paginacao.totalCandidatos) {
       const novaPaginacao = {
         inicio: paginacao.final,
         final: paginacao.final + TAM_PAGINA,
-        totalCandidatos: paginacao.totalCandidatos
+        totalCandidatos: paginacao.totalCandidatos,
+        paginaAtual: paginacao.paginaAtual + 1
       };
       this.props.setPaginacao(novaPaginacao);
     } else if (
@@ -102,7 +109,8 @@ class CandidatosContainer extends Component {
       const novaPaginacao = {
         inicio: paginacao.final,
         final: paginacao.final + (paginacao.totalCandidatos % TAM_PAGINA),
-        totalCandidatos: paginacao.totalCandidatos
+        totalCandidatos: paginacao.totalCandidatos,
+        paginaAtual: paginacao.paginaAtual + 1
       };
       this.props.setPaginacao(novaPaginacao);
     }
@@ -383,7 +391,8 @@ CandidatosContainer.propTypes = {
   setFiltroCandidatos: PropTypes.func.isRequired,
   setCandidatosFiltrados: PropTypes.func.isRequired,
   setPartidos: PropTypes.func.isRequired,
-  setPaginacao: PropTypes.func.isRequired
+  setPaginacao: PropTypes.func.isRequired,
+  getProximaPaginaCandidatos: PropTypes.func.isRequired
 };
 const mapStateToProps = state => ({
   candidatos: state.candidatosReducer,
@@ -399,6 +408,7 @@ export default connect(
     setFiltroCandidatos,
     setCandidatosFiltrados,
     setPartidos,
-    setPaginacao
+    setPaginacao,
+    getProximaPaginaCandidatos
   }
 )(CandidatosContainer);
