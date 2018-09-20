@@ -21,8 +21,8 @@ class BoasVindas extends Component {
             />
           </div>
           <div className="tutorial-text pl-2">
-            <strong className="strong">Vote</strong> nos temas propostos e veja aqui os
-              candidatos que mais se alinham com você.
+            <strong className="strong">Vote</strong> nos temas propostos e veja
+            aqui os candidatos que mais se alinham com você.
           </div>
         </div>
         <div className="d-flex align-items-center">
@@ -33,7 +33,8 @@ class BoasVindas extends Component {
             />
           </div>
           <div className="tutorial-text pl-2">
-            <strong className="strong">Filtre</strong> o resultado segundo seus critérios.
+            <strong className="strong">Filtre</strong> o resultado segundo seus
+            critérios.
           </div>
         </div>
         <div className="d-flex align-items-center">
@@ -44,8 +45,8 @@ class BoasVindas extends Component {
             />
           </div>
           <div className="tutorial-text pl-2">
-            <strong className="strong">Informe-se</strong> sobre os 5 temas. Quanto mais
-            perguntas você responder, mas preciso é o resultado.
+            <strong className="strong">Informe-se</strong> sobre os 5 temas.
+            Quanto mais perguntas você responder, mais preciso é o resultado.
           </div>
         </div>
       </div>
