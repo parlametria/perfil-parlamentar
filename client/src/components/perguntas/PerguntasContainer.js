@@ -180,32 +180,44 @@ class PerguntasContainer extends Component {
       isExibePerguntas = isFinalPerguntas ? false : true;
 
       exibePerguntas = (
-        <Collapse isOpen={this.state.show}>
-          <div
-            id="perguntaContainer"
-            className="card"
-            aria-labelledby="perguntaContainer"
-          >
-            <div className="card-body">
-              <div className="nav-horizontal">
-                <ul className="nav nav-pills nav-fill nav-horizontal-pills-sm">
-                  {indicadorPergunta}
-                </ul>
-              </div>
-              <div className="container">
-                <h2 className="question-theme">{filtroTema}</h2>
-              </div>
-              {pergunta}
-              <button
-                type="button"
-                className="btn btn-block btn-primary btn-square d-lg-none"
-                onClick={this.hidePerguntaContainer}
-              >
-                <span className="icon-cursor" /> Esconder
-              </button>
+        <div>
+          <div className="panel-detail-header">
+            <div
+              className="nav-horizontal nav-horizontal-lg custom-scroll-bar"
+              onClick={this.showPerguntaContainer}
+            >
+              <ul className="nav nav-tabs nav-fill nav-horizontal-pills">
+                {temas}
+              </ul>
             </div>
           </div>
-        </Collapse>
+          <Collapse isOpen={this.state.show}>
+            <div
+              id="perguntaContainer"
+              className="card"
+              aria-labelledby="perguntaContainer"
+            >
+              <div className="card-body">
+                <div className="nav-horizontal">
+                  <ul className="nav nav-pills nav-fill nav-horizontal-pills-sm">
+                    {indicadorPergunta}
+                  </ul>
+                </div>
+                <div className="container">
+                  <h2 className="question-theme">{filtroTema}</h2>
+                </div>
+                {pergunta}
+                <button
+                  type="button"
+                  className="btn btn-block btn-primary btn-square d-lg-none"
+                  onClick={this.hidePerguntaContainer}
+                >
+                  <span className="icon-cursor" /> Esconder
+                </button>
+              </div>
+            </div>
+          </Collapse>
+        </div>
       );
 
       exibeFinalPerguntas = (
@@ -233,16 +245,6 @@ class PerguntasContainer extends Component {
 
     return (
       <div className="pergunta-container">
-        <div className="panel-detail-header">
-          <div
-            className="nav-horizontal nav-horizontal-lg custom-scroll-bar"
-            onClick={this.showPerguntaContainer}
-          >
-            <ul className="nav nav-tabs nav-fill nav-horizontal-pills">
-              {temas}
-            </ul>
-          </div>
-        </div>
         {isExibePerguntas ? exibePerguntas : exibeFinalPerguntas}
         {/*
         <div className="container perguntas-container">
