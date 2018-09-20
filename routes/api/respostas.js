@@ -75,11 +75,25 @@ router.get("/candidatos/naoresponderam", (req, res) => {
     .catch(err => res.status(BAD_REQUEST).json({ err }));
 });
 
-// @route   GET api/respostas/estados/<uf>
+// @route   GET api/respostas/estados/<uf>/<partido>/<nome>
 // @desc    Pega as respostas por estado
 // @access  Public
 router.get("/estados/:uf", (req, res) => {
-  Resposta.find({ uf: req.params.uf })
+  query = {}
+  const partido = String(req.query.partido);
+  const nome = String(req.query.nome);
+
+  if( nome !== "undefined" && partido !== "undefined"){
+    query = { uf: req.params.uf, sg_partido: partido, $text: { $search: nome } }
+  } else if (nome !== "undefined" ){
+    query = { uf: req.params.uf, $text: { $search: nome } }
+  } else if(partido !== "undefined"){
+    query = { uf: req.params.uf, sg_partido: partido}
+  }else{
+    query =  {uf: req.params.uf}
+  }
+  console.log(query)
+  Resposta.find(query)
     .then(respostas => res.json(respostas))
     .catch(err => res.status(BAD_REQUEST).json({ err }));
 });
