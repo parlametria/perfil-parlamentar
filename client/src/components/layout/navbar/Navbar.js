@@ -21,9 +21,11 @@ class Navbar extends Component {
     this.props.logoutUser();
   }
 
-  render() {  
-    let linkCompartilhamento = "http://vozativa.org/compare/"
-    let textoCompartilhamento = "Nos diga o que você defende e em oito minutos a gente apresenta candidatos alinhados com você. " + linkCompartilhamento;
+  render() {
+    let linkCompartilhamento = "http://vozativa.org/compare/";
+    let textoCompartilhamento =
+      "Nos diga o que você defende e em oito minutos a gente apresenta candidatos alinhados com você. " +
+      linkCompartilhamento;
     return (
       <div>
         <nav className="navbar navbar-expand-lg navbar-light">
@@ -47,56 +49,72 @@ class Navbar extends Component {
             </button>
 
             <div className="collapse navbar-collapse" id="mainNavbar">
-              <ul className="navbar-nav ml-auto">
+              <ul className="navbar-nav ml-auto pr-3">
                 <li className="nav-item">
                   <Link to="/sobre" className="nav-link">
                     Sobre
                   </Link>
                 </li>
+                <li className="nav-item">
+                  <Link to="/soucandidato" className="nav-link">
+                    Sou candidato
+                  </Link>
+                </li>
               </ul>
-              <span class="navbar-text">
-                compartilhe:
+              <span className="navbar-text navbar-text-strong">
+                compartilhe
               </span>
               <ul className="navbar-nav navbar-inline">
                 <li className="nav-item">
                   <a
-                    href={"https://twitter.com/intent/tweet/?text="+textoCompartilhamento}
+                    href={
+                      "https://twitter.com/intent/tweet/?text=" +
+                      textoCompartilhamento
+                    }
                     data-show-count="false"
-                    className="nav-link"
-                    target="_blank" 
+                    className="nav-link nav-strong"
+                    target="_blank"
+                    rel="noopener noreferrer"
                   >
-                    <span className="icon-twitter" />
+                    <span className="icon-twitter share-icon" />
                   </a>
                 </li>
                 <li className="nav-item">
                   <a
-                    href={"https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fvozativa.org%2F&amp;src=sdkpreparse"}
+                    href={
+                      "https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fvozativa.org%2F&amp;src=sdkpreparse"
+                    }
                     data-show-count="false"
-                    className="nav-link"
+                    className="nav-link nav-strong"
                     target="_blank"
+                    rel="noopener noreferrer"
                   >
-                    <span className="icon-facebook" />
+                    <span className="icon-facebook share-icon" />
                   </a>
                 </li>
                 <BrowserView>
                   <li className="nav-item">
                     <a
-                      href={"https://web.whatsapp.com/send?text="+textoCompartilhamento}
+                      href={
+                        "https://web.whatsapp.com/send?text=" +
+                        textoCompartilhamento
+                      }
                       data-show-count="false"
-                      className="nav-link"
+                      className="nav-link nav-strong"
                       target="_blank"
+                      rel="noopener noreferrer"
                     >
-                      <span className="icon-whatsapp" />
+                      <span className="icon-whatsapp share-icon" />
                     </a>
                   </li>
                 </BrowserView>
                 <MobileView>
                   <li className="nav-item">
                     <a
-                      href={"whatsapp://send?text="+textoCompartilhamento}
+                      href={"whatsapp://send?text=" + textoCompartilhamento}
                       className="nav-link"
                     >
-                      <span className="icon-whatsapp" />
+                      <span className="icon-whatsapp share-icon" />
                     </a>
                   </li>
                 </MobileView>

@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 
 import Pergunta from "./Pergunta";
+import FinalPerguntas from "./FinalPerguntas";
 import { salvaScoreUsuario } from "../../actions/usuarioActions";
 import {
   calculaScore,
@@ -96,6 +97,10 @@ class PerguntasContainer extends Component {
     let pergunta;
     let indicadorPergunta;
     let temas = [];
+    let exibePerguntas;
+    let exibeFinalPerguntas;
+    let isFinalPerguntas;
+    let isExibePerguntas;
 
     if (!isEmpty(dadosPerguntas)) {
       const dadosPergunta = dadosPerguntas[indexPergunta];
@@ -162,6 +167,53 @@ class PerguntasContainer extends Component {
         />
       );
 
+      //verificar se todo mundo é diferente de zero
+
+      arrayRespostasUsuario.forEach(resposta => {
+        if (resposta === 0) {
+          isFinalPerguntas = false;
+        } else {
+          isFinalPerguntas = true;
+        }
+      });
+
+      isExibePerguntas = isFinalPerguntas ? false : true;
+
+      exibePerguntas = (
+        <Collapse isOpen={this.state.show}>
+          <div
+            id="perguntaContainer"
+            className="card"
+            aria-labelledby="perguntaContainer"
+          >
+            <div className="card-body">
+              <div className="nav-horizontal">
+                <ul className="nav nav-pills nav-fill nav-horizontal-pills-sm">
+                  {indicadorPergunta}
+                </ul>
+              </div>
+              <div className="container">
+                <h2 className="question-theme">{filtroTema}</h2>
+              </div>
+              {pergunta}
+              <button
+                type="button"
+                className="btn btn-block btn-primary btn-square d-lg-none"
+                onClick={this.hidePerguntaContainer}
+              >
+                <span className="icon-cursor" /> Esconder
+              </button>
+            </div>
+          </div>
+        </Collapse>
+      );
+
+      exibeFinalPerguntas = (
+        <div>
+          <FinalPerguntas />
+        </div>
+      );
+
       // indicadorPergunta = dadosPerguntas.map((pergunta, index) => (
       //   // done -> o usuario já respondeu essa pergunta
       //   // active -> o usuário está respondendo
@@ -191,32 +243,7 @@ class PerguntasContainer extends Component {
             </ul>
           </div>
         </div>
-        <Collapse isOpen={this.state.show}>
-          <div
-            id="perguntaContainer"
-            className="card"
-            aria-labelledby="perguntaContainer"
-          >
-            <div className="card-body">
-              <div className="nav-horizontal">
-                <ul className="nav nav-pills nav-fill nav-horizontal-pills-sm">
-                  {indicadorPergunta}
-                </ul>
-              </div>
-              <div className="container">
-                <h2 className="question-theme">{filtroTema}</h2>
-              </div>
-              {pergunta}
-              <button
-                type="button"
-                className="btn btn-block btn-primary btn-square d-lg-none"
-                onClick={this.hidePerguntaContainer}
-              >
-                <span className="icon-cursor" /> Esconder
-              </button>
-            </div>
-          </div>
-        </Collapse>
+        {isExibePerguntas ? exibePerguntas : exibeFinalPerguntas}
         {/*
         <div className="container perguntas-container">
           {isCarregando || isEmpty(dadosPerguntas) ? (

@@ -268,7 +268,7 @@ a.nav-link.done:not([href]):not([tabindex]) {
 }
 
 .navbar-light .navbar-text {
-  color: #a963b3;
+  color: #41c083;
 }
 
 @media (max-width: 991.98px) {
@@ -276,7 +276,12 @@ a.nav-link.done:not([href]):not([tabindex]) {
     flex-direction: row;
     justify-content: space-around;
   }
-  .navbar-light .navbar-inline .nav-link {
-    font-size: 1.7rem;
-  }
+}
+
+.navbar-light .navbar-nav .nav-strong:link,
+.navbar-light .navbar-nav .nav-strong:visited,
+.navbar-light .navbar-nav .nav-strong:active,
+.navbar-light .navbar-nav .nav-strong:focus,
+.navbar-light .navbar-nav .nav-strong:hover {
+  color: #41c083;
 }

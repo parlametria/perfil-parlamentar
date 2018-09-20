@@ -75,3 +75,31 @@
 .progress-none {
   background-color: #ffffff;
 }
+
+.tutorial-img {
+  margin-bottom: -10px;
+}
+.tutorial-img > img {
+  width: 80px;
+}
+.tutorial-text {
+  font-size: 0.8rem;
+}
+
+@media (min-width: 576px) {
+  .tutorial-img {
+    margin-bottom: -12px;
+  }
+  .tutorial-img > img {
+    width: 80px;
+  }
+  .tutorial-text {
+    font-size: 1rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .tutorial-img > img {
+    width: 100px;
+  }
+}

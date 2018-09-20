@@ -74,8 +74,18 @@ class CompareContainer extends Component {
         </div>
       </div>
     );
-    let linkCompartilhamento = "http://vozativa.org/compare/" + this.props.match.params.candidato + "/" + this.props.match.params.votos;
-    let textoCompartilhamento = "Tive um match eleitoral de "+ Math.round(dadosCandidato.score * 100) + " por cento com " + dadosCandidato.nome_urna + ". Mais informações: " + linkCompartilhamento;
+    let linkCompartilhamento =
+      "http://vozativa.org/compare/" +
+      this.props.match.params.candidato +
+      "/" +
+      this.props.match.params.votos;
+    let textoCompartilhamento =
+      "Tive um match eleitoral de " +
+      Math.round(dadosCandidato.score * 100) +
+      " por cento com " +
+      dadosCandidato.nome_urna +
+      ". Mais informações: " +
+      linkCompartilhamento;
 
     return (
       <div className="container">
@@ -91,48 +101,59 @@ class CompareContainer extends Component {
             <Link to="/" className="btn btn-link">
               <span className="icon-back" /> Voltar para o quiz
             </Link>
-          </div> 
+          </div>
           <div className="col-md-9" align="right">
-            <span class="navbar-text">
-                compartilhe o match com {dadosCandidato.nome_urna}
-              </span>
+            <span className="navbar-text">
+              compartilhe o match com {dadosCandidato.nome_urna}
+            </span>
           </div>
         </div>
         <div className="row justify-content-end">
-                  <a
-                    href={"https://twitter.com/intent/tweet/?text="+ textoCompartilhamento}
-                    data-show-count="false"
-                    className="nav-link"
-                    target="_blank" 
-                  >
-                    <span className="icon-twitter" />
-                  </a>
-                  <a
-                    href={"https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2F"+"vozativa.org/compare/" + this.props.match.params.candidato + "/" + this.props.match.params.votos+"%2F&amp;src=sdkpreparse"}
-                    data-show-count="false"
-                    className="nav-link"
-                    target="_blank"
-                  >
-                    <span className="icon-facebook" />
-                  </a>
-                <BrowserView>
-                    <a
-                      href={"https://web.whatsapp.com/send?text="+textoCompartilhamento}
-                      data-show-count="false"
-                      className="nav-link"
-                      target="_blank"
-                    >
-                      <span className="icon-whatsapp" />
-                    </a>
-                </BrowserView>
-                <MobileView>
-                    <a
-                      href={"whatsapp://send?text="+textoCompartilhamento}
-                      className="nav-link"
-                    >
-                      <span className="icon-whatsapp" />
-                    </a>
-                </MobileView>
+          <a
+            href={
+              "https://twitter.com/intent/tweet/?text=" + textoCompartilhamento
+            }
+            data-show-count="false"
+            className="nav-link"
+            target="_blank"
+          >
+            <span className="icon-twitter" />
+          </a>
+          <a
+            href={
+              "https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2F" +
+              "vozativa.org/compare/" +
+              this.props.match.params.candidato +
+              "/" +
+              this.props.match.params.votos +
+              "%2F&amp;src=sdkpreparse"
+            }
+            data-show-count="false"
+            className="nav-link"
+            target="_blank"
+          >
+            <span className="icon-facebook" />
+          </a>
+          <BrowserView>
+            <a
+              href={
+                "https://web.whatsapp.com/send?text=" + textoCompartilhamento
+              }
+              data-show-count="false"
+              className="nav-link"
+              target="_blank"
+            >
+              <span className="icon-whatsapp" />
+            </a>
+          </BrowserView>
+          <MobileView>
+            <a
+              href={"whatsapp://send?text=" + textoCompartilhamento}
+              className="nav-link"
+            >
+              <span className="icon-whatsapp" />
+            </a>
+          </MobileView>
         </div>
         <div className="row">
           <div className="col-md-3">

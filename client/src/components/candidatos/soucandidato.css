@@ -1,0 +1,17 @@
+.email-board {
+  background-color: #a963b3;
+  color: #ffffff;
+  padding: 2rem;
+}
+
+.profile-board {
+  background-size: auto;
+  padding-right: 2rem;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
+
+.search-person-profile {
+  padding-bottom: 1rem;
+  margin-bottom: 1rem;
+}
