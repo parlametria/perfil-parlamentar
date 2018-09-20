@@ -210,7 +210,6 @@ class PerguntasContainer extends Component {
 
       exibeFinalPerguntas = (
         <div>
-          final
           <FinalPerguntas />
         </div>
       );
