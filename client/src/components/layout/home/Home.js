@@ -68,20 +68,7 @@ class Home extends Component {
     // Essa função deve ser definida em "../../../constantes/tratamentoUrls";
     // if(isURLValida(votos){})
 
-    if (estado) {
-      const filtroEstado = {
-        nome: "",
-        partido: "TODOS",
-        estado: estado
-      };
-
-      this.props.setFiltroCandidatos(filtroEstado);
-      this.props.getDadosCandidatos();
-      this.setState({ selecionouEstado: true });
-
-      this.props.history.push("/");
-    }
-
+    
     if (votos && estado) {
       if(votosValidos(votos) && estadoValido(estado)){
         const arrayVotosUsuario = getArrayUrl(votos);
@@ -100,8 +87,10 @@ class Home extends Component {
         this.props.salvaScoreUsuario(votosUsuario, arrayVotosUsuario);
         this.props.mostraPerguntas();
         this.props.history.push("/");
+      }else{
+        this.props.history.push("/");
       };
-    ;}
+    };
   };
 
   render() {
