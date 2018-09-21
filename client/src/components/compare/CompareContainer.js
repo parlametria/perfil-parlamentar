@@ -13,6 +13,8 @@ import {
 } from "../../actions/candidatosActions";
 import isEmpty from "../../validation/is-empty";
 
+import { getArrayUrl, getDict } from "../../constantes/tratamentoUrls";
+
 import "./CompareContainer.css";
 import Spinner from "../common/Spinner";
 
@@ -20,27 +22,6 @@ class CompareContainer extends Component {
   constructor(props) {
     super(props);
     this.state = { votos: "" };
-  }
-
-  getArrayUrl(url) {
-    let arrayUrl = [];
-    for (var i = 0; i < url.length; i++) {
-      if (url[i] === "-") {
-        arrayUrl.push(Number(url[i] + url[i + 1]));
-        i++;
-      } else {
-        arrayUrl.push(Number(url[i]));
-      }
-    }
-    return arrayUrl;
-  }
-
-  getDict(arrayUrl) {
-    let dictUrl = {};
-    arrayUrl.forEach((voto, i) => {
-      dictUrl[i] = voto;
-    });
-    return dictUrl;
   }
 
   render() {
@@ -53,8 +34,8 @@ class CompareContainer extends Component {
             src={
               dadosCandidato.tem_foto
                 ? "https://s3-sa-east-1.amazonaws.com/fotoscandidatos2018/fotos_tratadas/img_" +
-                dadosCandidato.cpf +
-                ".jpg"
+                  dadosCandidato.cpf +
+                  ".jpg"
                 : "http://pontosdevista.pt/static/uploads/2016/05/sem-fotoABC.jpg"
             }
             alt={dadosCandidato.nome_urna}
@@ -92,8 +73,8 @@ class CompareContainer extends Component {
             {this.props.candidatos.isCarregando || isEmpty(dadosCandidato) ? (
               <Spinner />
             ) : (
-                perfilCandidato
-              )}
+              perfilCandidato
+            )}
             <h4 className="compare-title">
               O quanto vocês <strong className="strong">concordam</strong> nos
               temas:
@@ -104,11 +85,11 @@ class CompareContainer extends Component {
             {this.props.candidatos.isCarregando || isEmpty(dadosCandidato) ? (
               <Spinner />
             ) : (
-                <TabelaPerguntas
-                  respostas={dadosCandidato.respostas}
-                  votos={this.getArrayUrl(this.state.votos)}
-                />
-              )}
+              <TabelaPerguntas
+                respostas={dadosCandidato.respostas}
+                votos={getArrayUrl(this.state.votos)}
+              />
+            )}
           </div>
         </div>
         <div className="my-3">
@@ -122,8 +103,8 @@ class CompareContainer extends Component {
 
   componentDidMount() {
     const { candidato, votos } = this.props.match.params;
-    const respostasUsuario = this.getDict(this.getArrayUrl(votos));
-    const arrayRespostasUsuario = this.getArrayUrl(votos);
+    const respostasUsuario = getDict(getArrayUrl(votos));
+    const arrayRespostasUsuario = getArrayUrl(votos);
     this.props.getDadosCandidato(
       candidato,
       respostasUsuario,
