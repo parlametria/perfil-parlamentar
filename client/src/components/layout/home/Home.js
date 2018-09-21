@@ -82,25 +82,27 @@ class Home extends Component {
       this.props.history.push("/");
     }
 
-    if (votos) {
-      const arrayVotosUsuario = getArrayUrl(votos);
-      const votosUsuario = getDict(arrayVotosUsuario);
+    if (votos && estado) {
+      if(votosValidos(votos) && estadoValido(estado)){
+        const arrayVotosUsuario = getArrayUrl(votos);
+        const votosUsuario = getDict(arrayVotosUsuario);
 
-      const filtroEstado = {
-        nome: "",
-        partido: "TODOS",
-        estado: estado
+        const filtroEstado = {
+          nome: "",
+          partido: "TODOS",
+          estado: estado
+        };
+
+        this.props.setFiltroCandidatos(filtroEstado);
+        this.props.getDadosCandidatos();
+        this.setState({ selecionouEstado: true });
+
+        this.props.salvaScoreUsuario(votosUsuario, arrayVotosUsuario);
+        this.props.mostraPerguntas();
+        this.props.history.push("/");
       };
-
-      this.props.setFiltroCandidatos(filtroEstado);
-      this.props.getDadosCandidatos();
-      this.setState({ selecionouEstado: true });
-
-      this.props.salvaScoreUsuario(votosUsuario, arrayVotosUsuario);
-      this.props.mostraPerguntas();
-      this.props.history.push("/");
-    }
-  }
+    ;}
+  };
 
   render() {
     const { filtro } = this.props.candidatos;
