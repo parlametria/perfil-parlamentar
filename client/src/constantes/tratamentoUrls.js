@@ -13,9 +13,14 @@ export const getArrayUrl = url => {
 
 export const getDict = arrayUrl => {
   let dictUrl = {};
-  arrayUrl.forEach((voto, i) => {
-    dictUrl[i] = voto;
-  });
+  let indice = 0;
+  for (let index = 0; index < arrayUrl.length; index++) {
+    if(arrayUrl[index] == "-"){
+      dictUrl[indice] = arrayUrl[index] + arrayUrl[index + 1];
+      index++;
+    };
+    indice++;  
+  };
   return dictUrl;
 };
 
@@ -26,3 +31,5 @@ export const criaURL = arrayVotos => {
   });
   return urlVotos;
 };
+
+
