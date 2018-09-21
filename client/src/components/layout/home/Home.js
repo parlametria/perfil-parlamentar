@@ -61,13 +61,6 @@ class Home extends Component {
   componentDidMount() {
     if (!isMobile) this.props.mostraPerguntas();
     const { votos, estado } = this.props.match.params;
-
-    // Para pegar o estado e gerar o link.
-    // const { filtro } = this.props.candidatos;
-
-    // Essa função deve ser definida em "../../../constantes/tratamentoUrls";
-    // if(isURLValida(votos){})
-
     
     if (votos && estado) {
       if(votosValidos(votos) && estadoValido(estado)){
