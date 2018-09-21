@@ -20,7 +20,7 @@ import {
 
 import { salvaScoreUsuario } from "../../../actions/usuarioActions";
 
-import { getArrayUrl, getDict } from "../../../constantes/tratamentoUrls";
+import { getArrayUrl, getDict, votosValidos } from "../../../constantes/tratamentoUrls";
 
 import FlipMove from "react-flip-move";
 
