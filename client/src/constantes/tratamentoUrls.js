@@ -1,3 +1,5 @@
+import { listaEstados } from "./filtrosSeletoresCandidatos";
+
 export const getArrayUrl = url => {
   let arrayUrl = [];
   for (var i = 0; i < url.length; i++) {
@@ -48,4 +50,12 @@ export const votosValidos = votos => {
 };
 
 export const estadoValido = estado => {
+  let valido = true;
+  let listaEstadosValidos = listaEstados()
+  if (listaEstadosValidos.includes(estado)){
+    valido = valido;
+  }else{
+    valido = false;
+  }
+  return valido;
 };
