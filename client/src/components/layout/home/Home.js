@@ -18,6 +18,10 @@ import {
   setPartidos
 } from "../../../actions/candidatosActions";
 
+import { salvaScoreUsuario } from "../../../actions/usuarioActions";
+
+import { getArrayUrl, getDict } from "../../../constantes/tratamentoUrls";
+
 import FlipMove from "react-flip-move";
 
 // CSS imports
@@ -56,6 +60,46 @@ class Home extends Component {
 
   componentDidMount() {
     if (!isMobile) this.props.mostraPerguntas();
+    const { votos, estado } = this.props.match.params;
+
+    // Para pegar o estado e gerar o link.
+    // const { filtro } = this.props.candidatos;
+
+    // Essa função deve ser definida em "../../../constantes/tratamentoUrls";
+    // if(isURLValida(votos){})
+
+    if (estado) {
+      const filtroEstado = {
+        nome: "",
+        partido: "TODOS",
+        estado: estado
+      };
+
+      this.props.setFiltroCandidatos(filtroEstado);
+      this.props.getDadosCandidatos();
+      this.setState({ selecionouEstado: true });
+
+      this.props.history.push("/");
+    }
+
+    if (votos) {
+      const arrayVotosUsuario = getArrayUrl(votos);
+      const votosUsuario = getDict(arrayVotosUsuario);
+
+      const filtroEstado = {
+        nome: "",
+        partido: "TODOS",
+        estado: estado
+      };
+
+      this.props.setFiltroCandidatos(filtroEstado);
+      this.props.getDadosCandidatos();
+      this.setState({ selecionouEstado: true });
+
+      this.props.salvaScoreUsuario(votosUsuario, arrayVotosUsuario);
+      this.props.mostraPerguntas();
+      this.props.history.push("/");
+    }
   }
 
   render() {
@@ -125,7 +169,8 @@ Home.propTypes = {
   getDadosCandidatos: PropTypes.func.isRequired,
   setFiltroCandidatos: PropTypes.func.isRequired,
   calculaScore: PropTypes.func.isRequired,
-  setPartidos: PropTypes.func.isRequired
+  setPartidos: PropTypes.func.isRequired,
+  salvaScoreUsuario: PropTypes.func.isRequired
 };
 const mapStateToProps = state => ({
   candidatos: state.candidatosReducer
@@ -138,6 +183,7 @@ export default connect(
     setFiltroCandidatos,
     calculaScore,
     mostraPerguntas,
-    setPartidos
+    setPartidos,
+    salvaScoreUsuario
   }
 )(Home);
