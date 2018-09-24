@@ -14,7 +14,7 @@ import {
   passaPergunta,
   escolhePergunta,
   escolheTema,
-  mostraPerguntas,
+  exibePerguntas,
   escondePerguntas
 } from "../../actions/perguntasActions";
 
@@ -91,7 +91,12 @@ class PerguntasContainer extends Component {
   }
 
   render() {
-    const { dadosPerguntas, indexPergunta, filtroTema } = this.props.perguntas;
+    const {
+      dadosPerguntas,
+      indexPergunta,
+      filtroTema,
+      isExibeGavetaPerguntas
+    } = this.props.perguntas;
 
     let pergunta;
     let indicadorPergunta;
@@ -191,7 +196,7 @@ class PerguntasContainer extends Component {
             </ul>
           </div>
         </div>
-        <Collapse isOpen={this.props.perguntas.mostraPerguntas}>
+        <Collapse isOpen={isExibeGavetaPerguntas}>
           <div
             id="perguntaContainer"
             className="card"
@@ -234,7 +239,7 @@ class PerguntasContainer extends Component {
 
   showPerguntaContainer(event) {
     event.preventDefault();
-    this.props.mostraPerguntas();
+    this.props.exibePerguntas();
   }
 
   hidePerguntaContainer(event) {
@@ -252,8 +257,8 @@ PerguntasContainer.propTypes = {
   voltaPergunta: PropTypes.func.isRequired,
   escolhePergunta: PropTypes.func.isRequired,
   escolheTema: PropTypes.func.isRequired,
-  mostraPerguntas: PropTypes.func.isRequired,
-  escondePerguntas: PropTypes.func.isRequired
+  escondePerguntas: PropTypes.func.isRequired,
+  exibePerguntas: PropTypes.func.isRequired
 };
 const mapStateToProps = state => ({
   usuario: state.usuarioReducer,
@@ -272,7 +277,7 @@ export default connect(
     voltaPergunta,
     escolhePergunta,
     escolheTema,
-    mostraPerguntas,
-    escondePerguntas
+    escondePerguntas,
+    exibePerguntas
   }
 )(PerguntasContainer);
