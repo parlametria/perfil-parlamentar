@@ -40,7 +40,7 @@ class PerguntasContainer extends Component {
     this.selecionaTema = this.selecionaTema.bind(this);
     this.escolhePergunta = this.escolhePergunta.bind(this);
     this.showPerguntaContainer = this.showPerguntaContainer.bind(this);
-    this.hidePerguntaContainer = this.hidePerguntaContainer.bind(this);
+    this.togglePerguntaContainer = this.togglePerguntaContainer.bind(this);
   }
 
   registraResposta(novaResposta) {
@@ -180,43 +180,22 @@ class PerguntasContainer extends Component {
       isExibePerguntas = isFinalPerguntas ? false : true;
 
       exibePerguntas = (
-        <div>
-          <div className="panel-detail-header">
-            <div
-              className="nav-horizontal nav-horizontal-lg custom-scroll-bar"
-              onClick={this.showPerguntaContainer}
-            >
-              <ul className="nav nav-tabs nav-fill nav-horizontal-pills">
-                {temas}
+        <div
+          id="perguntaContainer"
+          className="card"
+          aria-labelledby="perguntaContainer"
+        >
+          <div className="card-body">
+            <div className="nav-horizontal">
+              <ul className="nav nav-pills nav-fill nav-horizontal-pills-sm">
+                {indicadorPergunta}
               </ul>
             </div>
-          </div>
-          <Collapse isOpen={this.state.show}>
-            <div
-              id="perguntaContainer"
-              className="card"
-              aria-labelledby="perguntaContainer"
-            >
-              <div className="card-body">
-                <div className="nav-horizontal">
-                  <ul className="nav nav-pills nav-fill nav-horizontal-pills-sm">
-                    {indicadorPergunta}
-                  </ul>
-                </div>
-                <div className="container">
-                  <h2 className="question-theme">{filtroTema}</h2>
-                </div>
-                {pergunta}
-                <button
-                  type="button"
-                  className="btn btn-block btn-primary btn-square d-lg-none"
-                  onClick={this.hidePerguntaContainer}
-                >
-                  <span className="icon-cursor" /> Esconder
-                </button>
-              </div>
+            <div className="container">
+              <h2 className="question-theme">{filtroTema}</h2>
             </div>
-          </Collapse>
+            {pergunta}
+          </div>
         </div>
       );
 
@@ -245,7 +224,30 @@ class PerguntasContainer extends Component {
 
     return (
       <div className="pergunta-container">
-        {isExibePerguntas ? exibePerguntas : exibeFinalPerguntas}
+        <div>
+          <div className="panel-detail-header">
+            <div
+              className="nav-horizontal nav-horizontal-lg custom-scroll-bar"
+              onClick={this.showPerguntaContainer}
+            >
+              <ul className="nav nav-tabs nav-fill nav-horizontal-pills">
+                {temas}
+              </ul>
+            </div>
+          </div>
+          <Collapse isOpen={this.state.show}>
+            {isExibePerguntas ? exibePerguntas : exibeFinalPerguntas}
+          </Collapse>
+          <button
+            type="button"
+            className="btn btn-block btn-primary btn-square d-lg-none"
+            onClick={this.togglePerguntaContainer}
+          >
+            {this.state.show && <span><span className="icon-cursor" /> Esconder</span>}
+            {!this.state.show && <span><span className="icon-up" /> Mostrar</span>}
+          </button>
+        </div>
+        
         {/*
         <div className="container perguntas-container">
           {isCarregando || isEmpty(dadosPerguntas) ? (
@@ -266,9 +268,9 @@ class PerguntasContainer extends Component {
     this.setState({ show: true });
   }
 
-  hidePerguntaContainer(event) {
+  togglePerguntaContainer(event) {
     event.preventDefault();
-    this.setState({ show: false });
+    this.setState({ show: !this.state.show });
   }
 }
 
