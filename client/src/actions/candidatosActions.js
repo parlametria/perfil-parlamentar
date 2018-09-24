@@ -249,12 +249,7 @@ export const getDadosCandidatos = () => (dispatch, getState) => {
     });
 
   axios
-    .get(
-      "/api/respostas/estados/" +
-        filtro.estado +
-        "/naoresponderam?pageNo=1&size=" +
-        ITENS_POR_REQ
-    )
+    .get("/api/respostas/estados/" + filtro.estado + "/naoresponderam")
     .then(respostas => {
       console.timeEnd("getNaoResponderam");
 

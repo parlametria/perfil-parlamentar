@@ -92,7 +92,7 @@ class CandidatosContainer extends Component {
   pegaProximosCandidatos() {
     const { paginacao } = this.props.candidatos;
 
-    this.props.getProximaPaginaCandidatos();
+    //this.props.getProximaPaginaCandidatos();
 
     if (paginacao.final + TAM_PAGINA <= paginacao.totalCandidatos) {
       const novaPaginacao = {
