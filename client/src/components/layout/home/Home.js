@@ -14,9 +14,10 @@ import {
   getDadosCandidatos,
   setFiltroCandidatos,
   calculaScore,
-  mostraPerguntas,
   setPartidos
 } from "../../../actions/candidatosActions";
+
+import { vamosComecar } from "../../../actions/perguntasActions";
 
 import FlipMove from "react-flip-move";
 
@@ -30,9 +31,8 @@ class Home extends Component {
   constructor(props) {
     super(props);
 
-    this.state = { selecionouEstado: false, mostraPerguntas: false };
     this.selecionaEstado = this.selecionaEstado.bind(this);
-    this.mostraPerguntas = this.mostraPerguntas.bind(this);
+    this.vamosComecar = this.vamosComecar.bind(this);
   }
 
   selecionaEstado(e) {
@@ -46,20 +46,20 @@ class Home extends Component {
 
     this.props.setFiltroCandidatos(novoFiltroEstado);
     this.props.getDadosCandidatos();
-    this.setState({ selecionouEstado: true });
   }
 
-  mostraPerguntas(e) {
+  vamosComecar(e) {
     e.preventDefault();
-    this.props.mostraPerguntas();
+    this.props.vamosComecar();
   }
 
   componentDidMount() {
-    if (!isMobile) this.props.mostraPerguntas();
+    if (!isMobile) this.props.vamosComecar();
   }
 
   render() {
     const { filtro } = this.props.candidatos;
+    const { isVamosComecar } = this.props.perguntas;
 
     return (
       <div>
@@ -90,28 +90,26 @@ class Home extends Component {
           <div className="grid-main">
             <section className="grid-panel panel-master">
               <FlipMove>
-                {filtro.estado !== "" ? <CandidatosContainer /> : null}
+                {filtro.estado !== "" && <CandidatosContainer />}
                 {isMobile &&
-                !this.props.candidatos.mostraPerguntas &&
-                filtro.estado !== "" ? (
-                  <div className="text-center mb-3">
-                    <button
-                      className="btn btn-secondary"
-                      onClick={this.mostraPerguntas}
-                    >
-                      Vamos Começar!
-                    </button>
-                  </div>
-                ) : null}
+                  !isVamosComecar &&
+                  filtro.estado !== "" && (
+                    <div className="text-center mb-3">
+                      <button
+                        className="btn btn-secondary"
+                        onClick={this.vamosComecar}
+                      >
+                        Vamos Começar!
+                      </button>
+                    </div>
+                  )}
               </FlipMove>
             </section>
             <div className="grid-separator" />
             <section className="grid-panel panel-detail">
               <FlipMove>
                 {filtro.estado !== "" &&
-                this.props.candidatos.mostraPerguntas ? (
-                  <PerguntasContainer />
-                ) : null}
+                  isVamosComecar && <PerguntasContainer />}
               </FlipMove>
             </section>
           </div>
@@ -128,7 +126,8 @@ Home.propTypes = {
   setPartidos: PropTypes.func.isRequired
 };
 const mapStateToProps = state => ({
-  candidatos: state.candidatosReducer
+  candidatos: state.candidatosReducer,
+  perguntas: state.perguntasReducer
 });
 
 export default connect(
@@ -137,7 +136,7 @@ export default connect(
     getDadosCandidatos,
     setFiltroCandidatos,
     calculaScore,
-    mostraPerguntas,
+    vamosComecar,
     setPartidos
   }
 )(Home);

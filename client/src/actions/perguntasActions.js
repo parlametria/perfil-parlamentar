@@ -2,7 +2,10 @@ import {
   PERGUNTAS_CARREGANDO,
   SET_DADOS_PERGUNTAS,
   SET_INDEX_PERGUNTA,
-  SET_TEMA
+  SET_TEMA,
+  SET_VAMOS_COMECAR,
+  ESCONDE_PERGUNTAS,
+  EXIBE_PERGUNTAS
 } from "./types";
 
 //import { firebaseDatabase } from "../services/firebaseService";
@@ -50,4 +53,16 @@ export const escolhePergunta = indexPergunta => dispatch => {
 
 export const escolheTema = tema => dispatch => {
   dispatch({ type: SET_TEMA, tema });
+};
+
+export const vamosComecar = () => dispatch => {
+  dispatch({ type: SET_VAMOS_COMECAR });
+};
+
+export const escondePerguntas = () => dispatch => {
+  dispatch({ type: ESCONDE_PERGUNTAS });
+};
+
+export const exibePerguntas = () => dispatch => {
+  dispatch({ type: EXIBE_PERGUNTAS });
 };

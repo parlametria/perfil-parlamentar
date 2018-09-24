@@ -380,10 +380,6 @@ export const mostrarTodosCandidatos = () => dispatch => {
   dispatch({ type: SET_MOSTRAR_TODOS_CANDIDATOS });
 };
 
-export const mostraPerguntas = () => dispatch => {
-  dispatch({ type: SET_MOSTRA_PERGUNTAS });
-};
-
 export const setPartidos = () => (dispatch, getState) => {
   const { dadosCandidatos } = getState().candidatosReducer;
   let partidosSet = new Set();

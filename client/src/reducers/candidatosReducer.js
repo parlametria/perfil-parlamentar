@@ -14,7 +14,6 @@ import {
   SET_MOSTRAR_TODOS_CANDIDATOS,
   SET_CANDIDATOS_FILTRADOS,
   SET_CANDIDATOS_RANQUEADOS,
-  SET_MOSTRA_PERGUNTAS,
   SET_PARTIDOS,
   SET_PAGINACAO,
   SET_CANDIDATOS_FILTRANDO
@@ -39,7 +38,6 @@ const initialState = {
   dadosCandidato: {},
   scoreTema: {},
   mostrarTodos: false,
-  mostraPerguntas: false,
   paginacao: { inicio: 0, final: 0, totalCandidatos: 0 },
   dadosCandidatoBusca: {}
 };
@@ -113,11 +111,6 @@ export default function(state = initialState, action) {
       return {
         ...state,
         mostrarTodos: true
-      };
-    case SET_MOSTRA_PERGUNTAS:
-      return {
-        ...state,
-        mostraPerguntas: true
       };
     case SET_CANDIDATOS_FILTRADOS:
       return {
