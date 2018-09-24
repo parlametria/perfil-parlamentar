@@ -14,8 +14,12 @@ import {
   voltaPergunta,
   passaPergunta,
   escolhePergunta,
-  escolheTema
+  escolheTema,
+  exibePerguntas,
+  escondePerguntas
 } from "../../actions/perguntasActions";
+
+import FlipMove from "react-flip-move";
 
 import { Collapse } from "reactstrap";
 
@@ -33,13 +37,10 @@ class PerguntasContainer extends Component {
   constructor(props) {
     super(props);
 
-    this.state = { indexIndicadorPergunta: 0, show: true };
-
     this.passaPergunta = this.passaPergunta.bind(this);
     this.voltaPergunta = this.voltaPergunta.bind(this);
     this.selecionaTema = this.selecionaTema.bind(this);
     this.escolhePergunta = this.escolhePergunta.bind(this);
-    this.showPerguntaContainer = this.showPerguntaContainer.bind(this);
     this.togglePerguntaContainer = this.togglePerguntaContainer.bind(this);
   }
 
@@ -89,10 +90,20 @@ class PerguntasContainer extends Component {
 
   componentDidMount() {
     this.props.getDadosPerguntas();
+
+    this.props.salvaScoreUsuario({}, Array(45).fill(1));
   }
 
   render() {
-    const { dadosPerguntas, indexPergunta, filtroTema } = this.props.perguntas;
+    const {
+      dadosPerguntas,
+      indexPergunta,
+      filtroTema,
+      isExibeGavetaPerguntas,
+      isContinuarRespondendo
+    } = this.props.perguntas;
+
+    const { respondeuTodos } = this.props.usuario;
 
     let pergunta;
     let indicadorPergunta;
@@ -167,18 +178,6 @@ class PerguntasContainer extends Component {
         />
       );
 
-      //verificar se todo mundo é diferente de zero
-
-      arrayRespostasUsuario.forEach(resposta => {
-        if (resposta === 0) {
-          isFinalPerguntas = false;
-        } else {
-          isFinalPerguntas = true;
-        }
-      });
-
-      isExibePerguntas = isFinalPerguntas ? false : true;
-
       exibePerguntas = (
         <div
           id="perguntaContainer"
@@ -235,19 +234,30 @@ class PerguntasContainer extends Component {
               </ul>
             </div>
           </div>
-          <Collapse isOpen={this.state.show}>
-            {isExibePerguntas ? exibePerguntas : exibeFinalPerguntas}
+          <Collapse isOpen={isExibeGavetaPerguntas}>
+            <FlipMove>
+              {(!respondeuTodos || isContinuarRespondendo) && exibePerguntas}
+              {respondeuTodos && !isContinuarRespondendo && exibeFinalPerguntas}
+            </FlipMove>
           </Collapse>
           <button
             type="button"
             className="btn btn-block btn-primary btn-square d-lg-none"
             onClick={this.togglePerguntaContainer}
           >
-            {this.state.show && <span><span className="icon-cursor" /> Esconder</span>}
-            {!this.state.show && <span><span className="icon-up" /> Mostrar</span>}
+            {isExibeGavetaPerguntas && (
+              <span>
+                <span className="icon-cursor" /> Esconder
+              </span>
+            )}
+            {!isExibeGavetaPerguntas && (
+              <span>
+                <span className="icon-up" /> Mostrar
+              </span>
+            )}
           </button>
         </div>
-        
+
         {/*
         <div className="container perguntas-container">
           {isCarregando || isEmpty(dadosPerguntas) ? (
@@ -263,14 +273,11 @@ class PerguntasContainer extends Component {
     );
   }
 
-  showPerguntaContainer(event) {
-    event.preventDefault();
-    this.setState({ show: true });
-  }
-
   togglePerguntaContainer(event) {
     event.preventDefault();
-    this.setState({ show: !this.state.show });
+    this.props.perguntas.isExibeGavetaPerguntas
+      ? this.props.escondePerguntas()
+      : this.props.exibePerguntas();
   }
 }
 
@@ -282,8 +289,11 @@ PerguntasContainer.propTypes = {
   passaPergunta: PropTypes.func.isRequired,
   voltaPergunta: PropTypes.func.isRequired,
   escolhePergunta: PropTypes.func.isRequired,
-  escolheTema: PropTypes.func.isRequired
+  escolheTema: PropTypes.func.isRequired,
+  escondePerguntas: PropTypes.func.isRequired,
+  exibePerguntas: PropTypes.func.isRequired
 };
+
 const mapStateToProps = state => ({
   usuario: state.usuarioReducer,
   candidatos: state.candidatosReducer,
@@ -300,6 +310,8 @@ export default connect(
     passaPergunta,
     voltaPergunta,
     escolhePergunta,
-    escolheTema
+    escolheTema,
+    escondePerguntas,
+    exibePerguntas
   }
 )(PerguntasContainer);
