@@ -5,6 +5,8 @@ import { BrowserView, MobileView } from "react-device-detect";
 
 import PropTypes from "prop-types";
 
+import { criaURL } from "../../constantes/tratamentoUrls";
+
 import {
   escondePerguntas,
   continuarRespondendo
@@ -28,9 +30,19 @@ class FinalPerguntas extends Component {
     this.props.continuarRespondendo();
   }
 
+  geraUrl() {
+    const url =
+      "http://vozativa.org/" +
+      this.props.candidatos.filtro.estado +
+      "/" +
+      criaURL(this.props.usuario.arrayRespostasUsuario);
+    return url;
+  }
+
   render() {
-    let linkCompartilhamento = "";
-    let textoCompartilhamento = "";
+    let linkCompartilhamento = this.geraUrl();
+    let textoCompartilhamento =  "Veja minhas respostas na plataforma VozAtiva! " +
+    linkCompartilhamento;
     return (
       <div className="container tutorial p-3">
         <div className="text-center">
@@ -114,7 +126,9 @@ FinalPerguntas.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  perguntas: state.perguntasReducer
+  perguntas: state.perguntasReducer,
+  usuario: state.usuarioReducer,
+  candidatos: state.candidatosReducer
 });
 
 export default connect(
