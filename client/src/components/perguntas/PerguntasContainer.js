@@ -4,6 +4,8 @@ import PropTypes from "prop-types";
 
 import Pergunta from "./Pergunta";
 import { salvaScoreUsuario } from "../../actions/usuarioActions";
+import {CopyToClipboard} from 'react-copy-to-clipboard';
+ 
 import {
   calculaScore,
   calculaScorePorTema
@@ -34,13 +36,12 @@ class PerguntasContainer extends Component {
   constructor(props) {
     super(props);
 
-    this.state = { indexIndicadorPergunta: 0, show: true };
+    this.state = { indexIndicadorPergunta: 0, show: true, copied: false };
 
     this.passaPergunta = this.passaPergunta.bind(this);
     this.voltaPergunta = this.voltaPergunta.bind(this);
     this.selecionaTema = this.selecionaTema.bind(this);
     this.escolhePergunta = this.escolhePergunta.bind(this);
-    this.handleClick = this.handleClick.bind(this);
     this.showPerguntaContainer = this.showPerguntaContainer.bind(this);
     this.hidePerguntaContainer = this.hidePerguntaContainer.bind(this);
   }
@@ -55,10 +56,9 @@ class PerguntasContainer extends Component {
     this.passaPergunta();
   }
 
-  handleClick(e){
-    e.preventDefault();
-    const url = "/" + this.props.candidatos.filtro.estado + "/" + criaURL(this.props.usuario.arrayRespostasUsuario);
-    console.log(url);
+  geraUrl(){  
+    const url = "http://vozativa.org/" + this.props.candidatos.filtro.estado + "/" + criaURL(this.props.usuario.arrayRespostasUsuario);
+    return url;
   }
 
   async passaPergunta() {
@@ -100,6 +100,20 @@ class PerguntasContainer extends Component {
   }
 
   render() {
+
+   let botaoCopia = (  <div className="PerguntasContainer">
+
+        <CopyToClipboard text={this.geraUrl()}
+          onCopy={() => this.setState({copied: true})}>
+          <button>Copy to clipboard with button</button>
+        </CopyToClipboard>
+ 
+       
+          <section className="section">
+            {this.state.copied ? <span style={{color: 'red'}}>Copied.</span> : null}
+        </section>
+  </div>);
+
     const { dadosPerguntas, indexPergunta, filtroTema } = this.props.perguntas;
 
     let pergunta;
@@ -223,7 +237,7 @@ class PerguntasContainer extends Component {
               >
                 <span className="icon-cursor" /> Esconder
               </button>
-              <button onClick={this.handleClick}>Gera URL</button>
+              {botaoCopia}
             </div>
           </div>
         </Collapse>
