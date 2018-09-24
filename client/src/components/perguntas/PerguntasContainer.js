@@ -125,19 +125,19 @@ class PerguntasContainer extends Component {
     let temas = [];
     let exibePerguntas;
     let exibeFinalPerguntas;
-
+  
     const botaoCopia = (
-      <div className="PerguntasContainer">
-        <CopyToClipboard
+      <div className="PerguntasContainer text-center">
+        <CopyToClipboard className="btn btn-outline-primary" style={{ align:"center" }}
           text={this.geraUrl()}
           onCopy={() => this.setState({ copied: true })}
         >
-          <button>Copy to clipboard with button</button>
+          <button>compartilhe suas respostas</button>
         </CopyToClipboard>
 
         <section className="section">
           {this.state.copied ? (
-            <span style={{ color: "red" }}>Copied.</span>
+            <span>link copiado para área de transferência.</span>
           ) : null}
         </section>
       </div>
@@ -225,6 +225,7 @@ class PerguntasContainer extends Component {
             </div>
             {pergunta}
           </div>
+          {botaoCopia}
         </div>
       );
 
@@ -286,7 +287,6 @@ class PerguntasContainer extends Component {
               </span>
             )}
           </button>
-          {botaoCopia}
         </div>
 
         {/*
