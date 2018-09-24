@@ -83,7 +83,7 @@ class FinalPerguntas extends Component {
               <a
                 href={
                   "https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2F" +
-                  "vozativa.org/"
+                  textoCompartilhamento
                 }
                 data-show-count="false"
                 className="nav-link"
