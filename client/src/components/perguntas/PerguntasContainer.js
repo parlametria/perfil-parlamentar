@@ -27,6 +27,8 @@ import classnames from "classnames";
 
 import isEmpty from "../../validation/is-empty";
 
+import { criaURL } from "../../constantes/tratamentoUrls";
+
 //import { delay } from "../../utils/funcoes";
 
 import "./perguntas.css";
@@ -42,6 +44,7 @@ class PerguntasContainer extends Component {
     this.selecionaTema = this.selecionaTema.bind(this);
     this.escolhePergunta = this.escolhePergunta.bind(this);
     this.togglePerguntaContainer = this.togglePerguntaContainer.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
 
   registraResposta(novaResposta) {
@@ -52,6 +55,16 @@ class PerguntasContainer extends Component {
     this.props.salvaScoreUsuario(respostasUsuario, arrayRespostasUsuario);
     this.props.calculaScore();
     this.passaPergunta();
+  }
+
+  handleClick(e) {
+    e.preventDefault();
+    const url =
+      "/" +
+      this.props.candidatos.filtro.estado +
+      "/" +
+      criaURL(this.props.usuario.arrayRespostasUsuario);
+    console.log(url);
   }
 
   async passaPergunta() {
@@ -256,6 +269,7 @@ class PerguntasContainer extends Component {
               </span>
             )}
           </button>
+          <button onClick={this.handleClick}>Gera URL</button>
         </div>
 
         {/*

@@ -15,6 +15,8 @@ import {
 } from "../../actions/candidatosActions";
 import isEmpty from "../../validation/is-empty";
 
+import { getArrayUrl, getDict } from "../../constantes/tratamentoUrls";
+
 import "./CompareContainer.css";
 import Spinner from "../common/Spinner";
 
@@ -22,27 +24,6 @@ class CompareContainer extends Component {
   constructor(props) {
     super(props);
     this.state = { votos: "" };
-  }
-
-  getArrayUrl(url) {
-    let arrayUrl = [];
-    for (var i = 0; i < url.length; i++) {
-      if (url[i] === "-") {
-        arrayUrl.push(Number(url[i] + url[i + 1]));
-        i++;
-      } else {
-        arrayUrl.push(Number(url[i]));
-      }
-    }
-    return arrayUrl;
-  }
-
-  getDict(arrayUrl) {
-    let dictUrl = {};
-    arrayUrl.forEach((voto, i) => {
-      dictUrl[i] = voto;
-    });
-    return dictUrl;
   }
 
   render() {
@@ -174,7 +155,7 @@ class CompareContainer extends Component {
             ) : (
               <TabelaPerguntas
                 respostas={dadosCandidato.respostas}
-                votos={this.getArrayUrl(this.state.votos)}
+                votos={getArrayUrl(this.state.votos)}
               />
             )}
           </div>
@@ -190,8 +171,8 @@ class CompareContainer extends Component {
 
   componentDidMount() {
     const { candidato, votos } = this.props.match.params;
-    const respostasUsuario = this.getDict(this.getArrayUrl(votos));
-    const arrayRespostasUsuario = this.getArrayUrl(votos);
+    const respostasUsuario = getDict(getArrayUrl(votos));
+    const arrayRespostasUsuario = getArrayUrl(votos);
     this.props.getDadosCandidato(
       candidato,
       respostasUsuario,

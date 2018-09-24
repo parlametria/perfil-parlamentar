@@ -18,6 +18,14 @@ import {
 } from "../../../actions/candidatosActions";
 
 import { vamosComecar } from "../../../actions/perguntasActions";
+import { salvaScoreUsuario } from "../../../actions/usuarioActions";
+
+import {
+  getArrayUrl,
+  getDict,
+  votosValidos,
+  estadoValido
+} from "../../../constantes/tratamentoUrls";
 
 import FlipMove from "react-flip-move";
 
@@ -55,6 +63,29 @@ class Home extends Component {
 
   componentDidMount() {
     if (!isMobile) this.props.vamosComecar();
+    const { votos, estado } = this.props.match.params;
+
+    if (votos && estado) {
+      if (votosValidos(votos) && estadoValido(estado)) {
+        const arrayVotosUsuario = getArrayUrl(votos);
+        const votosUsuario = getDict(arrayVotosUsuario);
+
+        const filtroEstado = {
+          nome: "",
+          partido: "TODOS",
+          estado: estado
+        };
+
+        this.props.setFiltroCandidatos(filtroEstado);
+        this.props.getDadosCandidatos();
+
+        this.props.salvaScoreUsuario(votosUsuario, arrayVotosUsuario);
+        this.props.mostraPerguntas();
+        this.props.history.push("/");
+      } else {
+        this.props.history.push("/");
+      }
+    }
   }
 
   render() {
@@ -123,7 +154,8 @@ Home.propTypes = {
   getDadosCandidatos: PropTypes.func.isRequired,
   setFiltroCandidatos: PropTypes.func.isRequired,
   calculaScore: PropTypes.func.isRequired,
-  setPartidos: PropTypes.func.isRequired
+  setPartidos: PropTypes.func.isRequired,
+  salvaScoreUsuario: PropTypes.func.isRequired
 };
 const mapStateToProps = state => ({
   candidatos: state.candidatosReducer,
@@ -137,6 +169,7 @@ export default connect(
     setFiltroCandidatos,
     calculaScore,
     vamosComecar,
-    setPartidos
+    setPartidos,
+    salvaScoreUsuario
   }
 )(Home);
