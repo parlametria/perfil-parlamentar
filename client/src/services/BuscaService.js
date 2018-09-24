@@ -1,16 +1,6 @@
+import axios from "axios";
 
-export const BuscaService = {
-  buscaNome,
-  buscaPartido,
-  buscaCPF
-};
+export const buscaCPF = (cpf) => {
+  return axios.get("/api/candidatos/" + cpf)
+}
 
-
-//acessar o reducer, buscar de acordo com o "tipo" e retornar uma lista de candidatos que batem com o filtro
-
-function buscaCPF(e) {
-  e.preventDefault();
-
-};
-
-export default BuscaService;

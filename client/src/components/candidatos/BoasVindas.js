@@ -13,19 +13,41 @@ class BoasVindas extends Component {
     return (
       <div className="container tutorial pb-3">
         <h2 className="panel-title text-center">Vamos começar?</h2>
-        <div className="pb-3">
-          <p>
+        <div className="d-flex align-items-center">
+          <div className="tutorial-img">
+            <img
+              src={require("../../data/img/step1.png")}
+              alt="Imagem de um questionário com algumas perguntas respondidas"
+            />
+          </div>
+          <div className="tutorial-text pl-2">
             <strong className="strong">Vote</strong> nos temas propostos e veja
             aqui os candidatos que mais se alinham com você.
-          </p>
-          <p>
+          </div>
+        </div>
+        <div className="d-flex align-items-center">
+          <div className="tutorial-img">
+            <img
+              src={require("../../data/img/step2.png")}
+              alt="Imagem de um questionário com algumas perguntas respondidas"
+            />
+          </div>
+          <div className="tutorial-text pl-2">
             <strong className="strong">Filtre</strong> o resultado segundo seus
             critérios.
-          </p>
-          <p>
+          </div>
+        </div>
+        <div className="d-flex align-items-center">
+          <div className="tutorial-img">
+            <img
+              src={require("../../data/img/step1.png")}
+              alt="Imagem de um questionário com algumas perguntas respondidas"
+            />
+          </div>
+          <div className="tutorial-text pl-2">
             <strong className="strong">Informe-se</strong> sobre os 5 temas.
             Quanto mais perguntas você responder, mais preciso é o resultado.
-          </p>
+          </div>
         </div>
       </div>
     );
