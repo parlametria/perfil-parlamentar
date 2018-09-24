@@ -5,6 +5,8 @@ import PropTypes from "prop-types";
 import Pergunta from "./Pergunta";
 import FinalPerguntas from "./FinalPerguntas";
 import { salvaScoreUsuario } from "../../actions/usuarioActions";
+import { CopyToClipboard } from "react-copy-to-clipboard";
+
 import {
   calculaScore,
   calculaScorePorTema
@@ -39,12 +41,13 @@ class PerguntasContainer extends Component {
   constructor(props) {
     super(props);
 
+    this.state = { copied: false };
+
     this.passaPergunta = this.passaPergunta.bind(this);
     this.voltaPergunta = this.voltaPergunta.bind(this);
     this.selecionaTema = this.selecionaTema.bind(this);
     this.escolhePergunta = this.escolhePergunta.bind(this);
     this.togglePerguntaContainer = this.togglePerguntaContainer.bind(this);
-    this.handleClick = this.handleClick.bind(this);
   }
 
   registraResposta(novaResposta) {
@@ -57,14 +60,13 @@ class PerguntasContainer extends Component {
     this.passaPergunta();
   }
 
-  handleClick(e) {
-    e.preventDefault();
+  geraUrl() {
     const url =
-      "/" +
+      "http://vozativa.org/" +
       this.props.candidatos.filtro.estado +
       "/" +
       criaURL(this.props.usuario.arrayRespostasUsuario);
-    console.log(url);
+    return url;
   }
 
   async passaPergunta() {
@@ -104,7 +106,7 @@ class PerguntasContainer extends Component {
   componentDidMount() {
     this.props.getDadosPerguntas();
 
-    this.props.salvaScoreUsuario({}, Array(45).fill(1));
+    //this.props.salvaScoreUsuario({}, Array(45).fill(1));
   }
 
   render() {
@@ -123,8 +125,23 @@ class PerguntasContainer extends Component {
     let temas = [];
     let exibePerguntas;
     let exibeFinalPerguntas;
-    let isFinalPerguntas;
-    let isExibePerguntas;
+
+    const botaoCopia = (
+      <div className="PerguntasContainer">
+        <CopyToClipboard
+          text={this.geraUrl()}
+          onCopy={() => this.setState({ copied: true })}
+        >
+          <button>Copy to clipboard with button</button>
+        </CopyToClipboard>
+
+        <section className="section">
+          {this.state.copied ? (
+            <span style={{ color: "red" }}>Copied.</span>
+          ) : null}
+        </section>
+      </div>
+    );
 
     if (!isEmpty(dadosPerguntas)) {
       const dadosPergunta = dadosPerguntas[indexPergunta];
@@ -269,7 +286,7 @@ class PerguntasContainer extends Component {
               </span>
             )}
           </button>
-          <button onClick={this.handleClick}>Gera URL</button>
+          {botaoCopia}
         </div>
 
         {/*
