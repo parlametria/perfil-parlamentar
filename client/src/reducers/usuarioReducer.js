@@ -14,7 +14,8 @@ const inicializaRespostasUsuario = () => {
 const initialState = {
   respostasUsuario: inicializaRespostasUsuario(),
   arrayRespostasUsuario: Array(TAM_PERGUNTAS).fill(0),
-  quantidadeVotos: 0
+  quantidadeVotos: 0,
+  respondeuTodos: false
 };
 
 const contaVotos = arrayRespostasUsuario => {
@@ -28,7 +29,9 @@ export default function(state = initialState, action) {
         ...state,
         respostasUsuario: action.respostasUsuario,
         arrayRespostasUsuario: action.arrayRespostasUsuario,
-        quantidadeVotos: contaVotos(action.arrayRespostasUsuario)
+        quantidadeVotos: contaVotos(action.arrayRespostasUsuario),
+        respondeuTodos:
+          contaVotos(action.arrayRespostasUsuario) === TAM_PERGUNTAS
       };
     default:
       return state;

@@ -2,17 +2,11 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 
+import { criaURL } from "../../constantes/tratamentoUrls";
+
 import "./candidato.css";
 
 class Candidato extends Component {
-  criaURL(arrayVotos) {
-    let urlVotos = "";
-    arrayVotos.forEach(voto => {
-      urlVotos = urlVotos + voto;
-    });
-    return urlVotos;
-  }
-
   render() {
     const naoRespondeu = (
       <div>
@@ -46,6 +40,7 @@ class Candidato extends Component {
             "%0D%0A" +
             "Fortaleça esta iniciativa de match eleitoral e contribua para uma nova cultura de voto consciente. "
           }
+          target="_blank"
         >
           Cobre a participação
         </a>
@@ -76,7 +71,7 @@ class Candidato extends Component {
             "compare/" +
             this.props.id +
             "/" +
-            this.criaURL(this.props.arrayRespostasUsuario)
+            criaURL(this.props.arrayRespostasUsuario)
           }
         >
           Compare
@@ -94,7 +89,7 @@ class Candidato extends Component {
                   "compare/" +
                   this.props.id +
                   "/" +
-                  this.criaURL(this.props.arrayRespostasUsuario)
+                  criaURL(this.props.arrayRespostasUsuario)
                 }
               >
                 <img
