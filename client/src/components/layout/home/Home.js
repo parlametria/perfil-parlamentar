@@ -80,7 +80,7 @@ class Home extends Component {
         this.props.getDadosCandidatos();
 
         this.props.salvaScoreUsuario(votosUsuario, arrayVotosUsuario);
-        this.props.mostraPerguntas();
+        this.props.vamosComecar();
         this.props.history.push("/");
       } else {
         this.props.history.push("/");
