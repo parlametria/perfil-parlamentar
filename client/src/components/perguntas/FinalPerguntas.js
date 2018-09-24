@@ -1,7 +1,33 @@
 import React, { Component } from "react";
+
+import { connect } from "react-redux";
 import { BrowserView, MobileView } from "react-device-detect";
 
+import PropTypes from "prop-types";
+
+import {
+  escondePerguntas,
+  continuarRespondendo
+} from "../../actions/perguntasActions";
+
 class FinalPerguntas extends Component {
+  constructor(props) {
+    super(props);
+
+    this.verAgora = this.verAgora.bind(this);
+    this.continuarRespondendo = this.continuarRespondendo.bind(this);
+  }
+
+  verAgora(e) {
+    e.preventDefault();
+    this.props.escondePerguntas();
+  }
+
+  continuarRespondendo(e) {
+    e.preventDefault();
+    this.props.continuarRespondendo();
+  }
+
   render() {
     let linkCompartilhamento = "";
     let textoCompartilhamento = "";
@@ -19,22 +45,22 @@ class FinalPerguntas extends Component {
         </h4>
 
         <div className="text-center">
-          <button
-            className="btn btn-outline-primary"
-          >
+          <button className="btn btn-outline-primary" onClick={this.verAgora}>
             Ver agora
           </button>{" "}
           <button
             className="btn btn-outline-primary"
+            onClick={this.continuarRespondendo}
           >
             Continuar respondendo
           </button>
           <div className="p-3">
-            Ou compartilhe <br/>
+            Ou compartilhe <br />
             <div className="row justify-content-center">
               <a
                 href={
-                  "https://twitter.com/intent/tweet/?text=" + textoCompartilhamento
+                  "https://twitter.com/intent/tweet/?text=" +
+                  textoCompartilhamento
                 }
                 data-show-count="false"
                 className="nav-link"
@@ -56,7 +82,8 @@ class FinalPerguntas extends Component {
               <BrowserView>
                 <a
                   href={
-                    "https://web.whatsapp.com/send?text=" + textoCompartilhamento
+                    "https://web.whatsapp.com/send?text=" +
+                    textoCompartilhamento
                   }
                   data-show-count="false"
                   className="nav-link"
@@ -81,4 +108,16 @@ class FinalPerguntas extends Component {
   }
 }
 
-export default FinalPerguntas;
+FinalPerguntas.propTypes = {
+  escondePerguntas: PropTypes.func.isRequired,
+  continuarRespondendo: PropTypes.func.isRequired
+};
+
+const mapStateToProps = state => ({
+  perguntas: state.perguntasReducer
+});
+
+export default connect(
+  mapStateToProps,
+  { escondePerguntas, continuarRespondendo }
+)(FinalPerguntas);
