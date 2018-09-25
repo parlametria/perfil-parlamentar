@@ -6,7 +6,7 @@ import PropTypes from "prop-types";
 import TabelaPerguntas from "./tabelaPerguntas/TabelaPerguntas";
 import PontuacaoPorTema from "./pontuacaoPorTema/PontuacaoTema";
 
-import { BrowserView, MobileView } from "react-device-detect";
+import { isMobile } from "react-device-detect";
 
 import {
   getDadosCandidato,
@@ -51,6 +51,13 @@ class CompareContainer extends Component {
             <p>
               {dadosCandidato.sg_partido}/{dadosCandidato.uf}
             </p>
+            <a
+              className="btn btn-link"
+              align="right"
+              href={"https://eleicoes.datapedia.info/candidato/historico/" + dadosCandidato.cpf}
+            >
+              ver seu histórico 
+            </a>
           </div>
         </div>
       </div>
@@ -115,8 +122,7 @@ class CompareContainer extends Component {
           >
             <span className="icon-facebook" />
           </a>
-          <BrowserView>
-            <a
+          {!isMobile && <a
               href={
                 "https://web.whatsapp.com/send?text=" + textoCompartilhamento
               }
@@ -124,17 +130,14 @@ class CompareContainer extends Component {
               className="nav-link"
               target="_blank"
             >
-              <span className="icon-whatsapp" />
-            </a>
-          </BrowserView>
-          <MobileView>
-            <a
+              <span className="icon-zapzap" />
+            </a>}
+            {isMobile && <a
               href={"whatsapp://send?text=" + textoCompartilhamento}
               className="nav-link"
             >
-              <span className="icon-whatsapp" />
-            </a>
-          </MobileView>
+              <span className="icon-zapzap" />
+            </a>}
         </div>
         <div className="row">
           <div className="col-md-3">

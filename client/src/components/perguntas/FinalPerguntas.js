@@ -2,6 +2,7 @@ import React, { Component } from "react";
 
 import { connect } from "react-redux";
 import { BrowserView, MobileView } from "react-device-detect";
+import { isMobile } from "react-device-detect";
 
 import PropTypes from "prop-types";
 
@@ -32,7 +33,7 @@ class FinalPerguntas extends Component {
 
   geraUrl() {
     const url =
-      "http://vozativa.org/" +
+      "https://voz-ativa.herokuapp.com/" +
       this.props.candidatos.filtro.estado +
       "/" +
       criaURL(this.props.usuario.arrayRespostasUsuario);
@@ -57,9 +58,11 @@ class FinalPerguntas extends Component {
         </h4>
 
         <div className="text-center">
+        {isMobile && 
           <button className="btn btn-outline-primary" onClick={this.verAgora}>
             Ver agora
-          </button>{" "}
+          </button>}
+          {" "}
           <button
             className="btn btn-outline-primary"
             onClick={this.continuarRespondendo}
@@ -91,8 +94,13 @@ class FinalPerguntas extends Component {
               >
                 <span className="icon-facebook share-icon" />
               </a>
-              <BrowserView>
-                <a
+              {isMobile && <a
+                  href={"whatsapp://send?text=" + textoCompartilhamento}
+                  className="nav-link"
+                >
+                  <span className="icon-zapzap share-icon" />
+                </a>}
+                {!isMobile && <a
                   href={
                     "https://web.whatsapp.com/send?text=" +
                     textoCompartilhamento
@@ -101,17 +109,8 @@ class FinalPerguntas extends Component {
                   className="nav-link"
                   target="_blank"
                 >
-                  <span className="icon-whatsapp share-icon" />
-                </a>
-              </BrowserView>
-              <MobileView>
-                <a
-                  href={"whatsapp://send?text=" + textoCompartilhamento}
-                  className="nav-link"
-                >
-                  <span className="icon-whatsapp share-icon" />
-                </a>
-              </MobileView>
+                  <span className="icon-zapzap share-icon" />
+                </a>}
             </div>
           </div>
         </div>
