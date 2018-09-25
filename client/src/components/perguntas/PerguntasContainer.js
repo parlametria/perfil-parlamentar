@@ -62,7 +62,7 @@ class PerguntasContainer extends Component {
 
   geraUrl() {
     const url =
-      "http://vozativa.org/" +
+      "https://voz-ativa.herokuapp.com/" +
       this.props.candidatos.filtro.estado +
       "/" +
       criaURL(this.props.usuario.arrayRespostasUsuario);
@@ -127,12 +127,12 @@ class PerguntasContainer extends Component {
     let exibeFinalPerguntas;
   
     const botaoCopia = (
-      <div className="PerguntasContainer text-center">
-        <CopyToClipboard className="btn btn-outline-primary" style={{ align:"center" }}
+      <div className="PerguntasContainer text-center" >
+        <CopyToClipboard 
           text={this.geraUrl()}
           onCopy={() => this.setState({ copied: true })}
         >
-          <button>compartilhe suas respostas</button>
+          <button className="btn btn-outline-primary"  style = {{marginTop: "-2vh"}} >compartilhe suas respostas</button>
         </CopyToClipboard>
 
         <section className="section">
@@ -224,8 +224,8 @@ class PerguntasContainer extends Component {
               <h2 className="question-theme">{filtroTema}</h2>
             </div>
             {pergunta}
+            {botaoCopia}
           </div>
-          {botaoCopia}
         </div>
       );
 
