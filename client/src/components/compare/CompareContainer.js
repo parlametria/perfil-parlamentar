@@ -51,6 +51,13 @@ class CompareContainer extends Component {
             <p>
               {dadosCandidato.sg_partido}/{dadosCandidato.uf}
             </p>
+            <a
+              className="btn btn-link"
+              align="right"
+              href="https://www.datapedia.info"
+            >
+              datapedia
+            </a>
           </div>
         </div>
       </div>
