@@ -74,7 +74,7 @@ class Candidato extends Component {
             criaURL(this.props.arrayRespostasUsuario)
           }
         >
-          Compare
+          saiba mais
         </Link>
       </div>
     );
