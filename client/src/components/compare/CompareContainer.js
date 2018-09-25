@@ -54,6 +54,7 @@ class CompareContainer extends Component {
             <a
               className="btn btn-link"
               align="right"
+              target="_blank"
               href={"https://eleicoes.datapedia.info/candidato/historico/" + dadosCandidato.cpf}
             >
               ver seu histórico 
