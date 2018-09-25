@@ -3,7 +3,10 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 
 import Pergunta from "./Pergunta";
+import FinalPerguntas from "./FinalPerguntas";
 import { salvaScoreUsuario } from "../../actions/usuarioActions";
+import { CopyToClipboard } from "react-copy-to-clipboard";
+
 import {
   calculaScore,
   calculaScorePorTema
@@ -18,11 +21,15 @@ import {
   escondePerguntas
 } from "../../actions/perguntasActions";
 
+import FlipMove from "react-flip-move";
+
 import { Collapse } from "reactstrap";
 
 import classnames from "classnames";
 
 import isEmpty from "../../validation/is-empty";
+
+import { criaURL } from "../../constantes/tratamentoUrls";
 
 //import { delay } from "../../utils/funcoes";
 
@@ -34,12 +41,13 @@ class PerguntasContainer extends Component {
   constructor(props) {
     super(props);
 
+    this.state = { copied: false };
+
     this.passaPergunta = this.passaPergunta.bind(this);
     this.voltaPergunta = this.voltaPergunta.bind(this);
     this.selecionaTema = this.selecionaTema.bind(this);
     this.escolhePergunta = this.escolhePergunta.bind(this);
-    this.showPerguntaContainer = this.showPerguntaContainer.bind(this);
-    this.hidePerguntaContainer = this.hidePerguntaContainer.bind(this);
+    this.togglePerguntaContainer = this.togglePerguntaContainer.bind(this);
   }
 
   registraResposta(novaResposta) {
@@ -50,6 +58,15 @@ class PerguntasContainer extends Component {
     this.props.salvaScoreUsuario(respostasUsuario, arrayRespostasUsuario);
     this.props.calculaScore();
     this.passaPergunta();
+  }
+
+  geraUrl() {
+    const url =
+      "https://voz-ativa.herokuapp.com/" +
+      this.props.candidatos.filtro.estado +
+      "/" +
+      criaURL(this.props.usuario.arrayRespostasUsuario);
+    return url;
   }
 
   async passaPergunta() {
@@ -88,6 +105,8 @@ class PerguntasContainer extends Component {
 
   componentDidMount() {
     this.props.getDadosPerguntas();
+
+    //this.props.salvaScoreUsuario({}, Array(45).fill(1));
   }
 
   render() {
@@ -95,12 +114,34 @@ class PerguntasContainer extends Component {
       dadosPerguntas,
       indexPergunta,
       filtroTema,
-      isExibeGavetaPerguntas
+      isExibeGavetaPerguntas,
+      isContinuarRespondendo
     } = this.props.perguntas;
+
+    const { respondeuTodos } = this.props.usuario;
 
     let pergunta;
     let indicadorPergunta;
     let temas = [];
+    let exibePerguntas;
+    let exibeFinalPerguntas;
+  
+    const botaoCopia = (
+      <div className="PerguntasContainer text-center" >
+        <CopyToClipboard 
+          text={this.geraUrl()}
+          onCopy={() => this.setState({ copied: true })}
+        >
+          <button className="btn btn-outline-primary"  style = {{marginTop: "-2vh"}} >compartilhe suas respostas</button>
+        </CopyToClipboard>
+
+        <section className="section">
+          {this.state.copied ? (
+            <span>link copiado para área de transferência.</span>
+          ) : null}
+        </section>
+      </div>
+    );
 
     if (!isEmpty(dadosPerguntas)) {
       const dadosPergunta = dadosPerguntas[indexPergunta];
@@ -167,6 +208,33 @@ class PerguntasContainer extends Component {
         />
       );
 
+      exibePerguntas = (
+        <div
+          id="perguntaContainer"
+          className="card"
+          aria-labelledby="perguntaContainer"
+        >
+          <div className="card-body">
+            <div className="nav-horizontal">
+              <ul className="nav nav-pills nav-fill nav-horizontal-pills-sm">
+                {indicadorPergunta}
+              </ul>
+            </div>
+            <div className="container">
+              <h2 className="question-theme">{filtroTema}</h2>
+            </div>
+            {pergunta}
+            {botaoCopia}
+          </div>
+        </div>
+      );
+
+      exibeFinalPerguntas = (
+        <div>
+          <FinalPerguntas />
+        </div>
+      );
+
       // indicadorPergunta = dadosPerguntas.map((pergunta, index) => (
       //   // done -> o usuario já respondeu essa pergunta
       //   // active -> o usuário está respondendo
@@ -186,42 +254,41 @@ class PerguntasContainer extends Component {
 
     return (
       <div className="pergunta-container">
-        <div className="panel-detail-header">
-          <div
-            className="nav-horizontal nav-horizontal-lg custom-scroll-bar"
-            onClick={this.showPerguntaContainer}
-          >
-            <ul className="nav nav-tabs nav-fill nav-horizontal-pills">
-              {temas}
-            </ul>
-          </div>
-        </div>
-        <Collapse isOpen={isExibeGavetaPerguntas}>
-          <div
-            id="perguntaContainer"
-            className="card"
-            aria-labelledby="perguntaContainer"
-          >
-            <div className="card-body">
-              <div className="nav-horizontal">
-                <ul className="nav nav-pills nav-fill nav-horizontal-pills-sm">
-                  {indicadorPergunta}
-                </ul>
-              </div>
-              <div className="container">
-                <h2 className="question-theme">{filtroTema}</h2>
-              </div>
-              {pergunta}
-              <button
-                type="button"
-                className="btn btn-block btn-primary btn-square d-lg-none"
-                onClick={this.hidePerguntaContainer}
-              >
-                <span className="icon-cursor" /> Esconder
-              </button>
+        <div>
+          <div className="panel-detail-header">
+            <div
+              className="nav-horizontal nav-horizontal-lg custom-scroll-bar"
+              onClick={this.showPerguntaContainer}
+            >
+              <ul className="nav nav-tabs nav-fill nav-horizontal-pills">
+                {temas}
+              </ul>
             </div>
           </div>
-        </Collapse>
+          <Collapse isOpen={isExibeGavetaPerguntas}>
+            <FlipMove>
+              {(!respondeuTodos || isContinuarRespondendo) && exibePerguntas}
+              {respondeuTodos && !isContinuarRespondendo && exibeFinalPerguntas}
+            </FlipMove>
+          </Collapse>
+          <button
+            type="button"
+            className="btn btn-block btn-primary btn-square d-lg-none"
+            onClick={this.togglePerguntaContainer}
+          >
+            {isExibeGavetaPerguntas && (
+              <span>
+                <span className="icon-cursor" /> Esconder
+              </span>
+            )}
+            {!isExibeGavetaPerguntas && (
+              <span>
+                <span className="icon-up" /> Mostrar
+              </span>
+            )}
+          </button>
+        </div>
+
         {/*
         <div className="container perguntas-container">
           {isCarregando || isEmpty(dadosPerguntas) ? (
@@ -237,14 +304,11 @@ class PerguntasContainer extends Component {
     );
   }
 
-  showPerguntaContainer(event) {
+  togglePerguntaContainer(event) {
     event.preventDefault();
-    this.props.exibePerguntas();
-  }
-
-  hidePerguntaContainer(event) {
-    event.preventDefault();
-    this.props.escondePerguntas();
+    this.props.perguntas.isExibeGavetaPerguntas
+      ? this.props.escondePerguntas()
+      : this.props.exibePerguntas();
   }
 }
 
@@ -260,6 +324,7 @@ PerguntasContainer.propTypes = {
   escondePerguntas: PropTypes.func.isRequired,
   exibePerguntas: PropTypes.func.isRequired
 };
+
 const mapStateToProps = state => ({
   usuario: state.usuarioReducer,
   candidatos: state.candidatosReducer,

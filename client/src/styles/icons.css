@@ -1,18 +1,17 @@
 @font-face {
-  font-family: "icomoon";
-  src: url("fonts/icomoon.eot?cts96w");
-  src: url("fonts/icomoon.eot?cts96w#iefix") format("embedded-opentype"),
-    url("fonts/icomoon.ttf?cts96w") format("truetype"),
-    url("fonts/icomoon.woff?cts96w") format("woff"),
-    url("fonts/icomoon.svg?cts96w#icomoon") format("svg");
+  font-family: 'icomoon';
+  src:  url('fonts/icomoon.eot?gmbp0v');
+  src:  url('fonts/icomoon.eot?gmbp0v#iefix') format('embedded-opentype'),
+    url('fonts/icomoon.ttf?gmbp0v') format('truetype'),
+    url('fonts/icomoon.woff?gmbp0v') format('woff'),
+    url('fonts/icomoon.svg?gmbp0v#icomoon') format('svg');
   font-weight: normal;
   font-style: normal;
 }
 
-[class^="icon-"],
-[class*=" icon-"] {
+[class^="icon-"], [class*=" icon-"] {
   /* use !important to prevent issues with browser extensions that change fonts */
-  font-family: "icomoon" !important;
+  font-family: 'icomoon' !important;
   speak: none;
   font-style: normal;
   font-weight: normal;
@@ -31,7 +30,7 @@
 .icon-twitter:before {
   content: "\e907";
 }
-.icon-whatsapp:before {
+.icon-zapzap:before {
   content: "\e908";
 }
 .icon-minus:before {
@@ -51,4 +50,7 @@
 }
 .icon-cursor:before {
   content: "\e904";
+}
+.icon-up:before {
+  content: "\e909";
 }

@@ -5,7 +5,8 @@ import {
   SET_TEMA,
   SET_VAMOS_COMECAR,
   ESCONDE_PERGUNTAS,
-  EXIBE_PERGUNTAS
+  EXIBE_PERGUNTAS,
+  SET_CONTINUAR_RESPONDENDO
 } from "./types";
 
 //import { firebaseDatabase } from "../services/firebaseService";
@@ -65,4 +66,8 @@ export const escondePerguntas = () => dispatch => {
 
 export const exibePerguntas = () => dispatch => {
   dispatch({ type: EXIBE_PERGUNTAS });
+};
+
+export const continuarRespondendo = () => dispatch => {
+  dispatch({ type: SET_CONTINUAR_RESPONDENDO });
 };

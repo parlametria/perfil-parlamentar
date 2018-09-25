@@ -13,6 +13,11 @@ const Main = () => (
   <main>
     <Switch>
       <Route exact path="/" component={Home} />
+      <Route
+        exact
+        path="/:estado/:votos"
+        render={props => <Home {...props} />}
+      />
       <Route exact path="/calculo" component={CalculoContainer} />
       <Route exact path="/sobre" component={Sobre} />
       <Route
@@ -23,7 +28,7 @@ const Main = () => (
       <Route
         exact
         path="/compare/:candidato/:votos"
-        render={(props) => <CompareContainer {...props} />}
+        render={props => <CompareContainer {...props} />}
       />
       <Route exact path="/soucandidato" component={SouCandidato} />
     </Switch>

@@ -5,7 +5,8 @@ import {
   SET_TEMA,
   SET_VAMOS_COMECAR,
   ESCONDE_PERGUNTAS,
-  EXIBE_PERGUNTAS
+  EXIBE_PERGUNTAS,
+  SET_CONTINUAR_RESPONDENDO
 } from "../actions/types";
 
 const initialState = {
@@ -15,7 +16,8 @@ const initialState = {
   filtroTema: "Meio Ambiente",
   // Vamos começar
   isVamosComecar: false,
-  isExibeGavetaPerguntas: true
+  isExibeGavetaPerguntas: true,
+  isContinuarRespondendo: false
 };
 
 export default function(state = initialState, action) {
@@ -55,6 +57,11 @@ export default function(state = initialState, action) {
       return {
         ...state,
         isExibeGavetaPerguntas: false
+      };
+    case SET_CONTINUAR_RESPONDENDO:
+      return {
+        ...state,
+        isContinuarRespondendo: true
       };
     default:
       return state;
