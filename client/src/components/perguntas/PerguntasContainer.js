@@ -62,7 +62,7 @@ class PerguntasContainer extends Component {
 
   geraUrl() {
     const url =
-      "https://voz-ativa.herokuapp.com/" +
+      "http://vozativa.org/" +
       this.props.candidatos.filtro.estado +
       "/" +
       criaURL(this.props.usuario.arrayRespostasUsuario);
