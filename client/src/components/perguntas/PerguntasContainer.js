@@ -127,21 +127,24 @@ class PerguntasContainer extends Component {
     let exibeFinalPerguntas;
   
     const botaoCopia = (
+      
       <div className="PerguntasContainer text-center" >
-        <CopyToClipboard 
+      <strong class="strong" > novo!{" "}</strong>
+        <CopyToClipboard
           text={this.geraUrl()}
           onCopy={() => this.setState({ copied: true })}
         >
           <button className="btn btn-outline-primary"  style = {{marginTop: "-2vh"}} >compartilhe suas respostas</button>
-        </CopyToClipboard>
+        </CopyToClipboard>  
+        </div>
+    );
 
-        <section className="section">
+     const copiado = ( <section className="section  text-center">
           {this.state.copied ? (
-            <span>link copiado para área de transferência.</span>
+            <span>Link copiado. Agora é só colar onde você quiser compartilhar!</span>
           ) : null}
         </section>
-      </div>
-    );
+      );
 
     if (!isEmpty(dadosPerguntas)) {
       const dadosPergunta = dadosPerguntas[indexPergunta];
@@ -225,6 +228,7 @@ class PerguntasContainer extends Component {
             </div>
             {pergunta}
             {botaoCopia}
+            {copiado}
           </div>
         </div>
       );
