@@ -128,14 +128,17 @@ class PerguntasContainer extends Component {
   
     const botaoCopia = (
       
-      <div className="PerguntasContainer text-center" >
-      <strong class="strong" > novo!{" "}</strong>
+      <div className="PerguntasContainer text-center">
+      
         <CopyToClipboard
           text={this.geraUrl()}
           onCopy={() => this.setState({ copied: true })}
         >
           <button className="btn btn-outline-primary"  style = {{marginTop: "-2vh"}} >compartilhe suas respostas</button>
         </CopyToClipboard>  
+        <div>
+        <strong class="strong" > novo!{" "}</strong>
+          </div>
         </div>
     );
 

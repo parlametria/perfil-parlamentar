@@ -38,7 +38,7 @@ class CompareContainer extends Component {
                 ? "https://s3-sa-east-1.amazonaws.com/fotoscandidatos2018/fotos_tratadas/img_" +
                   dadosCandidato.cpf +
                   ".jpg"
-                : "http://pontosdevista.pt/static/uploads/2016/05/sem-fotoABC.jpg"
+                : "https://s3-sa-east-1.amazonaws.com/fotoscandidatos2018/fotos_tratadas/nophoto.png"
             }
             alt={dadosCandidato.nome_urna}
             width="100%"
