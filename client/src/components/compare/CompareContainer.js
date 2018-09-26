@@ -51,14 +51,14 @@ class CompareContainer extends Component {
             <p>
               {dadosCandidato.sg_partido}/{dadosCandidato.uf}
             </p>
-            <a
+            <p>(novo!) {" "}<a
               className="btn btn-link"
               align="right"
               target="_blank"
               href={"https://eleicoes.datapedia.info/candidato/historico/" + dadosCandidato.cpf}
             >
-              ver seu histórico 
-            </a>
+              histórico 
+            </a></p>
           </div>
         </div>
       </div>
