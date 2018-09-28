@@ -51,14 +51,20 @@ class CompareContainer extends Component {
             <p>
               {dadosCandidato.sg_partido}/{dadosCandidato.uf}
             </p>
-            <p>(novo!) {" "}<a
-              className="btn btn-link"
-              align="right"
-              target="_blank"
-              href={"https://eleicoes.datapedia.info/candidato/historico/" + dadosCandidato.cpf}
-            >
-              histórico 
-            </a></p>
+            <p>
+              (novo!){" "}
+              <a
+                className="btn btn-link"
+                align="right"
+                target="_blank"
+                href={
+                  "https://eleicoes.datapedia.info/candidato/historico/" +
+                  dadosCandidato.cpf
+                }
+              >
+                histórico
+              </a>
+            </p>
           </div>
         </div>
       </div>
@@ -123,7 +129,8 @@ class CompareContainer extends Component {
           >
             <span className="icon-facebook" />
           </a>
-          {!isMobile && <a
+          {!isMobile && (
+            <a
               href={
                 "https://web.whatsapp.com/send?text=" + textoCompartilhamento
               }
@@ -132,13 +139,16 @@ class CompareContainer extends Component {
               target="_blank"
             >
               <span className="icon-zapzap" />
-            </a>}
-            {isMobile && <a
+            </a>
+          )}
+          {isMobile && (
+            <a
               href={"whatsapp://send?text=" + textoCompartilhamento}
               className="nav-link"
             >
               <span className="icon-zapzap" />
-            </a>}
+            </a>
+          )}
         </div>
         <div className="row">
           <div className="col-md-3">
