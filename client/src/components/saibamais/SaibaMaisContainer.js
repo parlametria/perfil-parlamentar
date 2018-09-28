@@ -3,6 +3,8 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 
+import { Nav, NavItem, NavLink, TabContent, TabPane } from "reactstrap";
+
 import TabelaPerguntas from "./tabelaPerguntas/TabelaPerguntas";
 import PontuacaoPorTema from "./pontuacaoPorTema/PontuacaoTema";
 
@@ -17,13 +19,28 @@ import isEmpty from "../../validation/is-empty";
 
 import { getArrayUrl, getDict } from "../../constantes/tratamentoUrls";
 
-import "./CompareContainer.css";
+import "./SaibaMaisContainer.css";
 import Spinner from "../common/Spinner";
+import classnames from "classnames";
 
-class CompareContainer extends Component {
+class SaibaMaisContainer extends Component {
   constructor(props) {
     super(props);
-    this.state = { votos: "" };
+
+    this.toggle = this.toggle.bind(this);
+
+    this.state = {
+      votos: "",
+      activeTab: "1"
+    };
+  }
+
+  toggle(tab) {
+    if (this.state.activeTab !== tab) {
+      this.setState({
+        activeTab: tab
+      });
+    }
   }
 
   render() {
@@ -167,10 +184,44 @@ class CompareContainer extends Component {
             {this.props.candidatos.isCarregando || isEmpty(dadosCandidato) ? (
               <Spinner />
             ) : (
-              <TabelaPerguntas
-                respostas={dadosCandidato.respostas}
-                votos={getArrayUrl(this.state.votos)}
-              />
+              <div>
+                <Nav tabs>
+                  <NavItem>
+                    <NavLink
+                      className={classnames({
+                        active: this.state.activeTab === "1"
+                      })}
+                      onClick={() => {
+                        this.toggle("1");
+                      }}
+                    >
+                      Compare
+                    </NavLink>
+                  </NavItem>
+                  <NavItem>
+                    <NavLink
+                      className={classnames({
+                        active: this.state.activeTab === "2"
+                      })}
+                      onClick={() => {
+                        this.toggle("2");
+                      }}
+                    >
+                      Na câmara
+                    </NavLink>
+                  </NavItem>
+                </Nav>
+
+                <TabContent activeTab={this.state.activeTab}>
+                  <TabPane tabId="1">
+                    <TabelaPerguntas
+                      respostas={dadosCandidato.respostas}
+                      votos={getArrayUrl(this.state.votos)}
+                    />
+                  </TabPane>
+                  <TabPane tabId="2">aaaa</TabPane>
+                </TabContent>
+              </div>
             )}
           </div>
         </div>
@@ -196,7 +247,7 @@ class CompareContainer extends Component {
   }
 }
 
-CompareContainer.propTypes = {
+SaibaMaisContainer.propTypes = {
   getDadosCandidato: PropTypes.func.isRequired,
   calculaScorePorTema: PropTypes.func.isRequired,
   setFiltroCandidatos: PropTypes.func.isRequired
@@ -208,4 +259,4 @@ const mapStateToProps = state => ({
 export default connect(
   mapStateToProps,
   { getDadosCandidato, calculaScorePorTema, setFiltroCandidatos }
-)(CompareContainer);
+)(SaibaMaisContainer);

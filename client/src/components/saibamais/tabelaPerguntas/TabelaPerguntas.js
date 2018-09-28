@@ -1,15 +1,5 @@
 import React, { Component } from "react";
-import {
-  Table,
-  Pagination,
-  PaginationItem,
-  PaginationLink,
-  Nav,
-  NavItem,
-  NavLink,
-  TabContent,
-  TabPane
-} from "reactstrap";
+import { Table, Pagination, PaginationItem, PaginationLink } from "reactstrap";
 import isEmpty from "../../../validation/is-empty";
 import { connect } from "react-redux";
 
@@ -25,22 +15,12 @@ import classnames from "classnames";
 class TabelaPerguntas extends Component {
   constructor(props) {
     super(props);
-    this.toggle = this.toggle.bind(this);
     this.state = {
       paginaAtual: 1,
-      perguntasPorPagina: 10,
-      activeTab: "1"
+      perguntasPorPagina: 10
     };
     this.qntPaginas = 0;
     this.handleClick = this.handleClick.bind(this);
-  }
-
-  toggle(tab) {
-    if (this.state.activeTab !== tab) {
-      this.setState({
-        activeTab: tab
-      });
-    }
   }
 
   handleClick(event, index) {
@@ -181,7 +161,7 @@ class TabelaPerguntas extends Component {
       this.qntPaginas = numeroPaginas.length;
     }
 
-    let tabelaPerguntas = (
+    return (
       <div className="table-responsive">
         <Table className="table-bordered" hover pagination={{ pageSize: 5 }}>
           <thead className="thead-dark">
@@ -212,38 +192,6 @@ class TabelaPerguntas extends Component {
             />
           </PaginationItem>
         </Pagination>
-      </div>
-    );
-
-    return (
-      <div>
-        <Nav tabs>
-          <NavItem>
-            <NavLink
-              className={classnames({ active: this.state.activeTab === "1" })}
-              onClick={() => {
-                this.toggle("1");
-              }}
-            >
-              Compare
-            </NavLink>
-          </NavItem>
-          <NavItem>
-            <NavLink
-              className={classnames({ active: this.state.activeTab === "2" })}
-              onClick={() => {
-                this.toggle("2");
-              }}
-            >
-              Na câmara
-            </NavLink>
-          </NavItem>
-        </Nav>
-
-        <TabContent activeTab={this.state.activeTab}>
-          <TabPane tabId="1">{tabelaPerguntas}</TabPane>
-          <TabPane tabId="2">aaaa</TabPane>
-        </TabContent>
       </div>
     );
   }
