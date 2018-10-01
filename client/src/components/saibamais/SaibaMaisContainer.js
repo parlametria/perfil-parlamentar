@@ -6,6 +6,7 @@ import PropTypes from "prop-types";
 import { Nav, NavItem, NavLink, TabContent, TabPane } from "reactstrap";
 
 import TabelaPerguntas from "./tabelaPerguntas/TabelaPerguntas";
+import TabelaVotacoes from "./tabelaVotacoes/TabelaVotacoes";
 import PontuacaoPorTema from "./pontuacaoPorTema/PontuacaoTema";
 
 import { isMobile } from "react-device-detect";
@@ -219,7 +220,9 @@ class SaibaMaisContainer extends Component {
                       votos={getArrayUrl(this.state.votos)}
                     />
                   </TabPane>
-                  <TabPane tabId="2">aaaa</TabPane>
+                  <TabPane tabId="2">
+                    <TabelaVotacoes />
+                  </TabPane>
                 </TabContent>
               </div>
             )}
