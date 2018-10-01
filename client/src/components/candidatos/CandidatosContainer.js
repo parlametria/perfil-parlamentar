@@ -184,7 +184,7 @@ class CandidatosContainer extends Component {
     const { arrayRespostasUsuario, quantidadeVotos } = this.props.usuario;
 
     const candidatosMapeaveis =
-      filtro.nome !== "" || filtro.partido !== "TODOS"
+      (filtro.nome !== "" || filtro.partido !== "TODOS") && !isFiltrandoPorNome
         ? candidatosFiltrados
         : candidatosRanqueados;
 

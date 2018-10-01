@@ -352,38 +352,68 @@ export const setCandidatosFiltrados = () => (dispatch, getState) => {
       })
     );
 
-  let candidatos;
-  if (filtro.nome === "" && filtro.partido === "TODOS") candidatos = [];
-  else if (filtro.partido !== "TODOS" && filtro.nome !== "") {
-    candidatos = filtraPorNomeEPartido(
-      filtro.nome,
-      filtro.partido,
-      dadosCandidatos
-    );
-  } else if (filtro.partido !== "TODOS") {
-    candidatos = filtraPorPartido(
-      filtro.partido,
-      dadosCandidatos,
-      scoreCandidatos
-    );
-  } else if (filtro.nome !== "") {
-    candidatos = filtraPorNome(filtro.nome, dadosCandidatos);
-  } else candidatos = [];
+  if (filtro.partido !== "TODOS") {
+    filtraPorPartido(filtro, dadosCandidatos, scoreCandidatos).then(
+      candidatos => {
+        console.log(candidatos);
 
-  dispatch({
-    type: SET_CANDIDATOS_FILTRADOS,
-    candidatosFiltrados: candidatos
-  });
-  dispatch(
-    setPaginacao({
-      inicio: 0,
-      final: TAM_PAGINA,
-      totalCandidatos:
-        filtro.partido !== "TODOS" || filtro.nome !== ""
-          ? candidatos.length
-          : candidatosRanqueados.length
-    })
-  );
+        dispatch({
+          type: SET_CANDIDATOS_FILTRADOS,
+          candidatosFiltrados: candidatos.data
+        });
+
+        dispatch(
+          setPaginacao({
+            inicio: 0,
+            final: TAM_PAGINA,
+            totalCandidatos: candidatos.data.length
+          })
+        );
+      }
+    );
+  }
+
+  // if (filtro.nome === "" && filtro.partido === "TODOS") candidatos = [];
+  // else if (filtro.partido !== "TODOS" && filtro.nome !== "") {
+  //   candidatos = filtraPorNomeEPartido(
+  //     filtro.nome,
+  //     filtro.partido,
+  //     dadosCandidatos
+  //   );
+  // } else if (filtro.partido !== "TODOS") {
+  //   filtraPorPartido(filtro, dadosCandidatos, scoreCandidatos).then(
+  //     candidatos => {
+  //       dispatch({
+  //         type: SET_CANDIDATOS_FILTRADOS,
+  //         candidatosFiltrados: candidatos
+  //       });
+  //       dispatch(
+  //         setPaginacao({
+  //           inicio: 0,
+  //           final: TAM_PAGINA,
+  //           totalCandidatos: candidatos.length
+  //         })
+  //       );
+  //     }
+  //   );
+  // } else if (filtro.nome !== "") {
+  //   candidatos = filtraPorNome(filtro.nome, dadosCandidatos);
+  // } else candidatos = [];
+
+  // dispatch({
+  //   type: SET_CANDIDATOS_FILTRADOS,
+  //   candidatosFiltrados: candidatos
+  // });
+  // dispatch(
+  //   setPaginacao({
+  //     inicio: 0,
+  //     final: TAM_PAGINA,
+  //     totalCandidatos:
+  //       filtro.partido !== "TODOS" || filtro.nome !== ""
+  //         ? candidatos.length
+  //         : candidatosRanqueados.length
+  //   })
+  // );
 };
 
 export const setFiltroCandidatos = filtro => dispatch => {
