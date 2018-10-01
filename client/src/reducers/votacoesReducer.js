@@ -18,5 +18,7 @@ export default function(state = initialState, action) {
         dadosVotacoes: action.dadosVotacoes,
         isCarregando: false
       };
+    default:
+      return state;
   }
 }
