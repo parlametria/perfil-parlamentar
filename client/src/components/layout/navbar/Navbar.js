@@ -23,7 +23,7 @@ class Navbar extends Component {
   }
 
   render() {
-    let linkCompartilhamento = "http://vozativa.org/compare/";
+    let linkCompartilhamento = "www.vozativa.org/";
     let textoCompartilhamento =
       "Nos diga o que você defende e em oito minutos a gente apresenta candidatos alinhados com você. " +
       linkCompartilhamento;

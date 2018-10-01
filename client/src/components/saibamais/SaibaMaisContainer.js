@@ -88,7 +88,7 @@ class SaibaMaisContainer extends Component {
       </div>
     );
     let linkCompartilhamento =
-      "http://vozativa.org/compare/" +
+      "www.vozativa.org/compare/" +
       this.props.match.params.candidato +
       "/" +
       this.props.match.params.votos;

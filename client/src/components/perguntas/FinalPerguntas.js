@@ -33,7 +33,7 @@ class FinalPerguntas extends Component {
 
   geraUrl() {
     const url =
-      "http://www.vozativa.org/" +
+      "www.vozativa.org/" +
       this.props.candidatos.filtro.estado +
       "/" +
       criaURL(this.props.usuario.arrayRespostasUsuario);
