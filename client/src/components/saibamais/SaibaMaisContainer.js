@@ -3,7 +3,10 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 
+import { Nav, NavItem, NavLink, TabContent, TabPane } from "reactstrap";
+
 import TabelaPerguntas from "./tabelaPerguntas/TabelaPerguntas";
+import TabelaVotacoes from "./tabelaVotacoes/TabelaVotacoes";
 import PontuacaoPorTema from "./pontuacaoPorTema/PontuacaoTema";
 
 import { isMobile } from "react-device-detect";
@@ -17,13 +20,28 @@ import isEmpty from "../../validation/is-empty";
 
 import { getArrayUrl, getDict } from "../../constantes/tratamentoUrls";
 
-import "./CompareContainer.css";
+import "./SaibaMaisContainer.css";
 import Spinner from "../common/Spinner";
+import classnames from "classnames";
 
-class CompareContainer extends Component {
+class SaibaMaisContainer extends Component {
   constructor(props) {
     super(props);
-    this.state = { votos: "" };
+
+    this.toggle = this.toggle.bind(this);
+
+    this.state = {
+      votos: "",
+      activeTab: "1"
+    };
+  }
+
+  toggle(tab) {
+    if (this.state.activeTab !== tab) {
+      this.setState({
+        activeTab: tab
+      });
+    }
   }
 
   render() {
@@ -51,14 +69,20 @@ class CompareContainer extends Component {
             <p>
               {dadosCandidato.sg_partido}/{dadosCandidato.uf}
             </p>
-            <p>(novo!) {" "}<a
-              className="btn btn-link"
-              align="right"
-              target="_blank"
-              href={"https://eleicoes.datapedia.info/candidato/historico/" + dadosCandidato.cpf}
-            >
-              histórico 
-            </a></p>
+            <p>
+              (novo!){" "}
+              <a
+                className="btn btn-link"
+                align="right"
+                target="_blank"
+                href={
+                  "https://eleicoes.datapedia.info/candidato/historico/" +
+                  dadosCandidato.cpf
+                }
+              >
+                histórico
+              </a>
+            </p>
           </div>
         </div>
       </div>
@@ -123,7 +147,8 @@ class CompareContainer extends Component {
           >
             <span className="icon-facebook" />
           </a>
-          {!isMobile && <a
+          {!isMobile && (
+            <a
               href={
                 "https://web.whatsapp.com/send?text=" + textoCompartilhamento
               }
@@ -132,13 +157,16 @@ class CompareContainer extends Component {
               target="_blank"
             >
               <span className="icon-zapzap" />
-            </a>}
-            {isMobile && <a
+            </a>
+          )}
+          {isMobile && (
+            <a
               href={"whatsapp://send?text=" + textoCompartilhamento}
               className="nav-link"
             >
               <span className="icon-zapzap" />
-            </a>}
+            </a>
+          )}
         </div>
         <div className="row">
           <div className="col-md-3">
@@ -157,10 +185,46 @@ class CompareContainer extends Component {
             {this.props.candidatos.isCarregando || isEmpty(dadosCandidato) ? (
               <Spinner />
             ) : (
-              <TabelaPerguntas
-                respostas={dadosCandidato.respostas}
-                votos={getArrayUrl(this.state.votos)}
-              />
+              <div>
+                <Nav tabs>
+                  <NavItem>
+                    <NavLink
+                      className={classnames({
+                        active: this.state.activeTab === "1"
+                      })}
+                      onClick={() => {
+                        this.toggle("1");
+                      }}
+                    >
+                      Compare
+                    </NavLink>
+                  </NavItem>
+                  <NavItem>
+                    <NavLink
+                      className={classnames({
+                        active: this.state.activeTab === "2"
+                      })}
+                      onClick={() => {
+                        this.toggle("2");
+                      }}
+                    >
+                      Na câmara
+                    </NavLink>
+                  </NavItem>
+                </Nav>
+
+                <TabContent activeTab={this.state.activeTab}>
+                  <TabPane tabId="1">
+                    <TabelaPerguntas
+                      respostas={dadosCandidato.respostas}
+                      votos={getArrayUrl(this.state.votos)}
+                    />
+                  </TabPane>
+                  <TabPane tabId="2">
+                    <TabelaVotacoes />
+                  </TabPane>
+                </TabContent>
+              </div>
             )}
           </div>
         </div>
@@ -186,7 +250,7 @@ class CompareContainer extends Component {
   }
 }
 
-CompareContainer.propTypes = {
+SaibaMaisContainer.propTypes = {
   getDadosCandidato: PropTypes.func.isRequired,
   calculaScorePorTema: PropTypes.func.isRequired,
   setFiltroCandidatos: PropTypes.func.isRequired
@@ -198,4 +262,4 @@ const mapStateToProps = state => ({
 export default connect(
   mapStateToProps,
   { getDadosCandidato, calculaScorePorTema, setFiltroCandidatos }
-)(CompareContainer);
+)(SaibaMaisContainer);
