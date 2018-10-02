@@ -122,7 +122,12 @@ class TabelaVotacoes extends Component {
               ) : null}
             </tr>
             <tr key={elem.key}>
-              <td dangerouslySetInnerHTML={{ __html: clean }} />
+              <td
+                dangerouslySetInnerHTML={{
+                  __html: elem.id_projeto + " - " + clean
+                }}
+              />
+              {console.log(elem)}
               <td
                 className={
                   "text-center table-row-center " +
