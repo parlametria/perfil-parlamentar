@@ -199,6 +199,7 @@ class CandidatosContainer extends Component {
             }
             arrayRespostasUsuario={arrayRespostasUsuario}
             email={candidato.email}
+            reeleicao={candidato.reeleicao === "0" ? false : true}
           />
         );
       }
