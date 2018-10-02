@@ -10,7 +10,6 @@ import sanitizeHtml from "sanitize-html";
 import PropTypes from "prop-types";
 
 import "./tabelaPerguntas.css";
-import classnames from "classnames";
 
 class TabelaPerguntas extends Component {
   constructor(props) {

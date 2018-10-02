@@ -9,8 +9,6 @@ import sanitizeHtml from "sanitize-html";
 
 import PropTypes from "prop-types";
 
-import classnames from "classnames";
-
 class TabelaVotacoes extends Component {
   constructor(props) {
     super(props);
@@ -47,8 +45,8 @@ class TabelaVotacoes extends Component {
         id_votacao: dadosVotacoes[i].id_votacao,
         id_projeto: dadosVotacoes[i].numero_proj_lei,
         tema: dadosVotacoes[i].tema,
-        titulo: dadosVotacoes[i].titulo
-        //descricao
+        titulo: dadosVotacoes[i].titulo,
+        descricao: dadosVotacoes[i].descricao
       });
     });
 
@@ -56,6 +54,16 @@ class TabelaVotacoes extends Component {
       if (a.key > b.key) return 1;
       else if (a.key < b.key) return -1;
       else return 0;
+    });
+
+    votacoes.sort((a, b) => {
+      if (a.tema > b.tema) return 2;
+      else if (a.tema < b.tema) return -2;
+      else {
+        if (a.id_projeto > b.id_projeto) return 1;
+        else if (a.id_projeto < b.id_projeto) return -1;
+        else return 0;
+      }
     });
 
     function getValorVotacao(num) {
@@ -124,10 +132,17 @@ class TabelaVotacoes extends Component {
             <tr key={elem.key}>
               <td
                 dangerouslySetInnerHTML={{
-                  __html: elem.id_projeto + " - " + clean
+                  __html:
+                    "<b>" +
+                    elem.id_projeto +
+                    " - " +
+                    clean +
+                    "</b>" +
+                    "</br> " +
+                    elem.descricao
                 }}
               />
-              {console.log(elem)}
+
               <td
                 className={
                   "text-center table-row-center " +

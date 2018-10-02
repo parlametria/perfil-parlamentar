@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 
 import { connect } from "react-redux";
-import { BrowserView, MobileView } from "react-device-detect";
 import { isMobile } from "react-device-detect";
 
 import PropTypes from "prop-types";
@@ -42,8 +41,8 @@ class FinalPerguntas extends Component {
 
   render() {
     let linkCompartilhamento = this.geraUrl();
-    let textoCompartilhamento =  "Veja minhas respostas na plataforma VozAtiva! " +
-    linkCompartilhamento;
+    let textoCompartilhamento =
+      "Veja minhas respostas na plataforma VozAtiva! " + linkCompartilhamento;
     return (
       <div className="container tutorial p-3">
         <div className="text-center">
@@ -58,11 +57,11 @@ class FinalPerguntas extends Component {
         </h4>
 
         <div className="text-center">
-        {isMobile && 
-          <button className="btn btn-outline-primary" onClick={this.verAgora}>
-            Ver agora
-          </button>}
-          {" "}
+          {isMobile && (
+            <button className="btn btn-outline-primary" onClick={this.verAgora}>
+              Ver agora
+            </button>
+          )}{" "}
           <button
             className="btn btn-outline-primary"
             onClick={this.continuarRespondendo}
@@ -94,13 +93,16 @@ class FinalPerguntas extends Component {
               >
                 <span className="icon-facebook share-icon" />
               </a>
-              {isMobile && <a
+              {isMobile && (
+                <a
                   href={"whatsapp://send?text=" + textoCompartilhamento}
                   className="nav-link"
                 >
                   <span className="icon-zapzap share-icon" />
-                </a>}
-                {!isMobile && <a
+                </a>
+              )}
+              {!isMobile && (
+                <a
                   href={
                     "https://web.whatsapp.com/send?text=" +
                     textoCompartilhamento
@@ -110,7 +112,8 @@ class FinalPerguntas extends Component {
                   target="_blank"
                 >
                   <span className="icon-zapzap share-icon" />
-                </a>}
+                </a>
+              )}
             </div>
           </div>
         </div>
