@@ -100,6 +100,53 @@ class SaibaMaisContainer extends Component {
 
     const tabela = !isEmpty(dadosCandidato.votacoes) ? (
       <div>
+        <div className="share-compare text-center">
+          <a
+            href={
+              "https://twitter.com/intent/tweet/?text=" + textoCompartilhamento
+            }
+            data-show-count="false"
+            className="btn btn-link"
+            target="_blank"
+          >
+            <span className="icon-twitter share-icon" />
+          </a>
+          <a
+            href={
+              "https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2F" +
+              "vozativa.org/compare/" +
+              this.props.match.params.candidato +
+              "/" +
+              this.props.match.params.votos +
+              "%2F&amp;src=sdkpreparse"
+            }
+            data-show-count="false"
+            className="btn btn-link"
+            target="_blank"
+          >
+            <span className="icon-facebook share-icon" />
+          </a>
+          {!isMobile && (
+            <a
+              href={
+                "https://web.whatsapp.com/send?text=" + textoCompartilhamento
+              }
+              data-show-count="false"
+              className="btn btn-link"
+              target="_blank"
+            >
+              <span className="icon-zapzap share-icon" />
+            </a>
+          )}
+          {isMobile && (
+            <a
+              href={"whatsapp://send?text=" + textoCompartilhamento}
+              className="btn btn-link"
+            >
+              <span className="icon-zapzap share-icon" />
+            </a>
+          )}
+        </div>
         <Nav tabs>
           <NavItem>
             <NavLink
@@ -110,7 +157,7 @@ class SaibaMaisContainer extends Component {
                 this.toggle("1");
               }}
             >
-              Compare
+              no Voz Ativa
             </NavLink>
           </NavItem>
           <NavItem>
@@ -122,7 +169,7 @@ class SaibaMaisContainer extends Component {
                 this.toggle("2");
               }}
             >
-              Na câmara
+              Na câmara <span className="badge badge-success">novo!</span>
             </NavLink>
           </NavItem>
         </Nav>
@@ -155,65 +202,9 @@ class SaibaMaisContainer extends Component {
           </strong>{" "}
           entre você e {dadosCandidato.nome_urna}
         </h4>
-        <div className="row">
-          <div className="col-md-3">
-            <Link to="/" className="btn btn-link">
-              <span className="icon-back" /> Voltar para o quiz
-            </Link>
-          </div>
-          <div className="col-md-9" align="right">
-            <span className="navbar-text">
-              compartilhe o match com {dadosCandidato.nome_urna}
-            </span>
-          </div>
-        </div>
-        <div className="row justify-content-end">
-          <a
-            href={
-              "https://twitter.com/intent/tweet/?text=" + textoCompartilhamento
-            }
-            data-show-count="false"
-            className="nav-link"
-            target="_blank"
-          >
-            <span className="icon-twitter" />
-          </a>
-          <a
-            href={
-              "https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2F" +
-              "vozativa.org/compare/" +
-              this.props.match.params.candidato +
-              "/" +
-              this.props.match.params.votos +
-              "%2F&amp;src=sdkpreparse"
-            }
-            data-show-count="false"
-            className="nav-link"
-            target="_blank"
-          >
-            <span className="icon-facebook" />
-          </a>
-          {!isMobile && (
-            <a
-              href={
-                "https://web.whatsapp.com/send?text=" + textoCompartilhamento
-              }
-              data-show-count="false"
-              className="nav-link"
-              target="_blank"
-            >
-              <span className="icon-zapzap" />
-            </a>
-          )}
-          {isMobile && (
-            <a
-              href={"whatsapp://send?text=" + textoCompartilhamento}
-              className="nav-link"
-            >
-              <span className="icon-zapzap" />
-            </a>
-          )}
-        </div>
+        <Link to="/" className="btn btn-link">
+          <span className="icon-back" /> Voltar para o quiz
+        </Link>
         <div className="row">
           <div className="col-md-3">
             {this.props.candidatos.isCarregando || isEmpty(dadosCandidato) ? (

@@ -88,3 +88,7 @@ a.link-inverse:active {
 .badge-success {
   background-color: #41c083;
 }
+
+a.nav-link:not([href]):not([tabindex]) {
+  color: #fff;
+}
