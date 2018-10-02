@@ -127,7 +127,7 @@ class Home extends Component {
                   filtro.estado !== "" && (
                     <div className="text-center mb-3">
                       <button
-                        className="btn btn-secondary"
+                        className="btn btn-secondary btn-lg"
                         onClick={this.vamosComecar}
                       >
                         Vamos Começar!

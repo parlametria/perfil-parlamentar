@@ -4,7 +4,7 @@ export default () => {
   return (
     <div>
       <footer>
-        <div className="container">
+        <div className="container d-none d-sm-block">
           <div className="row">
             <div className="col-md-4">
               <h4 className="footer-title">O que é a Rede Advocacy?</h4>
