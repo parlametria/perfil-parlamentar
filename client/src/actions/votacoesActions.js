@@ -10,7 +10,6 @@ export const getDadosVotacoes = () => dispatch => {
   Object.keys(votacoes).forEach(id => {
     dadosVotacoes[votacoes[id].id_votacao] = votacoes[id];
   });
-  console.log(dadosVotacoes);
 
   dispatch({ type: SET_DADOS_VOTACOES, dadosVotacoes });
 };

@@ -39,8 +39,6 @@ class TabelaVotacoes extends Component {
 
     const votacoesCandidato = this.props.candidatos.dadosCandidato.votacoes;
 
-    console.log(votacoesCandidato);
-
     let votacoes = [];
 
     Object.keys(dadosVotacoes).map(i => {
@@ -98,9 +96,7 @@ class TabelaVotacoes extends Component {
     if (!isEmpty(votacoes) && !isEmpty(votacoesCandidato)) {
       indiceUltimo = paginaAtual * votacoesPorPagina;
       indicePrimeiro = indiceUltimo - votacoesPorPagina;
-      votacoesExibidas = votacoes; //votacoes.slice(indicePrimeiro, indiceUltimo);
-
-      console.log(votacoesExibidas);
+      votacoesExibidas = votacoes.slice(indicePrimeiro, indiceUltimo);
 
       let temaExibido = "";
       let change = false;
@@ -141,6 +137,24 @@ class TabelaVotacoes extends Component {
       });
     }
 
+    const numeroPaginas = [];
+    for (let i = 1; i <= Math.ceil(votacoes.length / votacoesPorPagina); i++) {
+      numeroPaginas.push(i);
+    }
+
+    renderNumeroPaginas = numeroPaginas.map(num => {
+      return (
+        <PaginationLink
+          key={num}
+          id={num}
+          onClick={e => this.handleClick(e, num)}
+        >
+          {num}
+        </PaginationLink>
+      );
+    });
+    this.qntPaginas = numeroPaginas.length;
+
     return (
       <div className="table-responsive">
         <Table className="table-bordered" hover pagination={{ pageSize: 5 }}>
@@ -152,6 +166,26 @@ class TabelaVotacoes extends Component {
           </thead>
           {rows}
         </Table>
+
+        <Pagination aria-label="Navegação da tabela" size="sm">
+          <PaginationItem disabled={paginaAtual <= 1}>
+            <PaginationLink
+              previous
+              id={paginaAtual - 1}
+              onClick={e => this.handleClick(e, paginaAtual - 1)}
+            />
+          </PaginationItem>
+
+          {renderNumeroPaginas}
+
+          <PaginationItem disabled={paginaAtual >= this.qntPaginas}>
+            <PaginationLink
+              next
+              id={paginaAtual + 1}
+              onClick={e => this.handleClick(e, paginaAtual + 1)}
+            />
+          </PaginationItem>
+        </Pagination>
       </div>
     );
   }

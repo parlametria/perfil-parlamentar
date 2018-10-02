@@ -46,7 +46,6 @@ class SaibaMaisContainer extends Component {
 
   render() {
     const { dadosCandidato, scoreTema } = this.props.candidatos;
-    console.log(dadosCandidato);
     const perfilCandidato = (
       <div className="compare-person-profile row no-gutters">
         <div className="col-4">
