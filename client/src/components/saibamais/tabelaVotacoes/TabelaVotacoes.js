@@ -37,7 +37,11 @@ class TabelaVotacoes extends Component {
     const { dadosVotacoes } = this.props.votacoes;
     const { paginaAtual, votacoesPorPagina } = this.state;
 
-    const votacoes = [];
+    const votacoesCandidato = this.props.candidatos.dadosCandidato.votacoes;
+
+    console.log(votacoesCandidato);
+
+    let votacoes = [];
 
     Object.keys(dadosVotacoes).map(i => {
       return votacoes.push({
@@ -50,17 +54,53 @@ class TabelaVotacoes extends Component {
       });
     });
 
-    console.log(votacoes);
+    votacoes.sort((a, b) => {
+      if (a.key > b.key) return 1;
+      else if (a.key < b.key) return -1;
+      else return 0;
+    });
+
+    function getValorVotacao(num) {
+      switch (num) {
+        case 1:
+          return "Sim";
+        case 0:
+          return "--";
+        case -1:
+          return "Não";
+        case -2:
+          return "Não sabe";
+        default:
+          return "--";
+      }
+    }
+
+    function getClassVotacao(num) {
+      switch (num) {
+        case 1:
+          return "in-favor";
+        case 0:
+          return "";
+        case -1:
+          return "against";
+        case -2:
+          return "dont-know";
+        default:
+          return "--";
+      }
+    }
 
     let rows,
       indicePrimeiro,
       indiceUltimo,
       votacoesExibidas,
       renderNumeroPaginas;
-    if (!isEmpty(votacoes)) {
+    if (!isEmpty(votacoes) && !isEmpty(votacoesCandidato)) {
       indiceUltimo = paginaAtual * votacoesPorPagina;
       indicePrimeiro = indiceUltimo - votacoesPorPagina;
-      votacoesExibidas = votacoes.slice(indicePrimeiro, indiceUltimo);
+      votacoesExibidas = votacoes; //votacoes.slice(indicePrimeiro, indiceUltimo);
+
+      console.log(votacoesExibidas);
 
       let temaExibido = "";
       let change = false;
@@ -75,6 +115,29 @@ class TabelaVotacoes extends Component {
         const clean = sanitizeHtml(
           votacoesExibidas[elem.key % votacoesPorPagina].titulo
         );
+
+        return (
+          <tbody>
+            <tr key={"tema" + temaExibido}>
+              {change ? (
+                <td colSpan="3" className="table-title">
+                  {temaExibido}
+                </td>
+              ) : null}
+            </tr>
+            <tr key={elem.key}>
+              <td dangerouslySetInnerHTML={{ __html: clean }} />
+              <td
+                className={
+                  "text-center table-row-center " +
+                  getClassVotacao(votacoesCandidato[elem.id_votacao])
+                }
+              >
+                {getValorVotacao(votacoesCandidato[elem.id_votacao])}
+              </td>
+            </tr>
+          </tbody>
+        );
       });
     }
 
@@ -87,7 +150,7 @@ class TabelaVotacoes extends Component {
               <th className="table-th-candidate">Candidato/a</th>
             </tr>
           </thead>
-          {}
+          {rows}
         </Table>
       </div>
     );
@@ -99,7 +162,8 @@ TabelaVotacoes.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  votacoes: state.votacoesReducer
+  votacoes: state.votacoesReducer,
+  candidatos: state.candidatosReducer
 });
 
 export default connect(
