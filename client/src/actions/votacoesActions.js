@@ -5,7 +5,7 @@ import votacoes from "../data/votacoes.json";
 export const getDadosVotacoes = () => dispatch => {
   dispatch(setVotacoesCarregando());
 
-  let dadosVotacoes = [];
+  let dadosVotacoes = {};
 
   Object.keys(votacoes).forEach(id => {
     dadosVotacoes[votacoes[id].id_votacao] = votacoes[id];
