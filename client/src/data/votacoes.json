@@ -118,5 +118,13 @@
     "titulo": "Subsídios dados a empresas de tecnologia que façam investimentos em pesquisa, inovação e modernização dentro do território brasileiro",
     "descricao": "Subsídios dados a empresas de tecnologia que façam investimentos em pesquisa, inovação e modernização dentro do território brasileiro.",
     "tema": "Nova Economia"
+  },
+  "99999": {
+    "key": 15,
+    "numero_proj_lei": "PL 6299/2002",
+    "id_votacao": 99999,
+    "titulo": "Flexibilização das normas para uso de agrotóxicos",
+    "descricao": "O Projeto de Lei 6299/2002 está em tramitação no Congresso e visa flexibilizar a legislação que compreende as normas para uso de agrotóxicos em plantações no país.",
+    "tema": "Meio Ambiente"
   }
 }
