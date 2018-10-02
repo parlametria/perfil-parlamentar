@@ -69,9 +69,8 @@ class SaibaMaisContainer extends Component {
               {dadosCandidato.sg_partido}/{dadosCandidato.uf}
             </p>
             <p>
-              (novo!){" "}
               <a
-                className="btn btn-link"
+                className="btn btn-primary"
                 align="right"
                 target="_blank"
                 href={
@@ -79,8 +78,8 @@ class SaibaMaisContainer extends Component {
                   dadosCandidato.cpf
                 }
               >
-                histórico
-              </a>
+                histórico <span className="badge badge-success">novo!</span>
+              </a> 
             </p>
           </div>
         </div>
