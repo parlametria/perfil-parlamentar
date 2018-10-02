@@ -1,6 +1,6 @@
 {
   "6259": {
-    "key": "0",
+    "key": 0,
     "numero_proj_lei": "PL 4148/2008",
     "id_votacao": 6259,
     "titulo": "Rotulagem de Alimentos Transgênicos",
@@ -8,7 +8,7 @@
     "tema": "Meio Ambiente/Integridade e Transparência"
   },
   "4968": {
-    "key": "1",
+    "key": 1,
     "numero_proj_lei": "PL 1876/1999",
     "id_votacao": 4968,
     "titulo": "Mudanças no Código Florestal",
@@ -16,7 +16,7 @@
     "tema": "Meio Ambiente"
   },
   "6517": {
-    "key": "2",
+    "key": 2,
     "numero_proj_lei": "PEC 171/1993",
     "id_votacao": 6517,
     "titulo": "Redução da Maioridade Penal",
@@ -24,7 +24,7 @@
     "tema": "Direitos Humanos"
   },
   "7252": {
-    "key": "3",
+    "key": 3,
     "numero_proj_lei": "PEC 241/2016",
     "id_votacao": 7252,
     "titulo": "PEC do congelamento de gastos públicos",
@@ -32,7 +32,7 @@
     "tema": "Direitos Humanos"
   },
   "8175": {
-    "key": "4",
+    "key": 4,
     "numero_proj_lei": "PDC 886/2018",
     "id_votacao": 8175,
     "titulo": "Intervenção Federal no Rio de Janeiro",
@@ -40,7 +40,7 @@
     "tema": "Direitos Humanos"
   },
   "7317": {
-    "key": "5",
+    "key": 5,
     "numero_proj_lei": "PL 2516/2015",
     "id_votacao": 7317,
     "titulo": "Lei da Migração",
@@ -48,7 +48,7 @@
     "tema": "Direitos Humanos"
   },
   "6531": {
-    "key": "6",
+    "key": 6,
     "numero_proj_lei": "PL 1057/2007",
     "id_votacao": 6531,
     "titulo": "Infanticídio Indígena",
@@ -56,7 +56,7 @@
     "tema": "Direitos Humanos"
   },
   "7927": {
-    "key": "7",
+    "key": 7,
     "numero_proj_lei": "PL 8843/2017",
     "id_votacao": 7927,
     "titulo": "Regulamentação de acordos de leniência",
@@ -64,7 +64,7 @@
     "tema": "Integridade e Transparência"
   },
   "7291": {
-    "key": "8",
+    "key": 8,
     "numero_proj_lei": "PL 4850/2016",
     "id_votacao": 7291,
     "titulo": "Tipificação de crimes eleitorais",
@@ -72,7 +72,7 @@
     "tema": "Integridade e Transparência"
   },
   "6608": {
-    "key": "9",
+    "key": 9,
     "numero_proj_lei": "PL 4474/2004",
     "id_votacao": 6608,
     "titulo": "Limite de transferências voluntárias em anos de eleição aos municípios",
@@ -80,7 +80,7 @@
     "tema": "Integridade e Transparência"
   },
   "6095": {
-    "key": "10",
+    "key": 10,
     "numero_proj_lei": "PLP 177/2012",
     "id_votacao": 6095,
     "titulo": "Normas de repasses ou parcerias entre o setor público e ONGs",
@@ -88,7 +88,7 @@
     "tema": "Nova Economia"
   },
   "8309": {
-    "key": "11",
+    "key": 11,
     "numero_proj_lei": "MPV 809/2017",
     "id_votacao": 8309,
     "titulo": "Contribuição para o fundo de manutenção de unidades em conservação por parte de empreendimentos com grande impacto ambiental",
