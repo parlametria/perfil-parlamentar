@@ -46,7 +46,7 @@ class SaibaMaisContainer extends Component {
 
   render() {
     const { dadosCandidato, scoreTema } = this.props.candidatos;
-
+    console.log(dadosCandidato);
     const perfilCandidato = (
       <div className="compare-person-profile row no-gutters">
         <div className="col-4">
@@ -99,6 +99,54 @@ class SaibaMaisContainer extends Component {
       dadosCandidato.nome_urna +
       ". Mais informações: " +
       linkCompartilhamento;
+
+    const tabela = !isEmpty(dadosCandidato.votacoes) ? (
+      <div>
+        <Nav tabs>
+          <NavItem>
+            <NavLink
+              className={classnames({
+                active: this.state.activeTab === "1"
+              })}
+              onClick={() => {
+                this.toggle("1");
+              }}
+            >
+              Compare
+            </NavLink>
+          </NavItem>
+          <NavItem>
+            <NavLink
+              className={classnames({
+                active: this.state.activeTab === "2"
+              })}
+              onClick={() => {
+                this.toggle("2");
+              }}
+            >
+              Na câmara
+            </NavLink>
+          </NavItem>
+        </Nav>
+
+        <TabContent activeTab={this.state.activeTab}>
+          <TabPane tabId="1">
+            <TabelaPerguntas
+              respostas={dadosCandidato.respostas}
+              votos={getArrayUrl(this.state.votos)}
+            />
+          </TabPane>
+          <TabPane tabId="2">
+            <TabelaVotacoes />
+          </TabPane>
+        </TabContent>
+      </div>
+    ) : (
+      <TabelaPerguntas
+        respostas={dadosCandidato.respostas}
+        votos={getArrayUrl(this.state.votos)}
+      />
+    );
 
     return (
       <div className="container">
@@ -185,46 +233,7 @@ class SaibaMaisContainer extends Component {
             {this.props.candidatos.isCarregando || isEmpty(dadosCandidato) ? (
               <Spinner />
             ) : (
-              <div>
-                <Nav tabs>
-                  <NavItem>
-                    <NavLink
-                      className={classnames({
-                        active: this.state.activeTab === "1"
-                      })}
-                      onClick={() => {
-                        this.toggle("1");
-                      }}
-                    >
-                      Compare
-                    </NavLink>
-                  </NavItem>
-                  <NavItem>
-                    <NavLink
-                      className={classnames({
-                        active: this.state.activeTab === "2"
-                      })}
-                      onClick={() => {
-                        this.toggle("2");
-                      }}
-                    >
-                      Na câmara
-                    </NavLink>
-                  </NavItem>
-                </Nav>
-
-                <TabContent activeTab={this.state.activeTab}>
-                  <TabPane tabId="1">
-                    <TabelaPerguntas
-                      respostas={dadosCandidato.respostas}
-                      votos={getArrayUrl(this.state.votos)}
-                    />
-                  </TabPane>
-                  <TabPane tabId="2">
-                    <TabelaVotacoes />
-                  </TabPane>
-                </TabContent>
-              </div>
+              tabela
             )}
           </div>
         </div>
