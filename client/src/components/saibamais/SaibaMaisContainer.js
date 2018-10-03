@@ -98,55 +98,57 @@ class SaibaMaisContainer extends Component {
       ". Mais informações: " +
       linkCompartilhamento;
 
-    const tabela = !isEmpty(dadosCandidato.votacoes) ? (
-      <div>
-        <div className="share-compare text-center">
-          <a
-            href={
-              "https://twitter.com/intent/tweet/?text=" + textoCompartilhamento
-            }
-            data-show-count="false"
-            className="btn btn-link"
-            target="_blank"
-          >
-            <span className="icon-twitter share-icon" />
-          </a>
-          <a
-            href={
-              "https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2F" +
-              "vozativa.org/compare/" +
-              this.props.match.params.candidato +
-              "/" +
-              this.props.match.params.votos +
-              "%2F&amp;src=sdkpreparse"
-            }
-            data-show-count="false"
-            className="btn btn-link"
-            target="_blank"
-          >
-            <span className="icon-facebook share-icon" />
-          </a>
-          {!isMobile && (
+    const shareButtons = (
+      <div className="share-compare text-center">
             <a
               href={
-                "https://web.whatsapp.com/send?text=" + textoCompartilhamento
+                "https://twitter.com/intent/tweet/?text=" + textoCompartilhamento
               }
               data-show-count="false"
               className="btn btn-link"
               target="_blank"
             >
-              <span className="icon-zapzap share-icon" />
+              <span className="icon-twitter share-icon" />
             </a>
-          )}
-          {isMobile && (
             <a
-              href={"whatsapp://send?text=" + textoCompartilhamento}
+              href={
+                "https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2F" +
+                "vozativa.org/compare/" +
+                this.props.match.params.candidato +
+                "/" +
+                this.props.match.params.votos +
+                "%2F&amp;src=sdkpreparse"
+              }
+              data-show-count="false"
               className="btn btn-link"
+              target="_blank"
             >
-              <span className="icon-zapzap share-icon" />
+              <span className="icon-facebook share-icon" />
             </a>
-          )}
-        </div>
+            {!isMobile && (
+              <a
+                href={
+                  "https://web.whatsapp.com/send?text=" + textoCompartilhamento
+                }
+                data-show-count="false"
+                className="btn btn-link"
+                target="_blank"
+              >
+                <span className="icon-zapzap share-icon" />
+              </a>
+            )}
+            {isMobile && (
+              <a
+                href={"whatsapp://send?text=" + textoCompartilhamento}
+                className="btn btn-link"
+              >
+                <span className="icon-zapzap share-icon" />
+              </a>
+            )}
+      </div>);
+
+    const tabela = !isEmpty(dadosCandidato.votacoes) ? (
+      <div>
         <Nav tabs>
           <NavItem>
             <NavLink
@@ -219,6 +221,7 @@ class SaibaMaisContainer extends Component {
             <PontuacaoPorTema scoreTema={scoreTema} />
           </div>
           <div className="col-md-9">
+            {shareButtons}
             {this.props.candidatos.isCarregando || isEmpty(dadosCandidato) ? (
               <Spinner />
             ) : (
