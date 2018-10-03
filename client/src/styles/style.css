@@ -84,3 +84,7 @@ a.link-inverse:hover,
 a.link-inverse:active {
   color: #5b2762;
 }
+
+.badge-success {
+  background-color: #41c083;
+}

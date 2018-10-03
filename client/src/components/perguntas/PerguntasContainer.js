@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 
+import { Tooltip } from 'reactstrap';
+
 import Pergunta from "./Pergunta";
 import FinalPerguntas from "./FinalPerguntas";
 import { salvaScoreUsuario } from "../../actions/usuarioActions";
@@ -48,6 +50,15 @@ class PerguntasContainer extends Component {
     this.selecionaTema = this.selecionaTema.bind(this);
     this.escolhePergunta = this.escolhePergunta.bind(this);
     this.togglePerguntaContainer = this.togglePerguntaContainer.bind(this);
+    this.toggle = this.toggle.bind(this);
+  }
+
+  toggle() {
+    if (this.state.copied) {
+      this.setState({
+        copied: !this.state.copied
+      });
+    }
   }
 
   registraResposta(novaResposta) {
@@ -125,29 +136,20 @@ class PerguntasContainer extends Component {
     let temas = [];
     let exibePerguntas;
     let exibeFinalPerguntas;
-  
+
     const botaoCopia = (
-      
-      <div className="PerguntasContainer text-center">
-      
+      <div className="text-center d-none d-sm-block mb-2">
         <CopyToClipboard
           text={this.geraUrl()}
           onCopy={() => this.setState({ copied: true })}
         >
-          <button className="btn btn-outline-primary"  style = {{marginTop: "-2vh"}} >compartilhe suas respostas</button>
+          <button className="btn btn-outline-primary" id="shareBtn">compartilhe suas respostas <span className="badge badge-success">novo!</span></button>
         </CopyToClipboard>  
-        <div>
-        <strong class="strong" > novo!{" "}</strong>
-          </div>
-        </div>
+        <Tooltip placement="right" isOpen={this.state.copied} target="shareBtn" toggle={this.toggle} delay={{ hide: 1000 }}>
+          Link copiado!
+        </Tooltip>
+      </div>
     );
-
-     const copiado = ( <section className="section  text-center">
-          {this.state.copied ? (
-            <span>Link copiado. Agora é só colar onde você quiser compartilhar!</span>
-          ) : null}
-        </section>
-      );
 
     if (!isEmpty(dadosPerguntas)) {
       const dadosPergunta = dadosPerguntas[indexPergunta];
@@ -231,7 +233,6 @@ class PerguntasContainer extends Component {
             </div>
             {pergunta}
             {botaoCopia}
-            {copiado}
           </div>
         </div>
       );

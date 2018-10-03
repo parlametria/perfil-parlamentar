@@ -1,4 +1,4 @@
-a.nav-link:not([href]):not([tabindex]) {
+a.nav-link-b:not([href]):not([tabindex]) {
   color: #cccccc;
 }
 a.nav-link-a:not([href]):not([tabindex]) {
@@ -6,6 +6,9 @@ a.nav-link-a:not([href]):not([tabindex]) {
 }
 a.nav-link-b.active:not([href]):not([tabindex]) {
   color: #41c083;
+}
+a.nav-link-c {
+  color: #ffffff;
 }
 a.nav-link.done:not([href]):not([tabindex]) {
   color: rgba(65, 192, 131, 0.4);

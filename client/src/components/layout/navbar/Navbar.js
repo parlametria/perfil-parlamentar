@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 
 import { connect } from "react-redux";
 
-import { BrowserView, MobileView } from "react-device-detect";
 import { isMobile } from "react-device-detect";
 
 import "./navbar.css";
@@ -93,7 +92,8 @@ class Navbar extends Component {
                     <span className="icon-facebook share-icon" />
                   </a>
                 </li>
-                {!isMobile && <li className="nav-item">
+                {!isMobile && (
+                  <li className="nav-item">
                     <a
                       href={
                         "https://web.whatsapp.com/send?text=" +
@@ -104,10 +104,11 @@ class Navbar extends Component {
                       target="_blank"
                       rel="noopener noreferrer"
                     >
-                      <span className="icon-zapzap share-icon"></span>
+                      <span className="icon-zapzap share-icon" />
                     </a>
-                  </li>}
-               {isMobile && 
+                  </li>
+                )}
+                {isMobile && (
                   <li className="nav-item">
                     <a
                       href={"whatsapp://send?text=" + textoCompartilhamento}
@@ -115,7 +116,8 @@ class Navbar extends Component {
                     >
                       <span className="icon-zapzap share-icon" />
                     </a>
-                  </li>}
+                  </li>
+                )}
               </ul>
             </div>
           </div>

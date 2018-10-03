@@ -277,22 +277,38 @@ export const getDadosCandidato = (
 
   console.time("pega1Candidato");
 
-  axios.get("/api/respostas/candidatos/" + idCandidato).then(respostas => {
-    console.timeEnd("pega1Candidato");
+  axios
+    .get("/api/respostas/candidatos/" + idCandidato)
+    .then(respostas => {
+      console.timeEnd("pega1Candidato");
 
-    const dadosCandidato = respostas.data[0];
+      const dadosCandidato = respostas.data[0];
 
-    const score = comparaRespostas(
-      dadosCandidato.respostas,
-      respostasUsuario,
-      numRespostasUsuario
-    );
+      const score = comparaRespostas(
+        dadosCandidato.respostas,
+        respostasUsuario,
+        numRespostasUsuario
+      );
 
-    dadosCandidato.score = score;
+      dadosCandidato.score = score;
 
-    dispatch({ type: SET_DADOS_CANDIDATO, dadosCandidato });
-    dispatch(calculaScorePorTema(respostasUsuario, arrayRespostasUsuario));
-  });
+      dispatch({ type: SET_DADOS_CANDIDATO, dadosCandidato });
+      dispatch(calculaScorePorTema(respostasUsuario, arrayRespostasUsuario));
+    })
+    .then(() => {
+      axios.get("/api/candidatos/" + idCandidato + "/votacoes").then(res => {
+        const { dadosCandidato } = getState().candidatosReducer;
+
+        const votacoes = !isEmpty(res.data[0]) ? res.data[0].votacoes : {};
+
+        dadosCandidato.votacoes = votacoes;
+
+        dispatch({
+          type: SET_DADOS_CANDIDATO,
+          dadosCandidato: dadosCandidato
+        });
+      });
+    });
 };
 
 export const setCandidatosCarregando = () => {
