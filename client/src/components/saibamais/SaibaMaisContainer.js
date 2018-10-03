@@ -46,6 +46,7 @@ class SaibaMaisContainer extends Component {
 
   render() {
     const { dadosCandidato, scoreTema } = this.props.candidatos;
+    console.log(dadosCandidato)
     const perfilCandidato = (
       <div className="compare-person-profile row no-gutters">
         <div className="col-4">
@@ -68,7 +69,8 @@ class SaibaMaisContainer extends Component {
             <p>
               {dadosCandidato.sg_partido}/{dadosCandidato.uf}
             </p>
-            <p>
+            <p>Está em sua {Number(dadosCandidato.n_candidatura) + 1}ª candidatura </p>
+            {dadosCandidato.n_candidatura > 0 &&  ( <p>
               <a
                 className="btn btn-primary"
                 align="right"
@@ -80,7 +82,7 @@ class SaibaMaisContainer extends Component {
               >
                 histórico <span className="badge badge-success">novo!</span>
               </a> 
-            </p>
+    </p>)}
           </div>
         </div>
       </div>

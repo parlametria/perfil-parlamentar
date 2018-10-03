@@ -116,9 +116,6 @@ class TabelaVotacoes extends Component {
           change = false;
         }
 
-        const clean = sanitizeHtml(
-          votacoesExibidas[elem.key % votacoesPorPagina].titulo
-        );
 
         return (
           <tbody>
