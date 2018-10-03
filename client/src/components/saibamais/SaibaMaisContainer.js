@@ -69,7 +69,7 @@ class SaibaMaisContainer extends Component {
             <p>
               {dadosCandidato.sg_partido}/{dadosCandidato.uf}
             </p>
-            <p>Está em sua {Number(dadosCandidato.n_candidatura) + 1}ª candidatura </p>
+            <p>Está em sua {(Number(dadosCandidato.n_candidatura)=== 0) ? 1 : dadosCandidato.n_candidatura}ª candidatura </p>
             {dadosCandidato.n_candidatura > 0 &&  ( <p>
               <a
                 className="btn btn-primary"
