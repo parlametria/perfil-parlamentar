@@ -136,7 +136,7 @@ class TabelaVotacoes extends Component {
                     "<b>" +
                     elem.id_projeto +
                     " - " +
-                    clean +
+                    elem.titulo +
                     "</b>" +
                     "</br> " +
                     elem.descricao
