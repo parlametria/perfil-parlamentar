@@ -107,7 +107,18 @@ class Candidato extends Component {
                   {this.props.siglaPartido}/{this.props.estado}
                 </div>
                 {this.props.reeleicao && (
-                  <span className="badge badge-success">reeleição</span>
+                  <span className="badge badge-success">
+                    <Link
+                      to={
+                        "compare/" +
+                        this.props.id +
+                        "/" +
+                        criaURL(this.props.arrayRespostasUsuario) + "/true"
+                      }
+                    >
+                      ver atuação
+        </Link>
+                  </span>
                 )}
                 {this.props.respondeu ? barraScore : naoRespondeu}
               </div>

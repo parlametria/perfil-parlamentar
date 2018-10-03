@@ -54,8 +54,8 @@ class SaibaMaisContainer extends Component {
             src={
               dadosCandidato.tem_foto
                 ? "https://s3-sa-east-1.amazonaws.com/fotoscandidatos2018/fotos_tratadas/img_" +
-                  dadosCandidato.cpf +
-                  ".jpg"
+                dadosCandidato.cpf +
+                ".jpg"
                 : "https://s3-sa-east-1.amazonaws.com/fotoscandidatos2018/fotos_tratadas/nophoto.png"
             }
             alt={dadosCandidato.nome_urna}
@@ -71,6 +71,7 @@ class SaibaMaisContainer extends Component {
             </p>
             <p>Está em sua {(Number(dadosCandidato.n_candidatura)=== 0) ? 1 : dadosCandidato.n_candidatura}ª candidatura </p>
             {dadosCandidato.n_candidatura > 0 &&  ( <p>
+
               <a
                 className="btn btn-primary"
                 align="right"
@@ -81,8 +82,8 @@ class SaibaMaisContainer extends Component {
                 }
               >
                 histórico <span className="badge badge-success">novo!</span>
-              </a> 
-    </p>)}
+              </a>
+            </p>)}
           </div>
         </div>
       </div>
@@ -102,51 +103,51 @@ class SaibaMaisContainer extends Component {
 
     const shareButtons = (
       <div className="share-compare text-center">
-            <a
-              href={
-                "https://twitter.com/intent/tweet/?text=" + textoCompartilhamento
-              }
-              data-show-count="false"
-              className="btn btn-link"
-              target="_blank"
-            >
-              <span className="icon-twitter share-icon" />
-            </a>
-            <a
-              href={
-                "https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2F" +
-                "vozativa.org/compare/" +
-                this.props.match.params.candidato +
-                "/" +
-                this.props.match.params.votos +
-                "%2F&amp;src=sdkpreparse"
-              }
-              data-show-count="false"
-              className="btn btn-link"
-              target="_blank"
-            >
-              <span className="icon-facebook share-icon" />
-            </a>
-            {!isMobile && (
-              <a
-                href={
-                  "https://web.whatsapp.com/send?text=" + textoCompartilhamento
-                }
-                data-show-count="false"
-                className="btn btn-link"
-                target="_blank"
-              >
-                <span className="icon-zapzap share-icon" />
-              </a>
-            )}
-            {isMobile && (
-              <a
-                href={"whatsapp://send?text=" + textoCompartilhamento}
-                className="btn btn-link"
-              >
-                <span className="icon-zapzap share-icon" />
-              </a>
-            )}
+        <a
+          href={
+            "https://twitter.com/intent/tweet/?text=" + textoCompartilhamento
+          }
+          data-show-count="false"
+          className="btn btn-link"
+          target="_blank"
+        >
+          <span className="icon-twitter share-icon" />
+        </a>
+        <a
+          href={
+            "https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2F" +
+            "vozativa.org/compare/" +
+            this.props.match.params.candidato +
+            "/" +
+            this.props.match.params.votos +
+            "%2F&amp;src=sdkpreparse"
+          }
+          data-show-count="false"
+          className="btn btn-link"
+          target="_blank"
+        >
+          <span className="icon-facebook share-icon" />
+        </a>
+        {!isMobile && (
+          <a
+            href={
+              "https://web.whatsapp.com/send?text=" + textoCompartilhamento
+            }
+            data-show-count="false"
+            className="btn btn-link"
+            target="_blank"
+          >
+            <span className="icon-zapzap share-icon" />
+          </a>
+        )}
+        {isMobile && (
+          <a
+            href={"whatsapp://send?text=" + textoCompartilhamento}
+            className="btn btn-link"
+          >
+            <span className="icon-zapzap share-icon" />
+          </a>
+        )}
       </div>);
 
     const tabela = !isEmpty(dadosCandidato.votacoes) ? (
@@ -191,11 +192,11 @@ class SaibaMaisContainer extends Component {
         </TabContent>
       </div>
     ) : (
-      <TabelaPerguntas
-        respostas={dadosCandidato.respostas}
-        votos={getArrayUrl(this.state.votos)}
-      />
-    );
+        <TabelaPerguntas
+          respostas={dadosCandidato.respostas}
+          votos={getArrayUrl(this.state.votos)}
+        />
+      );
 
     return (
       <div className="container">
@@ -214,8 +215,8 @@ class SaibaMaisContainer extends Component {
             {this.props.candidatos.isCarregando || isEmpty(dadosCandidato) ? (
               <Spinner />
             ) : (
-              perfilCandidato
-            )}
+                perfilCandidato
+              )}
             <h4 className="compare-title">
               O quanto vocês <strong className="strong">concordam</strong> nos
               temas:
@@ -227,8 +228,8 @@ class SaibaMaisContainer extends Component {
             {this.props.candidatos.isCarregando || isEmpty(dadosCandidato) ? (
               <Spinner />
             ) : (
-              tabela
-            )}
+                tabela
+              )}
           </div>
         </div>
         <div className="my-3">
@@ -241,7 +242,7 @@ class SaibaMaisContainer extends Component {
   }
 
   componentDidMount() {
-    const { candidato, votos } = this.props.match.params;
+    const { candidato, votos, verAtuacao } = this.props.match.params;
     const respostasUsuario = getDict(getArrayUrl(votos));
     const arrayRespostasUsuario = getArrayUrl(votos);
     this.props.getDadosCandidato(
@@ -249,7 +250,15 @@ class SaibaMaisContainer extends Component {
       respostasUsuario,
       arrayRespostasUsuario
     );
-    this.setState({ votos });
+
+    if (verAtuacao) {
+      this.setState({ votos, activeTab: "2" })
+      this.props.history.push("/compare/" + candidato + "/" + votos);
+      console.log();
+    } else {
+      this.setState({ votos });
+    }
+
   }
 }
 
