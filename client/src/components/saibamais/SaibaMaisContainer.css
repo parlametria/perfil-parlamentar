@@ -62,6 +62,8 @@
   }
 }
 
-.share-compare {
-  float: right;
+@media (min-width: 992px) {
+  .share-compare {
+    float: right;
+  }
 }
