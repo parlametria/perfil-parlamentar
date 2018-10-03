@@ -3,7 +3,7 @@ import { Route, Switch } from "react-router-dom";
 import CalculoContainer from "./components/calculo/CalculoContainer";
 import Sobre from "./components/sobre/Sobre";
 import Home from "./components/layout/home/Home";
-import CompareContainer from "./components/compare/CompareContainer";
+import SaibaMaisContainer from "./components/saibamais/SaibaMaisContainer";
 import SouCandidato from "./components/candidatos/SouCandidato";
 
 // The Main component renders one of provided
@@ -23,12 +23,12 @@ const Main = () => (
       <Route
         exact
         path="/compare/:candidato/"
-        render={props => <CompareContainer {...props} />}
+        render={props => <SaibaMaisContainer {...props} />}
       />
       <Route
         exact
         path="/compare/:candidato/:votos"
-        render={props => <CompareContainer {...props} />}
+        render={props => <SaibaMaisContainer {...props} />}
       />
       <Route exact path="/soucandidato" component={SouCandidato} />
     </Switch>

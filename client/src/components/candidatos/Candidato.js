@@ -102,10 +102,13 @@ class Candidato extends Component {
             </div>
             <div className="col-10">
               <div className="person-data">
-                <h5 className="person-name">{this.props.nome} </h5>
+                <h5 className="person-name">{this.props.nome}</h5>
                 <div>
                   {this.props.siglaPartido}/{this.props.estado}
                 </div>
+                {this.props.reeleicao && (
+                  <span className="badge badge-success">reeleição</span>
+                )}
                 {this.props.respondeu ? barraScore : naoRespondeu}
               </div>
             </div>
