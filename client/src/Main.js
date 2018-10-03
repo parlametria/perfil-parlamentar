@@ -30,6 +30,11 @@ const Main = () => (
         path="/compare/:candidato/:votos"
         render={props => <SaibaMaisContainer {...props} />}
       />
+      <Route
+        exact
+        path="/compare/:candidato/:votos/:verAtuacao"
+        render={props => <SaibaMaisContainer {...props} />}
+      />
       <Route exact path="/soucandidato" component={SouCandidato} />
     </Switch>
   </main>
