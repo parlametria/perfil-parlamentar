@@ -76,6 +76,12 @@ class TabelaVotacoes extends Component {
           return "Não";
         case -2:
           return "Não sabe";
+        case 2:
+          return "Obstrução";
+        case 3:
+          return "Abstenção";
+        case 4:
+          return "Art. 17";
         default:
           return "--";
       }
@@ -90,6 +96,12 @@ class TabelaVotacoes extends Component {
         case -1:
           return "against";
         case -2:
+          return "dont-know";
+        case 2:
+          return "dont-know";
+        case 3:
+          return "dont-know";
+        case 4:
           return "dont-know";
         default:
           return "--";
