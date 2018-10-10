@@ -44,6 +44,21 @@ class Candidato extends Component {
         >
           Cobre a participação
         </a>
+        {this.props.reeleicao && (
+          <Link
+            className="person-link"
+            style={{ marginLeft: "10px" }}
+            to={
+              "compare/" +
+              this.props.id +
+              "/" +
+              criaURL(this.props.arrayRespostasUsuario) +
+              "/true"
+            }
+          >
+            ver atuação
+          </Link>
+        )}
       </div>
     );
     const barraScore = (
@@ -106,19 +121,12 @@ class Candidato extends Component {
                 <div>
                   {this.props.siglaPartido}/{this.props.estado}
                 </div>
-                {this.props.reeleicao && (
-                  <span className="badge badge-success">
-                    <Link
-                      to={
-                        "compare/" +
-                        this.props.id +
-                        "/" +
-                        criaURL(this.props.arrayRespostasUsuario) + "/true"
-                      }
-                    >
-                      ver atuação
-        </Link>
-                  </span>
+                {this.props.reeleicao &&
+                  !this.props.reeleito && (
+                    <span className="badge badge-success">reeleição</span>
+                  )}
+                {this.props.reeleito && (
+                  <span className="badge badge-success">reeleito/a</span>
                 )}
                 {this.props.respondeu ? barraScore : naoRespondeu}
               </div>
