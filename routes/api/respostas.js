@@ -144,6 +144,40 @@ router.get("/estados/:uf/responderam", (req, res) => {
   );
 });
 
+// @route   GET api/respostas/estados/<uf>/partidos/
+// @desc    Pega as respostas por partido e estado de quem respondeu
+// @access  Public
+router.get("/estados/:uf/partidos/:sigla", (req, res) => {
+  Resposta.countDocuments(
+    {
+      uf: req.params.uf,
+      sg_partido: req.params.sigla
+    },
+    (err, totalCount) => {
+      let response;
+      if (err) response = { error: true, message: "Error fetching data" };
+
+      Resposta.find(
+        {
+          uf: req.params.uf,
+          sg_partido: req.params.sigla
+        },
+        (err, candidatos) => {
+          response = err
+            ? { status: BAD_REQUEST, message: "Error fetching data" }
+            : {
+                candidatos,
+                total: totalCount,
+                status: SUCCESS
+              };
+
+          res.status(response.status).json(response);
+        }
+      );
+    }
+  );
+});
+
 // @route   GET api/respostas/estados/<uf>/partidos/<sigla>/responderam
 // @desc    Pega as respostas por partido e estado de quem respondeu
 // @access  Public
@@ -255,6 +289,31 @@ router.get("/estados/:uf/naoresponderam", (req, res) => {
       res.status(response.status).json(response);
     });
   });
+});
+
+// @route   GET api/respostas/estados/<uf>/eleitos
+// @desc    Pega as respostas por estado de quem se elegeu
+// @access  Public
+router.get("/estados/:uf/eleitos", (req, res) => {
+  Resposta.countDocuments(
+    { uf: req.params.uf, eleito: true },
+    (err, totalCount) => {
+      let response;
+      if (err) response = { error: true, message: "Error fetching data" };
+
+      Resposta.find({ uf: req.params.uf, eleito: true }, (err, candidatos) => {
+        response = err
+          ? { status: BAD_REQUEST, message: "Error fetching data" }
+          : {
+              candidatos,
+              total: totalCount,
+              status: SUCCESS
+            };
+
+        res.status(response.status).json(response);
+      });
+    }
+  );
 });
 
 module.exports = router;
