@@ -17,7 +17,9 @@ import {
   SET_PARTIDOS,
   SET_PAGINACAO,
   SET_CANDIDATOS_FILTRANDO,
-  SET_ACTIVE_TAB
+  SET_ACTIVE_TAB,
+  SET_TOTAL_ELEITOS_ESTADO,
+  SET_TOTAL_ELEITOS_PARTIDO
 } from "../actions/types";
 
 // candidatesVotings: {id_votacao: voto}
@@ -28,11 +30,13 @@ const initialState = {
   totalRespostasEstado: 0,
   totalResponderamPartido: 0,
   totalRespostasPartido: 0,
+  totalEleitosPartido: 0,
+  totalEleitosEstado: 0,
   dadosCandidatos: {},
   isCarregando: false,
   isFiltrandoPorNome: false,
   scoreCandidatos: {},
-  filtro: { nome: "", partido: "TODOS", estado: "", eleitos: true },
+  filtro: { nome: "", partido: "TODOS", estado: "" },
   candidatosFiltrados: [],
   candidatosRanqueados: [],
   partidos: [],
@@ -144,6 +148,16 @@ export default function(state = initialState, action) {
       return {
         ...state,
         activeTab: action.activeTab
+      };
+    case SET_TOTAL_ELEITOS_ESTADO:
+      return {
+        ...state,
+        totalEleitosEstado: action.totalEleitosEstado
+      };
+    case SET_TOTAL_ELEITOS_PARTIDO:
+      return {
+        ...state,
+        totalEleitosPartido: action.totalEleitosPartido
       };
     default:
       return state;
