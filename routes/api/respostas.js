@@ -79,110 +79,141 @@ router.get("/candidatos/naoresponderam", (req, res) => {
 // @desc    Pega as respostas por estado
 // @access  Public
 router.get("/estados/:uf", (req, res) => {
-  query = {}
+  query = {};
   const partido = String(req.query.partido);
   const nome = String(req.query.nome);
 
-  if( nome !== "undefined" && partido !== "undefined"){
-    query = { uf: req.params.uf, sg_partido: partido, $text: { $search: nome } }
-  } else if (nome !== "undefined" ){
-    query = { uf: req.params.uf, $text: { $search: nome } }
-  } else if(partido !== "undefined"){
-    query = { uf: req.params.uf, sg_partido: partido}
-  }else{
-    query =  {uf: req.params.uf}
+  if (nome !== "undefined" && partido !== "undefined") {
+    query = {
+      uf: req.params.uf,
+      sg_partido: partido,
+      $text: { $search: nome }
+    };
+  } else if (nome !== "undefined") {
+    query = { uf: req.params.uf, $text: { $search: nome } };
+  } else if (partido !== "undefined") {
+    query = { uf: req.params.uf, sg_partido: partido };
+  } else {
+    query = { uf: req.params.uf };
   }
-  console.log(query)
-  Resposta.find(query)
-    .then(respostas => res.json(respostas))
-    .catch(err => res.status(BAD_REQUEST).json({ err }));
+  console.log(query);
+
+  Resposta.countDocuments({ uf: req.params.uf }, (err, totalCount) => {
+    let response;
+    if (err) response = { error: true, message: "Error fetching data" };
+
+    Resposta.find(query, (err, candidatos) => {
+      response = err
+        ? { status: BAD_REQUEST, message: "Error fetching data" }
+        : {
+            candidatos,
+            total: totalCount,
+            status: SUCCESS
+          };
+
+      res.status(response.status).json(response);
+    });
+  });
 });
 
 // @route   GET api/respostas/estados/<uf>/responderam
 // @desc    Pega as respostas por estado de quem respondeu
 // @access  Public
 router.get("/estados/:uf/responderam", (req, res) => {
-  Resposta.find({ uf: req.params.uf, respondeu: true })
-    .then(respostas => res.json(respostas))
-    .catch(err => res.status(BAD_REQUEST).json({ err }));
-});
-
-// @route   GET api/respostas/estados/<uf>/responderam/numeroRespostas/totalcandidatos
-// @desc    Pega o número de candidatos que responderam por estado
-// @access  Public
-router.get("/estados/:uf/responderam/totalcandidatos", (req, res) => {
   Resposta.countDocuments(
     { uf: req.params.uf, respondeu: true },
     (err, totalCount) => {
-      if (!err) res.json(totalCount);
-      else res.status(BAD_REQUEST).json(err);
+      let response;
+      if (err) response = { error: true, message: "Error fetching data" };
+
+      Resposta.find(
+        { uf: req.params.uf, respondeu: true },
+        (err, candidatos) => {
+          response = err
+            ? { status: BAD_REQUEST, message: "Error fetching data" }
+            : {
+                candidatos,
+                total: totalCount,
+                status: SUCCESS
+              };
+
+          res.status(response.status).json(response);
+        }
+      );
     }
   );
 });
-
-// @route   GET api/respostas/estados/<id>/totalcandidatos
-// @desc    Pega o total de candidatos por estado
-// @access  Public
-router.get("/estados/:uf/totalcandidatos", (req, res) => {
-  Resposta.countDocuments({ uf: req.params.uf }, (err, totalCount) => {
-    if (!err) res.json(totalCount);
-    else res.status(BAD_REQUEST).json(err);
-  });
-});
-
-// @route   GET api/respostas/estados/<uf>/partidos/<sigla>/totalcandidatos
-// @desc    Pega o total de respostas por estado e partido
-// @access  Public
-router.get("/estados/:uf/partidos/:sigla/totalcandidatos", (req, res) => {
-  Resposta.countDocuments(
-    { uf: req.params.uf, sg_partido: req.params.sigla },
-    (err, totalCount) => {
-      if (!err) res.json(totalCount);
-      else res.status(BAD_REQUEST).json(err);
-    }
-  );
-});
-
-// @route   GET api/respostas/estados/<uf>/partidos/<sigla>/responderam/totalcandidatos
-// @desc    Pega o total de respostas por partido e estado de quem respondeu
-// @access  Public
-router.get(
-  "/estados/:uf/partidos/:sigla/responderam/totalcandidatos",
-  (req, res) => {
-    Resposta.countDocuments(
-      { uf: req.params.uf, sg_partido: req.params.sigla, respondeu: true },
-      (err, totalCount) => {
-        if (!err) res.json(totalCount);
-        else res.status(BAD_REQUEST).json(err);
-      }
-    );
-  }
-);
 
 // @route   GET api/respostas/estados/<uf>/partidos/<sigla>/responderam
 // @desc    Pega as respostas por partido e estado de quem respondeu
 // @access  Public
 router.get("/estados/:uf/partidos/:sigla/responderam", (req, res) => {
-  Resposta.find({
-    uf: req.params.uf,
-    sg_partido: req.params.sigla,
-    respondeu: true
-  })
-    .then(respostas => res.json(respostas))
-    .catch(err => res.status(BAD_REQUEST).json({ err }));
+  Resposta.countDocuments(
+    {
+      uf: req.params.uf,
+      sg_partido: req.params.sigla,
+      respondeu: true
+    },
+    (err, totalCount) => {
+      let response;
+      if (err) response = { error: true, message: "Error fetching data" };
+
+      Resposta.find(
+        {
+          uf: req.params.uf,
+          sg_partido: req.params.sigla,
+          respondeu: true
+        },
+        (err, candidatos) => {
+          response = err
+            ? { status: BAD_REQUEST, message: "Error fetching data" }
+            : {
+                candidatos,
+                total: totalCount,
+                status: SUCCESS
+              };
+
+          res.status(response.status).json(response);
+        }
+      );
+    }
+  );
 });
 
 // @route   GET api/respostas/estados/<uf>/partidos/<sigla>/naoresponderam
 // @desc    Pega as respostas por partido e estado de quem NÃO respondeu
 // @access  Public
 router.get("/estados/:uf/partidos/:sigla/naoresponderam", (req, res) => {
-  Resposta.find({
-    uf: req.params.uf,
-    sg_partido: req.params.sigla,
-    respondeu: false
-  })
-    .then(respostas => res.json(respostas))
-    .catch(err => res.status(BAD_REQUEST).json({ err }));
+  Resposta.countDocuments(
+    {
+      uf: req.params.uf,
+      sg_partido: req.params.sigla,
+      respondeu: false
+    },
+    (err, totalCount) => {
+      let response;
+      if (err) response = { error: true, message: "Error fetching data" };
+
+      Resposta.find(
+        {
+          uf: req.params.uf,
+          sg_partido: req.params.sigla,
+          respondeu: false
+        },
+        (err, candidatos) => {
+          response = err
+            ? { status: BAD_REQUEST, message: "Error fetching data" }
+            : {
+                candidatos,
+                total: totalCount,
+                status: SUCCESS
+              };
+
+          res.status(response.status).json(response);
+        }
+      );
+    }
+  );
 });
 
 // @route   GET api/respostas/estados/<uf>/naoresponderam
