@@ -16,7 +16,8 @@ import {
   SET_CANDIDATOS_RANQUEADOS,
   SET_PARTIDOS,
   SET_PAGINACAO,
-  SET_CANDIDATOS_FILTRANDO
+  SET_CANDIDATOS_FILTRANDO,
+  SET_ACTIVE_TAB
 } from "../actions/types";
 
 // candidatesVotings: {id_votacao: voto}
@@ -31,7 +32,7 @@ const initialState = {
   isCarregando: false,
   isFiltrandoPorNome: false,
   scoreCandidatos: {},
-  filtro: { nome: "", partido: "TODOS", estado: "" },
+  filtro: { nome: "", partido: "TODOS", estado: "", eleitos: true },
   candidatosFiltrados: [],
   candidatosRanqueados: [],
   partidos: [],
@@ -39,7 +40,8 @@ const initialState = {
   scoreTema: {},
   mostrarTodos: false,
   paginacao: { inicio: 0, final: 0, totalCandidatos: 0, paginaAtual: 0 },
-  dadosCandidatoBusca: {}
+  dadosCandidatoBusca: {},
+  activeTab: "eleitos"
 };
 
 export default function(state = initialState, action) {
@@ -137,6 +139,11 @@ export default function(state = initialState, action) {
       return {
         ...state,
         isFiltrandoPorNome: true
+      };
+    case SET_ACTIVE_TAB:
+      return {
+        ...state,
+        activeTab: action.activeTab
       };
     default:
       return state;

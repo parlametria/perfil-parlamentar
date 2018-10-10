@@ -5,6 +5,8 @@ import { connect } from "react-redux";
 
 import FlipMove from "react-flip-move";
 
+import { Nav, NavItem, NavLink, TabContent, TabPane } from "reactstrap";
+
 import isEmpty from "../../validation/is-empty";
 
 import BoasVindas from "./BoasVindas";
@@ -18,7 +20,8 @@ import {
   setCandidatosFiltrados,
   setPartidos,
   setPaginacao,
-  getProximaPaginaCandidatos
+  getProximaPaginaCandidatos,
+  setActiveTab
 } from "../../actions/candidatosActions";
 
 import PropTypes from "prop-types";
@@ -46,6 +49,8 @@ import {
   DEBOUNCE_TIME
 } from "../../constantes/constantesCandidatos";
 
+import classnames from "classnames";
+
 class CandidatosContainer extends Component {
   constructor(props) {
     super(props);
@@ -61,6 +66,11 @@ class CandidatosContainer extends Component {
     this.pegaPrimeiraPagina = this.pegaPrimeiraPagina.bind(this);
     this.pegaCandidatosAnteriores = this.pegaCandidatosAnteriores.bind(this);
     this.pegaProximosCandidatos = this.pegaProximosCandidatos.bind(this);
+    this.setActiveTab = this.setActiveTab.bind(this);
+  }
+
+  setActiveTab(e) {
+    this.props.setActiveTab(e);
   }
 
   pegaPrimeiraPagina() {
@@ -158,7 +168,8 @@ class CandidatosContainer extends Component {
       isCarregando,
       isFiltrandoPorNome,
       mostrarTodos,
-      partidos
+      partidos,
+      activeTab
     } = this.props.candidatos;
 
     const {
@@ -270,7 +281,28 @@ class CandidatosContainer extends Component {
         <div className="panel-master-header">
           <ul className="nav nav-tabs nav-tabs-secondary">
             <li className="nav-item">
-              <a className="nav-link nav-link-a active">Candidatos/as</a>
+              <a
+                className={classnames("nav-link nav-link-a", {
+                  active: activeTab === "eleitos"
+                })}
+                onClick={() => {
+                  this.setActiveTab("eleitos");
+                }}
+              >
+                Eleitos/as
+              </a>
+            </li>
+            <li className="nav-item">
+              <a
+                className={classnames("nav-link nav-link-a", {
+                  active: activeTab === "candidatos"
+                })}
+                onClick={() => {
+                  this.setActiveTab("candidatos");
+                }}
+              >
+                Candidatos/as
+              </a>
             </li>
           </ul>
         </div>
@@ -393,7 +425,8 @@ CandidatosContainer.propTypes = {
   setCandidatosFiltrados: PropTypes.func.isRequired,
   setPartidos: PropTypes.func.isRequired,
   setPaginacao: PropTypes.func.isRequired,
-  getProximaPaginaCandidatos: PropTypes.func.isRequired
+  getProximaPaginaCandidatos: PropTypes.func.isRequired,
+  setActiveTab: PropTypes.func.isRequired
 };
 const mapStateToProps = state => ({
   candidatos: state.candidatosReducer,
@@ -410,6 +443,7 @@ export default connect(
     setCandidatosFiltrados,
     setPartidos,
     setPaginacao,
-    getProximaPaginaCandidatos
+    getProximaPaginaCandidatos,
+    setActiveTab
   }
 )(CandidatosContainer);

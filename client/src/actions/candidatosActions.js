@@ -17,7 +17,8 @@ import {
   SET_TOTAL_RESPONDERAM_ESTADO,
   SET_TOTAL_RESPOSTAS_ESTADO,
   SET_TOTAL_RESPONDERAM_PARTIDO,
-  SET_TOTAL_RESPOSTAS_PARTIDO
+  SET_TOTAL_RESPOSTAS_PARTIDO,
+  SET_ACTIVE_TAB
 } from "./types";
 
 import { TAM_PAGINA, ITENS_POR_REQ } from "../constantes/constantesCandidatos";
@@ -459,4 +460,16 @@ export const getProximaPaginaCandidatos = () => (dispatch, getState) => {
         candidatosRanqueados: candidatosRanqueados
       });
     });
+};
+
+export const setActiveTab = activeTab => (dispatch, getState) => {
+  dispatch({
+    type: SET_ACTIVE_TAB,
+    activeTab: activeTab
+  });
+
+  dispatch({
+    type: SET_ACTIVE_TAB,
+    activeTab: activeTab
+  });
 };
