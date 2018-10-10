@@ -92,7 +92,7 @@ class TabelaPerguntas extends Component {
 
       let temaExibido = "";
       let change = false;
-      rows = perguntasExibidas.map(elem => {
+      rows = perguntasExibidas.map((elem, index) => {
         if (temaExibido !== elem.tema) {
           temaExibido = elem.tema;
           change = true;
@@ -104,7 +104,7 @@ class TabelaPerguntas extends Component {
         );
 
         return (
-          <tbody>
+          <tbody key={"tbody" + index}>
             <tr key={"tema" + temaExibido}>
               {change ? (
                 <td colSpan="3" className="table-title">
