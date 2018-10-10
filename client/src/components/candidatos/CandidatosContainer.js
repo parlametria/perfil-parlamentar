@@ -5,8 +5,6 @@ import { connect } from "react-redux";
 
 import FlipMove from "react-flip-move";
 
-import { Nav, NavItem, NavLink, TabContent, TabPane } from "reactstrap";
-
 import isEmpty from "../../validation/is-empty";
 
 import BoasVindas from "./BoasVindas";
@@ -165,6 +163,8 @@ class CandidatosContainer extends Component {
       totalRespostasEstado,
       totalResponderamPartido,
       totalRespostasPartido,
+      totalEleitosPartido,
+      totalEleitosEstado,
       isCarregando,
       isFiltrandoPorNome,
       mostrarTodos,
@@ -187,10 +187,13 @@ class CandidatosContainer extends Component {
         ? candidatosFiltrados
         : candidatosRanqueados;
 
+    let eleitosResponderam = 0;
+
     const candidatos = candidatosMapeaveis.map(cpf => {
       const candidato = dadosCandidatos[cpf];
 
       if (!isEmpty(candidato)) {
+        if (candidato.respondeu) eleitosResponderam++;
         return (
           <Candidato
             respondeu={candidato.respondeu}
@@ -211,6 +214,11 @@ class CandidatosContainer extends Component {
             arrayRespostasUsuario={arrayRespostasUsuario}
             email={candidato.email}
             reeleicao={candidato.reeleicao === "0" ? false : true}
+            reeleito={
+              candidato.reeleicao === "1" && activeTab === "eleitos"
+                ? true
+                : false
+            }
           />
         );
       }
@@ -225,23 +233,43 @@ class CandidatosContainer extends Component {
 
     const mostraPartido = (
       <div>
-        <h5>
-          Para esse partido,{" "}
-          <strong className="strong">{totalResponderamPartido}</strong> de{" "}
-          <strong className="strong">{totalRespostasPartido}</strong> candidatos
-          responderam ao questionário.
-        </h5>
+        {activeTab === "candidatos" && (
+          <h5>
+            Para esse partido,{" "}
+            <strong className="strong">{totalResponderamPartido}</strong> de{" "}
+            <strong className="strong">{totalRespostasPartido}</strong>{" "}
+            candidatos responderam ao questionário.
+          </h5>
+        )}
+        {activeTab === "eleitos" && (
+          <h5>
+            Para esse partido,{" "}
+            <strong className="strong">{totalEleitosPartido}</strong> dos{" "}
+            <strong className="strong">{candidatosFiltrados.length}</strong>{" "}
+            candidatos eleitos responderam ao questionário.
+          </h5>
+        )}
       </div>
     );
 
     const mostraEstado = (
       <div>
-        <h5>
-          Nesse Estado,{" "}
-          <strong className="strong">{totalResponderamEstado}</strong> de{" "}
-          <strong className="strong">{totalRespostasEstado}</strong> candidatos
-          responderam ao questionário.
-        </h5>
+        {activeTab === "candidatos" && (
+          <h5>
+            Nesse Estado,{" "}
+            <strong className="strong">{totalResponderamEstado}</strong> de{" "}
+            <strong className="strong">{totalRespostasEstado}</strong>{" "}
+            candidatos responderam ao questionário.
+          </h5>
+        )}
+        {activeTab === "eleitos" && (
+          <h5>
+            Nesse Estado,{" "}
+            <strong className="strong">{eleitosResponderam}</strong> dos{" "}
+            <strong className="strong">{totalEleitosEstado}</strong> candidatos
+            eleitos responderam ao questionário.
+          </h5>
+        )}
       </div>
     );
 
