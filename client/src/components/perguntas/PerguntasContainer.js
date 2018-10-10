@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 
-import { Tooltip } from 'reactstrap';
+import { Tooltip } from "reactstrap";
 
 import Pergunta from "./Pergunta";
 import FinalPerguntas from "./FinalPerguntas";
@@ -138,14 +138,26 @@ class PerguntasContainer extends Component {
     let exibeFinalPerguntas;
 
     const botaoCopia = (
-      <div className="text-center d-none d-sm-block mb-2">
+      <div
+        className="text-center d-sm-block mb-2"
+        style={{ marginTop: "-10px" }}
+      >
         <CopyToClipboard
           text={this.geraUrl()}
           onCopy={() => this.setState({ copied: true })}
         >
-          <button className="btn btn-outline-primary" id="shareBtn">compartilhe suas respostas <span className="badge badge-success">novo!</span></button>
-        </CopyToClipboard>  
-        <Tooltip placement="right" isOpen={this.state.copied} target="shareBtn" toggle={this.toggle} delay={{ hide: 1000 }}>
+          <button className="btn btn-outline-primary" id="shareBtn">
+            compartilhe suas respostas{" "}
+            <span className="badge badge-success">novo!</span>
+          </button>
+        </CopyToClipboard>
+        <Tooltip
+          placement="right"
+          isOpen={this.state.copied}
+          target="shareBtn"
+          toggle={this.toggle}
+          delay={{ hide: 1000 }}
+        >
           Link copiado!
         </Tooltip>
       </div>
