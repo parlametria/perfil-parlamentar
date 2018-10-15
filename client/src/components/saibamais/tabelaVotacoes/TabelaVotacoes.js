@@ -5,8 +5,6 @@ import { connect } from "react-redux";
 
 import { getDadosVotacoes } from "../../../actions/votacoesActions";
 
-import sanitizeHtml from "sanitize-html";
-
 import PropTypes from "prop-types";
 
 class TabelaVotacoes extends Component {
@@ -120,7 +118,7 @@ class TabelaVotacoes extends Component {
 
       let temaExibido = "";
       let change = false;
-      rows = votacoesExibidas.map(elem => {
+      rows = votacoesExibidas.map((elem, index) => {
         if (temaExibido !== elem.tema) {
           temaExibido = elem.tema;
           change = true;
@@ -128,9 +126,8 @@ class TabelaVotacoes extends Component {
           change = false;
         }
 
-
         return (
-          <tbody>
+          <tbody key={"tbody" + index}>
             <tr key={"tema" + temaExibido}>
               {change ? (
                 <td colSpan="3" className="table-title">

@@ -8,7 +8,6 @@ import {
   SET_DADOS_CANDIDATO,
   SET_DADOS_CANDIDATO_POR_CPF,
   SET_MOSTRAR_TODOS_CANDIDATOS,
-  SET_MOSTRA_PERGUNTAS,
   SET_CANDIDATOS_RANQUEADOS,
   SET_CANDIDATOS_FILTRADOS,
   SET_PARTIDOS,
@@ -17,7 +16,9 @@ import {
   SET_TOTAL_RESPONDERAM_ESTADO,
   SET_TOTAL_RESPOSTAS_ESTADO,
   SET_TOTAL_RESPONDERAM_PARTIDO,
-  SET_TOTAL_RESPOSTAS_PARTIDO
+  SET_TOTAL_RESPOSTAS_PARTIDO,
+  SET_ACTIVE_TAB,
+  SET_TOTAL_ELEITOS_ESTADO
 } from "./types";
 
 import { TAM_PAGINA, ITENS_POR_REQ } from "../constantes/constantesCandidatos";
@@ -157,7 +158,9 @@ export const getTopNCandidatos = n => (dispatch, getState) => {
   const {
     scoreCandidatos,
     dadosCandidatos,
-    totalRespostasEstado
+    totalRespostasEstado,
+    totalEleitosEstado,
+    activeTab
   } = getState().candidatosReducer;
   let matrizScores = Object.keys(scoreCandidatos).map(key => [
     key,
@@ -197,7 +200,8 @@ export const getTopNCandidatos = n => (dispatch, getState) => {
     setPaginacao({
       inicio: 0,
       final: TAM_PAGINA,
-      totalCandidatos: totalRespostasEstado,
+      totalCandidatos:
+        activeTab === "eleitos" ? totalEleitosEstado : totalRespostasEstado,
       paginaAtual: 1
     })
   );
@@ -207,60 +211,75 @@ export const getDadosCandidatos = () => (dispatch, getState) => {
   dispatch(setCandidatosCarregando());
   console.log("carregando");
 
-  const { filtro } = getState().candidatosReducer;
+  const { filtro, activeTab } = getState().candidatosReducer;
+
+  console.log(activeTab);
 
   let dadosCandidatos = {};
 
-  axios
-    .get(
-      "/api/respostas/estados/" + filtro.estado + "/responderam/totalcandidatos"
-    )
-    .then(totalCandidatos => {
-      dispatch({
-        type: SET_TOTAL_RESPONDERAM_ESTADO,
-        totalResponderam: totalCandidatos.data
+  if (activeTab === "eleitos") {
+    axios
+      .get("/api/respostas/estados/" + filtro.estado + "/eleitos")
+      .then(respostas => {
+        console.timeEnd("getResponderam");
+
+        respostas.data.candidatos.forEach(resp => {
+          dadosCandidatos[resp.cpf] = resp;
+        });
+
+        dispatch({ type: SET_DADOS_CANDIDATOS, dadosCandidatos });
+        dispatch({
+          type: SET_TOTAL_ELEITOS_ESTADO,
+          totalEleitosEstado: respostas.data.total
+        });
+        dispatch(setPartidos());
+        dispatch(calculaScore());
       });
-    });
-
-  axios
-    .get("/api/respostas/estados/" + filtro.estado + "/totalcandidatos")
-    .then(totalCandidatos => {
-      dispatch({
-        type: SET_TOTAL_RESPOSTAS_ESTADO,
-        totalRespostas: totalCandidatos.data
-      });
-    });
-
-  console.time("getResponderam");
-  console.time("getNaoResponderam");
-
-  axios
-    .get("/api/respostas/estados/" + filtro.estado + "/responderam")
-    .then(respostas => {
-      console.timeEnd("getResponderam");
-
-      respostas.data.forEach(resp => {
-        dadosCandidatos[resp.cpf] = resp;
+  } else {
+    axios
+      .get("/api/respostas/estados/" + filtro.estado)
+      .then(totalCandidatos => {
+        dispatch({
+          type: SET_TOTAL_RESPOSTAS_ESTADO,
+          totalRespostas: totalCandidatos.data.total
+        });
       });
 
-      dispatch({ type: SET_DADOS_CANDIDATOS, dadosCandidatos });
-      dispatch(setPartidos());
-      dispatch(calculaScore());
-    });
+    console.time("getResponderam");
+    console.time("getNaoResponderam");
 
-  axios
-    .get("/api/respostas/estados/" + filtro.estado + "/naoresponderam")
-    .then(respostas => {
-      console.timeEnd("getNaoResponderam");
+    axios
+      .get("/api/respostas/estados/" + filtro.estado + "/responderam")
+      .then(respostas => {
+        console.timeEnd("getResponderam");
 
-      respostas.data.data.forEach(resp => {
-        dadosCandidatos[resp.cpf] = resp;
+        respostas.data.candidatos.forEach(resp => {
+          dadosCandidatos[resp.cpf] = resp;
+        });
+
+        dispatch({ type: SET_DADOS_CANDIDATOS, dadosCandidatos });
+        dispatch({
+          type: SET_TOTAL_RESPONDERAM_ESTADO,
+          totalResponderam: respostas.data.total
+        });
+        dispatch(setPartidos());
+        dispatch(calculaScore());
       });
 
-      dispatch({ type: SET_DADOS_CANDIDATOS, dadosCandidatos });
-      dispatch(setPartidos());
-      dispatch(calculaScore());
-    });
+    axios
+      .get("/api/respostas/estados/" + filtro.estado + "/naoresponderam")
+      .then(respostas => {
+        console.timeEnd("getNaoResponderam");
+
+        respostas.data.data.forEach(resp => {
+          dadosCandidatos[resp.cpf] = resp;
+        });
+
+        dispatch({ type: SET_DADOS_CANDIDATOS, dadosCandidatos });
+        dispatch(setPartidos());
+        dispatch(calculaScore());
+      });
+  }
 };
 
 export const getDadosCandidato = (
@@ -335,18 +354,14 @@ export const setCandidatosFiltrados = () => (dispatch, getState) => {
 
   axios
     .get(
-      "api/respostas/estados/" +
-        filtro.estado +
-        "/partidos/" +
-        filtro.partido +
-        "/totalcandidatos"
+      "api/respostas/estados/" + filtro.estado + "/partidos/" + filtro.partido
     )
-    .then(totalCandidatos =>
+    .then(totalCandidatos => {
       dispatch({
         type: SET_TOTAL_RESPOSTAS_PARTIDO,
-        totalRespostas: totalCandidatos.data
-      })
-    );
+        totalRespostas: totalCandidatos.data.total
+      });
+    });
 
   axios
     .get(
@@ -354,12 +369,12 @@ export const setCandidatosFiltrados = () => (dispatch, getState) => {
         filtro.estado +
         "/partidos/" +
         filtro.partido +
-        "/responderam/totalcandidatos"
+        "/responderam"
     )
     .then(totalCandidatos =>
       dispatch({
         type: SET_TOTAL_RESPONDERAM_PARTIDO,
-        totalResponderam: totalCandidatos.data
+        totalResponderam: totalCandidatos.data.total
       })
     );
 
@@ -459,4 +474,13 @@ export const getProximaPaginaCandidatos = () => (dispatch, getState) => {
         candidatosRanqueados: candidatosRanqueados
       });
     });
+};
+
+export const setActiveTab = activeTab => dispatch => {
+  dispatch({
+    type: SET_ACTIVE_TAB,
+    activeTab: activeTab
+  });
+
+  dispatch(getDadosCandidatos());
 };

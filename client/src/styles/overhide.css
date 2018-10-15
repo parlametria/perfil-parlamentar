@@ -47,9 +47,6 @@ a.nav-link.done:not([href]):not([tabindex]) {
   text-transform: lowercase;
   border-radius: 20px;
 }
-.btn-sm {
-  border-radius: 0;
-}
 .btn-primary {
   color: #fff;
   background-color: #a963b3;
