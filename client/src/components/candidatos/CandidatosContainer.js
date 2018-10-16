@@ -402,7 +402,7 @@ class CandidatosContainer extends Component {
     );
 
     const isMinimoVotosOuMostreTodos =
-      quantidadeVotos >= MIN_VOTOS || mostrarTodos;
+      quantidadeVotos >= MIN_VOTOS || mostrarTodos || filtro.estado === "TODOS";
 
     let isExibeBoasVindas = false;
     let isExibeContinueVotando = false;

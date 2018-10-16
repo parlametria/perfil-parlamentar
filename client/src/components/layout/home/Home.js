@@ -97,9 +97,8 @@ class Home extends Component {
         <section className="intro">
           <div className="container">
             <h2 className="intro-title text-center">
-              Nos diga o que você <strong className="strong">defende</strong> e
-              em <strong className="strong">oito minutos</strong> a gente
-              apresenta candidatos alinhados com você
+              Descubra quais deputados/as e
+              candidatos/as são <strong className="strong">alinhados</strong> com o você.
             </h2>
             <div className="d-flex justify-content-center">
               <form>
@@ -109,7 +108,7 @@ class Home extends Component {
                     onChange={this.selecionaEstado}
                     value={filtro.estado}
                   >
-                    <option defaultValue="--">Em que Estado você vota?</option>
+                    <option defaultValue="--">Selecione um Estado</option>
                     {estados()}
                   </select>
                 </div>
