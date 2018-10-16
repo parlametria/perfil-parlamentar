@@ -48,6 +48,15 @@ router.get("/", (req, res) => {
   });
 });
 
+// @route   GET api/respostas/eleitos
+// @desc    Pega as respostas de todos os candidatos eleitos
+// @access  Public
+router.get("/eleitos", (req, res) => {
+  Resposta.find({ eleito: true })
+    .then(respostas => res.json(respostas))
+    .catch(err => res.status(BAD_REQUEST).json({ err }));
+});
+
 // @route   GET api/respostas/candidatos/<cpf>
 // @desc    Pega as respostas de um candidato dado o seu cpf
 // @access  Public
