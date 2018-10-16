@@ -1,3 +1,20 @@
+.btn-group-bordered {
+  height: 2em;
+  color: #41c083;
+  border: 1px solid #a963b3;
+}
+
+.btn-group-bordered > .btn-participation {
+  background-color: #ffffff;
+  font-size: 90%;
+}
+
+.btn-group-bordered > .btn-atuacao {
+  padding-right: 2rem;
+  background-color: #ffffff;
+  font-size: 90%;
+}
+
 .person-data {
   margin-left: 1rem;
 }

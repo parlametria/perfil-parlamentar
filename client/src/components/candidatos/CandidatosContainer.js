@@ -18,7 +18,8 @@ import {
   setCandidatosFiltrados,
   setPartidos,
   setPaginacao,
-  getProximaPaginaCandidatos
+  getProximaPaginaCandidatos,
+  setActiveTab
 } from "../../actions/candidatosActions";
 
 import PropTypes from "prop-types";
@@ -46,6 +47,8 @@ import {
   DEBOUNCE_TIME
 } from "../../constantes/constantesCandidatos";
 
+import classnames from "classnames";
+
 class CandidatosContainer extends Component {
   constructor(props) {
     super(props);
@@ -61,6 +64,11 @@ class CandidatosContainer extends Component {
     this.pegaPrimeiraPagina = this.pegaPrimeiraPagina.bind(this);
     this.pegaCandidatosAnteriores = this.pegaCandidatosAnteriores.bind(this);
     this.pegaProximosCandidatos = this.pegaProximosCandidatos.bind(this);
+    this.setActiveTab = this.setActiveTab.bind(this);
+  }
+
+  setActiveTab(e) {
+    this.props.setActiveTab(e);
   }
 
   pegaPrimeiraPagina() {
@@ -155,10 +163,13 @@ class CandidatosContainer extends Component {
       totalRespostasEstado,
       totalResponderamPartido,
       totalRespostasPartido,
+      totalEleitosPartido,
+      totalEleitosEstado,
       isCarregando,
       isFiltrandoPorNome,
       mostrarTodos,
-      partidos
+      partidos,
+      activeTab
     } = this.props.candidatos;
 
     const {
@@ -176,10 +187,13 @@ class CandidatosContainer extends Component {
         ? candidatosFiltrados
         : candidatosRanqueados;
 
+    let eleitosResponderam = 0;
+
     const candidatos = candidatosMapeaveis.map(cpf => {
       const candidato = dadosCandidatos[cpf];
 
       if (!isEmpty(candidato)) {
+        if (candidato.respondeu) eleitosResponderam++;
         return (
           <Candidato
             respondeu={candidato.respondeu}
@@ -200,6 +214,11 @@ class CandidatosContainer extends Component {
             arrayRespostasUsuario={arrayRespostasUsuario}
             email={candidato.email}
             reeleicao={candidato.reeleicao === "0" ? false : true}
+            reeleito={
+              candidato.reeleicao === "1" && activeTab === "eleitos"
+                ? true
+                : false
+            }
           />
         );
       }
@@ -214,23 +233,43 @@ class CandidatosContainer extends Component {
 
     const mostraPartido = (
       <div>
-        <h5>
-          Para esse partido,{" "}
-          <strong className="strong">{totalResponderamPartido}</strong> de{" "}
-          <strong className="strong">{totalRespostasPartido}</strong> candidatos
-          responderam ao questionário.
-        </h5>
+        {activeTab === "candidatos" && (
+          <h5>
+            Para esse partido,{" "}
+            <strong className="strong">{totalResponderamPartido}</strong> de{" "}
+            <strong className="strong">{totalRespostasPartido}</strong>{" "}
+            candidatos responderam ao questionário.
+          </h5>
+        )}
+        {activeTab === "eleitos" && (
+          <h5>
+            Para esse partido,{" "}
+            <strong className="strong">{totalEleitosPartido}</strong> dos{" "}
+            <strong className="strong">{candidatosFiltrados.length}</strong>{" "}
+            candidatos eleitos responderam ao questionário.
+          </h5>
+        )}
       </div>
     );
 
     const mostraEstado = (
       <div>
-        <h5>
-          Nesse Estado,{" "}
-          <strong className="strong">{totalResponderamEstado}</strong> de{" "}
-          <strong className="strong">{totalRespostasEstado}</strong> candidatos
-          responderam ao questionário.
-        </h5>
+        {activeTab === "candidatos" && (
+          <h5>
+            Nesse Estado,{" "}
+            <strong className="strong">{totalResponderamEstado}</strong> de{" "}
+            <strong className="strong">{totalRespostasEstado}</strong>{" "}
+            candidatos responderam ao questionário.
+          </h5>
+        )}
+        {activeTab === "eleitos" && (
+          <h5>
+            Nesse Estado,{" "}
+            <strong className="strong">{eleitosResponderam}</strong> dos{" "}
+            <strong className="strong">{totalEleitosEstado}</strong> candidatos
+            eleitos responderam ao questionário.
+          </h5>
+        )}
       </div>
     );
 
@@ -270,7 +309,28 @@ class CandidatosContainer extends Component {
         <div className="panel-master-header">
           <ul className="nav nav-tabs nav-tabs-secondary">
             <li className="nav-item">
-              <a className="nav-link nav-link-a active">Candidatos/as</a>
+              <a
+                className={classnames("nav-link nav-link-a", {
+                  active: activeTab === "eleitos"
+                })}
+                onClick={() => {
+                  this.setActiveTab("eleitos");
+                }}
+              >
+                Eleitos/as
+              </a>
+            </li>
+            <li className="nav-item">
+              <a
+                className={classnames("nav-link nav-link-a", {
+                  active: activeTab === "candidatos"
+                })}
+                onClick={() => {
+                  this.setActiveTab("candidatos");
+                }}
+              >
+                Candidatos/as
+              </a>
             </li>
           </ul>
         </div>
@@ -393,7 +453,8 @@ CandidatosContainer.propTypes = {
   setCandidatosFiltrados: PropTypes.func.isRequired,
   setPartidos: PropTypes.func.isRequired,
   setPaginacao: PropTypes.func.isRequired,
-  getProximaPaginaCandidatos: PropTypes.func.isRequired
+  getProximaPaginaCandidatos: PropTypes.func.isRequired,
+  setActiveTab: PropTypes.func.isRequired
 };
 const mapStateToProps = state => ({
   candidatos: state.candidatosReducer,
@@ -410,6 +471,7 @@ export default connect(
     setCandidatosFiltrados,
     setPartidos,
     setPaginacao,
-    getProximaPaginaCandidatos
+    getProximaPaginaCandidatos,
+    setActiveTab
   }
 )(CandidatosContainer);

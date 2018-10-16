@@ -16,7 +16,10 @@ import {
   SET_CANDIDATOS_RANQUEADOS,
   SET_PARTIDOS,
   SET_PAGINACAO,
-  SET_CANDIDATOS_FILTRANDO
+  SET_CANDIDATOS_FILTRANDO,
+  SET_ACTIVE_TAB,
+  SET_TOTAL_ELEITOS_ESTADO,
+  SET_TOTAL_ELEITOS_PARTIDO
 } from "../actions/types";
 
 // candidatesVotings: {id_votacao: voto}
@@ -27,6 +30,8 @@ const initialState = {
   totalRespostasEstado: 0,
   totalResponderamPartido: 0,
   totalRespostasPartido: 0,
+  totalEleitosPartido: 0,
+  totalEleitosEstado: 0,
   dadosCandidatos: {},
   isCarregando: false,
   isFiltrandoPorNome: false,
@@ -39,7 +44,8 @@ const initialState = {
   scoreTema: {},
   mostrarTodos: false,
   paginacao: { inicio: 0, final: 0, totalCandidatos: 0, paginaAtual: 0 },
-  dadosCandidatoBusca: {}
+  dadosCandidatoBusca: {},
+  activeTab: "eleitos"
 };
 
 export default function(state = initialState, action) {
@@ -137,6 +143,21 @@ export default function(state = initialState, action) {
       return {
         ...state,
         isFiltrandoPorNome: true
+      };
+    case SET_ACTIVE_TAB:
+      return {
+        ...state,
+        activeTab: action.activeTab
+      };
+    case SET_TOTAL_ELEITOS_ESTADO:
+      return {
+        ...state,
+        totalEleitosEstado: action.totalEleitosEstado
+      };
+    case SET_TOTAL_ELEITOS_PARTIDO:
+      return {
+        ...state,
+        totalEleitosPartido: action.totalEleitosPartido
       };
     default:
       return state;

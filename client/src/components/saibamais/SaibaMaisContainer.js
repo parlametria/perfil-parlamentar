@@ -46,7 +46,6 @@ class SaibaMaisContainer extends Component {
 
   render() {
     const { dadosCandidato, scoreTema } = this.props.candidatos;
-    console.log(dadosCandidato)
     const perfilCandidato = (
       <div className="compare-person-profile row no-gutters">
         <div className="col-4">
@@ -54,8 +53,8 @@ class SaibaMaisContainer extends Component {
             src={
               dadosCandidato.tem_foto
                 ? "https://s3-sa-east-1.amazonaws.com/fotoscandidatos2018/fotos_tratadas/img_" +
-                dadosCandidato.cpf +
-                ".jpg"
+                  dadosCandidato.cpf +
+                  ".jpg"
                 : "https://s3-sa-east-1.amazonaws.com/fotoscandidatos2018/fotos_tratadas/nophoto.png"
             }
             alt={dadosCandidato.nome_urna}
@@ -69,21 +68,28 @@ class SaibaMaisContainer extends Component {
             <p>
               {dadosCandidato.sg_partido}/{dadosCandidato.uf}
             </p>
-            <p>Está em sua {(Number(dadosCandidato.n_candidatura)=== 0) ? 1 : dadosCandidato.n_candidatura}ª candidatura </p>
-            {dadosCandidato.n_candidatura > 0 &&  ( <p>
-
-              <a
-                className="btn btn-primary"
-                align="right"
-                target="_blank"
-                href={
-                  "https://eleicoes.datapedia.info/candidato/historico/" +
-                  dadosCandidato.cpf
-                }
-              >
-                histórico <span className="badge badge-success">novo!</span>
-              </a>
-            </p>)}
+            <p>
+              Está em sua{" "}
+              {Number(dadosCandidato.n_candidatura) === 0
+                ? 1
+                : dadosCandidato.n_candidatura}
+              ª candidatura{" "}
+            </p>
+            {dadosCandidato.n_candidatura > 0 && (
+              <p>
+                <a
+                  className="btn btn-primary"
+                  align="right"
+                  target="_blank"
+                  href={
+                    "https://eleicoes.datapedia.info/candidato/historico/" +
+                    dadosCandidato.cpf
+                  }
+                >
+                  histórico <span className="badge badge-success">novo!</span>
+                </a>
+              </p>
+            )}
           </div>
         </div>
       </div>
@@ -130,9 +136,7 @@ class SaibaMaisContainer extends Component {
         </a>
         {!isMobile && (
           <a
-            href={
-              "https://web.whatsapp.com/send?text=" + textoCompartilhamento
-            }
+            href={"https://web.whatsapp.com/send?text=" + textoCompartilhamento}
             data-show-count="false"
             className="btn btn-link"
             target="_blank"
@@ -148,7 +152,8 @@ class SaibaMaisContainer extends Component {
             <span className="icon-zapzap share-icon" />
           </a>
         )}
-      </div>);
+      </div>
+    );
 
     const tabela = !isEmpty(dadosCandidato.votacoes) ? (
       <div>
@@ -192,11 +197,11 @@ class SaibaMaisContainer extends Component {
         </TabContent>
       </div>
     ) : (
-        <TabelaPerguntas
-          respostas={dadosCandidato.respostas}
-          votos={getArrayUrl(this.state.votos)}
-        />
-      );
+      <TabelaPerguntas
+        respostas={dadosCandidato.respostas}
+        votos={getArrayUrl(this.state.votos)}
+      />
+    );
 
     return (
       <div className="container">
@@ -215,8 +220,8 @@ class SaibaMaisContainer extends Component {
             {this.props.candidatos.isCarregando || isEmpty(dadosCandidato) ? (
               <Spinner />
             ) : (
-                perfilCandidato
-              )}
+              perfilCandidato
+            )}
             <h4 className="compare-title">
               O quanto vocês <strong className="strong">concordam</strong> nos
               temas:
@@ -228,8 +233,8 @@ class SaibaMaisContainer extends Component {
             {this.props.candidatos.isCarregando || isEmpty(dadosCandidato) ? (
               <Spinner />
             ) : (
-                tabela
-              )}
+              tabela
+            )}
           </div>
         </div>
         <div className="my-3">
@@ -252,13 +257,12 @@ class SaibaMaisContainer extends Component {
     );
 
     if (verAtuacao) {
-      this.setState({ votos, activeTab: "2" })
+      this.setState({ votos, activeTab: "2" });
       this.props.history.push("/compare/" + candidato + "/" + votos);
       console.log();
     } else {
       this.setState({ votos });
     }
-
   }
 }
 
