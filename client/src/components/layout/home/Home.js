@@ -17,7 +17,7 @@ import {
   setPartidos
 } from "../../../actions/candidatosActions";
 
-import { vamosComecar } from "../../../actions/perguntasActions";
+import { vamosComecar, escondePerguntas } from "../../../actions/perguntasActions";
 import { salvaScoreUsuario } from "../../../actions/usuarioActions";
 
 import {
@@ -51,6 +51,11 @@ class Home extends Component {
       partido: "TODOS",
       estado: e.target.value
     };
+
+    if (e.target.value === "TODOS" && isMobile){ 
+      this.props.vamosComecar();
+      this.props.escondePerguntas();
+    }
 
     this.props.setFiltroCandidatos(novoFiltroEstado);
     this.props.getDadosCandidatos();
@@ -154,7 +159,8 @@ Home.propTypes = {
   setFiltroCandidatos: PropTypes.func.isRequired,
   calculaScore: PropTypes.func.isRequired,
   setPartidos: PropTypes.func.isRequired,
-  salvaScoreUsuario: PropTypes.func.isRequired
+  salvaScoreUsuario: PropTypes.func.isRequired,
+  escondePerguntas: PropTypes.func.isRequired
 };
 const mapStateToProps = state => ({
   candidatos: state.candidatosReducer,
@@ -169,6 +175,7 @@ export default connect(
     calculaScore,
     vamosComecar,
     setPartidos,
-    salvaScoreUsuario
+    salvaScoreUsuario,
+    escondePerguntas
   }
 )(Home);

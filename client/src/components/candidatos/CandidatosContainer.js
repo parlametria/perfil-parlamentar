@@ -262,9 +262,16 @@ class CandidatosContainer extends Component {
             candidatos responderam ao questionário.
           </h5>
         )}
-        {activeTab === "eleitos" && (
+        {activeTab === "eleitos" && filtro.estado !== "TODOS" &&(
           <h5>
             Nesse Estado,{" "}
+            <strong className="strong">{eleitosResponderam}</strong> dos{" "}
+            <strong className="strong">{totalEleitosEstado}</strong> candidatos
+            eleitos responderam ao questionário.
+          </h5>
+        )}{activeTab === "eleitos" && filtro.estado === "TODOS" && (
+          <h5>
+            {" "}
             <strong className="strong">{eleitosResponderam}</strong> dos{" "}
             <strong className="strong">{totalEleitosEstado}</strong> candidatos
             eleitos responderam ao questionário.
@@ -320,7 +327,7 @@ class CandidatosContainer extends Component {
                 Eleitos/as
               </a>
             </li>
-            <li className="nav-item">
+            {filtro.estado !== "TODOS" && <li className="nav-item">
               <a
                 className={classnames("nav-link nav-link-a", {
                   active: activeTab === "candidatos"
@@ -331,7 +338,7 @@ class CandidatosContainer extends Component {
               >
                 Candidatos/as
               </a>
-            </li>
+            </li>}
           </ul>
         </div>
         <div className="container">
