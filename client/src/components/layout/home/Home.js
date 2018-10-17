@@ -4,6 +4,7 @@ import React, { Component } from "react";
 import PerguntasContainer from "../../perguntas/PerguntasContainer";
 import CandidatosContainer from "../../candidatos/CandidatosContainer";
 import { isMobile } from "react-device-detect";
+import { Link, Element, Events } from "react-scroll";
 
 // Redux stuff
 import { connect } from "react-redux";
@@ -56,8 +57,8 @@ class Home extends Component {
       estado: e.target.value
     };
 
-    if(!isMobile) this.props.verTodosEleitos();
-   // if (isMobile) this.props.escondePerguntas();
+    if (!isMobile) this.props.verTodosEleitos();
+    // if (isMobile) this.props.escondePerguntas();
 
     this.props.setFiltroCandidatos(novoFiltroEstado);
     this.props.getDadosCandidatos();
@@ -69,7 +70,7 @@ class Home extends Component {
   }
 
   componentDidMount() {
-    if(!isMobile) this.props.vamosComecar();
+    if (!isMobile) this.props.vamosComecar();
     const { votos, estado } = this.props.match.params;
 
     if (votos && estado) {
@@ -101,57 +102,79 @@ class Home extends Component {
 
     return (
       <div>
-        <section className="intro">
-          <div className="container">
-            <h2 className="intro-title text-center">
-              Descubra quais deputados/as e candidatos/as são{" "}
-              <strong className="strong">alinhados</strong> com você.
+        <Element
+          className="element"
+          id="containerElement"
+        >
+
+          <section className="intro">
+            <div className="container">
+              <Element name="firstInsideContainer">
+                <h2 className="intro-title text-center">
+                  Descubra quais deputados/as e candidatos/as são{" "}
+                  <strong className="strong">alinhados</strong> com você.
             </h2>
-            <div className="d-flex justify-content-center">
-              <form>
-                <div className="form-group">
-                  <select
-                    className="form-control"
-                    onChange={this.selecionaEstado}
-                    value={filtro.estado}
-                  >
-                    <option defaultValue="--">Selecione um Estado</option>
-                    {estados()}
-                  </select>
+                <div className="d-flex justify-content-center">
+                  <form>
+                    <div className="form-group">
+                      <select
+                        className="form-control"
+                        onChange={this.selecionaEstado}
+                        value={filtro.estado}
+                      >
+                        <option defaultValue="--">Selecione um Estado</option>
+                        {estados()}
+                      </select>
+                    </div>
+                  </form>
                 </div>
-              </form>
+              </Element>
+            </div>
+          </section>
+
+
+          <div className="grid-wrapper">
+            <div className="grid-main">
+              <Element name="secondInsideContainer">
+                <section className="grid-panel panel-master">
+                  <FlipMove>
+                    {filtro.estado !== "" && <CandidatosContainer />}
+                    {isMobile &&
+                      !isVamosComecar &&
+                      filtro.estado !== "" && (
+                        <div className="text-center mb-3">
+                          <Link
+                            activeClass="active"
+                            to="secondInsideContainer"
+                            spy={true}
+                            smooth={true}
+                            duration={250}
+                            containerId="containerElement"
+                          >
+                            <button
+                              className="btn btn-secondary btn-lg"
+                              onClick={this.vamosComecar}
+                            >
+                              Vamos Começar!
+                      </button>
+                          </Link>
+                        </div>
+                      )}
+
+                  </FlipMove>
+                </section>
+              </Element>
+              <div className="grid-separator" />
+              <section className="grid-panel panel-detail">
+                <FlipMove>
+                  {filtro.estado !== "" &&
+                    isVamosComecar && <PerguntasContainer />}
+                </FlipMove>
+              </section>
             </div>
           </div>
-        </section>
-        <div className="grid-wrapper">
-          <div className="grid-main">
-            <section className="grid-panel panel-master">
-              <FlipMove>
-                {filtro.estado !== "" && <CandidatosContainer />}
-                {isMobile &&
-                  !isVamosComecar &&
-                  filtro.estado !== "" && (
-                    <div className="text-center mb-3">
-                      <button
-                        className="btn btn-secondary btn-lg"
-                        onClick={this.vamosComecar}
-                      >
-                        Vamos Começar!
-                      </button>
-                    </div>
-                  )}
-              </FlipMove>
-            </section>
-            <div className="grid-separator" />
-            <section className="grid-panel panel-detail">
-              <FlipMove>
-                {filtro.estado !== "" &&
-                  isVamosComecar && <PerguntasContainer />}
-              </FlipMove>
-            </section>
-          </div>
-        </div>
-      </div>
+        </Element>
+      </div >
     );
   }
 }
