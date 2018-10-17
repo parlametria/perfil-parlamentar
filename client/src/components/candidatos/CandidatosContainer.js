@@ -169,7 +169,8 @@ class CandidatosContainer extends Component {
       isFiltrandoPorNome,
       mostrarTodos,
       partidos,
-      activeTab
+      activeTab,
+      isVerTodosEleitos
     } = this.props.candidatos;
 
     const {
@@ -262,14 +263,24 @@ class CandidatosContainer extends Component {
             candidatos responderam ao questionário.
           </h5>
         )}
-        {activeTab === "eleitos" && (
-          <h5>
-            Nesse Estado,{" "}
-            <strong className="strong">{eleitosResponderam}</strong> dos{" "}
-            <strong className="strong">{totalEleitosEstado}</strong> candidatos
-            eleitos responderam ao questionário.
-          </h5>
-        )}
+        {activeTab === "eleitos" &&
+          filtro.estado !== "TODOS" && (
+            <h5>
+              Nesse Estado,{" "}
+              <strong className="strong">{eleitosResponderam}</strong> dos{" "}
+              <strong className="strong">{totalEleitosEstado}</strong>{" "}
+              candidatos eleitos responderam ao questionário.
+            </h5>
+          )}
+        {activeTab === "eleitos" &&
+          filtro.estado === "TODOS" && (
+            <h5>
+              {" "}
+              <strong className="strong">{eleitosResponderam}</strong> dos{" "}
+              <strong className="strong">{totalEleitosEstado}</strong>{" "}
+              candidatos eleitos responderam ao questionário.
+            </h5>
+          )}
       </div>
     );
 
@@ -320,18 +331,20 @@ class CandidatosContainer extends Component {
                 Eleitos/as
               </a>
             </li>
-            <li className="nav-item">
-              <a
-                className={classnames("nav-link nav-link-a", {
-                  active: activeTab === "candidatos"
-                })}
-                onClick={() => {
-                  this.setActiveTab("candidatos");
-                }}
-              >
-                Candidatos/as
-              </a>
-            </li>
+            {filtro.estado !== "TODOS" && (
+              <li className="nav-item">
+                <a
+                  className={classnames("nav-link nav-link-a", {
+                    active: activeTab === "candidatos"
+                  })}
+                  onClick={() => {
+                    this.setActiveTab("candidatos");
+                  }}
+                >
+                  Candidatos/as
+                </a>
+              </li>
+            )}
           </ul>
         </div>
         <div className="container">
@@ -401,27 +414,9 @@ class CandidatosContainer extends Component {
       </div>
     );
 
-    const isMinimoVotosOuMostreTodos =
-      quantidadeVotos >= MIN_VOTOS || mostrarTodos;
-
-    let isExibeBoasVindas = false;
-    let isExibeContinueVotando = false;
-    let isExibeCandidatos = false;
-    if (isMinimoVotosOuMostreTodos) {
-      isExibeCandidatos = true;
-    } else if (quantidadeVotos > 0 && quantidadeVotos < MIN_VOTOS) {
-      isExibeContinueVotando = true;
-    } else {
-      isExibeBoasVindas = true;
-    }
-
     return (
       <div>
-        <FlipMove>
-          {isExibeCandidatos ? exibeCandidatos : null}
-          {isExibeContinueVotando ? <ContinueVotando /> : null}
-          {isExibeBoasVindas ? <BoasVindas /> : null}
-        </FlipMove>
+        <FlipMove>{exibeCandidatos}</FlipMove>
       </div>
     );
   }

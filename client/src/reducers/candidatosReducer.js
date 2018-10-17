@@ -19,7 +19,8 @@ import {
   SET_CANDIDATOS_FILTRANDO,
   SET_ACTIVE_TAB,
   SET_TOTAL_ELEITOS_ESTADO,
-  SET_TOTAL_ELEITOS_PARTIDO
+  SET_TOTAL_ELEITOS_PARTIDO,
+  SET_VER_TODOS_ELEITOS
 } from "../actions/types";
 
 // candidatesVotings: {id_votacao: voto}
@@ -45,7 +46,8 @@ const initialState = {
   mostrarTodos: false,
   paginacao: { inicio: 0, final: 0, totalCandidatos: 0, paginaAtual: 0 },
   dadosCandidatoBusca: {},
-  activeTab: "eleitos"
+  activeTab: "eleitos",
+  isVerTodosEleitos: false
 };
 
 export default function(state = initialState, action) {
@@ -158,6 +160,11 @@ export default function(state = initialState, action) {
       return {
         ...state,
         totalEleitosPartido: action.totalEleitosPartido
+      };
+    case SET_VER_TODOS_ELEITOS:
+      return {
+        ...state,
+        isVerTodosEleitos: true
       };
     default:
       return state;
