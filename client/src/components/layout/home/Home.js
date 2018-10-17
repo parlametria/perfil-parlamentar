@@ -56,8 +56,8 @@ class Home extends Component {
       estado: e.target.value
     };
 
-    this.props.verTodosEleitos();
-    if (isMobile) this.props.escondePerguntas();
+    if(!isMobile) this.props.verTodosEleitos();
+   // if (isMobile) this.props.escondePerguntas();
 
     this.props.setFiltroCandidatos(novoFiltroEstado);
     this.props.getDadosCandidatos();
@@ -69,7 +69,7 @@ class Home extends Component {
   }
 
   componentDidMount() {
-    this.props.vamosComecar();
+    if(!isMobile) this.props.vamosComecar();
     const { votos, estado } = this.props.match.params;
 
     if (votos && estado) {

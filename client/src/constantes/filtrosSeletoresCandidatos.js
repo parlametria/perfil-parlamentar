@@ -96,6 +96,7 @@ export const partidos = () => {
 
 export const listaEstados = () => {
   return [
+    "TODOS",
     "AC",
     "AL",
     "AM",
