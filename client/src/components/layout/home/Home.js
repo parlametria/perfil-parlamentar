@@ -14,10 +14,14 @@ import {
   getDadosCandidatos,
   setFiltroCandidatos,
   calculaScore,
-  setPartidos
+  setPartidos,
+  verTodosEleitos
 } from "../../../actions/candidatosActions";
 
-import { vamosComecar, escondePerguntas } from "../../../actions/perguntasActions";
+import {
+  vamosComecar,
+  escondePerguntas
+} from "../../../actions/perguntasActions";
 import { salvaScoreUsuario } from "../../../actions/usuarioActions";
 
 import {
@@ -52,10 +56,8 @@ class Home extends Component {
       estado: e.target.value
     };
 
-    if (e.target.value === "TODOS" && isMobile){ 
-      this.props.vamosComecar();
-      this.props.escondePerguntas();
-    }
+    this.props.verTodosEleitos();
+    if (isMobile) this.props.escondePerguntas();
 
     this.props.setFiltroCandidatos(novoFiltroEstado);
     this.props.getDadosCandidatos();
@@ -67,7 +69,7 @@ class Home extends Component {
   }
 
   componentDidMount() {
-    if (!isMobile) this.props.vamosComecar();
+    this.props.vamosComecar();
     const { votos, estado } = this.props.match.params;
 
     if (votos && estado) {
@@ -102,8 +104,8 @@ class Home extends Component {
         <section className="intro">
           <div className="container">
             <h2 className="intro-title text-center">
-              Descubra quais deputados/as e
-              candidatos/as são <strong className="strong">alinhados</strong> com o você.
+              Descubra quais deputados/as e candidatos/as são{" "}
+              <strong className="strong">alinhados</strong> com você.
             </h2>
             <div className="d-flex justify-content-center">
               <form>
@@ -160,7 +162,8 @@ Home.propTypes = {
   calculaScore: PropTypes.func.isRequired,
   setPartidos: PropTypes.func.isRequired,
   salvaScoreUsuario: PropTypes.func.isRequired,
-  escondePerguntas: PropTypes.func.isRequired
+  escondePerguntas: PropTypes.func.isRequired,
+  verTodosEleitos: PropTypes.func.isRequired
 };
 const mapStateToProps = state => ({
   candidatos: state.candidatosReducer,
@@ -176,6 +179,7 @@ export default connect(
     vamosComecar,
     setPartidos,
     salvaScoreUsuario,
-    escondePerguntas
+    escondePerguntas,
+    verTodosEleitos
   }
 )(Home);
