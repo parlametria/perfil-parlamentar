@@ -45,15 +45,12 @@ class FinalPerguntas extends Component {
       "Veja minhas respostas na plataforma VozAtiva! " + linkCompartilhamento;
     return (
       <div className="container tutorial p-3">
-        <div className="text-center">
-          <img
-            src={require("../../data/img/step2.png")}
-            width="80px"
-            alt="Imagem de ícones representando candidatos e uma barra de proximidade com os mesmos"
-          />
-        </div>
         <h4 className="text-center p-3">
-          Veja os candidatos alinhados com você.
+          Veja os deputados alinhados com você.
+        </h4>
+        <h4 className="text-center p-3"> Cobre participação de quem não respondeu. </h4>
+        <h4 className="text-center p-3">
+          Ou veja a atuação anterior dos candidatos reeleitos! 
         </h4>
 
         <div className="text-center">
@@ -69,7 +66,7 @@ class FinalPerguntas extends Component {
             Continuar respondendo
           </button>
           <div className="p-3">
-            Ou compartilhe <br />
+           compartilhe suas respostas <br />
             <div className="row justify-content-center">
               <a
                 href={

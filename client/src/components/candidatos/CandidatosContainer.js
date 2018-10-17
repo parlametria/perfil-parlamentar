@@ -19,7 +19,8 @@ import {
   setPartidos,
   setPaginacao,
   getProximaPaginaCandidatos,
-  setActiveTab
+  setActiveTab,
+  
 } from "../../actions/candidatosActions";
 
 import PropTypes from "prop-types";
@@ -414,9 +415,27 @@ class CandidatosContainer extends Component {
       </div>
     );
 
+    const isMinimoVotosOuMostreTodos =		
+       quantidadeVotos >= MIN_VOTOS || mostrarTodos;		
+		
+     let isExibeBoasVindas = false;		
+     let isExibeContinueVotando = false;		
+     let isExibeCandidatos = false;		
+     if (isMinimoVotosOuMostreTodos) {		
+       isExibeCandidatos = true;		
+     } else if (quantidadeVotos > 0 && quantidadeVotos < MIN_VOTOS) {		
+       isExibeContinueVotando = true;		
+     } else {		
+       isExibeBoasVindas = true;		
+     }		
+		
     return (
       <div>
-        <FlipMove>{exibeCandidatos}</FlipMove>
+        <FlipMove> 
+           {isExibeCandidatos ? exibeCandidatos : null}		
+           {isExibeContinueVotando ? <ContinueVotando /> : null}		
+           {isExibeBoasVindas ? <BoasVindas /> : null}
+        </FlipMove>
       </div>
     );
   }
