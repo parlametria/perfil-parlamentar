@@ -18,7 +18,8 @@ import {
   SET_TOTAL_RESPONDERAM_PARTIDO,
   SET_TOTAL_RESPOSTAS_PARTIDO,
   SET_ACTIVE_TAB,
-  SET_TOTAL_ELEITOS_ESTADO
+  SET_TOTAL_ELEITOS_ESTADO,
+  SET_VER_TODOS_ELEITOS
 } from "./types";
 
 import { TAM_PAGINA, ITENS_POR_REQ } from "../constantes/constantesCandidatos";
@@ -235,24 +236,22 @@ export const getDadosCandidatos = () => (dispatch, getState) => {
         dispatch(setPartidos());
         dispatch(calculaScore());
       });
-  } else if (activeTab === "eleitos" && filtro.estado === "TODOS"){
-    axios
-      .get("/api/respostas/eleitos")
-      .then(respostas => {
-        console.timeEnd("getResponderam");
+  } else if (activeTab === "eleitos" && filtro.estado === "TODOS") {
+    axios.get("/api/respostas/eleitos").then(respostas => {
+      console.timeEnd("getResponderam");
 
-        respostas.data.forEach(resp => {
-          dadosCandidatos[resp.cpf] = resp;
-        });
-
-        dispatch({ type: SET_DADOS_CANDIDATOS, dadosCandidatos });
-        dispatch({
-          type: SET_TOTAL_ELEITOS_ESTADO,
-          totalEleitosEstado: 513
-        });
-        dispatch(setPartidos());
-        dispatch(calculaScore());
+      respostas.data.forEach(resp => {
+        dadosCandidatos[resp.cpf] = resp;
       });
+
+      dispatch({ type: SET_DADOS_CANDIDATOS, dadosCandidatos });
+      dispatch({
+        type: SET_TOTAL_ELEITOS_ESTADO,
+        totalEleitosEstado: 513
+      });
+      dispatch(setPartidos());
+      dispatch(calculaScore());
+    });
   } else {
     axios
       .get("/api/respostas/estados/" + filtro.estado)
@@ -501,4 +500,8 @@ export const setActiveTab = activeTab => dispatch => {
   });
 
   dispatch(getDadosCandidatos());
+};
+
+export const verTodosEleitos = () => dispatch => {
+  dispatch({ type: SET_VER_TODOS_ELEITOS });
 };
