@@ -15,7 +15,8 @@ import {
   setFiltroCandidatos,
   calculaScore,
   setPartidos,
-  verTodosEleitos
+  verTodosEleitos,
+  mostrarTodosCandidatos
 } from "../../../actions/candidatosActions";
 
 import {
@@ -45,6 +46,12 @@ class Home extends Component {
 
     this.selecionaEstado = this.selecionaEstado.bind(this);
     this.vamosComecar = this.vamosComecar.bind(this);
+    this.mostrarTodos = this.mostrarTodos.bind(this);
+  }
+
+  mostrarTodos() {
+    this.props.mostrarTodosCandidatos();
+    this.props.verTodosEleitos();
   }
 
   selecionaEstado(e) {
@@ -61,6 +68,7 @@ class Home extends Component {
 
     this.props.setFiltroCandidatos(novoFiltroEstado);
     this.props.getDadosCandidatos();
+    
   }
 
   vamosComecar(e) {
@@ -96,7 +104,7 @@ class Home extends Component {
   }
 
   render() {
-    const { filtro } = this.props.candidatos;
+    const { filtro, isVerTodosEleitos } = this.props.candidatos;
     const { isVamosComecar } = this.props.perguntas;
 
     return (
@@ -128,18 +136,25 @@ class Home extends Component {
             <section className="grid-panel panel-master">
               <FlipMove>
                 {filtro.estado !== "" && <CandidatosContainer />}
+                <div className="text-center mb-3">
                 {isMobile &&
                   !isVamosComecar &&
                   filtro.estado !== "" && (
-                    <div className="text-center mb-3">
+                   
                       <button
                         className="btn btn-secondary btn-lg"
                         onClick={this.vamosComecar}
                       >
-                        Vamos Começar!
+                        Votar
                       </button>
-                    </div>
                   )}
+                  {filtro.estado === "TODOS" && 
+                      (<button 
+                      className="btn btn-secondary btn-lg"
+                      onClick= {this.mostrarTodos}>
+                      Ver Eleitos
+                      </button>)}
+                  </div>
               </FlipMove>
             </section>
             <div className="grid-separator" />
@@ -163,7 +178,8 @@ Home.propTypes = {
   setPartidos: PropTypes.func.isRequired,
   salvaScoreUsuario: PropTypes.func.isRequired,
   escondePerguntas: PropTypes.func.isRequired,
-  verTodosEleitos: PropTypes.func.isRequired
+  verTodosEleitos: PropTypes.func.isRequired,
+  mostrarTodosCandidatos: PropTypes.func.isRequired
 };
 const mapStateToProps = state => ({
   candidatos: state.candidatosReducer,
@@ -180,6 +196,7 @@ export default connect(
     setPartidos,
     salvaScoreUsuario,
     escondePerguntas,
-    verTodosEleitos
+    verTodosEleitos,
+    mostrarTodosCandidatos
   }
 )(Home);
