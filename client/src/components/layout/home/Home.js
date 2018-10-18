@@ -153,7 +153,7 @@ class Home extends Component {
                         Votar
                       </button>
                     )}
-                  {filtro.estado === "TODOS" &&
+                  {filtro.estado !== "" &&
                     !isVerTodosEleitos &&
                     quantidadeVotos < 1 && (
                       <button
