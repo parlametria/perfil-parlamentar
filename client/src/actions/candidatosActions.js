@@ -27,7 +27,8 @@ import { TAM_PAGINA, ITENS_POR_REQ } from "../constantes/constantesCandidatos";
 import {
   filtraPorNome,
   filtraPorPartido,
-  filtraPorNomeEPartido
+  filtraPorNomeEPartido,
+  filtra
 } from "../services/FiltroService";
 
 import { buscaCPF } from "../services/BuscaService";
@@ -395,34 +396,21 @@ export const setCandidatosFiltrados = () => (dispatch, getState) => {
       })
     );
 
-  let candidatos;
-  if (filtro.nome === "" && filtro.partido === "TODOS") candidatos = [];
-  else if (filtro.partido !== "TODOS" && filtro.nome !== "") {
-    candidatos = filtraPorNomeEPartido(
-      filtro.nome,
-      filtro.partido,
-      dadosCandidatos
-    );
-  } else if (filtro.partido !== "TODOS") {
-    candidatos = filtraPorPartido(
-      filtro.partido,
-      dadosCandidatos,
-      scoreCandidatos
-    );
-  } else if (filtro.nome !== "") {
-    candidatos = filtraPorNome(filtro.nome, dadosCandidatos);
-  } else candidatos = [];
+  const candidatos = filtra(filtro, dadosCandidatos);
 
   dispatch({
     type: SET_CANDIDATOS_FILTRADOS,
     candidatosFiltrados: candidatos
   });
+
   dispatch(
     setPaginacao({
       inicio: 0,
       final: TAM_PAGINA,
       totalCandidatos:
-        filtro.partido !== "TODOS" || filtro.nome !== ""
+        filtro.partido !== "TODOS" ||
+        filtro.nome !== "" ||
+        filtro.reeleicao !== "-1"
           ? candidatos.length
           : candidatosRanqueados.length
     })
@@ -447,7 +435,7 @@ export const setPartidos = () => (dispatch, getState) => {
 
   let partidos = Array.from(partidosSet).sort((a, b) => a.localeCompare(b));
 
-  partidos.splice(0, 0, "TODOS");
+  partidos.splice(0, 0, "Partidos");
 
   dispatch({ type: SET_PARTIDOS, partidos: partidos });
 };
@@ -493,12 +481,22 @@ export const getProximaPaginaCandidatos = () => (dispatch, getState) => {
     });
 };
 
-export const setActiveTab = activeTab => dispatch => {
+export const setActiveTab = activeTab => (dispatch, getState) => {
+  const { filtro } = getState().candidatosReducer;
+
   dispatch({
     type: SET_ACTIVE_TAB,
     activeTab: activeTab
   });
 
+  const filtroLimpo = {
+    nome: filtro.nome,
+    partido: "Partidos",
+    estado: filtro.estado,
+    reeleicao: filtro.reeleicao
+  };
+
+  dispatch(setFiltroCandidatos(filtroLimpo));
   dispatch(getDadosCandidatos());
 };
 
