@@ -215,6 +215,7 @@ class CandidatosContainer extends Component {
 
     let eleitosResponderam = 0;
     let totalCandAtuacao = 0;
+    let totalResponderamAtuacao = 0;
 
     const candidatos = candidatosMapeaveis.map(cpf => {
       const candidato = dadosCandidatos[cpf];
@@ -222,6 +223,8 @@ class CandidatosContainer extends Component {
       if (!isEmpty(candidato)) {
         if (candidato.respondeu) eleitosResponderam++;
         if (candidato.reeleicao === "1") totalCandAtuacao++;
+        if (candidato.reeleicao === "1" && candidato.respondeu) totalResponderamAtuacao++;
+        
 
         return (
           <Candidato
@@ -316,7 +319,7 @@ class CandidatosContainer extends Component {
           {activeTab === "candidatos" && filtro.reeleicao === "1" &&(
           <h5>
             Nesse Estado,{" "}
-            <strong className="strong">{totalResponderamEstado}</strong> de{" "}
+            <strong className="strong">{totalResponderamAtuacao}</strong> de{" "}
             <strong className="strong">{totalCandAtuacao}</strong>{" "}
             candidatos que já tinham atuação na câmara responderam ao questionário.
           </h5>
@@ -343,7 +346,7 @@ class CandidatosContainer extends Component {
           filtro.estado === "TODOS" && filtro.reeleicao === "1" && (
             <h5>
               {" "}
-              <strong className="strong">{eleitosResponderam}</strong> dos{" "}
+              <strong className="strong">{totalResponderamAtuacao}</strong> dos{" "}
               <strong className="strong">{totalCandAtuacao}</strong>{" "}
               candidatos eleitos que já tinham atuação na câmara responderam ao questionário.
             </h5>
@@ -352,7 +355,7 @@ class CandidatosContainer extends Component {
           filtro.estado !== "TODOS" && filtro.reeleicao === "1" && (
             <h5>
               {" "}
-              Nesse Estado, <strong className="strong">{eleitosResponderam}</strong> dos{" "}
+              Nesse Estado, <strong className="strong">{totalResponderamAtuacao}</strong> dos{" "}
               <strong className="strong">{totalCandAtuacao}</strong>{" "}
               candidatos eleitos que já tinham atuação na câmara responderam ao questionário.
             </h5>
