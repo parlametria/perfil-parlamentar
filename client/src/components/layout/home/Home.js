@@ -57,7 +57,9 @@ class Home extends Component {
       estado: e.target.value
     };
 
-    if (!isMobile) this.props.verTodosEleitos();
+    if (!isMobile) {
+      this.props.verTodosEleitos();
+    }
     // if (isMobile) this.props.escondePerguntas();
 
     this.props.setFiltroCandidatos(novoFiltroEstado);
@@ -136,7 +138,8 @@ class Home extends Component {
                   !isVamosComecar &&
                   filtro.estado !== "" && (
                     <div className="text-center mb-3">
-                      <ScrollIntoView selector="#candidatos" alignToTop="true">
+                      <ScrollIntoView selector="#scroll" alignToTop="true">
+
                         <button
                           className="btn btn-secondary btn-lg"
                           onClick={this.vamosComecar}
@@ -144,10 +147,9 @@ class Home extends Component {
                           Vamos Começar!
                       </button>
                       </ScrollIntoView>
-
+                      <div id="scroll"></div>
                     </div>
                   )}
-
               </FlipMove>
             </section>
             <div className="grid-separator" />
