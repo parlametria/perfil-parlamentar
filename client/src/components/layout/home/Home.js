@@ -61,8 +61,9 @@ class Home extends Component {
 
     const novoFiltroEstado = {
       nome: "",
-      partido: "TODOS",
-      estado: e.target.value
+      partido: "Partidos",
+      estado: e.target.value,
+      reeleicao: "-1"
     };
 
     //if(!isMobile) this.props.verTodosEleitos();
