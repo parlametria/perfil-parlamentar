@@ -214,12 +214,15 @@ class CandidatosContainer extends Component {
         : candidatosRanqueados;
 
     let eleitosResponderam = 0;
+    let totalCandAtuacao = 0;
 
     const candidatos = candidatosMapeaveis.map(cpf => {
       const candidato = dadosCandidatos[cpf];
 
       if (!isEmpty(candidato)) {
         if (candidato.respondeu) eleitosResponderam++;
+        if (candidato.reeleicao === "1") totalCandAtuacao++;
+
         return (
           <Candidato
             respondeu={candidato.respondeu}
@@ -277,7 +280,7 @@ class CandidatosContainer extends Component {
           <h5>
             Para esse partido,{" "}
             <strong className="strong">{totalResponderamPartido}</strong> de{" "}
-            <strong className="strong">{totalRespostasPartido}</strong>{" "}
+            <strong className="strong">{totalCandAtuacao}</strong>{" "}
             candidatos que já tinham atuação na câmara responderam ao questionário.
           </h5>
         )} 
@@ -285,7 +288,7 @@ class CandidatosContainer extends Component {
           <h5>
             Para esse partido,{" "}
             <strong className="strong">{totalEleitosPartido}</strong> dos{" "}
-            <strong className="strong">{candidatosFiltrados.length}</strong>{" "}
+            <strong className="strong">{totalCandAtuacao}</strong>{" "}
             candidatos eleitos que já tinham atuação na câmara responderam ao questionário.
           </h5>
         )}
@@ -310,11 +313,11 @@ class CandidatosContainer extends Component {
             candidatos responderam ao questionário.
           </h5>
         )}
-          {activeTab === "candidatos" && filtro.reeleicao == "1" &&(
+          {activeTab === "candidatos" && filtro.reeleicao === "1" &&(
           <h5>
             Nesse Estado,{" "}
             <strong className="strong">{totalResponderamEstado}</strong> de{" "}
-            <strong className="strong">{totalRespostasEstado}</strong>{" "}
+            <strong className="strong">{totalCandAtuacao}</strong>{" "}
             candidatos que já tinham atuação na câmara responderam ao questionário.
           </h5>
         )}
@@ -341,7 +344,7 @@ class CandidatosContainer extends Component {
             <h5>
               {" "}
               <strong className="strong">{eleitosResponderam}</strong> dos{" "}
-              <strong className="strong">{totalEleitosEstado}</strong>{" "}
+              <strong className="strong">{totalCandAtuacao}</strong>{" "}
               candidatos eleitos que já tinham atuação na câmara responderam ao questionário.
             </h5>
           )}
@@ -350,7 +353,7 @@ class CandidatosContainer extends Component {
             <h5>
               {" "}
               Nesse Estado, <strong className="strong">{eleitosResponderam}</strong> dos{" "}
-              <strong className="strong">{totalEleitosEstado}</strong>{" "}
+              <strong className="strong">{totalCandAtuacao}</strong>{" "}
               candidatos eleitos que já tinham atuação na câmara responderam ao questionário.
             </h5>
           )}

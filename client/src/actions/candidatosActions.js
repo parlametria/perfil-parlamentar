@@ -490,10 +490,10 @@ export const setActiveTab = activeTab => (dispatch, getState) => {
   });
 
   const filtroLimpo = {
-    nome: filtro.nome,
+    nome: "",
     partido: "Partidos",
     estado: filtro.estado,
-    reeleicao: filtro.reeleicao
+    reeleicao: "-1"
   };
 
   dispatch(setFiltroCandidatos(filtroLimpo));
