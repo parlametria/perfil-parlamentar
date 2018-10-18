@@ -150,7 +150,7 @@ class Home extends Component {
                         Votar
                       </button>
                   )}
-                  {filtro.estado === "TODOS" && !isVerTodosEleitos && (quantidadeVotos < 1) && 
+                  {filtro.estado === "TODOS" && !isVerTodosEleitos && (quantidadeVotos < 1 ) && 
                       (<button 
                       className="btn btn-secondary btn-lg"
                       onClick= {this.mostrarTodos}>
@@ -159,7 +159,7 @@ class Home extends Component {
                   </div>
               </FlipMove>
             </section>
-            <div className="grid-separator" />
+            {filtro.estado !== "" && <div className="grid-separator" />}
             <section className="grid-panel panel-detail">
               <FlipMove>
                 {filtro.estado !== "" &&
