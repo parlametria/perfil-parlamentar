@@ -46,12 +46,65 @@ class FinalPerguntas extends Component {
     return (
       <div className="container tutorial p-3">
         <h4 className="text-center p-3">
-          Veja os deputados alinhados com você.
+          Agora é com você!
         </h4>
-        <h4 className="text-center p-3"> Cobre participação de quem não respondeu. </h4>
-        <h4 className="text-center p-3">
-          Ou veja a atuação anterior dos candidatos reeleitos! 
-        </h4>
+        <p>
+          <strong className="strong">Veja</strong> os deputados alinhados com você.
+        </p>
+        <p>
+          <strong className="strong">Cobre</strong> a participação de quem não respondeu.
+        </p>
+        <p>
+          <strong className="strong">Examine</strong> a atuação anterior dos candidatos reeleitos.
+        </p>
+        <p>
+          <strong className="strong">Compartilhe</strong> suas respostas nas redes sociais.
+        </p>
+        <div className="row justify-content-center">
+          <a
+            href={
+              "https://twitter.com/intent/tweet/?text=" +
+              textoCompartilhamento
+            }
+            data-show-count="false"
+            className="nav-link"
+            target="_blank"
+          >
+            <span className="icon-twitter share-icon" />
+          </a>
+          <a
+            href={
+              "https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2F" +
+              textoCompartilhamento
+            }
+            data-show-count="false"
+            className="nav-link"
+            target="_blank"
+          >
+            <span className="icon-facebook share-icon" />
+          </a>
+          {isMobile && (
+            <a
+              href={"whatsapp://send?text=" + textoCompartilhamento}
+              className="nav-link"
+            >
+              <span className="icon-zapzap share-icon" />
+            </a>
+          )}
+          {!isMobile && (
+            <a
+              href={
+                "https://web.whatsapp.com/send?text=" +
+                textoCompartilhamento
+              }
+              data-show-count="false"
+              className="nav-link"
+              target="_blank"
+            >
+              <span className="icon-zapzap share-icon" />
+            </a>
+          )}
+        </div>
 
         <div className="text-center">
           {isMobile && (
@@ -65,54 +118,6 @@ class FinalPerguntas extends Component {
           >
             Continuar respondendo
           </button>
-          <div className="p-3">
-           compartilhe suas respostas <br />
-            <div className="row justify-content-center">
-              <a
-                href={
-                  "https://twitter.com/intent/tweet/?text=" +
-                  textoCompartilhamento
-                }
-                data-show-count="false"
-                className="nav-link"
-                target="_blank"
-              >
-                <span className="icon-twitter share-icon" />
-              </a>
-              <a
-                href={
-                  "https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2F" +
-                  textoCompartilhamento
-                }
-                data-show-count="false"
-                className="nav-link"
-                target="_blank"
-              >
-                <span className="icon-facebook share-icon" />
-              </a>
-              {isMobile && (
-                <a
-                  href={"whatsapp://send?text=" + textoCompartilhamento}
-                  className="nav-link"
-                >
-                  <span className="icon-zapzap share-icon" />
-                </a>
-              )}
-              {!isMobile && (
-                <a
-                  href={
-                    "https://web.whatsapp.com/send?text=" +
-                    textoCompartilhamento
-                  }
-                  data-show-count="false"
-                  className="nav-link"
-                  target="_blank"
-                >
-                  <span className="icon-zapzap share-icon" />
-                </a>
-              )}
-            </div>
-          </div>
         </div>
       </div>
     );
