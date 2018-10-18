@@ -19,8 +19,7 @@ import {
   setPartidos,
   setPaginacao,
   getProximaPaginaCandidatos,
-  setActiveTab,
-  
+  setActiveTab
 } from "../../actions/candidatosActions";
 
 import PropTypes from "prop-types";
@@ -48,6 +47,8 @@ import {
   DEBOUNCE_TIME
 } from "../../constantes/constantesCandidatos";
 
+import { opcoesFiltroReeleicao } from "../../constantes/filtrosSeletoresCandidatos";
+
 import classnames from "classnames";
 
 class CandidatosContainer extends Component {
@@ -62,6 +63,7 @@ class CandidatosContainer extends Component {
     this.onSearch$ = new Subject();
     this.buscaNome = this.buscaNome.bind(this);
     this.buscaPartido = this.buscaPartido.bind(this);
+    this.buscaReeleitos = this.buscaReeleitos.bind(this);
     this.pegaPrimeiraPagina = this.pegaPrimeiraPagina.bind(this);
     this.pegaCandidatosAnteriores = this.pegaCandidatosAnteriores.bind(this);
     this.pegaProximosCandidatos = this.pegaProximosCandidatos.bind(this);
@@ -133,7 +135,8 @@ class CandidatosContainer extends Component {
     let novoFiltro = {
       nome: e.target.value,
       partido: filtro.partido,
-      estado: filtro.estado
+      estado: filtro.estado,
+      reeleicao: filtro.reeleicao
     };
 
     this.setState({ isPesquisando: true });
@@ -149,7 +152,26 @@ class CandidatosContainer extends Component {
     let novoFiltro = {
       nome: filtro.nome,
       partido: e.target.value,
-      estado: filtro.estado
+      estado: filtro.estado,
+      reeleicao: filtro.reeleicao
+    };
+
+    this.props.setFiltroCandidatos(novoFiltro);
+    this.props.setCandidatosFiltrados();
+  }
+
+  buscaReeleitos(e) {
+    e.preventDefault();
+
+    const { filtro } = this.props.candidatos;
+
+    console.log(e.target.value);
+
+    let novoFiltro = {
+      nome: filtro.nome,
+      partido: filtro.partido,
+      estado: filtro.estado,
+      reeleicao: e.target.value
     };
 
     this.props.setFiltroCandidatos(novoFiltro);
@@ -185,7 +207,9 @@ class CandidatosContainer extends Component {
     const { arrayRespostasUsuario, quantidadeVotos } = this.props.usuario;
 
     const candidatosMapeaveis =
-      filtro.nome !== "" || filtro.partido !== "TODOS"
+      filtro.nome !== "" ||
+      filtro.partido !== "Partidos" ||
+      filtro.reeleicao !== "-1"
         ? candidatosFiltrados
         : candidatosRanqueados;
 
@@ -230,6 +254,12 @@ class CandidatosContainer extends Component {
     const listaSelectPartidos = partidos.map(partido => (
       <option key={partido} value={partido}>
         {partido}
+      </option>
+    ));
+
+    const listaSelectReeleicao = opcoesFiltroReeleicao().map(opcao => (
+      <option key={opcao.label} value={opcao.value}>
+        {opcao.label}
       </option>
     ));
 
@@ -350,9 +380,8 @@ class CandidatosContainer extends Component {
         </div>
         <div className="container">
           <header className="panel-header">
-            {false ? <Apresentacao /> : null}
             <div className="form-row">
-              <div className="col-7">
+              <div className="col-6">
                 <div className="input-group mb-3">
                   <div className="input-group-prepend">
                     <span
@@ -373,7 +402,7 @@ class CandidatosContainer extends Component {
                   />
                 </div>
               </div>
-              <div className="col-5">
+              <div className="col-3">
                 <div className="form-group">
                   <select
                     className="form-control form-control-secondary barra-filtro-candidato"
@@ -385,8 +414,20 @@ class CandidatosContainer extends Component {
                   </select>
                 </div>
               </div>
+              <div className="col-3">
+                <div className="form-group">
+                  <select
+                    className="form-control form-control-secondary barra-filtro-candidato"
+                    placeholder="Reeleitos"
+                    onChange={this.buscaReeleitos}
+                    value={filtro.reeleicao}
+                  >
+                    {listaSelectReeleicao}
+                  </select>
+                </div>
+              </div>
             </div>
-            {filtro.partido !== "TODOS" ? mostraPartido : mostraEstado}
+            {filtro.partido !== "Partidos" ? mostraPartido : mostraEstado}
           </header>
 
           {isCarregando || this.state.isPesquisando || isFiltrandoPorNome ? (
@@ -415,26 +456,26 @@ class CandidatosContainer extends Component {
       </div>
     );
 
-    const isMinimoVotosOuMostreTodos =		
-       quantidadeVotos >= MIN_VOTOS || mostrarTodos;		
-		
-     let isExibeBoasVindas = false;		
-     let isExibeContinueVotando = false;		
-     let isExibeCandidatos = false;		
-     if (isMinimoVotosOuMostreTodos) {		
-       isExibeCandidatos = true;		
-     } else if (quantidadeVotos > 0 && quantidadeVotos < MIN_VOTOS) {		
-       isExibeContinueVotando = true;		
-     } else {		
-       isExibeBoasVindas = true;		
-     }		
-		
+    const isMinimoVotosOuMostreTodos =
+      quantidadeVotos >= MIN_VOTOS || mostrarTodos;
+
+    let isExibeBoasVindas = false;
+    let isExibeContinueVotando = false;
+    let isExibeCandidatos = false;
+    if (isMinimoVotosOuMostreTodos) {
+      isExibeCandidatos = true;
+    } else if (quantidadeVotos > 0 && quantidadeVotos < MIN_VOTOS) {
+      isExibeContinueVotando = true;
+    } else {
+      isExibeBoasVindas = true;
+    }
+
     return (
       <div>
-        <FlipMove> 
-           {isExibeCandidatos ? exibeCandidatos : null}		
-           {isExibeContinueVotando ? <ContinueVotando /> : null}		
-           {isExibeBoasVindas ? <BoasVindas /> : null}
+        <FlipMove>
+          {isExibeCandidatos ? exibeCandidatos : null}
+          {isExibeContinueVotando ? <ContinueVotando /> : null}
+          {isExibeBoasVindas ? <BoasVindas /> : null}
         </FlipMove>
       </div>
     );
