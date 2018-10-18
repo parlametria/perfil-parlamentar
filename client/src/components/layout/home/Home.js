@@ -48,10 +48,10 @@ class Home extends Component {
     this.vamosComecar = this.vamosComecar.bind(this);
     this.mostrarTodos = this.mostrarTodos.bind(this);
   }
-
+  
   mostrarTodos() {
+    this.props.verTodosEleitos();    
     this.props.mostrarTodosCandidatos();
-    this.props.verTodosEleitos();
   }
 
   selecionaEstado(e) {
@@ -63,7 +63,7 @@ class Home extends Component {
       estado: e.target.value
     };
 
-    if(!isMobile) this.props.verTodosEleitos();
+    //if(!isMobile) this.props.verTodosEleitos();
    // if (isMobile) this.props.escondePerguntas();
 
     this.props.setFiltroCandidatos(novoFiltroEstado);
@@ -106,7 +106,6 @@ class Home extends Component {
   render() {
     const { filtro, isVerTodosEleitos } = this.props.candidatos;
     const { isVamosComecar } = this.props.perguntas;
-
     return (
       <div>
         <section className="intro">
@@ -148,7 +147,7 @@ class Home extends Component {
                         Votar
                       </button>
                   )}
-                  {filtro.estado === "TODOS" && 
+                  {filtro.estado === "TODOS" && !isVerTodosEleitos &&
                       (<button 
                       className="btn btn-secondary btn-lg"
                       onClick= {this.mostrarTodos}>
