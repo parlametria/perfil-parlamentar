@@ -265,7 +265,7 @@ class CandidatosContainer extends Component {
 
     const mostraPartido = (
       <div>
-        {activeTab === "candidatos" && (
+        {activeTab === "candidatos" && filtro.reeleicao !== "1" &&(
           <h5>
             Para esse partido,{" "}
             <strong className="strong">{totalResponderamPartido}</strong> de{" "}
@@ -273,7 +273,23 @@ class CandidatosContainer extends Component {
             candidatos responderam ao questionário.
           </h5>
         )}
-        {activeTab === "eleitos" && (
+        {activeTab === "candidatos" && filtro.reeleicao === "1" && (
+          <h5>
+            Para esse partido,{" "}
+            <strong className="strong">{totalResponderamPartido}</strong> de{" "}
+            <strong className="strong">{totalRespostasPartido}</strong>{" "}
+            candidatos que já tinham atuação na câmara responderam ao questionário.
+          </h5>
+        )} 
+        {activeTab === "eleitos" && filtro.reeleicao === "1" &&(
+          <h5>
+            Para esse partido,{" "}
+            <strong className="strong">{totalEleitosPartido}</strong> dos{" "}
+            <strong className="strong">{candidatosFiltrados.length}</strong>{" "}
+            candidatos eleitos que já tinham atuação na câmara responderam ao questionário.
+          </h5>
+        )}
+        {activeTab === "eleitos" && filtro.reeleicao !== "1" &&(
           <h5>
             Para esse partido,{" "}
             <strong className="strong">{totalEleitosPartido}</strong> dos{" "}
@@ -286,7 +302,7 @@ class CandidatosContainer extends Component {
 
     const mostraEstado = (
       <div>
-        {activeTab === "candidatos" && (
+        {activeTab === "candidatos" &&  filtro.reeleicao !== "1" &&(
           <h5>
             Nesse Estado,{" "}
             <strong className="strong">{totalResponderamEstado}</strong> de{" "}
@@ -294,8 +310,16 @@ class CandidatosContainer extends Component {
             candidatos responderam ao questionário.
           </h5>
         )}
+          {activeTab === "candidatos" && filtro.reeleicao == "1" &&(
+          <h5>
+            Nesse Estado,{" "}
+            <strong className="strong">{totalResponderamEstado}</strong> de{" "}
+            <strong className="strong">{totalRespostasEstado}</strong>{" "}
+            candidatos que já tinham atuação na câmara responderam ao questionário.
+          </h5>
+        )}
         {activeTab === "eleitos" &&
-          filtro.estado !== "TODOS" && (
+          filtro.estado !== "TODOS" && filtro.reeleicao !== "1"&&(
             <h5>
               Nesse Estado,{" "}
               <strong className="strong">{eleitosResponderam}</strong> dos{" "}
@@ -304,12 +328,30 @@ class CandidatosContainer extends Component {
             </h5>
           )}
         {activeTab === "eleitos" &&
-          filtro.estado === "TODOS" && (
+          filtro.estado === "TODOS" &&  filtro.reeleicao !== "1" &&(
             <h5>
               {" "}
               <strong className="strong">{eleitosResponderam}</strong> dos{" "}
               <strong className="strong">{totalEleitosEstado}</strong>{" "}
               candidatos eleitos responderam ao questionário.
+            </h5>
+          )}
+          {activeTab === "eleitos" &&
+          filtro.estado === "TODOS" && filtro.reeleicao === "1" && (
+            <h5>
+              {" "}
+              <strong className="strong">{eleitosResponderam}</strong> dos{" "}
+              <strong className="strong">{totalEleitosEstado}</strong>{" "}
+              candidatos eleitos que já tinham atuação na câmara responderam ao questionário.
+            </h5>
+          )}
+          {activeTab === "eleitos" &&
+          filtro.estado !== "TODOS" && filtro.reeleicao === "1" && (
+            <h5>
+              {" "}
+              Nesse Estado, <strong className="strong">{eleitosResponderam}</strong> dos{" "}
+              <strong className="strong">{totalEleitosEstado}</strong>{" "}
+              candidatos eleitos que já tinham atuação na câmara responderam ao questionário.
             </h5>
           )}
       </div>
