@@ -91,16 +91,18 @@ router.get("/estados/:uf", (req, res) => {
   query = {};
   const partido = String(req.query.partido);
   const nome = String(req.query.nome);
+  const pattern = new RegExp(nome, "i");
+  console.log(pattern);
 
   if (nome !== "undefined" && partido !== "undefined") {
     query = {
       uf: req.params.uf,
       sg_partido: partido,
-      $text: { $search: nome }
+      nome_urna: { $regex: pattern }
     };
-  } else if (nome !== "undefined") {
-    query = { uf: req.params.uf, $text: { $search: nome } };
-  } else if (partido !== "undefined") {
+  } else if (nome !== "undefined" && partido === "undefined") { 
+    query = { uf: req.params.uf, nome_urna: { $regex: pattern } };
+  } else if (partido !== "undefined" && nome === "undefined") {
     query = { uf: req.params.uf, sg_partido: partido };
   } else {
     query = { uf: req.params.uf };

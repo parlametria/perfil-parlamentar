@@ -11,6 +11,24 @@ class Candidato extends Component {
     const badgeNaoRespondeu = (
       <span className="badge badge-secondary">Não respondeu</span>
     );
+
+    const verAtuacao = (
+      
+      <Link
+        className="btn btn-outline-primary btn-sm"
+        to={
+          "compare/" +
+          this.props.id +
+          "/" +
+          criaURL(this.props.arrayRespostasUsuario) +
+          "/true"
+        }
+      >
+        ver atuação
+      </Link>
+     
+    );
+
     const naoRespondeu = (
       <div>
         <div>
@@ -40,20 +58,7 @@ class Candidato extends Component {
           >
             cobre a participação
           </a>{" "}
-          {this.props.reeleicao && (
-            <Link
-              className="btn btn-outline-primary btn-sm"
-              to={
-                "compare/" +
-                this.props.id +
-                "/" +
-                criaURL(this.props.arrayRespostasUsuario) +
-                "/true"
-              }
-            >
-              ver atuação
-            </Link>
-          )}
+          {this.props.reeleito && verAtuacao}
         </div>
       </div>
     );
@@ -77,7 +82,7 @@ class Candidato extends Component {
           </div>
         </div>
         <Link
-          className="person-link"
+          className="btn btn-outline-primary btn-sm"
           to={
             "compare/" +
             this.props.id +
@@ -87,6 +92,7 @@ class Candidato extends Component {
         >
           saiba mais
         </Link>
+        {this.props.reeleito && verAtuacao}
       </div>
     );
     return (
@@ -137,7 +143,7 @@ class Candidato extends Component {
                   )}
                   {!this.props.respondeu && badgeNaoRespondeu}
                 </div>
-                {this.props.respondeu ? barraScore : naoRespondeu}
+                {this.props.respondeu ? barraScore : naoRespondeu} 
               </div>
             </div>
           </div>
