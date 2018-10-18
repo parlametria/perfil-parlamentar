@@ -39,6 +39,7 @@ import "./home.css";
 
 // Import função de estado
 import { estados } from "../../../constantes/filtrosSeletoresCandidatos";
+import usuarioReducer from "../../../reducers/usuarioReducer";
 
 class Home extends Component {
   constructor(props) {
@@ -48,7 +49,7 @@ class Home extends Component {
     this.vamosComecar = this.vamosComecar.bind(this);
     this.mostrarTodos = this.mostrarTodos.bind(this);
   }
-  
+
   mostrarTodos() {
     this.props.verTodosEleitos();    
     this.props.mostrarTodosCandidatos();
@@ -104,8 +105,10 @@ class Home extends Component {
   }
 
   render() {
+  
     const { filtro, isVerTodosEleitos } = this.props.candidatos;
     const { isVamosComecar } = this.props.perguntas;
+    const { quantidadeVotos } = this.props.usuario;
     return (
       <div>
         <section className="intro">
@@ -147,7 +150,7 @@ class Home extends Component {
                         Votar
                       </button>
                   )}
-                  {filtro.estado === "TODOS" && !isVerTodosEleitos &&
+                  {filtro.estado === "TODOS" && !isVerTodosEleitos && (quantidadeVotos < 1) && 
                       (<button 
                       className="btn btn-secondary btn-lg"
                       onClick= {this.mostrarTodos}>
@@ -167,6 +170,7 @@ class Home extends Component {
         </div>
       </div>
     );
+    
   }
 }
 
@@ -182,7 +186,8 @@ Home.propTypes = {
 };
 const mapStateToProps = state => ({
   candidatos: state.candidatosReducer,
-  perguntas: state.perguntasReducer
+  perguntas: state.perguntasReducer,
+  usuario : state.usuarioReducer
 });
 
 export default connect(
