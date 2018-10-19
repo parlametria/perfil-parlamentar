@@ -10,7 +10,7 @@ import ScrollIntoViewOnChange from "../../../scroll/scrollIntoViewOnChange";
 // Redux stuff
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-
+//
 // Actions
 import {
   getDadosCandidatos,
@@ -103,7 +103,6 @@ class Home extends Component {
     const { filtro } = this.props.candidatos;
     const { isVamosComecar } = this.props.perguntas;
 
-
     return (
       <div>
         <section className="intro">
@@ -115,17 +114,18 @@ class Home extends Component {
             <div className="d-flex justify-content-center">
               <form>
                 <div className="form-group">
-                  {isMobile ?
-                    <ScrollIntoViewOnChange selector="#candidatos" >
+                  {isMobile ? (
+                    <ScrollIntoViewOnChange selector="#candidatos">
                       <select
                         className="form-control"
                         onChange={this.selecionaEstado}
-                        value={filtro.estado}>
+                        value={filtro.estado}
+                      >
                         <option defaultValue="--">Selecione um Estado</option>
                         {estados()}
                       </select>
                     </ScrollIntoViewOnChange>
-                    :
+                  ) : (
                     <select
                       className="form-control"
                       onChange={this.selecionaEstado}
@@ -134,21 +134,15 @@ class Home extends Component {
                       <option defaultValue="--">Selecione um Estado</option>
                       {estados()}
                     </select>
-
-                  }
-
-
+                  )}
                 </div>
               </form>
             </div>
           </div>
-
         </section>
-
 
         <div className="grid-wrapper" id="candidatos">
           <div className="grid-main">
-
             <section className="grid-panel panel-master">
               <FlipMove>
                 {filtro.estado !== "" && <CandidatosContainer />}
@@ -162,9 +156,9 @@ class Home extends Component {
                           onClick={this.vamosComecar}
                         >
                           Vamos Começar!
-                      </button>
+                        </button>
                       </ScrollIntoView>
-                      <div id="scroll"></div>
+                      <div id="scroll" />
                     </div>
                   )}
               </FlipMove>
@@ -178,7 +172,7 @@ class Home extends Component {
             </section>
           </div>
         </div>
-      </div >
+      </div>
     );
   }
 }
