@@ -15,7 +15,9 @@ import {
   setFiltroCandidatos,
   calculaScore,
   setPartidos,
-  verTodosEleitos
+  verTodosEleitos,
+  mostrarTodosCandidatos,
+  setActiveTab
 } from "../../../actions/candidatosActions";
 
 import {
@@ -38,6 +40,7 @@ import "./home.css";
 
 // Import função de estado
 import { estados } from "../../../constantes/filtrosSeletoresCandidatos";
+import usuarioReducer from "../../../reducers/usuarioReducer";
 
 class Home extends Component {
   constructor(props) {
@@ -45,6 +48,12 @@ class Home extends Component {
 
     this.selecionaEstado = this.selecionaEstado.bind(this);
     this.vamosComecar = this.vamosComecar.bind(this);
+    this.mostrarTodos = this.mostrarTodos.bind(this);
+  }
+
+  mostrarTodos() {
+    this.props.verTodosEleitos();
+    this.props.mostrarTodosCandidatos();
   }
 
   selecionaEstado(e) {
@@ -52,12 +61,17 @@ class Home extends Component {
 
     const novoFiltroEstado = {
       nome: "",
-      partido: "TODOS",
-      estado: e.target.value
+      partido: "Partidos",
+      estado: e.target.value,
+      reeleicao: "-1"
     };
 
-    this.props.verTodosEleitos();
-    if (isMobile) this.props.escondePerguntas();
+    //if(!isMobile) this.props.verTodosEleitos();
+    // if (isMobile) this.props.escondePerguntas();
+
+    if (novoFiltroEstado.estado === "TODOS") {
+      this.props.setActiveTab("eleitos");
+    }
 
     this.props.setFiltroCandidatos(novoFiltroEstado);
     this.props.getDadosCandidatos();
@@ -69,7 +83,7 @@ class Home extends Component {
   }
 
   componentDidMount() {
-    this.props.vamosComecar();
+    if (!isMobile) this.props.vamosComecar();
     const { votos, estado } = this.props.match.params;
 
     if (votos && estado) {
@@ -96,9 +110,9 @@ class Home extends Component {
   }
 
   render() {
-    const { filtro } = this.props.candidatos;
+    const { filtro, isVerTodosEleitos } = this.props.candidatos;
     const { isVamosComecar } = this.props.perguntas;
-
+    const { quantidadeVotos } = this.props.usuario;
     return (
       <div>
         <section className="intro">
@@ -128,21 +142,31 @@ class Home extends Component {
             <section className="grid-panel panel-master">
               <FlipMove>
                 {filtro.estado !== "" && <CandidatosContainer />}
-                {isMobile &&
-                  !isVamosComecar &&
-                  filtro.estado !== "" && (
-                    <div className="text-center mb-3">
+                <div className="text-center mb-3">
+                  {isMobile &&
+                    !isVamosComecar &&
+                    filtro.estado !== "" && (
                       <button
                         className="btn btn-secondary btn-lg"
                         onClick={this.vamosComecar}
                       >
-                        Vamos Começar!
+                        Votar
                       </button>
-                    </div>
-                  )}
+                    )}
+                  {filtro.estado !== "" &&
+                    !isVerTodosEleitos &&
+                    quantidadeVotos < 1 && (
+                      <button
+                        className="btn btn-secondary btn-lg"
+                        onClick={this.mostrarTodos}
+                      >
+                        Ver Eleitos
+                      </button>
+                    )}
+                </div>
               </FlipMove>
             </section>
-            <div className="grid-separator" />
+            {filtro.estado !== "" && <div className="grid-separator" />}
             <section className="grid-panel panel-detail">
               <FlipMove>
                 {filtro.estado !== "" &&
@@ -163,11 +187,14 @@ Home.propTypes = {
   setPartidos: PropTypes.func.isRequired,
   salvaScoreUsuario: PropTypes.func.isRequired,
   escondePerguntas: PropTypes.func.isRequired,
-  verTodosEleitos: PropTypes.func.isRequired
+  verTodosEleitos: PropTypes.func.isRequired,
+  mostrarTodosCandidatos: PropTypes.func.isRequired,
+  setActiveTab: PropTypes.func.isRequired
 };
 const mapStateToProps = state => ({
   candidatos: state.candidatosReducer,
-  perguntas: state.perguntasReducer
+  perguntas: state.perguntasReducer,
+  usuario: state.usuarioReducer
 });
 
 export default connect(
@@ -180,6 +207,8 @@ export default connect(
     setPartidos,
     salvaScoreUsuario,
     escondePerguntas,
-    verTodosEleitos
+    verTodosEleitos,
+    mostrarTodosCandidatos,
+    setActiveTab
   }
 )(Home);

@@ -47,6 +47,8 @@ import {
   DEBOUNCE_TIME
 } from "../../constantes/constantesCandidatos";
 
+import { opcoesFiltroReeleicao } from "../../constantes/filtrosSeletoresCandidatos";
+
 import classnames from "classnames";
 
 class CandidatosContainer extends Component {
@@ -61,6 +63,7 @@ class CandidatosContainer extends Component {
     this.onSearch$ = new Subject();
     this.buscaNome = this.buscaNome.bind(this);
     this.buscaPartido = this.buscaPartido.bind(this);
+    this.buscaReeleitos = this.buscaReeleitos.bind(this);
     this.pegaPrimeiraPagina = this.pegaPrimeiraPagina.bind(this);
     this.pegaCandidatosAnteriores = this.pegaCandidatosAnteriores.bind(this);
     this.pegaProximosCandidatos = this.pegaProximosCandidatos.bind(this);
@@ -132,7 +135,8 @@ class CandidatosContainer extends Component {
     let novoFiltro = {
       nome: e.target.value,
       partido: filtro.partido,
-      estado: filtro.estado
+      estado: filtro.estado,
+      reeleicao: filtro.reeleicao
     };
 
     this.setState({ isPesquisando: true });
@@ -148,7 +152,26 @@ class CandidatosContainer extends Component {
     let novoFiltro = {
       nome: filtro.nome,
       partido: e.target.value,
-      estado: filtro.estado
+      estado: filtro.estado,
+      reeleicao: filtro.reeleicao
+    };
+
+    this.props.setFiltroCandidatos(novoFiltro);
+    this.props.setCandidatosFiltrados();
+  }
+
+  buscaReeleitos(e) {
+    e.preventDefault();
+
+    const { filtro } = this.props.candidatos;
+
+    console.log(e.target.value);
+
+    let novoFiltro = {
+      nome: filtro.nome,
+      partido: filtro.partido,
+      estado: filtro.estado,
+      reeleicao: e.target.value
     };
 
     this.props.setFiltroCandidatos(novoFiltro);
@@ -184,17 +207,35 @@ class CandidatosContainer extends Component {
     const { arrayRespostasUsuario, quantidadeVotos } = this.props.usuario;
 
     const candidatosMapeaveis =
-      filtro.nome !== "" || filtro.partido !== "TODOS"
+      filtro.nome !== "" ||
+      filtro.partido !== "Partidos" ||
+      filtro.reeleicao !== "-1"
         ? candidatosFiltrados
         : candidatosRanqueados;
 
     let eleitosResponderam = 0;
+    let totalCandAtuacao = 0;
+    let totalResponderamAtuacao = 0;
+    let totalEleitosEResponderam = 0;
+    let totalReeleitosEResponderam = 0;
 
     const candidatos = candidatosMapeaveis.map(cpf => {
       const candidato = dadosCandidatos[cpf];
 
       if (!isEmpty(candidato)) {
         if (candidato.respondeu) eleitosResponderam++;
+        if (candidato.reeleicao === "1") totalCandAtuacao++;
+        if (candidato.reeleicao === "1" && candidato.respondeu)
+          totalResponderamAtuacao++;
+        if (activeTab === "eleitos" && candidato.respondeu)
+          totalEleitosEResponderam++;
+        if (
+          activeTab === "eleitos" &&
+          candidato.respondeu &&
+          candidato.reeleicao === "1"
+        )
+          totalReeleitosEResponderam++;
+
         return (
           <Candidato
             respondeu={candidato.respondeu}
@@ -232,39 +273,77 @@ class CandidatosContainer extends Component {
       </option>
     ));
 
+    const listaSelectReeleicao = opcoesFiltroReeleicao().map(opcao => (
+      <option key={opcao.label} value={opcao.value}>
+        {opcao.label}
+      </option>
+    ));
+
     const mostraPartido = (
       <div>
-        {activeTab === "candidatos" && (
-          <h5>
-            Para esse partido,{" "}
-            <strong className="strong">{totalResponderamPartido}</strong> de{" "}
-            <strong className="strong">{totalRespostasPartido}</strong>{" "}
-            candidatos responderam ao questionário.
-          </h5>
-        )}
-        {activeTab === "eleitos" && (
-          <h5>
-            Para esse partido,{" "}
-            <strong className="strong">{totalEleitosPartido}</strong> dos{" "}
-            <strong className="strong">{candidatosFiltrados.length}</strong>{" "}
-            candidatos eleitos responderam ao questionário.
-          </h5>
-        )}
+        {activeTab === "candidatos" &&
+          filtro.reeleicao !== "1" && (
+            <h5>
+              Para esse partido,{" "}
+              <strong className="strong">{totalResponderamPartido}</strong> de{" "}
+              <strong className="strong">{totalRespostasPartido}</strong>{" "}
+              candidatos responderam ao questionário.
+            </h5>
+          )}
+        {activeTab === "candidatos" &&
+          filtro.reeleicao === "1" && (
+            <h5>
+              Para esse partido,{" "}
+              <strong className="strong">{totalResponderamAtuacao}</strong> de{" "}
+              <strong className="strong">{totalCandAtuacao}</strong> candidatos
+              que já tinham atuação na câmara responderam ao questionário.
+            </h5>
+          )}
+        {activeTab === "eleitos" &&
+          filtro.reeleicao === "1" && (
+            <h5>
+              Para esse partido,{" "}
+              <strong className="strong">{totalReeleitosEResponderam}</strong>{" "}
+              dos <strong className="strong">{totalCandAtuacao}</strong>{" "}
+              candidatos eleitos que já tinham atuação na câmara responderam ao
+              questionário.
+            </h5>
+          )}
+        {activeTab === "eleitos" &&
+          filtro.reeleicao !== "1" && (
+            <h5>
+              Para esse partido,{" "}
+              <strong className="strong">{totalEleitosEResponderam}</strong> dos{" "}
+              <strong className="strong">{candidatosFiltrados.length}</strong>{" "}
+              candidatos eleitos responderam ao questionário.
+            </h5>
+          )}
       </div>
     );
 
     const mostraEstado = (
       <div>
-        {activeTab === "candidatos" && (
-          <h5>
-            Nesse Estado,{" "}
-            <strong className="strong">{totalResponderamEstado}</strong> de{" "}
-            <strong className="strong">{totalRespostasEstado}</strong>{" "}
-            candidatos responderam ao questionário.
-          </h5>
-        )}
+        {activeTab === "candidatos" &&
+          filtro.reeleicao !== "1" && (
+            <h5>
+              Nesse Estado,{" "}
+              <strong className="strong">{totalResponderamEstado}</strong> de{" "}
+              <strong className="strong">{totalRespostasEstado}</strong>{" "}
+              candidatos responderam ao questionário.
+            </h5>
+          )}
+        {activeTab === "candidatos" &&
+          filtro.reeleicao === "1" && (
+            <h5>
+              Nesse Estado,{" "}
+              <strong className="strong">{totalResponderamAtuacao}</strong> de{" "}
+              <strong className="strong">{totalCandAtuacao}</strong> candidatos
+              que já tinham atuação na câmara responderam ao questionário.
+            </h5>
+          )}
         {activeTab === "eleitos" &&
-          filtro.estado !== "TODOS" && (
+          filtro.estado !== "TODOS" &&
+          filtro.reeleicao !== "1" && (
             <h5>
               Nesse Estado,{" "}
               <strong className="strong">{eleitosResponderam}</strong> dos{" "}
@@ -273,12 +352,40 @@ class CandidatosContainer extends Component {
             </h5>
           )}
         {activeTab === "eleitos" &&
-          filtro.estado === "TODOS" && (
+          filtro.estado === "TODOS" &&
+          filtro.reeleicao !== "1" && (
             <h5>
               {" "}
               <strong className="strong">{eleitosResponderam}</strong> dos{" "}
               <strong className="strong">{totalEleitosEstado}</strong>{" "}
               candidatos eleitos responderam ao questionário.
+            </h5>
+          )}
+        {activeTab === "eleitos" &&
+          filtro.estado === "TODOS" &&
+          filtro.reeleicao === "1" && (
+            <h5>
+              {" "}
+              <strong className="strong">
+                {totalResponderamAtuacao}
+              </strong> dos{" "}
+              <strong className="strong">{totalCandAtuacao}</strong> candidatos
+              eleitos que já tinham atuação na câmara responderam ao
+              questionário.
+            </h5>
+          )}
+        {activeTab === "eleitos" &&
+          filtro.estado !== "TODOS" &&
+          filtro.reeleicao === "1" && (
+            <h5>
+              {" "}
+              Nesse Estado,{" "}
+              <strong className="strong">
+                {totalResponderamAtuacao}
+              </strong> dos{" "}
+              <strong className="strong">{totalCandAtuacao}</strong> candidatos
+              eleitos que já tinham atuação na câmara responderam ao
+              questionário.
             </h5>
           )}
       </div>
@@ -349,9 +456,8 @@ class CandidatosContainer extends Component {
         </div>
         <div className="container">
           <header className="panel-header">
-            {false ? <Apresentacao /> : null}
             <div className="form-row">
-              <div className="col-7">
+              <div className="col-6">
                 <div className="input-group mb-3">
                   <div className="input-group-prepend">
                     <span
@@ -372,7 +478,7 @@ class CandidatosContainer extends Component {
                   />
                 </div>
               </div>
-              <div className="col-5">
+              <div className="col-3">
                 <div className="form-group">
                   <select
                     className="form-control form-control-secondary barra-filtro-candidato"
@@ -384,8 +490,20 @@ class CandidatosContainer extends Component {
                   </select>
                 </div>
               </div>
+              <div className="col-3">
+                <div className="form-group">
+                  <select
+                    className="form-control form-control-secondary barra-filtro-candidato"
+                    placeholder="Reeleitos"
+                    onChange={this.buscaReeleitos}
+                    value={filtro.reeleicao}
+                  >
+                    {listaSelectReeleicao}
+                  </select>
+                </div>
+              </div>
             </div>
-            {filtro.partido !== "TODOS" ? mostraPartido : mostraEstado}
+            {filtro.partido !== "Partidos" ? mostraPartido : mostraEstado}
           </header>
 
           {isCarregando || this.state.isPesquisando || isFiltrandoPorNome ? (
@@ -414,9 +532,27 @@ class CandidatosContainer extends Component {
       </div>
     );
 
+    const isMinimoVotosOuMostreTodos =
+      quantidadeVotos >= MIN_VOTOS || mostrarTodos;
+
+    let isExibeBoasVindas = false;
+    let isExibeContinueVotando = false;
+    let isExibeCandidatos = false;
+    if (isMinimoVotosOuMostreTodos) {
+      isExibeCandidatos = true;
+    } else if (quantidadeVotos > 0 && quantidadeVotos < MIN_VOTOS) {
+      isExibeContinueVotando = true;
+    } else {
+      isExibeBoasVindas = true;
+    }
+
     return (
       <div>
-        <FlipMove>{exibeCandidatos}</FlipMove>
+        <FlipMove>
+          {isExibeCandidatos ? exibeCandidatos : null}
+          {isExibeContinueVotando ? <ContinueVotando /> : null}
+          {isExibeBoasVindas ? <BoasVindas /> : null}
+        </FlipMove>
       </div>
     );
   }

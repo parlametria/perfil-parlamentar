@@ -96,6 +96,7 @@ export const partidos = () => {
 
 export const listaEstados = () => {
   return [
+    "TODOS",
     "AC",
     "AL",
     "AM",
@@ -123,5 +124,13 @@ export const listaEstados = () => {
     "SE",
     "SP",
     "TO"
-  ]
-}
+  ];
+};
+
+export const opcoesFiltroReeleicao = () => {
+  return [
+    { label: "Atuação", value: "-1" },
+    { label: "SEM atuação na Câmara", value: "0" },
+    { label: "COM atuação na Câmara", value: "1" }
+  ];
+};
