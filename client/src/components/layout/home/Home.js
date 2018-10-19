@@ -4,7 +4,8 @@ import React, { Component } from "react";
 import PerguntasContainer from "../../perguntas/PerguntasContainer";
 import CandidatosContainer from "../../candidatos/CandidatosContainer";
 import { isMobile } from "react-device-detect";
-import ScrollIntoView from 'react-scroll-into-view'
+import ScrollIntoView from "react-scroll-into-view";
+import ScrollIntoViewOnChange from "../../../scroll/scrollIntoViewOnChange";
 
 // Redux stuff
 import { connect } from "react-redux";
@@ -102,6 +103,7 @@ class Home extends Component {
     const { filtro } = this.props.candidatos;
     const { isVamosComecar } = this.props.perguntas;
 
+
     return (
       <div>
         <section className="intro">
@@ -113,18 +115,34 @@ class Home extends Component {
             <div className="d-flex justify-content-center">
               <form>
                 <div className="form-group">
-                  <select
-                    className="form-control"
-                    onChange={this.selecionaEstado}
-                    value={filtro.estado}
-                  >
-                    <option defaultValue="--">Selecione um Estado</option>
-                    {estados()}
-                  </select>
+                  {isMobile ?
+                    <ScrollIntoViewOnChange selector="#candidatos" >
+                      <select
+                        className="form-control"
+                        onChange={this.selecionaEstado}
+                        value={filtro.estado}>
+                        <option defaultValue="--">Selecione um Estado</option>
+                        {estados()}
+                      </select>
+                    </ScrollIntoViewOnChange>
+                    :
+                    <select
+                      className="form-control"
+                      onChange={this.selecionaEstado}
+                      value={filtro.estado}
+                    >
+                      <option defaultValue="--">Selecione um Estado</option>
+                      {estados()}
+                    </select>
+
+                  }
+
+
                 </div>
               </form>
             </div>
           </div>
+
         </section>
 
 
@@ -138,8 +156,7 @@ class Home extends Component {
                   !isVamosComecar &&
                   filtro.estado !== "" && (
                     <div className="text-center mb-3">
-                      <ScrollIntoView selector="#scroll" alignToTop="true">
-
+                      <ScrollIntoView selector="#scroll">
                         <button
                           className="btn btn-secondary btn-lg"
                           onClick={this.vamosComecar}
