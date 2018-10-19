@@ -216,6 +216,8 @@ class CandidatosContainer extends Component {
     let eleitosResponderam = 0;
     let totalCandAtuacao = 0;
     let totalResponderamAtuacao = 0;
+    let totalEleitosEResponderam = 0;
+    let totalReeleitosEResponderam = 0;
 
     const candidatos = candidatosMapeaveis.map(cpf => {
       const candidato = dadosCandidatos[cpf];
@@ -223,8 +225,16 @@ class CandidatosContainer extends Component {
       if (!isEmpty(candidato)) {
         if (candidato.respondeu) eleitosResponderam++;
         if (candidato.reeleicao === "1") totalCandAtuacao++;
-        if (candidato.reeleicao === "1" && candidato.respondeu) totalResponderamAtuacao++;
-        
+        if (candidato.reeleicao === "1" && candidato.respondeu)
+          totalResponderamAtuacao++;
+        if (activeTab === "eleitos" && candidato.respondeu)
+          totalEleitosEResponderam++;
+        if (
+          activeTab === "eleitos" &&
+          candidato.respondeu &&
+          candidato.reeleicao === "1"
+        )
+          totalReeleitosEResponderam++;
 
         return (
           <Candidato
@@ -271,61 +281,69 @@ class CandidatosContainer extends Component {
 
     const mostraPartido = (
       <div>
-        {activeTab === "candidatos" && filtro.reeleicao !== "1" &&(
-          <h5>
-            Para esse partido,{" "}
-            <strong className="strong">{totalResponderamPartido}</strong> de{" "}
-            <strong className="strong">{totalRespostasPartido}</strong>{" "}
-            candidatos responderam ao questionário.
-          </h5>
-        )}
-        {activeTab === "candidatos" && filtro.reeleicao === "1" && (
-          <h5>
-            Para esse partido,{" "}
-            <strong className="strong">{totalResponderamPartido}</strong> de{" "}
-            <strong className="strong">{totalCandAtuacao}</strong>{" "}
-            candidatos que já tinham atuação na câmara responderam ao questionário.
-          </h5>
-        )} 
-        {activeTab === "eleitos" && filtro.reeleicao === "1" &&(
-          <h5>
-            Para esse partido,{" "}
-            <strong className="strong">{totalEleitosPartido}</strong> dos{" "}
-            <strong className="strong">{totalCandAtuacao}</strong>{" "}
-            candidatos eleitos que já tinham atuação na câmara responderam ao questionário.
-          </h5>
-        )}
-        {activeTab === "eleitos" && filtro.reeleicao !== "1" &&(
-          <h5>
-            Para esse partido,{" "}
-            <strong className="strong">{totalEleitosPartido}</strong> dos{" "}
-            <strong className="strong">{candidatosFiltrados.length}</strong>{" "}
-            candidatos eleitos responderam ao questionário.
-          </h5>
-        )}
+        {activeTab === "candidatos" &&
+          filtro.reeleicao !== "1" && (
+            <h5>
+              Para esse partido,{" "}
+              <strong className="strong">{totalResponderamPartido}</strong> de{" "}
+              <strong className="strong">{totalRespostasPartido}</strong>{" "}
+              candidatos responderam ao questionário.
+            </h5>
+          )}
+        {activeTab === "candidatos" &&
+          filtro.reeleicao === "1" && (
+            <h5>
+              Para esse partido,{" "}
+              <strong className="strong">{totalResponderamAtuacao}</strong> de{" "}
+              <strong className="strong">{totalCandAtuacao}</strong> candidatos
+              que já tinham atuação na câmara responderam ao questionário.
+            </h5>
+          )}
+        {activeTab === "eleitos" &&
+          filtro.reeleicao === "1" && (
+            <h5>
+              Para esse partido,{" "}
+              <strong className="strong">{totalReeleitosEResponderam}</strong>{" "}
+              dos <strong className="strong">{totalCandAtuacao}</strong>{" "}
+              candidatos eleitos que já tinham atuação na câmara responderam ao
+              questionário.
+            </h5>
+          )}
+        {activeTab === "eleitos" &&
+          filtro.reeleicao !== "1" && (
+            <h5>
+              Para esse partido,{" "}
+              <strong className="strong">{totalEleitosEResponderam}</strong> dos{" "}
+              <strong className="strong">{candidatosFiltrados.length}</strong>{" "}
+              candidatos eleitos responderam ao questionário.
+            </h5>
+          )}
       </div>
     );
 
     const mostraEstado = (
       <div>
-        {activeTab === "candidatos" &&  filtro.reeleicao !== "1" &&(
-          <h5>
-            Nesse Estado,{" "}
-            <strong className="strong">{totalResponderamEstado}</strong> de{" "}
-            <strong className="strong">{totalRespostasEstado}</strong>{" "}
-            candidatos responderam ao questionário.
-          </h5>
-        )}
-          {activeTab === "candidatos" && filtro.reeleicao === "1" &&(
-          <h5>
-            Nesse Estado,{" "}
-            <strong className="strong">{totalResponderamAtuacao}</strong> de{" "}
-            <strong className="strong">{totalCandAtuacao}</strong>{" "}
-            candidatos que já tinham atuação na câmara responderam ao questionário.
-          </h5>
-        )}
+        {activeTab === "candidatos" &&
+          filtro.reeleicao !== "1" && (
+            <h5>
+              Nesse Estado,{" "}
+              <strong className="strong">{totalResponderamEstado}</strong> de{" "}
+              <strong className="strong">{totalRespostasEstado}</strong>{" "}
+              candidatos responderam ao questionário.
+            </h5>
+          )}
+        {activeTab === "candidatos" &&
+          filtro.reeleicao === "1" && (
+            <h5>
+              Nesse Estado,{" "}
+              <strong className="strong">{totalResponderamAtuacao}</strong> de{" "}
+              <strong className="strong">{totalCandAtuacao}</strong> candidatos
+              que já tinham atuação na câmara responderam ao questionário.
+            </h5>
+          )}
         {activeTab === "eleitos" &&
-          filtro.estado !== "TODOS" && filtro.reeleicao !== "1"&&(
+          filtro.estado !== "TODOS" &&
+          filtro.reeleicao !== "1" && (
             <h5>
               Nesse Estado,{" "}
               <strong className="strong">{eleitosResponderam}</strong> dos{" "}
@@ -334,7 +352,8 @@ class CandidatosContainer extends Component {
             </h5>
           )}
         {activeTab === "eleitos" &&
-          filtro.estado === "TODOS" &&  filtro.reeleicao !== "1" &&(
+          filtro.estado === "TODOS" &&
+          filtro.reeleicao !== "1" && (
             <h5>
               {" "}
               <strong className="strong">{eleitosResponderam}</strong> dos{" "}
@@ -342,22 +361,31 @@ class CandidatosContainer extends Component {
               candidatos eleitos responderam ao questionário.
             </h5>
           )}
-          {activeTab === "eleitos" &&
-          filtro.estado === "TODOS" && filtro.reeleicao === "1" && (
+        {activeTab === "eleitos" &&
+          filtro.estado === "TODOS" &&
+          filtro.reeleicao === "1" && (
             <h5>
               {" "}
-              <strong className="strong">{totalResponderamAtuacao}</strong> dos{" "}
-              <strong className="strong">{totalCandAtuacao}</strong>{" "}
-              candidatos eleitos que já tinham atuação na câmara responderam ao questionário.
+              <strong className="strong">
+                {totalResponderamAtuacao}
+              </strong> dos{" "}
+              <strong className="strong">{totalCandAtuacao}</strong> candidatos
+              eleitos que já tinham atuação na câmara responderam ao
+              questionário.
             </h5>
           )}
-          {activeTab === "eleitos" &&
-          filtro.estado !== "TODOS" && filtro.reeleicao === "1" && (
+        {activeTab === "eleitos" &&
+          filtro.estado !== "TODOS" &&
+          filtro.reeleicao === "1" && (
             <h5>
               {" "}
-              Nesse Estado, <strong className="strong">{totalResponderamAtuacao}</strong> dos{" "}
-              <strong className="strong">{totalCandAtuacao}</strong>{" "}
-              candidatos eleitos que já tinham atuação na câmara responderam ao questionário.
+              Nesse Estado,{" "}
+              <strong className="strong">
+                {totalResponderamAtuacao}
+              </strong> dos{" "}
+              <strong className="strong">{totalCandAtuacao}</strong> candidatos
+              eleitos que já tinham atuação na câmara responderam ao
+              questionário.
             </h5>
           )}
       </div>
