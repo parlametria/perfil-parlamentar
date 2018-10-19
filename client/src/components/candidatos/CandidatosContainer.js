@@ -161,13 +161,13 @@ class CandidatosContainer extends Component {
   }
 
   buscaReeleitos() {
-      const { filtro } = this.props.candidatos;
+    const { filtro } = this.props.candidatos;
 
     let novoFiltro = {
       nome: filtro.nome,
       partido: filtro.partido,
       estado: filtro.estado,
-      reeleicao: (filtro.reeleicao === "1" ? "-1" : "1")
+      reeleicao: filtro.reeleicao === "1" ? "-1" : "1"
     };
 
     this.props.setFiltroCandidatos(novoFiltro);
@@ -486,17 +486,29 @@ class CandidatosContainer extends Component {
                   </select>
                 </div>
               </div>
-
-              <div >
-                <div className="form-group" style={{marginLeft:"10px"}}>
-                Apenas Candidatos:
-                <div className="form-group form-check">
-                <input type="checkbox" className="form-check-input"  onChange={this.buscaReeleitos} defaultChecked={filtro.reeleicao === "1" ? true : false}/>
-                <label className="form-check-label" >{listaSelectReeleicao}</label>
-                </div>
-                </div>
+              <div className="col-12">Apenas candidatos:</div>
+              <div className="col-7">
+                <input
+                  type="checkbox"
+                  className="form-check-input"
+                  onChange={this.buscaReeleitos}
+                  defaultChecked={filtro.reeleicao === "1" ? true : false}
+                />
+                <label className="form-check-label">
+                  {listaSelectReeleicao}
+                </label>
+              </div>
+              <div className="col-5">
+                <input
+                  type="checkbox"
+                  className="form-check-input"
+                  onChange={this.buscaReeleitos}
+                  defaultChecked={filtro.reeleicao === "1" ? true : false}
+                />
+                <label className="form-check-label">QUE responderam</label>
               </div>
             </div>
+
             {filtro.partido !== "Partidos" ? mostraPartido : mostraEstado}
           </header>
 
