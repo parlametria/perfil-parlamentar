@@ -473,7 +473,7 @@ class CandidatosContainer extends Component {
         <div className="container">
           <header className="panel-header">
             <div className="form-row">
-              <div className="col-7">
+              <div className="col-6">
                 <div className="input-group mb-3">
                   <div className="input-group-prepend">
                     <span
@@ -494,7 +494,7 @@ class CandidatosContainer extends Component {
                   />
                 </div>
               </div>
-              <div className="col-5">
+              <div className="col-6">
                 <div className="form-group">
                   <select
                     className="form-control form-control-secondary barra-filtro-candidato"
@@ -506,26 +506,33 @@ class CandidatosContainer extends Component {
                   </select>
                 </div>
               </div>
-              <div className="col-12">Apenas candidatos:</div>
-              <div className="col-7">
-                <input
-                  type="checkbox"
-                  className="form-check-input"
-                  onChange={this.buscaReeleitos}
-                  defaultChecked={filtro.reeleicao === "1" ? true : false}
-                />
-                <label className="form-check-label">
-                  {listaSelectReeleicao}
-                </label>
+              <div className="col-md-6">
+                <div class="form-group form-check">
+                  <input
+                    id="reeleitos"
+                    type="checkbox"
+                    className="form-check-input"
+                    onChange={this.buscaReeleitos}
+                    defaultChecked={filtro.reeleicao === "1" ? true : false}
+                  />
+                  <label className="form-check-label" for="reeleitos">
+                    {listaSelectReeleicao}
+                  </label>
+                </div>
               </div>
-              <div className="col-5">
-                <input
-                  type="checkbox"
-                  className="form-check-input"
-                  onChange={this.buscaRespondeu}
-                  defaultChecked={filtro.respondeu === "1" ? true : false}
-                />
-                <label className="form-check-label">QUE responderam</label>
+              <div className="col-md-6">
+                <div class="form-group form-check">
+                  <input
+                    id="responderam"
+                    type="checkbox"
+                    className="form-check-input"
+                    onChange={this.buscaRespondeu}
+                    defaultChecked={filtro.respondeu === "1" ? true : false}
+                  />
+                  <label className="form-check-label" for="responderam">
+                    responderam o questionário
+                  </label>
+                </div>
               </div>
             </div>
 
