@@ -64,6 +64,7 @@ class CandidatosContainer extends Component {
     this.buscaNome = this.buscaNome.bind(this);
     this.buscaPartido = this.buscaPartido.bind(this);
     this.buscaReeleitos = this.buscaReeleitos.bind(this);
+    this.buscaRespondeu = this.buscaRespondeu.bind(this);
     this.pegaPrimeiraPagina = this.pegaPrimeiraPagina.bind(this);
     this.pegaCandidatosAnteriores = this.pegaCandidatosAnteriores.bind(this);
     this.pegaProximosCandidatos = this.pegaProximosCandidatos.bind(this);
@@ -136,7 +137,8 @@ class CandidatosContainer extends Component {
       nome: e.target.value,
       partido: filtro.partido,
       estado: filtro.estado,
-      reeleicao: filtro.reeleicao
+      reeleicao: filtro.reeleicao,
+      respondeu: filtro.respondeu
     };
 
     this.setState({ isPesquisando: true });
@@ -153,25 +155,38 @@ class CandidatosContainer extends Component {
       nome: filtro.nome,
       partido: e.target.value,
       estado: filtro.estado,
-      reeleicao: filtro.reeleicao
+      reeleicao: filtro.reeleicao,
+      respondeu: filtro.respondeu
     };
 
     this.props.setFiltroCandidatos(novoFiltro);
     this.props.setCandidatosFiltrados();
   }
 
-  buscaReeleitos(e) {
-    e.preventDefault();
-
+  buscaReeleitos() {
     const { filtro } = this.props.candidatos;
-
-    console.log(e.target.value);
 
     let novoFiltro = {
       nome: filtro.nome,
       partido: filtro.partido,
       estado: filtro.estado,
-      reeleicao: e.target.value
+      reeleicao: filtro.reeleicao === "1" ? "-1" : "1",
+      respondeu: filtro.respondeu
+    };
+
+    this.props.setFiltroCandidatos(novoFiltro);
+    this.props.setCandidatosFiltrados();
+  }
+
+  buscaRespondeu() {
+    const { filtro } = this.props.candidatos;
+
+    let novoFiltro = {
+      nome: filtro.nome,
+      partido: filtro.partido,
+      estado: filtro.estado,
+      reeleicao: filtro.reeleicao,
+      respondeu: filtro.respondeu === "1" ? "-1" : "1"
     };
 
     this.props.setFiltroCandidatos(novoFiltro);
@@ -209,7 +224,8 @@ class CandidatosContainer extends Component {
     const candidatosMapeaveis =
       filtro.nome !== "" ||
       filtro.partido !== "Partidos" ||
-      filtro.reeleicao !== "-1"
+      filtro.reeleicao !== "-1" ||
+      filtro.respondeu !== "-1"
         ? candidatosFiltrados
         : candidatosRanqueados;
 
@@ -478,7 +494,7 @@ class CandidatosContainer extends Component {
                   />
                 </div>
               </div>
-              <div className="col-3">
+              <div className="col-6">
                 <div className="form-group">
                   <select
                     className="form-control form-control-secondary barra-filtro-candidato"
@@ -490,19 +506,36 @@ class CandidatosContainer extends Component {
                   </select>
                 </div>
               </div>
-              <div className="col-3">
-                <div className="form-group">
-                  <select
-                    className="form-control form-control-secondary barra-filtro-candidato"
-                    placeholder="Reeleitos"
+              <div className="col-md-6">
+                <div class="form-group form-check">
+                  <input
+                    id="reeleitos"
+                    type="checkbox"
+                    className="form-check-input"
                     onChange={this.buscaReeleitos}
-                    value={filtro.reeleicao}
-                  >
+                    defaultChecked={filtro.reeleicao === "1" ? true : false}
+                  />
+                  <label className="form-check-label" for="reeleitos">
                     {listaSelectReeleicao}
-                  </select>
+                  </label>
+                </div>
+              </div>
+              <div className="col-md-6">
+                <div class="form-group form-check">
+                  <input
+                    id="responderam"
+                    type="checkbox"
+                    className="form-check-input"
+                    onChange={this.buscaRespondeu}
+                    defaultChecked={filtro.respondeu === "1" ? true : false}
+                  />
+                  <label className="form-check-label" for="responderam">
+                    responderam o questionário
+                  </label>
                 </div>
               </div>
             </div>
+
             {filtro.partido !== "Partidos" ? mostraPartido : mostraEstado}
           </header>
 

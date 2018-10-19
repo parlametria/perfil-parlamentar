@@ -37,7 +37,13 @@ const initialState = {
   isCarregando: false,
   isFiltrandoPorNome: false,
   scoreCandidatos: {},
-  filtro: { nome: "", partido: "TODOS", estado: "", reeleicao: "-1" },
+  filtro: {
+    nome: "",
+    partido: "TODOS",
+    estado: "",
+    reeleicao: "-1",
+    respondeu: "-1"
+  },
   candidatosFiltrados: [],
   candidatosRanqueados: [],
   partidos: [],
