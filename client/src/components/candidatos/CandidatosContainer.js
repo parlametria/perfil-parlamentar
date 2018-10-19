@@ -453,7 +453,7 @@ class CandidatosContainer extends Component {
         <div className="container">
           <header className="panel-header">
             <div className="form-row">
-              <div className="col-6">
+              <div className="col-7">
                 <div className="input-group mb-3">
                   <div className="input-group-prepend">
                     <span
@@ -474,7 +474,7 @@ class CandidatosContainer extends Component {
                   />
                 </div>
               </div>
-              <div className="col-3">
+              <div className="col-5">
                 <div className="form-group">
                   <select
                     className="form-control form-control-secondary barra-filtro-candidato"
@@ -487,12 +487,12 @@ class CandidatosContainer extends Component {
                 </div>
               </div>
 
-              <div className="col-3">
-                <div className="form-group">
-                <div class="form-group form-check">
-                <p>Mostrar candidatos:</p>
-                <input type="checkbox" class="form-check-input" onChange={this.buscaReeleitos} defaultChecked={filtro.reeleicao === "1" ? true : false}/>
-                <label class="form-check-label">{listaSelectReeleicao}</label>
+              <div >
+                <div className="form-group" style={{marginLeft:"10px"}}>
+                Apenas Candidatos:
+                <div className="form-group form-check">
+                <input type="checkbox" className="form-check-input"  onChange={this.buscaReeleitos} defaultChecked={filtro.reeleicao === "1" ? true : false}/>
+                <label className="form-check-label" >{listaSelectReeleicao}</label>
                 </div>
                 </div>
               </div>
