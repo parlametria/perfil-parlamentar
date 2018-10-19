@@ -16,7 +16,8 @@ import {
   calculaScore,
   setPartidos,
   verTodosEleitos,
-  mostrarTodosCandidatos
+  mostrarTodosCandidatos,
+  setActiveTab
 } from "../../../actions/candidatosActions";
 
 import {
@@ -51,7 +52,7 @@ class Home extends Component {
   }
 
   mostrarTodos() {
-    this.props.verTodosEleitos();    
+    this.props.verTodosEleitos();
     this.props.mostrarTodosCandidatos();
   }
 
@@ -60,16 +61,20 @@ class Home extends Component {
 
     const novoFiltroEstado = {
       nome: "",
-      partido: "TODOS",
-      estado: e.target.value
+      partido: "Partidos",
+      estado: e.target.value,
+      reeleicao: "-1"
     };
 
     //if(!isMobile) this.props.verTodosEleitos();
-   // if (isMobile) this.props.escondePerguntas();
+    // if (isMobile) this.props.escondePerguntas();
+
+    if (novoFiltroEstado.estado === "TODOS") {
+      this.props.setActiveTab("eleitos");
+    }
 
     this.props.setFiltroCandidatos(novoFiltroEstado);
     this.props.getDadosCandidatos();
-    
   }
 
   vamosComecar(e) {
@@ -78,7 +83,7 @@ class Home extends Component {
   }
 
   componentDidMount() {
-    if(!isMobile) this.props.vamosComecar();
+    if (!isMobile) this.props.vamosComecar();
     const { votos, estado } = this.props.match.params;
 
     if (votos && estado) {
@@ -105,7 +110,6 @@ class Home extends Component {
   }
 
   render() {
-  
     const { filtro, isVerTodosEleitos } = this.props.candidatos;
     const { isVamosComecar } = this.props.perguntas;
     const { quantidadeVotos } = this.props.usuario;
@@ -139,24 +143,27 @@ class Home extends Component {
               <FlipMove>
                 {filtro.estado !== "" && <CandidatosContainer />}
                 <div className="text-center mb-3">
-                {isMobile &&
-                  !isVamosComecar &&
-                  filtro.estado !== "" && (
-                   
+                  {isMobile &&
+                    !isVamosComecar &&
+                    filtro.estado !== "" && (
                       <button
                         className="btn btn-secondary btn-lg"
                         onClick={this.vamosComecar}
                       >
                         Votar
                       </button>
-                  )}
-                  {filtro.estado === "TODOS" && !isVerTodosEleitos && (quantidadeVotos < 1 ) && 
-                      (<button 
-                      className="btn btn-secondary btn-lg"
-                      onClick= {this.mostrarTodos}>
-                      Ver Eleitos
-                      </button>)}
-                  </div>
+                    )}
+                  {filtro.estado !== "" &&
+                    !isVerTodosEleitos &&
+                    quantidadeVotos < 1 && (
+                      <button
+                        className="btn btn-secondary btn-lg"
+                        onClick={this.mostrarTodos}
+                      >
+                        Ver Eleitos
+                      </button>
+                    )}
+                </div>
               </FlipMove>
             </section>
             {filtro.estado !== "" && <div className="grid-separator" />}
@@ -170,7 +177,6 @@ class Home extends Component {
         </div>
       </div>
     );
-    
   }
 }
 
@@ -182,12 +188,13 @@ Home.propTypes = {
   salvaScoreUsuario: PropTypes.func.isRequired,
   escondePerguntas: PropTypes.func.isRequired,
   verTodosEleitos: PropTypes.func.isRequired,
-  mostrarTodosCandidatos: PropTypes.func.isRequired
+  mostrarTodosCandidatos: PropTypes.func.isRequired,
+  setActiveTab: PropTypes.func.isRequired
 };
 const mapStateToProps = state => ({
   candidatos: state.candidatosReducer,
   perguntas: state.perguntasReducer,
-  usuario : state.usuarioReducer
+  usuario: state.usuarioReducer
 });
 
 export default connect(
@@ -201,6 +208,7 @@ export default connect(
     salvaScoreUsuario,
     escondePerguntas,
     verTodosEleitos,
-    mostrarTodosCandidatos
+    mostrarTodosCandidatos,
+    setActiveTab
   }
 )(Home);
