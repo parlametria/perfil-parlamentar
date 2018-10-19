@@ -129,8 +129,6 @@ export const listaEstados = () => {
 
 export const opcoesFiltroReeleicao = () => {
   return [
-    { label: "Atuação", value: "-1" },
-    { label: "SEM atuação na Câmara", value: "0" },
     { label: "COM atuação na Câmara", value: "1" }
   ];
 };

@@ -160,18 +160,14 @@ class CandidatosContainer extends Component {
     this.props.setCandidatosFiltrados();
   }
 
-  buscaReeleitos(e) {
-    e.preventDefault();
-
-    const { filtro } = this.props.candidatos;
-
-    console.log(e.target.value);
+  buscaReeleitos() {
+      const { filtro } = this.props.candidatos;
 
     let novoFiltro = {
       nome: filtro.nome,
       partido: filtro.partido,
       estado: filtro.estado,
-      reeleicao: e.target.value
+      reeleicao: (filtro.reeleicao === "1" ? "-1" : "1")
     };
 
     this.props.setFiltroCandidatos(novoFiltro);
@@ -490,16 +486,14 @@ class CandidatosContainer extends Component {
                   </select>
                 </div>
               </div>
+
               <div className="col-3">
                 <div className="form-group">
-                  <select
-                    className="form-control form-control-secondary barra-filtro-candidato"
-                    placeholder="Reeleitos"
-                    onChange={this.buscaReeleitos}
-                    value={filtro.reeleicao}
-                  >
-                    {listaSelectReeleicao}
-                  </select>
+                <div class="form-group form-check">
+                <p>Mostrar candidatos:</p>
+                <input type="checkbox" class="form-check-input" onChange={this.buscaReeleitos} defaultChecked={filtro.reeleicao === "1" ? true : false}/>
+                <label class="form-check-label">{listaSelectReeleicao}</label>
+                </div>
                 </div>
               </div>
             </div>
