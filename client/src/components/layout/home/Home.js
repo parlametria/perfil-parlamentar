@@ -63,7 +63,8 @@ class Home extends Component {
       nome: "",
       partido: "Partidos",
       estado: e.target.value,
-      reeleicao: "-1"
+      reeleicao: "-1",
+      respondeu: "-1"
     };
 
     //if(!isMobile) this.props.verTodosEleitos();

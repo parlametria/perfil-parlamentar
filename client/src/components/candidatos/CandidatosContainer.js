@@ -64,6 +64,7 @@ class CandidatosContainer extends Component {
     this.buscaNome = this.buscaNome.bind(this);
     this.buscaPartido = this.buscaPartido.bind(this);
     this.buscaReeleitos = this.buscaReeleitos.bind(this);
+    this.buscaRespondeu = this.buscaRespondeu.bind(this);
     this.pegaPrimeiraPagina = this.pegaPrimeiraPagina.bind(this);
     this.pegaCandidatosAnteriores = this.pegaCandidatosAnteriores.bind(this);
     this.pegaProximosCandidatos = this.pegaProximosCandidatos.bind(this);
@@ -136,7 +137,8 @@ class CandidatosContainer extends Component {
       nome: e.target.value,
       partido: filtro.partido,
       estado: filtro.estado,
-      reeleicao: filtro.reeleicao
+      reeleicao: filtro.reeleicao,
+      respondeu: filtro.respondeu
     };
 
     this.setState({ isPesquisando: true });
@@ -153,7 +155,8 @@ class CandidatosContainer extends Component {
       nome: filtro.nome,
       partido: e.target.value,
       estado: filtro.estado,
-      reeleicao: filtro.reeleicao
+      reeleicao: filtro.reeleicao,
+      respondeu: filtro.respondeu
     };
 
     this.props.setFiltroCandidatos(novoFiltro);
@@ -167,7 +170,23 @@ class CandidatosContainer extends Component {
       nome: filtro.nome,
       partido: filtro.partido,
       estado: filtro.estado,
-      reeleicao: filtro.reeleicao === "1" ? "-1" : "1"
+      reeleicao: filtro.reeleicao === "1" ? "-1" : "1",
+      respondeu: filtro.respondeu
+    };
+
+    this.props.setFiltroCandidatos(novoFiltro);
+    this.props.setCandidatosFiltrados();
+  }
+
+  buscaRespondeu() {
+    const { filtro } = this.props.candidatos;
+
+    let novoFiltro = {
+      nome: filtro.nome,
+      partido: filtro.partido,
+      estado: filtro.estado,
+      reeleicao: filtro.reeleicao,
+      respondeu: filtro.respondeu === "1" ? "-1" : "1"
     };
 
     this.props.setFiltroCandidatos(novoFiltro);
@@ -205,7 +224,8 @@ class CandidatosContainer extends Component {
     const candidatosMapeaveis =
       filtro.nome !== "" ||
       filtro.partido !== "Partidos" ||
-      filtro.reeleicao !== "-1"
+      filtro.reeleicao !== "-1" ||
+      filtro.respondeu !== "-1"
         ? candidatosFiltrados
         : candidatosRanqueados;
 
@@ -502,8 +522,8 @@ class CandidatosContainer extends Component {
                 <input
                   type="checkbox"
                   className="form-check-input"
-                  onChange={this.buscaReeleitos}
-                  defaultChecked={filtro.reeleicao === "1" ? true : false}
+                  onChange={this.buscaRespondeu}
+                  defaultChecked={filtro.respondeu === "1" ? true : false}
                 />
                 <label className="form-check-label">QUE responderam</label>
               </div>

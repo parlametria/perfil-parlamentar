@@ -6,12 +6,14 @@ export const filtra = (filtro, dadosCandidatos, scoreCandidatos) => {
       const isFiltrandoPorNome = filtro.nome !== "";
       const isFiltrandoPorPartido = filtro.partido !== "Partidos";
       const isFiltrandoPorReeleicao = filtro.reeleicao !== "-1";
+      const isFiltrandoPorRespondeu = filtro.respondeu !== "-1";
 
       return (
         (dadosCandidatos[cpf].sg_partido === filtro.partido ||
           !isFiltrandoPorPartido) &&
         (dadosCandidatos[cpf].reeleicao === filtro.reeleicao ||
           !isFiltrandoPorReeleicao) &&
+        (dadosCandidatos[cpf].respondeu || !isFiltrandoPorRespondeu) &&
         (dadosCandidatos[cpf].nome_urna.indexOf(filtro.nome.toUpperCase()) >=
           0 ||
           !isFiltrandoPorNome)
