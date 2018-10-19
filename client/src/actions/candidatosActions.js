@@ -397,7 +397,7 @@ export const setCandidatosFiltrados = () => (dispatch, getState) => {
       })
     );
 
-  const candidatos = filtra(filtro, dadosCandidatos);
+  const candidatos = filtra(filtro, dadosCandidatos, scoreCandidatos);
 
   dispatch({
     type: SET_CANDIDATOS_FILTRADOS,
