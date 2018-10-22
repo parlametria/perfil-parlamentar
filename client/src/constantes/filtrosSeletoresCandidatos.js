@@ -2,6 +2,7 @@ import React from "react";
 
 export const estados = () => {
   return [
+    "TODOS",
     "AC",
     "AL",
     "AM",
@@ -91,4 +92,41 @@ export const partidos = () => {
       {partido}
     </option>
   ));
+};
+
+export const listaEstados = () => {
+  return [
+    "TODOS",
+    "AC",
+    "AL",
+    "AM",
+    "AP",
+    "BA",
+    "CE",
+    "DF",
+    "ES",
+    "GO",
+    "MA",
+    "MT",
+    "MS",
+    "MG",
+    "PA",
+    "PB",
+    "PR",
+    "PE",
+    "PI",
+    "RJ",
+    "RN",
+    "RO",
+    "RS",
+    "RR",
+    "SC",
+    "SE",
+    "SP",
+    "TO"
+  ];
+};
+
+export const opcoesFiltroReeleicao = () => {
+  return [{ label: "tem atuação na Câmara", value: "1" }];
 };

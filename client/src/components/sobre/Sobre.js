@@ -63,6 +63,9 @@ class Sobre extends Component {
                   width="100%"
                 />
               </div>
+              <div className="col-md-12">
+              Nosso código é aberto! Para saber mais sobre como funcionamos você pode consulta-lo em {"   "}<a href= "https://github.com/analytics-ufcg/voz-ativa">  github.com/analytics-ufcg/voz-ativa</a>
+              </div>
             </div>
           </section>
         </div>

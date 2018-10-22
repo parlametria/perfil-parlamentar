@@ -6,7 +6,7 @@ export default () => (
     <div>
       <p>
         <strong>Vote</strong> nos temas propostos e veja aqui os
-        candidatos que mais se alinham com você.
+        deputados que mais se alinham com você.
       </p>
       <p>
         <strong>Filtre</strong> o resultado segundo seus critérios.
@@ -14,6 +14,11 @@ export default () => (
       <p>
         <strong>Informe-se</strong> sobre os 5 temas. Quanto mais
         perguntas você responder, mas preciso é o resultado.
+      </p>
+      <p>
+        <strong>Cobre</strong> participação do seu deputado, caso
+         ele não tenha respondido o questionário, e veja se ele 
+         realmente te representa.
       </p>
 
       <div className="text-center">

@@ -11,8 +11,9 @@
     "firebase": "^5.3.1",
     "firebase-admin": "^6.0.0",
     "prop-types": "^15.6.2",
-    "react": "^16.4.2",
+    "react": "^16.5.2",
     "react-bootstrap-table": "^4.3.1",
+    "react-copy-to-clipboard": "^5.0.1",
     "react-device-detect": "^1.5.9",
     "react-dom": "^16.4.2",
     "react-flip-move": "^3.0.2",
@@ -29,7 +30,8 @@
     "redux-thunk": "^2.3.0",
     "rxjs": "^6.3.1",
     "rxjs-compat": "^6.3.1",
-    "sanitize-html": "^1.18.4"
+    "sanitize-html": "^1.18.4",
+    "react-scroll-into-view": "^1.5.0"
   },
   "scripts": {
     "start": "react-scripts start",

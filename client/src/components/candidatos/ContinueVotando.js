@@ -11,6 +11,7 @@ class ContinueVotando extends Component {
   }
   render() {
     return (
+
       <div className="container tutorial pb-3">
         <div className="text-center">
           <img

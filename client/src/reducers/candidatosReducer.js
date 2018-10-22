@@ -14,10 +14,13 @@ import {
   SET_MOSTRAR_TODOS_CANDIDATOS,
   SET_CANDIDATOS_FILTRADOS,
   SET_CANDIDATOS_RANQUEADOS,
-  SET_MOSTRA_PERGUNTAS,
   SET_PARTIDOS,
   SET_PAGINACAO,
-  SET_CANDIDATOS_FILTRANDO
+  SET_CANDIDATOS_FILTRANDO,
+  SET_ACTIVE_TAB,
+  SET_TOTAL_ELEITOS_ESTADO,
+  SET_TOTAL_ELEITOS_PARTIDO,
+  SET_VER_TODOS_ELEITOS
 } from "../actions/types";
 
 // candidatesVotings: {id_votacao: voto}
@@ -28,20 +31,29 @@ const initialState = {
   totalRespostasEstado: 0,
   totalResponderamPartido: 0,
   totalRespostasPartido: 0,
+  totalEleitosPartido: 0,
+  totalEleitosEstado: 0,
   dadosCandidatos: {},
   isCarregando: false,
   isFiltrandoPorNome: false,
   scoreCandidatos: {},
-  filtro: { nome: "", partido: "TODOS", estado: "" },
+  filtro: {
+    nome: "",
+    partido: "TODOS",
+    estado: "",
+    reeleicao: "-1",
+    respondeu: "-1"
+  },
   candidatosFiltrados: [],
   candidatosRanqueados: [],
   partidos: [],
   dadosCandidato: {},
   scoreTema: {},
   mostrarTodos: false,
-  mostraPerguntas: false,
-  paginacao: { inicio: 0, final: 0, totalCandidatos: 0, paginaAtualAPI: 0 },
-  dadosCandidatoBusca: {}
+  paginacao: { inicio: 0, final: 0, totalCandidatos: 0, paginaAtual: 0 },
+  dadosCandidatoBusca: {},
+  activeTab: "eleitos",
+  isVerTodosEleitos: false
 };
 
 export default function(state = initialState, action) {
@@ -114,11 +126,6 @@ export default function(state = initialState, action) {
         ...state,
         mostrarTodos: true
       };
-    case SET_MOSTRA_PERGUNTAS:
-      return {
-        ...state,
-        mostraPerguntas: true
-      };
     case SET_CANDIDATOS_FILTRADOS:
       return {
         ...state,
@@ -144,6 +151,26 @@ export default function(state = initialState, action) {
       return {
         ...state,
         isFiltrandoPorNome: true
+      };
+    case SET_ACTIVE_TAB:
+      return {
+        ...state,
+        activeTab: action.activeTab
+      };
+    case SET_TOTAL_ELEITOS_ESTADO:
+      return {
+        ...state,
+        totalEleitosEstado: action.totalEleitosEstado
+      };
+    case SET_TOTAL_ELEITOS_PARTIDO:
+      return {
+        ...state,
+        totalEleitosPartido: action.totalEleitosPartido
+      };
+    case SET_VER_TODOS_ELEITOS:
+      return {
+        ...state,
+        isVerTodosEleitos: true
       };
     default:
       return state;

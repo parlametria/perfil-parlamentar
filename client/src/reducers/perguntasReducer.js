@@ -2,14 +2,22 @@ import {
   PERGUNTAS_CARREGANDO,
   SET_DADOS_PERGUNTAS,
   SET_INDEX_PERGUNTA,
-  SET_TEMA
+  SET_TEMA,
+  SET_VAMOS_COMECAR,
+  ESCONDE_PERGUNTAS,
+  EXIBE_PERGUNTAS,
+  SET_CONTINUAR_RESPONDENDO
 } from "../actions/types";
 
 const initialState = {
   dadosPerguntas: {},
   isCarregando: false,
   indexPergunta: 0,
-  filtroTema: "Meio Ambiente"
+  filtroTema: "Meio Ambiente",
+  // Vamos começar
+  isVamosComecar: false,
+  isExibeGavetaPerguntas: true,
+  isContinuarRespondendo: false
 };
 
 export default function(state = initialState, action) {
@@ -34,6 +42,26 @@ export default function(state = initialState, action) {
       return {
         ...state,
         filtroTema: action.tema
+      };
+    case SET_VAMOS_COMECAR:
+      return {
+        ...state,
+        isVamosComecar: true
+      };
+    case EXIBE_PERGUNTAS:
+      return {
+        ...state,
+        isExibeGavetaPerguntas: true
+      };
+    case ESCONDE_PERGUNTAS:
+      return {
+        ...state,
+        isExibeGavetaPerguntas: false
+      };
+    case SET_CONTINUAR_RESPONDENDO:
+      return {
+        ...state,
+        isContinuarRespondendo: true
       };
     default:
       return state;
