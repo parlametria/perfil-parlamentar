@@ -458,27 +458,33 @@ export const getProximaPaginaCandidatos = () => (dispatch, getState) => {
     candidatosRanqueados
   } = getState().candidatosReducer;
 
+  let { dadosCandidatos } = getState().candidatosReducer;
+
+  dispatch(setCandidatosCarregando());
+
   axios
     .get(
       "/api/respostas/estados/" +
         filtro.estado +
         "/naoresponderam?pageNo=" +
-        paginacao.paginaAtual +
+        paginacao.paginaAtualAPI +
         "&size=" +
         ITENS_POR_REQ
     )
     .then(respostas => {
-      console.log(paginacao.paginaAtual);
+      console.log(paginacao.paginaAtualAPI);
 
-      respostas.data.data.forEach(resposta =>
-        candidatosRanqueados.push(resposta.cpf)
-      );
+      respostas.data.data.forEach(resposta => {
+        candidatosRanqueados.push(resposta.cpf);
+        dadosCandidatos[resposta.cpf] = resposta;
+      });
 
       console.log(candidatosRanqueados);
       dispatch({
         type: SET_CANDIDATOS_RANQUEADOS,
         candidatosRanqueados: candidatosRanqueados
       });
+      dispatch(setCandidatosCarregados());
     });
 };
 
