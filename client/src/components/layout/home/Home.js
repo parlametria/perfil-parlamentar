@@ -159,14 +159,14 @@ class Home extends Component {
             <section className="grid-panel panel-master">
               <FlipMove>
                 {filtro.estado !== "" && <CandidatosContainer />}
-                <div className="text-center mb-3">
+                <div className="d-flex justify-content-center mb-3">
                   {isMobile &&
                     !isVamosComecar &&
                     filtro.estado !== "" && (
-                      <div className="text-center mb-3">
+                      <div className="pr-1">
                         <ScrollIntoView selector="#scroll">
                           <button
-                            className="btn btn-secondary btn-lg"
+                            className="btn btn-secondary"
                             onClick={this.vamosComecar}
                           >
                             Vamos Começar!
@@ -178,12 +178,14 @@ class Home extends Component {
                   {filtro.estado !== "" &&
                     !isVerTodosEleitos &&
                     quantidadeVotos < 1 && (
-                      <button
-                        className="btn btn-secondary btn-lg"
-                        onClick={this.mostrarTodos}
-                      >
-                        Ver Eleitos
-                      </button>
+                      <div>
+                        <button
+                          className="btn btn-secondary"
+                          onClick={this.mostrarTodos}
+                        >
+                          Ver Eleitos
+                        </button>
+                      </div>
                     )}
                 </div>
               </FlipMove>
