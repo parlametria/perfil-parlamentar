@@ -4,11 +4,13 @@ import React, { Component } from "react";
 import PerguntasContainer from "../../perguntas/PerguntasContainer";
 import CandidatosContainer from "../../candidatos/CandidatosContainer";
 import { isMobile } from "react-device-detect";
+import ScrollIntoView from "react-scroll-into-view";
+import ScrollIntoViewOnChange from "../../../scroll/scrollIntoViewOnChange";
 
 // Redux stuff
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-
+//
 // Actions
 import {
   getDadosCandidatos,
@@ -63,7 +65,8 @@ class Home extends Component {
       nome: "",
       partido: "Partidos",
       estado: e.target.value,
-      reeleicao: "-1"
+      reeleicao: "-1",
+      respondeu: "-1"
     };
 
     //if(!isMobile) this.props.verTodosEleitos();
@@ -124,20 +127,34 @@ class Home extends Component {
             <div className="d-flex justify-content-center">
               <form>
                 <div className="form-group">
-                  <select
-                    className="form-control"
-                    onChange={this.selecionaEstado}
-                    value={filtro.estado}
-                  >
-                    <option defaultValue="--">Selecione um Estado</option>
-                    {estados()}
-                  </select>
+                  {isMobile ? (
+                    <ScrollIntoViewOnChange selector="#candidatos">
+                      <select
+                        className="form-control"
+                        onChange={this.selecionaEstado}
+                        value={filtro.estado}
+                      >
+                        <option defaultValue="--">Selecione um Estado</option>
+                        {estados()}
+                      </select>
+                    </ScrollIntoViewOnChange>
+                  ) : (
+                    <select
+                      className="form-control"
+                      onChange={this.selecionaEstado}
+                      value={filtro.estado}
+                    >
+                      <option defaultValue="--">Selecione um Estado</option>
+                      {estados()}
+                    </select>
+                  )}
                 </div>
               </form>
             </div>
           </div>
         </section>
-        <div className="grid-wrapper">
+
+        <div className="grid-wrapper" id="candidatos">
           <div className="grid-main">
             <section className="grid-panel panel-master">
               <FlipMove>
@@ -146,12 +163,17 @@ class Home extends Component {
                   {isMobile &&
                     !isVamosComecar &&
                     filtro.estado !== "" && (
-                      <button
-                        className="btn btn-secondary btn-lg"
-                        onClick={this.vamosComecar}
-                      >
-                        Votar
-                      </button>
+                      <div className="text-center mb-3">
+                        <ScrollIntoView selector="#scroll">
+                          <button
+                            className="btn btn-secondary btn-lg"
+                            onClick={this.vamosComecar}
+                          >
+                            Vamos Começar!
+                          </button>
+                        </ScrollIntoView>
+                        <div id="scroll" />
+                      </div>
                     )}
                   {filtro.estado !== "" &&
                     !isVerTodosEleitos &&
