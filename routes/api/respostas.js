@@ -1,4 +1,14 @@
+/** Express router
+ * @module routes/respostas
+ * @requires express
+ */
+
 const express = require("express");
+
+/**
+ * Rotas para funções relacionadas às respostas.
+ * @namespace module:routes/respostas
+ */
 const router = express.Router();
 const mongoose = require("mongoose");
 
@@ -7,9 +17,12 @@ const Resposta = require("../../models/Resposta");
 const BAD_REQUEST = 400;
 const SUCCESS = 200;
 
-// @route   GET api/respostas
-// @desc    Pega todos as respostas de uma vez
-// @access  Public
+/**
+ * Pega todas as respostas de uma vez.
+ * @name get/api/respostas
+ * @function
+ * @memberof module:routes/respostas
+ */
 router.get("/", (req, res) => {
   const pageNo = Number(req.query.pageNo);
   const size = Number(req.query.size);
@@ -35,58 +48,79 @@ router.get("/", (req, res) => {
       response = err
         ? { status: BAD_REQUEST, message: "Error fetching data" }
         : {
-            data,
-            total: totalCount,
-            itensPorPagina: size,
-            pagina: pageNo,
-            paginas: Math.ceil(totalCount / size),
-            status: SUCCESS
-          };
+          data,
+          total: totalCount,
+          itensPorPagina: size,
+          pagina: pageNo,
+          paginas: Math.ceil(totalCount / size),
+          status: SUCCESS
+        };
 
       res.status(response.status).json(response);
     });
   });
 });
 
-// @route   GET api/respostas/eleitos
-// @desc    Pega as respostas de todos os candidatos eleitos
-// @access  Public
+
+/**
+ * Pega as respostas de todos os candidatos eleitos
+ * @name get/api/respostas/eleitos
+ * @function
+ * @memberof module:routes/respostas
+ * @param {boolean} eleito - Flag eleito true
+ */
 router.get("/eleitos", (req, res) => {
   Resposta.find({ eleito: true })
     .then(respostas => res.json(respostas))
     .catch(err => res.status(BAD_REQUEST).json({ err }));
 });
 
-// @route   GET api/respostas/candidatos/<cpf>
-// @desc    Pega as respostas de um candidato dado o seu cpf
-// @access  Public
+/**
+ * Pega as respostas de um candidato dado o seu cpf.
+ * @name get/api/respostas/candidatos/<cpf>
+ * @function
+ * @memberof module:routes/respostas
+ * @param {string} cpf - CPF do candidato
+ */
 router.get("/candidatos/:cpf", (req, res) => {
   Resposta.find({ cpf: req.params.cpf })
     .then(respostas => res.json(respostas))
     .catch(err => res.status(BAD_REQUEST).json({ err }));
 });
 
-// @route   GET api/respostas/candidatos/responderam
-// @desc    Pega todos as respostas de todos que responderam
-// @access  Public
+/**
+ * Pega todos as respostas de todos que responderam.
+ * @name get/api/respostas/candidatos/responderam
+ * @function
+ * @memberof module:routes/respostas
+ * @param {boolean} respondeu - Flag respondeu true
+ */
 router.get("/candidatos/responderam", (req, res) => {
   Resposta.find({ respondeu: true })
     .then(respostas => res.json(respostas))
     .catch(err => res.status(BAD_REQUEST).json({ err }));
 });
 
-// @route   GET api/respostas
-// @desc    Pega todas as respostas de quem NÃO respondeu
-// @access  Public
+/**
+ * Pega todos as respostas de todos que não responderam.
+ * @name get/api/respostas/candidatos/responderam
+ * @function
+ * @memberof module:routes/respostas
+ * @param {boolean} respondeu - Flag respondeu false
+ */
 router.get("/candidatos/naoresponderam", (req, res) => {
   Resposta.find({ respondeu: false })
     .then(respostas => res.json(respostas))
     .catch(err => res.status(BAD_REQUEST).json({ err }));
 });
 
-// @route   GET api/respostas/estados/<uf>/<partido>/<nome>
-// @desc    Pega as respostas por estado
-// @access  Public
+/**
+ * Pega as respostas por estado.
+ * @name get/api/respostas/estados/<uf>
+ * @function
+ * @memberof module:routes/respostas
+ * @param {string} UF - Estado
+ */
 router.get("/estados/:uf", (req, res) => {
   query = {};
   const partido = String(req.query.partido);
@@ -100,7 +134,7 @@ router.get("/estados/:uf", (req, res) => {
       sg_partido: partido,
       nome_urna: { $regex: pattern }
     };
-  } else if (nome !== "undefined" && partido === "undefined") { 
+  } else if (nome !== "undefined" && partido === "undefined") {
     query = { uf: req.params.uf, nome_urna: { $regex: pattern } };
   } else if (partido !== "undefined" && nome === "undefined") {
     query = { uf: req.params.uf, sg_partido: partido };
@@ -117,20 +151,39 @@ router.get("/estados/:uf", (req, res) => {
       response = err
         ? { status: BAD_REQUEST, message: "Error fetching data" }
         : {
-            candidatos,
-            total: totalCount,
-            status: SUCCESS
-          };
+          candidatos,
+          total: totalCount,
+          status: SUCCESS
+        };
 
       res.status(response.status).json(response);
     });
   });
 });
 
-// @route   GET api/respostas/estados/<uf>/responderam
-// @desc    Pega as respostas por estado de quem respondeu
-// @access  Public
+/**
+ * Pega as respostas por estado de quem respondeu.
+ * @name get/api/respostas/estados/<uf>/responderam
+ * @function
+ * @memberof module:routes/respostas
+ * @param {string} UF - Estado
+ * @param {boolean} respondeu - Flag respondeu true
+ */
 router.get("/estados/:uf/responderam", (req, res) => {
+  Resposta.find({ uf: req.params.uf, respondeu: true })
+    .then(respostas => res.json(respostas))
+    .catch(err => res.status(BAD_REQUEST).json({ err }));
+});
+
+/**
+ * Pega o número de candidatos que responderam por estado.
+ * @name get/api/respostas/estados/<uf>/responderam/totalcandidatos
+ * @function
+ * @memberof module:routes/respostas
+ * @param {string} UF - Estado
+ * @param {boolean} respondeu - Flag respondeu true
+ */
+router.get("/estados/:uf/responderam/totalcandidatos", (req, res) => {
   Resposta.countDocuments(
     { uf: req.params.uf, respondeu: true },
     (err, totalCount) => {
@@ -143,10 +196,10 @@ router.get("/estados/:uf/responderam", (req, res) => {
           response = err
             ? { status: BAD_REQUEST, message: "Error fetching data" }
             : {
-                candidatos,
-                total: totalCount,
-                status: SUCCESS
-              };
+              candidatos,
+              total: totalCount,
+              status: SUCCESS
+            };
 
           res.status(response.status).json(response);
         }
@@ -155,10 +208,27 @@ router.get("/estados/:uf/responderam", (req, res) => {
   );
 });
 
-// @route   GET api/respostas/estados/<uf>/partidos/
-// @desc    Pega as respostas por partido e estado de quem respondeu
-// @access  Public
-router.get("/estados/:uf/partidos/:sigla", (req, res) => {
+/**
+ * Pega o número de candidatos que responderam por estado.
+ * @name get/api/respostas/estados/<uf>/totalcandidatos
+ * @memberof module:routes/respostas
+ * @param {string} UF - Estado
+ */
+router.get("/estados/:uf/totalcandidatos", (req, res) => {
+  Resposta.countDocuments({ uf: req.params.uf }, (err, totalCount) => {
+    if (!err) res.json(totalCount);
+    else res.status(400).json(err);
+  });
+});
+
+/**
+ * Pega o total de respostas por estado e partido.
+ * @name get/api/respostas/estados/<uf>/partidos/<sigla>/totalcandidatos
+ * @memberof module:routes/respostas
+ * @param {string} UF - Estado
+ * @param {string} sigla - Sigla do partido
+ */
+router.get("/estados/:uf/partidos/:sigla/totalcandidatos", (req, res) => {
   Resposta.countDocuments(
     {
       uf: req.params.uf,
@@ -177,10 +247,10 @@ router.get("/estados/:uf/partidos/:sigla", (req, res) => {
           response = err
             ? { status: BAD_REQUEST, message: "Error fetching data" }
             : {
-                candidatos,
-                total: totalCount,
-                status: SUCCESS
-              };
+              candidatos,
+              total: totalCount,
+              status: SUCCESS
+            };
 
           res.status(response.status).json(response);
         }
@@ -189,9 +259,35 @@ router.get("/estados/:uf/partidos/:sigla", (req, res) => {
   );
 });
 
-// @route   GET api/respostas/estados/<uf>/partidos/<sigla>/responderam
-// @desc    Pega as respostas por partido e estado de quem respondeu
-// @access  Public
+/**
+ * Pega o total de respostas por partido e estado de quem respondeu.
+ * @name get/api/respostas/estados/<uf>/partidos/<sigla>/responderam/totalcandidatos
+ * @memberof module:routes/respostas
+ * @param {string} UF - Estado
+ * @param {string} sigla - Sigla do partido
+ * @param {boolean} respondeu - Flag respondeu true
+ */
+router.get(
+  "/estados/:uf/partidos/:sigla/responderam/totalcandidatos",
+  (req, res) => {
+    Resposta.countDocuments(
+      { uf: req.params.uf, sg_partido: req.params.sigla, respondeu: true },
+      (err, totalCount) => {
+        if (!err) res.json(totalCount);
+        else res.status(400).json(err);
+      }
+    );
+  }
+);
+
+/**
+ * Pega as respostas por partido e estado de quem respondeu.
+ * @name get/api/respostas/estados/<uf>/partidos/<sigla>/responderam
+ * @memberof module:routes/respostas
+ * @param {string} UF - Estado
+ * @param {string} sigla - Sigla do partido
+ * @param {boolean} respondeu - Flag respondeu true
+ */
 router.get("/estados/:uf/partidos/:sigla/responderam", (req, res) => {
   Resposta.countDocuments(
     {
@@ -213,10 +309,10 @@ router.get("/estados/:uf/partidos/:sigla/responderam", (req, res) => {
           response = err
             ? { status: BAD_REQUEST, message: "Error fetching data" }
             : {
-                candidatos,
-                total: totalCount,
-                status: SUCCESS
-              };
+              candidatos,
+              total: totalCount,
+              status: SUCCESS
+            };
 
           res.status(response.status).json(response);
         }
@@ -225,9 +321,14 @@ router.get("/estados/:uf/partidos/:sigla/responderam", (req, res) => {
   );
 });
 
-// @route   GET api/respostas/estados/<uf>/partidos/<sigla>/naoresponderam
-// @desc    Pega as respostas por partido e estado de quem NÃO respondeu
-// @access  Public
+/**
+ * Pega as respostas por partido e estado de quem NÃO respondeu.
+ * @name get/api/respostas/estados/<uf>/partidos/<sigla>/naoresponderam
+ * @memberof module:routes/respostas
+ * @param {string} UF - Estado
+ * @param {string} sigla - Sigla do partido
+ * @param {boolean} respondeu - Flag respondeu false
+ */
 router.get("/estados/:uf/partidos/:sigla/naoresponderam", (req, res) => {
   Resposta.countDocuments(
     {
@@ -249,10 +350,10 @@ router.get("/estados/:uf/partidos/:sigla/naoresponderam", (req, res) => {
           response = err
             ? { status: BAD_REQUEST, message: "Error fetching data" }
             : {
-                candidatos,
-                total: totalCount,
-                status: SUCCESS
-              };
+              candidatos,
+              total: totalCount,
+              status: SUCCESS
+            };
 
           res.status(response.status).json(response);
         }
@@ -261,9 +362,13 @@ router.get("/estados/:uf/partidos/:sigla/naoresponderam", (req, res) => {
   );
 });
 
-// @route   GET api/respostas/estados/<uf>/naoresponderam
-// @desc    Pega as respostas por estado de quem NÃO respondeu
-// @access  Public
+/**
+ *  Pega as respostas por estado de quem NÃO respondeu.
+ * @name get/api/respostas/estados/<uf>
+ * @memberof module:routes/respostas
+ * @param {string} UF - Estado
+ * @param {boolean} respondeu - Flag respondeu false
+ */
 router.get("/estados/:uf/naoresponderam", (req, res) => {
   const pageNo = Number(req.query.pageNo);
   const size = Number(req.query.size);
@@ -289,13 +394,13 @@ router.get("/estados/:uf/naoresponderam", (req, res) => {
       response = err
         ? { status: BAD_REQUEST, message: "Error fetching data" }
         : {
-            data,
-            total: totalCount,
-            itensPorPagina: size,
-            pagina: pageNo,
-            paginas: Math.ceil(totalCount / size),
-            status: SUCCESS
-          };
+          data,
+          total: totalCount,
+          itensPorPagina: size,
+          pagina: pageNo,
+          paginas: Math.ceil(totalCount / size),
+          status: SUCCESS
+        };
 
       res.status(response.status).json(response);
     });
@@ -316,10 +421,10 @@ router.get("/estados/:uf/eleitos", (req, res) => {
         response = err
           ? { status: BAD_REQUEST, message: "Error fetching data" }
           : {
-              candidatos,
-              total: totalCount,
-              status: SUCCESS
-            };
+            candidatos,
+            total: totalCount,
+            status: SUCCESS
+          };
 
         res.status(response.status).json(response);
       });
