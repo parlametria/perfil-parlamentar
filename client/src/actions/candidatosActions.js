@@ -262,6 +262,28 @@ export const getDadosCandidatos = () => (dispatch, getState) => {
           type: SET_TOTAL_RESPOSTAS_ESTADO,
           totalRespostas: totalCandidatos.data.total
         });
+      })
+      .then(() => {
+        axios
+          .get(
+            "/api/respostas/estados/" +
+              filtro.estado +
+              "/naoresponderam?pageNo=1&size=" +
+              ITENS_POR_REQ
+          )
+          .then(respostas => {
+            console.timeEnd("getNaoResponderam");
+
+            respostas.data.data.forEach(resp => {
+              dadosCandidatos[resp.cpf] = resp;
+            });
+
+            console.log(respostas);
+
+            dispatch({ type: SET_DADOS_CANDIDATOS, dadosCandidatos });
+            dispatch(setPartidos());
+            dispatch(calculaScore());
+          });
       });
 
     console.time("getResponderam");
@@ -281,20 +303,6 @@ export const getDadosCandidatos = () => (dispatch, getState) => {
           type: SET_TOTAL_RESPONDERAM_ESTADO,
           totalResponderam: respostas.data.total
         });
-        dispatch(setPartidos());
-        dispatch(calculaScore());
-      });
-
-    axios
-      .get("/api/respostas/estados/" + filtro.estado + "/naoresponderam")
-      .then(respostas => {
-        console.timeEnd("getNaoResponderam");
-
-        respostas.data.data.forEach(resp => {
-          dadosCandidatos[resp.cpf] = resp;
-        });
-
-        dispatch({ type: SET_DADOS_CANDIDATOS, dadosCandidatos });
         dispatch(setPartidos());
         dispatch(calculaScore());
       });
@@ -409,7 +417,7 @@ export const setCandidatosFiltrados = () => (dispatch, getState) => {
       inicio: 0,
       final: TAM_PAGINA,
       totalCandidatos:
-        filtro.partido !== "TODOS" ||
+        filtro.partido !== "Partidos" ||
         filtro.nome !== "" ||
         filtro.reeleicao !== "-1"
           ? candidatos.length
@@ -467,12 +475,12 @@ export const getProximaPaginaCandidatos = () => (dispatch, getState) => {
       "/api/respostas/estados/" +
         filtro.estado +
         "/naoresponderam?pageNo=" +
-        paginacao.paginaAtualAPI +
+        paginacao.paginaAtual +
         "&size=" +
         ITENS_POR_REQ
     )
     .then(respostas => {
-      console.log(paginacao.paginaAtualAPI);
+      console.log(paginacao.paginaAtual);
 
       respostas.data.data.forEach(resposta => {
         candidatosRanqueados.push(resposta.cpf);
@@ -500,7 +508,8 @@ export const setActiveTab = activeTab => (dispatch, getState) => {
     nome: "",
     partido: "Partidos",
     estado: filtro.estado,
-    reeleicao: "-1"
+    reeleicao: "-1",
+    respondeu: "-1"
   };
 
   dispatch(setFiltroCandidatos(filtroLimpo));

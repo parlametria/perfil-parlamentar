@@ -96,7 +96,7 @@ class Home extends Component {
 
         const filtroEstado = {
           nome: "",
-          partido: "TODOS",
+          partido: "Partidos",
           estado: estado
         };
 
