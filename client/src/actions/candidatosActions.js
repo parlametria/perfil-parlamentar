@@ -47,10 +47,10 @@ const comparaRespostas = (
   chaves.forEach(idPergunta => {
     respostasIguais +=
       respostasCandidatos[idPergunta] !== undefined &&
-      respostasCandidatos[idPergunta] !== null &&
-      respostasUsuario[idPergunta] !== 0 &&
-      respostasUsuario[idPergunta] !== -2 &&
-      respostasCandidatos[idPergunta] === respostasUsuario[idPergunta]
+        respostasCandidatos[idPergunta] !== null &&
+        respostasUsuario[idPergunta] !== 0 &&
+        respostasUsuario[idPergunta] !== -2 &&
+        respostasCandidatos[idPergunta] === respostasUsuario[idPergunta]
         ? 1
         : 0;
   });
@@ -271,8 +271,8 @@ export const getDadosCandidatos = () => (dispatch, getState) => {
       .get("/api/respostas/estados/" + filtro.estado + "/responderam")
       .then(respostas => {
         console.timeEnd("getResponderam");
-
-        respostas.data.candidatos.forEach(resp => {
+        console.log(respostas)
+        respostas.data.forEach(resp => {
           dadosCandidatos[resp.cpf] = resp;
         });
 
@@ -385,10 +385,10 @@ export const setCandidatosFiltrados = () => (dispatch, getState) => {
   axios
     .get(
       "api/respostas/estados/" +
-        filtro.estado +
-        "/partidos/" +
-        filtro.partido +
-        "/responderam"
+      filtro.estado +
+      "/partidos/" +
+      filtro.partido +
+      "/responderam"
     )
     .then(totalCandidatos =>
       dispatch({
@@ -410,8 +410,8 @@ export const setCandidatosFiltrados = () => (dispatch, getState) => {
       final: TAM_PAGINA,
       totalCandidatos:
         filtro.partido !== "TODOS" ||
-        filtro.nome !== "" ||
-        filtro.reeleicao !== "-1"
+          filtro.nome !== "" ||
+          filtro.reeleicao !== "-1"
           ? candidatos.length
           : candidatosRanqueados.length
     })
@@ -461,11 +461,11 @@ export const getProximaPaginaCandidatos = () => (dispatch, getState) => {
   axios
     .get(
       "/api/respostas/estados/" +
-        filtro.estado +
-        "/naoresponderam?pageNo=" +
-        paginacao.paginaAtual +
-        "&size=" +
-        ITENS_POR_REQ
+      filtro.estado +
+      "/naoresponderam?pageNo=" +
+      paginacao.paginaAtual +
+      "&size=" +
+      ITENS_POR_REQ
     )
     .then(respostas => {
       console.log(paginacao.paginaAtual);
