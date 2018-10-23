@@ -169,7 +169,7 @@ class Home extends Component {
                             className="btn btn-secondary"
                             onClick={this.vamosComecar}
                           >
-                            Vamos Começar!
+                            Votar
                           </button>
                         </ScrollIntoView>
                         <div id="scroll" />
