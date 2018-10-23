@@ -205,7 +205,8 @@ export const getTopNCandidatos = n => (dispatch, getState) => {
       final: TAM_PAGINA,
       totalCandidatos:
         activeTab === "eleitos" ? totalEleitosEstado : totalRespostasEstado,
-      paginaAtual: 1
+      paginaAtual: 1,
+      paginaAtualAPI: 1
     })
   );
 };
@@ -475,7 +476,7 @@ export const getProximaPaginaCandidatos = () => (dispatch, getState) => {
       "/api/respostas/estados/" +
         filtro.estado +
         "/naoresponderam?pageNo=" +
-        paginacao.paginaAtual +
+        paginacao.paginaAtualAPI +
         "&size=" +
         ITENS_POR_REQ
     )

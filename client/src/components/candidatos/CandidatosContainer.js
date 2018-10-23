@@ -76,13 +76,14 @@ class CandidatosContainer extends Component {
   }
 
   pegaPrimeiraPagina() {
-    const { totalCandidatos } = this.props.candidatos.paginacao;
+    const { totalCandidatos, paginaAtualAPI } = this.props.candidatos.paginacao;
 
     const paginacao = {
       inicio: 0,
       final: TAM_PAGINA,
       totalCandidatos: totalCandidatos,
-      paginaAtualAPI: 1
+      paginaAtual: 1,
+      paginaAtualAPI
     };
     this.props.setPaginacao(paginacao);
   }
@@ -95,7 +96,8 @@ class CandidatosContainer extends Component {
         inicio: paginacao.inicio - TAM_PAGINA,
         final: paginacao.inicio,
         totalCandidatos: paginacao.totalCandidatos,
-        paginaAtualAPI: paginacao.paginaAtualAPI - 1
+        paginaAtual: paginacao.paginaAtual - 1,
+        paginaAtualAPI: paginacao.paginaAtualAPI
       };
       this.props.setPaginacao(novaPaginacao);
     }
@@ -112,7 +114,8 @@ class CandidatosContainer extends Component {
         inicio: paginacao.final,
         final: paginacao.final + TAM_PAGINA,
         totalCandidatos: paginacao.totalCandidatos,
-        paginaAtualAPI: paginacao.paginaAtualAPI
+        paginaAtualAPI: paginacao.paginaAtualAPI,
+        paginaAtual: paginacao.paginaAtual + 1
       };
       this.props.setPaginacao(novaPaginacao);
     }
@@ -122,7 +125,8 @@ class CandidatosContainer extends Component {
         inicio: paginacao.final,
         final: paginacao.final + TAM_PAGINA,
         totalCandidatos: paginacao.totalCandidatos,
-        paginaAtualAPI: paginacao.paginaAtualAPI + 1
+        paginaAtualAPI: paginacao.paginaAtualAPI + 1,
+        paginaAtual: paginacao.paginaAtual + 1
       };
       this.props.setPaginacao(novaPaginacao);
       this.props.getProximaPaginaCandidatos();
@@ -136,7 +140,8 @@ class CandidatosContainer extends Component {
         inicio: paginacao.final,
         final: paginacao.final + (paginacao.totalCandidatos % TAM_PAGINA),
         totalCandidatos: paginacao.totalCandidatos,
-        paginaAtual: paginacao.paginaAtual
+        paginaAtual: paginacao.paginaAtual,
+        paginaAtualAPI: paginacao.paginaAtualAPI
       };
       this.props.setPaginacao(novaPaginacao);
     }
