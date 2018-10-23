@@ -1,0 +1,130 @@
+{
+  "6259": {
+    "key": 0,
+    "numero_proj_lei": "PL 4148/2008",
+    "id_votacao": 6259,
+    "titulo": "Rotulagem de Alimentos Transgênicos",
+    "descricao": "Coloca um fim à exigência do símbolo da transgenia nos rótulos de produtos comercializados com organismos geneticamente modificados (OGM).",
+    "tema": "Meio Ambiente"
+  },
+  "4968": {
+    "key": 1,
+    "numero_proj_lei": "PL 1876/1999",
+    "id_votacao": 4968,
+    "titulo": "Mudanças no Código Florestal",
+    "descricao": "O projeto visou regulamentar e limitar os espaços e as maneiras disponíveis para exploração de vegetação nativa no país.",
+    "tema": "Meio Ambiente"
+  },
+  "6517": {
+    "key": 2,
+    "numero_proj_lei": "PEC 171/1993",
+    "id_votacao": 6517,
+    "titulo": "Redução da Maioridade Penal",
+    "descricao": "O projeto tem o objetivo de diminuir de 18 para 16 anos de idade a maioridade penal para tipos específicos de crimes.",
+    "tema": "Direitos Humanos"
+  },
+  "7252": {
+    "key": 3,
+    "numero_proj_lei": "PEC 241/2016",
+    "id_votacao": 7252,
+    "titulo": "PEC do congelamento de gastos públicos",
+    "descricao": "Determina um limite de gastos governamentais pelos próximos 20 anos.",
+    "tema": "Direitos Humanos"
+  },
+  "8175": {
+    "key": 4,
+    "numero_proj_lei": "PDC 886/2018",
+    "id_votacao": 8175,
+    "titulo": "Intervenção Federal no Rio de Janeiro",
+    "descricao": "Autoriza o Exército Brasileiro a administrar a segurança pública e suas operações no estado do Rio de Janeiro até o final de 2018.",
+    "tema": "Direitos Humanos"
+  },
+  "7317": {
+    "key": 5,
+    "numero_proj_lei": "PL 2516/2015",
+    "id_votacao": 7317,
+    "titulo": "Lei da Migração",
+    "descricao": "A lei disserta sobre direitos e deveres do indivíduo migrante e estabelece formatações para políticas públicas aos migrantes.",
+    "tema": "Direitos Humanos"
+  },
+  "6531": {
+    "key": 6,
+    "numero_proj_lei": "PL 1057/2007",
+    "id_votacao": 6531,
+    "titulo": "Infanticídio Indígena",
+    "descricao": "Visa frear a suposta prática cultural de infanticídio e controle populacional em determinados territórios indígenas.",
+    "tema": "Direitos Humanos"
+  },
+  "7927": {
+    "key": 7,
+    "numero_proj_lei": "PL 8843/2017",
+    "id_votacao": 7927,
+    "titulo": "Regulamentação de acordos de leniência",
+    "descricao": "Regulamentação e delimitação de acordos entre agentes infratores e mecanismos do Estado para cooperação em investigações e mitigação de danos ao bem público.",
+    "tema": "Integridade e Transparência"
+  },
+  "7291": {
+    "key": 8,
+    "numero_proj_lei": "PL 4850/2016",
+    "id_votacao": 7291,
+    "titulo": "Tipificação de crimes eleitorais",
+    "descricao": "Prevê a tipificação do crime eleitoral de caixa dois, a criminalização do eleitor pela venda do voto e a transformação de corrupção que envolve valores superiores a 10 mil salários mínimos em crime hediondo.",
+    "tema": "Integridade e Transparência"
+  },
+  "6608": {
+    "key": 9,
+    "numero_proj_lei": "PL 4474/2004",
+    "id_votacao": 6608,
+    "titulo": "Limite de transferências voluntárias em anos de eleição aos municípios",
+    "descricao": "Limita as transferências voluntárias (em anos eleitorais) da União aos estados e municípios, e dos estados aos municípios, à média dos valores correspondentes às transferências realizadas nos três anos anteriores as eleições.",
+    "tema": "Integridade e Transparência"
+  },
+  "6095": {
+    "key": 10,
+    "numero_proj_lei": "PLP 177/2012",
+    "id_votacao": 6095,
+    "titulo": "Normas de repasses ou parcerias entre o setor público e ONGs",
+    "descricao": "Cria normas de finanças públicas para a realização de repasses ou termos de parceria entre órgãos e entidades do setor público com pessoas jurídicas de direito privado sem fins lucrativos (ONGs).",
+    "tema": "Nova Economia"
+  },
+  "8309": {
+    "key": 11,
+    "numero_proj_lei": "MPV 809/2017",
+    "id_votacao": 8309,
+    "titulo": "Contribuição para o fundo de manutenção de unidades em conservação por parte de empreendimentos com grande impacto ambiental",
+    "descricao": "Autoriza a criação de um fundo financeiro pelo Instituto Chico Mendes de Conservação da Biodiversidade (ICMBio), órgão vinculado ao Ministério do Meio Ambiente; dá, ao órgão, a permissão legal de selecionar um banco público para a manutenção e gestão do fundo, que terá o efeito de promover uma compensação ambiental em Unidades de Conservação.",
+    "tema": "Meio Ambiente"
+  },
+  "7566": {
+    "key": 12,
+    "numero_proj_lei": "MPV 758/2016",
+    "id_votacao": 7566,
+    "titulo": "Redução do Parque Nacional do Jamanxim",
+    "descricao": "Altera os limites do Parque Nacional do Jamanxim e da Área de Proteção Ambiental do Tapajós para dar possibilidade legal à construção do Ferrogrão, a Estrada de Ferro 170.",
+    "tema": "Meio Ambiente"
+  },
+  "7546": {
+    "key": 13,
+    "numero_proj_lei": "MPV 756/2016",
+    "id_votacao": 7546,
+    "titulo": "Redução da proteção ambiental na Floresta do Jamanxim",
+    "descricao": "A MP 756 visou alterar os limites da Floresta Nacional do Jamanxim, no Pará, e transformá-la em um Área de Preservação Ambiental – um tipo de Unidade de Conservação que admite maior grau de ocupação humana e uso da terra. Também ltera os limites do Parque Nacional do Rio Novo.",
+    "tema": "Meio Ambiente"
+  },
+  "8334": {
+    "key": 14,
+    "numero_proj_lei": "MPV 810/2017",
+    "id_votacao": 8334,
+    "titulo": "Subsídios dados a empresas de tecnologia que façam investimentos em pesquisa, inovação e modernização dentro do território brasileiro",
+    "descricao": "Subsídios dados a empresas de tecnologia que façam investimentos em pesquisa, inovação e modernização dentro do território brasileiro.",
+    "tema": "Nova Economia"
+  },
+  "99999": {
+    "key": 15,
+    "numero_proj_lei": "PL 6299/2002",
+    "id_votacao": 99999,
+    "titulo": "Flexibilização das normas para uso de agrotóxicos",
+    "descricao": "O Projeto de Lei 6299/2002 está em tramitação no Congresso e visa flexibilizar a legislação que compreende as normas para uso de agrotóxicos em plantações no país.",
+    "tema": "Meio Ambiente"
+  }
+}

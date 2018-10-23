@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 import { connect } from "react-redux";
 
-import { BrowserView, MobileView } from "react-device-detect";
+import { isMobile } from "react-device-detect";
 
 import "./navbar.css";
 
@@ -22,6 +22,10 @@ class Navbar extends Component {
   }
 
   render() {
+    let linkCompartilhamento = "www.vozativa.org/";
+    let textoCompartilhamento =
+      "Nos diga o que você defende e em oito minutos a gente apresenta candidatos alinhados com você. " +
+      linkCompartilhamento;
     return (
       <div>
         <nav className="navbar navbar-expand-lg navbar-light">
@@ -63,7 +67,10 @@ class Navbar extends Component {
               <ul className="navbar-nav navbar-inline">
                 <li className="nav-item">
                   <a
-                    href="https://twitter.com/intent/tweet/?text=Nos diga o que você defende e em oito minutos a gente apresenta candidatos alinhados com você. http://vozativa.org/"
+                    href={
+                      "https://twitter.com/intent/tweet/?text=" +
+                      textoCompartilhamento
+                    }
                     data-show-count="false"
                     className="nav-link nav-strong"
                     target="_blank"
@@ -74,7 +81,9 @@ class Navbar extends Component {
                 </li>
                 <li className="nav-item">
                   <a
-                    href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fvozativa.org%2F&amp;src=sdkpreparse"
+                    href={
+                      "https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fvozativa.org%2F&amp;src=sdkpreparse"
+                    }
                     data-show-count="false"
                     className="nav-link nav-strong"
                     target="_blank"
@@ -83,29 +92,32 @@ class Navbar extends Component {
                     <span className="icon-facebook share-icon" />
                   </a>
                 </li>
-                <BrowserView>
+                {!isMobile && (
                   <li className="nav-item">
                     <a
-                      href="https://web.whatsapp.com/send?text=Nos diga o que você defende e em oito minutos a gente apresenta candidatos alinhados com você. http://vozativa.org/"
+                      href={
+                        "https://web.whatsapp.com/send?text=" +
+                        textoCompartilhamento
+                      }
                       data-show-count="false"
                       className="nav-link nav-strong"
                       target="_blank"
                       rel="noopener noreferrer"
                     >
-                      <span className="icon-whatsapp share-icon" />
+                      <span className="icon-zapzap share-icon" />
                     </a>
                   </li>
-                </BrowserView>
-                <MobileView>
+                )}
+                {isMobile && (
                   <li className="nav-item">
                     <a
-                      href="whatsapp://send?text=Nos diga o que você defende e em oito minutos a gente apresenta candidatos alinhados com você. http://vozativa.org/"
-                      className="nav-link nav-strong"
+                      href={"whatsapp://send?text=" + textoCompartilhamento}
+                      className="nav-link"
                     >
-                      <span className="icon-whatsapp share-icon" />
+                      <span className="icon-zapzap share-icon" />
                     </a>
                   </li>
-                </MobileView>
+                )}
               </ul>
             </div>
           </div>

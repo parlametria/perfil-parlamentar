@@ -1,3 +1,20 @@
+.btn-group-bordered {
+  height: 2em;
+  color: #41c083;
+  border: 1px solid #a963b3;
+}
+
+.btn-group-bordered > .btn-participation {
+  background-color: #ffffff;
+  font-size: 90%;
+}
+
+.btn-group-bordered > .btn-atuacao {
+  padding-right: 2rem;
+  background-color: #ffffff;
+  font-size: 90%;
+}
+
 .person-data {
   margin-left: 1rem;
 }
@@ -74,4 +91,32 @@
 
 .progress-none {
   background-color: #ffffff;
+}
+
+.tutorial-img {
+  margin-bottom: -10px;
+}
+.tutorial-img > img {
+  width: 80px;
+}
+.tutorial-text {
+  font-size: 0.8rem;
+}
+
+@media (min-width: 576px) {
+  .tutorial-img {
+    margin-bottom: -12px;
+  }
+  .tutorial-img > img {
+    width: 80px;
+  }
+  .tutorial-text {
+    font-size: 1rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .tutorial-img > img {
+    width: 100px;
+  }
 }

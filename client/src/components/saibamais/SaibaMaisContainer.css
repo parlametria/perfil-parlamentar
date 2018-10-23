@@ -1,6 +1,6 @@
 .compare-title {
   margin: 2rem auto 2rem auto;
-  max-width: 720px;
+  max-width: 510px;
   font-weight: 700;
 }
 
@@ -18,7 +18,13 @@
   font-size: 1rem;
   font-weight: 700;
 }
-
+.compare-person-detail {
+  margin-bottom: 0.5rem;
+}
+.btn-link {
+  padding-top: 0.5rem;
+  padding-left: 0;
+}
 .score-theme {
   font-weight: 700;
   font-size: 2.5rem;
@@ -53,5 +59,11 @@
 @media (min-width: 992px) {
   .score-pie-chart {
     padding: 1rem;
+  }
+}
+
+@media (min-width: 992px) {
+  .share-compare {
+    float: right;
   }
 }

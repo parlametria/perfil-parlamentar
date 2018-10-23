@@ -9,9 +9,9 @@ const express = require("express");
  * @namespace module:routes/candidatos
  */
 const router = express.Router();
-const mongoose = require("mongoose");
 
 const Candidato = require("../../models/Candidato");
+const Votacao = require("../../models/Votacao");
 
 /**
  * Testa a rota de candidatos.
@@ -45,6 +45,20 @@ router.get("/", (req, res) => {
 router.get("/:cpf", (req, res) => {
   Candidato.find({ cpf: req.params.cpf })
     .then(candidatos => res.json(candidatos))
+    .catch(err => res.status(400).json({ err }));
+});
+
+
+/**
+ * Pega as votações de um deputado dado seu cpf.
+ * @name get/api/:cpf/votacoes
+ * @function
+ * @memberof module:routes/candidatos
+ * @param {string} cpf - CPF do candidato
+ */
+router.get("/:cpf/votacoes", (req, res) => {
+  Votacao.find({ cpf: req.params.cpf })
+    .then(votacoes => res.json(votacoes))
     .catch(err => res.status(400).json({ err }));
 });
 
