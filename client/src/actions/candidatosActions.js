@@ -403,23 +403,41 @@ export const setCandidatosFiltrados = () => (dispatch, getState) => {
       })
     );
 
-  filtra(filtro).then(candidatos => {
-    const cpfCandidatos = {};
-    //foreach para adcionar cada objeto em dadosCandidatos
-    candidatos.data.candidato.forEach(candidato => {
-      console.log(candidato)
-      dadosCandidatos.push(candidato.data)
+  filtra(filtro).then(todosCandidatos => {
+    const cpfCandidatos = [];
+    const candidatos = todosCandidatos.data.candidatos
+
+    candidatos.forEach(candidato => {
+      dadosCandidatos[candidato.id] = candidato;
       cpfCandidatos.push(candidato.cpf);
     })
-    //chamar dispatch pro calculascore -> gera um novo mapa 
-    dispatch(calculaScore());
-    //iterar no candidatos para retornar apenas os cpfs ordenados por score e nome. pega o sort passado
 
-    //do filtroService
+    dispatch(calculaScore());
+
+    let candidatosOrdenados = Object.keys(dadosCandidatos)
+      .sort((a, b) => {
+        if (scoreCandidatos[a] > scoreCandidatos[b]) return -1;
+        else if (scoreCandidatos[a] < scoreCandidatos[b]) return 1;
+        else if (scoreCandidatos[a] === scoreCandidatos[b]) {
+          if (!isEmpty(dadosCandidatos[a]) && !isEmpty(dadosCandidatos[b])) {
+            if (
+              (dadosCandidatos[a].respondeu && dadosCandidatos[b].respondeu) ||
+              (!dadosCandidatos[a].respondeu && !dadosCandidatos[b].respondeu)
+            )
+              return dadosCandidatos[a].nome_urna.localeCompare(
+                dadosCandidatos[b].nome_urna
+              );
+            else if (dadosCandidatos[b].respondeu) return 1;
+            else return -1;
+          }
+          return 0;
+        }
+      });
+
 
     dispatch({
       type: SET_CANDIDATOS_FILTRADOS,
-      candidatosFiltrados: candidatos
+      candidatosFiltrados: candidatosOrdenados
     });
 
     dispatch(
