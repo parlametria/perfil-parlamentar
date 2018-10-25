@@ -84,6 +84,23 @@ router.get("/candidatos/naoresponderam", (req, res) => {
     .catch(err => res.status(BAD_REQUEST).json({ err }));
 });
 
+// @route   GET api/respostas/estados/<uf>/partidos
+// @desc    Pega todos os partidos de um estado
+// @access  Public
+router.get("/estados/:uf/partidos", (req, res) => {
+  Resposta.find({ uf: req.params.uf })
+    .then(respostas => {
+      const partidosSet = new Set();
+      respostas.forEach(resposta => {
+        partidosSet.add(resposta.sg_partido);
+      });
+      let partidos = Array.from(partidosSet).sort((a, b) => a.localeCompare(b));
+      partidos.splice(0, 0, "Partidos");
+      res.json({ data: partidos });
+    })
+    .catch(err => res.status(BAD_REQUEST).json({ err }));
+});
+
 // @route   GET api/respostas/estados/<uf>?partido=<partido>&nome=<nome>&responderam=<responderam>&reeleicao=<reeleicao>
 // @desc    Pega as respostas por estado
 // @access  Public
