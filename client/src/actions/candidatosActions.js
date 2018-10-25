@@ -467,18 +467,13 @@ export const mostrarTodosCandidatos = () => dispatch => {
 };
 
 export const setPartidos = () => (dispatch, getState) => {
-  const { dadosCandidatos } = getState().candidatosReducer;
-  let partidosSet = new Set();
-
-  Object.keys(dadosCandidatos).forEach(candidato =>
-    partidosSet.add(dadosCandidatos[candidato].sg_partido)
-  );
-
-  let partidos = Array.from(partidosSet).sort((a, b) => a.localeCompare(b));
-
-  partidos.splice(0, 0, "Partidos");
-
-  dispatch({ type: SET_PARTIDOS, partidos: partidos });
+  const { filtro } = getState().candidatosReducer;
+  const partidos = {};
+  axios
+    .get("api/respostas/estados/" + filtro.estado + "/partidos")
+    .then(partidos => {
+      dispatch({ type: SET_PARTIDOS, partidos: partidos.data.data });
+    });
 };
 
 export const setPaginacao = paginacao => dispatch => {
