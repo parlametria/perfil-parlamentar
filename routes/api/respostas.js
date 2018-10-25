@@ -84,29 +84,45 @@ router.get("/candidatos/naoresponderam", (req, res) => {
     .catch(err => res.status(BAD_REQUEST).json({ err }));
 });
 
-// @route   GET api/respostas/estados/<uf>/<partido>/<nome>
+// @route   GET api/respostas/estados/<uf>?partido=<partido>&nome=<nome>&responderam=<responderam>&reeleicao=<reeleicao>
 // @desc    Pega as respostas por estado
 // @access  Public
 router.get("/estados/:uf", (req, res) => {
   query = {};
   const partido = String(req.query.partido);
   const nome = String(req.query.nome);
-  const pattern = new RegExp(nome, "i");
-  console.log(pattern);
 
-  if (nome !== "undefined" && partido !== "undefined") {
-    query = {
-      uf: req.params.uf,
-      sg_partido: partido,
-      nome_urna: { $regex: pattern }
-    };
-  } else if (nome !== "undefined" && partido === "undefined") { 
-    query = { uf: req.params.uf, nome_urna: { $regex: pattern } };
-  } else if (partido !== "undefined" && nome === "undefined") {
-    query = { uf: req.params.uf, sg_partido: partido };
-  } else {
-    query = { uf: req.params.uf };
+  const responderam =
+    String(req.query.responderam) !== "undefined"
+      ? Number(req.query.responderam) !== -1
+        ? true
+        : false
+      : String(req.query.responderam);
+
+  const reeleicao = String(req.query.reeleicao);
+  const pattern = new RegExp(nome, "i");
+
+  const isFiltrandoPorNome = nome !== "undefined";
+  const isFiltrandoPorPartido = partido !== "undefined";
+  const isFiltrandoPorReeleicao = reeleicao !== "undefined";
+  const isFiltrandoPorRespondeu = responderam !== "undefined";
+
+  query = {};
+  query.uf = req.params.uf;
+
+  if (isFiltrandoPorNome) {
+    query.nome_urna = { $regex: pattern };
   }
+  if (isFiltrandoPorPartido) {
+    query.sg_partido = partido;
+  }
+  if (isFiltrandoPorReeleicao) {
+    query.reeleicao = reeleicao;
+  }
+  if (isFiltrandoPorRespondeu) {
+    query.respondeu = responderam;
+  }
+
   console.log(query);
 
   Resposta.countDocuments({ uf: req.params.uf }, (err, totalCount) => {
