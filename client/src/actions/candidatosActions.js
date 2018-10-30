@@ -225,7 +225,6 @@ export const getDadosCandidatos = () => (dispatch, getState) => {
     axios
       .get("/api/respostas/estados/" + filtro.estado + "/eleitos")
       .then(respostas => {
-        console.timeEnd("getResponderam");
 
         respostas.data.candidatos.forEach(resp => {
           dadosCandidatos[resp.cpf] = resp;
@@ -241,7 +240,6 @@ export const getDadosCandidatos = () => (dispatch, getState) => {
       });
   } else if (activeTab === "eleitos" && filtro.estado === "TODOS") {
     axios.get("/api/respostas/eleitos").then(respostas => {
-      console.timeEnd("getResponderam");
 
       respostas.data.forEach(resp => {
         dadosCandidatos[resp.cpf] = resp;
@@ -404,17 +402,22 @@ export const setCandidatosFiltrados = () => (dispatch, getState) => {
     );
 
   filtra(filtro).then(todosCandidatos => {
-    const cpfCandidatos = [];
-    const candidatos = todosCandidatos.data.candidatos
+    const cpfCandidatos = {};
+    const candidatos = todosCandidatos.data.candidatos;
 
     candidatos.forEach(candidato => {
-      dadosCandidatos[candidato.id] = candidato;
-      cpfCandidatos.push(candidato.cpf);
-    })
+      dadosCandidatos[candidato.cpf] = candidato;
+      cpfCandidatos[candidato.cpf] = candidato;
+    });
+
+    dispatch({
+      type: SET_DADOS_CANDIDATOS,
+      dadosCandidatos: dadosCandidatos
+    });
 
     dispatch(calculaScore());
 
-    let candidatosOrdenados = Object.keys(dadosCandidatos)
+    let candidatosOrdenados = Object.keys(cpfCandidatos)
       .sort((a, b) => {
         if (scoreCandidatos[a] > scoreCandidatos[b]) return -1;
         else if (scoreCandidatos[a] < scoreCandidatos[b]) return 1;
@@ -433,7 +436,6 @@ export const setCandidatosFiltrados = () => (dispatch, getState) => {
           return 0;
         }
       });
-
 
     dispatch({
       type: SET_CANDIDATOS_FILTRADOS,
