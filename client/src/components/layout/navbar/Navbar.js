@@ -10,6 +10,7 @@ import TwitterLogin from "react-twitter-auth";
 import FacebookLogin from "react-facebook-login";
 import { GoogleLogin } from "react-google-login";
 
+
 import "./navbar.css";
 
 class Navbar extends Component {
@@ -79,27 +80,59 @@ class Navbar extends Component {
                 </li>
                 <li className="nav-item">
                   <GoogleLogin
+                    className="login"
                     clientId="XXXXXXXXXX"
                     buttonText="Google"
                     onSuccess={this.googleResponse}
                     onFailure={this.googleResponse}
-                  />
+                  >
+                    <a
+                      data-show-count="false"
+                      className="nav-link nav-strong"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <span className="icon-google share-icon" />
+                    </a>
+                  </GoogleLogin>
                 </li>
+
                 <li className="nav-item">
                   <FacebookLogin
+                    className="login"
                     appId="XXXXXXXXXX"
                     autoLoad={false}
                     fields="name,email,picture"
                     callback={this.facebookResponse}
-                  />
+                  >
+                    <a
+                      data-show-count="false"
+                      className="nav-link nav-strong"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <span className="icon-facebook share-icon" />
+                    </a>
+                  </FacebookLogin>
                 </li>
+
                 <li className="nav-item">
                   <TwitterLogin
+                    className="login"
                     loginUrl="http://localhost:4000/api/v1/auth/twitter"
                     onFailure={this.twitterResponse}
                     onSuccess={this.twitterResponse}
                     requestTokenUrl="http://localhost:4000/api/v1/auth/twitter/reverse"
-                  />
+                  >
+                    <a
+                      data-show-count="false"
+                      className="nav-link nav-strong"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <span className="icon-twitter share-icon" />
+                    </a>
+                  </TwitterLogin>
                 </li>
               </ul>
               <span className="navbar-text navbar-text-strong">

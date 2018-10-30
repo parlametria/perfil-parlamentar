@@ -24,6 +24,9 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-google:before{
+  content: "\e034";
+}
 .icon-facebook:before {
   content: "\e906";
 }
