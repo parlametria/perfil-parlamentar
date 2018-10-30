@@ -457,7 +457,6 @@ export const setCandidatosFiltrados = () => (dispatch, getState) => {
     );
   });
 
-
 };
 
 export const setFiltroCandidatos = filtro => dispatch => {
