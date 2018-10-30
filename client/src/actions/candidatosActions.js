@@ -436,7 +436,6 @@ export const setCandidatosFiltrados = () => (dispatch, getState) => {
           return 0;
         }
       });
-    console.log(candidatosOrdenados)
 
     dispatch({
       type: SET_CANDIDATOS_FILTRADOS,

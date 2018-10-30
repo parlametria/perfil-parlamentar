@@ -4,7 +4,7 @@ import axios from "axios";
 export const filtra = (filtro) => {
   return axios
     .get(
-      "api/respostas/estados/" + filtro.estado + "?partido=" + filtro.partido + "&nome=" + filtro.nome + "&responderam=" + filtro.responderam + "&reeleicao=" + filtro.reeleicao
+      "api/respostas/estados/" + filtro.estado + "?partido=" + filtro.partido + "&nome=" + filtro.nome + "&respondeu=" + filtro.respondeu + "&reeleicao=" + filtro.reeleicao
     );
 
 };

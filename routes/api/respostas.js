@@ -109,12 +109,12 @@ router.get("/estados/:uf", (req, res) => {
   const partido = String(req.query.partido);
   const nome = String(req.query.nome);
 
-  const responderam =
-    String(req.query.responderam) !== "-1"
-      ? Number(req.query.responderam) !== -1
+  const respondeu =
+    String(req.query.respondeu) !== "-1"
+      ? Number(req.query.respondeu) !== -1
         ? true
         : false
-      : String(req.query.responderam);
+      : String(req.query.respondeu);
 
   const reeleicao = String(req.query.reeleicao);
   const pattern = new RegExp(nome, "i");
@@ -122,7 +122,7 @@ router.get("/estados/:uf", (req, res) => {
   const isFiltrandoPorNome = nome !== "";
   const isFiltrandoPorPartido = partido !== "Partidos";
   const isFiltrandoPorReeleicao = reeleicao !== "-1";
-  const isFiltrandoPorRespondeu = responderam !== "-1";
+  const isFiltrandoPorRespondeu = respondeu !== "-1";
 
   query = {};
   query.uf = req.params.uf;
@@ -137,7 +137,7 @@ router.get("/estados/:uf", (req, res) => {
     query.reeleicao = reeleicao;
   }
   if (isFiltrandoPorRespondeu) {
-    query.respondeu = responderam;
+    query.respondeu = respondeu;
   }
 
   console.log(query);
