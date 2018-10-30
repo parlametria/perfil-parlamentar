@@ -101,7 +101,7 @@ router.get("/estados/:uf/partidos", (req, res) => {
     .catch(err => res.status(BAD_REQUEST).json({ err }));
 });
 
-// @route   GET api/respostas/estados/<uf>?partido=<partido>&nome=<nome>&responderam=<responderam>&reeleicao=<reeleicao>
+// @route   GET api/respostas/estados/<uf>?partido=<partido>&nome=<nome>&respondeu=<respondeu>&reeleicao=<reeleicao>
 // @desc    Pega as respostas por estado
 // @access  Public
 router.get("/estados/:uf", (req, res) => {
