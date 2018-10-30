@@ -209,20 +209,6 @@ router.get("/estados/:uf", (req, res) => {
  * @param {boolean} respondeu - Flag respondeu true
  */
 router.get("/estados/:uf/responderam", (req, res) => {
-  Resposta.find({ uf: req.params.uf, respondeu: true })
-    .then(respostas => res.json(respostas))
-    .catch(err => res.status(BAD_REQUEST).json({ err }));
-});
-
-/**
- * Pega o número de candidatos que responderam por estado.
- * @name get/api/respostas/estados/<uf>/responderam/totalcandidatos
- * @function
- * @memberof module:routes/respostas
- * @param {string} UF - Estado
- * @param {boolean} respondeu - Flag respondeu true
- */
-router.get("/estados/:uf/responderam/totalcandidatos", (req, res) => {
   Resposta.countDocuments(
     { uf: req.params.uf, respondeu: true },
     (err, totalCount) => {
@@ -247,27 +233,10 @@ router.get("/estados/:uf/responderam/totalcandidatos", (req, res) => {
   );
 });
 
-/**
- * Pega o número de candidatos que responderam por estado.
- * @name get/api/respostas/estados/<uf>/totalcandidatos
- * @memberof module:routes/respostas
- * @param {string} UF - Estado
- */
-router.get("/estados/:uf/totalcandidatos", (req, res) => {
-  Resposta.countDocuments({ uf: req.params.uf }, (err, totalCount) => {
-    if (!err) res.json(totalCount);
-    else res.status(400).json(err);
-  });
-});
-
-/**
- * Pega o total de respostas por estado e partido.
- * @name get/api/respostas/estados/<uf>/partidos/<sigla>/totalcandidatos
- * @memberof module:routes/respostas
- * @param {string} UF - Estado
- * @param {string} sigla - Sigla do partido
- */
-router.get("/estados/:uf/partidos/:sigla/totalcandidatos", (req, res) => {
+// @route   GET api/respostas/estados/<uf>/partidos/
+// @desc    Pega as respostas por partido e estado de quem respondeu
+// @access  Public
+router.get("/estados/:uf/partidos/:sigla", (req, res) => {
   Resposta.countDocuments(
     {
       uf: req.params.uf,
@@ -298,26 +267,6 @@ router.get("/estados/:uf/partidos/:sigla/totalcandidatos", (req, res) => {
   );
 });
 
-/**
- * Pega o total de respostas por partido e estado de quem respondeu.
- * @name get/api/respostas/estados/<uf>/partidos/<sigla>/responderam/totalcandidatos
- * @memberof module:routes/respostas
- * @param {string} UF - Estado
- * @param {string} sigla - Sigla do partido
- * @param {boolean} respondeu - Flag respondeu true
- */
-router.get(
-  "/estados/:uf/partidos/:sigla/responderam/totalcandidatos",
-  (req, res) => {
-    Resposta.countDocuments(
-      { uf: req.params.uf, sg_partido: req.params.sigla, respondeu: true },
-      (err, totalCount) => {
-        if (!err) res.json(totalCount);
-        else res.status(400).json(err);
-      }
-    );
-  }
-);
 
 /**
  * Pega as respostas por partido e estado de quem respondeu.

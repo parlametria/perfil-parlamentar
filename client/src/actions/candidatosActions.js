@@ -288,7 +288,6 @@ export const getDadosCandidatos = () => (dispatch, getState) => {
     axios
       .get("/api/respostas/estados/" + filtro.estado + "/responderam")
       .then(respostas => {
-
         respostas.data.candidatos.forEach(resp => {
           dadosCandidatos[resp.cpf] = resp;
         });
@@ -373,7 +372,6 @@ export const setCandidatosFiltrados = () => (dispatch, getState) => {
   } = getState().candidatosReducer;
 
   dispatch(setCandidatosFiltrando());
-  // atualizar para a nova modelagem com paginação
 
   axios
     .get(

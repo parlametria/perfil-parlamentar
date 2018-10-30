@@ -242,9 +242,9 @@ class CandidatosContainer extends Component {
 
     const candidatosMapeaveis =
       filtro.nome !== "" ||
-      filtro.partido !== "Partidos" ||
-      filtro.reeleicao !== "-1" ||
-      filtro.respondeu !== "-1"
+        filtro.partido !== "Partidos" ||
+        filtro.reeleicao !== "-1" ||
+        filtro.respondeu !== "-1"
         ? candidatosFiltrados
         : candidatosRanqueados;
 
@@ -284,8 +284,8 @@ class CandidatosContainer extends Component {
             foto={
               candidato.tem_foto
                 ? "https://s3-sa-east-1.amazonaws.com/fotoscandidatos2018/fotos_tratadas/img_" +
-                  candidato.cpf +
-                  ".jpg"
+                candidato.cpf +
+                ".jpg"
                 : "https://s3-sa-east-1.amazonaws.com/fotoscandidatos2018/fotos_tratadas/nophoto.png"
             }
             arrayRespostasUsuario={arrayRespostasUsuario}
@@ -532,7 +532,7 @@ class CandidatosContainer extends Component {
                     type="checkbox"
                     className="form-check-input"
                     onChange={this.buscaReeleitos}
-                    defaultChecked={filtro.reeleicao === "1" ? true : false}
+                    checked={filtro.reeleicao === "1" ? true : false}
                   />
                   <label className="form-check-label" htmlFor="reeleitos">
                     {listaSelectReeleicao}
@@ -546,7 +546,7 @@ class CandidatosContainer extends Component {
                     type="checkbox"
                     className="form-check-input"
                     onChange={this.buscaRespondeu}
-                    defaultChecked={filtro.respondeu === "1" ? true : false}
+                    checked={filtro.respondeu === "1" ? true : false}
                   />
                   <label className="form-check-label" htmlFor="responderam">
                     responderam o questionário
@@ -563,23 +563,23 @@ class CandidatosContainer extends Component {
               <Spinner />
             </div>
           ) : (
-            <div>
-              <div className="candidatos">
-                <FlipMove>
-                  {candidatos.slice(paginacao.inicio, paginacao.final)}
-                </FlipMove>
-              </div>
-              {!isFiltrandoPorNome ? (
-                <div className="candidatos-pagination d-flex justify-content-center flex-wrap mb-3">
-                  {paginacao.inicio !== 0 ? btnFirst : null}
-                  {paginacao.inicio > 0 ? btnMenosCandidatos : null}
-                  {paginacao.final < paginacao.totalCandidatos
-                    ? btnMaisCandidatos
-                    : null}
+              <div>
+                <div className="candidatos">
+                  <FlipMove>
+                    {candidatos.slice(paginacao.inicio, paginacao.final)}
+                  </FlipMove>
                 </div>
-              ) : null}
-            </div>
-          )}
+                {!isFiltrandoPorNome ? (
+                  <div className="candidatos-pagination d-flex justify-content-center flex-wrap mb-3">
+                    {paginacao.inicio !== 0 ? btnFirst : null}
+                    {paginacao.inicio > 0 ? btnMenosCandidatos : null}
+                    {paginacao.final < paginacao.totalCandidatos
+                      ? btnMaisCandidatos
+                      : null}
+                  </div>
+                ) : null}
+              </div>
+            )}
         </div>
       </div>
     );
