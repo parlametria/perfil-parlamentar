@@ -3,12 +3,17 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 
 import { connect } from "react-redux";
+import PropTypes from "prop-types";
 
 import { isMobile } from "react-device-detect";
+
+import { logoutUser } from "../../../actions/authActions";
 
 import TwitterLogin from "react-twitter-auth";
 import FacebookLogin from "react-facebook-login";
 import { GoogleLogin } from "react-google-login";
+
+import config from "../../../config.json";
 
 import "./navbar.css";
 
@@ -18,8 +23,9 @@ class Navbar extends Component {
     //this.props.twitterResponse();
   }
 
-  facebookResponse(e) {
+  facebookResponse(response) {
     console.log("loga com facebook");
+    console.log(response);
     //this.props.facebookResponse();
   }
 
@@ -78,27 +84,11 @@ class Navbar extends Component {
                   </Link>
                 </li>
                 <li className="nav-item">
-                  <GoogleLogin
-                    clientId="XXXXXXXXXX"
-                    buttonText="Google"
-                    onSuccess={this.googleResponse}
-                    onFailure={this.googleResponse}
-                  />
-                </li>
-                <li className="nav-item">
                   <FacebookLogin
-                    appId="XXXXXXXXXX"
+                    appId={config.FACEBOOK_APP_ID}
                     autoLoad={false}
                     fields="name,email,picture"
                     callback={this.facebookResponse}
-                  />
-                </li>
-                <li className="nav-item">
-                  <TwitterLogin
-                    loginUrl="http://localhost:4000/api/v1/auth/twitter"
-                    onFailure={this.twitterResponse}
-                    onSuccess={this.twitterResponse}
-                    requestTokenUrl="http://localhost:4000/api/v1/auth/twitter/reverse"
                   />
                 </li>
               </ul>
@@ -168,11 +158,15 @@ class Navbar extends Component {
   }
 }
 
+Navbar.propTypes = {
+  logoutUser: PropTypes.func.isRequired
+};
+
 const mapStateToProps = state => ({
   auth: state.auth
 });
 
 export default connect(
   mapStateToProps,
-  {}
+  { logoutUser }
 )(Navbar);
