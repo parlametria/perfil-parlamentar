@@ -3,13 +3,17 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 
 import { connect } from "react-redux";
+import PropTypes from "prop-types";
 
 import { isMobile } from "react-device-detect";
+
+import { logoutUser } from "../../../actions/authActions";
 
 import TwitterLogin from "react-twitter-auth";
 import FacebookLogin from "react-facebook-login";
 import { GoogleLogin } from "react-google-login";
 
+import config from "../../../config.json";
 
 import "./navbar.css";
 
@@ -19,8 +23,9 @@ class Navbar extends Component {
     //this.props.twitterResponse();
   }
 
-  facebookResponse(e) {
+  facebookResponse(response) {
     console.log("loga com facebook");
+    console.log(response);
     //this.props.facebookResponse();
   }
 
@@ -78,7 +83,7 @@ class Navbar extends Component {
                     Sou candidato
                   </Link>
                 </li>
-                <li className="nav-item">
+                {/* <li className="nav-item">
                   <GoogleLogin
                     className="login"
                     clientId="XXXXXXXXXX"
@@ -95,12 +100,12 @@ class Navbar extends Component {
                       <span className="icon-google share-icon" />
                     </a>
                   </GoogleLogin>
-                </li>
+                </li>*/}
 
                 <li className="nav-item">
                   <FacebookLogin
                     className="login"
-                    appId="XXXXXXXXXX"
+                    appId={config.FACEBOOK_APP_ID}
                     autoLoad={false}
                     fields="name,email,picture"
                     callback={this.facebookResponse}
@@ -116,7 +121,7 @@ class Navbar extends Component {
                   </FacebookLogin>
                 </li>
 
-                <li className="nav-item">
+                {/* <li className="nav-item">
                   <TwitterLogin
                     className="login"
                     loginUrl="http://localhost:4000/api/v1/auth/twitter"
@@ -133,7 +138,7 @@ class Navbar extends Component {
                       <span className="icon-twitter share-icon" />
                     </a>
                   </TwitterLogin>
-                </li>
+                </li>  */}
               </ul>
               <span className="navbar-text navbar-text-strong">
                 compartilhe
@@ -201,11 +206,15 @@ class Navbar extends Component {
   }
 }
 
+Navbar.propTypes = {
+  logoutUser: PropTypes.func.isRequired
+};
+
 const mapStateToProps = state => ({
   auth: state.auth
 });
 
 export default connect(
   mapStateToProps,
-  {}
+  { logoutUser }
 )(Navbar);
