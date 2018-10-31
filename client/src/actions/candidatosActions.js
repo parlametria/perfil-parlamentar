@@ -47,10 +47,10 @@ const comparaRespostas = (
   chaves.forEach(idPergunta => {
     respostasIguais +=
       respostasCandidatos[idPergunta] !== undefined &&
-        respostasCandidatos[idPergunta] !== null &&
-        respostasUsuario[idPergunta] !== 0 &&
-        respostasUsuario[idPergunta] !== -2 &&
-        respostasCandidatos[idPergunta] === respostasUsuario[idPergunta]
+      respostasCandidatos[idPergunta] !== null &&
+      respostasUsuario[idPergunta] !== 0 &&
+      respostasUsuario[idPergunta] !== -2 &&
+      respostasCandidatos[idPergunta] === respostasUsuario[idPergunta]
         ? 1
         : 0;
   });
@@ -225,7 +225,6 @@ export const getDadosCandidatos = () => (dispatch, getState) => {
     axios
       .get("/api/respostas/estados/" + filtro.estado + "/eleitos")
       .then(respostas => {
-
         respostas.data.candidatos.forEach(resp => {
           dadosCandidatos[resp.cpf] = resp;
         });
@@ -240,7 +239,6 @@ export const getDadosCandidatos = () => (dispatch, getState) => {
       });
   } else if (activeTab === "eleitos" && filtro.estado === "TODOS") {
     axios.get("/api/respostas/eleitos").then(respostas => {
-
       respostas.data.forEach(resp => {
         dadosCandidatos[resp.cpf] = resp;
       });
@@ -267,23 +265,20 @@ export const getDadosCandidatos = () => (dispatch, getState) => {
         axios
           .get(
             "/api/respostas/estados/" +
-            filtro.estado +
-            "/naoresponderam?pageNo=1&size=" +
-            ITENS_POR_REQ
+              filtro.estado +
+              "/naoresponderam?pageNo=1&size=" +
+              ITENS_POR_REQ
           )
           .then(respostas => {
-
             respostas.data.data.forEach(resp => {
               dadosCandidatos[resp.cpf] = resp;
             });
-
 
             dispatch({ type: SET_DADOS_CANDIDATOS, dadosCandidatos });
             dispatch(setPartidos());
             dispatch(calculaScore());
           });
       });
-
 
     axios
       .get("/api/respostas/estados/" + filtro.estado + "/responderam")
@@ -387,10 +382,10 @@ export const setCandidatosFiltrados = () => (dispatch, getState) => {
   axios
     .get(
       "api/respostas/estados/" +
-      filtro.estado +
-      "/partidos/" +
-      filtro.partido +
-      "/responderam"
+        filtro.estado +
+        "/partidos/" +
+        filtro.partido +
+        "/responderam"
     )
     .then(totalCandidatos =>
       dispatch({
@@ -415,25 +410,24 @@ export const setCandidatosFiltrados = () => (dispatch, getState) => {
 
     dispatch(calculaScore());
 
-    let candidatosOrdenados = Object.keys(cpfCandidatos)
-      .sort((a, b) => {
-        if (scoreCandidatos[a] > scoreCandidatos[b]) return -1;
-        else if (scoreCandidatos[a] < scoreCandidatos[b]) return 1;
-        else if (scoreCandidatos[a] === scoreCandidatos[b]) {
-          if (!isEmpty(dadosCandidatos[a]) && !isEmpty(dadosCandidatos[b])) {
-            if (
-              (dadosCandidatos[a].respondeu && dadosCandidatos[b].respondeu) ||
-              (!dadosCandidatos[a].respondeu && !dadosCandidatos[b].respondeu)
-            )
-              return dadosCandidatos[a].nome_urna.localeCompare(
-                dadosCandidatos[b].nome_urna
-              );
-            else if (dadosCandidatos[b].respondeu) return 1;
-            else return -1;
-          }
-          return 0;
+    let candidatosOrdenados = Object.keys(cpfCandidatos).sort((a, b) => {
+      if (scoreCandidatos[a] > scoreCandidatos[b]) return -1;
+      else if (scoreCandidatos[a] < scoreCandidatos[b]) return 1;
+      else if (scoreCandidatos[a] === scoreCandidatos[b]) {
+        if (!isEmpty(dadosCandidatos[a]) && !isEmpty(dadosCandidatos[b])) {
+          if (
+            (dadosCandidatos[a].respondeu && dadosCandidatos[b].respondeu) ||
+            (!dadosCandidatos[a].respondeu && !dadosCandidatos[b].respondeu)
+          )
+            return dadosCandidatos[a].nome_urna.localeCompare(
+              dadosCandidatos[b].nome_urna
+            );
+          else if (dadosCandidatos[b].respondeu) return 1;
+          else return -1;
         }
-      });
+        return 0;
+      }
+    });
 
     dispatch({
       type: SET_CANDIDATOS_FILTRADOS,
@@ -446,15 +440,14 @@ export const setCandidatosFiltrados = () => (dispatch, getState) => {
         final: TAM_PAGINA,
         totalCandidatos:
           filtro.partido !== "Partidos" ||
-            filtro.nome !== "" ||
-            filtro.reeleicao !== "-1" ||
-            filtro.responderam !== "-1"
+          filtro.nome !== "" ||
+          filtro.reeleicao !== "-1" ||
+          filtro.responderam !== "-1"
             ? candidatos.length
             : candidatosRanqueados.length
       })
     );
   });
-
 };
 
 export const setFiltroCandidatos = filtro => dispatch => {
@@ -466,10 +459,16 @@ export const mostrarTodosCandidatos = () => dispatch => {
 };
 
 export const setPartidos = () => (dispatch, getState) => {
-  const { filtro } = getState().candidatosReducer;
-  const partidos = {};
+  const { filtro, activeTab } = getState().candidatosReducer;
+  const eleito = activeTab === "eleitos" ? true : "";
   axios
-    .get("api/respostas/estados/" + filtro.estado + "/partidos")
+    .get(
+      "api/respostas/estados/" +
+        filtro.estado +
+        "/partidos" +
+        "?eleito=" +
+        eleito
+    )
     .then(partidos => {
       dispatch({ type: SET_PARTIDOS, partidos: partidos.data.data });
     });
@@ -499,11 +498,11 @@ export const getProximaPaginaCandidatos = () => (dispatch, getState) => {
   axios
     .get(
       "/api/respostas/estados/" +
-      filtro.estado +
-      "/naoresponderam?pageNo=" +
-      paginacao.paginaAtualAPI +
-      "&size=" +
-      ITENS_POR_REQ
+        filtro.estado +
+        "/naoresponderam?pageNo=" +
+        paginacao.paginaAtualAPI +
+        "&size=" +
+        ITENS_POR_REQ
     )
     .then(respostas => {
       console.log(paginacao.paginaAtual);

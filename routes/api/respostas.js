@@ -48,19 +48,18 @@ router.get("/", (req, res) => {
       response = err
         ? { status: BAD_REQUEST, message: "Error fetching data" }
         : {
-          data,
-          total: totalCount,
-          itensPorPagina: size,
-          pagina: pageNo,
-          paginas: Math.ceil(totalCount / size),
-          status: SUCCESS
-        };
+            data,
+            total: totalCount,
+            itensPorPagina: size,
+            pagina: pageNo,
+            paginas: Math.ceil(totalCount / size),
+            status: SUCCESS
+          };
 
       res.status(response.status).json(response);
     });
   });
 });
-
 
 /**
  * Pega as respostas de todos os candidatos eleitos
@@ -114,16 +113,24 @@ router.get("/candidatos/naoresponderam", (req, res) => {
     .catch(err => res.status(BAD_REQUEST).json({ err }));
 });
 
-
 /**
  * Pega todos os partidos de um estado.
- * @name get/api/respostas/estados/<uf>/partidos
+ * @name get/api/respostas/estados/<uf>/partidos?eleito=<eleito>
  * @function
  * @memberof module:routes/respostas
  * @param {string} uf - Estado
  */
 router.get("/estados/:uf/partidos", (req, res) => {
-  Resposta.find({ uf: req.params.uf })
+  const eleito =
+    String(req.query.eleito) !== "" && String(req.query.eleito) !== "undefined";
+  const query = {};
+  query.uf = req.params.uf;
+
+  if (eleito) {
+    query.eleito = eleito;
+  }
+
+  Resposta.find(query)
     .then(respostas => {
       const partidosSet = new Set();
       respostas.forEach(resposta => {
@@ -135,7 +142,6 @@ router.get("/estados/:uf/partidos", (req, res) => {
     })
     .catch(err => res.status(BAD_REQUEST).json({ err }));
 });
-
 
 /**
  * Pega as respostas por estado.
@@ -165,7 +171,9 @@ router.get("/estados/:uf", (req, res) => {
   const isFiltrandoPorRespondeu = respondeu !== "-1";
 
   query = {};
-  query.uf = req.params.uf;
+  if (req.params.uf !== "TODOS") {
+    query.uf = req.params.uf;
+  }
 
   if (isFiltrandoPorNome) {
     query.nome_urna = { $regex: pattern };
@@ -190,10 +198,10 @@ router.get("/estados/:uf", (req, res) => {
       response = err
         ? { status: BAD_REQUEST, message: "Error fetching data" }
         : {
-          candidatos,
-          total: totalCount,
-          status: SUCCESS
-        };
+            candidatos,
+            total: totalCount,
+            status: SUCCESS
+          };
 
       res.status(response.status).json(response);
     });
@@ -221,10 +229,10 @@ router.get("/estados/:uf/responderam", (req, res) => {
           response = err
             ? { status: BAD_REQUEST, message: "Error fetching data" }
             : {
-              candidatos,
-              total: totalCount,
-              status: SUCCESS
-            };
+                candidatos,
+                total: totalCount,
+                status: SUCCESS
+              };
 
           res.status(response.status).json(response);
         }
@@ -255,10 +263,10 @@ router.get("/estados/:uf/partidos/:sigla", (req, res) => {
           response = err
             ? { status: BAD_REQUEST, message: "Error fetching data" }
             : {
-              candidatos,
-              total: totalCount,
-              status: SUCCESS
-            };
+                candidatos,
+                total: totalCount,
+                status: SUCCESS
+              };
 
           res.status(response.status).json(response);
         }
@@ -266,7 +274,6 @@ router.get("/estados/:uf/partidos/:sigla", (req, res) => {
     }
   );
 });
-
 
 /**
  * Pega as respostas por partido e estado de quem respondeu.
@@ -297,10 +304,10 @@ router.get("/estados/:uf/partidos/:sigla/responderam", (req, res) => {
           response = err
             ? { status: BAD_REQUEST, message: "Error fetching data" }
             : {
-              candidatos,
-              total: totalCount,
-              status: SUCCESS
-            };
+                candidatos,
+                total: totalCount,
+                status: SUCCESS
+              };
 
           res.status(response.status).json(response);
         }
@@ -338,10 +345,10 @@ router.get("/estados/:uf/partidos/:sigla/naoresponderam", (req, res) => {
           response = err
             ? { status: BAD_REQUEST, message: "Error fetching data" }
             : {
-              candidatos,
-              total: totalCount,
-              status: SUCCESS
-            };
+                candidatos,
+                total: totalCount,
+                status: SUCCESS
+              };
 
           res.status(response.status).json(response);
         }
@@ -382,19 +389,18 @@ router.get("/estados/:uf/naoresponderam", (req, res) => {
       response = err
         ? { status: BAD_REQUEST, message: "Error fetching data" }
         : {
-          data,
-          total: totalCount,
-          itensPorPagina: size,
-          pagina: pageNo,
-          paginas: Math.ceil(totalCount / size),
-          status: SUCCESS
-        };
+            data,
+            total: totalCount,
+            itensPorPagina: size,
+            pagina: pageNo,
+            paginas: Math.ceil(totalCount / size),
+            status: SUCCESS
+          };
 
       res.status(response.status).json(response);
     });
   });
 });
-
 
 /**
  *  Pega as respostas por estado de quem se elegeu.
@@ -413,10 +419,10 @@ router.get("/estados/:uf/eleitos", (req, res) => {
         response = err
           ? { status: BAD_REQUEST, message: "Error fetching data" }
           : {
-            candidatos,
-            total: totalCount,
-            status: SUCCESS
-          };
+              candidatos,
+              total: totalCount,
+              status: SUCCESS
+            };
 
         res.status(response.status).json(response);
       });
