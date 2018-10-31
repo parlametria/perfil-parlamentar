@@ -15,7 +15,7 @@
 .share-icon {
   font-size: 1.7rem;
 }
-.login{
+.login-facebook{
   background-color: #ffffff; 
   border: none;
   color: #41c083;
@@ -24,5 +24,22 @@
   text-decoration: none;
   display: inline-block;
   font-size: 27px;
-
+}
+.login-google{
+  background-color: #ffffff; 
+  border: none;
+  color: #41c083;
+  padding: 4px 0px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+}
+.login-twitter{
+  background-color: #ffffff; 
+  border: none;
+  color: #41c083;
+  padding: 4px 0px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
 }

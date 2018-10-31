@@ -83,9 +83,9 @@ class Navbar extends Component {
                     Sou candidato
                   </Link>
                 </li>
-                {/* <li className="nav-item">
+                <li className="nav-item">
                   <GoogleLogin
-                    className="login"
+                    className="login-google"
                     clientId="XXXXXXXXXX"
                     buttonText="Google"
                     onSuccess={this.googleResponse}
@@ -97,28 +97,29 @@ class Navbar extends Component {
                       target="_blank"
                       rel="noopener noreferrer"
                     >
-                      <span className="icon-google share-icon" />
+                      <span className="icon-facebook share-icon" />
                     </a>
                   </GoogleLogin>
-                </li>*/}
+                </li>
 
-                <li className="nav-item">
+                <li className="nav-link nav-strong">
                   <FacebookLogin
                     appId={config.FACEBOOK_APP_ID}
                     autoLoad={false}
                     fields="name,email,picture"
                     callback={this.facebookResponse}
-                    cssClass="login"
+                    cssClass="login-facebook"
                     icon="icon-facebook share-icon"
                     textButton=""
-                    tag="button"
+                    tag="a"
+                    size="medium"
                   />
 
                 </li>
 
-                {/* <li className="nav-item">
+                <li className="nav-item">
                   <TwitterLogin
-                    className="login"
+                    className="login-twitter"
                     loginUrl="http://localhost:4000/api/v1/auth/twitter"
                     onFailure={this.twitterResponse}
                     onSuccess={this.twitterResponse}
@@ -133,7 +134,7 @@ class Navbar extends Component {
                       <span className="icon-twitter share-icon" />
                     </a>
                   </TwitterLogin>
-                </li>  */}
+                </li>
               </ul>
               <span className="navbar-text navbar-text-strong">
                 compartilhe
