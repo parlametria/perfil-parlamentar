@@ -151,10 +151,10 @@ router.get("/estados/:uf/partidos", (req, res) => {
  * @param {string} uf - Estado
  */
 router.get("/estados/:uf", (req, res) => {
-  query = {};
   const partido = String(req.query.partido);
   const nome = String(req.query.nome);
-
+  const eleito =
+    String(req.query.eleito) !== "" && String(req.query.eleito) !== "undefined";
   const respondeu =
     String(req.query.respondeu) !== "-1"
       ? Number(req.query.respondeu) !== -1
@@ -174,7 +174,9 @@ router.get("/estados/:uf", (req, res) => {
   if (req.params.uf !== "TODOS") {
     query.uf = req.params.uf;
   }
-
+  if (eleito) {
+    query.eleito = eleito;
+  }
   if (isFiltrandoPorNome) {
     query.nome_urna = { $regex: pattern };
   }

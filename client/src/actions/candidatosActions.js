@@ -363,7 +363,8 @@ export const setCandidatosFiltrados = () => (dispatch, getState) => {
     dadosCandidatos,
     filtro,
     scoreCandidatos,
-    candidatosRanqueados
+    candidatosRanqueados,
+    activeTab
   } = getState().candidatosReducer;
 
   dispatch(setCandidatosFiltrando());
@@ -394,7 +395,9 @@ export const setCandidatosFiltrados = () => (dispatch, getState) => {
       })
     );
 
-  filtra(filtro).then(todosCandidatos => {
+  const eleito = activeTab === "eleitos" ? true : "";
+
+  filtra(filtro, eleito).then(todosCandidatos => {
     const cpfCandidatos = {};
     const candidatos = todosCandidatos.data.candidatos;
 
