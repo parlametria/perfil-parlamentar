@@ -91,7 +91,7 @@ class Candidato extends Component {
           }
         >
           saiba mais
-        </Link>
+        </Link>{" "}
         {this.props.reeleito && verAtuacao}
       </div>
     );
