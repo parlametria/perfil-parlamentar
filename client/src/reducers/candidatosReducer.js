@@ -50,7 +50,13 @@ const initialState = {
   dadosCandidato: {},
   scoreTema: {},
   mostrarTodos: false,
-  paginacao: { inicio: 0, final: 0, totalCandidatos: 0, paginaAtual: 0 },
+  paginacao: {
+    inicio: 0,
+    final: 0,
+    totalCandidatos: 0,
+    paginaAtual: 0,
+    paginaAtualAPI: 0
+  },
   dadosCandidatoBusca: {},
   activeTab: "eleitos",
   isVerTodosEleitos: false
