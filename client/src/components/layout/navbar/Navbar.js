@@ -104,21 +104,16 @@ class Navbar extends Component {
 
                 <li className="nav-item">
                   <FacebookLogin
-                    className="login"
                     appId={config.FACEBOOK_APP_ID}
                     autoLoad={false}
                     fields="name,email,picture"
                     callback={this.facebookResponse}
-                  >
-                    <a
-                      data-show-count="false"
-                      className="nav-link nav-strong"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      <span className="icon-facebook share-icon" />
-                    </a>
-                  </FacebookLogin>
+                    cssClass="login"
+                    icon="icon-facebook share-icon"
+                    textButton=""
+                    tag="button"
+                  />
+
                 </li>
 
                 {/* <li className="nav-item">
