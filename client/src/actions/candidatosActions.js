@@ -508,14 +508,11 @@ export const getProximaPaginaCandidatos = () => (dispatch, getState) => {
         ITENS_POR_REQ
     )
     .then(respostas => {
-      console.log(paginacao.paginaAtual);
-
       respostas.data.data.forEach(resposta => {
         candidatosRanqueados.push(resposta.cpf);
         dadosCandidatos[resposta.cpf] = resposta;
       });
 
-      console.log(candidatosRanqueados);
       dispatch({
         type: SET_CANDIDATOS_RANQUEADOS,
         candidatosRanqueados: candidatosRanqueados
