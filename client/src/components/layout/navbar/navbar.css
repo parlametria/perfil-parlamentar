@@ -15,15 +15,17 @@
 .share-icon {
   font-size: 1.7rem;
 }
+
 .login-facebook{
   background-color: #ffffff; 
-  border: none;
   color: #41c083;
-  padding: 0px 0px;
+  padding: 4px 0px 0px 0px;
   text-align: center;
   text-decoration: none;
   display: inline-block;
   font-size: 27px;
+  border: none;
+  background: none;
 }
 .login-google{
   background-color: #ffffff; 
@@ -43,3 +45,4 @@
   text-decoration: none;
   display: inline-block;
 }
+

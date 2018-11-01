@@ -72,7 +72,7 @@ class Navbar extends Component {
             </button>
 
             <div className="collapse navbar-collapse" id="mainNavbar">
-              <ul className="navbar-nav ml-auto pr-3">
+              <ul className="navbar-nav ml-auto pr-1">
                 <li className="nav-item">
                   <Link to="/sobre" className="nav-link">
                     Sobre
@@ -83,7 +83,13 @@ class Navbar extends Component {
                     Sou candidato
                   </Link>
                 </li>
-                <li className="nav-item">
+              </ul>
+              <span className="navbar-text navbar-text-strong">
+                faça login
+              </span>
+              <ul className="navbar-nav navbar-inline">
+
+                <li className="nav-link nav-strong">
                   <GoogleLogin
                     className="login-google"
                     clientId="XXXXXXXXXX"
@@ -93,11 +99,10 @@ class Navbar extends Component {
                   >
                     <a
                       data-show-count="false"
-                      className="nav-link nav-strong"
                       target="_blank"
                       rel="noopener noreferrer"
                     >
-                      <span className="icon-facebook share-icon" />
+                      <span className="icon-google1 share-icon" />
                     </a>
                   </GoogleLogin>
                 </li>
@@ -111,13 +116,12 @@ class Navbar extends Component {
                     cssClass="login-facebook"
                     icon="icon-facebook share-icon"
                     textButton=""
-                    tag="a"
-                    size="medium"
+                    tag="button"
                   />
 
                 </li>
 
-                <li className="nav-item">
+                <li className="nav-link nav-strong">
                   <TwitterLogin
                     className="login-twitter"
                     loginUrl="http://localhost:4000/api/v1/auth/twitter"
@@ -127,7 +131,6 @@ class Navbar extends Component {
                   >
                     <a
                       data-show-count="false"
-                      className="nav-link nav-strong"
                       target="_blank"
                       rel="noopener noreferrer"
                     >
@@ -136,7 +139,8 @@ class Navbar extends Component {
                   </TwitterLogin>
                 </li>
               </ul>
-              <span className="navbar-text navbar-text-strong">
+
+              {/* <span className="navbar-text navbar-text-strong">
                 compartilhe
               </span>
               <ul className="navbar-nav navbar-inline">
@@ -193,7 +197,7 @@ class Navbar extends Component {
                     </a>
                   </li>
                 )}
-              </ul>
+              </ul> */}
             </div>
           </div>
         </nav>
