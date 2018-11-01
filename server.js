@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const path = require("path");
 const logger = require("heroku-logger");
+const cors = require("cors");
 
 const perguntas = require("./routes/api/perguntas");
 const candidatos = require("./routes/api/candidatos");
@@ -12,6 +13,14 @@ const auth = require("./routes/api/auth");
 const app = express();
 
 // app.use(compression())
+
+var corsOption = {
+  origin: true,
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  credentials: true,
+  exposedHeaders: ['x-auth-token']
+};
+app.use(cors(corsOption));
 
 // Body parser middleware
 app.use(bodyParser.urlencoded({ extended: false }));
