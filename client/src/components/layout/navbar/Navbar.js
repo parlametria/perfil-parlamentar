@@ -23,6 +23,8 @@ class Navbar extends Component {
     super(props);
 
     this.facebookResponse = this.facebookResponse.bind(this);
+    this.googleResponse = this.googleResponse.bind(this);
+    this.onSignOut = this.onSignOut.bind(this);
   }
 
   twitterResponse(e) {
@@ -52,10 +54,83 @@ class Navbar extends Component {
   }
 
   render() {
+
+    const { isAuthenticated, user } = this.props.auth;
+
     let linkCompartilhamento = "www.vozativa.org/";
     let textoCompartilhamento =
       "Nos diga o que você defende e em oito minutos a gente apresenta candidatos alinhados com você. " +
       linkCompartilhamento;
+
+    const barraLogado = (
+      <div>
+        <div>Bem vindo, {user.firstName}!</div>
+        <span className="navbar-text navbar-text-strong" onClick={this.onSignOut}>
+          logout
+        </span>
+      </div>
+    );
+
+    const barraNaoLogado = (
+      <div>
+        <span className="navbar-text navbar-text-strong">
+          faça login
+              </span>
+        <ul className="navbar-nav navbar-inline">
+
+          <li className="nav-link nav-strong">
+            <GoogleLogin
+              className="login-google"
+              clientId={"791030988243-msi1r67ltvd5v1fjtajj3un1f0c0d7ds.apps.googleusercontent.com"}
+              buttonText="Google"
+              onSuccess={this.googleResponse}
+              onFailure={this.googleResponse}
+            >
+              <a
+                data-show-count="false"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <span className="icon-google1 share-icon" />
+              </a>
+            </GoogleLogin>
+          </li>
+
+          <li className="nav-link nav-strong">
+            <FacebookLogin
+              appId={2339282366084079}
+              autoLoad={false}
+              fields="name,email,picture"
+              callback={this.facebookResponse}
+              cssClass="login-facebook"
+              icon="icon-facebook share-icon"
+              textButton=""
+              tag="button"
+            />
+
+          </li>
+
+          <li className="nav-link nav-strong">
+            <TwitterLogin
+              className="login-twitter"
+              loginUrl="http://localhost:5000/api/v1/auth/twitter"
+              onFailure={this.twitterResponse}
+              onSuccess={this.twitterResponse}
+              requestTokenUrl="http://localhost:5000/api/v1/auth/twitter/reverse"
+            >
+              <a
+                data-show-count="false"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <span className="icon-twitter share-icon" />
+              </a>
+            </TwitterLogin>
+          </li>
+        </ul>
+      </div>
+    );
+
     return (
       <div>
         <nav className="navbar navbar-expand-lg navbar-light">
@@ -91,61 +166,8 @@ class Navbar extends Component {
                   </Link>
                 </li>
               </ul>
-              <span className="navbar-text navbar-text-strong">
-                faça login
-              </span>
-              <ul className="navbar-nav navbar-inline">
-
-                <li className="nav-link nav-strong">
-                  <GoogleLogin
-                    className="login-google"
-                    clientId="XXXXXXXXXX"
-                    buttonText="Google"
-                    onSuccess={this.googleResponse}
-                    onFailure={this.googleResponse}
-                  >
-                    <a
-                      data-show-count="false"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      <span className="icon-google1 share-icon" />
-                    </a>
-                  </GoogleLogin>
-                </li>
-
-                <li className="nav-link nav-strong">
-                  <FacebookLogin
-                    appId={2339282366084079}
-                    autoLoad={false}
-                    fields="name,email,picture"
-                    callback={this.facebookResponse}
-                    cssClass="login-facebook"
-                    icon="icon-facebook share-icon"
-                    textButton=""
-                    tag="button"
-                  />
-
-                </li>
-
-                <li className="nav-link nav-strong">
-                  <TwitterLogin
-                    className="login-twitter"
-                    loginUrl="http://localhost:4000/api/v1/auth/twitter"
-                    onFailure={this.twitterResponse}
-                    onSuccess={this.twitterResponse}
-                    requestTokenUrl="http://localhost:4000/api/v1/auth/twitter/reverse"
-                  >
-                    <a
-                      data-show-count="false"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      <span className="icon-twitter share-icon" />
-                    </a>
-                  </TwitterLogin>
-                </li>
-              </ul>
+              {!isAuthenticated && barraNaoLogado}
+              {isAuthenticated && barraLogado}
 
               {/* <span className="navbar-text navbar-text-strong">
                 compartilhe
