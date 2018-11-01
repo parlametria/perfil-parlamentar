@@ -8,6 +8,18 @@
   margin-bottom: 3rem;
   max-width: 720px;
 }
+.btn-share{
+  margin: 2px;
+  border-radius: 50%;
+  width: 45px;
+  height: 45px;
+  text-align: center;
+  padding: 6px 0;
+  line-height: 1.428571429;
+}
+.btn-share-element{
+  font-size: 10px;
+}
 .grid-wrapper {
   min-height: 60vh;
 }

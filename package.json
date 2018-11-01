@@ -32,7 +32,9 @@
     "heroku-logger": "^0.3.1",
     "mongoose": "^5.2.10",
     "passport": "^0.4.0",
-    "passport-facebook": "^2.1.1"
+    "passport-facebook": "^2.1.1",
+    "react-bootstrap": "^0.32.4",
+    "react-float-button": "^0.1.2"
   },
   "devDependencies": {
     "nodemon": "^1.18.3"
