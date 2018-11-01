@@ -2,6 +2,14 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const UsuarioSchema = new Schema({
+  firstName: {
+    type: String,
+    required: true
+  },
+  fullName: {
+    type: String,
+    required: true
+  },
   email: {
     type: String,
     required: true
@@ -25,6 +33,7 @@ UsuarioSchema.statics.upsertFbUser = function (accessToken, refreshToken, profil
     // no user was found, lets create a new one
     if (!user) {
       var newUser = new that({
+        firstName: profile.displayName.split(" ")[0],
         fullName: profile.displayName,
         email: profile.emails[0].value,
         facebookProvider: {
