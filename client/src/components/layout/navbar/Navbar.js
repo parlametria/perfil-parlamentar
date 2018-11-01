@@ -7,17 +7,24 @@ import PropTypes from "prop-types";
 
 import { isMobile } from "react-device-detect";
 
-import { logoutUser } from "../../../actions/authActions";
+import { facebookLogin, logoutUser } from "../../../actions/authActions";
 
 import TwitterLogin from "react-twitter-auth";
 import FacebookLogin from "react-facebook-login";
 import { GoogleLogin } from "react-google-login";
 
-import config from "../../../config.json";
+//import config from "../../../config.json";
 
 import "./navbar.css";
 
 class Navbar extends Component {
+
+  constructor(props) {
+    super(props);
+
+    this.facebookResponse = this.facebookResponse.bind(this);
+  }
+
   twitterResponse(e) {
     console.log("loga com twitter");
     //this.props.twitterResponse();
@@ -25,8 +32,8 @@ class Navbar extends Component {
 
   facebookResponse(response) {
     console.log("loga com facebook");
-    console.log(response);
-    //this.props.facebookResponse();
+    this.props.facebookLogin(response);
+    //this.props.history.push("/");
   }
 
   googleResponse(e) {
@@ -109,7 +116,7 @@ class Navbar extends Component {
 
                 <li className="nav-link nav-strong">
                   <FacebookLogin
-                    appId={config.FACEBOOK_APP_ID}
+                    appId={2339282366084079}
                     autoLoad={false}
                     fields="name,email,picture"
                     callback={this.facebookResponse}
@@ -207,6 +214,7 @@ class Navbar extends Component {
 }
 
 Navbar.propTypes = {
+  facebookLogin: PropTypes.func.isRequired,
   logoutUser: PropTypes.func.isRequired
 };
 
@@ -216,5 +224,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { logoutUser }
+  { facebookLogin, logoutUser }
 )(Navbar);
