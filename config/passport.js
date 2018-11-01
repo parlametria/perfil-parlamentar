@@ -1,28 +1,18 @@
-const facebookStrategy = require("passport-facebook");
+const passport = require('passport');
+const FacebookTokenStrategy = require('passport-facebook-token');
 
 const Usuario = require("../models/Usuario");
 
 const keys = require("./keys");
 
-module.exports = passport => {
-  passport.use(
-    new facebookStrategy(
-      {
-        clientID: keys.facebookAppID,
-        clientSecret: keys.facebookAppSecret,
-        callbackURL: "http://localhost:3000/auth/facebook/callback"
-      },
-      (accessToken, refreshToken, profile, cb) => {
-        Usuario.findOneOrCreate(
-          {
-            email: profile.email,
-            facebookProvider: { id: profile.id, token: accessToken }
-          },
-          (err, user) => {
-            return cb(err, user);
-          }
-        );
-      }
-    )
-  );
-};
+module.exports = () => {
+  passport.use(new FacebookTokenStrategy({
+    clientID: keys.facebookAppID,
+    clientSecret: keys.facebookAppSecret
+  },
+    (accessToken, refreshToken, profile, done) => {
+      Usuario.upsertFbUser(accessToken, refreshToken, profile, (err, user) => {
+        return done(err, user);
+      });
+    }));
+}
