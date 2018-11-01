@@ -45,6 +45,9 @@ export const googleLogin = response => dispatch => {
     cache: 'default'
   };
 
+  console.log(response);
+  console.log(options);
+
   // axios(options).then(res => {
   //   console.log(res);
   // })

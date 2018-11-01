@@ -20,10 +20,18 @@ router.post("/facebook", passport.authenticate("facebook-token", { session: fals
   next();
 }, generateToken, sendToken);
 
-router.get("/callback/facebook", (req, res) => {
-  return passport.authenticate("facebook", {
-    failureRedirect: "/auth/failed"
-  });
-});
+// @route   POST api/auth/google
+// @desc    Login com google
+// @access  Public
+router.post("/google", passport.authenticate("google-token", { session: false }), (req, res, next) => {
+  if (!req.user) {
+    return res.send(401, 'User Not Authenticated');
+  }
+  req.auth = {
+    id: req.user.id
+  };
+
+  next();
+}, generateToken, sendToken);
 
 module.exports = router;

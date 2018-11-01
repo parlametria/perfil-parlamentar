@@ -20,23 +20,59 @@ const UsuarioSchema = new Schema({
       token: String
     },
     select: false
+  },
+  googleProvider: {
+    type: {
+      id: String,
+      token: String
+    },
+    select: false
   }
 });
 
 UsuarioSchema.set('toJSON', { getters: true, virtuals: true });
 
 UsuarioSchema.statics.upsertFbUser = function (accessToken, refreshToken, profile, cb) {
-  var that = this;
+  const that = this;
   return this.findOne({
     'facebookProvider.id': profile.id
   }, function (err, user) {
     // no user was found, lets create a new one
     if (!user) {
-      var newUser = new that({
+      const newUser = new that({
         firstName: profile.displayName.split(" ")[0],
         fullName: profile.displayName,
         email: profile.emails[0].value,
         facebookProvider: {
+          id: profile.id,
+          token: accessToken
+        }
+      });
+
+      newUser.save(function (error, savedUser) {
+        if (error) {
+          console.log(error);
+        }
+        return cb(error, savedUser);
+      });
+    } else {
+      return cb(err, user);
+    }
+  });
+};
+
+UsuarioSchema.statics.upsertGoogleUser = function (accessToken, refreshToken, profile, cb) {
+  const that = this;
+  return this.findOne({
+    'googleProvider.id': profile.id
+  }, function (err, user) {
+    // no user was found, lets create a new one
+    if (!user) {
+      const newUser = new that({
+        firstName: profile.displayName.split(" ")[0],
+        fullName: profile.displayName,
+        email: profile.emails[0].value,
+        googleProvider: {
           id: profile.id,
           token: accessToken
         }

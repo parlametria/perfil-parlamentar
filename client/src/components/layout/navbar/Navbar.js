@@ -7,7 +7,7 @@ import PropTypes from "prop-types";
 
 import { isMobile } from "react-device-detect";
 
-import { facebookLogin, logoutUser } from "../../../actions/authActions";
+import { facebookLogin, googleLogin, logoutUser } from "../../../actions/authActions";
 
 import TwitterLogin from "react-twitter-auth";
 import FacebookLogin from "react-facebook-login";
@@ -38,9 +38,9 @@ class Navbar extends Component {
     //this.props.history.push("/");
   }
 
-  googleResponse(e) {
+  googleResponse(response) {
     console.log("loga com google");
-    //this.props.googleResponse();
+    this.props.googleLogin(response);
   }
 
   onFailure = error => {
@@ -84,7 +84,6 @@ class Navbar extends Component {
               clientId={"791030988243-msi1r67ltvd5v1fjtajj3un1f0c0d7ds.apps.googleusercontent.com"}
               buttonText="Google"
               onSuccess={this.googleResponse}
-              onFailure={this.googleResponse}
             >
               <a
                 data-show-count="false"
@@ -237,7 +236,8 @@ class Navbar extends Component {
 
 Navbar.propTypes = {
   facebookLogin: PropTypes.func.isRequired,
-  logoutUser: PropTypes.func.isRequired
+  logoutUser: PropTypes.func.isRequired,
+  googleLogin: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -246,5 +246,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { facebookLogin, logoutUser }
+  { facebookLogin, googleLogin, logoutUser }
 )(Navbar);
