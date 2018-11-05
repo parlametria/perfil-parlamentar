@@ -8,8 +8,7 @@ import ScrollIntoView from "react-scroll-into-view";
 import ScrollIntoViewOnChange from "../../../scroll/scrollIntoViewOnChange";
 import FloatGroup from 'react-float-button';
 import { Button } from 'react-bootstrap';
-
-
+import StickyBox from "react-sticky-box";
 
 // Redux stuff
 import { connect } from "react-redux";
@@ -127,6 +126,58 @@ class Home extends Component {
       linkCompartilhamento;
     return (
       <div>
+        <StickyBox offsetTop={20} offsetBottom={20} className="share-box">
+          <div>
+            <ul>
+              <a
+                href={
+                  "https://twitter.com/intent/tweet/?text=" +
+                  textoCompartilhamento
+                }
+                data-show-count="false"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <span className="icon-twitter share-icon" />
+              </a>
+            </ul>
+            <ul>
+              <a
+                href={
+                  "https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fvozativa.org%2F&amp;src=sdkpreparse"
+                }
+                data-show-count="false"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <span className="icon-facebook share-icon" />
+              </a>
+            </ul>
+            <ul>
+              {!isMobile && (
+                <a
+                  href={
+                    "https://web.whatsapp.com/send?text=" +
+                    textoCompartilhamento
+                  }
+                  data-show-count="false"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <span className="icon-zapzap share-icon" />
+                </a>
+              )}
+              {isMobile && (
+                <a
+                  href={"whatsapp://send?text=" + textoCompartilhamento}
+                >
+                  <span className="icon-zapzap share-icon" />
+                </a>
+              )}
+            </ul>
+          </div>
+        </StickyBox>
+
         <section className="intro">
           <div className="container">
             <h2 className="intro-title text-center">
@@ -209,56 +260,16 @@ class Home extends Component {
           </div>
         </div>
 
-        <div className="float-right">
+        <div className="btn pull-right">
           <FloatGroup style={{ margin: '0 5px' }} margin={70} delay={0.02}>
             <Button className="btn  btn-share btn-sm icon-facebook share-icon ">
             </Button>
-            <Button className="btn btn-share-element btn-sm">
-              <a
-                href={
-                  "https://twitter.com/intent/tweet/?text=" +
-                  textoCompartilhamento
-                }
-                data-show-count="false"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <span className="icon-twitter share-icon" />
-              </a>
+
+            <Button className="btn btn-share btn-share-element btn-sm">
+
             </Button>
-            <Button className="btn btn-share-element btn-sm">
-              <a
-                href={
-                  "https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fvozativa.org%2F&amp;src=sdkpreparse"
-                }
-                data-show-count="false"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <span className="icon-facebook share-icon" />
-              </a>
-            </Button>
-            <Button className="btn btn-share-element btn-sm">
-              {!isMobile && (
-                <a
-                  href={
-                    "https://web.whatsapp.com/send?text=" +
-                    textoCompartilhamento
-                  }
-                  data-show-count="false"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <span className="icon-zapzap share-icon" />
-                </a>
-              )}
-              {isMobile && (
-                <a
-                  href={"whatsapp://send?text=" + textoCompartilhamento}
-                >
-                  <span className="icon-zapzap share-icon" />
-                </a>
-              )}
+            <Button className="btn btn-share btn-share-element btn-sm">
+
             </Button>
           </FloatGroup>
         </div>

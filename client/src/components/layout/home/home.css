@@ -8,16 +8,17 @@
   margin-bottom: 3rem;
   max-width: 720px;
 }
-.btn-share{
-  margin: 2px;
-  border-radius: 50%;
-  width: 45px;
-  height: 45px;
-  text-align: center;
-  padding: 6px 0;
-  line-height: 1.428571429;
+
+.share-box{
+  width: 30px;
+  height: 90px;
+  background-color:  #ddc1e1;
+  display: block;
+  float:right; 
+  padding-left: 0pt
 }
-.btn-share-element{
+
+.share-element{
   font-size: 10px;
 }
 .grid-wrapper {
