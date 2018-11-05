@@ -7,6 +7,8 @@ import { isMobile } from "react-device-detect";
 import ScrollIntoView from "react-scroll-into-view";
 import ScrollIntoViewOnChange from "../../../scroll/scrollIntoViewOnChange";
 import StickyBox from "react-sticky-box";
+import FloatGroup from 'react-float-button';
+import { Button } from 'react-bootstrap';
 
 // Redux stuff
 import { connect } from "react-redux";
@@ -43,7 +45,6 @@ import "./home.css";
 
 // Import função de estado
 import { estados } from "../../../constantes/filtrosSeletoresCandidatos";
-import usuarioReducer from "../../../reducers/usuarioReducer";
 
 class Home extends Component {
   constructor(props) {
@@ -123,8 +124,8 @@ class Home extends Component {
       "Nos diga o que você defende e em oito minutos a gente apresenta candidatos alinhados com você. " +
       linkCompartilhamento;
 
-    let barraCompartilhamento =
-      (<StickyBox offsetTop={20} offsetBottom={20} offsetRight={20}>
+    let barraCompartilhamento = (
+      <StickyBox offsetTop={20} offsetBottom={20} offsetRight={20}>
         <ul className="share-box">
           <li className="share-element">
             <a
@@ -151,31 +152,26 @@ class Home extends Component {
 
           </li>
           <li className="share-element">
-            {!isMobile && (
-              <a
-                href={
-                  "https://web.whatsapp.com/send?text=" +
-                  textoCompartilhamento
-                }
-                data-show-count="false"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="icon-zapzap share-icon btn btn-link btn-icon"
-              />
-            )}
-            {isMobile && (
-              <a
-                href={"whatsapp://send?text=" + textoCompartilhamento}
-                className="icon-zapzap share-icon btn btn-link btn-icon"
-              />
-            )}
+            <a
+              href={
+                "https://web.whatsapp.com/send?text=" +
+                textoCompartilhamento
+              }
+              data-show-count="false"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="icon-zapzap share-icon btn btn-link btn-icon"
+            />
+
           </li>
         </ul>
-      </StickyBox>)
+      </StickyBox>
+    )
+
 
     return (
       <div>
-        {barraCompartilhamento}
+        {!isMobile && barraCompartilhamento}
         <section className="intro">
           <div className="container">
             <h2 className="intro-title text-center">
@@ -211,7 +207,7 @@ class Home extends Component {
             </div>
           </div>
         </section>
-        
+
         <div className="grid-wrapper" id="candidatos">
           <div className="grid-main">
             <section className="grid-panel panel-master">

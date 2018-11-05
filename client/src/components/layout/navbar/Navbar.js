@@ -42,6 +42,7 @@ class Navbar extends Component {
     this.props.logoutUser();
   }
 
+  // atualizar com nova rota pra login e compartilhamento mobile
   render() {
     let linkCompartilhamento = "www.vozativa.org/";
     let textoCompartilhamento =
