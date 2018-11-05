@@ -5,25 +5,27 @@ import setAuthToken from "../utils/setAuthToken";
 
 // Login user - Get token
 export const facebookLogin = response => dispatch => {
-  const tokenBlob = new Blob([JSON.stringify({ access_token: response.accessToken }, null, 2)], { type: 'application/json' });
+  const tokenBlob = new Blob(
+    [JSON.stringify({ access_token: response.accessToken }, null, 2)],
+    { type: "application/json" }
+  );
 
   const options = {
-    method: 'POST',
+    method: "POST",
     url: "api/auth/facebook",
     body: tokenBlob,
-    mode: 'cors',
-    cache: 'default'
+    mode: "cors",
+    cache: "default"
   };
 
   // axios(options).then(res => {
   //   console.log(res);
   // })
 
-  fetch('api/auth/facebook', options).then(r => {
-    const token = r.headers.get('x-auth-token');
+  fetch("api/auth/facebook", options).then(r => {
+    const token = r.headers.get("x-auth-token");
     r.json().then(user => {
       if (token) {
-
         // Set token to localStorage
         localStorage.setItem("accessToken ", token);
         setAuthToken(token);
@@ -31,18 +33,21 @@ export const facebookLogin = response => dispatch => {
         dispatch(setCurrentUser(user));
       }
     });
-  })
+  });
 };
 
 export const googleLogin = response => dispatch => {
-  const tokenBlob = new Blob([JSON.stringify({ access_token: response.accessToken }, null, 2)], { type: 'application/json' });
+  const tokenBlob = new Blob(
+    [JSON.stringify({ access_token: response.accessToken }, null, 2)],
+    { type: "application/json" }
+  );
 
   const options = {
-    method: 'POST',
+    method: "POST",
     url: "api/auth/google",
     body: tokenBlob,
-    mode: 'cors',
-    cache: 'default'
+    mode: "cors",
+    cache: "default"
   };
 
   console.log(response);
@@ -52,11 +57,10 @@ export const googleLogin = response => dispatch => {
   //   console.log(res);
   // })
 
-  fetch('api/auth/google', options).then(r => {
-    const token = r.headers.get('x-auth-token');
+  fetch("api/auth/google", options).then(r => {
+    const token = r.headers.get("x-auth-token");
     r.json().then(user => {
       if (token) {
-
         // Set token to localStorage
         localStorage.setItem("accessToken ", token);
         setAuthToken(token);
@@ -64,7 +68,10 @@ export const googleLogin = response => dispatch => {
         dispatch(setCurrentUser(user));
       }
     });
-  })
+
+    console.log(r);
+    console.log(token);
+  });
 };
 
 // Set logged in user

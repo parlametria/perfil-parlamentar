@@ -7,7 +7,11 @@ import PropTypes from "prop-types";
 
 import { isMobile } from "react-device-detect";
 
-import { facebookLogin, googleLogin, logoutUser } from "../../../actions/authActions";
+import {
+  facebookLogin,
+  googleLogin,
+  logoutUser
+} from "../../../actions/authActions";
 
 import TwitterLogin from "react-twitter-auth";
 import FacebookLogin from "react-facebook-login";
@@ -18,13 +22,13 @@ import { GoogleLogin } from "react-google-login";
 import "./navbar.css";
 
 class Navbar extends Component {
-
   constructor(props) {
     super(props);
 
     this.facebookResponse = this.facebookResponse.bind(this);
     this.googleResponse = this.googleResponse.bind(this);
     this.onSignOut = this.onSignOut.bind(this);
+    this.onFailure = this.onFailure.bind(this);
   }
 
   twitterResponse(e) {
@@ -44,7 +48,7 @@ class Navbar extends Component {
   }
 
   onFailure = error => {
-    alert(error);
+    console.log(error);
   };
 
   onSignOut(e) {
@@ -54,7 +58,6 @@ class Navbar extends Component {
   }
 
   render() {
-
     const { isAuthenticated, user } = this.props.auth;
 
     let linkCompartilhamento = "www.vozativa.org/";
@@ -65,7 +68,10 @@ class Navbar extends Component {
     const barraLogado = (
       <div>
         <div>Bem vindo, {user.firstName}!</div>
-        <span className="navbar-text navbar-text-strong" onClick={this.onSignOut}>
+        <span
+          className="navbar-text navbar-text-strong"
+          onClick={this.onSignOut}
+        >
           logout
         </span>
       </div>
@@ -73,17 +79,17 @@ class Navbar extends Component {
 
     const barraNaoLogado = (
       <div>
-        <span className="navbar-text navbar-text-strong">
-          faça login
-              </span>
+        <span className="navbar-text navbar-text-strong">faça login</span>
         <ul className="navbar-nav navbar-inline">
-
           <li className="nav-link nav-strong">
             <GoogleLogin
               className="login-google"
-              clientId={"791030988243-msi1r67ltvd5v1fjtajj3un1f0c0d7ds.apps.googleusercontent.com"}
+              clientId={
+                "791030988243-msi1r67ltvd5v1fjtajj3un1f0c0d7ds.apps.googleusercontent.com"
+              }
               buttonText="Google"
               onSuccess={this.googleResponse}
+              onFailure={this.onFailure}
             >
               <a
                 data-show-count="false"
@@ -106,7 +112,6 @@ class Navbar extends Component {
               textButton=""
               tag="button"
             />
-
           </li>
 
           <li className="nav-link nav-strong">
@@ -237,7 +242,7 @@ class Navbar extends Component {
 Navbar.propTypes = {
   facebookLogin: PropTypes.func.isRequired,
   logoutUser: PropTypes.func.isRequired,
-  googleLogin: PropTypes.func.isRequired,
+  googleLogin: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
