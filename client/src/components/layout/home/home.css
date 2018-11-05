@@ -11,15 +11,19 @@
 
 .share-box{
   width: 30px;
-  height: 90px;
+  height: 120px;
   background-color:  #ddc1e1;
   display: block;
   float:right; 
-  padding-left: 0pt
+  list-style-type: none;
+  padding: 0px 2px;
+  margin: 0;
+
 }
 
 .share-element{
-  font-size: 10px;
+  padding: 5px 0px;
+  
 }
 .grid-wrapper {
   min-height: 60vh;

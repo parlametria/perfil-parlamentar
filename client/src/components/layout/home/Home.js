@@ -6,8 +6,6 @@ import CandidatosContainer from "../../candidatos/CandidatosContainer";
 import { isMobile } from "react-device-detect";
 import ScrollIntoView from "react-scroll-into-view";
 import ScrollIntoViewOnChange from "../../../scroll/scrollIntoViewOnChange";
-import FloatGroup from 'react-float-button';
-import { Button } from 'react-bootstrap';
 import StickyBox from "react-sticky-box";
 
 // Redux stuff
@@ -124,60 +122,59 @@ class Home extends Component {
     let textoCompartilhamento =
       "Nos diga o que você defende e em oito minutos a gente apresenta candidatos alinhados com você. " +
       linkCompartilhamento;
-    return (
-      <div>
-        <StickyBox offsetTop={20} offsetBottom={20} className="share-box">
-          <div>
-            <ul>
+
+    let barraCompartilhamento =
+      (<StickyBox offsetTop={20} offsetBottom={20} >
+        <ul className="share-box">
+          <li className="share-element">
+            <a
+              href={
+                "https://twitter.com/intent/tweet/?text=" +
+                textoCompartilhamento
+              }
+              data-show-count="false"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="icon-twitter share-icon"
+            />
+          </li>
+          <li className="share-element">
+            <a
+              href={
+                "https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fvozativa.org%2F&amp;src=sdkpreparse"
+              }
+              data-show-count="false"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="icon-facebook share-icon"
+            />
+
+          </li>
+          <li className="share-element">
+            {!isMobile && (
               <a
                 href={
-                  "https://twitter.com/intent/tweet/?text=" +
+                  "https://web.whatsapp.com/send?text=" +
                   textoCompartilhamento
                 }
                 data-show-count="false"
                 target="_blank"
                 rel="noopener noreferrer"
-              >
-                <span className="icon-twitter share-icon" />
-              </a>
-            </ul>
-            <ul>
+                className="icon-zapzap share-icon"
+              />
+            )}
+            {isMobile && (
               <a
-                href={
-                  "https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fvozativa.org%2F&amp;src=sdkpreparse"
-                }
-                data-show-count="false"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <span className="icon-facebook share-icon" />
-              </a>
-            </ul>
-            <ul>
-              {!isMobile && (
-                <a
-                  href={
-                    "https://web.whatsapp.com/send?text=" +
-                    textoCompartilhamento
-                  }
-                  data-show-count="false"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <span className="icon-zapzap share-icon" />
-                </a>
-              )}
-              {isMobile && (
-                <a
-                  href={"whatsapp://send?text=" + textoCompartilhamento}
-                >
-                  <span className="icon-zapzap share-icon" />
-                </a>
-              )}
-            </ul>
-          </div>
-        </StickyBox>
+                href={"whatsapp://send?text=" + textoCompartilhamento}
+                className="icon-zapzap share-icon"
+              />
+            )}
+          </li>
+        </ul>
+      </StickyBox>)
 
+    return (
+      <div>
         <section className="intro">
           <div className="container">
             <h2 className="intro-title text-center">
@@ -213,7 +210,7 @@ class Home extends Component {
             </div>
           </div>
         </section>
-
+        {barraCompartilhamento}
         <div className="grid-wrapper" id="candidatos">
           <div className="grid-main">
             <section className="grid-panel panel-master">
@@ -258,20 +255,6 @@ class Home extends Component {
               </FlipMove>
             </section>
           </div>
-        </div>
-
-        <div className="btn pull-right">
-          <FloatGroup style={{ margin: '0 5px' }} margin={70} delay={0.02}>
-            <Button className="btn  btn-share btn-sm icon-facebook share-icon ">
-            </Button>
-
-            <Button className="btn btn-share btn-share-element btn-sm">
-
-            </Button>
-            <Button className="btn btn-share btn-share-element btn-sm">
-
-            </Button>
-          </FloatGroup>
         </div>
 
       </div>
