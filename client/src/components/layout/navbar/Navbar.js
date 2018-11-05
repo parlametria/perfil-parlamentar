@@ -10,7 +10,8 @@ import { isMobile } from "react-device-detect";
 import {
   facebookLogin,
   googleLogin,
-  logoutUser
+  logoutUser,
+  twitterLogin
 } from "../../../actions/authActions";
 
 import TwitterLogin from "react-twitter-auth";
@@ -31,8 +32,9 @@ class Navbar extends Component {
     this.onFailure = this.onFailure.bind(this);
   }
 
-  twitterResponse(e) {
+  twitterResponse(response) {
     console.log("loga com twitter");
+    this.props.twitterLogin(response);
     //this.props.twitterResponse();
   }
 
@@ -117,10 +119,10 @@ class Navbar extends Component {
           <li className="nav-link nav-strong">
             <TwitterLogin
               className="login-twitter"
-              loginUrl="http://localhost:5000/api/v1/auth/twitter"
-              onFailure={this.twitterResponse}
+              loginUrl="http://localhost:5000/api/auth/twitter"
+              onFailure={this.onFailure}
               onSuccess={this.twitterResponse}
-              requestTokenUrl="http://localhost:5000/api/v1/auth/twitter/reverse"
+              requestTokenUrl="http://localhost:5000/api/auth/twitter/reverse"
             >
               <a
                 data-show-count="false"
@@ -242,7 +244,8 @@ class Navbar extends Component {
 Navbar.propTypes = {
   facebookLogin: PropTypes.func.isRequired,
   logoutUser: PropTypes.func.isRequired,
-  googleLogin: PropTypes.func.isRequired
+  googleLogin: PropTypes.func.isRequired,
+  twitterLogin: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -251,5 +254,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { facebookLogin, googleLogin, logoutUser }
+  { facebookLogin, googleLogin, logoutUser, twitterLogin }
 )(Navbar);

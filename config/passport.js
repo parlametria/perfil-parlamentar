@@ -48,8 +48,8 @@ module.exports = () => {
   passport.use(
     new TwitterTokenStrategy(
       {
-        consumerKey: keys.twittterConsumerKey,
-        consumerSecret: keys.twittterConsumerSecret,
+        consumerKey: keys.twitterConsumerKey,
+        consumerSecret: keys.twitterConsumerSecret,
         includeEmail: true
       },
       function(token, tokenSecret, profile, done) {

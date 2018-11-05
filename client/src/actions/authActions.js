@@ -74,6 +74,16 @@ export const googleLogin = response => dispatch => {
   });
 };
 
+export const twitterLogin = response => dispatch => {
+  const token = response.headers.get("x-auth-token");
+
+  response.json().then(user => {
+    if (token) {
+      dispatch(setCurrentUser(user));
+    }
+  });
+};
+
 // Set logged in user
 export const setCurrentUser = decoded => {
   return {
