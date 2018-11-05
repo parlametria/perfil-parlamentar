@@ -124,7 +124,7 @@ class Home extends Component {
       linkCompartilhamento;
 
     let barraCompartilhamento =
-      (<StickyBox offsetTop={20} offsetBottom={20} >
+      (<StickyBox offsetTop={20} offsetBottom={20} offsetRight={20}>
         <ul className="share-box">
           <li className="share-element">
             <a
@@ -135,7 +135,7 @@ class Home extends Component {
               data-show-count="false"
               target="_blank"
               rel="noopener noreferrer"
-              className="icon-twitter share-icon"
+              className="icon-twitter share-icon btn btn-link btn-icon"
             />
           </li>
           <li className="share-element">
@@ -146,7 +146,7 @@ class Home extends Component {
               data-show-count="false"
               target="_blank"
               rel="noopener noreferrer"
-              className="icon-facebook share-icon"
+              className="icon-facebook share-icon btn btn-link btn-icon"
             />
 
           </li>
@@ -160,13 +160,13 @@ class Home extends Component {
                 data-show-count="false"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="icon-zapzap share-icon"
+                className="icon-zapzap share-icon btn btn-link btn-icon"
               />
             )}
             {isMobile && (
               <a
                 href={"whatsapp://send?text=" + textoCompartilhamento}
-                className="icon-zapzap share-icon"
+                className="icon-zapzap share-icon btn btn-link btn-icon"
               />
             )}
           </li>
@@ -175,6 +175,7 @@ class Home extends Component {
 
     return (
       <div>
+        {barraCompartilhamento}
         <section className="intro">
           <div className="container">
             <h2 className="intro-title text-center">
@@ -210,7 +211,7 @@ class Home extends Component {
             </div>
           </div>
         </section>
-        {barraCompartilhamento}
+        
         <div className="grid-wrapper" id="candidatos">
           <div className="grid-main">
             <section className="grid-panel panel-master">

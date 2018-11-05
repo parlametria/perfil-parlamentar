@@ -10,15 +10,14 @@
 }
 
 .share-box{
-  width: 30px;
+  width: 50px;
   height: 120px;
-  background-color:  #ddc1e1;
   display: block;
-  float:right; 
+  float:right;
   list-style-type: none;
   padding: 0px 2px;
   margin: 0;
-
+  z-index: 9999;
 }
 
 .share-element{

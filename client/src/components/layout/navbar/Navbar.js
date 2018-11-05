@@ -13,8 +13,6 @@ import TwitterLogin from "react-twitter-auth";
 import FacebookLogin from "react-facebook-login";
 import { GoogleLogin } from "react-google-login";
 
-import config from "../../../config.json";
-
 import "./navbar.css";
 
 class Navbar extends Component {
@@ -109,7 +107,7 @@ class Navbar extends Component {
 
                 <li className="nav-link nav-strong">
                   <FacebookLogin
-                    appId={config.FACEBOOK_APP_ID}
+                    appId="2339282366084079"
                     autoLoad={false}
                     fields="name,email,picture"
                     callback={this.facebookResponse}
