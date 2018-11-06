@@ -1,10 +1,9 @@
 module.exports = (sequelize, type) => {
-  return sequelize.define("Pergunta", {
-    titulo: type.STRING,
-    descricao: type.STRING,
+  return sequelize.define("Tema", {
     id: {
       type: type.INTEGER,
       primaryKey: true
-    }
+    },
+    nome: type.STRING
   });
 };

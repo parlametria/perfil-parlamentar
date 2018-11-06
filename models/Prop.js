@@ -3,8 +3,7 @@ module.exports = (sequelize, type) => {
     proj_lei: type.STRING,
     titulo: type.STRING,
     descricao: type.STRING,
-    tema_id: type.INTEGER,
-    id_votacao: {
+    id: {
       type: type.INTEGER,
       primaryKey: true
     }
