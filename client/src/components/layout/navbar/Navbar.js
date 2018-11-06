@@ -86,7 +86,52 @@ class Navbar extends Component {
               <span className="navbar-text navbar-text-strong">
                 faça login
               </span>
-              <ul className="navbar-nav navbar-inline">
+              {isMobile && (
+                <div>
+                  <span className="navbar-text navbar-text-strong">
+                    compartilhe
+                </span>
+                  <ul className="navbar-nav navbar-inline">
+                    <li className="nav-item">
+                      <a
+                        href={
+                          "https://twitter.com/intent/tweet/?text=" +
+                          textoCompartilhamento
+                        }
+                        data-show-count="false"
+                        className="nav-link nav-strong"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <span className="icon-twitter share-icon" />
+                      </a>
+                    </li>
+                    <li className="nav-item">
+                      <a
+                        href={
+                          "https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fvozativa.org%2F&amp;src=sdkpreparse"
+                        }
+                        data-show-count="false"
+                        className="nav-link nav-strong"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <span className="icon-facebook share-icon" />
+                      </a>
+                    </li>
+                    <li className="nav-item">
+                      <a
+                        href={"whatsapp://send?text=" + textoCompartilhamento}
+                        className="nav-link nav-strong"
+                      >
+                        <span className="icon-zapzap share-icon" />
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              )}
+
+              {/* <ul className="navbar-nav navbar-inline">
 
                 <li className="nav-link nav-strong">
                   <GoogleLogin
@@ -137,7 +182,7 @@ class Navbar extends Component {
                     </a>
                   </TwitterLogin>
                 </li>
-              </ul>
+              </ul> */}
             </div>
           </div>
         </nav>

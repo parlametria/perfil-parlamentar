@@ -7,8 +7,6 @@ import { isMobile } from "react-device-detect";
 import ScrollIntoView from "react-scroll-into-view";
 import ScrollIntoViewOnChange from "../../../scroll/scrollIntoViewOnChange";
 import StickyBox from "react-sticky-box";
-import FloatGroup from 'react-float-button';
-import { Button } from 'react-bootstrap';
 
 // Redux stuff
 import { connect } from "react-redux";
