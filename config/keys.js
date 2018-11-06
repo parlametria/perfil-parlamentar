@@ -1,4 +1,5 @@
 module.exports = {
   mongoURI: process.env.MONGODB_URI,
-  secretOrKey: process.env.SECRET_OR_KEY
+  secretOrKey: process.env.SECRET_OR_KEY,
+  postgresURI: process.env.postgresURI,
 };
