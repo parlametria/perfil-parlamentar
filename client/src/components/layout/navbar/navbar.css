@@ -11,38 +11,28 @@
     width: auto;
   }
 }
+.modal-body{
+  text-align: center;
+}
+
+.login-icon {
+  padding: 0px 4px 0px 0px;
+  font-size: 1.7rem;
+  color: #a963b3;
+}
+
+.login-text{
+  background-color: #ffffff; 
+  color: #41c083;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  border: none;
+  background: none;
+  
+}
 
 .share-icon {
   font-size: 1.7rem;
-}
-
-.login-facebook{
-  background-color: #ffffff; 
-  color: #41c083;
-  padding: 4px 0px 0px 0px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 27px;
-  border: none;
-  background: none;
-}
-.login-google{
-  background-color: #ffffff; 
-  border: none;
-  color: #41c083;
-  padding: 4px 0px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-}
-.login-twitter{
-  background-color: #ffffff; 
-  border: none;
-  color: #41c083;
-  padding: 4px 0px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
 }
 

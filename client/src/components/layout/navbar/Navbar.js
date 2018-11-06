@@ -107,14 +107,14 @@ class Navbar extends Component {
                   </a>
                 </li>
               </ul>
-              <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
-                <ModalHeader toggle={this.toggle}>Modal title</ModalHeader>
+              <Modal isOpen={this.state.modal} toggle={this.toggle} className="modal-login">
+                <ModalHeader toggle={this.toggle}>identifique-se para a vozativa</ModalHeader>
                 <ModalBody>
-                  <ul className="navbar-nav navbar-inline">
-
-                    <li className="nav-link nav-strong">
+                  <ul className="navbar-nav">
+                    <li className="nav-item">
+                      <span className="icon-google1 login-icon" />
                       <GoogleLogin
-                        className="login-google"
+                        className="login-text nav-link"
                         clientId="XXXXXXXXXX"
                         buttonText="Google"
                         onSuccess={this.googleResponse}
@@ -125,28 +125,28 @@ class Navbar extends Component {
                           target="_blank"
                           rel="noopener noreferrer"
                         >
-                          <span className="icon-google1 share-icon" />
+                          entre com sua conta google
                         </a>
                       </GoogleLogin>
                     </li>
 
-                    <li className="nav-link nav-strong">
+                    <li className="nav-item">
+                      <span className="icon-facebook login-icon" />
                       <FacebookLogin
                         appId="2339282366084079"
                         autoLoad={false}
                         fields="name,email,picture"
                         callback={this.facebookResponse}
-                        cssClass="login-facebook"
-                        icon="icon-facebook share-icon"
-                        textButton=""
+                        cssClass="login-text nav-link"
+                        textButton="entre com sua conta facebook"
                         tag="button"
                       />
-
                     </li>
 
-                    <li className="nav-link nav-strong">
+                    <li className="nav-item">
+                      <span className="icon-twitter login-icon" />
                       <TwitterLogin
-                        className="login-twitter"
+                        className="login-text nav-link"
                         loginUrl="http://localhost:4000/api/v1/auth/twitter"
                         onFailure={this.twitterResponse}
                         onSuccess={this.twitterResponse}
@@ -157,7 +157,7 @@ class Navbar extends Component {
                           target="_blank"
                           rel="noopener noreferrer"
                         >
-                          <span className="icon-twitter share-icon" />
+                          entre com sua conta twitter
                         </a>
                       </TwitterLogin>
                     </li>
