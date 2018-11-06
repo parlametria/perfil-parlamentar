@@ -3,7 +3,7 @@ module.exports = (sequelize, type) => {
     email: type.STRING,
     nome: type.STRING,
     id: {
-      type: Sequelize.INTEGER,
+      type: type.INTEGER,
       autoIncrement: true,
       primaryKey: true
     }
