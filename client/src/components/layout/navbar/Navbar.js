@@ -9,6 +9,8 @@ import { isMobile } from "react-device-detect";
 
 import { logoutUser } from "../../../actions/authActions";
 
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+
 import TwitterLogin from "react-twitter-auth";
 import FacebookLogin from "react-facebook-login";
 import { GoogleLogin } from "react-google-login";
@@ -16,6 +18,14 @@ import { GoogleLogin } from "react-google-login";
 import "./navbar.css";
 
 class Navbar extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      modal: false
+    };
+    this.toggle = this.toggle.bind(this);
+  }
+
   twitterResponse(e) {
     console.log("loga com twitter");
     //this.props.twitterResponse();
@@ -42,8 +52,14 @@ class Navbar extends Component {
     this.props.logoutUser();
   }
 
-  // atualizar com nova rota pra login e compartilhamento mobile
+  toggle() {
+    this.setState({
+      modal: !this.state.modal
+    });
+  }
+
   render() {
+    const { open } = this.state;
     let linkCompartilhamento = "www.vozativa.org/";
     let textoCompartilhamento =
       "Nos diga o que você defende e em oito minutos a gente apresenta candidatos alinhados com você. " +
@@ -82,10 +98,74 @@ class Navbar extends Component {
                     Sou candidato
                   </Link>
                 </li>
+                <li className="nav-item">
+                  <a
+                    onClick={this.toggle}
+                    className="nav-link"
+                  >
+                    login
+                  </a>
+                </li>
               </ul>
-              <span className="navbar-text navbar-text-strong">
-                faça login
-              </span>
+              <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
+                <ModalHeader toggle={this.toggle}>Modal title</ModalHeader>
+                <ModalBody>
+                  <ul className="navbar-nav navbar-inline">
+
+                    <li className="nav-link nav-strong">
+                      <GoogleLogin
+                        className="login-google"
+                        clientId="XXXXXXXXXX"
+                        buttonText="Google"
+                        onSuccess={this.googleResponse}
+                        onFailure={this.googleResponse}
+                      >
+                        <a
+                          data-show-count="false"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          <span className="icon-google1 share-icon" />
+                        </a>
+                      </GoogleLogin>
+                    </li>
+
+                    <li className="nav-link nav-strong">
+                      <FacebookLogin
+                        appId="2339282366084079"
+                        autoLoad={false}
+                        fields="name,email,picture"
+                        callback={this.facebookResponse}
+                        cssClass="login-facebook"
+                        icon="icon-facebook share-icon"
+                        textButton=""
+                        tag="button"
+                      />
+
+                    </li>
+
+                    <li className="nav-link nav-strong">
+                      <TwitterLogin
+                        className="login-twitter"
+                        loginUrl="http://localhost:4000/api/v1/auth/twitter"
+                        onFailure={this.twitterResponse}
+                        onSuccess={this.twitterResponse}
+                        requestTokenUrl="http://localhost:4000/api/v1/auth/twitter/reverse"
+                      >
+                        <a
+                          data-show-count="false"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          <span className="icon-twitter share-icon" />
+                        </a>
+                      </TwitterLogin>
+                    </li>
+                  </ul>
+                </ModalBody>
+              </Modal>
+
+
               {isMobile && (
                 <div>
                   <span className="navbar-text navbar-text-strong">
@@ -130,59 +210,6 @@ class Navbar extends Component {
                   </ul>
                 </div>
               )}
-
-              {/* <ul className="navbar-nav navbar-inline">
-
-                <li className="nav-link nav-strong">
-                  <GoogleLogin
-                    className="login-google"
-                    clientId="XXXXXXXXXX"
-                    buttonText="Google"
-                    onSuccess={this.googleResponse}
-                    onFailure={this.googleResponse}
-                  >
-                    <a
-                      data-show-count="false"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      <span className="icon-google1 share-icon" />
-                    </a>
-                  </GoogleLogin>
-                </li>
-
-                <li className="nav-link nav-strong">
-                  <FacebookLogin
-                    appId="2339282366084079"
-                    autoLoad={false}
-                    fields="name,email,picture"
-                    callback={this.facebookResponse}
-                    cssClass="login-facebook"
-                    icon="icon-facebook share-icon"
-                    textButton=""
-                    tag="button"
-                  />
-
-                </li>
-
-                <li className="nav-link nav-strong">
-                  <TwitterLogin
-                    className="login-twitter"
-                    loginUrl="http://localhost:4000/api/v1/auth/twitter"
-                    onFailure={this.twitterResponse}
-                    onSuccess={this.twitterResponse}
-                    requestTokenUrl="http://localhost:4000/api/v1/auth/twitter/reverse"
-                  >
-                    <a
-                      data-show-count="false"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      <span className="icon-twitter share-icon" />
-                    </a>
-                  </TwitterLogin>
-                </li>
-              </ul> */}
             </div>
           </div>
         </nav>

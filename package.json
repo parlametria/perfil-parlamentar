@@ -34,7 +34,13 @@
     "passport": "^0.4.0",
     "passport-facebook": "^2.1.1",
     "react-bootstrap": "^0.32.4",
-    "react-float-button": "^0.1.2"
+    "react-facebook-login": "^4.1.1",
+    "react-float-button": "^0.1.2",
+    "react-google-login": "^3.2.1",
+    "react-responsive-modal": "^3.5.0",
+    "react-sticky-box": "^0.7.5",
+    "react-twitter-auth": "0.0.12",
+    "recompose": "^0.30.0"
   },
   "devDependencies": {
     "nodemon": "^1.18.3"
