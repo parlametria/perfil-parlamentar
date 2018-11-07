@@ -5,6 +5,8 @@ import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 
+import io from "socket.io-client";
+
 import { isMobile } from "react-device-detect";
 
 import {
@@ -22,26 +24,81 @@ import { GoogleLogin } from "react-google-login";
 
 import "./navbar.css";
 
+const API_URL = "http://localhost:5000";
+
+const socket = io(API_URL);
+
 class Navbar extends Component {
   constructor(props) {
     super(props);
 
+    this.state = {
+      disabled: ""
+    };
+
+    this.popup = null;
+
     this.facebookResponse = this.facebookResponse.bind(this);
     this.googleResponse = this.googleResponse.bind(this);
+    this.twitterResponse = this.twitterResponse.bind(this);
     this.onSignOut = this.onSignOut.bind(this);
     this.onFailure = this.onFailure.bind(this);
+  }
+
+  componentDidMount() {
+    socket.on("user", user => {
+      this.popup.close();
+      //this.props.twitterLogin(user);
+    });
+  }
+
+  checkPopup() {
+    const check = setInterval(() => {
+      const { popup } = this;
+      if (!popup || popup.closed || popup.closed === undefined) {
+        clearInterval(check);
+        this.setState({ disabled: "" });
+      }
+    }, 1000);
+  }
+
+  openPopup() {
+    const width = 600,
+      height = 600;
+    const left = window.innerWidth / 2 - width / 2;
+    const top = window.innerHeight / 2 - height / 2;
+
+    const url = `${API_URL}/twitter?socketId=${socket.id}`;
+
+    return window.open(
+      url,
+      "",
+      `toolbar=no, location=no, directories=no, status=no, menubar=no, 
+      scrollbars=no, resizable=no, copyhistory=no, width=${width}, 
+      height=${height}, top=${top}, left=${left}`
+    );
+  }
+
+  startAuth() {
+    if (!this.state.disabled) {
+      this.popup = this.openPopup();
+      this.checkPopup();
+      this.setState({ disabled: "disabled" });
+    }
+  }
+
+  closeCard() {
+    //this.setState({user: {}}) logout
   }
 
   twitterResponse(response) {
     console.log("loga com twitter");
     this.props.twitterLogin(response);
-    //this.props.twitterResponse();
   }
 
   facebookResponse(response) {
     console.log("loga com facebook");
     this.props.facebookLogin(response);
-    //this.props.history.push("/");
   }
 
   googleResponse(response) {
@@ -117,21 +174,14 @@ class Navbar extends Component {
           </li>
 
           <li className="nav-link nav-strong">
-            <TwitterLogin
-              className="login-twitter"
-              loginUrl="http://localhost:5000/api/auth/twitter"
-              onFailure={this.onFailure}
-              onSuccess={this.twitterResponse}
-              requestTokenUrl="http://localhost:5000/api/auth/twitter/reverse"
-            >
-              <a
-                data-show-count="false"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <span className="icon-twitter share-icon" />
-              </a>
-            </TwitterLogin>
+            <div className={"container"}>
+              <div className={"button"}>
+                <button
+                  onClick={this.startAuth.bind(this)}
+                  className={`twitter ${this.state.disabled}`}
+                />
+              </div>
+            </div>
           </li>
         </ul>
       </div>
