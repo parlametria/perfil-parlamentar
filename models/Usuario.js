@@ -14,6 +14,9 @@ const UsuarioSchema = new Schema({
     type: String,
     required: true
   },
+  photo: {
+    type: String
+  },
   facebookProvider: {
     type: {
       id: String,
@@ -45,6 +48,7 @@ UsuarioSchema.statics.upsertFbUser = function(
   profile,
   cb
 ) {
+  console.log(profile);
   const that = this;
   return this.findOne(
     {
@@ -57,6 +61,7 @@ UsuarioSchema.statics.upsertFbUser = function(
           firstName: profile.displayName.split(" ")[0],
           fullName: profile.displayName,
           email: profile.emails[0].value,
+          photo: profile.photos[0].value,
           facebookProvider: {
             id: profile.id,
             token: accessToken
@@ -94,6 +99,7 @@ UsuarioSchema.statics.upsertGoogleUser = function(
           firstName: profile.displayName.split(" ")[0],
           fullName: profile.displayName,
           email: profile.emails[0].value,
+          photo: profile.json.picture,
           googleProvider: {
             id: profile.id,
             token: accessToken
@@ -131,6 +137,7 @@ UsuarioSchema.statics.upsertTwitterUser = function(
           firstName: profile.displayName.split(" ")[0],
           fullName: profile.displayName,
           email: profile.emails[0].value,
+          photo: profile.photos[0].value,
           twitterProvider: {
             id: profile.id,
             token: token,
