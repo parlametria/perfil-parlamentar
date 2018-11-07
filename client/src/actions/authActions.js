@@ -50,13 +50,6 @@ export const googleLogin = response => dispatch => {
     cache: "default"
   };
 
-  console.log(response);
-  console.log(options);
-
-  // axios(options).then(res => {
-  //   console.log(res);
-  // })
-
   fetch("api/auth/google", options).then(r => {
     const token = r.headers.get("x-auth-token");
     r.json().then(user => {
@@ -68,20 +61,14 @@ export const googleLogin = response => dispatch => {
         dispatch(setCurrentUser(user));
       }
     });
-
-    console.log(r);
-    console.log(token);
   });
 };
 
-export const twitterLogin = response => dispatch => {
-  const token = response.headers.get("x-auth-token");
-
-  response.json().then(user => {
-    if (token) {
-      dispatch(setCurrentUser(user));
-    }
-  });
+export const twitterLogin = user => dispatch => {
+  const { token } = user.twitterProvider;
+  localStorage.setItem("accessToken ", token);
+  setAuthToken(token);
+  dispatch(setCurrentUser(user));
 };
 
 // Set logged in user

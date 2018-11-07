@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 
 import { Link } from "react-router-dom";
+import { withRouter } from "react-router";
 
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
@@ -40,7 +41,6 @@ class Navbar extends Component {
 
     this.facebookResponse = this.facebookResponse.bind(this);
     this.googleResponse = this.googleResponse.bind(this);
-    this.twitterResponse = this.twitterResponse.bind(this);
     this.onSignOut = this.onSignOut.bind(this);
     this.onFailure = this.onFailure.bind(this);
   }
@@ -48,7 +48,7 @@ class Navbar extends Component {
   componentDidMount() {
     socket.on("user", user => {
       this.popup.close();
-      //this.props.twitterLogin(user);
+      this.props.twitterLogin(user);
     });
   }
 
@@ -68,7 +68,7 @@ class Navbar extends Component {
     const left = window.innerWidth / 2 - width / 2;
     const top = window.innerHeight / 2 - height / 2;
 
-    const url = `${API_URL}/twitter?socketId=${socket.id}`;
+    const url = `${API_URL}/api/auth/twitter?socketId=${socket.id}`;
 
     return window.open(
       url,
@@ -88,17 +88,13 @@ class Navbar extends Component {
   }
 
   closeCard() {
-    //this.setState({user: {}}) logout
-  }
-
-  twitterResponse(response) {
-    console.log("loga com twitter");
-    this.props.twitterLogin(response);
+    this.props.logoutUser();
   }
 
   facebookResponse(response) {
     console.log("loga com facebook");
     this.props.facebookLogin(response);
+    this.props.history.push("/");
   }
 
   googleResponse(response) {
@@ -302,7 +298,9 @@ const mapStateToProps = state => ({
   auth: state.auth
 });
 
-export default connect(
-  mapStateToProps,
-  { facebookLogin, googleLogin, logoutUser, twitterLogin }
-)(Navbar);
+export default withRouter(
+  connect(
+    mapStateToProps,
+    { facebookLogin, googleLogin, logoutUser, twitterLogin }
+  )(Navbar)
+);
