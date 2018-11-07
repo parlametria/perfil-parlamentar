@@ -1,7 +1,7 @@
 const passport = require("passport");
 const FacebookTokenStrategy = require("passport-facebook-token");
 const GoogleTokenStrategy = require("passport-google-token").Strategy;
-const TwitterTokenStrategy = require("passport-twitter-token");
+const { Strategy: TwitterStrategy } = require("passport-twitter");
 const Usuario = require("../models/Usuario");
 
 const keys = require("./keys");
@@ -45,11 +45,15 @@ module.exports = () => {
     )
   );
 
+  // allows us to save the user into the session
+  passport.serializeUser((user, cb) => cb(null, user));
+  passport.deserializeUser((obj, cb) => cb(null, obj));
   passport.use(
-    new TwitterTokenStrategy(
+    new TwitterStrategy(
       {
         consumerKey: keys.twitterConsumerKey,
         consumerSecret: keys.twitterConsumerSecret,
+        callbackURL: keys.twitterCallbackURL,
         includeEmail: true
       },
       function(token, tokenSecret, profile, done) {

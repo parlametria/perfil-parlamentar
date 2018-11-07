@@ -1,9 +1,13 @@
 const express = require("express");
+const http = require("http");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const path = require("path");
 const logger = require("heroku-logger");
 const cors = require("cors");
+const passport = require("passport");
+const socketio = require("socket.io");
+const session = require("express-session");
 
 const perguntas = require("./routes/api/perguntas");
 const candidatos = require("./routes/api/candidatos");
@@ -14,16 +18,25 @@ const app = express();
 
 // app.use(compression())
 
-var corsOption = {
-  origin: true,
-  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+const corsOption = {
+  origin: "http://localhost:3000",
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
   credentials: true,
-  exposedHeaders: ['x-auth-token']
+  exposedHeaders: ["x-auth-token"]
 };
 app.use(cors(corsOption));
 
+app.use(
+  session({
+    secret: "KeyboardKittens",
+    resave: true,
+    saveUninitialized: true
+  })
+);
+
 // Body parser middleware
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(passport.initialize());
 app.use(bodyParser.json());
 
 // DB Config
@@ -53,4 +66,8 @@ app.get("*", (req, res) => {
 
 const port = process.env.PORT || 5000;
 
-app.listen(port, () => logger.info(`Servidor rodando na porta ${port}`));
+const server = http.createServer(app);
+
+server.listen(port, () => logger.info(`Servidor rodando na porta ${port}`));
+
+exports.io = socketio(server);

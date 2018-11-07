@@ -10,9 +10,9 @@ module.exports = {
 
   googleAppID: process.env.GOOGLE_APP_ID,
   googleAppSecret: process.env.GOOGLE_APP_SECRET,
-  googleCallbackURL: "http://localhost:5000/auth/google/callback",
+  googleCallbackURL: "http://localhost:5000/api//auth/google/callback",
 
   twitterConsumerKey: process.env.TWITTER_CONSUMER_KEY,
   twitterConsumerSecret: process.env.TWITTER_CONSUMER_SECRET,
-  twitterCallbackURL: "http://localhost:5000/auth/twitter/callback"
+  twitterCallbackURL: "http://localhost:5000/api/auth/twitter/callback"
 };
