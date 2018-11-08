@@ -99,7 +99,6 @@ UsuarioSchema.statics.upsertGoogleUser = function(
           firstName: profile.displayName.split(" ")[0],
           fullName: profile.displayName,
           email: profile.emails[0].value,
-          photo: profile.json.picture,
           googleProvider: {
             id: profile.id,
             token: accessToken
