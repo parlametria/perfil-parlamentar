@@ -1,5 +1,7 @@
 module.exports = (sequelize, type) => {
   return sequelize.define("Votacao", {
-    resposta: type.INTEGER
+    user_id: type.INTEGER,
+    resposta: type.INTEGER,
+    proposicao_id: type.STRING
   });
 };

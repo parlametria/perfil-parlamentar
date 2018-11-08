@@ -28,13 +28,13 @@ db2.sequelize.sync().then(function() {
 });
 
 // Connect to MongoDB
-// mongoose
-//   .connect(
-//     db,
-//     { useNewUrlParser: true }
-//   )
-//   .then(() => logger.info("Banco de dados conectado!"))
-//   .catch(err => logger.error(err));
+mongoose
+  .connect(
+    db,
+    { useNewUrlParser: true }
+  )
+  .then(() => logger.info("Banco de dados conectado!"))
+  .catch(err => logger.error(err));
 
 // Usar as rotas
 app.use("/api/perguntas", perguntas);

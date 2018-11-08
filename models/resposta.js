@@ -1,5 +1,7 @@
 module.exports = (sequelize, type) => {
   return sequelize.define("Resposta", {
-    resposta: type.INTEGER
+    cpf: type.STRING,
+    resposta: type.INTEGER,
+    pergunta_id: type.INTEGER
   });
 };
