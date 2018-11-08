@@ -2,6 +2,7 @@ import { SET_CURRENT_USER } from "./types";
 import axios from "axios";
 
 import setAuthToken from "../utils/setAuthToken";
+import jwt_decode from "jwt-decode";
 
 // Login user - Get token
 export const facebookLogin = response => dispatch => {
@@ -27,7 +28,7 @@ export const facebookLogin = response => dispatch => {
     r.json().then(user => {
       if (token) {
         // Set token to localStorage
-        localStorage.setItem("accessToken ", token);
+        localStorage.setItem("accessToken", token);
         setAuthToken(token);
 
         dispatch(setCurrentUser(user));
@@ -55,7 +56,7 @@ export const googleLogin = response => dispatch => {
     r.json().then(user => {
       if (token) {
         // Set token to localStorage
-        localStorage.setItem("accessToken ", token);
+        localStorage.setItem("accessToken", token);
         setAuthToken(token);
 
         dispatch(setCurrentUser(user));
@@ -64,11 +65,14 @@ export const googleLogin = response => dispatch => {
   });
 };
 
-export const twitterLogin = user => dispatch => {
-  const { token } = user.twitterProvider;
-  localStorage.setItem("accessToken ", token);
-  setAuthToken(token);
-  dispatch(setCurrentUser(user));
+export const twitterLogin = jwtToken => dispatch => {
+  const decoded = jwt_decode(jwtToken);
+
+  localStorage.setItem("accessToken", jwtToken);
+
+  setAuthToken(jwtToken);
+
+  dispatch(setCurrentUser(decoded));
 };
 
 // Set logged in user
