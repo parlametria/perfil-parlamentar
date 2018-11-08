@@ -2,7 +2,11 @@ const express = require("express");
 const router = express.Router();
 const mongoose = require("mongoose");
 const request = require("request");
-const { generateToken, sendToken } = require("../../utils/token.utils");
+const {
+  generateToken,
+  sendToken,
+  createToken
+} = require("../../utils/token.utils");
 
 const io = require("../../server");
 
@@ -30,7 +34,9 @@ router.post(
       return res.send(401, "User Not Authenticated");
     }
     req.auth = {
-      id: req.user.id
+      id: req.user.id,
+      firstName: req.user.firstName,
+      photo: req.user.photo
     };
 
     next();
@@ -50,7 +56,9 @@ router.post(
       return res.send(401, "User Not Authenticated");
     }
     req.auth = {
-      id: req.user.id
+      id: req.user.id,
+      firstName: req.user.firstName,
+      photo: req.user.photo
     };
 
     next();
@@ -61,8 +69,30 @@ router.post(
 
 router.get("/twitter", addSocketIdToSession, twitterAuth);
 
+router.get(
+  "/test",
+  passport.authenticate(["facebook-token", "google-token", "twitter"], {
+    session: false
+  }),
+  (req, res) => {
+    res.json({ msg: "Tudo certo" });
+  }
+);
+
+// router.get("/test", twitterAuth, (req, res) => {
+//   res.json({ msg: "Tudo certo" });
+// });
+
 router.get("/twitter/callback", twitterAuth, (req, res) => {
-  io.io.in(req.session.socketId).emit("user", req.user);
+  const auth = {
+    id: req.user.id,
+    firstName: req.user.firstName,
+    photo: req.user.photo
+  };
+
+  const jwtObject = createToken(auth);
+
+  io.io.in(req.session.socketId).emit("user", jwtObject);
   res.end();
 });
 
