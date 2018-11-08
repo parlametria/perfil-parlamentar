@@ -48,7 +48,6 @@ router.get("/:cpf", (req, res) => {
     .catch(err => res.status(400).json({ err }));
 });
 
-
 /**
  * Pega as votações de um deputado dado seu cpf.
  * @name get/api/:cpf/votacoes
@@ -58,6 +57,18 @@ router.get("/:cpf", (req, res) => {
  */
 router.get("/:cpf/votacoes", (req, res) => {
   Votacao.find({ cpf: req.params.cpf })
+    .then(votacoes => res.json(votacoes))
+    .catch(err => res.status(400).json({ err }));
+});
+
+/**
+ * Pega as votações de um deputado dado seu cpf.
+ * @name get/api/candidatos/votacoes
+ * @function
+ * @memberof module:routes/candidatos
+ */
+router.get("/votacoes", (req, res) => {
+  Votacao.find()
     .then(votacoes => res.json(votacoes))
     .catch(err => res.status(400).json({ err }));
 });
