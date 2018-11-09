@@ -3,8 +3,22 @@ const router = express.Router();
 const { generateToken, sendToken } = require("../../utils/token.utils");
 
 const passport = require("passport");
+const expressJwt = require("express-jwt");
+
+const keys = require("../../config/keys");
 
 require("../../config/passport")();
+
+const authenticate = expressJwt({
+  secret: keys.secretOrKey,
+  requestProperty: "auth",
+  getToken: function(req) {
+    if (req.headers["authorization"]) {
+      return req.headers["authorization"];
+    }
+    return null;
+  }
+});
 
 // @route   POST api/auth/facebook
 // @desc    Login com facebook
@@ -50,14 +64,8 @@ router.post(
   sendToken
 );
 
-router.get(
-  "/test",
-  passport.authenticate(["facebook-token", "google-token"], {
-    session: false
-  }),
-  (req, res) => {
-    res.json({ msg: "Tudo certo" });
-  }
-);
+router.get("/test", authenticate, (req, res) => {
+  res.json({ msg: "Tudo certo" });
+});
 
 module.exports = router;

@@ -9,7 +9,8 @@ import PropTypes from "prop-types";
 import {
   facebookLogin,
   googleLogin,
-  logoutUser
+  logoutUser,
+  testaAutorizacao
 } from "../../../actions/authActions";
 
 import FacebookLogin from "react-facebook-login";
@@ -147,7 +148,9 @@ class Navbar extends Component {
               </ul>
               {!isAuthenticated && barraNaoLogado}
               {isAuthenticated && barraLogado}
-
+              <button onClick={this.props.testaAutorizacao.bind(this)}>
+                Testa
+              </button>
               {/* <span className="navbar-text navbar-text-strong">
                 compartilhe
               </span>
@@ -217,7 +220,8 @@ class Navbar extends Component {
 Navbar.propTypes = {
   facebookLogin: PropTypes.func.isRequired,
   logoutUser: PropTypes.func.isRequired,
-  googleLogin: PropTypes.func.isRequired
+  googleLogin: PropTypes.func.isRequired,
+  testaAutorizacao: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -227,6 +231,6 @@ const mapStateToProps = state => ({
 export default withRouter(
   connect(
     mapStateToProps,
-    { facebookLogin, googleLogin, logoutUser }
+    { facebookLogin, googleLogin, logoutUser, testaAutorizacao }
   )(Navbar)
 );

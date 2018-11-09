@@ -24,7 +24,7 @@ export const facebookLogin = response => dispatch => {
   // })
 
   fetch("api/auth/facebook", options).then(r => {
-    const token = r.headers.get("x-auth-token");
+    const token = r.headers.get("authorization");
     r.json().then(user => {
       if (token) {
         // Set token to localStorage
@@ -52,7 +52,7 @@ export const googleLogin = response => dispatch => {
   };
 
   fetch("api/auth/google", options).then(r => {
-    const token = r.headers.get("x-auth-token");
+    const token = r.headers.get("authorization");
     r.json().then(user => {
       if (token) {
         // Set token to localStorage
@@ -73,6 +73,12 @@ export const twitterLogin = jwtToken => dispatch => {
   setAuthToken(jwtToken);
 
   dispatch(setCurrentUser(decoded));
+};
+
+export const testaAutorizacao = () => dispatch => {
+  axios.get("api/auth/test").then(resp => {
+    console.log(resp);
+  });
 };
 
 // Set logged in user

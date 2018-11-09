@@ -6,7 +6,6 @@ const path = require("path");
 const logger = require("heroku-logger");
 const cors = require("cors");
 const passport = require("passport");
-const socketio = require("socket.io");
 
 const perguntas = require("./routes/api/perguntas");
 const candidatos = require("./routes/api/candidatos");
@@ -19,7 +18,7 @@ const corsOption = {
   origin: "http://localhost:3000",
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
   credentials: true,
-  exposedHeaders: ["x-auth-token"]
+  exposedHeaders: ["authorization"]
 };
 app.use(cors(corsOption));
 
