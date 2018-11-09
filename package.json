@@ -9,7 +9,8 @@
     "server": "nodemon server.js",
     "client": "npm start --prefix client",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
-    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client",
+    "docs": "documentation build 'server.js' -f html -o docs"
   },
   "engines": {
     "node": "8.11.4",
@@ -28,19 +29,16 @@
   "dependencies": {
     "body-parser": "^1.18.3",
     "concurrently": "^4.0.1",
+    "cors": "^2.8.4",
     "express": "^4.16.3",
+    "express-jwt": "^5.3.1",
     "heroku-logger": "^0.3.1",
+    "jsonwebtoken": "^8.3.0",
     "mongoose": "^5.2.10",
     "passport": "^0.4.0",
-    "passport-facebook": "^2.1.1",
-    "react-bootstrap": "^0.32.4",
-    "react-facebook-login": "^4.1.1",
-    "react-float-button": "^0.1.2",
-    "react-google-login": "^3.2.1",
-    "react-responsive-modal": "^3.5.0",
-    "react-sticky-box": "^0.7.5",
-    "react-twitter-auth": "0.0.12",
-    "recompose": "^0.30.0"
+    "passport-facebook-token": "^3.3.0",
+    "passport-google-token": "^0.1.2",
+    "request": "^2.88.0"
   },
   "devDependencies": {
     "nodemon": "^1.18.3"

@@ -96,7 +96,7 @@ class Home extends Component {
 
         const filtroEstado = {
           nome: "",
-          partido: "TODOS",
+          partido: "Partidos",
           estado: estado
         };
 
@@ -221,7 +221,7 @@ class Home extends Component {
                             className="btn btn-secondary"
                             onClick={this.vamosComecar}
                           >
-                            Vamos Começar!
+                            Votar
                           </button>
                         </ScrollIntoView>
                         <div id="scroll" />

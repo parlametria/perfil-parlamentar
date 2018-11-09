@@ -1,17 +1,22 @@
 import React, { Component } from "react";
 
 import { Link } from "react-router-dom";
+import { withRouter } from "react-router";
+
+import { isMobile } from "react-device-detect";
 
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 
-import { isMobile } from "react-device-detect";
+import {
+  facebookLogin,
+  googleLogin,
+  logoutUser,
+  testaAutorizacao
+} from "../../../actions/authActions";
 
-import { logoutUser } from "../../../actions/authActions";
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
-
-import TwitterLogin from "react-twitter-auth";
 import FacebookLogin from "react-facebook-login";
 import { GoogleLogin } from "react-google-login";
 
@@ -23,27 +28,29 @@ class Navbar extends Component {
     this.state = {
       modal: false
     };
-    this.toggle = this.toggle.bind(this);
-  }
 
-  twitterResponse(e) {
-    console.log("loga com twitter");
-    //this.props.twitterResponse();
+    this.toggle = this.toggle.bind(this);
+    this.facebookResponse = this.facebookResponse.bind(this);
+    this.googleResponse = this.googleResponse.bind(this);
+    this.onSignOut = this.onSignOut.bind(this);
+    this.onFailure = this.onFailure.bind(this);
   }
 
   facebookResponse(response) {
     console.log("loga com facebook");
-    console.log(response);
-    //this.props.facebookResponse();
+    this.props.facebookLogin(response);
+    this.props.history.push("/");
+    this.setState({ modal: false });
   }
 
-  googleResponse(e) {
+  googleResponse(response) {
     console.log("loga com google");
-    //this.props.googleResponse();
+    this.props.googleLogin(response);
+    this.setState({ modal: false });
   }
 
   onFailure = error => {
-    alert(error);
+    console.log(error);
   };
 
   onSignOut(e) {
@@ -60,10 +67,13 @@ class Navbar extends Component {
 
   render() {
     const { open } = this.state;
+    const { isAuthenticated, user } = this.props.auth;
+
     let linkCompartilhamento = "www.vozativa.org/";
     let textoCompartilhamento =
       "Nos diga o que você defende e em oito minutos a gente apresenta candidatos alinhados com você. " +
       linkCompartilhamento;
+
     return (
       <div>
         <nav className="navbar navbar-expand-lg navbar-light">
@@ -98,24 +108,36 @@ class Navbar extends Component {
                     Sou candidato
                   </Link>
                 </li>
-                <li className="nav-item">
-                  <a
-                    onClick={this.toggle}
-                    className="nav-link"
-                  >
-                    login
-                  </a>
-                </li>
+                {!isAuthenticated && (
+                  <li className="nav-item">
+                    <a onClick={this.toggle} className="nav-link">
+                      login
+                    </a>
+                  </li>
+                )}
+                {isAuthenticated && (
+                  <li className="nav-item">
+                    <a onClick={this.onSignOut} className="nav-link">
+                      logout
+                    </a>
+                  </li>
+                )}
               </ul>
-              <Modal isOpen={this.state.modal} toggle={this.toggle} className="modal-login">
-                <ModalHeader toggle={this.toggle}>identifique-se para a vozativa</ModalHeader>
+              <Modal
+                isOpen={this.state.modal}
+                toggle={this.toggle}
+                className="modal-login"
+              >
+                <ModalHeader toggle={this.toggle}>
+                  identifique-se para a vozativa
+                </ModalHeader>
                 <ModalBody>
                   <ul className="navbar-nav">
                     <li className="nav-item">
                       <span className="icon-google1 login-icon" />
                       <GoogleLogin
                         className="login-text nav-link"
-                        clientId="XXXXXXXXXX"
+                        clientId="791030988243-msi1r67ltvd5v1fjtajj3un1f0c0d7ds.apps.googleusercontent.com"
                         buttonText="Google"
                         onSuccess={this.googleResponse}
                         onFailure={this.googleResponse}
@@ -142,35 +164,15 @@ class Navbar extends Component {
                         tag="button"
                       />
                     </li>
-
-                    <li className="nav-item">
-                      <span className="icon-twitter login-icon" />
-                      <TwitterLogin
-                        className="login-text nav-link"
-                        loginUrl="http://localhost:4000/api/v1/auth/twitter"
-                        onFailure={this.twitterResponse}
-                        onSuccess={this.twitterResponse}
-                        requestTokenUrl="http://localhost:4000/api/v1/auth/twitter/reverse"
-                      >
-                        <a
-                          data-show-count="false"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                        >
-                          entre com sua conta twitter
-                        </a>
-                      </TwitterLogin>
-                    </li>
                   </ul>
                 </ModalBody>
               </Modal>
-
 
               {isMobile && (
                 <div>
                   <span className="navbar-text navbar-text-strong">
                     compartilhe
-                </span>
+                  </span>
                   <ul className="navbar-nav navbar-inline">
                     <li className="nav-item">
                       <a
@@ -219,14 +221,19 @@ class Navbar extends Component {
 }
 
 Navbar.propTypes = {
-  logoutUser: PropTypes.func.isRequired
+  facebookLogin: PropTypes.func.isRequired,
+  logoutUser: PropTypes.func.isRequired,
+  googleLogin: PropTypes.func.isRequired,
+  testaAutorizacao: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
   auth: state.auth
 });
 
-export default connect(
-  mapStateToProps,
-  { logoutUser }
-)(Navbar);
+export default withRouter(
+  connect(
+    mapStateToProps,
+    { facebookLogin, googleLogin, logoutUser, testaAutorizacao }
+  )(Navbar)
+);
