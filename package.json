@@ -30,7 +30,7 @@
     "concurrently": "^4.0.1",
     "cors": "^2.8.4",
     "express": "^4.16.3",
-    "express-session": "^1.15.6",
+    "express-jwt": "^5.3.1",
     "heroku-logger": "^0.3.1",
     "jsonwebtoken": "^8.3.0",
     "mongoose": "^5.2.10",
