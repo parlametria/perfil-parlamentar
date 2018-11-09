@@ -8,6 +8,8 @@ import { isMobile } from "react-device-detect";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 
+import { salvaScoreUsuario, salvaRespostasUsuario } from "../../../actions/usuarioActions";
+
 import {
   facebookLogin,
   googleLogin,
@@ -68,6 +70,7 @@ class Navbar extends Component {
   render() {
     const { open } = this.state;
     const { isAuthenticated, user } = this.props.auth;
+    const { arrayRespostasUsuario } = this.props.usuario;
 
     let linkCompartilhamento = "www.vozativa.org/";
     let textoCompartilhamento =
@@ -122,6 +125,11 @@ class Navbar extends Component {
                     </a>
                   </li>
                 )}
+                <li className="nav-item">
+                  <a onClick={salvaRespostasUsuario} className="nav-link">
+                    minhas respostas
+                    </a>
+                </li>
               </ul>
               <Modal
                 isOpen={this.state.modal}
@@ -228,12 +236,14 @@ Navbar.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  auth: state.auth
+  auth: state.auth,
+  usuario: state.usuarioReducer
+
 });
 
 export default withRouter(
   connect(
     mapStateToProps,
-    { facebookLogin, googleLogin, logoutUser, testaAutorizacao }
+    { facebookLogin, googleLogin, logoutUser, testaAutorizacao, salvaScoreUsuario, salvaRespostasUsuario }
   )(Navbar)
 );
