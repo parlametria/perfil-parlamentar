@@ -140,7 +140,7 @@ class Navbar extends Component {
                         clientId="791030988243-msi1r67ltvd5v1fjtajj3un1f0c0d7ds.apps.googleusercontent.com"
                         buttonText="Google"
                         onSuccess={this.googleResponse}
-                        onFailure={this.googleResponse}
+                        onFailure={this.onFailure}
                       >
                         <a
                           data-show-count="false"
