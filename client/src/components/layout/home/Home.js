@@ -6,6 +6,7 @@ import CandidatosContainer from "../../candidatos/CandidatosContainer";
 import { isMobile } from "react-device-detect";
 import ScrollIntoView from "react-scroll-into-view";
 import ScrollIntoViewOnChange from "../../../scroll/scrollIntoViewOnChange";
+import StickyBox from "react-sticky-box";
 
 // Redux stuff
 import { connect } from "react-redux";
@@ -42,7 +43,6 @@ import "./home.css";
 
 // Import função de estado
 import { estados } from "../../../constantes/filtrosSeletoresCandidatos";
-import usuarioReducer from "../../../reducers/usuarioReducer";
 
 class Home extends Component {
   constructor(props) {
@@ -116,8 +116,60 @@ class Home extends Component {
     const { filtro, isVerTodosEleitos } = this.props.candidatos;
     const { isVamosComecar } = this.props.perguntas;
     const { quantidadeVotos } = this.props.usuario;
+
+    let linkCompartilhamento = "www.vozativa.org/";
+    let textoCompartilhamento =
+      "Nos diga o que você defende e em oito minutos a gente apresenta candidatos alinhados com você. " +
+      linkCompartilhamento;
+
+    let barraCompartilhamento = (
+      <StickyBox offsetTop={20} offsetBottom={20} offsetRight={20}>
+        <ul className="share-box">
+          <li className="share-element">
+            <a
+              href={
+                "https://twitter.com/intent/tweet/?text=" +
+                textoCompartilhamento
+              }
+              data-show-count="false"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="icon-twitter share-icon btn btn-link btn-icon"
+            />
+          </li>
+          <li className="share-element">
+            <a
+              href={
+                "https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fvozativa.org%2F&amp;src=sdkpreparse"
+              }
+              data-show-count="false"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="icon-facebook share-icon btn btn-link btn-icon"
+            />
+
+          </li>
+          <li className="share-element">
+            <a
+              href={
+                "https://web.whatsapp.com/send?text=" +
+                textoCompartilhamento
+              }
+              data-show-count="false"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="icon-zapzap share-icon btn btn-link btn-icon"
+            />
+
+          </li>
+        </ul>
+      </StickyBox>
+    )
+
+
     return (
       <div>
+        {!isMobile && barraCompartilhamento}
         <section className="intro">
           <div className="container">
             <h2 className="intro-title text-center">
@@ -139,15 +191,15 @@ class Home extends Component {
                       </select>
                     </ScrollIntoViewOnChange>
                   ) : (
-                    <select
-                      className="form-control"
-                      onChange={this.selecionaEstado}
-                      value={filtro.estado}
-                    >
-                      <option defaultValue="--">Selecione um Estado</option>
-                      {estados()}
-                    </select>
-                  )}
+                      <select
+                        className="form-control"
+                        onChange={this.selecionaEstado}
+                        value={filtro.estado}
+                      >
+                        <option defaultValue="--">Selecione um Estado</option>
+                        {estados()}
+                      </select>
+                    )}
                 </div>
               </form>
             </div>
@@ -199,6 +251,7 @@ class Home extends Component {
             </section>
           </div>
         </div>
+
       </div>
     );
   }

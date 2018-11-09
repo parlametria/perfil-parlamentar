@@ -3,6 +3,8 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { withRouter } from "react-router";
 
+import { isMobile } from "react-device-detect";
+
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 
@@ -13,17 +15,21 @@ import {
   testaAutorizacao
 } from "../../../actions/authActions";
 
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
+
 import FacebookLogin from "react-facebook-login";
 import { GoogleLogin } from "react-google-login";
-
-//import config from "../../../config.json";
 
 import "./navbar.css";
 
 class Navbar extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      modal: false
+    };
 
+    this.toggle = this.toggle.bind(this);
     this.facebookResponse = this.facebookResponse.bind(this);
     this.googleResponse = this.googleResponse.bind(this);
     this.onSignOut = this.onSignOut.bind(this);
@@ -34,11 +40,13 @@ class Navbar extends Component {
     console.log("loga com facebook");
     this.props.facebookLogin(response);
     this.props.history.push("/");
+    this.setState({ modal: false });
   }
 
   googleResponse(response) {
     console.log("loga com google");
     this.props.googleLogin(response);
+    this.setState({ modal: false });
   }
 
   onFailure = error => {
@@ -51,65 +59,20 @@ class Navbar extends Component {
     this.props.logoutUser();
   }
 
+  toggle() {
+    this.setState({
+      modal: !this.state.modal
+    });
+  }
+
   render() {
+    const { open } = this.state;
     const { isAuthenticated, user } = this.props.auth;
 
     let linkCompartilhamento = "www.vozativa.org/";
     let textoCompartilhamento =
       "Nos diga o que você defende e em oito minutos a gente apresenta candidatos alinhados com você. " +
       linkCompartilhamento;
-
-    const barraLogado = (
-      <div>
-        <div>Bem vindo, {user.firstName}!</div>
-        <span
-          className="navbar-text navbar-text-strong"
-          onClick={this.onSignOut}
-        >
-          logout
-        </span>
-      </div>
-    );
-
-    const barraNaoLogado = (
-      <div>
-        <span className="navbar-text navbar-text-strong">faça login</span>
-        <ul className="navbar-nav navbar-inline">
-          <li className="nav-link nav-strong">
-            <GoogleLogin
-              className="login-google"
-              clientId={
-                "791030988243-msi1r67ltvd5v1fjtajj3un1f0c0d7ds.apps.googleusercontent.com"
-              }
-              buttonText="Google"
-              onSuccess={this.googleResponse}
-              onFailure={this.onFailure}
-            >
-              <a
-                data-show-count="false"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <span className="icon-google1 share-icon" />
-              </a>
-            </GoogleLogin>
-          </li>
-
-          <li className="nav-link nav-strong">
-            <FacebookLogin
-              appId={2339282366084079}
-              autoLoad={false}
-              fields="name,email,picture"
-              callback={this.facebookResponse}
-              cssClass="login-facebook"
-              icon="icon-facebook share-icon"
-              textButton=""
-              tag="button"
-            />
-          </li>
-        </ul>
-      </div>
-    );
 
     return (
       <div>
@@ -145,70 +108,110 @@ class Navbar extends Component {
                     Sou candidato
                   </Link>
                 </li>
+                {!isAuthenticated && (
+                  <li className="nav-item">
+                    <a onClick={this.toggle} className="nav-link">
+                      login
+                    </a>
+                  </li>
+                )}
+                {isAuthenticated && (
+                  <li className="nav-item">
+                    <a onClick={this.onSignOut} className="nav-link">
+                      logout
+                    </a>
+                  </li>
+                )}
               </ul>
-              {!isAuthenticated && barraNaoLogado}
-              {isAuthenticated && barraLogado}
-              <button onClick={this.props.testaAutorizacao.bind(this)}>
-                Testa
-              </button>
-              {/* <span className="navbar-text navbar-text-strong">
-                compartilhe
-              </span>
-              <ul className="navbar-nav navbar-inline">
-                <li className="nav-item">
-                  <a
-                    href={
-                      "https://twitter.com/intent/tweet/?text=" +
-                      textoCompartilhamento
-                    }
-                    data-show-count="false"
-                    className="nav-link nav-strong"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <span className="icon-twitter share-icon" />
-                  </a>
-                </li>
-                <li className="nav-item">
-                  <a
-                    href={
-                      "https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fvozativa.org%2F&amp;src=sdkpreparse"
-                    }
-                    data-show-count="false"
-                    className="nav-link nav-strong"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <span className="icon-facebook share-icon" />
-                  </a>
-                </li>
-                {!isMobile && (
-                  <li className="nav-item">
-                    <a
-                      href={
-                        "https://web.whatsapp.com/send?text=" +
-                        textoCompartilhamento
-                      }
-                      data-show-count="false"
-                      className="nav-link nav-strong"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      <span className="icon-zapzap share-icon" />
-                    </a>
-                  </li>
-                )}
-                {isMobile && (
-                  <li className="nav-item">
-                    <a
-                      href={"whatsapp://send?text=" + textoCompartilhamento}
-                      className="nav-link"
-                    >
-                      <span className="icon-zapzap share-icon" />
-                    </a>
-                  </li>
-                )}
-              </ul> */}
+              <Modal
+                isOpen={this.state.modal}
+                toggle={this.toggle}
+                className="modal-login"
+              >
+                <ModalHeader toggle={this.toggle}>
+                  identifique-se para a vozativa
+                </ModalHeader>
+                <ModalBody>
+                  <ul className="navbar-nav">
+                    <li className="nav-item">
+                      <span className="icon-google1 login-icon" />
+                      <GoogleLogin
+                        className="login-text nav-link"
+                        clientId="791030988243-msi1r67ltvd5v1fjtajj3un1f0c0d7ds.apps.googleusercontent.com"
+                        buttonText="Google"
+                        onSuccess={this.googleResponse}
+                        onFailure={this.googleResponse}
+                      >
+                        <a
+                          data-show-count="false"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          entre com sua conta google
+                        </a>
+                      </GoogleLogin>
+                    </li>
+
+                    <li className="nav-item">
+                      <span className="icon-facebook login-icon" />
+                      <FacebookLogin
+                        appId="2339282366084079"
+                        autoLoad={false}
+                        fields="name,email,picture"
+                        callback={this.facebookResponse}
+                        cssClass="login-text nav-link"
+                        textButton="entre com sua conta facebook"
+                        tag="button"
+                      />
+                    </li>
+                  </ul>
+                </ModalBody>
+              </Modal>
+
+              {isMobile && (
+                <div>
+                  <span className="navbar-text navbar-text-strong">
+                    compartilhe
+                  </span>
+                  <ul className="navbar-nav navbar-inline">
+                    <li className="nav-item">
+                      <a
+                        href={
+                          "https://twitter.com/intent/tweet/?text=" +
+                          textoCompartilhamento
+                        }
+                        data-show-count="false"
+                        className="nav-link nav-strong"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <span className="icon-twitter share-icon" />
+                      </a>
+                    </li>
+                    <li className="nav-item">
+                      <a
+                        href={
+                          "https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fvozativa.org%2F&amp;src=sdkpreparse"
+                        }
+                        data-show-count="false"
+                        className="nav-link nav-strong"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <span className="icon-facebook share-icon" />
+                      </a>
+                    </li>
+                    <li className="nav-item">
+                      <a
+                        href={"whatsapp://send?text=" + textoCompartilhamento}
+                        className="nav-link nav-strong"
+                      >
+                        <span className="icon-zapzap share-icon" />
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              )}
             </div>
           </div>
         </nav>
