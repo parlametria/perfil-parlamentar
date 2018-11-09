@@ -6,18 +6,12 @@ import { withRouter } from "react-router";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 
-import io from "socket.io-client";
-
-import { isMobile } from "react-device-detect";
-
 import {
   facebookLogin,
   googleLogin,
-  logoutUser,
-  twitterLogin
+  logoutUser
 } from "../../../actions/authActions";
 
-import TwitterLogin from "react-twitter-auth";
 import FacebookLogin from "react-facebook-login";
 import { GoogleLogin } from "react-google-login";
 
@@ -25,70 +19,14 @@ import { GoogleLogin } from "react-google-login";
 
 import "./navbar.css";
 
-const API_URL = "http://localhost:5000";
-
-const socket = io(API_URL);
-
 class Navbar extends Component {
   constructor(props) {
     super(props);
-
-    this.state = {
-      disabled: ""
-    };
-
-    this.popup = null;
 
     this.facebookResponse = this.facebookResponse.bind(this);
     this.googleResponse = this.googleResponse.bind(this);
     this.onSignOut = this.onSignOut.bind(this);
     this.onFailure = this.onFailure.bind(this);
-  }
-
-  componentDidMount() {
-    socket.on("user", user => {
-      this.popup.close();
-      this.props.twitterLogin(user);
-    });
-  }
-
-  checkPopup() {
-    const check = setInterval(() => {
-      const { popup } = this;
-      if (!popup || popup.closed || popup.closed === undefined) {
-        clearInterval(check);
-        this.setState({ disabled: "" });
-      }
-    }, 1000);
-  }
-
-  openPopup() {
-    const width = 600,
-      height = 600;
-    const left = window.innerWidth / 2 - width / 2;
-    const top = window.innerHeight / 2 - height / 2;
-
-    const url = `${API_URL}/api/auth/twitter?socketId=${socket.id}`;
-
-    return window.open(
-      url,
-      "",
-      `toolbar=no, location=no, directories=no, status=no, menubar=no, 
-      scrollbars=no, resizable=no, copyhistory=no, width=${width}, 
-      height=${height}, top=${top}, left=${left}`
-    );
-  }
-
-  startAuth() {
-    if (!this.state.disabled) {
-      this.popup = this.openPopup();
-      this.checkPopup();
-      this.setState({ disabled: "disabled" });
-    }
-  }
-
-  closeCard() {
-    this.props.logoutUser();
   }
 
   facebookResponse(response) {
@@ -167,17 +105,6 @@ class Navbar extends Component {
               textButton=""
               tag="button"
             />
-          </li>
-
-          <li className="nav-link nav-strong">
-            <div className={"container"}>
-              <div className={"button"}>
-                <button
-                  onClick={this.startAuth.bind(this)}
-                  className={`twitter ${this.state.disabled}`}
-                />
-              </div>
-            </div>
           </li>
         </ul>
       </div>
@@ -290,8 +217,7 @@ class Navbar extends Component {
 Navbar.propTypes = {
   facebookLogin: PropTypes.func.isRequired,
   logoutUser: PropTypes.func.isRequired,
-  googleLogin: PropTypes.func.isRequired,
-  twitterLogin: PropTypes.func.isRequired
+  googleLogin: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -301,6 +227,6 @@ const mapStateToProps = state => ({
 export default withRouter(
   connect(
     mapStateToProps,
-    { facebookLogin, googleLogin, logoutUser, twitterLogin }
+    { facebookLogin, googleLogin, logoutUser }
   )(Navbar)
 );
