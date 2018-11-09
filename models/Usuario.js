@@ -17,6 +17,9 @@ const UsuarioSchema = new Schema({
   photo: {
     type: String
   },
+  respostas: {
+    type: Map
+  },
   facebookProvider: {
     type: {
       id: String,
@@ -42,7 +45,7 @@ const UsuarioSchema = new Schema({
 
 UsuarioSchema.set("toJSON", { getters: true, virtuals: true });
 
-UsuarioSchema.statics.upsertFbUser = function(
+UsuarioSchema.statics.upsertFbUser = function (
   accessToken,
   refreshToken,
   profile,
@@ -54,7 +57,7 @@ UsuarioSchema.statics.upsertFbUser = function(
     {
       "facebookProvider.id": profile.id
     },
-    function(err, user) {
+    function (err, user) {
       // no user was found, lets create a new one
       if (!user) {
         const newUser = new that({
@@ -68,7 +71,7 @@ UsuarioSchema.statics.upsertFbUser = function(
           }
         });
 
-        newUser.save(function(error, savedUser) {
+        newUser.save(function (error, savedUser) {
           if (error) {
             console.log(error);
           }
@@ -81,7 +84,7 @@ UsuarioSchema.statics.upsertFbUser = function(
   );
 };
 
-UsuarioSchema.statics.upsertGoogleUser = function(
+UsuarioSchema.statics.upsertGoogleUser = function (
   accessToken,
   refreshToken,
   profile,
@@ -92,7 +95,7 @@ UsuarioSchema.statics.upsertGoogleUser = function(
     {
       "googleProvider.id": profile.id
     },
-    function(err, user) {
+    function (err, user) {
       // no user was found, lets create a new one
       if (!user) {
         const newUser = new that({
@@ -105,7 +108,7 @@ UsuarioSchema.statics.upsertGoogleUser = function(
           }
         });
 
-        newUser.save(function(error, savedUser) {
+        newUser.save(function (error, savedUser) {
           if (error) {
             console.log(error);
           }
@@ -118,7 +121,7 @@ UsuarioSchema.statics.upsertGoogleUser = function(
   );
 };
 
-UsuarioSchema.statics.upsertTwitterUser = function(
+UsuarioSchema.statics.upsertTwitterUser = function (
   token,
   tokenSecret,
   profile,
@@ -129,7 +132,7 @@ UsuarioSchema.statics.upsertTwitterUser = function(
     {
       "twitterProvider.id": profile.id
     },
-    function(err, user) {
+    function (err, user) {
       // no user was found, lets create a new one
       if (!user) {
         var newUser = new that({
@@ -144,7 +147,7 @@ UsuarioSchema.statics.upsertTwitterUser = function(
           }
         });
 
-        newUser.save(function(error, savedUser) {
+        newUser.save(function (error, savedUser) {
           if (error) {
             console.log(error);
           }
