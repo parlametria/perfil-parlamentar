@@ -6,8 +6,6 @@ const path = require("path");
 const logger = require("heroku-logger");
 const cors = require("cors");
 const passport = require("passport");
-const socketio = require("socket.io");
-const session = require("express-session");
 
 const perguntas = require("./routes/api/perguntas");
 const candidatos = require("./routes/api/candidatos");
@@ -16,23 +14,13 @@ const auth = require("./routes/api/auth");
 
 const app = express();
 
-// app.use(compression())
-
 const corsOption = {
   origin: "http://localhost:3000",
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
   credentials: true,
-  exposedHeaders: ["x-auth-token"]
+  exposedHeaders: ["authorization"]
 };
 app.use(cors(corsOption));
-
-app.use(
-  session({
-    secret: "KeyboardKittens",
-    resave: true,
-    saveUninitialized: true
-  })
-);
 
 // Body parser middleware
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -66,8 +54,4 @@ app.get("*", (req, res) => {
 
 const port = process.env.PORT || 5000;
 
-const server = http.createServer(app);
-
-server.listen(port, () => logger.info(`Servidor rodando na porta ${port}`));
-
-exports.io = socketio(server);
+app.listen(port, () => logger.info(`Servidor rodando na porta ${port}`));
