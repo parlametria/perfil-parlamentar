@@ -45,14 +45,15 @@ router.post("/respostas/eu", authenticate, (req, res) => {
 
   perfil.usuario = req.auth.id;
   respostas = req.body.respostas;
-  console.log(respostas)
 
   Usuario.findOneAndUpdate(
     { _id: req.auth.id },
-    { $set: respostas },
+    { $set: { respostas: respostas } },
     { upsert: true }
   )
-    .then(usuario => res.status(SUCCESS).json(usuario.respostas))
+    .then(usuario => {
+      res.status(SUCCESS).json(usuario.respostas)
+    })
     .catch(err => res.status(BAD_REQUEST).json({ err }));
 
 })
