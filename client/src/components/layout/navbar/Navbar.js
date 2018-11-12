@@ -44,14 +44,14 @@ class Navbar extends Component {
   }
 
   facebookResponse(response) {
-    console.log("loga com facebook");
-    this.props.facebookLogin(response);
-    this.props.history.push("/");
-    this.setState({ modal: false });
+    if (response.accessToken) {
+      this.props.facebookLogin(response);
+      this.props.history.push("/");
+      this.setState({ modal: false });
+    }
   }
 
   googleResponse(response) {
-    console.log("loga com google");
     this.props.googleLogin(response);
     this.setState({ modal: false });
   }
@@ -157,7 +157,7 @@ class Navbar extends Component {
                         clientId="791030988243-msi1r67ltvd5v1fjtajj3un1f0c0d7ds.apps.googleusercontent.com"
                         buttonText="Google"
                         onSuccess={this.googleResponse}
-                        onFailure={this.googleResponse}
+                        onFailure={this.onFailure}
                       >
                         <a
                           data-show-count="false"
@@ -179,6 +179,7 @@ class Navbar extends Component {
                         cssClass="login-text nav-link"
                         textButton="entre com sua conta facebook"
                         tag="button"
+                        redirectUri="http://localhost:3000/"
                       />
                     </li>
                   </ul>

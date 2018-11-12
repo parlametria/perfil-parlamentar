@@ -8,6 +8,8 @@ import ScrollIntoView from "react-scroll-into-view";
 import ScrollIntoViewOnChange from "../../../scroll/scrollIntoViewOnChange";
 import StickyBox from "react-sticky-box";
 
+import querystring from "query-string";
+
 // Redux stuff
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
@@ -22,6 +24,8 @@ import {
   mostrarTodosCandidatos,
   setActiveTab
 } from "../../../actions/candidatosActions";
+
+import { facebookLoginComCodigo } from "../../../actions/authActions";
 
 import {
   vamosComecar,
@@ -87,7 +91,14 @@ class Home extends Component {
 
   componentDidMount() {
     if (!isMobile) this.props.vamosComecar();
-    const { votos, estado } = this.props.match.params;
+    const { votos, estado, code } = this.props.match.params;
+
+    const parsed = querystring.parse(this.props.location.search);
+
+    if (parsed.state === "facebookdirect") {
+      this.props.facebookLoginComCodigo(parsed.code);
+      this.props.history.push("/");
+    }
 
     if (votos && estado) {
       if (votosValidos(votos) && estadoValido(estado)) {
@@ -147,25 +158,21 @@ class Home extends Component {
               rel="noopener noreferrer"
               className="icon-facebook share-icon btn btn-link btn-icon"
             />
-
           </li>
           <li className="share-element">
             <a
               href={
-                "https://web.whatsapp.com/send?text=" +
-                textoCompartilhamento
+                "https://web.whatsapp.com/send?text=" + textoCompartilhamento
               }
               data-show-count="false"
               target="_blank"
               rel="noopener noreferrer"
               className="icon-zapzap share-icon btn btn-link btn-icon"
             />
-
           </li>
         </ul>
       </StickyBox>
-    )
-
+    );
 
     return (
       <div>
@@ -191,15 +198,15 @@ class Home extends Component {
                       </select>
                     </ScrollIntoViewOnChange>
                   ) : (
-                      <select
-                        className="form-control"
-                        onChange={this.selecionaEstado}
-                        value={filtro.estado}
-                      >
-                        <option defaultValue="--">Selecione um Estado</option>
-                        {estados()}
-                      </select>
-                    )}
+                    <select
+                      className="form-control"
+                      onChange={this.selecionaEstado}
+                      value={filtro.estado}
+                    >
+                      <option defaultValue="--">Selecione um Estado</option>
+                      {estados()}
+                    </select>
+                  )}
                 </div>
               </form>
             </div>
@@ -212,21 +219,19 @@ class Home extends Component {
               <FlipMove>
                 {filtro.estado !== "" && <CandidatosContainer />}
                 <div className="d-flex justify-content-center mb-3">
-                  {isMobile &&
-                    !isVamosComecar &&
-                    filtro.estado !== "" && (
-                      <div className="pr-1">
-                        <ScrollIntoView selector="#scroll">
-                          <button
-                            className="btn btn-secondary"
-                            onClick={this.vamosComecar}
-                          >
-                            Votar
-                          </button>
-                        </ScrollIntoView>
-                        <div id="scroll" />
-                      </div>
-                    )}
+                  {isMobile && !isVamosComecar && filtro.estado !== "" && (
+                    <div className="pr-1">
+                      <ScrollIntoView selector="#scroll">
+                        <button
+                          className="btn btn-secondary"
+                          onClick={this.vamosComecar}
+                        >
+                          Votar
+                        </button>
+                      </ScrollIntoView>
+                      <div id="scroll" />
+                    </div>
+                  )}
                   {filtro.estado !== "" &&
                     !isVerTodosEleitos &&
                     quantidadeVotos < 1 && (
@@ -245,13 +250,13 @@ class Home extends Component {
             {filtro.estado !== "" && <div className="grid-separator" />}
             <section className="grid-panel panel-detail">
               <FlipMove>
-                {filtro.estado !== "" &&
-                  isVamosComecar && <PerguntasContainer />}
+                {filtro.estado !== "" && isVamosComecar && (
+                  <PerguntasContainer />
+                )}
               </FlipMove>
             </section>
           </div>
         </div>
-
       </div>
     );
   }
@@ -266,7 +271,8 @@ Home.propTypes = {
   escondePerguntas: PropTypes.func.isRequired,
   verTodosEleitos: PropTypes.func.isRequired,
   mostrarTodosCandidatos: PropTypes.func.isRequired,
-  setActiveTab: PropTypes.func.isRequired
+  setActiveTab: PropTypes.func.isRequired,
+  facebookLoginComCodigo: PropTypes.func.isRequired
 };
 const mapStateToProps = state => ({
   candidatos: state.candidatosReducer,
@@ -286,6 +292,7 @@ export default connect(
     escondePerguntas,
     verTodosEleitos,
     mostrarTodosCandidatos,
-    setActiveTab
+    setActiveTab,
+    facebookLoginComCodigo
   }
 )(Home);

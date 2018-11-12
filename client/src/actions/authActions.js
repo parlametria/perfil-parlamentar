@@ -19,12 +19,9 @@ export const facebookLogin = response => dispatch => {
     cache: "default"
   };
 
-  // axios(options).then(res => {
-  //   console.log(res);
-  // })
-
   fetch("api/auth/facebook", options).then(r => {
     const token = r.headers.get("authorization");
+
     r.json().then(user => {
       if (token) {
         // Set token to localStorage
@@ -78,6 +75,14 @@ export const twitterLogin = jwtToken => dispatch => {
 export const testaAutorizacao = () => dispatch => {
   axios.get("api/auth/test").then(resp => {
     console.log(resp);
+  });
+};
+
+export const facebookLoginComCodigo = codigo => dispatch => {
+  axios.get("api/auth/usingFacebookCode/?code=" + codigo).then(response => {
+    let r = response.data;
+    r.accessToken = response.data.access_token;
+    dispatch(facebookLogin(r));
   });
 };
 

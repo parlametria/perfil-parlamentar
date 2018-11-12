@@ -9,6 +9,7 @@
     "classnames": "^2.2.6",
     "jwt-decode": "^2.2.0",
     "prop-types": "^15.6.2",
+    "query-string": "^6.2.0",
     "react": "^16.5.2",
     "react-bootstrap": "^0.32.4",
     "react-bootstrap-table": "^4.3.1",
