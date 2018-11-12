@@ -8,9 +8,13 @@ export const salvaScoreUsuario = (respostasUsuario, arrayRespostasUsuario) => {
     arrayRespostasUsuario
   };
 };
-export const salvaRespostasUsuario = () => (getState) => {
+export const salvaRespostasUsuario = () => (dispatch, getState) => {
   const { respostasUsuario } = getState().usuarioReducer;
-  axios
-    .post("/api/usuarios/respostas", respostasUsuario)
-    .then(res => console.log(res));
+  const { arrayRespostasUsuario } = getState().usuarioReducer;
+  return axios
+    .post("/api/usuarios/respostas/eu", { respostas: respostasUsuario })
+    .then(res => {
+      console.log(res.data)
+    });
+
 }

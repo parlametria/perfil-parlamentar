@@ -8,7 +8,10 @@ import { isMobile } from "react-device-detect";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 
-import { salvaScoreUsuario, salvaRespostasUsuario } from "../../../actions/usuarioActions";
+import {
+  salvaScoreUsuario,
+  salvaRespostasUsuario
+} from "../../../actions/usuarioActions";
 
 import {
   facebookLogin,
@@ -36,6 +39,8 @@ class Navbar extends Component {
     this.googleResponse = this.googleResponse.bind(this);
     this.onSignOut = this.onSignOut.bind(this);
     this.onFailure = this.onFailure.bind(this);
+    this.onMinhasRespostas = this.onMinhasRespostas.bind(this);
+
   }
 
   facebookResponse(response) {
@@ -60,6 +65,11 @@ class Navbar extends Component {
 
     this.props.logoutUser();
   }
+  onMinhasRespostas(e) {
+    e.preventDefault();
+
+    this.props.salvaRespostasUsuario();
+  }
 
   toggle() {
     this.setState({
@@ -69,8 +79,7 @@ class Navbar extends Component {
 
   render() {
     const { open } = this.state;
-    const { isAuthenticated, user } = this.props.auth;
-    const { arrayRespostasUsuario } = this.props.usuario;
+    const { isAuthenticated } = this.props.auth;
 
     let linkCompartilhamento = "www.vozativa.org/";
     let textoCompartilhamento =
@@ -126,7 +135,7 @@ class Navbar extends Component {
                   </li>
                 )}
                 <li className="nav-item">
-                  <a onClick={salvaRespostasUsuario} className="nav-link">
+                  <a onClick={this.onMinhasRespostas} className="nav-link">
                     minhas respostas
                     </a>
                 </li>
@@ -232,7 +241,9 @@ Navbar.propTypes = {
   facebookLogin: PropTypes.func.isRequired,
   logoutUser: PropTypes.func.isRequired,
   googleLogin: PropTypes.func.isRequired,
-  testaAutorizacao: PropTypes.func.isRequired
+  testaAutorizacao: PropTypes.func.isRequired,
+  salvaScoreUsuario: PropTypes.func.isRequired,
+  salvaRespostasUsuario: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -244,6 +255,13 @@ const mapStateToProps = state => ({
 export default withRouter(
   connect(
     mapStateToProps,
-    { facebookLogin, googleLogin, logoutUser, testaAutorizacao, salvaScoreUsuario, salvaRespostasUsuario }
+    {
+      facebookLogin,
+      googleLogin,
+      logoutUser,
+      testaAutorizacao,
+      salvaScoreUsuario,
+      salvaRespostasUsuario
+    }
   )(Navbar)
 );
