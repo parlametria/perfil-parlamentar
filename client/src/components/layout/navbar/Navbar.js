@@ -37,10 +37,12 @@ class Navbar extends Component {
   }
 
   facebookResponse(response) {
-    console.log("loga com facebook");
-    this.props.facebookLogin(response);
-    this.props.history.push("/");
-    this.setState({ modal: false });
+    if (response.accessToken) {
+      console.log("loga com facebook");
+      this.props.facebookLogin(response);
+      this.props.history.push("/");
+      this.setState({ modal: false });
+    }
   }
 
   googleResponse(response) {
