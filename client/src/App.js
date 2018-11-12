@@ -41,8 +41,6 @@ if (localStorage.accessToken) {
     // Logout
     store.dispatch(logoutUser());
   }
-
-  console.log(decoded);
 }
 
 class App extends Component {

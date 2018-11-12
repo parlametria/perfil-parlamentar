@@ -38,7 +38,6 @@ class Navbar extends Component {
 
   facebookResponse(response) {
     if (response.accessToken) {
-      console.log("loga com facebook");
       this.props.facebookLogin(response);
       this.props.history.push("/");
       this.setState({ modal: false });
@@ -46,7 +45,6 @@ class Navbar extends Component {
   }
 
   googleResponse(response) {
-    console.log("loga com google");
     this.props.googleLogin(response);
     this.setState({ modal: false });
   }
@@ -164,6 +162,7 @@ class Navbar extends Component {
                         cssClass="login-text nav-link"
                         textButton="entre com sua conta facebook"
                         tag="button"
+                        redirectUri="http://localhost:3000/"
                       />
                     </li>
                   </ul>
