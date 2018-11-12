@@ -7,6 +7,8 @@ const expressJwt = require("express-jwt");
 
 const keys = require("../../config/keys");
 
+const graph = require("fbgraph");
+
 require("../../config/passport")();
 
 const authenticate = expressJwt({
@@ -66,6 +68,21 @@ router.post(
 
 router.get("/test", authenticate, (req, res) => {
   res.json({ msg: "Tudo certo" });
+});
+
+router.get("/usingFacebookCode", (req, res) => {
+  graph.authorize(
+    {
+      client_id: keys.facebookAppID,
+      redirect_uri: "http://localhost:3000/",
+      client_secret: keys.facebookAppSecret,
+      code: req.query.code
+    },
+    function(err, facebookRes) {
+      if (err) res.status(400).json(err);
+      res.status(200).json(facebookRes);
+    }
+  );
 });
 
 module.exports = router;
