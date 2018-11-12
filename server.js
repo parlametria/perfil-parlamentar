@@ -11,6 +11,7 @@ const perguntas = require("./routes/api/perguntas");
 const candidatos = require("./routes/api/candidatos");
 const respostas = require("./routes/api/respostas");
 const auth = require("./routes/api/auth");
+const usuarios = require("./routes/api/usuarios");
 
 const app = express();
 
@@ -43,6 +44,7 @@ mongoose
 app.use("/api/perguntas", perguntas);
 app.use("/api/candidatos", candidatos);
 app.use("/api/respostas", respostas);
+app.use("/api/usuarios", usuarios);
 app.use("/api/auth", auth);
 
 // Set static folder
