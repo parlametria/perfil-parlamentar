@@ -33,13 +33,13 @@ if (!global.hasOwnProperty("models")) {
   global.models = {
     Sequelize: Sequelize,
     sequelize: sequelize,
-    Usuario: sequelize.import(UsuarioModel),
-    Candidato: sequelize.import(CandidatoModel),
-    Pergunta: sequelize.import(PerguntaModel),
-    Proposicao: sequelize.import(ProposicaoModel),
-    Tema: sequelize.import(TemaModel),
-    Votacao: sequelize.import(VotacaoModel),
-    Resposta: sequelize.import(RespostaModel)
+    usuario: sequelize.import(UsuarioModel),
+    candidato: sequelize.import(CandidatoModel),
+    pergunta: sequelize.import(PerguntaModel),
+    proposicoe: sequelize.import(ProposicaoModel),
+    tema: sequelize.import(TemaModel),
+    votacoe: sequelize.import(VotacaoModel),
+    resposta: sequelize.import(RespostaModel)
     // RespostaU: sequelize.import(RespostaModel),
     // VotacaoU: sequelize.import(VotacaoModel)
     // add your other models here
