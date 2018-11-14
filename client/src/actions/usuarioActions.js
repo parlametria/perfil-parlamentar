@@ -10,7 +10,6 @@ export const salvaScoreUsuario = (respostasUsuario, arrayRespostasUsuario) => {
 };
 export const salvaRespostasUsuario = () => (dispatch, getState) => {
   const { respostasUsuario } = getState().usuarioReducer;
-  const { arrayRespostasUsuario } = getState().usuarioReducer;
   return axios
     .post("/api/usuarios/respostas/eu", { respostas: respostasUsuario })
     .then(res => {

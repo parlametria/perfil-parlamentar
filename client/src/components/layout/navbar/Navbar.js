@@ -39,7 +39,7 @@ class Navbar extends Component {
     this.googleResponse = this.googleResponse.bind(this);
     this.onSignOut = this.onSignOut.bind(this);
     this.onFailure = this.onFailure.bind(this);
-    this.onMinhasRespostas = this.onMinhasRespostas.bind(this);
+
 
   }
 
@@ -65,11 +65,7 @@ class Navbar extends Component {
 
     this.props.logoutUser();
   }
-  onMinhasRespostas(e) {
-    e.preventDefault();
 
-    this.props.salvaRespostasUsuario();
-  }
 
   toggle() {
     this.setState({
@@ -134,11 +130,6 @@ class Navbar extends Component {
                     </a>
                   </li>
                 )}
-                <li className="nav-item">
-                  <a onClick={this.onMinhasRespostas} className="nav-link">
-                    minhas respostas
-                    </a>
-                </li>
               </ul>
               <Modal
                 isOpen={this.state.modal}
@@ -261,7 +252,6 @@ export default withRouter(
       logoutUser,
       testaAutorizacao,
       salvaScoreUsuario,
-      salvaRespostasUsuario
     }
   )(Navbar)
 );

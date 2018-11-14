@@ -6,7 +6,6 @@ import { Tooltip } from "reactstrap";
 
 import Pergunta from "./Pergunta";
 import FinalPerguntas from "./FinalPerguntas";
-import { salvaScoreUsuario } from "../../actions/usuarioActions";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 
 import {
@@ -22,6 +21,12 @@ import {
   exibePerguntas,
   escondePerguntas
 } from "../../actions/perguntasActions";
+
+import {
+  salvaScoreUsuario,
+  salvaRespostasUsuario
+} from "../../actions/usuarioActions";
+
 
 import FlipMove from "react-flip-move";
 
@@ -63,10 +68,15 @@ class PerguntasContainer extends Component {
 
   registraResposta(novaResposta) {
     const { respostasUsuario, arrayRespostasUsuario } = this.props.usuario;
+    const { isAuthenticated } = this.props.auth;
+
 
     respostasUsuario[novaResposta.id] = novaResposta.resposta;
     arrayRespostasUsuario[novaResposta.id] = novaResposta.resposta;
     this.props.salvaScoreUsuario(respostasUsuario, arrayRespostasUsuario);
+
+    if (isAuthenticated) this.props.salvaRespostasUsuario();
+
     this.props.calculaScore();
     this.passaPergunta();
   }
@@ -335,6 +345,7 @@ class PerguntasContainer extends Component {
 PerguntasContainer.propTypes = {
   salvaScoreUsuario: PropTypes.func.isRequired,
   calculaScore: PropTypes.func.isRequired,
+  salvaRespostasUsuario: PropTypes.func.isRequired,
   calculaScorePorTema: PropTypes.func.isRequired,
   getDadosPerguntas: PropTypes.func.isRequired,
   passaPergunta: PropTypes.func.isRequired,
@@ -348,13 +359,15 @@ PerguntasContainer.propTypes = {
 const mapStateToProps = state => ({
   usuario: state.usuarioReducer,
   candidatos: state.candidatosReducer,
-  perguntas: state.perguntasReducer
+  perguntas: state.perguntasReducer,
+  auth: state.auth
 });
 
 export default connect(
   mapStateToProps,
   {
     salvaScoreUsuario,
+    salvaRespostasUsuario,
     calculaScore,
     calculaScorePorTema,
     getDadosPerguntas,
