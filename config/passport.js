@@ -10,13 +10,15 @@ module.exports = () => {
     new FacebookTokenStrategy(
       {
         clientID: keys.facebookAppID,
-        clientSecret: keys.facebookAppSecret
+        clientSecret: keys.facebookAppSecret,
+        passReqToCallback: true
       },
-      (accessToken, refreshToken, profile, done) => {
+      (req, accessToken, refreshToken, profile, done) => {
         Usuario.upsertFbUser(
           accessToken,
           refreshToken,
           profile,
+          respostas,
           (err, user) => {
             return done(err, user);
           }

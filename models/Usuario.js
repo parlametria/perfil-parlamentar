@@ -49,6 +49,7 @@ UsuarioSchema.statics.upsertFbUser = function(
   accessToken,
   refreshToken,
   profile,
+  respostas,
   cb
 ) {
   const that = this;
@@ -67,7 +68,8 @@ UsuarioSchema.statics.upsertFbUser = function(
           facebookProvider: {
             id: profile.id,
             token: accessToken
-          }
+          },
+          respostas
         });
 
         newUser.save(function(error, savedUser) {

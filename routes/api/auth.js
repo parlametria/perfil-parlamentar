@@ -14,7 +14,7 @@ require("../../config/passport")();
 const authenticate = expressJwt({
   secret: keys.secretOrKey,
   requestProperty: "auth",
-  getToken: function (req) {
+  getToken: function(req) {
     if (req.headers["authorization"]) {
       return req.headers["authorization"];
     }
@@ -27,7 +27,9 @@ const authenticate = expressJwt({
 // @access  Public
 router.post(
   "/facebook",
-  passport.authenticate("facebook-token", { session: false }),
+  (req, res, next) => {
+    passport.authenticate("facebook-token", { session: false })(req, res, next);
+  },
   (req, res, next) => {
     if (!req.user) {
       return res.send(401, "User Not Authenticated");
@@ -80,7 +82,7 @@ router.get("/usingFacebookCode", (req, res) => {
       client_secret: keys.facebookAppSecret,
       code: req.query.code
     },
-    function (err, facebookRes) {
+    function(err, facebookRes) {
       if (err) res.status(400).json(err);
       res.status(200).json(facebookRes);
     }

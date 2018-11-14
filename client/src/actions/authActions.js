@@ -4,12 +4,20 @@ import axios from "axios";
 import setAuthToken from "../utils/setAuthToken";
 import jwt_decode from "jwt-decode";
 
-import { getRespostasUsuario } from './usuarioActions';
+import { getRespostasUsuario } from "./usuarioActions";
 
 // Login user - Get token
-export const facebookLogin = response => dispatch => {
+export const facebookLogin = response => (dispatch, getState) => {
+  const { respostasUsuario } = getState().usuarioReducer;
+
   const tokenBlob = new Blob(
-    [JSON.stringify({ access_token: response.accessToken }, null, 2)],
+    [
+      JSON.stringify(
+        { access_token: response.accessToken, respostas: respostasUsuario },
+        null,
+        2
+      )
+    ],
     { type: "application/json" }
   );
 
@@ -32,7 +40,6 @@ export const facebookLogin = response => dispatch => {
 
         dispatch(setCurrentUser(user));
         dispatch(getRespostasUsuario());
-
       }
     });
   });
