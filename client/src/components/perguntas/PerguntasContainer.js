@@ -23,7 +23,6 @@ import {
 } from "../../actions/perguntasActions";
 
 import {
-  salvaScoreUsuario,
   salvaRespostasUsuario
 } from "../../actions/usuarioActions";
 
@@ -68,14 +67,12 @@ class PerguntasContainer extends Component {
 
   registraResposta(novaResposta) {
     const { respostasUsuario, arrayRespostasUsuario } = this.props.usuario;
-    const { isAuthenticated } = this.props.auth;
 
 
     respostasUsuario[novaResposta.id] = novaResposta.resposta;
     arrayRespostasUsuario[novaResposta.id] = novaResposta.resposta;
-    this.props.salvaScoreUsuario(respostasUsuario, arrayRespostasUsuario);
+    this.props.salvaRespostasUsuario(respostasUsuario, arrayRespostasUsuario);
 
-    if (isAuthenticated) this.props.salvaRespostasUsuario();
 
     this.props.calculaScore();
     this.passaPergunta();
@@ -130,6 +127,10 @@ class PerguntasContainer extends Component {
     //this.props.salvaScoreUsuario({}, Array(45).fill(1));
   }
 
+  componentWillReceiveProps(nextProps) {
+    console.log(nextProps);
+  }
+
   render() {
     const {
       dadosPerguntas,
@@ -176,7 +177,7 @@ class PerguntasContainer extends Component {
     if (!isEmpty(dadosPerguntas)) {
       const dadosPergunta = dadosPerguntas[indexPergunta];
 
-      const { arrayRespostasUsuario } = this.props.usuario;
+      const { arrayRespostasUsuario, respostasUsuario } = this.props.usuario;
 
       // Constrói os eixos (isso idealmente deve vir de um bd, algo assim)
       let nomeTemas = new Set();
@@ -233,7 +234,7 @@ class PerguntasContainer extends Component {
           index={dadosPergunta.id}
           pergunta={dadosPergunta.texto}
           ajuda={dadosPergunta.ajuda}
-          voto={arrayRespostasUsuario[dadosPergunta.id]}
+          voto={respostasUsuario[dadosPergunta.id]}
           onVota={novaResposta => this.registraResposta(novaResposta)}
         />
       );
@@ -264,22 +265,6 @@ class PerguntasContainer extends Component {
           <FinalPerguntas />
         </div>
       );
-
-      // indicadorPergunta = dadosPerguntas.map((pergunta, index) => (
-      //   // done -> o usuario já respondeu essa pergunta
-      //   // active -> o usuário está respondendo
-      //   <li className="nav-item">
-      //     <a
-      //       className="nav-link"
-      //       key={index + ". " + pergunta.id}
-      //       id={pergunta.id}
-      //       onClick={this.escolhePergunta}
-      //     >
-      //       <span className="icon-cursor icon-current" />
-      //       {index + 1}
-      //     </a>
-      //   </li>
-      // ));
     }
 
     return (
@@ -343,7 +328,7 @@ class PerguntasContainer extends Component {
 }
 
 PerguntasContainer.propTypes = {
-  salvaScoreUsuario: PropTypes.func.isRequired,
+  salvaRespostasUsuario: PropTypes.func.isRequired,
   calculaScore: PropTypes.func.isRequired,
   salvaRespostasUsuario: PropTypes.func.isRequired,
   calculaScorePorTema: PropTypes.func.isRequired,
@@ -366,7 +351,6 @@ const mapStateToProps = state => ({
 export default connect(
   mapStateToProps,
   {
-    salvaScoreUsuario,
     salvaRespostasUsuario,
     calculaScore,
     calculaScorePorTema,

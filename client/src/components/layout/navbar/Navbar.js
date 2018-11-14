@@ -10,7 +10,7 @@ import PropTypes from "prop-types";
 
 import {
   salvaScoreUsuario,
-  salvaRespostasUsuario
+  getRespostasUsuario
 } from "../../../actions/usuarioActions";
 
 import {
@@ -235,7 +235,7 @@ Navbar.propTypes = {
   googleLogin: PropTypes.func.isRequired,
   testaAutorizacao: PropTypes.func.isRequired,
   salvaScoreUsuario: PropTypes.func.isRequired,
-  salvaRespostasUsuario: PropTypes.func.isRequired
+  getRespostasUsuario: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -253,6 +253,7 @@ export default withRouter(
       logoutUser,
       testaAutorizacao,
       salvaScoreUsuario,
+      getRespostasUsuario
     }
   )(Navbar)
 );

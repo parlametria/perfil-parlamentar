@@ -4,6 +4,8 @@ import axios from "axios";
 import setAuthToken from "../utils/setAuthToken";
 import jwt_decode from "jwt-decode";
 
+import { getRespostasUsuario } from './usuarioActions';
+
 // Login user - Get token
 export const facebookLogin = response => dispatch => {
   const tokenBlob = new Blob(
@@ -29,6 +31,8 @@ export const facebookLogin = response => dispatch => {
         setAuthToken(token);
 
         dispatch(setCurrentUser(user));
+        dispatch(getRespostasUsuario());
+
       }
     });
   });
@@ -57,6 +61,8 @@ export const googleLogin = response => dispatch => {
         setAuthToken(token);
 
         dispatch(setCurrentUser(user));
+
+        dispatch(getRespostasUsuario());
       }
     });
   });
