@@ -71,7 +71,7 @@ class PerguntasContainer extends Component {
 
     respostasUsuario[novaResposta.id] = novaResposta.resposta;
     arrayRespostasUsuario[novaResposta.id] = novaResposta.resposta;
-    this.props.salvaRespostasUsuario(respostasUsuario, arrayRespostasUsuario);
+    this.props.salvaRespostasUsuario(respostasUsuario);
 
 
     this.props.calculaScore();
@@ -125,10 +125,6 @@ class PerguntasContainer extends Component {
     this.props.getDadosPerguntas();
 
     //this.props.salvaScoreUsuario({}, Array(45).fill(1));
-  }
-
-  componentWillReceiveProps(nextProps) {
-    console.log(nextProps);
   }
 
   render() {
@@ -330,7 +326,6 @@ class PerguntasContainer extends Component {
 PerguntasContainer.propTypes = {
   salvaRespostasUsuario: PropTypes.func.isRequired,
   calculaScore: PropTypes.func.isRequired,
-  salvaRespostasUsuario: PropTypes.func.isRequired,
   calculaScorePorTema: PropTypes.func.isRequired,
   getDadosPerguntas: PropTypes.func.isRequired,
   passaPergunta: PropTypes.func.isRequired,
