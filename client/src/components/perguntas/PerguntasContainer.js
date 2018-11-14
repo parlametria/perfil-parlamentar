@@ -177,7 +177,7 @@ class PerguntasContainer extends Component {
     if (!isEmpty(dadosPerguntas)) {
       const dadosPergunta = dadosPerguntas[indexPergunta];
 
-      const { arrayRespostasUsuario, respostasUsuario } = this.props.usuario;
+      const { respostasUsuario } = this.props.usuario;
 
       // Constrói os eixos (isso idealmente deve vir de um bd, algo assim)
       let nomeTemas = new Set();
@@ -211,7 +211,7 @@ class PerguntasContainer extends Component {
               className={classnames("nav-link nav-link-b", {
                 active: perguntaFiltrada.id === indexPergunta,
                 done:
-                  arrayRespostasUsuario[Number(perguntaFiltrada.id)] !== 0 &&
+                  respostasUsuario[Number(perguntaFiltrada.id)] !== 0 &&
                   perguntaFiltrada.id !== indexPergunta
               })}
               key={index + ". " + perguntaFiltrada.id}

@@ -1,6 +1,8 @@
 import { SET_SCORE_USUARIO } from "./types";
 import axios from "axios";
 
+const TAM_PERGUNTAS = 46;
+
 export const salvaScoreUsuario = (respostasUsuario, arrayRespostasUsuario) => {
   return {
     type: SET_SCORE_USUARIO,
@@ -27,8 +29,11 @@ export const getRespostasUsuario = () => (dispatch) => {
     get("/api/usuarios/respostas/eu")
     .then(res => {
       const respostasUsuario = res.data;
-      const arrayRespostasUsuario = Array.from(res.data);
-      console.log(arrayRespostasUsuario);
+      const arrayRespostasUsuario = Array(TAM_PERGUNTAS).fill(0);
+
+      for (var id in respostasUsuario) {
+        arrayRespostasUsuario[id] = respostasUsuario[id];
+      }
 
       dispatch(salvaScoreUsuario(respostasUsuario, arrayRespostasUsuario));
     })

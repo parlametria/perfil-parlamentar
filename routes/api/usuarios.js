@@ -34,7 +34,6 @@ router.get("/respostas", (req, res) => {
 })
 
 router.get("/respostas/eu", authenticate, (req, res) => {
-  console.log(req.auth);
   Usuario.findById(req.auth.id)
     .then(usuario => res.status(SUCCESS).json(usuario.respostas)
     )
