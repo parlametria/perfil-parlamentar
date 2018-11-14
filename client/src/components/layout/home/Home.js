@@ -91,7 +91,7 @@ class Home extends Component {
 
   componentDidMount() {
     if (!isMobile) this.props.vamosComecar();
-    const { votos, estado, code } = this.props.match.params;
+    const { votos, estado } = this.props.match.params;
 
     const parsed = querystring.parse(this.props.location.search);
 
@@ -198,15 +198,15 @@ class Home extends Component {
                       </select>
                     </ScrollIntoViewOnChange>
                   ) : (
-                    <select
-                      className="form-control"
-                      onChange={this.selecionaEstado}
-                      value={filtro.estado}
-                    >
-                      <option defaultValue="--">Selecione um Estado</option>
-                      {estados()}
-                    </select>
-                  )}
+                      <select
+                        className="form-control"
+                        onChange={this.selecionaEstado}
+                        value={filtro.estado}
+                      >
+                        <option defaultValue="--">Selecione um Estado</option>
+                        {estados()}
+                      </select>
+                    )}
                 </div>
               </form>
             </div>

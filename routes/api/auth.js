@@ -14,7 +14,7 @@ require("../../config/passport")();
 const authenticate = expressJwt({
   secret: keys.secretOrKey,
   requestProperty: "auth",
-  getToken: function(req) {
+  getToken: function (req) {
     if (req.headers["authorization"]) {
       return req.headers["authorization"];
     }
@@ -35,7 +35,8 @@ router.post(
     req.auth = {
       id: req.user.id,
       firstName: req.user.firstName,
-      photo: req.user.photo
+      photo: req.user.photo,
+      respostas: req.user.respostas
     };
 
     next();
@@ -57,7 +58,8 @@ router.post(
     req.auth = {
       id: req.user.id,
       firstName: req.user.firstName,
-      photo: req.user.photo
+      photo: req.user.photo,
+      respostas: req.user.respostas
     };
 
     next();
@@ -78,7 +80,7 @@ router.get("/usingFacebookCode", (req, res) => {
       client_secret: keys.facebookAppSecret,
       code: req.query.code
     },
-    function(err, facebookRes) {
+    function (err, facebookRes) {
       if (err) res.status(400).json(err);
       res.status(200).json(facebookRes);
     }

@@ -16,6 +16,7 @@ import Footer from "./components/layout/footer/Footer";
 
 // Login and logout actions
 import { setCurrentUser, logoutUser } from "./actions/authActions";
+import { getRespostasUsuario } from "./actions/usuarioActions";
 import Main from "./Main";
 
 import ReactGA from "react-ga";
@@ -27,13 +28,12 @@ if (localStorage.accessToken) {
   // Set auth header
   setAuthToken(localStorage.accessToken);
 
-  // console.log("a");
-
   // Decode token
   const decoded = jwt_decode(localStorage.accessToken);
 
   // // Set user and isAuthenticated
   store.dispatch(setCurrentUser(decoded));
+  store.dispatch(getRespostasUsuario());
 
   // // Check for expired token
   const currentTime = Date.now() / 1000;

@@ -10,7 +10,7 @@ import PropTypes from "prop-types";
 
 import {
   salvaScoreUsuario,
-  salvaRespostasUsuario
+  getRespostasUsuario
 } from "../../../actions/usuarioActions";
 
 import {
@@ -20,7 +20,7 @@ import {
   testaAutorizacao
 } from "../../../actions/authActions";
 
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
+import { Modal, ModalHeader, ModalBody } from "reactstrap";
 
 import FacebookLogin from "react-facebook-login";
 import { GoogleLogin } from "react-google-login";
@@ -39,7 +39,6 @@ class Navbar extends Component {
     this.googleResponse = this.googleResponse.bind(this);
     this.onSignOut = this.onSignOut.bind(this);
     this.onFailure = this.onFailure.bind(this);
-    this.onMinhasRespostas = this.onMinhasRespostas.bind(this);
   }
 
   facebookResponse(response) {
@@ -65,11 +64,6 @@ class Navbar extends Component {
 
     this.props.logoutUser();
   }
-  onMinhasRespostas(e) {
-    e.preventDefault();
-
-    this.props.salvaRespostasUsuario();
-  }
 
   toggle() {
     this.setState({
@@ -78,7 +72,6 @@ class Navbar extends Component {
   }
 
   render() {
-    const { open } = this.state;
     const { isAuthenticated, user } = this.props.auth;
 
     let linkCompartilhamento = "www.vozativa.org/";
@@ -126,6 +119,21 @@ class Navbar extends Component {
             )}
             <div className="collapse navbar-collapse" id="mainNavbar">
               <ul className="navbar-nav ml-auto pr-1">
+                {isAuthenticated && (
+                  <li className="nav-item">
+                    <div>
+                      {/*<img
+                      className="rounded-circle"
+                      src={user.photo}
+                      width="30px"
+                      onClick={this.onSignOut}
+                    />*/}
+                      <span className="nav-link" onClick={this.onSignOut}>
+                        sair
+                      </span>
+                    </div>
+                  </li>
+                )}
                 <li className="nav-item">
                   <Link to="/sobre" className="nav-link">
                     Sobre
@@ -136,11 +144,6 @@ class Navbar extends Component {
                     Sou candidato
                   </Link>
                 </li>
-                <li className="nav-item">
-                  <a onClick={this.onMinhasRespostas} className="nav-link">
-                    minhas respostas
-                  </a>
-                </li>
                 {!isAuthenticated && !isMobile && (
                   <a
                     onClick={this.toggle}
@@ -149,21 +152,6 @@ class Navbar extends Component {
                   >
                     entrar
                   </a>
-                )}
-                {isAuthenticated && (
-                  <li className="nav-item">
-                    <div>
-                      {/*<img
-                        className="rounded-circle"
-                        src={user.photo}
-                        width="30px"
-                        onClick={this.onSignOut}
-                      />*/}
-                      <span className="nav-link" onClick={this.onSignOut}>
-                        sair
-                      </span>
-                    </div>
-                  </li>
                 )}
               </ul>
               <Modal
@@ -270,7 +258,7 @@ Navbar.propTypes = {
   googleLogin: PropTypes.func.isRequired,
   testaAutorizacao: PropTypes.func.isRequired,
   salvaScoreUsuario: PropTypes.func.isRequired,
-  salvaRespostasUsuario: PropTypes.func.isRequired
+  getRespostasUsuario: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -287,7 +275,7 @@ export default withRouter(
       logoutUser,
       testaAutorizacao,
       salvaScoreUsuario,
-      salvaRespostasUsuario
+      getRespostasUsuario
     }
   )(Navbar)
 );

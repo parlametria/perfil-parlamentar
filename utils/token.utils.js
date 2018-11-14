@@ -1,12 +1,13 @@
 const jwt = require("jsonwebtoken");
 const keys = require("../config/keys");
 
-const createToken = function(auth) {
+const createToken = function (auth) {
   return jwt.sign(
     {
       id: auth.id,
       firstName: auth.firstName,
-      photo: auth.photo
+      photo: auth.photo,
+      respostas: auth.respostas
     },
     keys.secretOrKey,
     {
@@ -16,11 +17,11 @@ const createToken = function(auth) {
 };
 
 module.exports = {
-  generateToken: function(req, res, next) {
+  generateToken: function (req, res, next) {
     req.token = createToken(req.auth);
     return next();
   },
-  sendToken: function(req, res) {
+  sendToken: function (req, res) {
     res.setHeader("authorization", req.token);
     return res.status(200).send(JSON.stringify(req.user));
   },
