@@ -20,7 +20,7 @@ import {
   testaAutorizacao
 } from "../../../actions/authActions";
 
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
+import { Modal, ModalHeader, ModalBody } from "reactstrap";
 
 import FacebookLogin from "react-facebook-login";
 import { GoogleLogin } from "react-google-login";
@@ -74,7 +74,6 @@ class Navbar extends Component {
   }
 
   render() {
-    const { open } = this.state;
     const { isAuthenticated } = this.props.auth;
 
     let linkCompartilhamento = "www.vozativa.org/";

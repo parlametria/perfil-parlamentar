@@ -30,8 +30,7 @@ export const salvaRespostasUsuario = (respostasUsuario) => (dispatch, getState) 
 
 }
 export const getRespostasUsuario = () => (dispatch) => {
-  axios.
-    get("/api/usuarios/respostas/eu")
+  axios.get("/api/usuarios/respostas/eu")
     .then(res => {
       const respostasUsuario = res.data;
 
