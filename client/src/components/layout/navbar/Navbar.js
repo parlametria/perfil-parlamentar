@@ -40,7 +40,6 @@ class Navbar extends Component {
     this.onSignOut = this.onSignOut.bind(this);
     this.onFailure = this.onFailure.bind(this);
     this.onMinhasRespostas = this.onMinhasRespostas.bind(this);
-
   }
 
   facebookResponse(response) {
@@ -52,6 +51,7 @@ class Navbar extends Component {
   }
 
   googleResponse(response) {
+    console.log(response);
     this.props.googleLogin(response);
     this.setState({ modal: false });
   }
@@ -79,7 +79,7 @@ class Navbar extends Component {
 
   render() {
     const { open } = this.state;
-    const { isAuthenticated } = this.props.auth;
+    const { isAuthenticated, user } = this.props.auth;
 
     let linkCompartilhamento = "www.vozativa.org/";
     let textoCompartilhamento =
@@ -90,13 +90,6 @@ class Navbar extends Component {
       <div>
         <nav className="navbar navbar-expand-lg navbar-light">
           <div className="container">
-            <Link to="/" className="navbar-brand">
-              <img
-                src={require("../../../data/img/logo.png")}
-                alt="Voz Ativa"
-                width="100px"
-              />
-            </Link>
             <button
               className="navbar-toggler"
               type="button"
@@ -107,7 +100,30 @@ class Navbar extends Component {
             >
               <span className="navbar-toggler-icon" />
             </button>
+            <Link to="/" className="navbar-brand">
+              <img
+                src={require("../../../data/img/logo.png")}
+                alt="Voz Ativa"
+                width="100px"
+              />
+            </Link>
+            {!isAuthenticated && isMobile && (
+              <a onClick={this.toggle} className="nav-link">
+                entrar
+              </a>
+            )}
 
+            {isAuthenticated && (
+              <img
+                data-toggle="collapse"
+                data-target="#mainNavbar"
+                aria-expanded="false"
+                aria-label="Menu"
+                className="rounded-circle"
+                src={user.photo}
+                width="45px"
+              />
+            )}
             <div className="collapse navbar-collapse" id="mainNavbar">
               <ul className="navbar-nav ml-auto pr-1">
                 <li className="nav-item">
@@ -120,25 +136,35 @@ class Navbar extends Component {
                     Sou candidato
                   </Link>
                 </li>
-                {!isAuthenticated && (
-                  <li className="nav-item">
-                    <a onClick={this.toggle} className="nav-link">
-                      login
-                    </a>
-                  </li>
-                )}
-                {isAuthenticated && (
-                  <li className="nav-item">
-                    <a onClick={this.onSignOut} className="nav-link">
-                      logout
-                    </a>
-                  </li>
-                )}
                 <li className="nav-item">
                   <a onClick={this.onMinhasRespostas} className="nav-link">
                     minhas respostas
-                    </a>
+                  </a>
                 </li>
+                {!isAuthenticated && !isMobile && (
+                  <a
+                    onClick={this.toggle}
+                    className="nav-link"
+                    style={{ marginLeft: "auto" }}
+                  >
+                    entrar
+                  </a>
+                )}
+                {isAuthenticated && (
+                  <li className="nav-item">
+                    <div>
+                      {/*<img
+                        className="rounded-circle"
+                        src={user.photo}
+                        width="30px"
+                        onClick={this.onSignOut}
+                      />*/}
+                      <span className="nav-link" onClick={this.onSignOut}>
+                        sair
+                      </span>
+                    </div>
+                  </li>
+                )}
               </ul>
               <Modal
                 isOpen={this.state.modal}
@@ -250,7 +276,6 @@ Navbar.propTypes = {
 const mapStateToProps = state => ({
   auth: state.auth,
   usuario: state.usuarioReducer
-
 });
 
 export default withRouter(
