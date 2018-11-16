@@ -119,7 +119,7 @@ class Navbar extends Component {
             )}
             <div className="collapse navbar-collapse" id="mainNavbar">
               <ul className="navbar-nav ml-auto pr-1">
-                {isAuthenticated && (
+                {isAuthenticated && isMobile && (
                   <li className="nav-item">
                     <div>
                       {/*<img
@@ -152,6 +152,21 @@ class Navbar extends Component {
                   >
                     entrar
                   </a>
+                )}
+                {isAuthenticated && !isMobile && (
+                  <li className="nav-item">
+                    <div>
+                      {/*<img
+                      className="rounded-circle"
+                      src={user.photo}
+                      width="30px"
+                      onClick={this.onSignOut}
+                    />*/}
+                      <span className="nav-link" onClick={this.onSignOut}>
+                        sair
+                      </span>
+                    </div>
+                  </li>
                 )}
               </ul>
               <Modal
