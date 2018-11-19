@@ -26,6 +26,7 @@ import FacebookLogin from "react-facebook-login";
 import { GoogleLogin } from "react-google-login";
 
 import "./navbar.css";
+import Spinner from "../../common/Spinner";
 
 class Navbar extends Component {
   constructor(props) {
@@ -72,7 +73,7 @@ class Navbar extends Component {
   }
 
   render() {
-    const { isAuthenticated, user } = this.props.auth;
+    const { isAuthenticated, user, isLogging } = this.props.auth;
 
     let linkCompartilhamento = "www.vozativa.org/";
     let textoCompartilhamento =
@@ -106,7 +107,7 @@ class Navbar extends Component {
               </a>
             )}
 
-            {isAuthenticated && (
+            {isAuthenticated && !isLogging && isMobile && (
               <img
                 data-toggle="collapse"
                 data-target="#mainNavbar"
@@ -117,6 +118,7 @@ class Navbar extends Component {
                 width="45px"
               />
             )}
+            {isLogging && <Spinner />}
             <div className="collapse navbar-collapse" id="mainNavbar">
               <ul className="navbar-nav ml-auto pr-1">
                 {isAuthenticated && isMobile && (
@@ -155,20 +157,15 @@ class Navbar extends Component {
                 )}
                 {isAuthenticated && !isMobile && (
                   <li className="nav-item">
-                    <div>
-                      {/*<img
-                      className="rounded-circle"
-                      src={user.photo}
-                      width="30px"
-                      onClick={this.onSignOut}
-                    />*/}
-                      <span className="nav-link" onClick={this.onSignOut}>
-                        sair
-                      </span>
-                    </div>
+                    <span className="nav-link" onClick={this.onSignOut}>
+                      sair
+                    </span>
                   </li>
                 )}
               </ul>
+              {isAuthenticated && !isMobile && (
+                <img className="rounded-circle" src={user.photo} width="45px" />
+              )}
               <Modal
                 isOpen={this.state.modal}
                 toggle={this.toggle}

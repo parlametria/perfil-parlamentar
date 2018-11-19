@@ -143,5 +143,4 @@ export const logoutUser = () => dispatch => {
   setAuthToken(false);
   dispatch(setCurrentUser({}));
   dispatch({ type: SET_SCORE_USUARIO_LIMPO });
-  dispatch({ type: ESCONDE_PERGUNTAS });
 };
