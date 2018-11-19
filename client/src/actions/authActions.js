@@ -45,9 +45,17 @@ export const facebookLogin = response => (dispatch, getState) => {
   });
 };
 
-export const googleLogin = response => dispatch => {
+export const googleLogin = response => (dispatch, getState) => {
+  const { respostasUsuario } = getState().usuarioReducer;
+
   const tokenBlob = new Blob(
-    [JSON.stringify({ access_token: response.accessToken }, null, 2)],
+    [
+      JSON.stringify(
+        { access_token: response.accessToken, respostas: respostasUsuario },
+        null,
+        2
+      )
+    ],
     { type: "application/json" }
   );
 
