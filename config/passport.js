@@ -18,7 +18,7 @@ module.exports = () => {
           accessToken,
           refreshToken,
           profile,
-          respostas,
+          req.body.respostas,
           (err, user) => {
             return done(err, user);
           }
