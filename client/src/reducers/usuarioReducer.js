@@ -1,4 +1,4 @@
-import { SET_SCORE_USUARIO } from "../actions/types";
+import { SET_SCORE_USUARIO, SET_SCORE_USUARIO_LIMPO } from "../actions/types";
 
 const TAM_PERGUNTAS = 46; // Esse tamanho é calculado em perguntasActions, mas não sei como inicializá-lo aqui e em que momento isso seria viável porque esse reducer é chamado antes da chamada ao banco. Então, acho melhor inicializar o array com um tamanho máximo.
 
@@ -32,6 +32,14 @@ export default function(state = initialState, action) {
         quantidadeVotos: contaVotos(action.arrayRespostasUsuario),
         respondeuTodos:
           contaVotos(action.arrayRespostasUsuario) === TAM_PERGUNTAS
+      };
+    case SET_SCORE_USUARIO_LIMPO:
+      return {
+        ...state,
+        respostasUsuario: inicializaRespostasUsuario(),
+        arrayRespostasUsuario: Array(TAM_PERGUNTAS).fill(0),
+        quantidadeVotos: 0,
+        respondeuTodos: false
       };
     default:
       return state;

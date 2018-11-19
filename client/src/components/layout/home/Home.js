@@ -55,6 +55,7 @@ class Home extends Component {
     this.selecionaEstado = this.selecionaEstado.bind(this);
     this.vamosComecar = this.vamosComecar.bind(this);
     this.mostrarTodos = this.mostrarTodos.bind(this);
+    this.salvaRespostasCache = this.salvaRespostasCache.bind(this);
   }
 
   mostrarTodos() {
@@ -121,6 +122,20 @@ class Home extends Component {
         this.props.history.push("/");
       }
     }
+
+    window.addEventListener("beforeunload", this.salvaRespostasCache);
+  }
+
+  salvaRespostasCache() {
+    const { respostasUsuario, arrayRespostasUsuario } = this.props.usuario;
+    console.log(respostasUsuario);
+    localStorage.setItem("respostasUsuario", JSON.stringify(respostasUsuario));
+    localStorage.setItem("arrayRespostasUsuario", arrayRespostasUsuario);
+  }
+
+  componentWillUnmount() {
+    this.salvaRespostasCache();
+    window.removeEventListener("beforeunload", this.salvaRespostasCache);
   }
 
   render() {
@@ -198,15 +213,15 @@ class Home extends Component {
                       </select>
                     </ScrollIntoViewOnChange>
                   ) : (
-                      <select
-                        className="form-control"
-                        onChange={this.selecionaEstado}
-                        value={filtro.estado}
-                      >
-                        <option defaultValue="--">Selecione um Estado</option>
-                        {estados()}
-                      </select>
-                    )}
+                    <select
+                      className="form-control"
+                      onChange={this.selecionaEstado}
+                      value={filtro.estado}
+                    >
+                      <option defaultValue="--">Selecione um Estado</option>
+                      {estados()}
+                    </select>
+                  )}
                 </div>
               </form>
             </div>

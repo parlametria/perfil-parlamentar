@@ -1,4 +1,10 @@
-import { SET_CURRENT_USER } from "./types";
+import {
+  SET_CURRENT_USER,
+  SET_SCORE_USUARIO_LIMPO,
+  ESCONDE_PERGUNTAS,
+  IS_LOGGING,
+  SET_SCORE_USUARIO
+} from "./types";
 import axios from "axios";
 
 import setAuthToken from "../utils/setAuthToken";
@@ -28,6 +34,8 @@ export const facebookLogin = response => (dispatch, getState) => {
     mode: "cors",
     cache: "default"
   };
+
+  dispatch({ type: IS_LOGGING });
 
   fetch("api/auth/facebook", options).then(r => {
     const token = r.headers.get("authorization");
@@ -67,6 +75,8 @@ export const googleLogin = response => (dispatch, getState) => {
     cache: "default"
   };
 
+  dispatch({ type: IS_LOGGING });
+
   fetch("api/auth/google", options).then(r => {
     const token = r.headers.get("authorization");
     r.json().then(user => {
@@ -100,6 +110,18 @@ export const testaAutorizacao = () => dispatch => {
 };
 
 export const facebookLoginComCodigo = codigo => dispatch => {
+  dispatch({
+    type: SET_SCORE_USUARIO,
+    respostasUsuario: JSON.parse(localStorage.getItem("respostasUsuario")),
+    arrayRespostasUsuario: localStorage
+      .getItem("arrayRespostasUsuario")
+      .split(",")
+      .map(Number)
+  });
+
+  localStorage.removeItem("respostasUsuario");
+  localStorage.removeItem("arrayRespostasUsuario");
+
   axios.get("api/auth/usingFacebookCode/?code=" + codigo).then(response => {
     let r = response.data;
     r.accessToken = response.data.access_token;
@@ -120,4 +142,6 @@ export const logoutUser = () => dispatch => {
   localStorage.removeItem("accessToken");
   setAuthToken(false);
   dispatch(setCurrentUser({}));
+  dispatch({ type: SET_SCORE_USUARIO_LIMPO });
+  dispatch({ type: ESCONDE_PERGUNTAS });
 };
