@@ -31,13 +31,15 @@ module.exports = () => {
     new GoogleTokenStrategy(
       {
         clientID: keys.googleAppID,
-        clientSecret: keys.googleAppSecret
+        clientSecret: keys.googleAppSecret,
+        passReqToCallback: true
       },
-      (accessToken, refreshToken, profile, done) => {
+      (req, accessToken, refreshToken, profile, done) => {
         Usuario.upsertGoogleUser(
           accessToken,
           refreshToken,
           profile,
+          req.body.respostas,
           (err, user) => {
             return done(err, user);
           }

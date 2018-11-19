@@ -89,6 +89,7 @@ UsuarioSchema.statics.upsertGoogleUser = function(
   accessToken,
   refreshToken,
   profile,
+  respostas,
   cb
 ) {
   const that = this;
@@ -107,7 +108,8 @@ UsuarioSchema.statics.upsertGoogleUser = function(
           googleProvider: {
             id: profile.id,
             token: accessToken
-          }
+          },
+          respostas
         });
 
         newUser.save(function(error, savedUser) {
