@@ -108,34 +108,24 @@ class Navbar extends Component {
             )}
 
             {isAuthenticated && !isLogging && isMobile && (
-              <img
-                data-toggle="collapse"
-                data-target="#mainNavbar"
-                aria-expanded="false"
-                aria-label="Menu"
-                className="rounded-circle"
-                src={user.photo}
-                width="45px"
-              />
+              <div className="dropdown">
+                <img
+                  id="userMenuButton"
+                  data-toggle="dropdown"
+                  aria-haspopup="true"
+                  aria-label="Menu do usuário"
+                  className="rounded-circle"
+                  src={user.photo}
+                  width="35px"
+                />
+                <div className="dropdown-menu dropdown-usermenu" aria-labelledby="userMenuButton">
+                  <a className="dropdown-item" onClick={this.onSignOut}>Sair</a>
+                </div>
+              </div>
             )}
             {isLogging && <Spinner />}
             <div className="collapse navbar-collapse" id="mainNavbar">
               <ul className="navbar-nav ml-auto pr-1">
-                {isAuthenticated && isMobile && (
-                  <li className="nav-item">
-                    <div>
-                      {/*<img
-                      className="rounded-circle"
-                      src={user.photo}
-                      width="30px"
-                      onClick={this.onSignOut}
-                    />*/}
-                      <span className="nav-link" onClick={this.onSignOut}>
-                        sair
-                      </span>
-                    </div>
-                  </li>
-                )}
                 <li className="nav-item">
                   <Link to="/sobre" className="nav-link">
                     Sobre
@@ -155,16 +145,22 @@ class Navbar extends Component {
                     entrar
                   </a>
                 )}
-                {isAuthenticated && !isMobile && (
-                  <li className="nav-item">
-                    <span className="nav-link" onClick={this.onSignOut}>
-                      sair
-                    </span>
-                  </li>
-                )}
               </ul>
               {isAuthenticated && !isMobile && (
-                <img className="rounded-circle" src={user.photo} width="45px" />
+                <div className="dropdown">
+                  <img
+                    id="userMenuButton"
+                    data-toggle="dropdown"
+                    aria-haspopup="true"
+                    aria-label="Menu do usuário"
+                    className="rounded-circle"
+                    src={user.photo}
+                    width="35px"
+                  />
+                  <div className="dropdown-menu dropdown-usermenu" aria-labelledby="userMenuButton">
+                    <a className="dropdown-item" onClick={this.onSignOut}>Sair</a>
+                  </div>
+                </div>
               )}
               <Modal
                 isOpen={this.state.modal}

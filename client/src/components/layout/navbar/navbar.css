@@ -16,3 +16,7 @@
   font-size: 1.7rem;
 }
 
+.dropdown-usermenu {
+  right: 0;
+  left: auto;
+}
