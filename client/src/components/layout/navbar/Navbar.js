@@ -172,43 +172,39 @@ class Navbar extends Component {
                 className="modal-login"
               >
                 <ModalHeader toggle={this.toggle}>
-                  identifique-se para a vozativa
+                  identifique-se
                 </ModalHeader>
                 <ModalBody>
-                  <ul className="navbar-nav">
-                    <li className="nav-item">
-                      <span className="icon-google1 login-icon" />
+                  {/* Ao autenticar-se, suas respostas ficarão salvas.
+                  <br/><br/> */}
+                  <div className="row">
+                    <div className="col-lg-8 offset-lg-2">
                       <GoogleLogin
-                        className="login-text nav-link"
+                        className="btn btn-primary btn-sm btn-block"
                         clientId="791030988243-msi1r67ltvd5v1fjtajj3un1f0c0d7ds.apps.googleusercontent.com"
                         buttonText="Google"
                         onSuccess={this.googleResponse}
                         onFailure={this.onFailure}
                       >
-                        <a
-                          data-show-count="false"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                        >
-                          entre com sua conta google
+                        <a data-show-count="false" target="_blank" rel="noopener noreferrer">
+                          <span className="icon-google1" /> Entre com sua conta Google
                         </a>
                       </GoogleLogin>
-                    </li>
-
-                    <li className="nav-item">
-                      <span className="icon-facebook login-icon" />
+                      <br/>
                       <FacebookLogin
                         appId="2339282366084079"
                         autoLoad={false}
                         fields="name,email,picture"
                         callback={this.facebookResponse}
-                        cssClass="login-text nav-link"
-                        textButton="entre com sua conta facebook"
+                        cssClass="btn btn-primary btn-sm btn-block"
+                        textButton="Entre com sua conta Facebook"
+                        icon="icon-facebook"
                         tag="button"
                         redirectUri="http://localhost:3000/"
                       />
-                    </li>
-                  </ul>
+                    </div>
+                  </div>
+                  
                 </ModalBody>
               </Modal>
 
