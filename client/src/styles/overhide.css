@@ -138,6 +138,13 @@ a.nav-link.done:not([href]):not([tabindex]) {
 .btn-link:hover {
   color: #41c083;
 }
+.btn-icon {
+  color: #a963b3;
+}
+.btn-icon:hover {
+  color: #5b2762;
+  text-decoration: none;
+}
 
 .btn-group-vertical > .btn,
 .btn-group > .btn {

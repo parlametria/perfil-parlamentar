@@ -28,15 +28,19 @@
   "homepage": "https://github.com/analytics-ufcg/voz-ativa#readme",
   "dependencies": {
     "body-parser": "^1.18.3",
-    "compression": "^1.7.3",
     "concurrently": "^4.0.1",
+    "cors": "^2.8.4",
     "express": "^4.16.3",
+    "express-jwt": "^5.3.1",
+    "fbgraph": "^1.4.4",
     "heroku-logger": "^0.3.1",
-    "mongoose": "^5.2.10",
-    "react-device-detect": "^1.5.9",
-    "react-scroll": "^1.7.10",
-    "react-scroll-into-view": "^1.5.0",
-    "recompose": "^0.30.0"
+    "jsonwebtoken": "^8.3.0",
+    "mongoose": "^5.2.8",
+    "npm": "^6.4.1",
+    "passport": "^0.4.0",
+    "passport-facebook-token": "^3.3.0",
+    "passport-google-token": "^0.1.2",
+    "request": "^2.88.0"
   },
   "devDependencies": {
     "nodemon": "^1.18.3"

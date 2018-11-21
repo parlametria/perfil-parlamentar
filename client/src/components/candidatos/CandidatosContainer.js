@@ -25,8 +25,6 @@ import {
 import PropTypes from "prop-types";
 import Spinner from "../common/Spinner";
 
-import Apresentacao from "./apresentacao";
-
 import "../../styles/style.css";
 
 import { Subject } from "rxjs/Subject";
@@ -220,14 +218,12 @@ class CandidatosContainer extends Component {
       totalRespostasEstado,
       totalResponderamPartido,
       totalRespostasPartido,
-      totalEleitosPartido,
       totalEleitosEstado,
       isCarregando,
       isFiltrandoPorNome,
       mostrarTodos,
       partidos,
-      activeTab,
-      isVerTodosEleitos
+      activeTab
     } = this.props.candidatos;
 
     const {

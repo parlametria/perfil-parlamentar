@@ -46,25 +46,28 @@ class FinalPerguntas extends Component {
     return (
       <div className="container tutorial p-3">
         <h4 className="text-center p-3">
-          Agora é com você!
+          Todas as perguntas foram respondidas, agora é com você!
         </h4>
         <p>
-          <strong className="strong">Veja</strong> os deputados alinhados com você.
+          <strong className="strong">Veja</strong> os deputados alinhados com
+          você.
         </p>
         <p>
-          <strong className="strong">Cobre</strong> a participação de quem não respondeu.
+          <strong className="strong">Cobre</strong> a participação de quem não
+          respondeu.
         </p>
         <p>
-          <strong className="strong">Examine</strong> a atuação anterior dos candidatos reeleitos.
+          <strong className="strong">Examine</strong> a atuação anterior dos
+          candidatos reeleitos.
         </p>
         <p>
-          <strong className="strong">Compartilhe</strong> suas respostas nas redes sociais.
+          <strong className="strong">Compartilhe</strong> suas respostas nas
+          redes sociais.
         </p>
         <div className="row justify-content-center">
           <a
             href={
-              "https://twitter.com/intent/tweet/?text=" +
-              textoCompartilhamento
+              "https://twitter.com/intent/tweet/?text=" + textoCompartilhamento
             }
             data-show-count="false"
             className="nav-link"
@@ -94,8 +97,7 @@ class FinalPerguntas extends Component {
           {!isMobile && (
             <a
               href={
-                "https://web.whatsapp.com/send?text=" +
-                textoCompartilhamento
+                "https://web.whatsapp.com/send?text=" + textoCompartilhamento
               }
               data-show-count="false"
               className="nav-link"

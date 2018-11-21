@@ -25,6 +25,20 @@ por exemplo:
 export MONGODB_URI=mongodb://localhost:27017/voz-ativa
 ```
 
+## Conexão com os aplicativos do Google, Facebook e Twitter para login
+
+É necessário exportar as seguintes variáveis de ambiente: `FACEBOOK_APP_ID`, `FACEBOOK_APP_SECRET`, `GOOGLE_APP_ID`, `GOOGLE_APP_SECRET`, `TWITTER_CONSUMER_KEY` e `TWITTER_CONSUMER_SECRET`, por exemplo:
+
+```
+export FACEBOOK_APP_ID="MeuAPPID"
+```
+
+Além disso, é necessário exportar a variável `SECRET_OR_KEY` para a geração do _token jwt_.
+
+```
+export SECRET_OR_KEY="SECRET"
+```
+
 ## Instalando dependências:
 
 ```
