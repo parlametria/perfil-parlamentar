@@ -292,3 +292,9 @@ a.nav-link.done:not([href]):not([tabindex]) {
 .navbar-light .navbar-nav .nav-strong:hover {
   color: #41c083;
 }
+
+.dropdown-item.active,
+.dropdown-item:active {
+  background-color: #5b2762;
+  color: #ffffff !important;
+}
