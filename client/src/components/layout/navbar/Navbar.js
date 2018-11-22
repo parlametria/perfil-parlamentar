@@ -171,10 +171,9 @@ class Navbar extends Component {
                   identifique-se
                 </ModalHeader>
                 <ModalBody>
-                  {/* Ao autenticar-se, suas respostas ficarão salvas.
-                  <br/><br/> */}
                   <div className="row">
-                    <div className="col-lg-8 offset-lg-2">
+                  <div className="col-lg-8 offset-lg-2">
+                      <p>Ao entrar no Voz Ativa, suas respostas ficarão salvas para que você possa continuar de onde parou. Não guardaremos nenhuma informação sensível, apenas dados públicos (nome, e-mail e foto).</p>
                       <GoogleLogin
                         className="btn btn-primary btn-sm btn-block"
                         clientId="791030988243-msi1r67ltvd5v1fjtajj3un1f0c0d7ds.apps.googleusercontent.com"
