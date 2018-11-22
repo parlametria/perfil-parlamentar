@@ -27,7 +27,7 @@
     "react-redux": "^5.0.7",
     "react-responsive-modal": "^3.5.0",
     "react-router-dom": "^4.3.1",
-    "react-scripts": "^1.1.5",
+    "react-scripts": "2.1.1",
     "react-scroll": "^1.7.10",
     "react-scroll-into-view": "^1.5.0",
     "react-sticky-box": "^0.7.5",
@@ -47,6 +47,12 @@
     "eject": "react-scripts eject",
     "deploy": "npm run build&&gh-pages -d build"
   },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ],
   "proxy": "http://localhost:5000",
   "devDependencies": {
     "gh-pages": "^1.2.0"
