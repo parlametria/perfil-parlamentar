@@ -126,5 +126,143 @@
     "titulo": "Flexibilização das normas para uso de agrotóxicos",
     "descricao": "O Projeto de Lei 6299/2002 está em tramitação no Congresso e visa flexibilizar a legislação que compreende as normas para uso de agrotóxicos em plantações no país.",
     "tema": "Meio Ambiente"
+  },
+
+  "6675": {
+    "key": 16,
+    "numero_proj_lei": "PEC 395/2014",
+    "id_votacao": 6675,
+    "titulo": "Cobrança de cursos em universidades públicas",
+    "descricao": "Segundo o texto, o ensino público superior de graduação e de pós-graduação acadêmica continuam gratuitos, mas as instituições poderão cobrar pelos cursos de extensão, de pós-graduação lato sensu (como MBAs) e de mestrado profissional. A exceção será para os programas de residência (em saúde) e de formação de profissionais na área de ensino, que continuarão gratuitos.",
+    "tema": "Transversal / Educação"
+  },
+  "6204": {
+    "key": 17,
+    "numero_proj_lei": "PL 4330/2004",
+    "id_votacao": 6204,
+    "titulo": "Terceirização",
+    "descricao": "Entre outros pontos: terceirizar a atividade-fim; redução de 24 meses para 12 meses a chamada quarentena, período que o ex-empregado de uma empresa deve cumprir a fim de poder prestar serviços à mesma empresa por uma contratada de terceirização.",
+    "tema": "Transversal / Direitos Trabalhistas"
+  },
+  "7431": {
+    "key": 18,
+    "numero_proj_lei": "PL 4302/1998",
+    "id_votacao": 7431,
+    "titulo": "Terceirização total 2017",
+    "descricao": "O projeto de lei aprovado permite a terceirização inclusive da atividade-fim de uma empresa. Por exemplo, um hospital poderá terceirizar não apenas o serviço de limpeza (que já acontece hoje), mas a contratação de seus enfermeiros e médicos.",
+    "tema": "Transversal / Direitos Trabalhistas"
+  },
+  "7492": {
+    "key": 19,
+    "numero_proj_lei": "PL 6787/2016",
+    "id_votacao": 7492,
+    "titulo": "Lei Trabalhista",
+    "descricao": "Alguns pontos da reforma da CLT: acordos coletivos na empresa entre patrão e funcionário poderão ser feitos independentemente do que prevê a lei trabalhista; mulher grávida ou lactante poderá trabalhar em ambientes considerados insalubre, desde que apresente um atestado médico que garanta que não há risco ao bebê nem à mãe; intervalo de almoço de no mínimo 30 minutos; fim da obrigatoriedade da contribuiçao sindical; novas modalidades de contratação: trabalho intermitente e home-office.",
+    "tema": "Transversal / Direitos Trabalhistas"
+  },
+  "6286": {
+    "key": 20,
+    "numero_proj_lei": "MPV 665/2014",
+    "id_votacao": 6286,
+    "titulo": "Seguro Desemprego",
+    "descricao": "Com a lei fica mais difícil o acesso ao seguro-desemprego, ao abono salarial e ao seguro-defeso. Por exemplo: antes era necessário que um empregado tivesse um tempo de trabalho de no mínimo 6 meses para solicitar o seguro-desemprego no ato da demissão. Com a lei esse tempo mínimo passou para 1 ano. O objetivo da lei é reduzir os gastos.",
+    "tema": "Transversal / Direitos Trabalhistas"
+  },
+  "6358": {
+    "key": 21,
+    "numero_proj_lei": "PEC 182/2007",
+    "id_votacao": 6358,
+    "titulo": "Distritão",
+    "descricao": "Neste sistema, Estados e o Distrito Federal são transformados em distritos eleitorais e os candidatos eleitos são aqueles que conseguem o maior número de votos em cada distrito (semelhante nas eleições para presidente, governador e prefeito, onde quem tem o maior número de votos é eleito). Atualmente o sistema em vigor é o Sistema Proporcional.",
+    "tema": "Eleitoral"
+  },
+  "6370": {
+    "key": 22,
+    "numero_proj_lei": "PEC 182/2007",
+    "id_votacao": 6370,
+    "titulo": "Financiamento privado para partidos e candidatos",
+    "descricao": "Torna possível financiamento privado de campanhas com doações de pessoas físicas e jurídicas para os partidos políticos e com doações de pessoas físicas para candidatos.",
+    "tema": "Eleitoral"
+  },
+  "6359": {
+    "key": 23,
+    "numero_proj_lei": "PEC 182/2007",
+    "id_votacao": 6359,
+    "titulo": "Fim da reeleição nos cargos executivos",
+    "descricao": "Fim da reeleição para presidente da República, governador e prefeito.",
+    "tema": "Eleitoral"
+  },
+  "6354": {
+    "key": 24,
+    "numero_proj_lei": "PEC 182/2007",
+    "id_votacao": 6354,
+    "titulo": "Financiamento privado para partidos",
+    "descricao": "Financiamento privado de campanhas para partidos políticos. Não é permitido o financiamento para candidatos.",
+    "tema": "Eleitoral"
+  },
+  "6371": {
+    "key": 25,
+    "numero_proj_lei": "PEC 182/2007",
+    "id_votacao": 6371,
+    "titulo": "Coincidência reeleição",
+    "descricao": "As eleições municipais, estaduais e federais seriam no mesmo ano.",
+    "tema": "Eleitoral"
+  },
+  "6352": {
+    "key": 26,
+    "numero_proj_lei": "PEC 182/2007",
+    "id_votacao": 6352,
+    "titulo": "Tempo mandato",
+    "descricao": "Mudança no tempo de mandato dos cargos do executivo (prefeito, governador e presidente) para 5 anos. Atualmente o mandato é de 4 anos.",
+    "tema": "Eleitoral"
+  },
+  "6369": {
+    "key": 27,
+    "numero_proj_lei": "PEC 182/2007",
+    "id_votacao": 6369,
+    "titulo": "Voto Facultativo",
+    "descricao": "Não obrigatoriedade do voto.",
+    "tema": "Eleitoral"
+  },
+  "6377": {
+    "key": 28,
+    "numero_proj_lei": "PEC 182/2007",
+    "id_votacao": 6377,
+    "titulo": "Cota para mulheres legislativo",
+    "descricao": "O texto previa uma espécie de reserva de vagas para as mulheres nas próximas três legislaturas. Na primeira delas, de 10% do total de cadeiras na Câmara dos Deputados, nas assembleias legislativas estaduais, nas câmaras de vereadores e na Câmara Legislativa do Distrito Federal. Na segunda legislatura, o percentual subiria para 12% e, na terceira, para 15%.",
+    "tema": "Eleitoral"
+  },
+  "6378": {
+    "key": 29,
+    "numero_proj_lei": "PEC 182/2007",
+    "id_votacao": 6378,
+    "titulo": "Voto impresso",
+    "descricao": "Impressão do voto.",
+    "tema": "Eleitoral"
+  },
+
+  "6310": {
+    "key": 30,
+    "numero_proj_lei": "MPV 664/2014",
+    "id_votacao": 6310,
+    "titulo": "Pensão por morte",
+    "descricao": "Pelo texto aprovado, os cônjuges só poderão requerer pensão por morte do companheiro se o tempo de união estável ou casamento for de mais de dois anos e o segurado tiver contribuído para o INSS por, no mínimo, um ano e meio. Antes, não era exigido tempo mínimo de contribuição para que os dependentes tivessem direito ao benefício, mas era necessário que, na data da morte, o segurado estivesse contribuindo para a Previdência Social",
+    "tema": "Transversal"
+  },
+  "6575": {
+    "key": 31,
+    "numero_proj_lei": "PLP 366/2013",
+    "id_votacao": 6575,
+    "titulo": "Tributação serviços de internet",
+    "descricao": "Novas regras para o ISS (Imposto sobre Serviços). O texto-base fixa em 2% a alíquota do ISS (Imposto sobre Serviços), tentando acabar com a guerra fiscal entre os municípios. Além disso, O projeto inclui novos serviços na lista daqueles que podem ser tributados como aplicação de tatuagens, piercings e congêneres; vigilância e monitoramento de bens móveis; e disponibilização de conteúdos de áudio, vídeo, imagem e texto em páginas eletrônicas, exceto no caso de jornais, livros e periódicos.",
+    "tema": "Transversal"
+  },
+  "6502": {
+    "key": 32,
+    "numero_proj_lei": "PL 2016/2015",
+    "id_votacao": 6502,
+    "titulo": "Tipificação do terrorismo",
+    "descricao": "A votação do projeto de lei tipifica o crime de terrorismo. O texto aprovado tipifica o terrorismo como a prática, por um ou mais indivíduos, de atos por razões de xenofobia, discriminação ou preconceito de raça, cor, etnia ou religião, com a finalidade de provocar terror social ou generalizado, expondo a perigo pessoa, patrimônio, a paz pública ou a incolumidade pública. O texto prevê pena de reclusão de 12 a 30 anos em regime fechado, sem prejuízo das penas relativas a outras infrações decorrentes desse crime.",
+    "tema": "Transversal"
   }
 }
