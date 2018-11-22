@@ -78,7 +78,7 @@ router.get("/usingFacebookCode", (req, res) => {
   graph.authorize(
     {
       client_id: keys.facebookAppID,
-      redirect_uri: "http://localhost:3000/",
+      redirect_uri: "https://voz-ativa.herokuapp.com/",
       client_secret: keys.facebookAppSecret,
       code: req.query.code
     },
