@@ -108,34 +108,24 @@ class Navbar extends Component {
             )}
 
             {isAuthenticated && !isLogging && isMobile && (
-              <img
-                data-toggle="collapse"
-                data-target="#mainNavbar"
-                aria-expanded="false"
-                aria-label="Menu"
-                className="rounded-circle"
-                src={user.photo}
-                width="45px"
-              />
+              <div className="dropdown">
+                <img
+                  id="userMenuButton"
+                  data-toggle="dropdown"
+                  aria-haspopup="true"
+                  aria-label="Menu do usuário"
+                  className="rounded-circle"
+                  src={user.photo}
+                  width="35px"
+                />
+                <div className="dropdown-menu dropdown-usermenu" aria-labelledby="userMenuButton">
+                  <a className="dropdown-item" onClick={this.onSignOut}>Sair</a>
+                </div>
+              </div>
             )}
             {isLogging && <Spinner />}
             <div className="collapse navbar-collapse" id="mainNavbar">
               <ul className="navbar-nav ml-auto pr-1">
-                {isAuthenticated && isMobile && (
-                  <li className="nav-item">
-                    <div>
-                      {/*<img
-                      className="rounded-circle"
-                      src={user.photo}
-                      width="30px"
-                      onClick={this.onSignOut}
-                    />*/}
-                      <span className="nav-link" onClick={this.onSignOut}>
-                        sair
-                      </span>
-                    </div>
-                  </li>
-                )}
                 <li className="nav-item">
                   <Link to="/sobre" className="nav-link">
                     Sobre
@@ -155,16 +145,22 @@ class Navbar extends Component {
                     entrar
                   </a>
                 )}
-                {isAuthenticated && !isMobile && (
-                  <li className="nav-item">
-                    <span className="nav-link" onClick={this.onSignOut}>
-                      sair
-                    </span>
-                  </li>
-                )}
               </ul>
               {isAuthenticated && !isMobile && (
-                <img className="rounded-circle" src={user.photo} width="45px" />
+                <div className="dropdown">
+                  <img
+                    id="userMenuButton"
+                    data-toggle="dropdown"
+                    aria-haspopup="true"
+                    aria-label="Menu do usuário"
+                    className="rounded-circle"
+                    src={user.photo}
+                    width="35px"
+                  />
+                  <div className="dropdown-menu dropdown-usermenu" aria-labelledby="userMenuButton">
+                    <a className="dropdown-item" onClick={this.onSignOut}>Sair</a>
+                  </div>
+                </div>
               )}
               <Modal
                 isOpen={this.state.modal}
@@ -172,43 +168,39 @@ class Navbar extends Component {
                 className="modal-login"
               >
                 <ModalHeader toggle={this.toggle}>
-                  identifique-se para a vozativa
+                  identifique-se
                 </ModalHeader>
                 <ModalBody>
-                  <ul className="navbar-nav">
-                    <li className="nav-item">
-                      <span className="icon-google1 login-icon" />
+                  {/* Ao autenticar-se, suas respostas ficarão salvas.
+                  <br/><br/> */}
+                  <div className="row">
+                    <div className="col-lg-8 offset-lg-2">
                       <GoogleLogin
-                        className="login-text nav-link"
+                        className="btn btn-primary btn-sm btn-block"
                         clientId="791030988243-msi1r67ltvd5v1fjtajj3un1f0c0d7ds.apps.googleusercontent.com"
                         buttonText="Google"
                         onSuccess={this.googleResponse}
                         onFailure={this.onFailure}
                       >
-                        <a
-                          data-show-count="false"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                        >
-                          entre com sua conta google
+                        <a data-show-count="false" target="_blank" rel="noopener noreferrer">
+                          <span className="icon-google1" /> Entre com sua conta Google
                         </a>
                       </GoogleLogin>
-                    </li>
-
-                    <li className="nav-item">
-                      <span className="icon-facebook login-icon" />
+                      <br/>
                       <FacebookLogin
                         appId="2339282366084079"
                         autoLoad={false}
                         fields="name,email,picture"
                         callback={this.facebookResponse}
-                        cssClass="login-text nav-link"
-                        textButton="entre com sua conta facebook"
+                        cssClass="btn btn-primary btn-sm btn-block"
+                        textButton="Entre com sua conta Facebook"
+                        icon="icon-facebook"
                         tag="button"
                         redirectUri="http://localhost:3000/"
                       />
-                    </li>
-                  </ul>
+                    </div>
+                  </div>
+                  
                 </ModalBody>
               </Modal>
 
