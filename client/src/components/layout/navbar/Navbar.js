@@ -196,7 +196,7 @@ class Navbar extends Component {
                         textButton="Entre com sua conta Facebook"
                         icon="icon-facebook"
                         tag="button"
-                        redirectUri="https://voz-ativa.herokuapp.com"
+                        redirectUri="https://vozativa-producao.herokuapp.com"
                       />
                     </div>
                   </div>
