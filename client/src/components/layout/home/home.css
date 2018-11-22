@@ -8,6 +8,22 @@
   margin-bottom: 3rem;
   max-width: 720px;
 }
+
+.share-box{
+  width: 50px;
+  height: 120px;
+  display: block;
+  float:right;
+  list-style-type: none;
+  padding: 0px 2px;
+  margin: 0;
+  z-index: 9999;
+}
+
+.share-element{
+  padding: 5px 0px;
+  
+}
 .grid-wrapper {
   min-height: 60vh;
 }
