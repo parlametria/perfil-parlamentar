@@ -66,11 +66,10 @@ class PerguntasContainer extends Component {
   }
 
   registraResposta(novaResposta) {
-    const { respostasUsuario, arrayRespostasUsuario } = this.props.usuario;
+    const { respostasUsuario } = this.props.usuario;
 
 
     respostasUsuario[novaResposta.id] = novaResposta.resposta;
-    arrayRespostasUsuario[novaResposta.id] = novaResposta.resposta;
     this.props.salvaRespostasUsuario(respostasUsuario);
 
 
@@ -83,7 +82,7 @@ class PerguntasContainer extends Component {
       "www.vozativa.org/" +
       this.props.candidatos.filtro.estado +
       "/" +
-      criaURL(this.props.usuario.arrayRespostasUsuario);
+      criaURL(this.props.usuario.respostasUsuario);
     return url;
   }
 

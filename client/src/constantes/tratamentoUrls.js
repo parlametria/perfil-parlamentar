@@ -1,4 +1,5 @@
 import { listaEstados } from "./filtrosSeletoresCandidatos";
+const TAM_PERGUNTAS = 46;
 
 export const getArrayUrl = url => {
   let arrayUrl = [];
@@ -28,8 +29,13 @@ export const getDict = arrayUrl => {
   return dictUrl;
 };
 
-export const criaURL = arrayVotos => {
+export const criaURL = respostasUsuario => {
   //receber o dict e dentro fazer o array
+  const arrayVotos = Array(TAM_PERGUNTAS).fill(0);
+
+  for (var id in respostasUsuario) {
+    arrayVotos[id] = respostasUsuario[id];
+  }
   let urlVotos = "";
   arrayVotos.forEach(voto => {
     urlVotos = urlVotos + voto;

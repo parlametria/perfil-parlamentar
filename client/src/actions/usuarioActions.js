@@ -33,7 +33,7 @@ export const getRespostasUsuario = () => (dispatch) => {
   axios.get("/api/usuarios/respostas/eu")
     .then(res => {
       const respostasUsuario = res.data;
-
+      ''
       dispatch(salvaScoreUsuario(respostasUsuario));
     })
 }

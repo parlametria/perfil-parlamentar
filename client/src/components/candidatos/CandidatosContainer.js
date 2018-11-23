@@ -227,7 +227,7 @@ class CandidatosContainer extends Component {
 
     const { paginacao } = this.props.candidatos;
 
-    const { arrayRespostasUsuario, quantidadeVotos } = this.props.usuario;
+    const { respostasUsuario, quantidadeVotos } = this.props.usuario;
 
     const candidatosMapeaveis =
       filtro.nome !== "" ||
@@ -277,7 +277,7 @@ class CandidatosContainer extends Component {
                 ".jpg"
                 : "https://s3-sa-east-1.amazonaws.com/fotoscandidatos2018/fotos_tratadas/nophoto.png"
             }
-            arrayRespostasUsuario={arrayRespostasUsuario}
+            respostasUsuario={respostasUsuario}
             email={candidato.email}
             reeleicao={candidato.reeleicao === "0" ? false : true}
             reeleito={
