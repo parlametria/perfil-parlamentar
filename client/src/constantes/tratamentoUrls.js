@@ -29,6 +29,7 @@ export const getDict = arrayUrl => {
 };
 
 export const criaURL = arrayVotos => {
+  //receber o dict e dentro fazer o array
   let urlVotos = "";
   arrayVotos.forEach(voto => {
     urlVotos = urlVotos + voto;

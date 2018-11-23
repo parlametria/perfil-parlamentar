@@ -8,6 +8,7 @@ export const getDadosVotacoes = () => dispatch => {
   let dadosVotacoes = {};
   Object.keys(votacoes).forEach(id => {
     dadosVotacoes[votacoes[id].id_votacao] = votacoes[id];
+    //fazer a transformacao
   });
   dispatch({ type: SET_DADOS_VOTACOES, dadosVotacoes });
 };
