@@ -66,13 +66,11 @@ class PerguntasContainer extends Component {
   }
 
   registraResposta(novaResposta) {
-    const { respostasUsuario, arrayRespostasUsuario } = this.props.usuario;
+    const { respostasUsuario } = this.props.usuario;
 
-
-    respostasUsuario[novaResposta.id] = novaResposta.resposta;
-    arrayRespostasUsuario[novaResposta.id] = novaResposta.resposta;
+    respostasUsuario.vozAtiva[novaResposta.id] = novaResposta.resposta;
+    //arrayRespostasUsuario[novaResposta.id] = novaResposta.resposta;
     this.props.salvaRespostasUsuario(respostasUsuario);
-
 
     this.props.calculaScore();
     this.passaPergunta();
@@ -173,7 +171,7 @@ class PerguntasContainer extends Component {
     if (!isEmpty(dadosPerguntas)) {
       const dadosPergunta = dadosPerguntas[indexPergunta];
 
-      const { respostasUsuario } = this.props.usuario;
+      const { vozAtiva: respostasUsuario } = this.props.usuario.respostasUsuario;
 
       // Constrói os eixos (isso idealmente deve vir de um bd, algo assim)
       let nomeTemas = new Set();
