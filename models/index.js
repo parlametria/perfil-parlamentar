@@ -2,22 +2,30 @@ const Sequelize = require("sequelize");
 const logger = require("heroku-logger");
 
 // Models
-const ProposicaoModel = "./Prop.js";
-const PerguntaModel = "./Perg.js";
-const CandidatoModel = "./Cand.js";
-const UsuarioModel = "./Usuario.js";
-const TemaModel = "./tema.js";
-const VotacaoModel = "./votacao.js";
-const RespostaModel = "./resposta.js";
+const ProposicaoModel = "./postgres/proposicao.js";
+const PerguntaModel = "./postgres/pergunta.js";
+const CandidatoModel = "./postgres/candidato.js";
+const UsuarioModel = "./postgres/usuario.js";
+const TemaModel = "./postgres/tema.js";
+const VotacaoModel = "./postgres/votacao.js";
+const RespostaModel = "./postgres/resposta.js";
 
 if (!global.hasOwnProperty("models")) {
   const db = require("../config/keys").postgresURI;
 
   // Connect to Postgres
-  const sequelize = new Sequelize(db, {
+  const sequelize = new Sequelize("vozativa", "postgres", "senha", {
+    host: "localhost",
     dialect: "postgres",
+    operatorsAliases: false,
     dialectOptions: {
       ssl: true
+    },
+    pool: {
+      max: 5,
+      min: 0,
+      acquire: 30000,
+      idle: 10000
     }
   });
 
@@ -36,9 +44,9 @@ if (!global.hasOwnProperty("models")) {
     usuario: sequelize.import(UsuarioModel),
     candidato: sequelize.import(CandidatoModel),
     pergunta: sequelize.import(PerguntaModel),
-    proposicoe: sequelize.import(ProposicaoModel),
+    proposicao: sequelize.import(ProposicaoModel),
     tema: sequelize.import(TemaModel),
-    votacoe: sequelize.import(VotacaoModel),
+    votacao: sequelize.import(VotacaoModel),
     resposta: sequelize.import(RespostaModel)
     // RespostaU: sequelize.import(RespostaModel),
     // VotacaoU: sequelize.import(VotacaoModel)
