@@ -162,7 +162,7 @@ Candidato.propTypes = {
   score: PropTypes.number.isRequired,
   respostas: PropTypes.any.isRequired,
   foto: PropTypes.string.isRequired,
-  respostasUsuario: PropTypes.array.isRequired,
+  respostasUsuario: PropTypes.object.isRequired,
   email: PropTypes.string.isRequired
 };
 

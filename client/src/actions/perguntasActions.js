@@ -24,7 +24,7 @@ export const getDadosPerguntas = () => dispatch => {
     dadosPerguntas[perguntas[key].id] = perguntas[key];
   });
 
-  dispatch({ type: SET_DADOS_PERGUNTAS, dadosPerguntas });
+  dispatch({ type: SET_DADOS_PERGUNTAS, dadosPerguntas, TAM_PERGUNTAS });
 };
 
 export const setPerguntasCarregando = () => {

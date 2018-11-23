@@ -55,8 +55,15 @@ const comparaRespostas = (
 // Recebe um dicionário das respostas dos candidatos no formato {id_cand: [array_resp]} e retorna um dicionário no formato {id_cand: score}
 export const calculaScore = () => (dispatch, getState) => {
   const { respostasUsuario } = getState().usuarioReducer;
-  const { arrayRespostasUsuario } = getState().usuarioReducer;
+  const { TAM_PERGUNTAS } = getState().perguntasReducer;
   const respostasCandidatos = getState().candidatosReducer.dadosCandidatos;
+
+  const arrayRespostasUsuario = Array(TAM_PERGUNTAS).fill(0);
+
+  for (var id in respostasUsuario) {
+    arrayRespostasUsuario[id] = respostasUsuario[id];
+  }
+
   const quantValidos = arrayRespostasUsuario.filter(
     value => value !== 0 && value !== -2
   ).length;

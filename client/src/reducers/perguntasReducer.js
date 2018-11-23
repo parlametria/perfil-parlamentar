@@ -11,6 +11,7 @@ import {
 
 const initialState = {
   dadosPerguntas: {},
+  TAM_PERGUNTAS: 0,
   isCarregando: false,
   indexPergunta: 0,
   filtroTema: "Meio Ambiente",
@@ -20,7 +21,7 @@ const initialState = {
   isContinuarRespondendo: false
 };
 
-export default function(state = initialState, action) {
+export default function (state = initialState, action) {
   switch (action.type) {
     case PERGUNTAS_CARREGANDO:
       return {
@@ -31,6 +32,7 @@ export default function(state = initialState, action) {
       return {
         ...state,
         dadosPerguntas: action.dadosPerguntas,
+        TAM_PERGUNTAS: action.TAM_PERGUNTAS,
         isCarregando: false
       };
     case SET_INDEX_PERGUNTA:
