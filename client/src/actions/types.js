@@ -1,6 +1,7 @@
 // Users types
 export const SET_CURRENT_USER = "SET_CURRENT_USER";
 export const SET_SCORE_USUARIO = "SET_SCORE_USUARIO";
+export const SET_SCORE_USUARIO_LIMPO = "SET_SCORE_USUARIO_LIMPO";
 
 // Candidate types
 export const SET_DADOS_CANDIDATOS = "SET_DADOS_CANDIDATOS";
@@ -39,3 +40,6 @@ export const SET_CONTINUAR_RESPONDENDO = "SET_CONTINUAR_RESPONDENDO";
 // Votacoes types
 export const SET_DADOS_VOTACOES = "SET_DADOS_VOTACOES";
 export const VOTACOES_CARREGANDO = "VOTACOES_CARREGANDO";
+
+// Auth types
+export const IS_LOGGING = "IS_LOGGING";

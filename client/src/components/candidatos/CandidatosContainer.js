@@ -25,21 +25,12 @@ import {
 import PropTypes from "prop-types";
 import Spinner from "../common/Spinner";
 
-import Apresentacao from "./apresentacao";
-
 import "../../styles/style.css";
 
 import { Subject } from "rxjs/Subject";
+import { debounceTime } from 'rxjs/operators'
 
-import "rxjs/add/observable/of";
-import "rxjs/add/observable/fromPromise";
-
-import "rxjs/add/operator/catch";
-import "rxjs/add/operator/switchMap";
 import "rxjs/add/operator/debounceTime";
-import "rxjs/add/operator/distinctUntilChanged";
-import "rxjs/add/operator/map";
-import "rxjs/add/operator/filter";
 
 import {
   TAM_PAGINA,
@@ -220,14 +211,12 @@ class CandidatosContainer extends Component {
       totalRespostasEstado,
       totalResponderamPartido,
       totalRespostasPartido,
-      totalEleitosPartido,
       totalEleitosEstado,
       isCarregando,
       isFiltrandoPorNome,
       mostrarTodos,
       partidos,
-      activeTab,
-      isVerTodosEleitos
+      activeTab
     } = this.props.candidatos;
 
     const {
@@ -610,15 +599,13 @@ class CandidatosContainer extends Component {
   }
 
   componentDidMount() {
-    this.subscription = this.onSearch$
-      .debounceTime(DEBOUNCE_TIME)
-      .subscribe(debounced => {
-        this.props.setCandidatosFiltrados();
-        this.setState({
-          debounced,
-          isPesquisando: false
-        });
+    this.subscription = this.onSearch$.pipe(debounceTime(DEBOUNCE_TIME)).subscribe(debounced => {
+      this.props.setCandidatosFiltrados();
+      this.setState({
+        debounced,
+        isPesquisando: false
       });
+    });
   }
 
   componentWillUnmount() {

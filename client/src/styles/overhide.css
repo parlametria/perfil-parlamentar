@@ -138,6 +138,13 @@ a.nav-link.done:not([href]):not([tabindex]) {
 .btn-link:hover {
   color: #41c083;
 }
+.btn-icon {
+  color: #a963b3;
+}
+.btn-icon:hover {
+  color: #5b2762;
+  text-decoration: none;
+}
 
 .btn-group-vertical > .btn,
 .btn-group > .btn {
@@ -284,4 +291,10 @@ a.nav-link.done:not([href]):not([tabindex]) {
 .navbar-light .navbar-nav .nav-strong:focus,
 .navbar-light .navbar-nav .nav-strong:hover {
   color: #41c083;
+}
+
+.dropdown-item.active,
+.dropdown-item:active {
+  background-color: #5b2762;
+  color: #ffffff !important;
 }

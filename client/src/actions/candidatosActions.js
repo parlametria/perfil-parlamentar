@@ -19,18 +19,12 @@ import {
   SET_TOTAL_RESPOSTAS_PARTIDO,
   SET_ACTIVE_TAB,
   SET_TOTAL_ELEITOS_ESTADO,
-  SET_TOTAL_ELEITOS_PARTIDO,
   SET_VER_TODOS_ELEITOS
 } from "./types";
 
 import { TAM_PAGINA, ITENS_POR_REQ } from "../constantes/constantesCandidatos";
 
-import {
-  filtraPorNome,
-  filtraPorPartido,
-  filtraPorNomeEPartido,
-  filtra
-} from "../services/FiltroService";
+import { filtra } from "../services/FiltroService";
 
 import { buscaCPF } from "../services/BuscaService";
 
@@ -47,10 +41,10 @@ const comparaRespostas = (
   chaves.forEach(idPergunta => {
     respostasIguais +=
       respostasCandidatos[idPergunta] !== undefined &&
-      respostasCandidatos[idPergunta] !== null &&
-      respostasUsuario[idPergunta] !== 0 &&
-      respostasUsuario[idPergunta] !== -2 &&
-      respostasCandidatos[idPergunta] === respostasUsuario[idPergunta]
+        respostasCandidatos[idPergunta] !== null &&
+        respostasUsuario[idPergunta] !== 0 &&
+        respostasUsuario[idPergunta] !== -2 &&
+        respostasCandidatos[idPergunta] === respostasUsuario[idPergunta]
         ? 1
         : 0;
   });
@@ -265,9 +259,9 @@ export const getDadosCandidatos = () => (dispatch, getState) => {
         axios
           .get(
             "/api/respostas/estados/" +
-              filtro.estado +
-              "/naoresponderam?pageNo=1&size=" +
-              ITENS_POR_REQ
+            filtro.estado +
+            "/naoresponderam?pageNo=1&size=" +
+            ITENS_POR_REQ
           )
           .then(respostas => {
             respostas.data.data.forEach(resp => {
@@ -383,10 +377,10 @@ export const setCandidatosFiltrados = () => (dispatch, getState) => {
   axios
     .get(
       "api/respostas/estados/" +
-        filtro.estado +
-        "/partidos/" +
-        filtro.partido +
-        "/responderam"
+      filtro.estado +
+      "/partidos/" +
+      filtro.partido +
+      "/responderam"
     )
     .then(totalCandidatos =>
       dispatch({
@@ -429,7 +423,7 @@ export const setCandidatosFiltrados = () => (dispatch, getState) => {
           else return -1;
         }
         return 0;
-      }
+      } else return 0;
     });
 
     dispatch({
@@ -443,9 +437,9 @@ export const setCandidatosFiltrados = () => (dispatch, getState) => {
         final: TAM_PAGINA,
         totalCandidatos:
           filtro.partido !== "Partidos" ||
-          filtro.nome !== "" ||
-          filtro.reeleicao !== "-1" ||
-          filtro.responderam !== "-1"
+            filtro.nome !== "" ||
+            filtro.reeleicao !== "-1" ||
+            filtro.responderam !== "-1"
             ? candidatos.length
             : candidatosRanqueados.length
       })
@@ -467,10 +461,10 @@ export const setPartidos = () => (dispatch, getState) => {
   axios
     .get(
       "api/respostas/estados/" +
-        filtro.estado +
-        "/partidos" +
-        "?eleito=" +
-        eleito
+      filtro.estado +
+      "/partidos" +
+      "?eleito=" +
+      eleito
     )
     .then(partidos => {
       dispatch({ type: SET_PARTIDOS, partidos: partidos.data.data });
@@ -501,11 +495,11 @@ export const getProximaPaginaCandidatos = () => (dispatch, getState) => {
   axios
     .get(
       "/api/respostas/estados/" +
-        filtro.estado +
-        "/naoresponderam?pageNo=" +
-        paginacao.paginaAtualAPI +
-        "&size=" +
-        ITENS_POR_REQ
+      filtro.estado +
+      "/naoresponderam?pageNo=" +
+      paginacao.paginaAtualAPI +
+      "&size=" +
+      ITENS_POR_REQ
     )
     .then(respostas => {
       respostas.data.data.forEach(resposta => {
