@@ -1,6 +1,8 @@
 import { SET_SCORE_USUARIO } from "./types";
 import axios from "axios";
 
+import { calculaScore } from "./candidatosActions";
+
 const TAM_PERGUNTAS = 46;
 
 export const salvaScoreUsuario = (respostasUsuario) => {
@@ -35,5 +37,6 @@ export const getRespostasUsuario = () => (dispatch) => {
       const respostasUsuario = res.data;
 
       dispatch(salvaScoreUsuario(respostasUsuario));
+      dispatch(calculaScore());
     })
 }
