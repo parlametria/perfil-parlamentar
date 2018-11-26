@@ -195,7 +195,6 @@ class PerguntasContainer extends Component {
           </li>
         );
       });
-      { console.log(respostasUsuario) }
 
       indicadorPergunta = dadosPerguntas
         .filter(pergunta => pergunta.tema === filtroTema)
