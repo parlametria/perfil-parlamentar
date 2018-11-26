@@ -52,6 +52,19 @@ if (!global.hasOwnProperty("models")) {
     // VotacaoU: sequelize.import(VotacaoModel)
     // add your other models here
   };
+
+  sequelize.sync({ force: true }).then(() => {
+    logger.info(`Database & tables created!`);
+    sequelize
+      .query(
+        "copy respostas FROM '/home/luizacs/Documentos/respostas.csv' DELIMITER ',' CSV HEADER;"
+      )
+      .spread((results, metadata) => {
+        // Results will be an empty array and metadata will contain the number of affected rows.
+        console.log("Inserted rows");
+      });
+  });
+
   // global.models.Resposta.hasOne(global.models.Candidato, {
   //   foreignKey: "cand_cpf"
   // });

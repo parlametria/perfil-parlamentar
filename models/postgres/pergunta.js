@@ -1,5 +1,5 @@
 module.exports = (sequelize, type) => {
-  return sequelize.define("pergunta", {
+  return sequelize.define("perguntas", {
     texto: type.STRING,
     id: {
       type: type.INTEGER,
