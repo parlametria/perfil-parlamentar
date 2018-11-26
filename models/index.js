@@ -5,7 +5,6 @@ const logger = require("heroku-logger");
 const ProposicaoModel = "./postgres/proposicao.js";
 const PerguntaModel = "./postgres/pergunta.js";
 const CandidatoModel = "./postgres/candidato.js";
-const UsuarioModel = "./postgres/usuario.js";
 const TemaModel = "./postgres/tema.js";
 const VotacaoModel = "./postgres/votacao.js";
 const RespostaModel = "./postgres/resposta.js";
@@ -14,7 +13,7 @@ if (!global.hasOwnProperty("models")) {
   const db = require("../config/keys").postgresURI;
 
   // Connect to Postgres
-  const sequelize = new Sequelize("vozativa", "postgres", "senha", {
+  const sequelize = new Sequelize("vozativa", "postgres", "v0z4tiva18#", {
     host: "localhost",
     dialect: "postgres",
     operatorsAliases: false,
@@ -41,7 +40,6 @@ if (!global.hasOwnProperty("models")) {
   global.models = {
     Sequelize: Sequelize,
     sequelize: sequelize,
-    usuario: sequelize.import(UsuarioModel),
     candidato: sequelize.import(CandidatoModel),
     pergunta: sequelize.import(PerguntaModel),
     proposicao: sequelize.import(ProposicaoModel),
@@ -54,52 +52,51 @@ if (!global.hasOwnProperty("models")) {
   };
 
   sequelize.sync({ force: true }).then(() => {
-    logger.info(`Database & tables created!`);
     sequelize
       .query(
         "copy respostas FROM '/home/luizacs/Documentos/respostas.csv' DELIMITER ',' CSV HEADER;"
       )
       .spread((results, metadata) => {
         // Results will be an empty array and metadata will contain the number of affected rows.
-        console.log("Inserted rows");
+        console.log("Inserted respostas");
+      });
+
+    sequelize
+      .query(
+        "copy candidatos FROM '/home/luizacs/Documentos/candidatos.csv' DELIMITER ',' CSV HEADER;"
+      )
+      .spread((results, metadata) => {
+        console.log("Inserted candidatos");
+      });
+    sequelize
+      .query(
+        "copy votacoes FROM '/home/luizacs/Documentos/votacoes.csv' DELIMITER ',' CSV HEADER;"
+      )
+      .spread((results, metadata) => {
+        console.log("Inserted votacoes");
+      });
+
+    sequelize
+      .query(
+        "copy temas FROM '/home/luizacs/Documentos/temas.csv' DELIMITER ',' CSV HEADER;"
+      )
+      .spread((results, metadata) => {
+        console.log("Inserted temas");
+      });
+    sequelize
+      .query(
+        "copy perguntas FROM '/home/luizacs/Documentos/perguntas.csv' DELIMITER ',' CSV HEADER;"
+      )
+      .spread((results, metadata) => {
+        console.log("Inserted perguntas");
+      });
+    sequelize
+      .query(
+        "copy proposicoes FROM '/home/luizacs/Documentos/proposicoes.csv' DELIMITER ',' CSV HEADER;"
+      )
+      .spread((results, metadata) => {
+        console.log("Inserted proposicoes");
       });
   });
-
-  // global.models.Resposta.hasOne(global.models.Candidato, {
-  //   foreignKey: "cand_cpf"
-  // });
-
-  // global.models.Resposta.hasOne(global.models.Pergunta, {
-  //   foreignKey: "pergunta_id"
-  // });
-
-  // global.models.Votacao.hasOne(global.models.Candidato, {
-  //   foreignKey: "cand_cpf"
-  // });
-
-  // global.models.Votacao.hasOne(global.models.Proposicao, {
-  //   foreignKey: "proposicao_id"
-  // });
-
-  // global.models.Pergunta.hasOne(global.models.Tema, { foreignKey: "tema_id" });
-  // global.models.Proposicao.hasOne(global.models.Tema, {
-  //   foreignKey: "tema_id"
-  // });
-
-  // global.models.VotacaoU.hasOne(global.models.Usuario, {
-  //   foreignKey: "usr_id"
-  // });
-
-  // global.models.VotacaoU.hasOne(global.models.Proposicao, {
-  //   foreignKey: "proposicao_id"
-  // });
-
-  // global.models.RespostaU.hasOne(global.models.Usuario, {
-  //   foreignKey: "usr_id"
-  // });
-
-  // global.models.RespostaU.hasOne(global.models.Pergunta, {
-  //   foreignKey: "pergunta_id"
-  // });
 }
 module.exports = global.models;

@@ -7,7 +7,7 @@ module.exports = (sequelize, type) => {
       primaryKey: true
     },
     titulo: type.STRING,
-    descricao: type.STRING,
+    descricao: type.STRING(500),
     tema_id: type.INTEGER
   });
 };

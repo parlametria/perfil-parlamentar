@@ -1,6 +1,6 @@
 module.exports = (sequelize, type) => {
   return sequelize.define("votacoe", {
-    user_id: type.INTEGER,
+    cpf: type.STRING,
     resposta: type.INTEGER,
     proposicao_id: type.STRING
   });
