@@ -59,6 +59,11 @@ if (!global.hasOwnProperty("models")) {
       .spread((results, metadata) => {
         // Results will be an empty array and metadata will contain the number of affected rows.
         console.log("Inserted respostas");
+      })
+      .then(res => {
+        sequelize.query(
+          "ALTER TABLE perguntas ADD CONSTRAINT tema_pergunta FOREIGN KEY (tema_id) REFERENCES temas (id); ALTER TABLE proposicoes ADD CONSTRAINT tema_proposicoes FOREIGN KEY (tema_id) REFERENCES temas (id); ALTER TABLE votacoes ADD CONSTRAINT votacoes_proposicoes FOREIGN KEY (proposicao_id) REFERENCES proposicoes (id_votacao); ALTER TABLE respostas ADD CONSTRAINT cpf_respostas FOREIGN KEY (cpf) REFERENCES candidatos (cpf);ALTER TABLE respostas ADD CONSTRAINT perguntas_respostas FOREIGN KEY (pergunta_id) REFERENCES perguntas (id); ALTER TABLE votacoes ADD CONSTRAINT cpf_votacoes FOREIGN KEY (cpf) REFERENCES candidatos (cpf);"
+        );
       });
 
     sequelize
