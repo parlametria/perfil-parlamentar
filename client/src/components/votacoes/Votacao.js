@@ -6,15 +6,19 @@ class Votacao extends Component {
 
   render() {
     return (
-      <Pergunta
-        key={this.props.id}
-        id={this.props.id}
-        index={this.props.id}
-        pergunta={this.props.texto}
-        ajuda={this.props.ajuda}
-        voto={this.props.voto}
-        onVota={this.props.onVota}
-      />
+      <div>
+        <Pergunta
+          key={this.props.id}
+          id={this.props.id}
+          index={this.props.id}
+          pergunta={this.props.texto}
+          ajuda={this.props.ajuda}
+          voto={this.props.voto}
+          onVota={this.props.onVota}
+        />
+      </div>
+
+
     );
   }
 }
@@ -22,13 +26,13 @@ class Votacao extends Component {
 Votacao.propTypes = {
   key: PropTypes.string.isRequired,
   id: PropTypes.number.isRequired,
-  tema: PropTypes.string.isRequired,
+  projLei: PropTypes.string.isRequired,
   idVotacao: PropTypes.number.isRequired,
-  nomeVotacao: PropTypes.string.isRequired,
-  pergunta: PropTypes.string,
+  titulo: PropTypes.string.isRequired,
   descricao: PropTypes.string,
-  onVota: PropTypes.func.isRequired,
-  voto: PropTypes.number.isRequired
+  tema: PropTypes.string.isRequired,
+  voto: PropTypes.number.isRequired,
+  onVota: PropTypes.func.isRequired
 };
 
 export default Votacao;

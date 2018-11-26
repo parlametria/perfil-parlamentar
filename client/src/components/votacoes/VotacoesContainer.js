@@ -8,26 +8,63 @@ import {
   setVotacoesCarregando
 } from "../../actions/votacoesActions";
 
+import {
+  salvaRespostasUsuario
+} from "../../actions/usuarioActions";
+
+const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
+
 class VotacoesContainer extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = { copied: false };
+
+    this.passaPergunta = this.passaPergunta.bind(this);
+  }
+
+  registraResposta(novaResposta) {
+    const { respostasUsuario } = this.props.usuario;
+
+
+    respostasUsuario[novaResposta.id] = novaResposta.resposta;
+    this.props.salvaRespostasUsuario(respostasUsuario);
+
+
+    this.props.calculaScore();
+    this.passaPergunta();
+  }
+
+  async passaPergunta() {
+    await delay(400);
+    this.props.passaPergunta();
+    const { indexPergunta, dadosPerguntas } = this.props.perguntas;
+
+    if (indexPergunta <= 45) {
+      this.props.escolheTema(dadosPerguntas[indexPergunta].tema);
+    }
+  }
+
   render() {
     const { dadosVotacoes } = this.props.votacoes;
-    const { respostasUsuario, arrayRespostasUsuario } = this.props.usuario;
+    const { respostasUsuario } = this.props.usuario;
+
+    let votacao = (
+      <Votacao
+        key={dadosVotacoes.id}
+        id={dadosVotacoes.id}
+        projLei={dadosVotacoes.num_proj_lei}
+        idVotacao={dadosVotacoes.id_votacao}
+        titulo={dadosVotacoes.titulo}
+        descricao={dadosVotacoes.descricao}
+        tema={dadosVotacoes.tema}
+        voto={respostasUsuario[dadosVotacoes.id]}
+        onVota={novaResposta => this.registraResposta(novaResposta)}
+      />
+    );
     return (
       <div className="votacao-container">
-        <Votacao
-          key={dadosVotacoes.key}
-          id={dadosVotacoes.id}
-          tema={dadosVotacoes.tema}
-          idVotacao={dadosVotacoes.id_votacao}
-          nomeVotacao={dadosVotacoes.nome_votacao}
-          pergunta={dadosVotacoes.pergunta}
-          descricao={dadosVotacoes.descricao}
-          voto={}
-          onVota={}
-        // voto={arrayRespostasUsuario[dadosVotacoes.id]}
-        // onVota={novaResposta => this.registraResposta(novaResposta)}
-        />
-      </div>
+        {votacao}</div>
     );
   }
 }
@@ -35,7 +72,7 @@ class VotacoesContainer extends Component {
 VotacoesContainer.propTypes = {
   getDadosVotacoes: PropTypes.func.isRequired,
   setVotacoesCarregando: PropTypes.func.isRequired,
-  salvaScoreUsuario: PropTypes.func.isRequired
+  salvaRespostasUsuario: PropTypes.func.isRequired
 }
 const mapStateToProps = state => ({
   votacoes: state.votacoesReducer,
@@ -47,7 +84,7 @@ export default connect(
   {
     getDadosVotacoes,
     setVotacoesCarregando,
-    salvaScoreUsuario
+    salvaRespostasUsuario
   })
   (VotacoesContainer);
 
