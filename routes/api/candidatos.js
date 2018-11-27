@@ -9,8 +9,9 @@ const express = require("express");
  * @namespace module:routes/candidatos
  */
 const router = express.Router();
+const models = require("../../models/index");
 
-const Candidato = require("../../models/Candidato");
+const Candidato = models.candidato;
 const Votacao = require("../../models/Votacao");
 
 /**
@@ -30,7 +31,7 @@ router.get("/test", (req, res) =>
  * @memberof module:routes/candidatos
  */
 router.get("/", (req, res) => {
-  Candidato.find()
+  Candidato.findAll()
     .then(candidatos => res.json(candidatos))
     .catch(err => res.status(400).json({ err }));
 });
@@ -43,7 +44,11 @@ router.get("/", (req, res) => {
  * @param {string} cpf - CPF do candidato
  */
 router.get("/:cpf", (req, res) => {
-  Candidato.find({ cpf: req.params.cpf })
+  Candidato.findAll({
+    where: {
+      cpf: req.params.cpf
+    }
+  })
     .then(candidatos => res.json(candidatos))
     .catch(err => res.status(400).json({ err }));
 });
