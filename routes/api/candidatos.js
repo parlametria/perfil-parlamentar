@@ -12,7 +12,7 @@ const router = express.Router();
 const models = require("../../models/index");
 
 const Candidato = models.candidato;
-const Votacao = require("../../models/Votacao");
+const Votacao = models.votacao;
 
 /**
  * Testa a rota de candidatos.
@@ -23,6 +23,18 @@ const Votacao = require("../../models/Votacao");
 router.get("/test", (req, res) =>
   res.json({ msg: "Testando a rota de candidatos." })
 );
+
+/**
+ * Pega as votações de um deputado dado seu cpf.
+ * @name get/api/candidatos/votacoes
+ * @function
+ * @memberof module:routes/candidatos
+ */
+router.get("/votacoes", (req, res) => {
+  Votacao.findAll()
+    .then(votacoes => res.json(votacoes))
+    .catch(err => res.status(400).json({ err }));
+});
 
 /**
  * Pega todos os candidatos de uma vez.
@@ -61,19 +73,11 @@ router.get("/:cpf", (req, res) => {
  * @param {string} cpf - CPF do candidato
  */
 router.get("/:cpf/votacoes", (req, res) => {
-  Votacao.find({ cpf: req.params.cpf })
-    .then(votacoes => res.json(votacoes))
-    .catch(err => res.status(400).json({ err }));
-});
-
-/**
- * Pega as votações de um deputado dado seu cpf.
- * @name get/api/candidatos/votacoes
- * @function
- * @memberof module:routes/candidatos
- */
-router.get("/votacoes", (req, res) => {
-  Votacao.find()
+  Votacao.findAll({
+    where: {
+      cpf: req.params.cpf
+    }
+  })
     .then(votacoes => res.json(votacoes))
     .catch(err => res.status(400).json({ err }));
 });
