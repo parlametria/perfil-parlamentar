@@ -51,56 +51,64 @@ if (!global.hasOwnProperty("models")) {
     // add your other models here
   };
 
+  Object.keys(global.models).forEach(modelName => {
+    console.log(modelName);
+    if (global.models[modelName].associate) {
+      global.models[modelName].associate(global.models);
+    }
+  });
+
+  // isso vai embora depois, só está aqui para popular o banco local sempre
   sequelize.sync({ force: true }).then(() => {
-    sequelize
-      .query(
-        "copy respostas FROM '/home/luizacs/Documentos/respostas.csv' DELIMITER ',' CSV HEADER;"
-      )
-      .spread((results, metadata) => {
-        // Results will be an empty array and metadata will contain the number of affected rows.
-        console.log("Inserted respostas");
-      })
-      .then(res => {
-        sequelize.query(
-          "ALTER TABLE perguntas ADD CONSTRAINT tema_pergunta FOREIGN KEY (tema_id) REFERENCES temas (id); ALTER TABLE proposicoes ADD CONSTRAINT tema_proposicoes FOREIGN KEY (tema_id) REFERENCES temas (id); ALTER TABLE votacoes ADD CONSTRAINT votacoes_proposicoes FOREIGN KEY (proposicao_id) REFERENCES proposicoes (id_votacao); ALTER TABLE respostas ADD CONSTRAINT cpf_respostas FOREIGN KEY (cpf) REFERENCES candidatos (cpf);ALTER TABLE respostas ADD CONSTRAINT perguntas_respostas FOREIGN KEY (pergunta_id) REFERENCES perguntas (id); ALTER TABLE votacoes ADD CONSTRAINT cpf_votacoes FOREIGN KEY (cpf) REFERENCES candidatos (cpf);"
-        );
-      });
-
-    sequelize
-      .query(
-        "copy candidatos FROM '/home/luizacs/Documentos/candidatos.csv' DELIMITER ',' CSV HEADER;"
-      )
-      .spread((results, metadata) => {
-        console.log("Inserted candidatos");
-      });
-    sequelize
-      .query(
-        "copy votacoes FROM '/home/luizacs/Documentos/votacoes.csv' DELIMITER ',' CSV HEADER;"
-      )
-      .spread((results, metadata) => {
-        console.log("Inserted votacoes");
-      });
-
     sequelize
       .query(
         "copy temas FROM '/home/luizacs/Documentos/temas.csv' DELIMITER ',' CSV HEADER;"
       )
       .spread((results, metadata) => {
         console.log("Inserted temas");
-      });
-    sequelize
-      .query(
-        "copy perguntas FROM '/home/luizacs/Documentos/perguntas.csv' DELIMITER ',' CSV HEADER;"
-      )
-      .spread((results, metadata) => {
-        console.log("Inserted perguntas");
-      });
-    sequelize
-      .query(
-        "copy proposicoes FROM '/home/luizacs/Documentos/proposicoes.csv' DELIMITER ',' CSV HEADER;"
-      )
-      .spread((results, metadata) => {
-        console.log("Inserted proposicoes");
+      })
+      .then(() => {
+        sequelize
+          .query(
+            "copy perguntas FROM '/home/luizacs/Documentos/perguntas.csv' DELIMITER ',' CSV HEADER;"
+          )
+          .spread((results, metadata) => {
+            console.log("Inserted perguntas");
+          })
+          .then(() => {
+            sequelize
+              .query(
+                "copy candidatos FROM '/home/luizacs/Documentos/candidatos.csv' DELIMITER ',' CSV HEADER;"
+              )
+              .spread((results, metadata) => {
+                console.log("Inserted candidatos");
+              })
+              .then(() => {
+                sequelize
+                  .query(
+                    "copy votacoes FROM '/home/luizacs/Documentos/votacoes.csv' DELIMITER ',' CSV HEADER;"
+                  )
+                  .spread((results, metadata) => {
+                    console.log("Inserted votacoes");
+                  });
+
+                sequelize
+                  .query(
+                    "copy respostas FROM '/home/luizacs/Documentos/respostas.csv' DELIMITER ',' CSV HEADER;"
+                  )
+                  .spread((results, metadata) => {
+                    // Results will be an empty array and metadata will contain the number of affected rows.
+                    console.log("Inserted respostas");
+                  });
+              });
+          });
+        sequelize
+          .query(
+            "copy proposicoes FROM '/home/luizacs/Documentos/proposicoes.csv' DELIMITER ',' CSV HEADER;"
+          )
+          .spread((results, metadata) => {
+            console.log("Inserted proposicoes");
+          });
       });
   });
 }
