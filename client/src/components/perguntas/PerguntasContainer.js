@@ -22,10 +22,7 @@ import {
   escondePerguntas
 } from "../../actions/perguntasActions";
 
-import {
-  salvaRespostasUsuario
-} from "../../actions/usuarioActions";
-
+import { salvaRespostasUsuario } from "../../actions/usuarioActions";
 
 import FlipMove from "react-flip-move";
 
@@ -81,7 +78,7 @@ class PerguntasContainer extends Component {
       "www.vozativa.org/" +
       this.props.candidatos.filtro.estado +
       "/" +
-      criaURL(this.props.usuario.arrayRespostasUsuario);
+      criaURL(this.props.usuario.respostasUsuario);
     return url;
   }
 
@@ -171,7 +168,9 @@ class PerguntasContainer extends Component {
     if (!isEmpty(dadosPerguntas)) {
       const dadosPergunta = dadosPerguntas[indexPergunta];
 
-      const { vozAtiva: respostasUsuario } = this.props.usuario.respostasUsuario;
+      const {
+        vozAtiva: respostasUsuario
+      } = this.props.usuario.respostasUsuario;
 
       // Constrói os eixos (isso idealmente deve vir de um bd, algo assim)
       let nomeTemas = new Set();

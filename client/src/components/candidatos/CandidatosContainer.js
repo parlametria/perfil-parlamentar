@@ -28,7 +28,7 @@ import Spinner from "../common/Spinner";
 import "../../styles/style.css";
 
 import { Subject } from "rxjs/Subject";
-import { debounceTime } from 'rxjs/operators'
+import { debounceTime } from "rxjs/operators";
 
 import "rxjs/add/operator/debounceTime";
 
@@ -227,13 +227,13 @@ class CandidatosContainer extends Component {
 
     const { paginacao } = this.props.candidatos;
 
-    const { arrayRespostasUsuario, quantidadeVotos } = this.props.usuario;
+    const { respostasUsuario, quantidadeVotos } = this.props.usuario;
 
     const candidatosMapeaveis =
       filtro.nome !== "" ||
-        filtro.partido !== "Partidos" ||
-        filtro.reeleicao !== "-1" ||
-        filtro.respondeu !== "-1"
+      filtro.partido !== "Partidos" ||
+      filtro.reeleicao !== "-1" ||
+      filtro.respondeu !== "-1"
         ? candidatosFiltrados
         : candidatosRanqueados;
 
@@ -273,11 +273,11 @@ class CandidatosContainer extends Component {
             foto={
               candidato.tem_foto
                 ? "https://s3-sa-east-1.amazonaws.com/fotoscandidatos2018/fotos_tratadas/img_" +
-                candidato.cpf +
-                ".jpg"
+                  candidato.cpf +
+                  ".jpg"
                 : "https://s3-sa-east-1.amazonaws.com/fotoscandidatos2018/fotos_tratadas/nophoto.png"
             }
-            arrayRespostasUsuario={arrayRespostasUsuario}
+            respostasUsuario={respostasUsuario}
             email={candidato.email}
             reeleicao={candidato.reeleicao === "0" ? false : true}
             reeleito={
@@ -305,66 +305,59 @@ class CandidatosContainer extends Component {
 
     const mostraPartido = (
       <div>
-        {activeTab === "candidatos" &&
-          filtro.reeleicao !== "1" && (
-            <h5>
-              Para esse partido,{" "}
-              <strong className="strong">{totalResponderamPartido}</strong> de{" "}
-              <strong className="strong">{totalRespostasPartido}</strong>{" "}
-              candidatos responderam ao questionário.
-            </h5>
-          )}
-        {activeTab === "candidatos" &&
-          filtro.reeleicao === "1" && (
-            <h5>
-              Para esse partido,{" "}
-              <strong className="strong">{totalResponderamAtuacao}</strong> de{" "}
-              <strong className="strong">{totalCandAtuacao}</strong> candidatos
-              que já tinham atuação na câmara responderam ao questionário.
-            </h5>
-          )}
-        {activeTab === "eleitos" &&
-          filtro.reeleicao === "1" && (
-            <h5>
-              Para esse partido,{" "}
-              <strong className="strong">{totalReeleitosEResponderam}</strong>{" "}
-              dos <strong className="strong">{totalCandAtuacao}</strong>{" "}
-              candidatos eleitos que já tinham atuação na câmara responderam ao
-              questionário.
-            </h5>
-          )}
-        {activeTab === "eleitos" &&
-          filtro.reeleicao !== "1" && (
-            <h5>
-              Para esse partido,{" "}
-              <strong className="strong">{totalEleitosEResponderam}</strong> dos{" "}
-              <strong className="strong">{candidatosFiltrados.length}</strong>{" "}
-              candidatos eleitos responderam ao questionário.
-            </h5>
-          )}
+        {activeTab === "candidatos" && filtro.reeleicao !== "1" && (
+          <h5>
+            Para esse partido,{" "}
+            <strong className="strong">{totalResponderamPartido}</strong> de{" "}
+            <strong className="strong">{totalRespostasPartido}</strong>{" "}
+            candidatos responderam ao questionário.
+          </h5>
+        )}
+        {activeTab === "candidatos" && filtro.reeleicao === "1" && (
+          <h5>
+            Para esse partido,{" "}
+            <strong className="strong">{totalResponderamAtuacao}</strong> de{" "}
+            <strong className="strong">{totalCandAtuacao}</strong> candidatos
+            que já tinham atuação na câmara responderam ao questionário.
+          </h5>
+        )}
+        {activeTab === "eleitos" && filtro.reeleicao === "1" && (
+          <h5>
+            Para esse partido,{" "}
+            <strong className="strong">{totalReeleitosEResponderam}</strong> dos{" "}
+            <strong className="strong">{totalCandAtuacao}</strong> candidatos
+            eleitos que já tinham atuação na câmara responderam ao questionário.
+          </h5>
+        )}
+        {activeTab === "eleitos" && filtro.reeleicao !== "1" && (
+          <h5>
+            Para esse partido,{" "}
+            <strong className="strong">{totalEleitosEResponderam}</strong> dos{" "}
+            <strong className="strong">{candidatosFiltrados.length}</strong>{" "}
+            candidatos eleitos responderam ao questionário.
+          </h5>
+        )}
       </div>
     );
 
     const mostraEstado = (
       <div>
-        {activeTab === "candidatos" &&
-          filtro.reeleicao !== "1" && (
-            <h5>
-              Nesse Estado,{" "}
-              <strong className="strong">{totalResponderamEstado}</strong> de{" "}
-              <strong className="strong">{totalRespostasEstado}</strong>{" "}
-              candidatos responderam ao questionário.
-            </h5>
-          )}
-        {activeTab === "candidatos" &&
-          filtro.reeleicao === "1" && (
-            <h5>
-              Nesse Estado,{" "}
-              <strong className="strong">{totalResponderamAtuacao}</strong> de{" "}
-              <strong className="strong">{totalCandAtuacao}</strong> candidatos
-              que já tinham atuação na câmara responderam ao questionário.
-            </h5>
-          )}
+        {activeTab === "candidatos" && filtro.reeleicao !== "1" && (
+          <h5>
+            Nesse Estado,{" "}
+            <strong className="strong">{totalResponderamEstado}</strong> de{" "}
+            <strong className="strong">{totalRespostasEstado}</strong>{" "}
+            candidatos responderam ao questionário.
+          </h5>
+        )}
+        {activeTab === "candidatos" && filtro.reeleicao === "1" && (
+          <h5>
+            Nesse Estado,{" "}
+            <strong className="strong">{totalResponderamAtuacao}</strong> de{" "}
+            <strong className="strong">{totalCandAtuacao}</strong> candidatos
+            que já tinham atuação na câmara responderam ao questionário.
+          </h5>
+        )}
         {activeTab === "eleitos" &&
           filtro.estado !== "TODOS" &&
           filtro.reeleicao !== "1" && (
@@ -552,23 +545,23 @@ class CandidatosContainer extends Component {
               <Spinner />
             </div>
           ) : (
-              <div>
-                <div className="candidatos">
-                  <FlipMove>
-                    {candidatos.slice(paginacao.inicio, paginacao.final)}
-                  </FlipMove>
-                </div>
-                {!isFiltrandoPorNome ? (
-                  <div className="candidatos-pagination d-flex justify-content-center flex-wrap mb-3">
-                    {paginacao.inicio !== 0 ? btnFirst : null}
-                    {paginacao.inicio > 0 ? btnMenosCandidatos : null}
-                    {paginacao.final < paginacao.totalCandidatos
-                      ? btnMaisCandidatos
-                      : null}
-                  </div>
-                ) : null}
+            <div>
+              <div className="candidatos">
+                <FlipMove>
+                  {candidatos.slice(paginacao.inicio, paginacao.final)}
+                </FlipMove>
               </div>
-            )}
+              {!isFiltrandoPorNome ? (
+                <div className="candidatos-pagination d-flex justify-content-center flex-wrap mb-3">
+                  {paginacao.inicio !== 0 ? btnFirst : null}
+                  {paginacao.inicio > 0 ? btnMenosCandidatos : null}
+                  {paginacao.final < paginacao.totalCandidatos
+                    ? btnMaisCandidatos
+                    : null}
+                </div>
+              ) : null}
+            </div>
+          )}
         </div>
       </div>
     );
@@ -599,13 +592,15 @@ class CandidatosContainer extends Component {
   }
 
   componentDidMount() {
-    this.subscription = this.onSearch$.pipe(debounceTime(DEBOUNCE_TIME)).subscribe(debounced => {
-      this.props.setCandidatosFiltrados();
-      this.setState({
-        debounced,
-        isPesquisando: false
+    this.subscription = this.onSearch$
+      .pipe(debounceTime(DEBOUNCE_TIME))
+      .subscribe(debounced => {
+        this.props.setCandidatosFiltrados();
+        this.setState({
+          debounced,
+          isPesquisando: false
+        });
       });
-    });
   }
 
   componentWillUnmount() {

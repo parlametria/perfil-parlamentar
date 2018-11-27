@@ -321,10 +321,11 @@ export const getDadosCandidato = (
 ) => (dispatch, getState) => {
   dispatch(setCandidatosCarregando());
 
-  const quantValidos = arrayRespostasUsuario.filter(
-    value => value !== 0 && value !== -2
-  ).length;
-  const numRespostasUsuario = quantValidos === 0 ? 1 : quantValidos;
+  const { quantidadeVotos } = getState().usuarioReducer;
+
+  const { votacoesCandidatos } = getState().votacoesReducer;
+
+  const numRespostasUsuario = quantidadeVotos === 0 ? 1 : quantidadeVotos;
 
   console.time("pega1Candidato");
 
@@ -337,7 +338,9 @@ export const getDadosCandidato = (
 
       const score = comparaRespostas(
         dadosCandidato.respostas,
-        respostasUsuario,
+        respostasUsuario.vozAtiva,
+        respostasUsuario.qmr,
+        votacoesCandidatos,
         numRespostasUsuario
       );
 
