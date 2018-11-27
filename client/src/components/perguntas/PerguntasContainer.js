@@ -14,14 +14,17 @@ import {
 } from "../../actions/candidatosActions";
 import {
   getDadosPerguntas,
+
+} from "../../actions/perguntasActions";
+
+import {
   voltaPergunta,
   passaPergunta,
   escolhePergunta,
   escolheTema,
   exibePerguntas,
   escondePerguntas
-} from "../../actions/perguntasActions";
-
+} from "../../actions/questionarioActions";
 import {
   salvaRespostasUsuario
 } from "../../actions/usuarioActions";
@@ -129,11 +132,14 @@ class PerguntasContainer extends Component {
   render() {
     const {
       dadosPerguntas,
-      indexPergunta,
+      indexPergunta
+    } = this.props.perguntas;
+
+    const {
       filtroTema,
       isExibeGavetaPerguntas,
       isContinuarRespondendo
-    } = this.props.perguntas;
+    } = this.props.questionario;
 
     const { respondeuTodos } = this.props.usuario;
 
@@ -339,7 +345,8 @@ const mapStateToProps = state => ({
   usuario: state.usuarioReducer,
   candidatos: state.candidatosReducer,
   perguntas: state.perguntasReducer,
-  auth: state.auth
+  auth: state.auth,
+  questionario: state.questionarioReducer
 });
 
 export default connect(

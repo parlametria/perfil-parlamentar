@@ -31,7 +31,7 @@ import { facebookLoginComCodigo } from "../../../actions/authActions";
 import {
   vamosComecar,
   escondePerguntas
-} from "../../../actions/perguntasActions";
+} from "../../../actions/questionarioActions";
 import { salvaScoreUsuario } from "../../../actions/usuarioActions";
 
 import {
@@ -141,7 +141,7 @@ class Home extends Component {
 
   render() {
     const { filtro, isVerTodosEleitos } = this.props.candidatos;
-    const { isVamosComecar } = this.props.perguntas;
+    const { isVamosComecar } = this.props.questionario;
     const { quantidadeVotos } = this.props.usuario;
 
     let linkCompartilhamento = "www.vozativa.org/";
@@ -293,7 +293,8 @@ Home.propTypes = {
 const mapStateToProps = state => ({
   candidatos: state.candidatosReducer,
   perguntas: state.perguntasReducer,
-  usuario: state.usuarioReducer
+  usuario: state.usuarioReducer,
+  questionario: state.questionarioReducer
 });
 
 export default connect(

@@ -1,11 +1,13 @@
-import { VOTACOES_CARREGANDO, SET_DADOS_VOTACOES } from "../actions/types";
+import { VOTACOES_CARREGANDO, SET_DADOS_VOTACOES, SET_INDEX_VOTACAO } from "../actions/types";
 
 const initialState = {
   dadosVotacoes: {},
-  isCarregando: false
+  isCarregando: false,
+  TAM_PERGUNTAS: 0,
+  indexPergunta: 0,
 };
 
-export default function(state = initialState, action) {
+export default function (state = initialState, action) {
   switch (action.type) {
     case VOTACOES_CARREGANDO:
       return {
@@ -17,6 +19,11 @@ export default function(state = initialState, action) {
         ...state,
         dadosVotacoes: action.dadosVotacoes,
         isCarregando: false
+      };
+    case SET_INDEX_VOTACAO:
+      return {
+        ...state,
+        indexPergunta: action.indexPergunta
       };
     default:
       return state;
