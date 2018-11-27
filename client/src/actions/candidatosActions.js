@@ -33,6 +33,8 @@ import { buscaCPF } from "../services/BuscaService";
 import axios from "axios";
 import isEmpty from "../validation/is-empty";
 
+import votacoes from "../data/votacoes.json";
+
 const comparaRespostas = (
   respostasCandidatos,
   respostasUsuarioVozAtiva,
@@ -91,8 +93,6 @@ export const calculaScore = () => (dispatch, getState) => {
     scoreCandidatos[elem] = score;
   });
 
-  console.log(scoreCandidatos);
-
   dispatch({
     type: SET_SCORE_CANDIDATOS,
     scoreCandidatos
@@ -106,6 +106,7 @@ export const calculaScorePorTema = (
 ) => (dispatch, getState) => {
   const { dadosCandidato } = getState().candidatosReducer;
   const perguntas = getState().perguntasReducer.dadosPerguntas;
+  const { votacoesCandidatos } = getState().votacoesReducer;
 
   let nomeTemas = new Set();
   perguntas.forEach(elem => {
@@ -130,12 +131,23 @@ export const calculaScorePorTema = (
   Object.keys(temas).forEach(tema => {
     let score = 0;
     let respostasCandidatosTema = {};
+    let votacoesCandidatosTema = {};
     perguntas.forEach(pergunta => {
       if (pergunta.tema === tema) {
         respostasCandidatosTema[pergunta.id] =
           dadosCandidato.respostas[pergunta.id];
       }
     });
+
+    // Pegar as informações de votações do reducer de votações e não pegar diretamente do json
+    Object.keys(votacoes).forEach(keyVotacao => {
+      const votacao = votacoes[keyVotacao];
+      if (votacao.tema === tema) {
+        votacoesCandidatosTema[votacao.id_votacao] =
+          votacoesCandidatos[dadosCandidato.cpf][votacao.id_votacao];
+      }
+    });
+
     const primeiroID = temas[tema][0].id;
     const ultimoID = temas[tema][temas[tema].length - 1].id;
 
@@ -146,7 +158,9 @@ export const calculaScorePorTema = (
       const numRespostasUsuario = quantValidos === 0 ? 1 : quantValidos;
       score = comparaRespostas(
         respostasCandidatosTema,
-        respostasUsuario,
+        respostasUsuario.vozAtiva,
+        respostasUsuario.qmr,
+        votacoesCandidatosTema,
         numRespostasUsuario
       );
     });
