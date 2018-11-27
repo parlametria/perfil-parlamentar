@@ -1,7 +1,22 @@
 module.exports = (sequelize, type) => {
-  return sequelize.define("votacoe", {
-    cpf: type.STRING,
-    resposta: type.INTEGER,
-    proposicao_id: type.INTEGER
-  });
+  const votacao = sequelize.define(
+    "votacoe",
+    {
+      resposta: type.INTEGER
+    },
+    {
+      timestamps: false
+    }
+  );
+  votacao.associate = function(models) {
+    votacao.belongsTo(models.proposicao, {
+      foreignKey: "proposicao_id",
+      as: "id_vot_prop"
+    }),
+      votacao.belongsTo(models.candidato, {
+        foreignKey: "cpf",
+        as: "cpf_vot"
+      });
+  };
+  return votacao;
 };
