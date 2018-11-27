@@ -45,7 +45,7 @@ export default function (state = initialState, action) {
     case SET_BANDEJA_ATIVA:
       return {
         ...state,
-        bandejaAtiva: action.bandeja
+        bandejaAtiva: action.bandejaAtiva
       };
     default:
       return state;

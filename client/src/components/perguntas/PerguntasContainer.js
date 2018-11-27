@@ -322,7 +322,7 @@ class PerguntasContainer extends Component {
 
   togglePerguntaContainer(event) {
     event.preventDefault();
-    this.props.perguntas.isExibeGavetaPerguntas
+    this.props.questionario.isExibeGavetaPerguntas
       ? this.props.escondePerguntas()
       : this.props.exibePerguntas();
   }

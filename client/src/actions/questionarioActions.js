@@ -5,29 +5,63 @@ import {
   SET_VAMOS_COMECAR,
   ESCONDE_PERGUNTAS,
   EXIBE_PERGUNTAS,
-  SET_CONTINUAR_RESPONDENDO
+  SET_CONTINUAR_RESPONDENDO,
+  SET_BANDEJA_ATIVA
 } from "./types";
 
-
+export const mudaBandeja = bandejaAtiva => dispatch => {
+  console.log(bandejaAtiva);
+  dispatch({ type: SET_BANDEJA_ATIVA, bandejaAtiva: bandejaAtiva })
+}
 export const passaPergunta = () => (dispatch, getState) => {
-  const { indexPergunta, TAM_PERGUNTAS } = getState().perguntasReducer;
+  const { bandejaAtiva } = getState().questionarioReducer;
+  let indexPergunta;
+  let TAM_PERGUNTAS;
+  let type;
+  if (bandejaAtiva === "Voz Ativa") {
+    indexPergunta = getState().perguntasReducer.indexPergunta;
+    TAM_PERGUNTAS = getState().perguntasReducer.TAM_PERGUNTAS;
+    type = SET_INDEX_PERGUNTA;
+  } else if (bandejaAtiva === "Votacoes") {
+    indexPergunta = getState().votacoesReducer.indexPergunta;
+    TAM_PERGUNTAS = getState().votacoesReducer.TAM_PERGUNTAS;
+    type = SET_INDEX_VOTACAO;
+
+  }
 
   let newIndex =
     indexPergunta < TAM_PERGUNTAS - 1 ? indexPergunta + 1 : indexPergunta;
 
-  dispatch({ type: SET_INDEX_PERGUNTA, indexPergunta: newIndex });
+  dispatch({ type: type, indexPergunta: newIndex });
 };
 
 export const voltaPergunta = () => (dispatch, getState) => {
-  const { indexPergunta } = getState().perguntasReducer;
+  const { bandejaAtiva } = getState().questionarioReducer;
+  let indexPergunta;
+  let type;
+  if (bandejaAtiva === "Voz Ativa") {
+    indexPergunta = getState().perguntasReducer.indexPergunta;
+    type = SET_INDEX_PERGUNTA;
+  } else if (bandejaAtiva === "Votacoes") {
+    indexPergunta = getState().votacoesReducer.indexPergunta;
+    type = SET_INDEX_VOTACAO;
+  }
 
   let newIndex = indexPergunta > 0 ? indexPergunta - 1 : indexPergunta;
 
-  dispatch({ type: SET_INDEX_PERGUNTA, indexPergunta: newIndex });
+  dispatch({ type: type, indexPergunta: newIndex });
 };
 
-export const escolhePergunta = indexPergunta => dispatch => {
-  dispatch({ type: SET_INDEX_PERGUNTA, indexPergunta });
+export const escolhePergunta = indexPergunta => (dispatch, getState) => {
+  const { bandejaAtiva } = getState().questionarioReducer;
+  let type;
+  if (bandejaAtiva === "Voz Ativa") {
+    type = SET_INDEX_PERGUNTA;
+  } else if (bandejaAtiva === "Votacoes") {
+    type = SET_INDEX_VOTACAO;
+
+  }
+  dispatch({ type: type, indexPergunta });
 };
 
 export const escolheTema = tema => dispatch => {
