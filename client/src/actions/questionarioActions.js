@@ -6,23 +6,22 @@ import {
   ESCONDE_PERGUNTAS,
   EXIBE_PERGUNTAS,
   SET_CONTINUAR_RESPONDENDO,
-  SET_BANDEJA_ATIVA
+  SET_ABA_ATIVA
 } from "./types";
 
-export const mudaBandeja = bandejaAtiva => dispatch => {
-  console.log(bandejaAtiva);
-  dispatch({ type: SET_BANDEJA_ATIVA, bandejaAtiva: bandejaAtiva })
+export const mudaAba = abaAtiva => dispatch => {
+  dispatch({ type: SET_ABA_ATIVA, abaAtiva: abaAtiva })
 }
 export const passaPergunta = () => (dispatch, getState) => {
-  const { bandejaAtiva } = getState().questionarioReducer;
+  const { abaAtiva } = getState().questionarioReducer;
   let indexPergunta;
   let TAM_PERGUNTAS;
   let type;
-  if (bandejaAtiva === "Voz Ativa") {
+  if (abaAtiva === "Voz Ativa") {
     indexPergunta = getState().perguntasReducer.indexPergunta;
     TAM_PERGUNTAS = getState().perguntasReducer.TAM_PERGUNTAS;
     type = SET_INDEX_PERGUNTA;
-  } else if (bandejaAtiva === "Votacoes") {
+  } else if (abaAtiva === "Votacoes") {
     indexPergunta = getState().votacoesReducer.indexPergunta;
     TAM_PERGUNTAS = getState().votacoesReducer.TAM_PERGUNTAS;
     type = SET_INDEX_VOTACAO;
@@ -36,13 +35,13 @@ export const passaPergunta = () => (dispatch, getState) => {
 };
 
 export const voltaPergunta = () => (dispatch, getState) => {
-  const { bandejaAtiva } = getState().questionarioReducer;
+  const { abaAtiva } = getState().questionarioReducer;
   let indexPergunta;
   let type;
-  if (bandejaAtiva === "Voz Ativa") {
+  if (abaAtiva === "Voz Ativa") {
     indexPergunta = getState().perguntasReducer.indexPergunta;
     type = SET_INDEX_PERGUNTA;
-  } else if (bandejaAtiva === "Votacoes") {
+  } else if (abaAtiva === "Votacoes") {
     indexPergunta = getState().votacoesReducer.indexPergunta;
     type = SET_INDEX_VOTACAO;
   }
@@ -53,11 +52,11 @@ export const voltaPergunta = () => (dispatch, getState) => {
 };
 
 export const escolhePergunta = indexPergunta => (dispatch, getState) => {
-  const { bandejaAtiva } = getState().questionarioReducer;
+  const { abaAtiva } = getState().questionarioReducer;
   let type;
-  if (bandejaAtiva === "Voz Ativa") {
+  if (abaAtiva === "Voz Ativa") {
     type = SET_INDEX_PERGUNTA;
-  } else if (bandejaAtiva === "Votacoes") {
+  } else if (abaAtiva === "Votacoes") {
     type = SET_INDEX_VOTACAO;
 
   }

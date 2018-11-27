@@ -3,11 +3,13 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 
 import Toggle from 'react-toggle';
+
 import PerguntasContainer from "../perguntas/PerguntasContainer";
 import VotacoesContainer from "../votacoes/VotacoesContainer";
 import "./questionario.css";
+import MenuTema from "./MenuTema";
 
-import { mudaBandeja } from "../../actions/questionarioActions";
+import { mudaAba } from "../../actions/questionarioActions";
 
 
 class QuestionarioContainer extends Component {
@@ -15,14 +17,14 @@ class QuestionarioContainer extends Component {
     super(props);
     this.state = { isOn: false };
     this.handleToggle = this.handleToggle.bind(this);
-    this.bandejaAtiva = "Voz Ativa" //se mudar, lembra de mudar no reducer o default também
+    this.abaAtiva = "Voz Ativa" //se mudar, lembra de mudar no reducer o default também
 
   }
 
   handleToggle(e) {
     this.setState({ isOn: !this.state.isOn });
-    this.bandejaAtiva = this.bandejaAtiva === "Voz Ativa" ? "Votacoes" : "Voz Ativa"
-    this.props.mudaBandeja(this.bandejaAtiva);
+    this.abaAtiva = this.abaAtiva === "Voz Ativa" ? "Votacoes" : "Voz Ativa"
+    this.props.mudaAba(this.abaAtiva);
   }
 
   render() {
@@ -36,10 +38,11 @@ class QuestionarioContainer extends Component {
             onChange={this.handleToggle} />
           <span>Câmara</span>
         </label>
+        <MenuTema />
         {this.state.isOn &&
           <div>
-            {/* <VotacoesContainer /> */}
-            rs
+            <VotacoesContainer />
+
           </div>
         }
         {!this.state.isOn &&
@@ -53,7 +56,7 @@ class QuestionarioContainer extends Component {
 };
 
 QuestionarioContainer.propTypes = {
-  mudaBandeja: PropTypes.func.isRequired
+  mudaAba: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -62,5 +65,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { mudaBandeja }
+  { mudaAba }
 )(QuestionarioContainer);

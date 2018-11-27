@@ -39,7 +39,7 @@ export const SET_INDEX_VOTACAO = "SET_INDEX_VOTACAO";
 
 
 // Questionario types
-export const SET_BANDEJA_ATIVA = "SET_BANDEJA_ATIVA";
+export const SET_ABA_ATIVA = "SET_ABA_ATIVA";
 export const SET_TEMA = "SET_TEMA";
 export const SET_VAMOS_COMECAR = "SET_VAMOS_COMECAR";
 export const EXIBE_PERGUNTAS = "EXIBE_PERGUNTAS";

@@ -4,7 +4,7 @@ import {
   ESCONDE_PERGUNTAS,
   EXIBE_PERGUNTAS,
   SET_CONTINUAR_RESPONDENDO,
-  SET_BANDEJA_ATIVA
+  SET_ABA_ATIVA
 } from "../actions/types";
 
 const initialState = {
@@ -12,7 +12,7 @@ const initialState = {
   isVamosComecar: false,
   isExibeGavetaPerguntas: true,
   isContinuarRespondendo: false,
-  bandejaAtiva: "Voz Ativa"
+  abaAtiva: "Voz Ativa"
 };
 
 export default function (state = initialState, action) {
@@ -42,10 +42,10 @@ export default function (state = initialState, action) {
         ...state,
         isContinuarRespondendo: true
       };
-    case SET_BANDEJA_ATIVA:
+    case SET_ABA_ATIVA:
       return {
         ...state,
-        bandejaAtiva: action.bandejaAtiva
+        abaAtiva: action.abaAtiva
       };
     default:
       return state;

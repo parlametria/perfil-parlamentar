@@ -12,6 +12,7 @@ import {
   calculaScore,
   calculaScorePorTema
 } from "../../actions/candidatosActions";
+
 import {
   getDadosPerguntas,
 
@@ -25,6 +26,7 @@ import {
   exibePerguntas,
   escondePerguntas
 } from "../../actions/questionarioActions";
+
 import {
   salvaRespostasUsuario
 } from "../../actions/usuarioActions";
@@ -271,16 +273,6 @@ class PerguntasContainer extends Component {
     return (
       <div className="pergunta-container">
         <div>
-          <div className="panel-detail-header">
-            <div
-              className="nav-horizontal nav-horizontal-lg custom-scroll-bar"
-              onClick={this.showPerguntaContainer}
-            >
-              <ul className="nav nav-tabs nav-fill nav-horizontal-pills">
-                {temas}
-              </ul>
-            </div>
-          </div>
           <Collapse isOpen={isExibeGavetaPerguntas}>
             <FlipMove>
               {(!respondeuTodos || isContinuarRespondendo) && exibePerguntas}
