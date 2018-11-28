@@ -43,7 +43,7 @@ const comparaRespostas = (
   numRespostasUsuario
 ) => {
   let respostasIguais = 0;
-  const chaves = Object.keys(respostasUsuarioVozAtiva);
+  const chaves = Object.keys(respostasCandidatos);
   chaves.forEach(idPergunta => {
     respostasIguais +=
       respostasCandidatos[idPergunta] !== undefined &&
@@ -55,7 +55,7 @@ const comparaRespostas = (
         : 0;
   });
 
-  const chavesQMR = Object.keys(respostasUsuarioQMR);
+  const chavesQMR = Object.keys(votacoesCandidatos);
   chavesQMR.forEach(idPergunta => {
     respostasIguais +=
       votacoesCandidatos[idPergunta] !== undefined &&
@@ -150,15 +150,20 @@ export const calculaScorePorTema = (
     console.log(perguntasPorTema[tema]);
     console.log(votacoesPorTema[tema]);
 
-    const respostasValidasVA = perguntasPorTema[tema].filter(
-      id =>
-        respostasUsuario.vozAtiva[id] !== 0 &&
-        respostasUsuario.vozAtiva[id] !== -2
-    ).length;
+    const respostasValidasVA = perguntasPorTema[tema]
+      ? perguntasPorTema[tema].filter(
+          id =>
+            respostasUsuario.vozAtiva[id] !== 0 &&
+            respostasUsuario.vozAtiva[id] !== -2
+        ).length
+      : 0;
 
-    const respostasValidasQMR = votacoesPorTema[tema].filter(
-      id => respostasUsuario.qmr[id] !== 0 && respostasUsuario.qmr[id] !== -2
-    ).length;
+    const respostasValidasQMR = votacoesPorTema[tema]
+      ? votacoesPorTema[tema].filter(
+          id =>
+            respostasUsuario.qmr[id] !== 0 && respostasUsuario.qmr[id] !== -2
+        ).length
+      : 0;
 
     const numRespostasUsuario =
       respostasValidasVA + respostasValidasQMR === 0
@@ -168,10 +173,13 @@ export const calculaScorePorTema = (
     let respostasCandidatosTema = {};
     let votacoesCandidatosTema = {};
 
-    perguntasPorTema[tema].forEach(idPergunta => {
-      respostasCandidatosTema[idPergunta] =
-        dadosCandidato.respostas[idPergunta];
-    });
+    if (perguntasPorTema[tema]) {
+      perguntasPorTema[tema].forEach(idPergunta => {
+        respostasCandidatosTema[idPergunta] =
+          dadosCandidato.respostas[idPergunta];
+      });
+    }
+
     if (votacoesCandidatos[dadosCandidato.cpf]) {
       votacoesPorTema[tema].forEach(idVotacao => {
         votacoesCandidatosTema[idVotacao] =
