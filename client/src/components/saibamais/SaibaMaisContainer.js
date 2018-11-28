@@ -16,6 +16,8 @@ import {
   calculaScorePorTema,
   setFiltroCandidatos
 } from "../../actions/candidatosActions";
+
+import { salvaScoreUsuario } from "../../actions/usuarioActions";
 import isEmpty from "../../validation/is-empty";
 
 import { getArrayUrl, getDict } from "../../constantes/tratamentoUrls";
@@ -250,6 +252,9 @@ class SaibaMaisContainer extends Component {
     const { candidato, votos, verAtuacao } = this.props.match.params;
     const respostasUsuario = getDict(getArrayUrl(votos));
     const arrayRespostasUsuario = getArrayUrl(votos);
+
+    this.props.salvaScoreUsuario(respostasUsuario);
+
     this.props.getDadosCandidato(
       candidato,
       respostasUsuario,
@@ -269,7 +274,8 @@ class SaibaMaisContainer extends Component {
 SaibaMaisContainer.propTypes = {
   getDadosCandidato: PropTypes.func.isRequired,
   calculaScorePorTema: PropTypes.func.isRequired,
-  setFiltroCandidatos: PropTypes.func.isRequired
+  setFiltroCandidatos: PropTypes.func.isRequired,
+  salvaScoreUsuario: PropTypes.func.isRequired
 };
 const mapStateToProps = state => ({
   candidatos: state.candidatosReducer
@@ -277,5 +283,10 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { getDadosCandidato, calculaScorePorTema, setFiltroCandidatos }
+  {
+    getDadosCandidato,
+    calculaScorePorTema,
+    setFiltroCandidatos,
+    salvaScoreUsuario
+  }
 )(SaibaMaisContainer);
