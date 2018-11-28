@@ -214,11 +214,9 @@ export const getTopNCandidatos = n => (dispatch, getState) => {
 
 export const getDadosCandidatos = () => (dispatch, getState) => {
   dispatch(setCandidatosCarregando());
-  console.log("carregando");
 
   const { filtro, activeTab } = getState().candidatosReducer;
 
-  console.log(activeTab);
 
   let dadosCandidatos = {};
 
