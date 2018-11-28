@@ -32,10 +32,12 @@ router.get("/test", (req, res) =>
  * @memberof module:routes/perguntas
  */
 router.get("/", (req, res) => {
-  Pergunta.find({
+  Pergunta.findAll({
+    attributes: ["id", "texto"],
     include: [
       {
-        model: Temas
+        model: Temas,
+        as: "tema_perg"
       }
     ]
   })

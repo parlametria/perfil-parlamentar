@@ -18,11 +18,11 @@ module.exports = (sequelize, type) => {
   proposicao.associate = function(models) {
     proposicao.belongsTo(models.tema, {
       foreignKey: "tema_id",
-      as: "id_tema_prop"
+      as: "tema_prop"
     }),
       proposicao.hasMany(models.votacao, {
         foreignKey: "proposicao_id",
-        as: "id_vot_prop"
+        as: "vot_prop"
       });
   };
 

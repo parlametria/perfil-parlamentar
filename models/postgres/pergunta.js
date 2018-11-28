@@ -16,11 +16,12 @@ module.exports = (sequelize, type) => {
   pergunta.associate = function(models) {
     pergunta.belongsTo(models.tema, {
       foreignKey: "tema_id",
-      as: "id_tema_perg"
+      as: "tema_perg",
+      targetKey: "id"
     }),
       pergunta.hasMany(models.resposta, {
         foreignKey: "pergunta_id",
-        as: "id_perg_resp"
+        as: "perg_resp"
       });
   };
   return pergunta;

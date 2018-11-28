@@ -16,11 +16,11 @@ module.exports = (sequelize, type) => {
   tema.associate = function(models) {
     tema.hasMany(models.pergunta, {
       foreignKey: "tema_id",
-      as: "id_tema_perg"
+      as: "tema_perg"
     }),
       tema.hasMany(models.proposicao, {
         foreignKey: "tema_id",
-        as: "id_tema_prop"
+        as: "tema_prop"
       });
   };
   return tema;
