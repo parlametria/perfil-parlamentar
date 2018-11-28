@@ -64,7 +64,6 @@ class MenuTema extends Component {
   selecionaTema(e) {
     e.preventDefault();
     const dadosAba = this.getDadosAba();
-    const index = dadosAba[0];
     const dados = dadosAba[1];
 
     const perguntasFiltradas = dados.filter(pergunta => {

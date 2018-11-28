@@ -6,6 +6,7 @@ import { Tooltip } from "reactstrap";
 
 import Pergunta from "./Pergunta";
 import FinalPerguntas from "./FinalPerguntas";
+import CopiaUrl from "../questionario/CopiaUrl";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 
 import {
@@ -37,8 +38,6 @@ import { Collapse } from "reactstrap";
 
 import isEmpty from "../../validation/is-empty";
 
-import { criaURL } from "../../constantes/tratamentoUrls";
-
 //import { delay } from "../../utils/funcoes";
 
 import "./perguntas.css";
@@ -49,19 +48,8 @@ class PerguntasContainer extends Component {
   constructor(props) {
     super(props);
 
-    this.state = { copied: false };
-
     this.passaPergunta = this.passaPergunta.bind(this);
     this.togglePerguntaContainer = this.togglePerguntaContainer.bind(this);
-    this.toggle = this.toggle.bind(this);
-  }
-
-  toggle() {
-    if (this.state.copied) {
-      this.setState({
-        copied: !this.state.copied
-      });
-    }
   }
 
   registraResposta(novaResposta) {
@@ -74,15 +62,6 @@ class PerguntasContainer extends Component {
 
     this.props.calculaScore();
     this.passaPergunta();
-  }
-
-  geraUrl() {
-    const url =
-      "www.vozativa.org/" +
-      this.props.candidatos.filtro.estado +
-      "/" +
-      criaURL(this.props.usuario.respostasUsuario);
-    return url;
   }
 
   async passaPergunta() {
@@ -119,32 +98,6 @@ class PerguntasContainer extends Component {
     let exibePerguntas;
     let exibeFinalPerguntas;
 
-    const botaoCopia = (
-      <div
-        className="text-center d-sm-block mb-2"
-        style={{ marginTop: "-10px" }}
-      >
-        <CopyToClipboard
-          text={this.geraUrl()}
-          onCopy={() => this.setState({ copied: true })}
-        >
-          <button className="btn btn-outline-primary" id="shareBtn">
-            compartilhe suas respostas{" "}
-            <span className="badge badge-success">novo!</span>
-          </button>
-        </CopyToClipboard>
-        <Tooltip
-          placement="right"
-          isOpen={this.state.copied}
-          target="shareBtn"
-          toggle={this.toggle}
-          delay={{ hide: 1000 }}
-        >
-          Link copiado!
-        </Tooltip>
-      </div>
-    );
-
     if (!isEmpty(dadosPerguntas)) {
       const dadosPergunta = dadosPerguntas[indexPergunta];
 
@@ -170,7 +123,7 @@ class PerguntasContainer extends Component {
         >
           <div className="card-body">
             {pergunta}
-            {botaoCopia}
+            <CopiaUrl />
           </div>
         </div>
       );
