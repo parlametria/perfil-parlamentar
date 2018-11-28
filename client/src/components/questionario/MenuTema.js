@@ -13,6 +13,10 @@ import {
 
 import classnames from "classnames";
 
+import FlipMove from "react-flip-move";
+
+import { Collapse } from "reactstrap";
+
 import isEmpty from "../../validation/is-empty";
 
 
@@ -24,11 +28,9 @@ class MenuTema extends Component {
     super(props);
 
     this.getDadosAba = this.getDadosAba.bind(this);
-    this.passaPergunta = this.passaPergunta.bind(this);
     this.voltaPergunta = this.voltaPergunta.bind(this);
     this.selecionaTema = this.selecionaTema.bind(this);
     this.escolhePergunta = this.escolhePergunta.bind(this);
-    // this.togglePerguntaContainer = this.togglePerguntaContainer.bind(this);
   }
 
   getDadosAba() {
@@ -42,18 +44,6 @@ class MenuTema extends Component {
     return [index, dados, tamPergunta];
   }
 
-  async passaPergunta() {
-    await delay(400);
-    this.props.passaPergunta();
-    const dadosAba = this.getDadosAba();
-    const index = dadosAba[0];
-    const dados = dadosAba[1];
-    const tamPergunta = dadosAba[2];
-
-    if (index <= tamPergunta) {
-      this.props.escolheTema(dados[index].tema);
-    }
-  }
 
   voltaPergunta() {
     this.props.passaPergunta();
@@ -92,16 +82,19 @@ class MenuTema extends Component {
       isContinuarRespondendo
     } = this.props.questionario;
 
+    const { respondeuTodos } = this.props.usuario;
+
     const dadosAba = this.getDadosAba();
-    const index = dadosAba[0];
+    const indexPergunta = dadosAba[0];
     const dadosPerguntas = dadosAba[1];
     const tamPergunta = dadosAba[2];
 
     let indicadorPergunta;
+    let exibeMenu;
     let temas = [];
 
     if (!isEmpty(dadosPerguntas)) {
-      const dadosPergunta = dadosPerguntas[index];
+      const dadosPergunta = dadosPerguntas[indexPergunta];
 
       const { respostasUsuario } = this.props.usuario;
 
@@ -134,10 +127,10 @@ class MenuTema extends Component {
           <li className="nav-item" key={index}>
             <a
               className={classnames("nav-link nav-link-b", {
-                active: perguntaFiltrada.id === index,
+                active: perguntaFiltrada.id === indexPergunta,
                 done:
                   respostasUsuario[Number(perguntaFiltrada.id)] !== 0 &&
-                  perguntaFiltrada.id !== index
+                  perguntaFiltrada.id !== indexPergunta
               })}
               key={index + ". " + perguntaFiltrada.id}
               id={perguntaFiltrada.id}
@@ -151,7 +144,24 @@ class MenuTema extends Component {
             </a>
           </li>
         ));
-
+      exibeMenu = (
+        <div
+          id="perguntaContainer"
+          className="card"
+          aria-labelledby="perguntaContainer"
+        >
+          <div className="card-body">
+            <div className="nav-horizontal">
+              <ul className="nav nav-pills nav-fill nav-horizontal-pills-sm">
+                {indicadorPergunta}
+              </ul>
+            </div>
+            <div className="container">
+              <h2 className="question-theme">{filtroTema}</h2>
+            </div>
+          </div>
+        </div>
+      );
     }
 
     return (
@@ -161,13 +171,16 @@ class MenuTema extends Component {
             <div
               className="nav-horizontal nav-horizontal-lg custom-scroll-bar"
             // onClick={this.showPerguntaContainer}
-
             >
               <ul className="nav nav-tabs nav-fill nav-horizontal-pills">
                 {temas}
-
               </ul>
             </div>
+            <Collapse isOpen={isExibeGavetaPerguntas}>
+              <FlipMove>
+                {(!respondeuTodos || isContinuarRespondendo) && exibeMenu}
+              </FlipMove>
+            </Collapse>
           </div>
         </div>
       </div>

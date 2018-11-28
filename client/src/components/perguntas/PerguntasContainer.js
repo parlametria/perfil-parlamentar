@@ -19,9 +19,7 @@ import {
 } from "../../actions/perguntasActions";
 
 import {
-  voltaPergunta,
   passaPergunta,
-  escolhePergunta,
   escolheTema,
   exibePerguntas,
   escondePerguntas
@@ -36,7 +34,6 @@ import FlipMove from "react-flip-move";
 
 import { Collapse } from "reactstrap";
 
-import classnames from "classnames";
 
 import isEmpty from "../../validation/is-empty";
 
@@ -55,9 +52,6 @@ class PerguntasContainer extends Component {
     this.state = { copied: false };
 
     this.passaPergunta = this.passaPergunta.bind(this);
-    this.voltaPergunta = this.voltaPergunta.bind(this);
-    this.selecionaTema = this.selecionaTema.bind(this);
-    this.escolhePergunta = this.escolhePergunta.bind(this);
     this.togglePerguntaContainer = this.togglePerguntaContainer.bind(this);
     this.toggle = this.toggle.bind(this);
   }
@@ -101,29 +95,6 @@ class PerguntasContainer extends Component {
     }
   }
 
-  voltaPergunta() {
-    this.props.voltaPergunta();
-    const { indexPergunta, dadosPerguntas } = this.props.perguntas;
-
-    if (indexPergunta - 1 > 0) {
-      this.props.escolheTema(dadosPerguntas[indexPergunta - 1].tema);
-    }
-  }
-
-  escolhePergunta(e) {
-    e.preventDefault();
-    this.props.escolhePergunta(Number(e.target.id));
-  }
-
-  selecionaTema(e) {
-    e.preventDefault();
-    const { dadosPerguntas } = this.props.perguntas;
-    const perguntasFiltradas = dadosPerguntas.filter(pergunta => {
-      return pergunta.tema === e.target.id;
-    });
-    this.props.escolheTema(e.target.id);
-    this.props.escolhePergunta(perguntasFiltradas[0].id);
-  }
 
   componentDidMount() {
     this.props.getDadosPerguntas();
@@ -138,7 +109,6 @@ class PerguntasContainer extends Component {
     } = this.props.perguntas;
 
     const {
-      filtroTema,
       isExibeGavetaPerguntas,
       isContinuarRespondendo
     } = this.props.questionario;
@@ -146,8 +116,6 @@ class PerguntasContainer extends Component {
     const { respondeuTodos } = this.props.usuario;
 
     let pergunta;
-    let indicadorPergunta;
-    let temas = [];
     let exibePerguntas;
     let exibeFinalPerguntas;
 
@@ -182,54 +150,6 @@ class PerguntasContainer extends Component {
 
       const { respostasUsuario } = this.props.usuario;
 
-      // Constrói os eixos (isso idealmente deve vir de um bd, algo assim)
-      let nomeTemas = new Set();
-      dadosPerguntas.forEach(pergunta => {
-        nomeTemas.add(pergunta.tema);
-      });
-
-      Array.from(nomeTemas).forEach((tema, i) => {
-        temas.push(
-          <li className="nav-item" key={i}>
-            <a
-              className={classnames("nav-link nav-link-a", {
-                active: filtroTema === tema
-              })}
-              onClick={this.selecionaTema}
-              id={tema}
-            >
-              {tema}
-            </a>
-          </li>
-        );
-      });
-
-      indicadorPergunta = dadosPerguntas
-        .filter(pergunta => pergunta.tema === filtroTema)
-        .map((perguntaFiltrada, index) => (
-          // done -> o usuario já respondeu essa pergunta
-          // active -> o usuário está respondendo
-          <li className="nav-item" key={index}>
-            <a
-              className={classnames("nav-link nav-link-b", {
-                active: perguntaFiltrada.id === indexPergunta,
-                done:
-                  respostasUsuario[Number(perguntaFiltrada.id)] !== 0 &&
-                  perguntaFiltrada.id !== indexPergunta
-              })}
-              key={index + ". " + perguntaFiltrada.id}
-              id={perguntaFiltrada.id}
-              onClick={this.escolhePergunta}
-            >
-              <span
-                className="icon-cursor icon-current"
-                id={perguntaFiltrada.id}
-              />
-              {index + 1}
-            </a>
-          </li>
-        ));
-
       pergunta = (
         <Pergunta
           key={dadosPergunta.id}
@@ -249,14 +169,6 @@ class PerguntasContainer extends Component {
           aria-labelledby="perguntaContainer"
         >
           <div className="card-body">
-            <div className="nav-horizontal">
-              <ul className="nav nav-pills nav-fill nav-horizontal-pills-sm">
-                {indicadorPergunta}
-              </ul>
-            </div>
-            <div className="container">
-              <h2 className="question-theme">{filtroTema}</h2>
-            </div>
             {pergunta}
             {botaoCopia}
           </div>
@@ -326,8 +238,6 @@ PerguntasContainer.propTypes = {
   calculaScorePorTema: PropTypes.func.isRequired,
   getDadosPerguntas: PropTypes.func.isRequired,
   passaPergunta: PropTypes.func.isRequired,
-  voltaPergunta: PropTypes.func.isRequired,
-  escolhePergunta: PropTypes.func.isRequired,
   escolheTema: PropTypes.func.isRequired,
   escondePerguntas: PropTypes.func.isRequired,
   exibePerguntas: PropTypes.func.isRequired
@@ -349,8 +259,6 @@ export default connect(
     calculaScorePorTema,
     getDadosPerguntas,
     passaPergunta,
-    voltaPergunta,
-    escolhePergunta,
     escolheTema,
     escondePerguntas,
     exibePerguntas
