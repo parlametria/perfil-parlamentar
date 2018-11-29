@@ -18,6 +18,7 @@ export default function (state = initialState, action) {
       return {
         ...state,
         dadosVotacoes: action.dadosVotacoes,
+        TAM_PERGUNTAS: action.TAM_PERGUNTAS,
         isCarregando: false
       };
     case SET_INDEX_VOTACAO:

@@ -86,7 +86,6 @@ class MenuTema extends Component {
     const dadosAba = this.getDadosAba();
     const indexPergunta = dadosAba[0];
     const dadosPerguntas = dadosAba[1];
-    const tamPergunta = dadosAba[2];
 
     let indicadorPergunta;
     let exibeMenu;
@@ -94,7 +93,6 @@ class MenuTema extends Component {
 
     if (!isEmpty(dadosPerguntas)) {
       const dadosPergunta = dadosPerguntas[indexPergunta];
-
       const { respostasUsuario } = this.props.usuario;
 
       let nomeTemas = new Set();
@@ -121,8 +119,6 @@ class MenuTema extends Component {
       indicadorPergunta = dadosPerguntas
         .filter(pergunta => pergunta.tema === filtroTema)
         .map((perguntaFiltrada, index) => (
-          // done -> o usuario já respondeu essa pergunta
-          // active -> o usuário está respondendo
           <li className="nav-item" key={index}>
             <a
               className={classnames("nav-link nav-link-b", {

@@ -17,6 +17,7 @@ export const passaPergunta = () => (dispatch, getState) => {
   let indexPergunta;
   let TAM_PERGUNTAS;
   let type;
+
   if (abaAtiva === "Voz Ativa") {
     indexPergunta = getState().perguntasReducer.indexPergunta;
     TAM_PERGUNTAS = getState().perguntasReducer.TAM_PERGUNTAS;

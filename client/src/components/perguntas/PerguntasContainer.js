@@ -2,12 +2,9 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 
-import { Tooltip } from "reactstrap";
-
 import Pergunta from "./Pergunta";
 import FinalPerguntas from "./FinalPerguntas";
 import CopiaUrl from "../questionario/CopiaUrl";
-import { CopyToClipboard } from "react-copy-to-clipboard";
 
 import {
   calculaScore,
