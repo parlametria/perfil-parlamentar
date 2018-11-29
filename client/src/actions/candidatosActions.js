@@ -76,12 +76,27 @@ export const calculaScore = () => (dispatch, getState) => {
   const respostasCandidatos = getState().candidatosReducer.dadosCandidatos;
   const { votacoesCandidatos } = getState().votacoesReducer;
 
-  console.log(votacoesCandidatos);
+  const quantVotosVozAtiva = Object.keys(respostasUsuario.vozAtiva).filter(
+    id =>
+      respostasUsuario.vozAtiva[id] !== 0 &&
+      respostasUsuario.vozAtiva[id] !== -2
+  ).length;
 
-  const numRespostasUsuario = quantidadeVotos === 0 ? 1 : quantidadeVotos;
+  const quantVotosQMR = Object.keys(respostasUsuario.qmr).filter(
+    id => respostasUsuario.qmr[id] !== 0 && respostasUsuario.qmr[id] !== -2
+  ).length;
+
+  const numRespostasUsuario =
+    quantVotosVozAtiva + quantVotosQMR === 0
+      ? 1
+      : quantVotosVozAtiva + quantVotosQMR;
 
   let scoreCandidatos = {};
   Object.keys(respostasCandidatos).forEach(elem => {
+    const naoRespondeuVozAtiva =
+      Object.keys(respostasCandidatos[elem].respostas).filter(
+        id => respostasCandidatos[elem].respostas[id] !== 0
+      ).length === 0;
     let score = comparaRespostas(
       respostasCandidatos[elem].respostas,
       respostasUsuario.vozAtiva,
@@ -158,12 +173,13 @@ export const calculaScorePorTema = (
         ).length
       : 0;
 
-    const respostasValidasQMR = votacoesPorTema[tema]
-      ? votacoesPorTema[tema].filter(
-          id =>
-            respostasUsuario.qmr[id] !== 0 && respostasUsuario.qmr[id] !== -2
-        ).length
-      : 0;
+    const respostasValidasQMR =
+      votacoesPorTema[tema] && !isEmpty(dadosCandidato.votacoes)
+        ? votacoesPorTema[tema].filter(
+            id =>
+              respostasUsuario.qmr[id] !== 0 && respostasUsuario.qmr[id] !== -2
+          ).length
+        : 0;
 
     const numRespostasUsuario =
       respostasValidasVA + respostasValidasQMR === 0
@@ -187,6 +203,15 @@ export const calculaScorePorTema = (
       });
     }
 
+    if (!isEmpty(dadosCandidato.votacoes)) {
+      votacoesPorTema[tema].forEach(idVotacao => {
+        votacoesCandidatosTema[idVotacao] = dadosCandidato.votacoes[idVotacao];
+      });
+    }
+
+    console.log(respostasCandidatosTema);
+    console.log(votacoesCandidatosTema);
+
     let score = comparaRespostas(
       respostasCandidatosTema,
       respostasUsuario.vozAtiva,
@@ -196,6 +221,10 @@ export const calculaScorePorTema = (
     );
 
     scoreTema[tema] = score;
+
+    console.log(tema);
+    console.log(respostasUsuario.qmr);
+    console.log(scoreTema);
 
     dispatch({
       type: SET_SCORE_CANDIDATO_POR_TEMA,
@@ -430,6 +459,8 @@ export const getDadosCandidato = (
 
   console.time("pega1Candidato");
 
+  console.log(votacoesCandidatos);
+
   axios
     .get("/api/respostas/candidatos/" + idCandidato)
     .then(respostas => {
@@ -437,18 +468,7 @@ export const getDadosCandidato = (
 
       const dadosCandidato = respostas.data[0];
 
-      const score = comparaRespostas(
-        dadosCandidato.respostas,
-        respostasUsuario.vozAtiva,
-        respostasUsuario.qmr,
-        votacoesCandidatos,
-        numRespostasUsuario
-      );
-
-      dadosCandidato.score = score;
-
       dispatch({ type: SET_DADOS_CANDIDATO, dadosCandidato });
-      dispatch(calculaScorePorTema(respostasUsuario, arrayRespostasUsuario));
     })
     .then(() => {
       axios.get("/api/candidatos/" + idCandidato + "/votacoes").then(res => {
@@ -458,10 +478,21 @@ export const getDadosCandidato = (
 
         dadosCandidato.votacoes = votacoes;
 
+        const score = comparaRespostas(
+          dadosCandidato.respostas,
+          respostasUsuario.vozAtiva,
+          respostasUsuario.qmr,
+          votacoes,
+          numRespostasUsuario
+        );
+
+        dadosCandidato.score = score;
+
         dispatch({
           type: SET_DADOS_CANDIDATO,
           dadosCandidato: dadosCandidato
         });
+        dispatch(calculaScorePorTema(respostasUsuario, arrayRespostasUsuario));
       });
     });
 };
