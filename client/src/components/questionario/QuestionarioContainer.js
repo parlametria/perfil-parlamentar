@@ -38,15 +38,18 @@ class QuestionarioContainer extends Component {
             onChange={this.handleToggle} />
           <span>Câmara</span>
         </label>
-        <MenuTema />
         {this.state.isOn &&
           <div>
+            <MenuTema />
+
             <VotacoesContainer />
 
           </div>
         }
         {!this.state.isOn &&
           <div>
+            <MenuTema />
+
             < PerguntasContainer />
           </div>
         }
