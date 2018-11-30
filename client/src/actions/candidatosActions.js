@@ -93,10 +93,20 @@ export const calculaScore = () => (dispatch, getState) => {
 
   let scoreCandidatos = {};
   Object.keys(respostasCandidatos).forEach(elem => {
-    const naoRespondeuVozAtiva =
-      Object.keys(respostasCandidatos[elem].respostas).filter(
-        id => respostasCandidatos[elem].respostas[id] !== 0
-      ).length === 0;
+    // const naoRespondeuVozAtiva =
+    //   Object.keys(respostasCandidatos[elem].respostas).filter(
+    //     id => respostasCandidatos[elem].respostas[id] !== 0
+    //   ).length === 0;
+
+    // const votacoesCand = votacoesCandidatos[elem];
+
+    // let numRespostasConsideradas;
+    // if (votacoesCand && !naoRespondeuVozAtiva)
+    //   numRespostasConsideradas = numRespostasUsuario;
+    // else if (naoRespondeuVozAtiva) numRespostasConsideradas = quantVotosQMR;
+    // else if (!votacoesCand) numRespostasConsideradas = quantVotosVozAtiva;
+    // else numRespostasConsideradas = 0;
+
     let score = comparaRespostas(
       respostasCandidatos[elem].respostas,
       respostasUsuario.vozAtiva,
