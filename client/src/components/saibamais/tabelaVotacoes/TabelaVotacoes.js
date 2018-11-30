@@ -67,7 +67,6 @@ class TabelaVotacoes extends Component {
     //   }
     // });
 
-    console.log(votacoes);
 
     function getValorVotacao(num) {
       switch (num) {

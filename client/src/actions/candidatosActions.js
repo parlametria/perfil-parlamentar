@@ -47,10 +47,10 @@ const comparaRespostas = (
   chaves.forEach(idPergunta => {
     respostasIguais +=
       respostasCandidatos[idPergunta] !== undefined &&
-      respostasCandidatos[idPergunta] !== null &&
-      respostasUsuarioVozAtiva[idPergunta] !== 0 &&
-      respostasUsuarioVozAtiva[idPergunta] !== -2 &&
-      respostasCandidatos[idPergunta] === respostasUsuarioVozAtiva[idPergunta]
+        respostasCandidatos[idPergunta] !== null &&
+        respostasUsuarioVozAtiva[idPergunta] !== 0 &&
+        respostasUsuarioVozAtiva[idPergunta] !== -2 &&
+        respostasCandidatos[idPergunta] === respostasUsuarioVozAtiva[idPergunta]
         ? 1
         : 0;
   });
@@ -59,10 +59,10 @@ const comparaRespostas = (
   chavesQMR.forEach(idPergunta => {
     respostasIguais +=
       votacoesCandidatos[idPergunta] !== undefined &&
-      votacoesCandidatos[idPergunta] !== null &&
-      respostasUsuarioQMR[idPergunta] !== 0 &&
-      respostasUsuarioQMR[idPergunta] !== -2 &&
-      votacoesCandidatos[idPergunta] === respostasUsuarioQMR[idPergunta]
+        votacoesCandidatos[idPergunta] !== null &&
+        respostasUsuarioQMR[idPergunta] !== 0 &&
+        respostasUsuarioQMR[idPergunta] !== -2 &&
+        votacoesCandidatos[idPergunta] === respostasUsuarioQMR[idPergunta]
         ? 1
         : 0;
   });
@@ -174,18 +174,18 @@ export const calculaScorePorTema = (
   nomeTemas.forEach(tema => {
     const respostasValidasVA = perguntasPorTema[tema]
       ? perguntasPorTema[tema].filter(
-          id =>
-            respostasUsuario.vozAtiva[id] !== 0 &&
-            respostasUsuario.vozAtiva[id] !== -2
-        ).length
+        id =>
+          respostasUsuario.vozAtiva[id] !== 0 &&
+          respostasUsuario.vozAtiva[id] !== -2
+      ).length
       : 0;
 
     const respostasValidasQMR =
       votacoesPorTema[tema] && !isEmpty(dadosCandidato.votacoes)
         ? votacoesPorTema[tema].filter(
-            id =>
-              respostasUsuario.qmr[id] !== 0 && respostasUsuario.qmr[id] !== -2
-          ).length
+          id =>
+            respostasUsuario.qmr[id] !== 0 && respostasUsuario.qmr[id] !== -2
+        ).length
         : 0;
 
     const numRespostasUsuario =
@@ -425,9 +425,9 @@ export const getDadosCandidatos = () => (dispatch, getState) => {
         axios
           .get(
             "/api/respostas/estados/" +
-              filtro.estado +
-              "/naoresponderam?pageNo=1&size=" +
-              ITENS_POR_REQ
+            filtro.estado +
+            "/naoresponderam?pageNo=1&size=" +
+            ITENS_POR_REQ
           )
           .then(respostas => {
             respostas.data.data.forEach(resp => {
@@ -471,14 +471,11 @@ export const getDadosCandidato = (
 
   const numRespostasUsuario = quantidadeVotos === 0 ? 1 : quantidadeVotos;
 
-  console.time("pega1Candidato");
 
-  console.log(votacoesCandidatos);
 
   axios
     .get("/api/respostas/candidatos/" + idCandidato)
     .then(respostas => {
-      console.timeEnd("pega1Candidato");
 
       const dadosCandidato = respostas.data[0];
 
@@ -548,10 +545,10 @@ export const setCandidatosFiltrados = () => (dispatch, getState) => {
   axios
     .get(
       "api/respostas/estados/" +
-        filtro.estado +
-        "/partidos/" +
-        filtro.partido +
-        "/responderam"
+      filtro.estado +
+      "/partidos/" +
+      filtro.partido +
+      "/responderam"
     )
     .then(totalCandidatos =>
       dispatch({
@@ -608,9 +605,9 @@ export const setCandidatosFiltrados = () => (dispatch, getState) => {
         final: TAM_PAGINA,
         totalCandidatos:
           filtro.partido !== "Partidos" ||
-          filtro.nome !== "" ||
-          filtro.reeleicao !== "-1" ||
-          filtro.responderam !== "-1"
+            filtro.nome !== "" ||
+            filtro.reeleicao !== "-1" ||
+            filtro.responderam !== "-1"
             ? candidatos.length
             : candidatosRanqueados.length
       })
@@ -632,10 +629,10 @@ export const setPartidos = () => (dispatch, getState) => {
   axios
     .get(
       "api/respostas/estados/" +
-        filtro.estado +
-        "/partidos" +
-        "?eleito=" +
-        eleito
+      filtro.estado +
+      "/partidos" +
+      "?eleito=" +
+      eleito
     )
     .then(partidos => {
       dispatch({ type: SET_PARTIDOS, partidos: partidos.data.data });
@@ -666,11 +663,11 @@ export const getProximaPaginaCandidatos = () => (dispatch, getState) => {
   axios
     .get(
       "/api/respostas/estados/" +
-        filtro.estado +
-        "/naoresponderam?pageNo=" +
-        paginacao.paginaAtualAPI +
-        "&size=" +
-        ITENS_POR_REQ
+      filtro.estado +
+      "/naoresponderam?pageNo=" +
+      paginacao.paginaAtualAPI +
+      "&size=" +
+      ITENS_POR_REQ
     )
     .then(respostas => {
       respostas.data.data.forEach(resposta => {
