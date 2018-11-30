@@ -220,6 +220,7 @@ class CandidatosContainer extends Component {
     } = this.props.candidatos;
 
     const isVotacoesCarregando = this.props.votacoes.isCarregando;
+    const { votacoesCandidatos } = this.props.votacoes;
 
     const {
       filtro,
@@ -233,9 +234,9 @@ class CandidatosContainer extends Component {
 
     const candidatosMapeaveis =
       filtro.nome !== "" ||
-        filtro.partido !== "Partidos" ||
-        filtro.reeleicao !== "-1" ||
-        filtro.respondeu !== "-1"
+      filtro.partido !== "Partidos" ||
+      filtro.reeleicao !== "-1" ||
+      filtro.respondeu !== "-1"
         ? candidatosFiltrados
         : candidatosRanqueados;
 
@@ -274,8 +275,8 @@ class CandidatosContainer extends Component {
             foto={
               candidato.tem_foto
                 ? "https://s3-sa-east-1.amazonaws.com/fotoscandidatos2018/fotos_tratadas/img_" +
-                candidato.cpf +
-                ".jpg"
+                  candidato.cpf +
+                  ".jpg"
                 : "https://s3-sa-east-1.amazonaws.com/fotoscandidatos2018/fotos_tratadas/nophoto.png"
             }
             respostasUsuario={respostasUsuario}
@@ -286,6 +287,7 @@ class CandidatosContainer extends Component {
                 ? true
                 : false
             }
+            temHistorico={votacoesCandidatos[candidato.cpf] !== undefined}
           />
         );
       }
@@ -549,23 +551,23 @@ class CandidatosContainer extends Component {
               <Spinner />
             </div>
           ) : (
-              <div>
-                <div className="candidatos">
-                  <FlipMove>
-                    {candidatos.slice(paginacao.inicio, paginacao.final)}
-                  </FlipMove>
-                </div>
-                {!isFiltrandoPorNome ? (
-                  <div className="candidatos-pagination d-flex justify-content-center flex-wrap mb-3">
-                    {paginacao.inicio !== 0 ? btnFirst : null}
-                    {paginacao.inicio > 0 ? btnMenosCandidatos : null}
-                    {paginacao.final < paginacao.totalCandidatos
-                      ? btnMaisCandidatos
-                      : null}
-                  </div>
-                ) : null}
+            <div>
+              <div className="candidatos">
+                <FlipMove>
+                  {candidatos.slice(paginacao.inicio, paginacao.final)}
+                </FlipMove>
               </div>
-            )}
+              {!isFiltrandoPorNome ? (
+                <div className="candidatos-pagination d-flex justify-content-center flex-wrap mb-3">
+                  {paginacao.inicio !== 0 ? btnFirst : null}
+                  {paginacao.inicio > 0 ? btnMenosCandidatos : null}
+                  {paginacao.final < paginacao.totalCandidatos
+                    ? btnMaisCandidatos
+                    : null}
+                </div>
+              ) : null}
+            </div>
+          )}
         </div>
       </div>
     );
