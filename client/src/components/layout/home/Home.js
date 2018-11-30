@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 
 // Containers imports
-import PerguntasContainer from "../../perguntas/PerguntasContainer";
+import Questionario from "../../questionario/QuestionarioContainer";
 import CandidatosContainer from "../../candidatos/CandidatosContainer";
 import { isMobile } from "react-device-detect";
 import ScrollIntoView from "react-scroll-into-view";
@@ -30,7 +30,7 @@ import { facebookLoginComCodigo } from "../../../actions/authActions";
 import {
   vamosComecar,
   escondePerguntas
-} from "../../../actions/perguntasActions";
+} from "../../../actions/questionarioActions";
 import { salvaScoreUsuario } from "../../../actions/usuarioActions";
 
 import {
@@ -128,7 +128,6 @@ class Home extends Component {
 
   salvaRespostasCache() {
     const { respostasUsuario, arrayRespostasUsuario } = this.props.usuario;
-    console.log(respostasUsuario);
     localStorage.setItem("respostasUsuario", JSON.stringify(respostasUsuario));
     localStorage.setItem("arrayRespostasUsuario", arrayRespostasUsuario);
   }
@@ -140,7 +139,7 @@ class Home extends Component {
 
   render() {
     const { filtro, isVerTodosEleitos } = this.props.candidatos;
-    const { isVamosComecar } = this.props.perguntas;
+    const { isVamosComecar } = this.props.questionario;
     const { quantidadeVotos } = this.props.usuario;
 
     let linkCompartilhamento = "www.vozativa.org/";
@@ -213,15 +212,15 @@ class Home extends Component {
                       </select>
                     </ScrollIntoViewOnChange>
                   ) : (
-                    <select
-                      className="form-control"
-                      onChange={this.selecionaEstado}
-                      value={filtro.estado}
-                    >
-                      <option defaultValue="--">Selecione um Estado</option>
-                      {estados()}
-                    </select>
-                  )}
+                      <select
+                        className="form-control"
+                        onChange={this.selecionaEstado}
+                        value={filtro.estado}
+                      >
+                        <option defaultValue="--">Selecione um Estado</option>
+                        {estados()}
+                      </select>
+                    )}
                 </div>
               </form>
             </div>
@@ -265,9 +264,7 @@ class Home extends Component {
             {filtro.estado !== "" && <div className="grid-separator" />}
             <section className="grid-panel panel-detail">
               <FlipMove>
-                {filtro.estado !== "" && isVamosComecar && (
-                  <PerguntasContainer />
-                )}
+                {filtro.estado !== "" && isVamosComecar && <Questionario />}
               </FlipMove>
             </section>
           </div>
@@ -292,7 +289,8 @@ Home.propTypes = {
 const mapStateToProps = state => ({
   candidatos: state.candidatosReducer,
   perguntas: state.perguntasReducer,
-  usuario: state.usuarioReducer
+  usuario: state.usuarioReducer,
+  questionario: state.questionarioReducer
 });
 
 export default connect(
