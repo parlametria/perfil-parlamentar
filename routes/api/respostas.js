@@ -4,15 +4,15 @@
  */
 
 const express = require("express");
-
+const models = require("../../models/index");
 /**
  * Rotas para funções relacionadas às respostas.
  * @namespace module:routes/respostas
  */
 const router = express.Router();
-const mongoose = require("mongoose");
 
-const Resposta = require("../../models/Resposta");
+const Resposta = models.resposta;
+const Candidato = models.candidato;
 
 const BAD_REQUEST = 400;
 const SUCCESS = 200;
@@ -37,14 +37,14 @@ router.get("/", (req, res) => {
     return res.json(response);
   }
 
-  query.skip = size * (pageNo - 1);
+  query.offset = size * (pageNo - 1);
   query.limit = size;
 
-  Resposta.countDocuments({}, (err, totalCount) => {
+  Resposta.findAndCountAll({}, (err, totalCount) => {
     let response;
     if (err) response = { error: true, message: "Error fetching data" };
 
-    Resposta.find({}, {}, query, (err, data) => {
+    Resposta.findAll({}, {}, query, (err, data) => {
       response = err
         ? { status: BAD_REQUEST, message: "Error fetching data" }
         : {
@@ -69,7 +69,9 @@ router.get("/", (req, res) => {
  * @param {boolean} eleito - Flag eleito true
  */
 router.get("/eleitos", (req, res) => {
-  Resposta.find({ eleito: true })
+  Resposta.findAll({
+    include: [{ model: Candidato, as: "cpf_resp", where: { eleito: true } }]
+  })
     .then(respostas => res.json(respostas))
     .catch(err => res.status(BAD_REQUEST).json({ err }));
 });
