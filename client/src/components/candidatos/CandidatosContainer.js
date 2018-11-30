@@ -219,6 +219,8 @@ class CandidatosContainer extends Component {
       activeTab
     } = this.props.candidatos;
 
+    const isVotacoesCarregando = this.props.votacoes.isCarregando;
+
     const {
       filtro,
       candidatosFiltrados,
@@ -540,7 +542,10 @@ class CandidatosContainer extends Component {
             {filtro.partido !== "Partidos" ? mostraPartido : mostraEstado}
           </header>
 
-          {isCarregando || this.state.isPesquisando || isFiltrandoPorNome ? (
+          {isCarregando ||
+          isVotacoesCarregando ||
+          this.state.isPesquisando ||
+          isFiltrandoPorNome ? (
             <div style={{ paddingTop: "30vh" }}>
               <Spinner />
             </div>
@@ -623,7 +628,8 @@ CandidatosContainer.propTypes = {
 };
 const mapStateToProps = state => ({
   candidatos: state.candidatosReducer,
-  usuario: state.usuarioReducer
+  usuario: state.usuarioReducer,
+  votacoes: state.votacoesReducer
 });
 
 export default connect(

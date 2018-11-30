@@ -5,6 +5,8 @@ import {
   SET_VOTACOES_CANDIDATOS
 } from "./types";
 
+import { calculaScore } from "./candidatosActions";
+
 import votacoes from "../data/votacoes.json";
 
 export const getDadosVotacoes = () => dispatch => {
@@ -36,5 +38,7 @@ export const getVotacoesDeputados = () => (dispatch, getState) => {
       type: SET_VOTACOES_CANDIDATOS,
       votacoesCandidatos: mapaVotacoes
     });
+
+    dispatch(calculaScore());
   });
 };
