@@ -43,7 +43,7 @@ const comparaRespostas = (
   numRespostasUsuario
 ) => {
   let respostasIguais = 0;
-  const chaves = Object.keys(respostasCandidatos);
+  const chaves = Object.keys(respostasUsuarioVozAtiva);
   chaves.forEach(idPergunta => {
     respostasIguais +=
       respostasCandidatos[idPergunta] !== undefined &&
@@ -55,7 +55,7 @@ const comparaRespostas = (
         : 0;
   });
 
-  const chavesQMR = Object.keys(votacoesCandidatos);
+  const chavesQMR = Object.keys(respostasUsuarioQMR);
   chavesQMR.forEach(idPergunta => {
     respostasIguais +=
       votacoesCandidatos[idPergunta] !== undefined &&
@@ -93,26 +93,27 @@ export const calculaScore = () => (dispatch, getState) => {
 
   let scoreCandidatos = {};
   Object.keys(respostasCandidatos).forEach(elem => {
-    // const naoRespondeuVozAtiva =
-    //   Object.keys(respostasCandidatos[elem].respostas).filter(
-    //     id => respostasCandidatos[elem].respostas[id] !== 0
-    //   ).length === 0;
+    const naoRespondeuVozAtiva =
+      Object.keys(respostasCandidatos[elem].respostas).filter(
+        id => respostasCandidatos[elem].respostas[id] !== 0
+      ).length === 0;
 
-    // const votacoesCand = votacoesCandidatos[elem];
+    const naoRespondeuCamara = votacoesCandidatos[elem] === undefined;
 
-    // let numRespostasConsideradas;
-    // if (votacoesCand && !naoRespondeuVozAtiva)
-    //   numRespostasConsideradas = numRespostasUsuario;
-    // else if (naoRespondeuVozAtiva) numRespostasConsideradas = quantVotosQMR;
-    // else if (!votacoesCand) numRespostasConsideradas = quantVotosVozAtiva;
-    // else numRespostasConsideradas = 0;
+    let numRespostasConsideradas;
+    if (!naoRespondeuCamara && !naoRespondeuVozAtiva)
+      numRespostasConsideradas = numRespostasUsuario;
+    else if (naoRespondeuCamara)
+      numRespostasConsideradas =
+        quantVotosVozAtiva === 0 ? 1 : quantVotosVozAtiva;
+    else numRespostasConsideradas = quantVotosQMR === 0 ? 1 : quantVotosQMR;
 
     let score = comparaRespostas(
       respostasCandidatos[elem].respostas,
       respostasUsuario.vozAtiva,
       respostasUsuario.qmr,
       votacoesCandidatos[elem] !== undefined ? votacoesCandidatos[elem] : {},
-      numRespostasUsuario
+      numRespostasConsideradas
     );
     scoreCandidatos[elem] = score;
   });
@@ -215,12 +216,29 @@ export const calculaScorePorTema = (
       });
     }
 
+    const naoRespondeuVozAtiva =
+      Object.keys(dadosCandidato.respostas).filter(
+        id => dadosCandidato.respostas[id] !== 0
+      ).length === 0;
+
+    const naoRespondeuCamara = isEmpty(dadosCandidato.votacoes);
+
+    let numRespostasConsideradas;
+    if (!naoRespondeuCamara && !naoRespondeuVozAtiva)
+      numRespostasConsideradas = numRespostasUsuario;
+    else if (naoRespondeuCamara)
+      numRespostasConsideradas =
+        respostasValidasVA === 0 ? 1 : respostasValidasVA;
+    else
+      numRespostasConsideradas =
+        respostasValidasQMR === 0 ? 1 : respostasValidasQMR;
+
     let score = comparaRespostas(
       respostasCandidatosTema,
       respostasUsuario.vozAtiva,
       respostasUsuario.qmr,
       votacoesCandidatosTema,
-      numRespostasUsuario
+      numRespostasConsideradas
     );
 
     scoreTema[tema] = score;

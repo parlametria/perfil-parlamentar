@@ -35,6 +35,8 @@ class TabelaVotacoes extends Component {
 
     const votacoesCandidato = this.props.candidatos.dadosCandidato.votacoes;
 
+    const { qmr: respostasUsuario } = this.props.usuario.respostasUsuario;
+
     let votacoes = [];
 
     Object.keys(dadosVotacoes).map(i => {
@@ -157,6 +159,14 @@ class TabelaVotacoes extends Component {
               >
                 {getValorVotacao(votacoesCandidato[elem.id_votacao])}
               </td>
+              <td
+                className={
+                  "text-center table-row-center " +
+                  getClassVotacao(respostasUsuario[elem.id_votacao])
+                }
+              >
+                {getValorVotacao(respostasUsuario[elem.id_votacao])}
+              </td>
             </tr>
           </tbody>
         );
@@ -188,6 +198,7 @@ class TabelaVotacoes extends Component {
             <tr>
               <th className="table-th-question">Proposições</th>
               <th className="table-th-candidate">Candidato/a</th>
+              <th className="table-th-candidate">Você</th>
             </tr>
           </thead>
           {rows}
@@ -223,7 +234,8 @@ TabelaVotacoes.propTypes = {
 
 const mapStateToProps = state => ({
   votacoes: state.votacoesReducer,
-  candidatos: state.candidatosReducer
+  candidatos: state.candidatosReducer,
+  usuario: state.usuarioReducer
 });
 
 export default connect(
