@@ -2,7 +2,6 @@ import React, { Component } from "react";
 
 // Containers imports
 import Questionario from "../../questionario/QuestionarioContainer";
-import PerguntasContainer from "../../perguntas/PerguntasContainer";
 import CandidatosContainer from "../../candidatos/CandidatosContainer";
 import { isMobile } from "react-device-detect";
 import ScrollIntoView from "react-scroll-into-view";
@@ -213,15 +212,15 @@ class Home extends Component {
                       </select>
                     </ScrollIntoViewOnChange>
                   ) : (
-                    <select
-                      className="form-control"
-                      onChange={this.selecionaEstado}
-                      value={filtro.estado}
-                    >
-                      <option defaultValue="--">Selecione um Estado</option>
-                      {estados()}
-                    </select>
-                  )}
+                      <select
+                        className="form-control"
+                        onChange={this.selecionaEstado}
+                        value={filtro.estado}
+                      >
+                        <option defaultValue="--">Selecione um Estado</option>
+                        {estados()}
+                      </select>
+                    )}
                 </div>
               </form>
             </div>
