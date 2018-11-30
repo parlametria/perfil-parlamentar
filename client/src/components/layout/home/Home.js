@@ -129,7 +129,6 @@ class Home extends Component {
 
   salvaRespostasCache() {
     const { respostasUsuario, arrayRespostasUsuario } = this.props.usuario;
-    console.log(respostasUsuario);
     localStorage.setItem("respostasUsuario", JSON.stringify(respostasUsuario));
     localStorage.setItem("arrayRespostasUsuario", arrayRespostasUsuario);
   }
@@ -214,15 +213,15 @@ class Home extends Component {
                       </select>
                     </ScrollIntoViewOnChange>
                   ) : (
-                      <select
-                        className="form-control"
-                        onChange={this.selecionaEstado}
-                        value={filtro.estado}
-                      >
-                        <option defaultValue="--">Selecione um Estado</option>
-                        {estados()}
-                      </select>
-                    )}
+                    <select
+                      className="form-control"
+                      onChange={this.selecionaEstado}
+                      value={filtro.estado}
+                    >
+                      <option defaultValue="--">Selecione um Estado</option>
+                      {estados()}
+                    </select>
+                  )}
                 </div>
               </form>
             </div>
@@ -266,9 +265,7 @@ class Home extends Component {
             {filtro.estado !== "" && <div className="grid-separator" />}
             <section className="grid-panel panel-detail">
               <FlipMove>
-                {filtro.estado !== "" && isVamosComecar && (
-                  <Questionario />
-                )}
+                {filtro.estado !== "" && isVamosComecar && <Questionario />}
               </FlipMove>
             </section>
           </div>

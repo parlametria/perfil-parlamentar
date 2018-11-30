@@ -10,9 +10,7 @@ import {
   setVotacoesCarregando
 } from "../../actions/votacoesActions";
 
-import {
-  salvaRespostasUsuario
-} from "../../actions/usuarioActions";
+import { salvaRespostasUsuario } from "../../actions/usuarioActions";
 
 import {
   calculaScore,
@@ -30,7 +28,6 @@ import isEmpty from "../../validation/is-empty";
 import FlipMove from "react-flip-move";
 import { Collapse } from "reactstrap";
 
-
 const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
 
 class VotacoesContainer extends Component {
@@ -44,10 +41,8 @@ class VotacoesContainer extends Component {
   registraResposta(novaResposta) {
     const { respostasUsuario } = this.props.usuario;
 
-
-    respostasUsuario[novaResposta.id] = novaResposta.resposta;
+    respostasUsuario.qmr[novaResposta.id] = novaResposta.resposta;
     this.props.salvaRespostasUsuario(respostasUsuario);
-
 
     this.props.calculaScore();
     this.passaPergunta();
@@ -93,7 +88,7 @@ class VotacoesContainer extends Component {
           titulo={dadosVotacao.titulo}
           descricao={dadosVotacao.descricao}
           tema={dadosVotacao.tema}
-          voto={respostasUsuario[dadosVotacao.id]}
+          voto={respostasUsuario.qmr[dadosVotacao.id_votacao]}
           onVota={novaResposta => this.registraResposta(novaResposta)}
         />
       );
@@ -109,8 +104,7 @@ class VotacoesContainer extends Component {
             <CopiaUrl />
           </div>
         </div>
-      )
-
+      );
     }
     return (
       <div className="votacao-container">
@@ -137,8 +131,6 @@ class VotacoesContainer extends Component {
             )}
           </button>
         </div>
-
-
       </div>
     );
   }
@@ -150,7 +142,6 @@ class VotacoesContainer extends Component {
   }
 }
 
-
 VotacoesContainer.propTypes = {
   calculaScore: PropTypes.func.isRequired,
   calculaScorePorTema: PropTypes.func.isRequired,
@@ -161,14 +152,13 @@ VotacoesContainer.propTypes = {
   escolheTema: PropTypes.func.isRequired,
   escondePerguntas: PropTypes.func.isRequired,
   exibePerguntas: PropTypes.func.isRequired
-}
+};
 const mapStateToProps = state => ({
   votacoes: state.votacoesReducer,
   usuario: state.usuarioReducer,
   questionario: state.questionarioReducer,
   candidatos: state.candidatosReducer
-
-})
+});
 
 export default connect(
   mapStateToProps,
@@ -182,6 +172,5 @@ export default connect(
     escolheTema,
     escondePerguntas,
     exibePerguntas
-  })
-  (VotacoesContainer);
-
+  }
+)(VotacoesContainer);

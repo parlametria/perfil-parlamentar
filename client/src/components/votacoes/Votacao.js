@@ -3,14 +3,13 @@ import PropTypes from "prop-types";
 import Pergunta from "../perguntas/Pergunta";
 
 class Votacao extends Component {
-
   render() {
     let texto = this.props.projLei + " - " + this.props.titulo;
     return (
       <div>
         <Pergunta
           key={this.props.id}
-          id={this.props.id}
+          id={this.props.idVotacao}
           index={this.props.id}
           pergunta={texto}
           ajuda={this.props.descricao}
@@ -18,8 +17,6 @@ class Votacao extends Component {
           onVota={this.props.onVota}
         />
       </div>
-
-
     );
   }
 }

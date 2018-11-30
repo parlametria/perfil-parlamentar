@@ -13,7 +13,6 @@ class Candidato extends Component {
     );
 
     const verAtuacao = (
-
       <Link
         className="btn btn-outline-primary btn-sm"
         to={
@@ -26,7 +25,6 @@ class Candidato extends Component {
       >
         ver atuação
       </Link>
-
     );
 
     const naoRespondeu = (
@@ -124,15 +122,14 @@ class Candidato extends Component {
                   {this.props.siglaPartido}/{this.props.estado}
                 </div>
                 <div className="pb-1">
-                  {this.props.reeleicao &&
-                    !this.props.reeleito && (
-                      <span
-                        style={{ marginRight: "5px" }}
-                        className="badge badge-success"
-                      >
-                        reeleição
-                      </span>
-                    )}
+                  {this.props.reeleicao && !this.props.reeleito && (
+                    <span
+                      style={{ marginRight: "5px" }}
+                      className="badge badge-success"
+                    >
+                      reeleição
+                    </span>
+                  )}
                   {this.props.reeleito && (
                     <span
                       style={{ marginRight: "5px" }}
@@ -162,7 +159,7 @@ Candidato.propTypes = {
   score: PropTypes.number.isRequired,
   respostas: PropTypes.any.isRequired,
   foto: PropTypes.string.isRequired,
-  respostasUsuario: PropTypes.object.isRequired,
+  respostasUsuario: PropTypes.instanceOf(Object),
   email: PropTypes.string.isRequired
 };
 

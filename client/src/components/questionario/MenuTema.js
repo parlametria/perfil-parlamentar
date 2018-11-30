@@ -19,11 +19,9 @@ import { Collapse } from "reactstrap";
 
 import isEmpty from "../../validation/is-empty";
 
-
 const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
 
 class MenuTema extends Component {
-
   constructor(props) {
     super(props);
 
@@ -35,15 +33,28 @@ class MenuTema extends Component {
 
   getDadosAba() {
     const abaAtiva = this.props.questionario.abaAtiva;
-    const index = (abaAtiva === "Voz Ativa" ? this.props.perguntas.indexPergunta : this.props.votacoes.indexPergunta);
+    const index =
+      abaAtiva === "Voz Ativa"
+        ? this.props.perguntas.indexPergunta
+        : this.props.votacoes.indexPergunta;
 
-    const dados = (abaAtiva === "Voz Ativa" ? this.props.perguntas.dadosPerguntas : this.props.votacoes.dadosVotacoes);
+    const dados =
+      abaAtiva === "Voz Ativa"
+        ? this.props.perguntas.dadosPerguntas
+        : this.props.votacoes.dadosVotacoes;
 
-    const tamPergunta = (abaAtiva === "Voz Ativa" ? this.props.perguntas.TAM_PERGUNTAS : this.props.votacoes.TAM_PERGUNTAS);
+    const tamPergunta =
+      abaAtiva === "Voz Ativa"
+        ? this.props.perguntas.TAM_PERGUNTAS
+        : this.props.votacoes.TAM_PERGUNTAS;
 
-    return [index, dados, tamPergunta];
+    const respostasUsuario =
+      abaAtiva === "Voz Ativa"
+        ? this.props.usuario.respostasUsuario.vozAtiva
+        : this.props.usuario.respostasUsuario.qmr;
+
+    return [index, dados, tamPergunta, respostasUsuario];
   }
-
 
   voltaPergunta() {
     this.props.passaPergunta();
@@ -86,6 +97,7 @@ class MenuTema extends Component {
     const dadosAba = this.getDadosAba();
     const indexPergunta = dadosAba[0];
     const dadosPerguntas = dadosAba[1];
+    const respostasUsuario = dadosAba[3];
 
     let indicadorPergunta;
     let exibeMenu;
@@ -93,7 +105,6 @@ class MenuTema extends Component {
 
     if (!isEmpty(dadosPerguntas)) {
       const dadosPergunta = dadosPerguntas[indexPergunta];
-      const { respostasUsuario } = this.props.usuario;
 
       let nomeTemas = new Set();
       dadosPerguntas.forEach(pergunta => {
@@ -118,27 +129,33 @@ class MenuTema extends Component {
 
       indicadorPergunta = dadosPerguntas
         .filter(pergunta => pergunta.tema === filtroTema)
-        .map((perguntaFiltrada, index) => (
-          <li className="nav-item" key={index}>
-            <a
-              className={classnames("nav-link nav-link-b", {
-                active: perguntaFiltrada.id === indexPergunta,
-                done:
-                  respostasUsuario[Number(perguntaFiltrada.id)] !== 0 &&
-                  perguntaFiltrada.id !== indexPergunta
-              })}
-              key={index + ". " + perguntaFiltrada.id}
-              id={perguntaFiltrada.id}
-              onClick={this.escolhePergunta}
-            >
-              <span
-                className="icon-cursor icon-current"
-                id={perguntaFiltrada.id}
-              />
-              {index + 1}
-            </a>
-          </li>
-        ));
+        .map((perguntaFiltrada, index) => {
+          const idQuestionario =
+            this.props.questionario.abaAtiva === "Voz Ativa"
+              ? perguntaFiltrada.id
+              : perguntaFiltrada.id_votacao;
+          return (
+            <li className="nav-item" key={index}>
+              <a
+                className={classnames("nav-link nav-link-b", {
+                  active: perguntaFiltrada.id === indexPergunta,
+                  done:
+                    respostasUsuario[idQuestionario] !== 0 &&
+                    idQuestionario !== indexPergunta
+                })}
+                key={index + ". " + idQuestionario}
+                id={idQuestionario}
+                onClick={this.escolhePergunta}
+              >
+                <span
+                  className="icon-cursor icon-current"
+                  id={idQuestionario}
+                />
+                {index + 1}
+              </a>
+            </li>
+          );
+        });
       exibeMenu = (
         <div
           id="perguntaContainer"
@@ -165,7 +182,7 @@ class MenuTema extends Component {
           <div className="panel-detail-header">
             <div
               className="nav-horizontal nav-horizontal-lg custom-scroll-bar"
-            // onClick={this.showPerguntaContainer}
+              // onClick={this.showPerguntaContainer}
             >
               <ul className="nav nav-tabs nav-fill nav-horizontal-pills">
                 {temas}
@@ -179,9 +196,8 @@ class MenuTema extends Component {
           </div>
         </div>
       </div>
-    )
+    );
   }
-
 }
 
 MenuTema.propTypes = {
