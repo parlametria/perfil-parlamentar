@@ -11,10 +11,7 @@ import {
   calculaScorePorTema
 } from "../../actions/candidatosActions";
 
-import {
-  getDadosPerguntas,
-
-} from "../../actions/perguntasActions";
+import { getDadosPerguntas } from "../../actions/perguntasActions";
 
 import {
   passaPergunta,
@@ -23,15 +20,11 @@ import {
   escondePerguntas
 } from "../../actions/questionarioActions";
 
-import {
-  salvaRespostasUsuario
-} from "../../actions/usuarioActions";
-
+import { salvaRespostasUsuario } from "../../actions/usuarioActions";
 
 import FlipMove from "react-flip-move";
 
 import { Collapse } from "reactstrap";
-
 
 import isEmpty from "../../validation/is-empty";
 
@@ -52,13 +45,21 @@ class PerguntasContainer extends Component {
   registraResposta(novaResposta) {
     const { respostasUsuario } = this.props.usuario;
 
-
-    respostasUsuario[novaResposta.id] = novaResposta.resposta;
+    respostasUsuario.vozAtiva[novaResposta.id] = novaResposta.resposta;
+    //arrayRespostasUsuario[novaResposta.id] = novaResposta.resposta;
     this.props.salvaRespostasUsuario(respostasUsuario);
-
 
     this.props.calculaScore();
     this.passaPergunta();
+  }
+
+  geraUrl() {
+    const url =
+      "www.vozativa.org/" +
+      this.props.candidatos.filtro.estado +
+      "/" +
+      criaURL(this.props.usuario.respostasUsuario);
+    return url;
   }
 
   async passaPergunta() {
@@ -71,7 +72,6 @@ class PerguntasContainer extends Component {
     }
   }
 
-
   componentDidMount() {
     this.props.getDadosPerguntas();
 
@@ -79,10 +79,7 @@ class PerguntasContainer extends Component {
   }
 
   render() {
-    const {
-      dadosPerguntas,
-      indexPergunta
-    } = this.props.perguntas;
+    const { dadosPerguntas, indexPergunta } = this.props.perguntas;
 
     const {
       isExibeGavetaPerguntas,
@@ -98,7 +95,9 @@ class PerguntasContainer extends Component {
     if (!isEmpty(dadosPerguntas)) {
       const dadosPergunta = dadosPerguntas[indexPergunta];
 
-      const { respostasUsuario } = this.props.usuario;
+      const {
+        vozAtiva: respostasUsuario
+      } = this.props.usuario.respostasUsuario;
 
       pergunta = (
         <Pergunta

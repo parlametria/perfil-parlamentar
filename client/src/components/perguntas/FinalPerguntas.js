@@ -35,7 +35,7 @@ class FinalPerguntas extends Component {
       "www.vozativa.org/" +
       this.props.candidatos.filtro.estado +
       "/" +
-      criaURL(this.props.usuario.arrayRespostasUsuario);
+      criaURL(this.props.usuario.respostasUsuario);
     return url;
   }
 

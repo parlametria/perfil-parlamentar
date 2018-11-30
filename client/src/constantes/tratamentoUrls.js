@@ -1,5 +1,6 @@
 import { listaEstados } from "./filtrosSeletoresCandidatos";
-const TAM_PERGUNTAS = 46;
+import votacoes from "../data/votacoes.json";
+import perguntas from "../data/perguntas.json";
 
 export const getArrayUrl = url => {
   let arrayUrl = [];
@@ -15,31 +16,50 @@ export const getArrayUrl = url => {
 };
 
 export const getDict = arrayUrl => {
-  let dictUrl = {};
+  const TAM_PERGUNTAS = Object.keys(perguntas).length;
+
+  let respostasUsuario = {};
+  respostasUsuario.vozAtiva = {};
+  respostasUsuario.qmr = {};
+
   let indice = 0;
-  for (let index = 0; index < arrayUrl.length; index++) {
+  for (let index = 0; index < TAM_PERGUNTAS; index++) {
     if (arrayUrl[index] === "-") {
-      dictUrl[indice] = arrayUrl[index] + arrayUrl[index + 1];
+      respostasUsuario.vozAtiva[indice] = arrayUrl[index] + arrayUrl[index + 1];
       index++;
     } else {
-      dictUrl[indice] = arrayUrl[index];
+      respostasUsuario.vozAtiva[indice] = arrayUrl[index];
     }
     indice++;
   }
-  return dictUrl;
+
+  Object.keys(votacoes).forEach(id => {
+    const key = votacoes[id].key;
+
+    respostasUsuario.qmr[id] = arrayUrl[key + TAM_PERGUNTAS];
+  });
+
+  return respostasUsuario;
 };
 
 export const criaURL = respostasUsuario => {
-  //receber o dict e dentro fazer o array
-  const arrayVotos = Array(TAM_PERGUNTAS).fill(0);
-
-  for (var id in respostasUsuario) {
-    arrayVotos[id] = respostasUsuario[id];
-  }
   let urlVotos = "";
+
+  const { vozAtiva, qmr } = respostasUsuario;
+  const idsVozAtiva = Object.keys(vozAtiva);
+  const idsQMR = Object.keys(qmr);
+
+  let arrayVotos = Array(idsVozAtiva.length + idsQMR.length).fill(0);
+
+  idsVozAtiva.forEach(id => (arrayVotos[Number(id)] = vozAtiva[id]));
+  idsQMR.forEach(
+    id => (arrayVotos[Number(qmr[id].key) + idsVozAtiva.length] = qmr[id])
+  );
+
   arrayVotos.forEach(voto => {
     urlVotos = urlVotos + voto;
   });
+
   return urlVotos;
 };
 
