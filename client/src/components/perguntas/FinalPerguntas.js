@@ -10,7 +10,7 @@ import { criaURL } from "../../constantes/tratamentoUrls";
 import {
   escondePerguntas,
   continuarRespondendo
-} from "../../actions/perguntasActions";
+} from "../../actions/questionarioActions";
 
 class FinalPerguntas extends Component {
   constructor(props) {
@@ -132,7 +132,7 @@ FinalPerguntas.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  perguntas: state.perguntasReducer,
+  questionario: state.questionarioReducer,
   usuario: state.usuarioReducer,
   candidatos: state.candidatosReducer
 });

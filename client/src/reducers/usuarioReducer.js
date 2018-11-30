@@ -1,9 +1,8 @@
 import { SET_SCORE_USUARIO, SET_SCORE_USUARIO_LIMPO } from "../actions/types";
-
+import perguntas from "../data/perguntas.json";
 import votacoes from "../data/votacoes.json";
 
-const TAM_PERGUNTAS = 46; // Esse tamanho é calculado em perguntasActions, mas não sei como inicializá-lo aqui e em que momento isso seria viável porque esse reducer é chamado antes da chamada ao banco. Então, acho melhor inicializar o array com um tamanho máximo.
-const TAM_VOTACOES = 32;
+const TAM_PERGUNTAS = Object.keys(perguntas).length;
 
 const inicializaRespostasUsuario = () => {
   let respostasUsuario = {};
@@ -24,9 +23,9 @@ const inicializaRespostasUsuario = () => {
 // arrayVotings: [0/1/-1]
 const initialState = {
   respostasUsuario: inicializaRespostasUsuario(),
-  arrayRespostasUsuario: Array(TAM_PERGUNTAS).fill(0),
   quantidadeVotos: 0,
-  respondeuTodos: false
+  respondeuTodos: false,
+  tamPerguntas: TAM_PERGUNTAS
 };
 
 const contaVotos = respostasUsuario => {
@@ -46,7 +45,6 @@ export default function(state = initialState, action) {
       return {
         ...state,
         respostasUsuario: action.respostasUsuario,
-        arrayRespostasUsuario: action.arrayRespostasUsuario,
         quantidadeVotos: contaVotos(action.respostasUsuario),
         respondeuTodos: contaVotos(action.respostasUsuario) === TAM_PERGUNTAS
       };
@@ -54,7 +52,6 @@ export default function(state = initialState, action) {
       return {
         ...state,
         respostasUsuario: inicializaRespostasUsuario(),
-        arrayRespostasUsuario: Array(TAM_PERGUNTAS).fill(0),
         quantidadeVotos: 0,
         respondeuTodos: false
       };

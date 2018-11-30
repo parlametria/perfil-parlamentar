@@ -114,7 +114,6 @@ export const calculaScore = () => (dispatch, getState) => {
       votacoesCandidatos[elem] !== undefined ? votacoesCandidatos[elem] : {},
       numRespostasUsuario
     );
-    console.log(score);
     scoreCandidatos[elem] = score;
   });
 
@@ -172,9 +171,6 @@ export const calculaScorePorTema = (
   });
 
   nomeTemas.forEach(tema => {
-    console.log(perguntasPorTema[tema]);
-    console.log(votacoesPorTema[tema]);
-
     const respostasValidasVA = perguntasPorTema[tema]
       ? perguntasPorTema[tema].filter(
           id =>
@@ -219,9 +215,6 @@ export const calculaScorePorTema = (
       });
     }
 
-    console.log(respostasCandidatosTema);
-    console.log(votacoesCandidatosTema);
-
     let score = comparaRespostas(
       respostasCandidatosTema,
       respostasUsuario.vozAtiva,
@@ -231,10 +224,6 @@ export const calculaScorePorTema = (
     );
 
     scoreTema[tema] = score;
-
-    console.log(tema);
-    console.log(respostasUsuario.qmr);
-    console.log(scoreTema);
 
     dispatch({
       type: SET_SCORE_CANDIDATO_POR_TEMA,
@@ -369,11 +358,8 @@ export const getTopNCandidatos = n => (dispatch, getState) => {
 export const getDadosCandidatos = () => (dispatch, getState) => {
   dispatch(setCandidatosCarregando());
   dispatch(getVotacoesDeputados());
-  console.log("carregando");
 
   const { filtro, activeTab } = getState().candidatosReducer;
-
-  console.log(activeTab);
 
   let dadosCandidatos = {};
 
