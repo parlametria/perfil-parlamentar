@@ -10,9 +10,10 @@ import votacoes from "../data/votacoes.json";
 export const getDadosVotacoes = () => dispatch => {
   dispatch(setVotacoesCarregando());
   var TAM_PERGUNTAS = Object.keys(votacoes).length;
-
   let dadosVotacoes = [];
-  Object.keys(votacoes).forEach(key => {
+
+  Object.keys(votacoes).sort().forEach(key => {
+
     dadosVotacoes[votacoes[key].id] = votacoes[key];
   });
   dispatch({ type: SET_DADOS_VOTACOES, dadosVotacoes, TAM_PERGUNTAS });
