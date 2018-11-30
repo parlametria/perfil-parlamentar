@@ -17,6 +17,20 @@ const Candidato = models.candidato;
 const BAD_REQUEST = 400;
 const SUCCESS = 200;
 
+const att_res = ["cpf", "resposta", "pergunta_id"];
+const att = [
+  "estado",
+  "uf",
+  "nome_urna",
+  "recebeu",
+  "respondeu",
+  "eleito",
+  "reeleicao",
+  "email",
+  "sg_partido",
+  "partido"
+];
+
 /**
  * Pega todas as respostas de uma vez.
  * @name get/api/respostas
@@ -70,7 +84,15 @@ router.get("/", (req, res) => {
  */
 router.get("/eleitos", (req, res) => {
   Resposta.findAll({
-    include: [{ model: Candidato, as: "cpf_resp", where: { eleito: true } }]
+    attributes: att_res,
+    include: [
+      {
+        model: Candidato,
+        as: "cpf_resp",
+        attributes: att,
+        where: { eleito: true }
+      }
+    ]
   })
     .then(respostas => res.json(respostas))
     .catch(err => res.status(BAD_REQUEST).json({ err }));
@@ -84,7 +106,17 @@ router.get("/eleitos", (req, res) => {
  * @param {string} cpf - CPF do candidato
  */
 router.get("/candidatos/:cpf", (req, res) => {
-  Resposta.find({ cpf: req.params.cpf })
+  Resposta.findAll({
+    attributes: att_res,
+    include: [
+      {
+        model: Candidato,
+        as: "cpf_resp",
+        attributes: att,
+        where: { cpf: req.params.cpf }
+      }
+    ]
+  })
     .then(respostas => res.json(respostas))
     .catch(err => res.status(BAD_REQUEST).json({ err }));
 });
