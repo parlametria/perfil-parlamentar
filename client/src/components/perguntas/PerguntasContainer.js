@@ -22,6 +22,8 @@ import {
 
 import { salvaRespostasUsuario } from "../../actions/usuarioActions";
 
+import { criaURL } from "../../constantes/tratamentoUrls";
+
 import FlipMove from "react-flip-move";
 
 import { Collapse } from "reactstrap";

@@ -33,10 +33,10 @@ export const getDict = arrayUrl => {
     indice++;
   }
 
-  Object.keys(votacoes).forEach(id => {
-    const key = votacoes[id].key;
+  Object.keys(votacoes).forEach(idVotacao => {
+    const id = votacoes[idVotacao].id;
 
-    respostasUsuario.qmr[id] = arrayUrl[key + TAM_PERGUNTAS];
+    respostasUsuario.qmr[idVotacao] = arrayUrl[id + TAM_PERGUNTAS];
   });
 
   return respostasUsuario;
@@ -51,10 +51,14 @@ export const criaURL = respostasUsuario => {
 
   let arrayVotos = Array(idsVozAtiva.length + idsQMR.length).fill(0);
 
-  idsVozAtiva.forEach(id => (arrayVotos[Number(id)] = vozAtiva[id]));
-  idsQMR.forEach(
-    id => (arrayVotos[Number(qmr[id].key) + idsVozAtiva.length] = qmr[id])
-  );
+  idsVozAtiva.forEach(id => {
+    arrayVotos[Number(id)] = vozAtiva[id];
+  });
+
+  idsQMR.forEach(idVotacao => {
+    arrayVotos[Number(votacoes[idVotacao].id) + idsVozAtiva.length] =
+      qmr[idVotacao];
+  });
 
   arrayVotos.forEach(voto => {
     urlVotos = urlVotos + voto;

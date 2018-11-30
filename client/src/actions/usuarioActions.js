@@ -1,4 +1,6 @@
 import { SET_SCORE_USUARIO } from "./types";
+import { calculaScore } from "./candidatosActions";
+
 import axios from "axios";
 
 export const salvaScoreUsuario = respostasUsuario => {

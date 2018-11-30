@@ -1,7 +1,8 @@
 import {
   VOTACOES_CARREGANDO,
   SET_DADOS_VOTACOES,
-  SET_INDEX_VOTACAO
+  SET_INDEX_VOTACAO,
+  SET_VOTACOES_CANDIDATOS
 } from "../actions/types";
 
 const initialState = {
