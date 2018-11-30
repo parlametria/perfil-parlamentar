@@ -140,7 +140,9 @@ class Candidato extends Component {
                   )}
                   {!this.props.respondeu && badgeNaoRespondeu}
                 </div>
-                {this.props.respondeu ? barraScore : naoRespondeu}
+                {this.props.respondeu || this.props.reeleito
+                  ? barraScore
+                  : naoRespondeu}
               </div>
             </div>
           </div>
