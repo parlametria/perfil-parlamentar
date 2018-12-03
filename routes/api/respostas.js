@@ -185,12 +185,22 @@ router.get("/estados/:uf/partidos", (req, res) => {
   if (eleito) {
     query.eleito = eleito;
   }
-
-  Resposta.find(query)
+  console.log(query);
+  Resposta.findAll({
+    attributes: att_res,
+    include: [
+      {
+        model: Candidato,
+        as: "cpf_resp",
+        attributes: att,
+        where: query
+      }
+    ]
+  })
     .then(respostas => {
       const partidosSet = new Set();
       respostas.forEach(resposta => {
-        partidosSet.add(resposta.sg_partido);
+        partidosSet.add(resposta.cpf_resp.sg_partido);
       });
       let partidos = Array.from(partidosSet).sort((a, b) => a.localeCompare(b));
       partidos.splice(0, 0, "Partidos");
