@@ -3,6 +3,7 @@ import perguntas from "../data/perguntas.json";
 import votacoes from "../data/votacoes.json";
 
 const TAM_PERGUNTAS = Object.keys(perguntas).length;
+const TAM_VOTACOES = Object.keys(votacoes).length;
 
 const inicializaRespostasUsuario = () => {
   let respostasUsuario = {};
@@ -25,18 +26,22 @@ const initialState = {
   respostasUsuario: inicializaRespostasUsuario(),
   quantidadeVotos: 0,
   respondeuTodos: false,
-  tamPerguntas: TAM_PERGUNTAS
+  respondeuVozAtiva: false,
+  respondeuQMR: false,
+  tamPerguntas: TAM_PERGUNTAS,
+  tamVotacoes: TAM_VOTACOES
+};
+
+const contaTodosVotos = respostasUsuario => {
+  return (
+    contaVotos(respostasUsuario.vozAtiva) + contaVotos(respostasUsuario.qmr)
+  );
 };
 
 const contaVotos = respostasUsuario => {
-  return (
-    Object.keys(respostasUsuario.vozAtiva).filter(
-      res => respostasUsuario.vozAtiva[res] !== 0
-    ).length +
-    Object.keys(respostasUsuario.qmr).filter(
-      res => respostasUsuario.qmr[res] !== 0
-    ).length
-  );
+  return Object.keys(respostasUsuario).filter(
+    res => respostasUsuario[res] !== 0
+  ).length;
 };
 
 export default function(state = initialState, action) {
@@ -45,15 +50,22 @@ export default function(state = initialState, action) {
       return {
         ...state,
         respostasUsuario: action.respostasUsuario,
-        quantidadeVotos: contaVotos(action.respostasUsuario),
-        respondeuTodos: contaVotos(action.respostasUsuario) === TAM_PERGUNTAS
+        quantidadeVotos: contaTodosVotos(action.respostasUsuario),
+        respondeuTodos:
+          contaTodosVotos(action.respostasUsuario) ===
+          TAM_PERGUNTAS + TAM_VOTACOES,
+        respondeuVozAtiva:
+          contaVotos(action.respostasUsuario.vozAtiva) === TAM_PERGUNTAS,
+        respondeuQMR: contaVotos(action.respostasUsuario.qmr) === TAM_VOTACOES
       };
     case SET_SCORE_USUARIO_LIMPO:
       return {
         ...state,
         respostasUsuario: inicializaRespostasUsuario(),
         quantidadeVotos: 0,
-        respondeuTodos: false
+        respondeuTodos: false,
+        respondeuVozAtiva: false,
+        respondeuQMR: false
       };
     default:
       return state;
