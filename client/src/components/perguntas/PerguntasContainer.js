@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 
 import Pergunta from "./Pergunta";
-import FinalPerguntas from "./FinalPerguntas";
+import FinalPerguntas from "../questionario/FinalPerguntas";
 import CopiaUrl from "../questionario/CopiaUrl";
 
 import {
@@ -33,6 +33,7 @@ import isEmpty from "../../validation/is-empty";
 //import { delay } from "../../utils/funcoes";
 
 import "./perguntas.css";
+
 
 const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
 
@@ -76,23 +77,17 @@ class PerguntasContainer extends Component {
 
   componentDidMount() {
     this.props.getDadosPerguntas();
-
-    //this.props.salvaScoreUsuario({}, Array(45).fill(1));
   }
 
   render() {
     const { dadosPerguntas, indexPergunta } = this.props.perguntas;
 
     const {
-      isExibeGavetaPerguntas,
-      isContinuarRespondendo
+      isExibeGavetaPerguntas
     } = this.props.questionario;
-
-    const { respondeuTodos } = this.props.usuario;
 
     let pergunta;
     let exibePerguntas;
-    let exibeFinalPerguntas;
 
     if (!isEmpty(dadosPerguntas)) {
       const dadosPergunta = dadosPerguntas[indexPergunta];
@@ -120,17 +115,19 @@ class PerguntasContainer extends Component {
           aria-labelledby="perguntaContainer"
         >
           <div className="card-body">
+            <div className="container">
+              <h2 className="question-theme">{this.props.questionario.filtroTema}</h2>
+            </div>
+
             {pergunta}
             <CopiaUrl />
           </div>
         </div>
       );
 
-      exibeFinalPerguntas = (
-        <div>
-          <FinalPerguntas />
-        </div>
-      );
+
+
+
     }
 
     return (
@@ -138,8 +135,7 @@ class PerguntasContainer extends Component {
         <div>
           <Collapse isOpen={isExibeGavetaPerguntas}>
             <FlipMove>
-              {(!respondeuTodos || isContinuarRespondendo) && exibePerguntas}
-              {respondeuTodos && !isContinuarRespondendo && exibeFinalPerguntas}
+              {exibePerguntas}
             </FlipMove>
           </Collapse>
           <button

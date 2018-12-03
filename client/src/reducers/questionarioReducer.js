@@ -3,7 +3,9 @@ import {
   SET_VAMOS_COMECAR,
   ESCONDE_PERGUNTAS,
   EXIBE_PERGUNTAS,
-  SET_CONTINUAR_RESPONDENDO,
+  SET_CONTINUAR_RESPONDENDO_TODOS,
+  SET_CONTINUAR_RESPONDENDO_VOTACOES,
+  SET_CONTINUAR_RESPONDENDO_VOZATIVA,
   SET_ABA_ATIVA
 } from "../actions/types";
 
@@ -11,7 +13,7 @@ const initialState = {
   filtroTema: "Meio Ambiente",
   isVamosComecar: false,
   isExibeGavetaPerguntas: true,
-  isContinuarRespondendo: false,
+  isContinuarRespondendo: { todos: false, votacoes: false, vozAtiva: false },
   abaAtiva: "Voz Ativa"
 };
 
@@ -37,10 +39,20 @@ export default function (state = initialState, action) {
         ...state,
         isExibeGavetaPerguntas: false
       };
-    case SET_CONTINUAR_RESPONDENDO:
+    case SET_CONTINUAR_RESPONDENDO_TODOS:
       return {
         ...state,
-        isContinuarRespondendo: true
+        isContinuarRespondendo: { todos: true, votacoes: state.isContinuarRespondendo.votacoes, vozAtiva: state.isContinuarRespondendo.vozAtiva }
+      };
+    case SET_CONTINUAR_RESPONDENDO_VOTACOES:
+      return {
+        ...state,
+        isContinuarRespondendo: { todos: state.isContinuarRespondendo.todos, votacoes: true, vozAtiva: state.isContinuarRespondendo.vozAtiva }
+      };
+    case SET_CONTINUAR_RESPONDENDO_VOZATIVA:
+      return {
+        ...state,
+        isContinuarRespondendo: { todos: state.isContinuarRespondendo.todos, votacoes: state.isContinuarRespondendo.votacoes, vozAtiva: true }
       };
     case SET_ABA_ATIVA:
       return {

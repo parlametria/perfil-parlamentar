@@ -168,9 +168,6 @@ class MenuTema extends Component {
                 {indicadorPergunta}
               </ul>
             </div>
-            <div className="container">
-              <h2 className="question-theme">{filtroTema}</h2>
-            </div>
           </div>
         </div>
       );

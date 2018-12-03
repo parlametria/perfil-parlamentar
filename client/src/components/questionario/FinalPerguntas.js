@@ -9,7 +9,9 @@ import { criaURL } from "../../constantes/tratamentoUrls";
 
 import {
   escondePerguntas,
-  continuarRespondendo
+  continuarRespondendoTodos,
+  continuarRespondendoVotacoes,
+  continuarRespondendoVozAtiva
 } from "../../actions/questionarioActions";
 
 class FinalPerguntas extends Component {
@@ -27,7 +29,13 @@ class FinalPerguntas extends Component {
 
   continuarRespondendo(e) {
     e.preventDefault();
-    this.props.continuarRespondendo();
+    if (this.props.usuario.respondeuTodos) {
+      this.props.continuarRespondendoTodos();
+    } else if (this.props.usuario.respondeuVozAtiva) {
+      this.props.continuarRespondendoVozAtiva();
+    } else if (this.props.usuario.respondeuVotacoes) {
+      this.props.continuarRespondendoVotacoes();
+    }
   }
 
   geraUrl() {
@@ -45,25 +53,7 @@ class FinalPerguntas extends Component {
       "Veja minhas respostas na plataforma VozAtiva! " + linkCompartilhamento;
     return (
       <div className="container tutorial p-3">
-        <h4 className="text-center p-3">
-          Todas as perguntas foram respondidas, agora é com você!
-        </h4>
-        <p>
-          <strong className="strong">Veja</strong> os deputados alinhados com
-          você.
-        </p>
-        <p>
-          <strong className="strong">Cobre</strong> a participação de quem não
-          respondeu.
-        </p>
-        <p>
-          <strong className="strong">Examine</strong> a atuação anterior dos
-          candidatos reeleitos.
-        </p>
-        <p>
-          <strong className="strong">Compartilhe</strong> suas respostas nas
-          redes sociais.
-        </p>
+        <div>{this.props.children}</div>
         <div className="row justify-content-center">
           <a
             href={
@@ -128,7 +118,9 @@ class FinalPerguntas extends Component {
 
 FinalPerguntas.propTypes = {
   escondePerguntas: PropTypes.func.isRequired,
-  continuarRespondendo: PropTypes.func.isRequired
+  continuarRespondendoTodos: PropTypes.func.isRequired,
+  continuarRespondendoVotacoes: PropTypes.func.isRequired,
+  continuarRespondendoVozAtiva: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -139,5 +131,10 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { escondePerguntas, continuarRespondendo }
+  {
+    escondePerguntas,
+    continuarRespondendoTodos,
+    continuarRespondendoVotacoes,
+    continuarRespondendoVozAtiva
+  }
 )(FinalPerguntas);
