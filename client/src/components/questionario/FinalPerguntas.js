@@ -9,7 +9,9 @@ import { criaURL } from "../../constantes/tratamentoUrls";
 
 import {
   escondePerguntas,
-  continuarRespondendo
+  continuarRespondendoTodos,
+  continuarRespondendoVotacoes,
+  continuarRespondendoVozAtiva
 } from "../../actions/questionarioActions";
 
 class FinalPerguntas extends Component {
@@ -27,7 +29,13 @@ class FinalPerguntas extends Component {
 
   continuarRespondendo(e) {
     e.preventDefault();
-    this.props.continuarRespondendo();
+    if (this.props.usuario.respondeuTodos) {
+      this.props.continuarRespondendoTodos();
+    } else if (this.props.usuario.respondeuVozAtiva) {
+      this.props.continuarRespondendoVozAtiva();
+    } else if (this.props.usuario.respondeuVotacoes) {
+      this.props.continuarRespondendoVotacoes();
+    }
   }
 
   geraUrl() {
@@ -110,7 +118,9 @@ class FinalPerguntas extends Component {
 
 FinalPerguntas.propTypes = {
   escondePerguntas: PropTypes.func.isRequired,
-  continuarRespondendo: PropTypes.func.isRequired
+  continuarRespondendoTodos: PropTypes.func.isRequired,
+  continuarRespondendoVotacoes: PropTypes.func.isRequired,
+  continuarRespondendoVozAtiva: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -121,5 +131,10 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { escondePerguntas, continuarRespondendo }
+  {
+    escondePerguntas,
+    continuarRespondendoTodos,
+    continuarRespondendoVotacoes,
+    continuarRespondendoVozAtiva
+  }
 )(FinalPerguntas);

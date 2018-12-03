@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 
 import Pergunta from "./Pergunta";
-import FinalPerguntas from "./FinalPerguntas";
+import FinalPerguntas from "../questionario/FinalPerguntas";
 import CopiaUrl from "../questionario/CopiaUrl";
 
 import {
@@ -33,9 +33,7 @@ import isEmpty from "../../validation/is-empty";
 //import { delay } from "../../utils/funcoes";
 
 import "./perguntas.css";
-import FinalVozAtiva from "./FinalVozAtiva";
-import FinalVotacoes from "./FinalVotacoes";
-import FinalQuestionario from "./FinalQuestionario";
+
 
 const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
 
@@ -87,19 +85,11 @@ class PerguntasContainer extends Component {
     const { dadosPerguntas, indexPergunta } = this.props.perguntas;
 
     const {
-      isExibeGavetaPerguntas,
-      isContinuarRespondendo
+      isExibeGavetaPerguntas
     } = this.props.questionario;
-
-    const {
-      respondeuTodos,
-      respondeuVozAtiva,
-      respondeuQMR
-    } = this.props.usuario;
 
     let pergunta;
     let exibePerguntas;
-    let exibeFinalPerguntas;
 
     if (!isEmpty(dadosPerguntas)) {
       const dadosPergunta = dadosPerguntas[indexPergunta];
@@ -133,11 +123,9 @@ class PerguntasContainer extends Component {
         </div>
       );
 
-      exibeFinalPerguntas = (
-        <div>
-          <FinalPerguntas />
-        </div>
-      );
+
+
+
     }
 
     return (
@@ -145,18 +133,7 @@ class PerguntasContainer extends Component {
         <div>
           <Collapse isOpen={isExibeGavetaPerguntas}>
             <FlipMove>
-              {((!respondeuTodos && !respondeuQMR && !respondeuVozAtiva) ||
-                isContinuarRespondendo) &&
-                exibePerguntas}
-              {respondeuVozAtiva &&
-                !respondeuTodos &&
-                !isContinuarRespondendo && <FinalVozAtiva />}
-              {respondeuQMR && !respondeuTodos && !isContinuarRespondendo && (
-                <FinalVotacoes />
-              )}
-              {respondeuTodos && !isContinuarRespondendo && (
-                <FinalQuestionario />
-              )}
+              {exibePerguntas}
             </FlipMove>
           </Collapse>
           <button

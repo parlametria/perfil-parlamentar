@@ -11,46 +11,56 @@ import MenuTema from "./MenuTema";
 
 import { mudaAba } from "../../actions/questionarioActions";
 
+import FinalQuestionario from './FinalQuestionario';
+import FinalVotacoes from './FinalVotacoes';
+import FinalVozAtiva from './FinalVozAtiva';
 
 class QuestionarioContainer extends Component {
   constructor(props) {
     super(props);
-    this.state = { isOn: false };
     this.handleToggle = this.handleToggle.bind(this);
-    this.abaAtiva = "Voz Ativa" //se mudar, lembra de mudar no reducer o default também
-
   }
 
   handleToggle(e) {
-    this.setState({ isOn: !this.state.isOn });
-    this.abaAtiva = this.abaAtiva === "Voz Ativa" ? "Votacoes" : "Voz Ativa"
-    this.props.mudaAba(this.abaAtiva);
+    const { abaAtiva } = this.props.questionario;
+
+    this.props.mudaAba(abaAtiva === "Voz Ativa" ? "Votacoes" : "Voz Ativa");
   }
 
   render() {
+    const { abaAtiva, isContinuarRespondendo } = this.props.questionario;
+    const { respondeuTodos, respondeuVozAtiva, respondeuVotacoes } = this.props.usuario;
+
     return (
       <div>
         <label>
           <span>Voz Ativa</span>
           <Toggle
-            defaultChecked={this.state.isOn}
+            defaultChecked={this.props.questionario.abaAtiva !== "Voz Ativa"}
             icons={false}
             onChange={this.handleToggle} />
           <span>Câmara</span>
         </label>
-        {this.state.isOn &&
+        {abaAtiva === "Votacoes" &&
           <div>
             <MenuTema />
 
-            <VotacoesContainer />
-
+            {respondeuVotacoes && isContinuarRespondendo.votacoes && !respondeuTodos && <VotacoesContainer />}
+            {respondeuVotacoes && !isContinuarRespondendo.votacoes && !respondeuTodos && <FinalVotacoes />}
+            {!respondeuVotacoes && !respondeuTodos && <VotacoesContainer />}
+            {respondeuTodos && !isContinuarRespondendo.todos && <FinalQuestionario />}
+            {isContinuarRespondendo.todos && <VotacoesContainer />}
           </div>
         }
-        {!this.state.isOn &&
+        {abaAtiva === "Voz Ativa" &&
           <div>
             <MenuTema />
 
-            < PerguntasContainer />
+            {respondeuVozAtiva && isContinuarRespondendo.vozAtiva && !respondeuTodos && <PerguntasContainer />}
+            {respondeuVozAtiva && !isContinuarRespondendo.vozAtiva && !respondeuTodos && <FinalVozAtiva />}
+            {!respondeuVozAtiva && !respondeuTodos && <PerguntasContainer />}
+            {respondeuTodos && !isContinuarRespondendo.todos && <FinalQuestionario />}
+            {isContinuarRespondendo.todos && <PerguntasContainer />}
           </div>
         }
       </div>
@@ -63,7 +73,8 @@ QuestionarioContainer.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  questionario: state.questionarioReducer
+  questionario: state.questionarioReducer,
+  usuario: state.usuarioReducer
 });
 
 export default connect(

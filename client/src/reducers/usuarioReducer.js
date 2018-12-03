@@ -8,11 +8,11 @@ const TAM_VOTACOES = Object.keys(votacoes).length;
 const inicializaRespostasUsuario = () => {
   let respostasUsuario = {};
 
-  let respostasVAVazio = [].fill.call({ length: TAM_PERGUNTAS }, 0);
+  let respostasVAVazio = [].fill.call({ length: TAM_PERGUNTAS }, 1);
   delete respostasVAVazio.length;
 
   let respostasQMRVazio = {};
-  Object.keys(votacoes).forEach(id => (respostasQMRVazio[id] = 0));
+  Object.keys(votacoes).forEach(id => (respostasQMRVazio[id] = 1));
 
   respostasUsuario["vozAtiva"] = respostasVAVazio;
   respostasUsuario["qmr"] = respostasQMRVazio;
@@ -27,7 +27,7 @@ const initialState = {
   quantidadeVotos: 0,
   respondeuTodos: false,
   respondeuVozAtiva: false,
-  respondeuQMR: false,
+  respondeuVotacoes: false,
   tamPerguntas: TAM_PERGUNTAS,
   tamVotacoes: TAM_VOTACOES
 };
@@ -44,7 +44,7 @@ const contaVotos = respostasUsuario => {
   ).length;
 };
 
-export default function(state = initialState, action) {
+export default function (state = initialState, action) {
   switch (action.type) {
     case SET_SCORE_USUARIO:
       return {
@@ -56,7 +56,7 @@ export default function(state = initialState, action) {
           TAM_PERGUNTAS + TAM_VOTACOES,
         respondeuVozAtiva:
           contaVotos(action.respostasUsuario.vozAtiva) === TAM_PERGUNTAS,
-        respondeuQMR: contaVotos(action.respostasUsuario.qmr) === TAM_VOTACOES
+        respondeuVotacoes: contaVotos(action.respostasUsuario.qmr) === TAM_VOTACOES
       };
     case SET_SCORE_USUARIO_LIMPO:
       return {
@@ -65,7 +65,7 @@ export default function(state = initialState, action) {
         quantidadeVotos: 0,
         respondeuTodos: false,
         respondeuVozAtiva: false,
-        respondeuQMR: false
+        respondeuVotacoes: false
       };
     default:
       return state;

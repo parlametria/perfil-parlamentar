@@ -28,9 +28,6 @@ import isEmpty from "../../validation/is-empty";
 import FlipMove from "react-flip-move";
 import { Collapse } from "reactstrap";
 
-import FinalVozAtiva from "../perguntas/FinalVozAtiva";
-import FinalVotacoes from "../perguntas/FinalVotacoes";
-import FinalQuestionario from "../perguntas/FinalQuestionario";
 
 const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
 
@@ -70,15 +67,8 @@ class VotacoesContainer extends Component {
     const { dadosVotacoes, indexPergunta } = this.props.votacoes;
 
     const {
-      isExibeGavetaPerguntas,
-      isContinuarRespondendo
+      isExibeGavetaPerguntas
     } = this.props.questionario;
-
-    const {
-      respondeuTodos,
-      respondeuVozAtiva,
-      respondeuQMR
-    } = this.props.usuario;
 
     let votacao;
     let exibeVotacao;
@@ -124,18 +114,7 @@ class VotacoesContainer extends Component {
         <div>
           <Collapse isOpen={isExibeGavetaPerguntas}>
             <FlipMove>
-              {((!respondeuTodos && !respondeuQMR && !respondeuVozAtiva) ||
-                isContinuarRespondendo) &&
-                exibeVotacao}
-              {respondeuVozAtiva &&
-                !respondeuTodos &&
-                !isContinuarRespondendo && <FinalVozAtiva />}
-              {respondeuQMR && !respondeuTodos && !isContinuarRespondendo && (
-                <FinalVotacoes />
-              )}
-              {respondeuTodos && !isContinuarRespondendo && (
-                <FinalQuestionario />
-              )}
+              {exibeVotacao}
             </FlipMove>
           </Collapse>
           <button

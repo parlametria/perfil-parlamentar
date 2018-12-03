@@ -5,7 +5,9 @@ import {
   SET_VAMOS_COMECAR,
   ESCONDE_PERGUNTAS,
   EXIBE_PERGUNTAS,
-  SET_CONTINUAR_RESPONDENDO,
+  SET_CONTINUAR_RESPONDENDO_TODOS,
+  SET_CONTINUAR_RESPONDENDO_VOTACOES,
+  SET_CONTINUAR_RESPONDENDO_VOZATIVA,
   SET_ABA_ATIVA
 } from "./types";
 
@@ -80,6 +82,21 @@ export const exibePerguntas = () => dispatch => {
   dispatch({ type: EXIBE_PERGUNTAS });
 };
 
-export const continuarRespondendo = () => dispatch => {
-  dispatch({ type: SET_CONTINUAR_RESPONDENDO });
+export const continuarRespondendoTodos = () => dispatch => {
+  dispatch({ type: SET_CONTINUAR_RESPONDENDO_TODOS });
+};
+
+export const continuarRespondendoVotacoes = () => dispatch => {
+  dispatch({ type: SET_CONTINUAR_RESPONDENDO_VOTACOES });
+  dispatch(mudaAba("Voz Ativa"));
+  dispatch(escolhePergunta(0));
+  dispatch(escolheTema("Meio Ambiente"));
+
+
+
+};
+
+export const continuarRespondendoVozAtiva = () => dispatch => {
+  dispatch({ type: SET_CONTINUAR_RESPONDENDO_VOZATIVA });
+  dispatch(mudaAba("Votacoes"));
 };
