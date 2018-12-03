@@ -99,6 +99,53 @@ router.get("/eleitos", (req, res) => {
 });
 
 /**
+ * Pega todos as respostas de todos que responderam.
+ * @name get/api/respostas/candidatos/responderam
+ * @function
+ * @memberof module:routes/respostas
+ * @param {boolean} respondeu - Flag respondeu true
+ */
+
+router.get("/candidatos/responderam", (req, res) => {
+  Resposta.findAll({
+    attributes: att_res,
+    include: [
+      {
+        model: Candidato,
+        as: "cpf_resp",
+        attributes: att,
+        where: { respondeu: true }
+      }
+    ]
+  })
+    .then(respostas => res.json(respostas))
+    .catch(err => res.status(BAD_REQUEST).json({ err }));
+});
+
+/**
+ * Pega todos as respostas de todos que não responderam.
+ * @name get/api/respostas/candidatos/naoresponderam
+ * @function
+ * @memberof module:routes/respostas
+ * @param {boolean} respondeu - Flag respondeu false
+ */
+router.get("/candidatos/naoresponderam", (req, res) => {
+  Resposta.findAll({
+    attributes: att_res,
+    include: [
+      {
+        model: Candidato,
+        as: "cpf_resp",
+        attributes: att,
+        where: { respondeu: false }
+      }
+    ]
+  })
+    .then(respostas => res.json(respostas))
+    .catch(err => res.status(BAD_REQUEST).json({ err }));
+});
+
+/**
  * Pega as respostas de um candidato dado o seu cpf.
  * @name get/api/respostas/candidatos/<cpf>
  * @function
@@ -117,32 +164,6 @@ router.get("/candidatos/:cpf", (req, res) => {
       }
     ]
   })
-    .then(respostas => res.json(respostas))
-    .catch(err => res.status(BAD_REQUEST).json({ err }));
-});
-
-/**
- * Pega todos as respostas de todos que responderam.
- * @name get/api/respostas/candidatos/responderam
- * @function
- * @memberof module:routes/respostas
- * @param {boolean} respondeu - Flag respondeu true
- */
-router.get("/candidatos/responderam", (req, res) => {
-  Resposta.find({ respondeu: true })
-    .then(respostas => res.json(respostas))
-    .catch(err => res.status(BAD_REQUEST).json({ err }));
-});
-
-/**
- * Pega todos as respostas de todos que não responderam.
- * @name get/api/respostas/candidatos/responderam
- * @function
- * @memberof module:routes/respostas
- * @param {boolean} respondeu - Flag respondeu false
- */
-router.get("/candidatos/naoresponderam", (req, res) => {
-  Resposta.find({ respondeu: false })
     .then(respostas => res.json(respostas))
     .catch(err => res.status(BAD_REQUEST).json({ err }));
 });
