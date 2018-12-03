@@ -2,9 +2,10 @@
  * @module routes/respostas
  * @requires express
  */
-
+const Sequelize = require("sequelize");
 const express = require("express");
 const models = require("../../models/index");
+const Op = Sequelize.Op;
 /**
  * Rotas para funções relacionadas às respostas.
  * @namespace module:routes/respostas
@@ -185,7 +186,7 @@ router.get("/estados/:uf/partidos", (req, res) => {
   if (eleito) {
     query.eleito = eleito;
   }
-  console.log(query);
+
   Resposta.findAll({
     attributes: att_res,
     include: [
@@ -216,6 +217,7 @@ router.get("/estados/:uf/partidos", (req, res) => {
  * @memberof module:routes/respostas
  * @param {string} uf - Estado
  */
+
 router.get("/estados/:uf", (req, res) => {
   const partido = String(req.query.partido);
   const nome = String(req.query.nome);
@@ -229,12 +231,14 @@ router.get("/estados/:uf", (req, res) => {
       : String(req.query.respondeu);
 
   const reeleicao = String(req.query.reeleicao);
-  const pattern = new RegExp(nome, "i");
 
-  const isFiltrandoPorNome = nome !== "";
-  const isFiltrandoPorPartido = partido !== "Partidos";
-  const isFiltrandoPorReeleicao = reeleicao !== "-1";
-  const isFiltrandoPorRespondeu = respondeu !== "-1";
+  const isFiltrandoPorNome = nome !== "" && nome !== "undefined";
+  const isFiltrandoPorPartido =
+    partido !== "Partidos" && partido !== "undefined";
+  const isFiltrandoPorReeleicao =
+    reeleicao !== "-1" && reeleicao !== "undefined";
+  const isFiltrandoPorRespondeu =
+    respondeu !== "-1" && respondeu !== "undefined";
 
   query = {};
   if (req.params.uf !== "TODOS") {
@@ -244,7 +248,7 @@ router.get("/estados/:uf", (req, res) => {
     query.eleito = eleito;
   }
   if (isFiltrandoPorNome) {
-    query.nome_urna = { $regex: pattern };
+    query.nome_urna = { [Op.iLike]: "%" + nome + "%" };
   }
   if (isFiltrandoPorPartido) {
     query.sg_partido = partido;
@@ -258,16 +262,35 @@ router.get("/estados/:uf", (req, res) => {
 
   console.log(query);
 
-  Resposta.countDocuments({ uf: req.params.uf }, (err, totalCount) => {
+  Resposta.count({
+    include: [
+      {
+        model: Candidato,
+        as: "cpf_resp",
+        where: { uf: req.params.uf }
+      }
+    ],
+    group: ["cpf_resp.cpf", "respostas.cpf"]
+  }).then((totalCount, err) => {
     let response;
     if (err) response = { error: true, message: "Error fetching data" };
 
-    Resposta.find(query, (err, candidatos) => {
+    Resposta.findAll({
+      attributes: att_res,
+      include: [
+        {
+          model: Candidato,
+          as: "cpf_resp",
+          attributes: att,
+          where: query
+        }
+      ]
+    }).then((candidatos, err) => {
       response = err
         ? { status: BAD_REQUEST, message: "Error fetching data" }
         : {
             candidatos,
-            total: totalCount,
+            total: totalCount.length,
             status: SUCCESS
           };
 
