@@ -33,6 +33,9 @@ import isEmpty from "../../validation/is-empty";
 //import { delay } from "../../utils/funcoes";
 
 import "./perguntas.css";
+import FinalVozAtiva from "./FinalVozAtiva";
+import FinalVotacoes from "./FinalVotacoes";
+import FinalQuestionario from "./FinalQuestionario";
 
 const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
 
@@ -88,7 +91,11 @@ class PerguntasContainer extends Component {
       isContinuarRespondendo
     } = this.props.questionario;
 
-    const { respondeuTodos } = this.props.usuario;
+    const {
+      respondeuTodos,
+      respondeuVozAtiva,
+      respondeuQMR
+    } = this.props.usuario;
 
     let pergunta;
     let exibePerguntas;
@@ -138,8 +145,18 @@ class PerguntasContainer extends Component {
         <div>
           <Collapse isOpen={isExibeGavetaPerguntas}>
             <FlipMove>
-              {(!respondeuTodos || isContinuarRespondendo) && exibePerguntas}
-              {respondeuTodos && !isContinuarRespondendo && exibeFinalPerguntas}
+              {((!respondeuTodos && !respondeuQMR && !respondeuVozAtiva) ||
+                isContinuarRespondendo) &&
+                exibePerguntas}
+              {respondeuVozAtiva &&
+                !respondeuTodos &&
+                !isContinuarRespondendo && <FinalVozAtiva />}
+              {respondeuQMR && !respondeuTodos && !isContinuarRespondendo && (
+                <FinalVotacoes />
+              )}
+              {respondeuTodos && !isContinuarRespondendo && (
+                <FinalQuestionario />
+              )}
             </FlipMove>
           </Collapse>
           <button
