@@ -8,11 +8,11 @@ const TAM_VOTACOES = Object.keys(votacoes).length;
 const inicializaRespostasUsuario = () => {
   let respostasUsuario = {};
 
-  let respostasVAVazio = [].fill.call({ length: TAM_PERGUNTAS }, 1);
+  let respostasVAVazio = [].fill.call({ length: TAM_PERGUNTAS }, 0);
   delete respostasVAVazio.length;
 
   let respostasQMRVazio = {};
-  Object.keys(votacoes).forEach(id => (respostasQMRVazio[id] = 1));
+  Object.keys(votacoes).forEach(id => (respostasQMRVazio[id] = 0));
 
   respostasUsuario["vozAtiva"] = respostasVAVazio;
   respostasUsuario["qmr"] = respostasQMRVazio;

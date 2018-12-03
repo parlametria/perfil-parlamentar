@@ -38,7 +38,9 @@ class QuestionarioContainer extends Component {
           <Toggle
             defaultChecked={this.props.questionario.abaAtiva !== "Voz Ativa"}
             icons={false}
-            onChange={this.handleToggle} />
+            onChange={this.handleToggle}
+            checked={this.props.questionario.abaAtiva !== "Voz Ativa"}
+          />
           <span>Câmara</span>
         </label>
         {abaAtiva === "Votacoes" &&
