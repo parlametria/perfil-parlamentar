@@ -7,7 +7,7 @@ class FinalVozAtiva extends Component {
       <div>
         <FinalPerguntas>
           <h4 className="text-center p-3">
-            Você já respondeu a todas as perguntas do Voz Ativa!
+            Você já respondeu todas as perguntas do Voz Ativa!
           </h4>
           <p>
             <strong className="strong">Veja</strong> os deputados alinhados com
@@ -23,7 +23,7 @@ class FinalVozAtiva extends Component {
           </p>
           <p>
             <strong className="strong">Responda</strong> as proposições da
-            Câmara dos Deputados e aumente a precisão do score com candidatos
+            Câmara dos Deputados e aumente a precisão do resultado com candidatos
             que já possuem histórico.
           </p>
           <p>

@@ -23,7 +23,7 @@ class FinalVotacoes extends Component {
           </p>
           <p>
             <strong className="strong">Responda</strong> as perguntas do Voz
-            Ativa e aumente a precisão do score.
+            Ativa e aumente a precisão do resultado.
           </p>
           <p>
             <strong className="strong">Compartilhe</strong> suas respostas nas
