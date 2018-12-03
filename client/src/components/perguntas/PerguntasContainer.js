@@ -77,8 +77,6 @@ class PerguntasContainer extends Component {
 
   componentDidMount() {
     this.props.getDadosPerguntas();
-
-    //this.props.salvaScoreUsuario({}, Array(45).fill(1));
   }
 
   render() {
@@ -117,6 +115,10 @@ class PerguntasContainer extends Component {
           aria-labelledby="perguntaContainer"
         >
           <div className="card-body">
+            <div className="container">
+              <h2 className="question-theme">{this.props.questionario.filtroTema}</h2>
+            </div>
+
             {pergunta}
             <CopiaUrl />
           </div>

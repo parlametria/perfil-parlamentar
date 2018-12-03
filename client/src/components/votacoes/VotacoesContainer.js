@@ -102,6 +102,9 @@ class VotacoesContainer extends Component {
           aria-labelledby="perguntaContainer"
         >
           <div className="card-body">
+            <div className="container">
+              <h2 className="question-theme">{this.props.questionario.filtroTema}</h2>
+            </div>
             {votacao}
             <CopiaUrl />
           </div>
