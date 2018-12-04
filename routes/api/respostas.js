@@ -346,37 +346,44 @@ router.get("/estados/:uf/responderam", (req, res) => {
 });
 
 // @route   GET api/respostas/estados/<uf>/partidos/
-// @desc    Pega as respostas por partido e estado de quem respondeu
+// @desc    Pega as respostas por partido e estado
 // @access  Public
 router.get("/estados/:uf/partidos/:sigla", (req, res) => {
-  Resposta.countDocuments(
-    {
-      uf: req.params.uf,
-      sg_partido: req.params.sigla
-    },
-    (err, totalCount) => {
-      let response;
-      if (err) response = { error: true, message: "Error fetching data" };
+  Resposta.count({
+    include: [
+      {
+        model: Candidato,
+        as: "cpf_resp",
+        where: { uf: req.params.uf, sg_partido: req.params.sigla }
+      }
+    ],
+    group: ["cpf_resp.cpf", "respostas.cpf"]
+  }).then((totalCount, err) => {
+    let response;
+    if (err) response = { error: true, message: "Error fetching data" };
 
-      Resposta.find(
+    Resposta.findAll({
+      attributes: att_res,
+      include: [
         {
-          uf: req.params.uf,
-          sg_partido: req.params.sigla
-        },
-        (err, candidatos) => {
-          response = err
-            ? { status: BAD_REQUEST, message: "Error fetching data" }
-            : {
-                candidatos,
-                total: totalCount,
-                status: SUCCESS
-              };
-
-          res.status(response.status).json(response);
+          model: Candidato,
+          as: "cpf_resp",
+          attributes: att,
+          where: { uf: req.params.uf, sg_partido: req.params.sigla }
         }
-      );
-    }
-  );
+      ]
+    }).then((candidatos, err) => {
+      response = err
+        ? { status: BAD_REQUEST, message: "Error fetching data" }
+        : {
+            candidatos,
+            total: totalCount.length,
+            status: SUCCESS
+          };
+
+      res.status(response.status).json(response);
+    });
+  });
 });
 
 /**
