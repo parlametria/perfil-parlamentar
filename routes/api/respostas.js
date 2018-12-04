@@ -515,22 +515,49 @@ router.get("/estados/:uf/naoresponderam", (req, res) => {
     return res.json(response);
   }
 
-  query.skip = size * (pageNo - 1);
+  query.offset = size * (pageNo - 1);
   query.limit = size;
 
-  Resposta.countDocuments({ uf, respondeu: false }, (err, totalCount) => {
+  Resposta.count({
+    include: [
+      {
+        model: Candidato,
+        as: "cpf_resp",
+        where: {
+          uf: req.params.uf,
+          respondeu: false
+        }
+      }
+    ],
+    group: ["cpf_resp.cpf", "respostas.cpf"]
+  }).then((totalCount, err) => {
     let response;
     if (err) response = { error: true, message: "Error fetching data" };
 
-    Resposta.find({ uf, respondeu: false }, {}, query, (err, data) => {
+    Candidato.findAll({
+      attributes: att,
+      include: [
+        {
+          model: Resposta,
+          as: "cpf_resp",
+          attributes: att_res
+        }
+      ],
+      where: {
+        uf: req.params.uf,
+        respondeu: false
+      },
+      limit: query.limit,
+      offset: query.offset
+    }).then((data, err) => {
       response = err
         ? { status: BAD_REQUEST, message: "Error fetching data" }
         : {
             data,
-            total: totalCount,
+            total: totalCount.length,
             itensPorPagina: size,
             pagina: pageNo,
-            paginas: Math.ceil(totalCount / size),
+            paginas: Math.ceil(totalCount.length / size),
             status: SUCCESS
           };
 
