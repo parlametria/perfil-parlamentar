@@ -546,25 +546,47 @@ router.get("/estados/:uf/naoresponderam", (req, res) => {
  * @param {string} UF - Estado
  */
 router.get("/estados/:uf/eleitos", (req, res) => {
-  Resposta.countDocuments(
-    { uf: req.params.uf, eleito: true },
-    (err, totalCount) => {
-      let response;
-      if (err) response = { error: true, message: "Error fetching data" };
+  Resposta.count({
+    include: [
+      {
+        model: Candidato,
+        as: "cpf_resp",
+        where: {
+          uf: req.params.uf,
+          eleito: true
+        }
+      }
+    ],
+    group: ["cpf_resp.cpf", "respostas.cpf"]
+  }).then((totalCount, err) => {
+    let response;
+    if (err) response = { error: true, message: "Error fetching data" };
 
-      Resposta.find({ uf: req.params.uf, eleito: true }, (err, candidatos) => {
-        response = err
-          ? { status: BAD_REQUEST, message: "Error fetching data" }
-          : {
-              candidatos,
-              total: totalCount,
-              status: SUCCESS
-            };
+    Resposta.findAll({
+      attributes: att_res,
+      include: [
+        {
+          model: Candidato,
+          as: "cpf_resp",
+          attributes: att,
+          where: {
+            uf: req.params.uf,
+            eleito: true
+          }
+        }
+      ]
+    }).then((candidatos, err) => {
+      response = err
+        ? { status: BAD_REQUEST, message: "Error fetching data" }
+        : {
+            candidatos,
+            total: totalCount.length,
+            status: SUCCESS
+          };
 
-        res.status(response.status).json(response);
-      });
-    }
-  );
+      res.status(response.status).json(response);
+    });
+  });
 });
 
 module.exports = router;
