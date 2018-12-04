@@ -1,6 +1,6 @@
 {
   "6259": {
-    "key": 0,
+    "id": 0,
     "numero_proj_lei": "PL 4148/2008",
     "id_votacao": 6259,
     "titulo": "Rotulagem de Alimentos Transgênicos",
@@ -8,87 +8,15 @@
     "tema": "Meio Ambiente"
   },
   "4968": {
-    "key": 1,
+    "id": 1,
     "numero_proj_lei": "PL 1876/1999",
     "id_votacao": 4968,
     "titulo": "Mudanças no Código Florestal",
     "descricao": "O projeto visou regulamentar e limitar os espaços e as maneiras disponíveis para exploração de vegetação nativa no país.",
     "tema": "Meio Ambiente"
   },
-  "6517": {
-    "key": 2,
-    "numero_proj_lei": "PEC 171/1993",
-    "id_votacao": 6517,
-    "titulo": "Redução da Maioridade Penal",
-    "descricao": "O projeto tem o objetivo de diminuir de 18 para 16 anos de idade a maioridade penal para tipos específicos de crimes.",
-    "tema": "Direitos Humanos"
-  },
-  "7252": {
-    "key": 3,
-    "numero_proj_lei": "PEC 241/2016",
-    "id_votacao": 7252,
-    "titulo": "PEC do congelamento de gastos públicos",
-    "descricao": "Determina um limite de gastos governamentais pelos próximos 20 anos.",
-    "tema": "Direitos Humanos"
-  },
-  "8175": {
-    "key": 4,
-    "numero_proj_lei": "PDC 886/2018",
-    "id_votacao": 8175,
-    "titulo": "Intervenção Federal no Rio de Janeiro",
-    "descricao": "Autoriza o Exército Brasileiro a administrar a segurança pública e suas operações no estado do Rio de Janeiro até o final de 2018.",
-    "tema": "Direitos Humanos"
-  },
-  "7317": {
-    "key": 5,
-    "numero_proj_lei": "PL 2516/2015",
-    "id_votacao": 7317,
-    "titulo": "Lei da Migração",
-    "descricao": "A lei disserta sobre direitos e deveres do indivíduo migrante e estabelece formatações para políticas públicas aos migrantes.",
-    "tema": "Direitos Humanos"
-  },
-  "6531": {
-    "key": 6,
-    "numero_proj_lei": "PL 1057/2007",
-    "id_votacao": 6531,
-    "titulo": "Infanticídio Indígena",
-    "descricao": "Visa frear a suposta prática cultural de infanticídio e controle populacional em determinados territórios indígenas.",
-    "tema": "Direitos Humanos"
-  },
-  "7927": {
-    "key": 7,
-    "numero_proj_lei": "PL 8843/2017",
-    "id_votacao": 7927,
-    "titulo": "Regulamentação de acordos de leniência",
-    "descricao": "Regulamentação e delimitação de acordos entre agentes infratores e mecanismos do Estado para cooperação em investigações e mitigação de danos ao bem público.",
-    "tema": "Integridade e Transparência"
-  },
-  "7291": {
-    "key": 8,
-    "numero_proj_lei": "PL 4850/2016",
-    "id_votacao": 7291,
-    "titulo": "Tipificação de crimes eleitorais",
-    "descricao": "Prevê a tipificação do crime eleitoral de caixa dois, a criminalização do eleitor pela venda do voto e a transformação de corrupção que envolve valores superiores a 10 mil salários mínimos em crime hediondo.",
-    "tema": "Integridade e Transparência"
-  },
-  "6608": {
-    "key": 9,
-    "numero_proj_lei": "PL 4474/2004",
-    "id_votacao": 6608,
-    "titulo": "Limite de transferências voluntárias em anos de eleição aos municípios",
-    "descricao": "Limita as transferências voluntárias (em anos eleitorais) da União aos estados e municípios, e dos estados aos municípios, à média dos valores correspondentes às transferências realizadas nos três anos anteriores as eleições.",
-    "tema": "Integridade e Transparência"
-  },
-  "6095": {
-    "key": 10,
-    "numero_proj_lei": "PLP 177/2012",
-    "id_votacao": 6095,
-    "titulo": "Normas de repasses ou parcerias entre o setor público e ONGs",
-    "descricao": "Cria normas de finanças públicas para a realização de repasses ou termos de parceria entre órgãos e entidades do setor público com pessoas jurídicas de direito privado sem fins lucrativos (ONGs).",
-    "tema": "Nova Economia"
-  },
   "8309": {
-    "key": 11,
+    "id": 2,
     "numero_proj_lei": "MPV 809/2017",
     "id_votacao": 8309,
     "titulo": "Contribuição para o fundo de manutenção de unidades em conservação por parte de empreendimentos com grande impacto ambiental",
@@ -96,7 +24,7 @@
     "tema": "Meio Ambiente"
   },
   "7566": {
-    "key": 12,
+    "id": 3,
     "numero_proj_lei": "MPV 758/2016",
     "id_votacao": 7566,
     "titulo": "Redução do Parque Nacional do Jamanxim",
@@ -104,27 +32,235 @@
     "tema": "Meio Ambiente"
   },
   "7546": {
-    "key": 13,
+    "id": 4,
     "numero_proj_lei": "MPV 756/2016",
     "id_votacao": 7546,
     "titulo": "Redução da proteção ambiental na Floresta do Jamanxim",
     "descricao": "A MP 756 visou alterar os limites da Floresta Nacional do Jamanxim, no Pará, e transformá-la em um Área de Preservação Ambiental – um tipo de Unidade de Conservação que admite maior grau de ocupação humana e uso da terra. Também ltera os limites do Parque Nacional do Rio Novo.",
     "tema": "Meio Ambiente"
   },
+  "99999": {
+    "id": 5,
+    "numero_proj_lei": "PL 6299/2002",
+    "id_votacao": 99999,
+    "titulo": "Flexibilização das normas para uso de agrotóxicos",
+    "descricao": "O Projeto de Lei 6299/2002 está em tramitação no Congresso e visa flexibilizar a legislação que compreende as normas para uso de agrotóxicos em plantações no país.",
+    "tema": "Meio Ambiente"
+  },
+  "6517": {
+    "id": 6,
+    "numero_proj_lei": "PEC 171/1993",
+    "id_votacao": 6517,
+    "titulo": "Redução da Maioridade Penal",
+    "descricao": "O projeto tem o objetivo de diminuir de 18 para 16 anos de idade a maioridade penal para tipos específicos de crimes.",
+    "tema": "Direitos Humanos"
+  },
+  "7252": {
+    "id": 7,
+    "numero_proj_lei": "PEC 241/2016",
+    "id_votacao": 7252,
+    "titulo": "PEC do congelamento de gastos públicos",
+    "descricao": "Determina um limite de gastos governamentais pelos próximos 20 anos.",
+    "tema": "Direitos Humanos"
+  },
+  "8175": {
+    "id": 8,
+    "numero_proj_lei": "PDC 886/2018",
+    "id_votacao": 8175,
+    "titulo": "Intervenção Federal no Rio de Janeiro",
+    "descricao": "Autoriza o Exército Brasileiro a administrar a segurança pública e suas operações no estado do Rio de Janeiro até o final de 2018.",
+    "tema": "Direitos Humanos"
+  },
+  "7317": {
+    "id": 9,
+    "numero_proj_lei": "PL 2516/2015",
+    "id_votacao": 7317,
+    "titulo": "Lei da Migração",
+    "descricao": "A lei disserta sobre direitos e deveres do indivíduo migrante e estabelece formatações para políticas públicas aos migrantes.",
+    "tema": "Direitos Humanos"
+  },
+  "6531": {
+    "id": 10,
+    "numero_proj_lei": "PL 1057/2007",
+    "id_votacao": 6531,
+    "titulo": "Infanticídio Indígena",
+    "descricao": "Visa frear a suposta prática cultural de infanticídio e controle populacional em determinados territórios indígenas.",
+    "tema": "Direitos Humanos"
+  },
+  "7927": {
+    "id": 11,
+    "numero_proj_lei": "PL 8843/2017",
+    "id_votacao": 7927,
+    "titulo": "Regulamentação de acordos de leniência",
+    "descricao": "Regulamentação e delimitação de acordos entre agentes infratores e mecanismos do Estado para cooperação em investigações e mitigação de danos ao bem público.",
+    "tema": "Integridade e Transparência"
+  },
+  "7291": {
+    "id": 12,
+    "numero_proj_lei": "PL 4850/2016",
+    "id_votacao": 7291,
+    "titulo": "Tipificação de crimes eleitorais",
+    "descricao": "Prevê a tipificação do crime eleitoral de caixa dois, a criminalização do eleitor pela venda do voto e a transformação de corrupção que envolve valores superiores a 10 mil salários mínimos em crime hediondo.",
+    "tema": "Integridade e Transparência"
+  },
+  "6608": {
+    "id": 13,
+    "numero_proj_lei": "PL 4474/2004",
+    "id_votacao": 6608,
+    "titulo": "Limite de transferências voluntárias em anos de eleição aos municípios",
+    "descricao": "Limita as transferências voluntárias (em anos eleitorais) da União aos estados e municípios, e dos estados aos municípios, à média dos valores correspondentes às transferências realizadas nos três anos anteriores as eleições.",
+    "tema": "Integridade e Transparência"
+  },
+  "6095": {
+    "id": 14,
+    "numero_proj_lei": "PLP 177/2012",
+    "id_votacao": 6095,
+    "titulo": "Normas de repasses ou parcerias entre o setor público e ONGs",
+    "descricao": "Cria normas de finanças públicas para a realização de repasses ou termos de parceria entre órgãos e entidades do setor público com pessoas jurídicas de direito privado sem fins lucrativos (ONGs).",
+    "tema": "Nova Economia"
+  },
   "8334": {
-    "key": 14,
+    "id": 15,
     "numero_proj_lei": "MPV 810/2017",
     "id_votacao": 8334,
     "titulo": "Subsídios dados a empresas de tecnologia que façam investimentos em pesquisa, inovação e modernização dentro do território brasileiro",
     "descricao": "Subsídios dados a empresas de tecnologia que façam investimentos em pesquisa, inovação e modernização dentro do território brasileiro.",
     "tema": "Nova Economia"
   },
-  "99999": {
-    "key": 15,
-    "numero_proj_lei": "PL 6299/2002",
-    "id_votacao": 99999,
-    "titulo": "Flexibilização das normas para uso de agrotóxicos",
-    "descricao": "O Projeto de Lei 6299/2002 está em tramitação no Congresso e visa flexibilizar a legislação que compreende as normas para uso de agrotóxicos em plantações no país.",
-    "tema": "Meio Ambiente"
+  "6675": {
+    "id": 16,
+    "numero_proj_lei": "PEC 395/2014",
+    "id_votacao": 6675,
+    "titulo": "Cobrança de cursos em universidades públicas",
+    "descricao": "Segundo o texto, o ensino público superior de graduação e de pós-graduação acadêmica continuam gratuitos, mas as instituições poderão cobrar pelos cursos de extensão, de pós-graduação lato sensu (como MBAs) e de mestrado profissional. A exceção será para os programas de residência (em saúde) e de formação de profissionais na área de ensino, que continuarão gratuitos.",
+    "tema": "Transversal"
+  },
+  "6204": {
+    "id": 17,
+    "numero_proj_lei": "PL 4330/2004",
+    "id_votacao": 6204,
+    "titulo": "Terceirização",
+    "descricao": "Entre outros pontos: terceirizar a atividade-fim; redução de 24 meses para 12 meses a chamada quarentena, período que o ex-empregado de uma empresa deve cumprir a fim de poder prestar serviços à mesma empresa por uma contratada de terceirização.",
+    "tema": "Transversal"
+  },
+  "7431": {
+    "id": 18,
+    "numero_proj_lei": "PL 4302/1998",
+    "id_votacao": 7431,
+    "titulo": "Terceirização total 2017",
+    "descricao": "O projeto de lei aprovado permite a terceirização inclusive da atividade-fim de uma empresa. Por exemplo, um hospital poderá terceirizar não apenas o serviço de limpeza (que já acontece hoje), mas a contratação de seus enfermeiros e médicos.",
+    "tema": "Transversal"
+  },
+  "7492": {
+    "id": 19,
+    "numero_proj_lei": "PL 6787/2016",
+    "id_votacao": 7492,
+    "titulo": "Lei Trabalhista",
+    "descricao": "Alguns pontos da reforma da CLT: acordos coletivos na empresa entre patrão e funcionário poderão ser feitos independentemente do que prevê a lei trabalhista; mulher grávida ou lactante poderá trabalhar em ambientes considerados insalubre, desde que apresente um atestado médico que garanta que não há risco ao bebê nem à mãe; intervalo de almoço de no mínimo 30 minutos; fim da obrigatoriedade da contribuiçao sindical; novas modalidades de contratação: trabalho intermitente e home-office.",
+    "tema": "Transversal"
+  },
+  "6286": {
+    "id": 20,
+    "numero_proj_lei": "MPV 665/2014",
+    "id_votacao": 6286,
+    "titulo": "Seguro Desemprego",
+    "descricao": "Com a lei fica mais difícil o acesso ao seguro-desemprego, ao abono salarial e ao seguro-defeso. Por exemplo: antes era necessário que um empregado tivesse um tempo de trabalho de no mínimo 6 meses para solicitar o seguro-desemprego no ato da demissão. Com a lei esse tempo mínimo passou para 1 ano. O objetivo da lei é reduzir os gastos.",
+    "tema": "Transversal"
+  },
+  "6310": {
+    "id": 21,
+    "numero_proj_lei": "MPV 664/2014",
+    "id_votacao": 6310,
+    "titulo": "Pensão por morte",
+    "descricao": "Pelo texto aprovado, os cônjuges só poderão requerer pensão por morte do companheiro se o tempo de união estável ou casamento for de mais de dois anos e o segurado tiver contribuído para o INSS por, no mínimo, um ano e meio. Antes, não era exigido tempo mínimo de contribuição para que os dependentes tivessem direito ao benefício, mas era necessário que, na data da morte, o segurado estivesse contribuindo para a Previdência Social",
+    "tema": "Transversal"
+  },
+  "6575": {
+    "id": 22,
+    "numero_proj_lei": "PLP 366/2013",
+    "id_votacao": 6575,
+    "titulo": "Tributação serviços de internet",
+    "descricao": "Novas regras para o ISS (Imposto sobre Serviços). O texto-base fixa em 2% a alíquota do ISS (Imposto sobre Serviços), tentando acabar com a guerra fiscal entre os municípios. Além disso, O projeto inclui novos serviços na lista daqueles que podem ser tributados como aplicação de tatuagens, piercings e congêneres; vigilância e monitoramento de bens móveis; e disponibilização de conteúdos de áudio, vídeo, imagem e texto em páginas eletrônicas, exceto no caso de jornais, livros e periódicos.",
+    "tema": "Transversal"
+  },
+  "6502": {
+    "id": 23,
+    "numero_proj_lei": "PL 2016/2015",
+    "id_votacao": 6502,
+    "titulo": "Tipificação do terrorismo",
+    "descricao": "A votação do projeto de lei tipifica o crime de terrorismo. O texto aprovado tipifica o terrorismo como a prática, por um ou mais indivíduos, de atos por razões de xenofobia, discriminação ou preconceito de raça, cor, etnia ou religião, com a finalidade de provocar terror social ou generalizado, expondo a perigo pessoa, patrimônio, a paz pública ou a incolumidade pública. O texto prevê pena de reclusão de 12 a 30 anos em regime fechado, sem prejuízo das penas relativas a outras infrações decorrentes desse crime.",
+    "tema": "Transversal"
+  },
+  "6358": {
+    "id": 24,
+    "numero_proj_lei": "PEC 182/2007",
+    "id_votacao": 6358,
+    "titulo": "Distritão",
+    "descricao": "Neste sistema, Estados e o Distrito Federal são transformados em distritos eleitorais e os candidatos eleitos são aqueles que conseguem o maior número de votos em cada distrito (semelhante nas eleições para presidente, governador e prefeito, onde quem tem o maior número de votos é eleito). Atualmente o sistema em vigor é o Sistema Proporcional.",
+    "tema": "Eleitoral"
+  },
+  "6370": {
+    "id": 25,
+    "numero_proj_lei": "PEC 182/2007",
+    "id_votacao": 6370,
+    "titulo": "Financiamento privado para partidos e candidatos",
+    "descricao": "Torna possível financiamento privado de campanhas com doações de pessoas físicas e jurídicas para os partidos políticos e com doações de pessoas físicas para candidatos.",
+    "tema": "Eleitoral"
+  },
+  "6359": {
+    "id": 26,
+    "numero_proj_lei": "PEC 182/2007",
+    "id_votacao": 6359,
+    "titulo": "Fim da reeleição nos cargos executivos",
+    "descricao": "Fim da reeleição para presidente da República, governador e prefeito.",
+    "tema": "Eleitoral"
+  },
+  "6354": {
+    "id": 27,
+    "numero_proj_lei": "PEC 182/2007",
+    "id_votacao": 6354,
+    "titulo": "Financiamento privado para partidos",
+    "descricao": "Financiamento privado de campanhas para partidos políticos. Não é permitido o financiamento para candidatos.",
+    "tema": "Eleitoral"
+  },
+  "6371": {
+    "id": 28,
+    "numero_proj_lei": "PEC 182/2007",
+    "id_votacao": 6371,
+    "titulo": "Coincidência reeleição",
+    "descricao": "As eleições municipais, estaduais e federais seriam no mesmo ano.",
+    "tema": "Eleitoral"
+  },
+  "6352": {
+    "id": 29,
+    "numero_proj_lei": "PEC 182/2007",
+    "id_votacao": 6352,
+    "titulo": "Tempo mandato",
+    "descricao": "Mudança no tempo de mandato dos cargos do executivo (prefeito, governador e presidente) para 5 anos. Atualmente o mandato é de 4 anos.",
+    "tema": "Eleitoral"
+  },
+  "6369": {
+    "id": 30,
+    "numero_proj_lei": "PEC 182/2007",
+    "id_votacao": 6369,
+    "titulo": "Voto Facultativo",
+    "descricao": "Não obrigatoriedade do voto.",
+    "tema": "Eleitoral"
+  },
+  "6377": {
+    "id": 31,
+    "numero_proj_lei": "PEC 182/2007",
+    "id_votacao": 6377,
+    "titulo": "Cota para mulheres legislativo",
+    "descricao": "O texto previa uma espécie de reserva de vagas para as mulheres nas próximas três legislaturas. Na primeira delas, de 10% do total de cadeiras na Câmara dos Deputados, nas assembleias legislativas estaduais, nas câmaras de vereadores e na Câmara Legislativa do Distrito Federal. Na segunda legislatura, o percentual subiria para 12% e, na terceira, para 15%.",
+    "tema": "Eleitoral"
+  },
+  "6378": {
+    "id": 32,
+    "numero_proj_lei": "PEC 182/2007",
+    "id_votacao": 6378,
+    "titulo": "Voto impresso",
+    "descricao": "Impressão do voto.",
+    "tema": "Eleitoral"
   }
 }

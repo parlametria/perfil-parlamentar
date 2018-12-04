@@ -48,6 +48,12 @@ router.get("/", (req, res) => {
     .catch(err => res.status(400).json({ err }));
 });
 
+router.get("/votacoes", (req, res) => {
+  Votacao.find()
+    .then(votacoes => res.json(votacoes))
+    .catch(err => res.status(400).json({ err }));
+});
+
 /**
  * Pega um candidato de acordo com o cpf.
  * @name get/api/candidatos/:cpf

@@ -1,8 +1,16 @@
-import { VOTACOES_CARREGANDO, SET_DADOS_VOTACOES } from "../actions/types";
+import {
+  VOTACOES_CARREGANDO,
+  SET_DADOS_VOTACOES,
+  SET_INDEX_VOTACAO,
+  SET_VOTACOES_CANDIDATOS
+} from "../actions/types";
 
 const initialState = {
   dadosVotacoes: {},
-  isCarregando: false
+  isCarregando: false,
+  TAM_PERGUNTAS: 0,
+  indexPergunta: 0,
+  votacoesCandidatos: {}
 };
 
 export default function(state = initialState, action) {
@@ -16,6 +24,18 @@ export default function(state = initialState, action) {
       return {
         ...state,
         dadosVotacoes: action.dadosVotacoes,
+        TAM_PERGUNTAS: action.TAM_PERGUNTAS,
+        isCarregando: false
+      };
+    case SET_INDEX_VOTACAO:
+      return {
+        ...state,
+        indexPergunta: action.indexPergunta
+      };
+    case SET_VOTACOES_CANDIDATOS:
+      return {
+        ...state,
+        votacoesCandidatos: action.votacoesCandidatos,
         isCarregando: false
       };
     default:
