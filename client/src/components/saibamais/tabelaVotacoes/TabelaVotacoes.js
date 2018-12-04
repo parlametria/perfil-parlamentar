@@ -35,11 +35,13 @@ class TabelaVotacoes extends Component {
 
     const votacoesCandidato = this.props.candidatos.dadosCandidato.votacoes;
 
+    const { qmr: respostasUsuario } = this.props.usuario.respostasUsuario;
+
     let votacoes = [];
 
     Object.keys(dadosVotacoes).map(i => {
       return votacoes.push({
-        key: dadosVotacoes[i].key,
+        key: dadosVotacoes[i].id,
         id_votacao: dadosVotacoes[i].id_votacao,
         id_projeto: dadosVotacoes[i].numero_proj_lei,
         tema: dadosVotacoes[i].tema,
@@ -47,22 +49,24 @@ class TabelaVotacoes extends Component {
         descricao: dadosVotacoes[i].descricao
       });
     });
+    // console.log(dadosVotacoes);
 
-    votacoes.sort((a, b) => {
-      if (a.key > b.key) return 1;
-      else if (a.key < b.key) return -1;
-      else return 0;
-    });
+    // votacoes.sort((a, b) => {
+    //   if (a.key > b.key) return 1;
+    //   else if (a.key < b.key) return -1;
+    //   else return 0;
+    // });
 
-    votacoes.sort((a, b) => {
-      if (a.tema > b.tema) return 2;
-      else if (a.tema < b.tema) return -2;
-      else {
-        if (a.id_projeto > b.id_projeto) return 1;
-        else if (a.id_projeto < b.id_projeto) return -1;
-        else return 0;
-      }
-    });
+    // votacoes.sort((a, b) => {
+    //   if (a.tema > b.tema) return 2;
+    //   else if (a.tema < b.tema) return -2;
+    //   else {
+    //     if (a.id_projeto > b.id_projeto) return 1;
+    //     else if (a.id_projeto < b.id_projeto) return -1;
+    //     else return 0;
+    //   }
+    // });
+
 
     function getValorVotacao(num) {
       switch (num) {
@@ -157,6 +161,14 @@ class TabelaVotacoes extends Component {
               >
                 {getValorVotacao(votacoesCandidato[elem.id_votacao])}
               </td>
+              <td
+                className={
+                  "text-center table-row-center " +
+                  getClassVotacao(respostasUsuario[elem.id_votacao])
+                }
+              >
+                {getValorVotacao(respostasUsuario[elem.id_votacao])}
+              </td>
             </tr>
           </tbody>
         );
@@ -188,6 +200,7 @@ class TabelaVotacoes extends Component {
             <tr>
               <th className="table-th-question">Proposições</th>
               <th className="table-th-candidate">Candidato/a</th>
+              <th className="table-th-candidate">Você</th>
             </tr>
           </thead>
           {rows}
@@ -223,7 +236,8 @@ TabelaVotacoes.propTypes = {
 
 const mapStateToProps = state => ({
   votacoes: state.votacoesReducer,
-  candidatos: state.candidatosReducer
+  candidatos: state.candidatosReducer,
+  usuario: state.usuarioReducer
 });
 
 export default connect(

@@ -1,10 +1,21 @@
 import { SET_SCORE_USUARIO, SET_SCORE_USUARIO_LIMPO } from "../actions/types";
+import perguntas from "../data/perguntas.json";
+import votacoes from "../data/votacoes.json";
 
-const TAM_PERGUNTAS = 46; // Esse tamanho é calculado em perguntasActions, mas não sei como inicializá-lo aqui e em que momento isso seria viável porque esse reducer é chamado antes da chamada ao banco. Então, acho melhor inicializar o array com um tamanho máximo.
+const TAM_PERGUNTAS = Object.keys(perguntas).length;
+const TAM_VOTACOES = Object.keys(votacoes).length;
 
 const inicializaRespostasUsuario = () => {
-  let respostasUsuario = [].fill.call({ length: TAM_PERGUNTAS }, 0);
-  delete respostasUsuario.length;
+  let respostasUsuario = {};
+
+  let respostasVAVazio = [].fill.call({ length: TAM_PERGUNTAS }, 0);
+  delete respostasVAVazio.length;
+
+  let respostasQMRVazio = {};
+  Object.keys(votacoes).forEach(id => (respostasQMRVazio[id] = 0));
+
+  respostasUsuario["vozAtiva"] = respostasVAVazio;
+  respostasUsuario["qmr"] = respostasQMRVazio;
 
   return respostasUsuario;
 };
@@ -13,33 +24,48 @@ const inicializaRespostasUsuario = () => {
 // arrayVotings: [0/1/-1]
 const initialState = {
   respostasUsuario: inicializaRespostasUsuario(),
-  arrayRespostasUsuario: Array(TAM_PERGUNTAS).fill(0),
   quantidadeVotos: 0,
-  respondeuTodos: false
+  respondeuTodos: false,
+  respondeuVozAtiva: false,
+  respondeuVotacoes: false,
+  tamPerguntas: TAM_PERGUNTAS,
+  tamVotacoes: TAM_VOTACOES
 };
 
-const contaVotos = arrayRespostasUsuario => {
-  return arrayRespostasUsuario.filter(res => res !== 0).length;
+const contaTodosVotos = respostasUsuario => {
+  return (
+    contaVotos(respostasUsuario.vozAtiva) + contaVotos(respostasUsuario.qmr)
+  );
 };
 
-export default function(state = initialState, action) {
+const contaVotos = respostasUsuario => {
+  return Object.keys(respostasUsuario).filter(
+    res => respostasUsuario[res] !== 0
+  ).length;
+};
+
+export default function (state = initialState, action) {
   switch (action.type) {
     case SET_SCORE_USUARIO:
       return {
         ...state,
         respostasUsuario: action.respostasUsuario,
-        arrayRespostasUsuario: action.arrayRespostasUsuario,
-        quantidadeVotos: contaVotos(action.arrayRespostasUsuario),
+        quantidadeVotos: contaTodosVotos(action.respostasUsuario),
         respondeuTodos:
-          contaVotos(action.arrayRespostasUsuario) === TAM_PERGUNTAS
+          contaTodosVotos(action.respostasUsuario) ===
+          TAM_PERGUNTAS + TAM_VOTACOES,
+        respondeuVozAtiva:
+          contaVotos(action.respostasUsuario.vozAtiva) === TAM_PERGUNTAS,
+        respondeuVotacoes: contaVotos(action.respostasUsuario.qmr) === TAM_VOTACOES
       };
     case SET_SCORE_USUARIO_LIMPO:
       return {
         ...state,
         respostasUsuario: inicializaRespostasUsuario(),
-        arrayRespostasUsuario: Array(TAM_PERGUNTAS).fill(0),
         quantidadeVotos: 0,
-        respondeuTodos: false
+        respondeuTodos: false,
+        respondeuVozAtiva: false,
+        respondeuVotacoes: false
       };
     default:
       return state;
