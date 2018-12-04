@@ -32,17 +32,21 @@ class QuestionarioContainer extends Component {
     const { respondeuTodos, respondeuVozAtiva, respondeuVotacoes } = this.props.usuario;
 
     return (
-      <div>
-        <label>
-          <span>Voz Ativa</span>
-          <Toggle
-            defaultChecked={this.props.questionario.abaAtiva !== "Voz Ativa"}
-            icons={false}
-            onChange={this.handleToggle}
-            checked={this.props.questionario.abaAtiva !== "Voz Ativa"}
-          />
-          <span>Câmara</span>
-        </label>
+      <div className="toogle-wrapper">
+        <div className="question-toogle">
+          <div>
+            <label className="label-toogle">
+              <span className="label-toogle-left">Voz Ativa</span>
+              <Toggle
+                defaultChecked={this.props.questionario.abaAtiva !== "Voz Ativa"}
+                icons={false}
+                onChange={this.handleToggle}
+                checked={this.props.questionario.abaAtiva !== "Voz Ativa"}
+              />
+              <span className="label-toogle-right">Câmara</span>
+            </label>
+          </div>
+        </div>
         {abaAtiva === "Votacoes" &&
           <div>
             <MenuTema />

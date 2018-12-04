@@ -127,3 +127,27 @@
   left: 27px;
   border-color: #41c083;
 }
+
+.toogle-wrapper {
+  background-color: #ffffff;
+}
+
+.question-toogle {
+  display: flex;
+  justify-content: center;
+  margin-top: .5rem;
+  margin-bottom: .5rem;
+  padding-top: 1rem;
+}
+
+.label-toogle {
+  display: flex;
+}
+
+.label-toogle-left {
+  margin-right: .5rem;
+}
+
+.label-toogle-right {
+  margin-left: .5rem;
+}
