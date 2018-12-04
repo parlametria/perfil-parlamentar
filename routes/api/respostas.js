@@ -395,36 +395,49 @@ router.get("/estados/:uf/partidos/:sigla", (req, res) => {
  * @param {boolean} respondeu - Flag respondeu true
  */
 router.get("/estados/:uf/partidos/:sigla/responderam", (req, res) => {
-  Resposta.countDocuments(
-    {
-      uf: req.params.uf,
-      sg_partido: req.params.sigla,
-      respondeu: true
-    },
-    (err, totalCount) => {
-      let response;
-      if (err) response = { error: true, message: "Error fetching data" };
-
-      Resposta.find(
-        {
+  Resposta.count({
+    include: [
+      {
+        model: Candidato,
+        as: "cpf_resp",
+        where: {
           uf: req.params.uf,
           sg_partido: req.params.sigla,
           respondeu: true
-        },
-        (err, candidatos) => {
-          response = err
-            ? { status: BAD_REQUEST, message: "Error fetching data" }
-            : {
-                candidatos,
-                total: totalCount,
-                status: SUCCESS
-              };
-
-          res.status(response.status).json(response);
         }
-      );
-    }
-  );
+      }
+    ],
+    group: ["cpf_resp.cpf", "respostas.cpf"]
+  }).then((totalCount, err) => {
+    let response;
+    if (err) response = { error: true, message: "Error fetching data" };
+
+    Resposta.findAll({
+      attributes: att_res,
+      include: [
+        {
+          model: Candidato,
+          as: "cpf_resp",
+          attributes: att,
+          where: {
+            uf: req.params.uf,
+            sg_partido: req.params.sigla,
+            respondeu: true
+          }
+        }
+      ]
+    }).then((candidatos, err) => {
+      response = err
+        ? { status: BAD_REQUEST, message: "Error fetching data" }
+        : {
+            candidatos,
+            total: totalCount.length,
+            status: SUCCESS
+          };
+
+      res.status(response.status).json(response);
+    });
+  });
 });
 
 /**
