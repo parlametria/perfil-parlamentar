@@ -84,16 +84,16 @@ router.get("/", (req, res) => {
  * @param {boolean} eleito - Flag eleito true
  */
 router.get("/eleitos", (req, res) => {
-  Resposta.findAll({
-    attributes: att_res,
+  Candidato.findAll({
+    attributes: att,
     include: [
       {
-        model: Candidato,
+        model: Resposta,
         as: "cpf_resp",
-        attributes: att,
-        where: { eleito: true }
+        attributes: att_res
       }
-    ]
+    ],
+    where: { eleito: true }
   })
     .then(respostas => res.json(respostas))
     .catch(err => res.status(BAD_REQUEST).json({ err }));
@@ -108,16 +108,16 @@ router.get("/eleitos", (req, res) => {
  */
 
 router.get("/candidatos/responderam", (req, res) => {
-  Resposta.findAll({
-    attributes: att_res,
+  Candidato.findAll({
+    attributes: att,
     include: [
       {
-        model: Candidato,
+        model: Resposta,
         as: "cpf_resp",
-        attributes: att,
-        where: { respondeu: true }
+        attributes: att_res
       }
-    ]
+    ],
+    where: { respondeu: true }
   })
     .then(respostas => res.json(respostas))
     .catch(err => res.status(BAD_REQUEST).json({ err }));
@@ -131,16 +131,16 @@ router.get("/candidatos/responderam", (req, res) => {
  * @param {boolean} respondeu - Flag respondeu false
  */
 router.get("/candidatos/naoresponderam", (req, res) => {
-  Resposta.findAll({
-    attributes: att_res,
+  Candidato.findAll({
+    attributes: att,
     include: [
       {
-        model: Candidato,
+        model: Resposta,
         as: "cpf_resp",
-        attributes: att,
-        where: { respondeu: false }
+        attributes: att_res
       }
-    ]
+    ],
+    where: { respondeu: false }
   })
     .then(respostas => res.json(respostas))
     .catch(err => res.status(BAD_REQUEST).json({ err }));
@@ -154,16 +154,16 @@ router.get("/candidatos/naoresponderam", (req, res) => {
  * @param {string} cpf - CPF do candidato
  */
 router.get("/candidatos/:cpf", (req, res) => {
-  Resposta.findAll({
-    attributes: att_res,
+  Candidato.findAll({
+    attributes: att,
     include: [
       {
-        model: Candidato,
+        model: Resposta,
         as: "cpf_resp",
-        attributes: att,
-        where: { cpf: req.params.cpf }
+        attributes: att_res
       }
-    ]
+    ],
+    where: { cpf: req.params.cpf }
   })
     .then(respostas => res.json(respostas))
     .catch(err => res.status(BAD_REQUEST).json({ err }));
@@ -187,16 +187,16 @@ router.get("/estados/:uf/partidos", (req, res) => {
     query.eleito = eleito;
   }
 
-  Resposta.findAll({
-    attributes: att_res,
+  Candidato.findAll({
+    attributes: att,
     include: [
       {
-        model: Candidato,
+        model: Resposta,
         as: "cpf_resp",
-        attributes: att,
-        where: query
+        attributes: att_res
       }
-    ]
+    ],
+    where: query
   })
     .then(respostas => {
       const partidosSet = new Set();
