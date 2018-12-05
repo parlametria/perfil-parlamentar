@@ -42,7 +42,8 @@ const initialState = {
     partido: "TODOS",
     estado: "",
     reeleicao: "-1",
-    respondeu: "-1"
+    respondeu: "-1",
+    tema: "Temas"
   },
   candidatosFiltrados: [],
   candidatosRanqueados: [],

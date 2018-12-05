@@ -148,7 +148,8 @@ class CandidatosContainer extends Component {
       partido: filtro.partido,
       estado: filtro.estado,
       reeleicao: filtro.reeleicao,
-      respondeu: filtro.respondeu
+      respondeu: filtro.respondeu,
+      tema: filtro.tema
     };
 
     this.setState({ isPesquisando: true });
@@ -166,7 +167,8 @@ class CandidatosContainer extends Component {
       partido: e.target.value,
       estado: filtro.estado,
       reeleicao: filtro.reeleicao,
-      respondeu: filtro.respondeu
+      respondeu: filtro.respondeu,
+      tema: filtro.tema
     };
 
     this.props.setFiltroCandidatos(novoFiltro);
@@ -181,7 +183,8 @@ class CandidatosContainer extends Component {
       partido: filtro.partido,
       estado: filtro.estado,
       reeleicao: filtro.reeleicao === "1" ? "-1" : "1",
-      respondeu: filtro.respondeu
+      respondeu: filtro.respondeu,
+      tema: filtro.tema
     };
 
     this.props.setFiltroCandidatos(novoFiltro);
@@ -196,7 +199,8 @@ class CandidatosContainer extends Component {
       partido: filtro.partido,
       estado: filtro.estado,
       reeleicao: filtro.reeleicao,
-      respondeu: filtro.respondeu === "1" ? "-1" : "1"
+      respondeu: filtro.respondeu === "1" ? "-1" : "1",
+      tema: filtro.tema
     };
 
     this.props.setFiltroCandidatos(novoFiltro);

@@ -71,7 +71,8 @@ class Home extends Component {
       partido: "Partidos",
       estado: e.target.value,
       reeleicao: "-1",
-      respondeu: "-1"
+      respondeu: "-1",
+      tema: "Temas"
     };
 
     //if(!isMobile) this.props.verTodosEleitos();
@@ -212,15 +213,15 @@ class Home extends Component {
                       </select>
                     </ScrollIntoViewOnChange>
                   ) : (
-                      <select
-                        className="form-control"
-                        onChange={this.selecionaEstado}
-                        value={filtro.estado}
-                      >
-                        <option defaultValue="--">Selecione um Estado</option>
-                        {estados()}
-                      </select>
-                    )}
+                    <select
+                      className="form-control"
+                      onChange={this.selecionaEstado}
+                      value={filtro.estado}
+                    >
+                      <option defaultValue="--">Selecione um Estado</option>
+                      {estados()}
+                    </select>
+                  )}
                 </div>
               </form>
             </div>
