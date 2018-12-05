@@ -74,7 +74,19 @@ const comparaRespostas = (
 export const calculaScore = () => (dispatch, getState) => {
   const { respostasUsuario, quantidadeVotos } = getState().usuarioReducer;
   const respostasCandidatos = getState().candidatosReducer.dadosCandidatos;
-  const { votacoesCandidatos } = getState().votacoesReducer;
+  const { filtro } = getState().candidatosReducer;
+  const { votacoesCandidatos, dadosVotacoes } = getState().votacoesReducer;
+  const { dadosPerguntas } = getState().perguntasReducer;
+
+  if (filtro.tema !== "Temas") {
+    const idsVozAtiva = dadosPerguntas.map(pergunta => {
+      if (pergunta.tema === filtro.tema) return pergunta.id;
+    });
+
+    const idsVotacoes = dadosVotacoes.map(votacao => {
+      if (votacao.tema === filtro.tema) return votacao.id;
+    });
+  }
 
   const quantVotosVozAtiva = Object.keys(respostasUsuario.vozAtiva).filter(
     id =>
