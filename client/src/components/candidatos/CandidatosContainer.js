@@ -60,6 +60,7 @@ class CandidatosContainer extends Component {
     this.pegaCandidatosAnteriores = this.pegaCandidatosAnteriores.bind(this);
     this.pegaProximosCandidatos = this.pegaProximosCandidatos.bind(this);
     this.setActiveTab = this.setActiveTab.bind(this);
+    this.filtraPorTema = this.filtraPorTema.bind(this);
   }
 
   setActiveTab(e) {
@@ -207,6 +208,25 @@ class CandidatosContainer extends Component {
     this.props.setCandidatosFiltrados();
   }
 
+  filtraPorTema(e) {
+    e.preventDefault();
+
+    const { filtro } = this.props.candidatos;
+
+    let novoFiltro = {
+      nome: filtro.nome,
+      partido: filtro.partido,
+      estado: filtro.estado,
+      reeleicao: filtro.reeleicao,
+      respondeu: filtro.respondeu,
+      tema: e.target.value
+    };
+
+    this.props.setFiltroCandidatos(novoFiltro);
+    //this.props.setCandidatosFiltrados();
+    this.props.calculaScore();
+  }
+
   render() {
     const {
       dadosCandidatos,
@@ -301,6 +321,19 @@ class CandidatosContainer extends Component {
     const listaSelectPartidos = partidos.map(partido => (
       <option key={partido} value={partido}>
         {partido}
+      </option>
+    ));
+
+    const listaSelectTemas = [
+      "Temas",
+      "Meio Ambiente",
+      "Direitos Humanos",
+      "Integridade e Transparência",
+      "Nova Economia",
+      "Transversal"
+    ].map(tema => (
+      <option key={tema} value={tema}>
+        {tema}
       </option>
     ));
 
@@ -502,7 +535,7 @@ class CandidatosContainer extends Component {
                   />
                 </div>
               </div>
-              <div className="col-6">
+              <div className="col-3">
                 <div className="form-group">
                   <select
                     className="form-control form-control-secondary barra-filtro-candidato"
@@ -511,6 +544,18 @@ class CandidatosContainer extends Component {
                     value={filtro.partido}
                   >
                     {listaSelectPartidos}
+                  </select>
+                </div>
+              </div>
+              <div className="col-3">
+                <div className="form-group">
+                  <select
+                    className="form-control form-control-secondary barra-filtro-candidato"
+                    placeholder="Temas"
+                    onChange={this.filtraPorTema}
+                    value={filtro.tema}
+                  >
+                    {listaSelectTemas}
                   </select>
                 </div>
               </div>
