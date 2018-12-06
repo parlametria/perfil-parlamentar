@@ -35,7 +35,7 @@ class TabelaVotacoes extends Component {
 
     const votacoesCandidato = this.props.candidatos.dadosCandidato.votacoes;
 
-    const { qmr: respostasUsuario } = this.props.usuario.respostasUsuario;
+    const { votacoes: respostasUsuario } = this.props.usuario.respostasUsuario;
 
     let votacoes = [];
 

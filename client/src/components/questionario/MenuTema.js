@@ -50,7 +50,7 @@ class MenuTema extends Component {
     const respostasUsuario =
       abaAtiva === "Voz Ativa"
         ? this.props.usuario.respostasUsuario.vozAtiva
-        : this.props.usuario.respostasUsuario.qmr;
+        : this.props.usuario.respostasUsuario.votacoes;
 
     return { index, dados, tamPergunta, respostasUsuario };
   }

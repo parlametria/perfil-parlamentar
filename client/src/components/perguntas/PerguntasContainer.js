@@ -124,10 +124,6 @@ class PerguntasContainer extends Component {
           </div>
         </div>
       );
-
-
-
-
     }
 
     return (
