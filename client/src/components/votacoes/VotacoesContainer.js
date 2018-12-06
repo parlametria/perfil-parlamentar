@@ -28,7 +28,6 @@ import isEmpty from "../../validation/is-empty";
 import FlipMove from "react-flip-move";
 import { Collapse } from "reactstrap";
 
-
 const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
 
 class VotacoesContainer extends Component {
@@ -59,16 +58,11 @@ class VotacoesContainer extends Component {
       this.props.escolheTema(dadosVotacoes[indexPergunta].tema);
     }
   }
-  componentDidMount() {
-    this.props.getDadosVotacoes();
-  }
 
   render() {
     const { dadosVotacoes, indexPergunta } = this.props.votacoes;
 
-    const {
-      isExibeGavetaPerguntas
-    } = this.props.questionario;
+    const { isExibeGavetaPerguntas } = this.props.questionario;
 
     let votacao;
     let exibeVotacao;
@@ -103,7 +97,9 @@ class VotacoesContainer extends Component {
         >
           <div className="card-body">
             <div className="container">
-              <h2 className="question-theme">{this.props.questionario.filtroTema}</h2>
+              <h2 className="question-theme">
+                {this.props.questionario.filtroTema}
+              </h2>
             </div>
             {votacao}
             <CopiaUrl />
@@ -116,9 +112,7 @@ class VotacoesContainer extends Component {
       <div className="votacao-container">
         <div>
           <Collapse isOpen={isExibeGavetaPerguntas}>
-            <FlipMove>
-              {exibeVotacao}
-            </FlipMove>
+            <FlipMove>{exibeVotacao}</FlipMove>
           </Collapse>
           <button
             type="button"

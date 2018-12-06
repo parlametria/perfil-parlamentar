@@ -70,47 +70,116 @@ const comparaRespostas = (
   return respostasIguais / numRespostasUsuario;
 };
 
-// Recebe um dicionário das respostas dos candidatos no formato {id_cand: [array_resp]} e retorna um dicionário no formato {id_cand: score}
-export const calculaScore = () => (dispatch, getState) => {
-  const { respostasUsuario, quantidadeVotos } = getState().usuarioReducer;
-  const respostasCandidatos = getState().candidatosReducer.dadosCandidatos;
-  const { filtro } = getState().candidatosReducer;
-  const { votacoesCandidatos, dadosVotacoes } = getState().votacoesReducer;
-  const { dadosPerguntas } = getState().perguntasReducer;
+const filtraIdsPorTema = (tema, dadosVotacoes, dadosPerguntas) => {
+  let idsVozAtiva, idsVotacoes;
 
-  if (filtro.tema !== "Temas") {
-    const idsVozAtiva = dadosPerguntas.map(pergunta => {
-      if (pergunta.tema === filtro.tema) return pergunta.id;
-    });
+  if (tema !== "Temas") {
+    idsVozAtiva = dadosPerguntas
+      .filter(pergunta => pergunta.tema === tema)
+      .map(pergunta => pergunta.id);
 
-    const idsVotacoes = dadosVotacoes.map(votacao => {
-      if (votacao.tema === filtro.tema) return votacao.id;
-    });
+    idsVotacoes = dadosVotacoes
+      .filter(votacao => votacao.tema === tema)
+      .map(votacao => votacao.id_votacao);
+  } else {
+    idsVozAtiva = dadosPerguntas.map(pergunta => pergunta.id);
+
+    idsVotacoes = dadosVotacoes.map(votacao => votacao.id_votacao);
   }
 
-  const quantVotosVozAtiva = Object.keys(respostasUsuario.vozAtiva).filter(
+  return { idsVozAtiva, idsVotacoes };
+};
+
+const filtraRespostasEVotacoesPorID = (
+  respostas,
+  votacoes,
+  idsVozAtiva,
+  idsVotacoes
+) => {
+  let respostasFiltradas = {};
+  let votacoesFiltradas = {};
+
+  idsVozAtiva.forEach(id => {
+    respostasFiltradas[id] = respostas[id];
+  });
+
+  idsVotacoes.forEach(id => {
+    votacoesFiltradas[id] = votacoes[id];
+  });
+
+  return { respostasFiltradas, votacoesFiltradas };
+};
+
+const verificaQuantidadeVotos = (
+  idsVozAtiva,
+  idsVotacoes,
+  respostasUsuario
+) => {
+  let quantVotosVozAtiva, quantVotosQMR, numRespostasUsuario;
+
+  quantVotosVozAtiva = idsVozAtiva.filter(
     id =>
       respostasUsuario.vozAtiva[id] !== 0 &&
       respostasUsuario.vozAtiva[id] !== -2
   ).length;
 
-  const quantVotosQMR = Object.keys(respostasUsuario.qmr).filter(
+  quantVotosQMR = idsVotacoes.filter(
     id => respostasUsuario.qmr[id] !== 0 && respostasUsuario.qmr[id] !== -2
   ).length;
 
-  const numRespostasUsuario =
+  numRespostasUsuario =
     quantVotosVozAtiva + quantVotosQMR === 0
       ? 1
       : quantVotosVozAtiva + quantVotosQMR;
 
+  return {
+    quantVotosVozAtiva,
+    quantVotosQMR,
+    numRespostasUsuario
+  };
+};
+
+// Recebe um dicionário das respostas dos candidatos no formato {id_cand: [array_resp]} e retorna um dicionário no formato {id_cand: score}
+export const calculaScore = () => (dispatch, getState) => {
+  const { respostasUsuario } = getState().usuarioReducer;
+  const { dadosCandidatos } = getState().candidatosReducer;
+  const { filtro } = getState().candidatosReducer;
+  const { votacoesCandidatos, dadosVotacoes } = getState().votacoesReducer;
+  const { dadosPerguntas } = getState().perguntasReducer;
+
+  const { idsVozAtiva, idsVotacoes } = filtraIdsPorTema(
+    filtro.tema,
+    dadosVotacoes,
+    dadosPerguntas
+  );
+
+  console.log(idsVotacoes);
+  console.log(idsVozAtiva);
+
+  const {
+    quantVotosVozAtiva,
+    quantVotosQMR,
+    numRespostasUsuario
+  } = verificaQuantidadeVotos(idsVozAtiva, idsVotacoes, respostasUsuario);
+
   let scoreCandidatos = {};
-  Object.keys(respostasCandidatos).forEach(elem => {
+  Object.keys(dadosCandidatos).forEach(elem => {
     const naoRespondeuVozAtiva =
-      Object.keys(respostasCandidatos[elem].respostas).filter(
-        id => respostasCandidatos[elem].respostas[id] !== 0
+      Object.keys(dadosCandidatos[elem].respostas).filter(
+        id => dadosCandidatos[elem].respostas[id] !== 0
       ).length === 0;
 
     const naoRespondeuCamara = votacoesCandidatos[elem] === undefined;
+
+    const {
+      respostasFiltradas,
+      votacoesFiltradas
+    } = filtraRespostasEVotacoesPorID(
+      dadosCandidatos[elem].respostas,
+      naoRespondeuCamara ? {} : votacoesCandidatos[elem],
+      idsVozAtiva,
+      idsVotacoes
+    );
 
     let numRespostasConsideradas;
     if (!naoRespondeuCamara && !naoRespondeuVozAtiva)
@@ -121,10 +190,10 @@ export const calculaScore = () => (dispatch, getState) => {
     else numRespostasConsideradas = quantVotosQMR === 0 ? 1 : quantVotosQMR;
 
     let score = comparaRespostas(
-      respostasCandidatos[elem].respostas,
+      respostasFiltradas,
       respostasUsuario.vozAtiva,
       respostasUsuario.qmr,
-      votacoesCandidatos[elem] !== undefined ? votacoesCandidatos[elem] : {},
+      votacoesFiltradas,
       numRespostasConsideradas
     );
     scoreCandidatos[elem] = score;
