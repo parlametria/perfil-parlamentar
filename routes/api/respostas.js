@@ -107,7 +107,20 @@ router.get("/eleitos", (req, res) => {
     ],
     where: { eleito: true }
   })
-    .then(respostas => res.json(respostas))
+    .then(resultado => {
+      const resultadoNovo = resultado.map(cand => cand.get({ plain: true }));
+
+      resultadoNovo.forEach(cand => {
+        const respostas = {};
+        cand.cpf_resp.forEach(resposta => {
+          respostas[resposta.pergunta_id] = resposta.resposta;
+        });
+        cand.respostas = respostas;
+        delete cand.cpf_resp;
+      });
+
+      return res.json(resultadoNovo);
+    })
     .catch(err => res.status(BAD_REQUEST).json({ err }));
 });
 
