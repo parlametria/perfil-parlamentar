@@ -10,6 +10,7 @@ const express = require("express");
  */
 const router = express.Router();
 const models = require("../../models/index");
+const { formataRespostas, formataVotacoes } = require("../../utils/functions");
 
 const Candidato = models.candidato;
 const Votacao = models.votacao;
@@ -57,7 +58,10 @@ router.get("/votacoes", (req, res) => {
       }
     ]
   })
-    .then(votacoes => res.json(votacoes))
+    .then(votacoes => {
+      novaVotacao = formataVotacoes(votacoes);
+      return res.json(novaVotacao);
+    })
     .catch(err => res.status(400).json({ err }));
 });
 
@@ -70,12 +74,6 @@ router.get("/votacoes", (req, res) => {
 router.get("/", (req, res) => {
   Candidato.findAll()
     .then(candidatos => res.json(candidatos))
-    .catch(err => res.status(400).json({ err }));
-});
-
-router.get("/votacoes", (req, res) => {
-  Votacao.find()
-    .then(votacoes => res.json(votacoes))
     .catch(err => res.status(400).json({ err }));
 });
 
@@ -104,12 +102,22 @@ router.get("/:cpf", (req, res) => {
  * @param {string} cpf - CPF do candidato
  */
 router.get("/:cpf/votacoes", (req, res) => {
-  Votacao.findAll({
-    where: {
-      cpf: req.params.cpf
-    }
+  Candidato.findAll({
+    attributes: att,
+    include: [
+      {
+        model: Votacao,
+        as: "cpf_vot",
+        attributes: att_res,
+        required: true
+      }
+    ],
+    where: { cpf: req.params.cpf }
   })
-    .then(votacoes => res.json(votacoes))
+    .then(votacoes => {
+      novaVotacao = formataVotacoes(votacoes);
+      return res.json(novaVotacao);
+    })
     .catch(err => res.status(400).json({ err }));
 });
 
