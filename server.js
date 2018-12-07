@@ -4,7 +4,6 @@ const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const path = require("path");
 const logger = require("heroku-logger");
-const http = require("http");
 const cors = require("cors");
 const passport = require("passport");
 
