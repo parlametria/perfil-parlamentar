@@ -5,6 +5,8 @@
 const Sequelize = require("sequelize");
 const express = require("express");
 const models = require("../../models/index");
+const { formataRespostas } = require("../../utils/functions");
+
 const Op = Sequelize.Op;
 /**
  * Rotas para funções relacionadas às respostas.
@@ -14,7 +16,6 @@ const router = express.Router();
 
 const Resposta = models.resposta;
 const Candidato = models.candidato;
-
 const BAD_REQUEST = 400;
 const SUCCESS = 200;
 
@@ -72,10 +73,11 @@ router.get("/", (req, res) => {
       offset: query.offset,
       limit: query.limit
     }).then((data, err) => {
+      dataNovo = formataRespostas(data);
       response = err
         ? { status: BAD_REQUEST, message: "Error fetching data" }
         : {
-            data,
+            data: dataNovo,
             total: totalCount,
             itensPorPagina: size,
             pagina: pageNo,
@@ -95,6 +97,7 @@ router.get("/", (req, res) => {
  * @memberof module:routes/respostas
  * @param {boolean} eleito - Flag eleito true
  */
+
 router.get("/eleitos", (req, res) => {
   Candidato.findAll({
     attributes: att,
@@ -108,16 +111,7 @@ router.get("/eleitos", (req, res) => {
     where: { eleito: true }
   })
     .then(resultado => {
-      const resultadoNovo = resultado.map(cand => cand.get({ plain: true }));
-
-      resultadoNovo.forEach(cand => {
-        const respostas = {};
-        cand.cpf_resp.forEach(resposta => {
-          respostas[resposta.pergunta_id] = resposta.resposta;
-        });
-        cand.respostas = respostas;
-        delete cand.cpf_resp;
-      });
+      resultadoNovo = formataRespostas(resultado);
 
       return res.json(resultadoNovo);
     })
@@ -144,7 +138,10 @@ router.get("/candidatos/responderam", (req, res) => {
     ],
     where: { respondeu: true }
   })
-    .then(respostas => res.json(respostas))
+    .then(respostas => {
+      respostasNovo = formataRespostas(respostas);
+      res.json(respostasNovo);
+    })
     .catch(err => res.status(BAD_REQUEST).json({ err }));
 });
 
@@ -167,7 +164,10 @@ router.get("/candidatos/naoresponderam", (req, res) => {
     ],
     where: { respondeu: false }
   })
-    .then(respostas => res.json(respostas))
+    .then(respostas => {
+      respostasNovo = formataRespostas(respostas);
+      res.json(respostasNovo);
+    })
     .catch(err => res.status(BAD_REQUEST).json({ err }));
 });
 
@@ -190,7 +190,10 @@ router.get("/candidatos/:cpf", (req, res) => {
     ],
     where: { cpf: req.params.cpf }
   })
-    .then(respostas => res.json(respostas))
+    .then(respostas => {
+      respostasNovo = formataRespostas(respostas);
+      res.json(respostasNovo);
+    })
     .catch(err => res.status(BAD_REQUEST).json({ err }));
 });
 
@@ -304,10 +307,12 @@ router.get("/estados/:uf", (req, res) => {
       ],
       where: query
     }).then((candidatos, err) => {
+      respostasNovo = formataRespostas(candidatos);
+
       response = err
         ? { status: BAD_REQUEST, message: "Error fetching data" }
         : {
-            candidatos,
+            candidatos: respostasNovo,
             total: totalCount,
             status: SUCCESS
           };
@@ -343,10 +348,12 @@ router.get("/estados/:uf/responderam", (req, res) => {
       ],
       where: { uf: req.params.uf, respondeu: true }
     }).then((candidatos, err) => {
+      respostasNovo = formataRespostas(candidatos);
+
       response = err
         ? { status: BAD_REQUEST, message: "Error fetching data" }
         : {
-            candidatos,
+            candidatos: respostasNovo,
             total: totalCount,
             status: SUCCESS
           };
@@ -377,10 +384,12 @@ router.get("/estados/:uf/partidos/:sigla", (req, res) => {
       ],
       where: { uf: req.params.uf, sg_partido: req.params.sigla }
     }).then((candidatos, err) => {
+      respostasNovo = formataRespostas(candidatos);
+
       response = err
         ? { status: BAD_REQUEST, message: "Error fetching data" }
         : {
-            candidatos,
+            candidatos: respostasNovo,
             total: totalCount,
             status: SUCCESS
           };
@@ -424,10 +433,12 @@ router.get("/estados/:uf/partidos/:sigla/responderam", (req, res) => {
         respondeu: true
       }
     }).then((candidatos, err) => {
+      respostasNovo = formataRespostas(candidatos);
+
       response = err
         ? { status: BAD_REQUEST, message: "Error fetching data" }
         : {
-            candidatos,
+            candidatos: respostasNovo,
             total: totalCount,
             status: SUCCESS
           };
@@ -471,10 +482,12 @@ router.get("/estados/:uf/partidos/:sigla/naoresponderam", (req, res) => {
         respondeu: false
       }
     }).then((candidatos, err) => {
+      respostasNovo = formataRespostas(candidatos);
+
       response = err
         ? { status: BAD_REQUEST, message: "Error fetching data" }
         : {
-            candidatos,
+            candidatos: respostasNovo,
             total: totalCount,
             status: SUCCESS
           };
@@ -533,10 +546,12 @@ router.get("/estados/:uf/naoresponderam", (req, res) => {
       limit: query.limit,
       offset: query.offset
     }).then((data, err) => {
+      respostasNovo = formataRespostas(data);
+
       response = err
         ? { status: BAD_REQUEST, message: "Error fetching data" }
         : {
-            data,
+            data: respostasNovo,
             total: totalCount,
             itensPorPagina: size,
             pagina: pageNo,
@@ -579,10 +594,12 @@ router.get("/estados/:uf/eleitos", (req, res) => {
         eleito: true
       }
     }).then((candidatos, err) => {
+      respostasNovo = formataRespostas(candidatos);
+
       response = err
         ? { status: BAD_REQUEST, message: "Error fetching data" }
         : {
-            candidatos,
+            candidatos: respostasNovo,
             total: totalCount,
             status: SUCCESS
           };
