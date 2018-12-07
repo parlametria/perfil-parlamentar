@@ -14,6 +14,21 @@ const models = require("../../models/index");
 const Candidato = models.candidato;
 const Votacao = models.votacao;
 
+const att_res = ["resposta", "proposicao_id"];
+const att = [
+  "cpf",
+  "estado",
+  "uf",
+  "nome_urna",
+  "recebeu",
+  "respondeu",
+  "eleito",
+  "reeleicao",
+  "email",
+  "sg_partido",
+  "partido"
+];
+
 /**
  * Testa a rota de candidatos.
  * @name get/api/candidatos/test
@@ -31,7 +46,17 @@ router.get("/test", (req, res) =>
  * @memberof module:routes/candidatos
  */
 router.get("/votacoes", (req, res) => {
-  Votacao.findAll()
+  Candidato.findAll({
+    attributes: att,
+    include: [
+      {
+        model: Votacao,
+        as: "cpf_vot",
+        attributes: att_res,
+        required: true
+      }
+    ]
+  })
     .then(votacoes => res.json(votacoes))
     .catch(err => res.status(400).json({ err }));
 });
