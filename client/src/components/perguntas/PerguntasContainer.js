@@ -34,7 +34,6 @@ import isEmpty from "../../validation/is-empty";
 
 import "./perguntas.css";
 
-
 const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
 
 class PerguntasContainer extends Component {
@@ -75,16 +74,10 @@ class PerguntasContainer extends Component {
     }
   }
 
-  componentDidMount() {
-    this.props.getDadosPerguntas();
-  }
-
   render() {
     const { dadosPerguntas, indexPergunta } = this.props.perguntas;
 
-    const {
-      isExibeGavetaPerguntas
-    } = this.props.questionario;
+    const { isExibeGavetaPerguntas } = this.props.questionario;
 
     let pergunta;
     let exibePerguntas;
@@ -116,7 +109,9 @@ class PerguntasContainer extends Component {
         >
           <div className="card-body">
             <div className="container">
-              <h2 className="question-theme">{this.props.questionario.filtroTema}</h2>
+              <h2 className="question-theme">
+                {this.props.questionario.filtroTema}
+              </h2>
             </div>
 
             {pergunta}
@@ -130,9 +125,7 @@ class PerguntasContainer extends Component {
       <div className="pergunta-container">
         <div>
           <Collapse isOpen={isExibeGavetaPerguntas}>
-            <FlipMove>
-              {exibePerguntas}
-            </FlipMove>
+            <FlipMove>{exibePerguntas}</FlipMove>
           </Collapse>
           <button
             type="button"

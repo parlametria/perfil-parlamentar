@@ -3,6 +3,7 @@ import Candidato from "./Candidato";
 
 import { connect } from "react-redux";
 
+import { Collapse, Button, CardBody, Card } from "reactstrap";
 import FlipMove from "react-flip-move";
 
 import isEmpty from "../../validation/is-empty";
@@ -48,7 +49,8 @@ class CandidatosContainer extends Component {
 
     this.state = {
       debounced: "",
-      isPesquisando: false
+      isPesquisando: false,
+      collapse: false
     };
 
     this.onSearch$ = new Subject();
@@ -60,10 +62,16 @@ class CandidatosContainer extends Component {
     this.pegaCandidatosAnteriores = this.pegaCandidatosAnteriores.bind(this);
     this.pegaProximosCandidatos = this.pegaProximosCandidatos.bind(this);
     this.setActiveTab = this.setActiveTab.bind(this);
+    this.filtraPorTema = this.filtraPorTema.bind(this);
+    this.toggle = this.toggle.bind(this);
   }
 
   setActiveTab(e) {
     this.props.setActiveTab(e);
+  }
+
+  toggle() {
+    this.setState({ collapse: !this.state.collapse });
   }
 
   pegaPrimeiraPagina() {
@@ -148,7 +156,8 @@ class CandidatosContainer extends Component {
       partido: filtro.partido,
       estado: filtro.estado,
       reeleicao: filtro.reeleicao,
-      respondeu: filtro.respondeu
+      respondeu: filtro.respondeu,
+      tema: filtro.tema
     };
 
     this.setState({ isPesquisando: true });
@@ -166,7 +175,8 @@ class CandidatosContainer extends Component {
       partido: e.target.value,
       estado: filtro.estado,
       reeleicao: filtro.reeleicao,
-      respondeu: filtro.respondeu
+      respondeu: filtro.respondeu,
+      tema: filtro.tema
     };
 
     this.props.setFiltroCandidatos(novoFiltro);
@@ -181,7 +191,8 @@ class CandidatosContainer extends Component {
       partido: filtro.partido,
       estado: filtro.estado,
       reeleicao: filtro.reeleicao === "1" ? "-1" : "1",
-      respondeu: filtro.respondeu
+      respondeu: filtro.respondeu,
+      tema: filtro.tema
     };
 
     this.props.setFiltroCandidatos(novoFiltro);
@@ -196,11 +207,31 @@ class CandidatosContainer extends Component {
       partido: filtro.partido,
       estado: filtro.estado,
       reeleicao: filtro.reeleicao,
-      respondeu: filtro.respondeu === "1" ? "-1" : "1"
+      respondeu: filtro.respondeu === "1" ? "-1" : "1",
+      tema: filtro.tema
     };
 
     this.props.setFiltroCandidatos(novoFiltro);
     this.props.setCandidatosFiltrados();
+  }
+
+  filtraPorTema(e) {
+    e.preventDefault();
+
+    const { filtro } = this.props.candidatos;
+
+    let novoFiltro = {
+      nome: filtro.nome,
+      partido: filtro.partido,
+      estado: filtro.estado,
+      reeleicao: filtro.reeleicao,
+      respondeu: filtro.respondeu,
+      tema: e.target.value
+    };
+
+    this.props.setFiltroCandidatos(novoFiltro);
+    //this.props.setCandidatosFiltrados();
+    this.props.calculaScore();
   }
 
   render() {
@@ -297,6 +328,19 @@ class CandidatosContainer extends Component {
     const listaSelectPartidos = partidos.map(partido => (
       <option key={partido} value={partido}>
         {partido}
+      </option>
+    ));
+
+    const listaSelectTemas = [
+      "Temas",
+      "Meio Ambiente",
+      "Direitos Humanos",
+      "Integridade e Transparência",
+      "Nova Economia",
+      "Transversal"
+    ].map(tema => (
+      <option key={tema} value={tema}>
+        {tema}
       </option>
     ));
 
@@ -477,70 +521,103 @@ class CandidatosContainer extends Component {
         <div className="container">
           <header className="panel-header">
             <div className="form-row">
-              <div className="col-6">
-                <div className="input-group mb-3">
-                  <div className="input-group-prepend">
-                    <span
-                      className="input-group-text input-group-text-secondary"
-                      id="search-candidate"
-                    >
-                      <span className="icon-search" />
-                    </span>
-                  </div>
-                  <input
-                    type="text"
-                    className="form-control form-control-secondary"
-                    placeholder="Pesquisar candidato/a..."
-                    aria-label="Pesquisar candidato/a"
-                    aria-describedby="search-candidate"
-                    onChange={this.buscaNome}
-                    value={filtro.nome}
-                  />
-                </div>
+              <div className="col-1" style={{ marginRight: "1.5em" }}>
+                <Button color="primary" onClick={this.toggle}>
+                  <span className="fas fa-filter" />
+                </Button>
               </div>
-              <div className="col-6">
-                <div className="form-group">
-                  <select
-                    className="form-control form-control-secondary barra-filtro-candidato"
-                    placeholder="Partidos"
-                    onChange={this.buscaPartido}
-                    value={filtro.partido}
-                  >
-                    {listaSelectPartidos}
-                  </select>
-                </div>
+              <div className="col-10">
+                {filtro.partido !== "Partidos" ? mostraPartido : mostraEstado}
               </div>
-              <div className="col-md-6">
-                <div className="form-group form-check">
-                  <input
-                    id="reeleitos"
-                    type="checkbox"
-                    className="form-check-input"
-                    onChange={this.buscaReeleitos}
-                    checked={filtro.reeleicao === "1" ? true : false}
-                  />
-                  <label className="form-check-label" htmlFor="reeleitos">
-                    {listaSelectReeleicao}
-                  </label>
-                </div>
-              </div>
-              <div className="col-md-6">
-                <div className="form-group form-check">
-                  <input
-                    id="responderam"
-                    type="checkbox"
-                    className="form-check-input"
-                    onChange={this.buscaRespondeu}
-                    checked={filtro.respondeu === "1" ? true : false}
-                  />
-                  <label className="form-check-label" htmlFor="responderam">
-                    responderam o questionário
-                  </label>
-                </div>
+              <div>
+                <Collapse isOpen={this.state.collapse}>
+                  <Card>
+                    <CardBody>
+                      <div className="form-row">
+                        <div className="input-group mb-3">
+                          <div className="input-group-prepend">
+                            <span
+                              className="input-group-text input-group-text-secondary"
+                              id="search-candidate"
+                            >
+                              <span className="icon-search" />
+                            </span>
+                          </div>
+                          <input
+                            type="text"
+                            className="form-control form-control-secondary"
+                            placeholder="Pesquisar candidato/a..."
+                            aria-label="Pesquisar candidato/a"
+                            aria-describedby="search-candidate"
+                            onChange={this.buscaNome}
+                            value={filtro.nome}
+                          />
+                        </div>
+                      </div>
+                      <div className="form-row">
+                        <div className="form-group col-6">
+                          <select
+                            className="form-control form-control-secondary barra-filtro-candidato"
+                            placeholder="Partidos"
+                            onChange={this.buscaPartido}
+                            value={filtro.partido}
+                          >
+                            {listaSelectPartidos}
+                          </select>
+                        </div>
+
+                        <div className="form-group col-6">
+                          <select
+                            className="form-control form-control-secondary barra-filtro-candidato"
+                            placeholder="Temas"
+                            onChange={this.filtraPorTema}
+                            value={filtro.tema}
+                          >
+                            {listaSelectTemas}
+                          </select>
+                        </div>
+                      </div>
+                      <div className="form-row">
+                        <div className="col-md-6">
+                          <div className="form-group form-check">
+                            <input
+                              id="reeleitos"
+                              type="checkbox"
+                              className="form-check-input"
+                              onChange={this.buscaReeleitos}
+                              checked={filtro.reeleicao === "1" ? true : false}
+                            />
+                            <label
+                              className="form-check-label"
+                              htmlFor="reeleitos"
+                            >
+                              {listaSelectReeleicao}
+                            </label>
+                          </div>
+                        </div>
+                        <div className="col-md-6">
+                          <div className="form-group form-check">
+                            <input
+                              id="responderam"
+                              type="checkbox"
+                              className="form-check-input"
+                              onChange={this.buscaRespondeu}
+                              checked={filtro.respondeu === "1" ? true : false}
+                            />
+                            <label
+                              className="form-check-label"
+                              htmlFor="responderam"
+                            >
+                              responderam o questionário
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+                    </CardBody>
+                  </Card>
+                </Collapse>
               </div>
             </div>
-
-            {filtro.partido !== "Partidos" ? mostraPartido : mostraEstado}
           </header>
 
           {isCarregando ||
