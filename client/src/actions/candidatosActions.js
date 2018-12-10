@@ -153,9 +153,6 @@ export const calculaScore = () => (dispatch, getState) => {
     dadosPerguntas
   );
 
-  console.log(idsVotacoes);
-  console.log(idsVozAtiva);
-
   const {
     quantVotosVozAtiva,
     quantVotosQMR,
@@ -408,6 +405,9 @@ export const getTopNCandidatos = n => (dispatch, getState) => {
     totalEleitosEstado,
     activeTab
   } = getState().candidatosReducer;
+
+  const { votacoesCandidatos } = getState().votacoesReducer;
+
   let matrizScores = Object.keys(scoreCandidatos).map(key => [
     key,
     scoreCandidatos[key]
@@ -418,19 +418,29 @@ export const getTopNCandidatos = n => (dispatch, getState) => {
       if (a[1] > b[1]) return -1;
       else if (a[1] === b[1]) {
         if (
+          dadosCandidatos[b[0]].respondeu ||
+          dadosCandidatos[b[0]].reeleicao === "1" ||
+          !isEmpty(votacoesCandidatos[b[0]])
+        )
+          return 1;
+        else if (
           !isEmpty(dadosCandidatos[a[0]]) &&
-          !isEmpty(dadosCandidatos[b[0]])
+          !isEmpty(dadosCandidatos[b[0]]) &&
+          !isEmpty(votacoesCandidatos)
         ) {
           if (
-            (dadosCandidatos[a[0]].respondeu &&
+            (((dadosCandidatos[a[0]].respondeu &&
               dadosCandidatos[b[0]].respondeu) ||
-            (!dadosCandidatos[a[0]].respondeu &&
-              !dadosCandidatos[b[0]].respondeu)
+              (!dadosCandidatos[a[0]].respondeu &&
+                !dadosCandidatos[b[0]].respondeu)) &&
+              (dadosCandidatos[a[0]].reeleicao === "0" &&
+                dadosCandidatos[b[0]].reeleicao === "0")) ||
+            (isEmpty(votacoesCandidatos[a[0]]) &&
+              isEmpty(votacoesCandidatos[b[0]]))
           )
             return dadosCandidatos[a[0]].nome_urna.localeCompare(
               dadosCandidatos[b[0]].nome_urna
             );
-          else if (dadosCandidatos[b[0]].respondeu) return 1;
           else return -1;
         }
         return 0;
@@ -631,6 +641,8 @@ export const setCandidatosFiltrados = () => (dispatch, getState) => {
     activeTab
   } = getState().candidatosReducer;
 
+  const { votacoesCandidatos } = getState().votacoesReducer;
+
   dispatch(setCandidatosFiltrando());
 
   axios
@@ -683,13 +695,23 @@ export const setCandidatosFiltrados = () => (dispatch, getState) => {
       else if (scoreCandidatos[a] === scoreCandidatos[b]) {
         if (!isEmpty(dadosCandidatos[a]) && !isEmpty(dadosCandidatos[b])) {
           if (
+            dadosCandidatos[b].respondeu ||
+            dadosCandidatos[b].reeleicao === "1" ||
+            !isEmpty(votacoesCandidatos[b])
+          )
+            return 1;
+          if (
             (dadosCandidatos[a].respondeu && dadosCandidatos[b].respondeu) ||
-            (!dadosCandidatos[a].respondeu && !dadosCandidatos[b].respondeu)
+            (!dadosCandidatos[a].respondeu &&
+              !dadosCandidatos[b].respondeu &&
+              ((dadosCandidatos[a].reeleicao === "0" &&
+                dadosCandidatos[b].reeleicao === "0") ||
+                (isEmpty(votacoesCandidatos[a[0]]) &&
+                  isEmpty(votacoesCandidatos[b[0]]))))
           )
             return dadosCandidatos[a].nome_urna.localeCompare(
               dadosCandidatos[b].nome_urna
             );
-          else if (dadosCandidatos[b].respondeu) return 1;
           else return -1;
         }
         return 0;

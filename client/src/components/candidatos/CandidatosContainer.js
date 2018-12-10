@@ -3,6 +3,7 @@ import Candidato from "./Candidato";
 
 import { connect } from "react-redux";
 
+import { Collapse, Button, CardBody, Card } from 'reactstrap';
 import FlipMove from "react-flip-move";
 
 import isEmpty from "../../validation/is-empty";
@@ -48,7 +49,8 @@ class CandidatosContainer extends Component {
 
     this.state = {
       debounced: "",
-      isPesquisando: false
+      isPesquisando: false,
+      collapse: false
     };
 
     this.onSearch$ = new Subject();
@@ -61,10 +63,15 @@ class CandidatosContainer extends Component {
     this.pegaProximosCandidatos = this.pegaProximosCandidatos.bind(this);
     this.setActiveTab = this.setActiveTab.bind(this);
     this.filtraPorTema = this.filtraPorTema.bind(this);
+    this.toggle = this.toggle.bind(this);
   }
 
   setActiveTab(e) {
     this.props.setActiveTab(e);
+  }
+
+  toggle() {
+    this.setState({ collapse: !this.state.collapse });
   }
 
   pegaPrimeiraPagina() {
@@ -258,9 +265,9 @@ class CandidatosContainer extends Component {
 
     const candidatosMapeaveis =
       filtro.nome !== "" ||
-      filtro.partido !== "Partidos" ||
-      filtro.reeleicao !== "-1" ||
-      filtro.respondeu !== "-1"
+        filtro.partido !== "Partidos" ||
+        filtro.reeleicao !== "-1" ||
+        filtro.respondeu !== "-1"
         ? candidatosFiltrados
         : candidatosRanqueados;
 
@@ -299,8 +306,8 @@ class CandidatosContainer extends Component {
             foto={
               candidato.tem_foto
                 ? "https://s3-sa-east-1.amazonaws.com/fotoscandidatos2018/fotos_tratadas/img_" +
-                  candidato.cpf +
-                  ".jpg"
+                candidato.cpf +
+                ".jpg"
                 : "https://s3-sa-east-1.amazonaws.com/fotoscandidatos2018/fotos_tratadas/nophoto.png"
             }
             respostasUsuario={respostasUsuario}
@@ -514,111 +521,128 @@ class CandidatosContainer extends Component {
         <div className="container">
           <header className="panel-header">
             <div className="form-row">
-              <div className="col-6">
-                <div className="input-group mb-3">
-                  <div className="input-group-prepend">
-                    <span
-                      className="input-group-text input-group-text-secondary"
-                      id="search-candidate"
-                    >
-                      <span className="icon-search" />
-                    </span>
-                  </div>
-                  <input
-                    type="text"
-                    className="form-control form-control-secondary"
-                    placeholder="Pesquisar candidato/a..."
-                    aria-label="Pesquisar candidato/a"
-                    aria-describedby="search-candidate"
-                    onChange={this.buscaNome}
-                    value={filtro.nome}
-                  />
-                </div>
-              </div>
-              <div className="col-3">
-                <div className="form-group">
-                  <select
-                    className="form-control form-control-secondary barra-filtro-candidato"
-                    placeholder="Partidos"
-                    onChange={this.buscaPartido}
-                    value={filtro.partido}
-                  >
-                    {listaSelectPartidos}
-                  </select>
-                </div>
-              </div>
-              <div className="col-3">
-                <div className="form-group">
-                  <select
-                    className="form-control form-control-secondary barra-filtro-candidato"
-                    placeholder="Temas"
-                    onChange={this.filtraPorTema}
-                    value={filtro.tema}
-                  >
-                    {listaSelectTemas}
-                  </select>
-                </div>
-              </div>
-              <div className="col-md-6">
-                <div className="form-group form-check">
-                  <input
-                    id="reeleitos"
-                    type="checkbox"
-                    className="form-check-input"
-                    onChange={this.buscaReeleitos}
-                    checked={filtro.reeleicao === "1" ? true : false}
-                  />
-                  <label className="form-check-label" htmlFor="reeleitos">
-                    {listaSelectReeleicao}
+              <div >
+                <Button color="primary" onClick={this.toggle} style={{ marginBottom: '1rem' }}>
+                  filtro</Button>
+                <Collapse isOpen={this.state.collapse}>
+                  <Card>
+                    <CardBody>
+                      <div className="form-row">
+                        <div className="input-group mb-3">
+                          <div className="input-group-prepend">
+                            <span
+                              className="input-group-text input-group-text-secondary"
+                              id="search-candidate"
+                            >
+                              <span className="icon-search" />
+                            </span>
+                          </div>
+                          <input
+                            type="text"
+                            className="form-control form-control-secondary"
+                            placeholder="Pesquisar candidato/a..."
+                            aria-label="Pesquisar candidato/a"
+                            aria-describedby="search-candidate"
+                            onChange={this.buscaNome}
+                            value={filtro.nome}
+                          />
+                        </div>
+                      </div>
+                      <div className="form-row">
+
+
+                        <div className="form-group col-6">
+
+                          <select
+                            className="form-control form-control-secondary barra-filtro-candidato"
+                            placeholder="Partidos"
+                            onChange={this.buscaPartido}
+                            value={filtro.partido}
+                          >
+                            {listaSelectPartidos}
+                          </select>
+                        </div>
+
+                        <div className="form-group col-6">
+                          <select
+                            className="form-control form-control-secondary barra-filtro-candidato"
+                            placeholder="Temas"
+                            onChange={this.filtraPorTema}
+                            value={filtro.tema}
+                          >
+                            {listaSelectTemas}
+                          </select>
+                        </div>
+                      </div>
+                      <div className="form-row">
+                        <div className="col-md-6">
+                          <div className="form-group form-check">
+                            <input
+                              id="reeleitos"
+                              type="checkbox"
+                              className="form-check-input"
+                              onChange={this.buscaReeleitos}
+                              checked={filtro.reeleicao === "1" ? true : false}
+                            />
+                            <label className="form-check-label" htmlFor="reeleitos">
+                              {listaSelectReeleicao}
+                            </label>
+                          </div>
+                        </div>
+                        <div className="col-md-6">
+                          <div className="form-group form-check">
+                            <input
+                              id="responderam"
+                              type="checkbox"
+                              className="form-check-input"
+                              onChange={this.buscaRespondeu}
+                              checked={filtro.respondeu === "1" ? true : false}
+                            />
+                            <label className="form-check-label" htmlFor="responderam">
+                              responderam o questionário
                   </label>
-                </div>
+                          </div>
+                        </div>
+                      </div>
+                    </CardBody>
+                  </Card>
+                </Collapse>
+
               </div>
-              <div className="col-md-6">
-                <div className="form-group form-check">
-                  <input
-                    id="responderam"
-                    type="checkbox"
-                    className="form-check-input"
-                    onChange={this.buscaRespondeu}
-                    checked={filtro.respondeu === "1" ? true : false}
-                  />
-                  <label className="form-check-label" htmlFor="responderam">
-                    responderam o questionário
-                  </label>
-                </div>
-              </div>
+
+
             </div>
 
             {filtro.partido !== "Partidos" ? mostraPartido : mostraEstado}
           </header>
 
           {isCarregando ||
-          isVotacoesCarregando ||
-          this.state.isPesquisando ||
-          isFiltrandoPorNome ? (
-            <div style={{ paddingTop: "30vh" }}>
-              <Spinner />
-            </div>
-          ) : (
-            <div>
-              <div className="candidatos">
-                <FlipMove>
-                  {candidatos.slice(paginacao.inicio, paginacao.final)}
-                </FlipMove>
+            isVotacoesCarregando ||
+            this.state.isPesquisando ||
+            isFiltrandoPorNome ? (
+              <div style={{ paddingTop: "30vh" }}>
+                <Spinner />
               </div>
-              {!isFiltrandoPorNome ? (
-                <div className="candidatos-pagination d-flex justify-content-center flex-wrap mb-3">
-                  {paginacao.inicio !== 0 ? btnFirst : null}
-                  {paginacao.inicio > 0 ? btnMenosCandidatos : null}
-                  {paginacao.final < paginacao.totalCandidatos
-                    ? btnMaisCandidatos
-                    : null}
+            ) : (
+              <div>
+                <div className="candidatos">
+                  <FlipMove>
+                    {candidatos.slice(paginacao.inicio, paginacao.final)}
+                  </FlipMove>
                 </div>
-              ) : null}
-            </div>
-          )}
+                {!isFiltrandoPorNome ? (
+                  <div className="candidatos-pagination d-flex justify-content-center flex-wrap mb-3">
+                    {paginacao.inicio !== 0 ? btnFirst : null}
+                    {paginacao.inicio > 0 ? btnMenosCandidatos : null}
+                    {paginacao.final < paginacao.totalCandidatos
+                      ? btnMaisCandidatos
+                      : null}
+                  </div>
+                ) : null}
+              </div>
+            )}
         </div>
-      </div>
+      </div >
     );
 
     const isMinimoVotosOuMostreTodos =
