@@ -521,34 +521,33 @@ class CandidatosContainer extends Component {
         <div className="container">
           <header className="panel-header">
             <div className="form-row">
-              <div className="col-6">
-                <div className="input-group mb-3">
-                  <div className="input-group-prepend">
-                    <span
-                      className="input-group-text input-group-text-secondary"
-                      id="search-candidate"
-                    >
-                      <span className="icon-search" />
-                    </span>
-                  </div>
-                  <input
-                    type="text"
-                    className="form-control form-control-secondary"
-                    placeholder="Pesquisar candidato/a..."
-                    aria-label="Pesquisar candidato/a"
-                    aria-describedby="search-candidate"
-                    onChange={this.buscaNome}
-                    value={filtro.nome}
-                  />
-                </div>
-              </div>
-              <div className="col-3">
-                <div>
-                  <Button color="primary" onClick={this.toggle} style={{ marginBottom: '1rem' }}>+</Button>
-                  <Collapse isOpen={this.state.collapse}>
-                    <Card>
-                      <CardBody>
-                        <div className="form-group">
+              <div >
+                <Button color="primary" onClick={this.toggle} style={{ marginBottom: '1rem' }}>+</Button>
+                <Collapse isOpen={this.state.collapse}>
+                  <Card>
+                    <CardBody>
+                      <div className="form-row">
+                        <div className="input-group mb-3 col-6">
+                          <div className="input-group-prepend">
+                            <span
+                              className="input-group-text input-group-text-secondary"
+                              id="search-candidate"
+                            >
+                              <span className="icon-search" />
+                            </span>
+                          </div>
+                          <input
+                            type="text"
+                            className="form-control form-control-secondary"
+                            placeholder="Pesquisar candidato/a..."
+                            aria-label="Pesquisar candidato/a"
+                            aria-describedby="search-candidate"
+                            onChange={this.buscaNome}
+                            value={filtro.nome}
+                          />
+                        </div>
+
+                        <div className="form-group col-3">
 
                           <select
                             className="form-control form-control-secondary barra-filtro-candidato"
@@ -560,7 +559,7 @@ class CandidatosContainer extends Component {
                           </select>
                         </div>
 
-                        <div className="form-group">
+                        <div className="form-group col-3">
                           <select
                             className="form-control form-control-secondary barra-filtro-candidato"
                             placeholder="Temas"
@@ -570,43 +569,44 @@ class CandidatosContainer extends Component {
                             {listaSelectTemas}
                           </select>
                         </div>
-                      </CardBody>
-                    </Card>
-                  </Collapse>
-
-                </div>
-              </div>
-              <div className="col-3">
-
-              </div>
-              <div className="col-md-6">
-                <div className="form-group form-check">
-                  <input
-                    id="reeleitos"
-                    type="checkbox"
-                    className="form-check-input"
-                    onChange={this.buscaReeleitos}
-                    checked={filtro.reeleicao === "1" ? true : false}
-                  />
-                  <label className="form-check-label" htmlFor="reeleitos">
-                    {listaSelectReeleicao}
+                      </div>
+                      <div className="form-row">
+                        <div className="col-md-6">
+                          <div className="form-group form-check">
+                            <input
+                              id="reeleitos"
+                              type="checkbox"
+                              className="form-check-input"
+                              onChange={this.buscaReeleitos}
+                              checked={filtro.reeleicao === "1" ? true : false}
+                            />
+                            <label className="form-check-label" htmlFor="reeleitos">
+                              {listaSelectReeleicao}
+                            </label>
+                          </div>
+                        </div>
+                        <div className="col-md-6">
+                          <div className="form-group form-check">
+                            <input
+                              id="responderam"
+                              type="checkbox"
+                              className="form-check-input"
+                              onChange={this.buscaRespondeu}
+                              checked={filtro.respondeu === "1" ? true : false}
+                            />
+                            <label className="form-check-label" htmlFor="responderam">
+                              responderam o questionário
                   </label>
-                </div>
+                          </div>
+                        </div>
+                      </div>
+                    </CardBody>
+                  </Card>
+                </Collapse>
+
               </div>
-              <div className="col-md-6">
-                <div className="form-group form-check">
-                  <input
-                    id="responderam"
-                    type="checkbox"
-                    className="form-check-input"
-                    onChange={this.buscaRespondeu}
-                    checked={filtro.respondeu === "1" ? true : false}
-                  />
-                  <label className="form-check-label" htmlFor="responderam">
-                    responderam o questionário
-                  </label>
-                </div>
-              </div>
+
+
             </div>
 
             {filtro.partido !== "Partidos" ? mostraPartido : mostraEstado}
