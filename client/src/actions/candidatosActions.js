@@ -38,13 +38,13 @@ import votacoes from "../data/votacoes.json";
 const comparaRespostas = (
   respostasCandidatos,
   respostasUsuarioVozAtiva,
-  respostasUsuarioQMR,
+  respostasUsuarioVotacoes,
   votacoesCandidatos,
   numRespostasUsuario
 ) => {
   let respostasIguais = 0;
-  const chaves = Object.keys(respostasUsuarioVozAtiva);
-  chaves.forEach(idPergunta => {
+  const idsVozAtiva = Object.keys(respostasUsuarioVozAtiva);
+  idsVozAtiva.forEach(idPergunta => {
     respostasIguais +=
       respostasCandidatos[idPergunta] !== undefined &&
       respostasCandidatos[idPergunta] !== null &&
@@ -55,14 +55,14 @@ const comparaRespostas = (
         : 0;
   });
 
-  const chavesQMR = Object.keys(respostasUsuarioQMR);
-  chavesQMR.forEach(idPergunta => {
+  const idsVotacoes = Object.keys(respostasUsuarioVotacoes);
+  idsVotacoes.forEach(idPergunta => {
     respostasIguais +=
       votacoesCandidatos[idPergunta] !== undefined &&
       votacoesCandidatos[idPergunta] !== null &&
-      respostasUsuarioQMR[idPergunta] !== 0 &&
-      respostasUsuarioQMR[idPergunta] !== -2 &&
-      votacoesCandidatos[idPergunta] === respostasUsuarioQMR[idPergunta]
+      respostasUsuarioVotacoes[idPergunta] !== 0 &&
+      respostasUsuarioVotacoes[idPergunta] !== -2 &&
+      votacoesCandidatos[idPergunta] === respostasUsuarioVotacoes[idPergunta]
         ? 1
         : 0;
   });
@@ -115,28 +115,28 @@ const verificaQuantidadeVotos = (
   idsVotacoes,
   respostasUsuario
 ) => {
-  let quantVotosVozAtiva, quantVotosQMR, numRespostasUsuario;
+  let quantPerguntasRespondidas, quantVotacoesRespondidas, numRespostasUsuario;
 
-  quantVotosVozAtiva = idsVozAtiva.filter(
+  quantPerguntasRespondidas = idsVozAtiva.filter(
     id =>
       respostasUsuario.vozAtiva[id] !== 0 &&
       respostasUsuario.vozAtiva[id] !== -2
   ).length;
 
-  quantVotosQMR = idsVotacoes.filter(
+  quantVotacoesRespondidas = idsVotacoes.filter(
     id =>
       respostasUsuario.votacoes[id] !== 0 &&
       respostasUsuario.votacoes[id] !== -2
   ).length;
 
   numRespostasUsuario =
-    quantVotosVozAtiva + quantVotosQMR === 0
+    quantPerguntasRespondidas + quantVotacoesRespondidas === 0
       ? 1
-      : quantVotosVozAtiva + quantVotosQMR;
+      : quantPerguntasRespondidas + quantVotacoesRespondidas;
 
   return {
-    quantVotosVozAtiva,
-    quantVotosQMR,
+    quantPerguntasRespondidas,
+    quantVotacoesRespondidas,
     numRespostasUsuario
   };
 };
@@ -156,8 +156,8 @@ export const calculaScore = () => (dispatch, getState) => {
   );
 
   const {
-    quantVotosVozAtiva,
-    quantVotosQMR,
+    quantPerguntasRespondidas,
+    quantVotacoesRespondidas,
     numRespostasUsuario
   } = verificaQuantidadeVotos(idsVozAtiva, idsVotacoes, respostasUsuario);
 
@@ -185,8 +185,10 @@ export const calculaScore = () => (dispatch, getState) => {
       numRespostasConsideradas = numRespostasUsuario;
     else if (naoRespondeuCamara)
       numRespostasConsideradas =
-        quantVotosVozAtiva === 0 ? 1 : quantVotosVozAtiva;
-    else numRespostasConsideradas = quantVotosQMR === 0 ? 1 : quantVotosQMR;
+        quantPerguntasRespondidas === 0 ? 1 : quantPerguntasRespondidas;
+    else
+      numRespostasConsideradas =
+        quantVotacoesRespondidas === 0 ? 1 : quantVotacoesRespondidas;
 
     let score = comparaRespostas(
       respostasFiltradas,
@@ -260,7 +262,7 @@ export const calculaScorePorTema = (
         ).length
       : 0;
 
-    const respostasValidasQMR =
+    const respostasValidasVotacoes =
       votacoesPorTema[tema] && !isEmpty(dadosCandidato.votacoes)
         ? votacoesPorTema[tema].filter(
             id =>
@@ -270,9 +272,9 @@ export const calculaScorePorTema = (
         : 0;
 
     const numRespostasUsuario =
-      respostasValidasVA + respostasValidasQMR === 0
+      respostasValidasVA + respostasValidasVotacoes === 0
         ? 1
-        : respostasValidasVA + respostasValidasQMR;
+        : respostasValidasVA + respostasValidasVotacoes;
 
     let respostasCandidatosTema = {};
     let votacoesCandidatosTema = {};
@@ -312,7 +314,7 @@ export const calculaScorePorTema = (
         respostasValidasVA === 0 ? 1 : respostasValidasVA;
     else
       numRespostasConsideradas =
-        respostasValidasQMR === 0 ? 1 : respostasValidasQMR;
+        respostasValidasVotacoes === 0 ? 1 : respostasValidasVotacoes;
 
     let score = comparaRespostas(
       respostasCandidatosTema,
@@ -565,16 +567,18 @@ export const getDadosCandidato = (
       respostasUsuario.vozAtiva[id] !== -2
   ).length;
 
-  const quantVotosQMR = Object.keys(respostasUsuario.votacoes).filter(
+  const quantVotacoesRespondidas = Object.keys(
+    respostasUsuario.votacoes
+  ).filter(
     id =>
       respostasUsuario.votacoes[id] !== 0 &&
       respostasUsuario.votacoes[id] !== -2
   ).length;
 
   const numRespostasUsuario =
-    quantVotosVozAtiva + quantVotosQMR === 0
+    quantVotosVozAtiva + quantVotacoesRespondidas === 0
       ? 1
-      : quantVotosVozAtiva + quantVotosQMR;
+      : quantVotosVozAtiva + quantVotacoesRespondidas;
 
   axios
     .get("/api/respostas/candidatos/" + idCandidato)
@@ -604,7 +608,9 @@ export const getDadosCandidato = (
         else if (naoRespondeuCamara)
           numRespostasConsideradas =
             quantVotosVozAtiva === 0 ? 1 : quantVotosVozAtiva;
-        else numRespostasConsideradas = quantVotosQMR === 0 ? 1 : quantVotosQMR;
+        else
+          numRespostasConsideradas =
+            quantVotacoesRespondidas === 0 ? 1 : quantVotacoesRespondidas;
 
         const score = comparaRespostas(
           dadosCandidato.respostas,
