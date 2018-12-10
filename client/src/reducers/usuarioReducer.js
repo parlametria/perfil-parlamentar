@@ -11,11 +11,11 @@ const inicializaRespostasUsuario = () => {
   let respostasVAVazio = [].fill.call({ length: TAM_PERGUNTAS }, 0);
   delete respostasVAVazio.length;
 
-  let respostasQMRVazio = {};
-  Object.keys(votacoes).forEach(id => (respostasQMRVazio[id] = 0));
+  let respostasVotacoesVazio = {};
+  Object.keys(votacoes).forEach(id => (respostasVotacoesVazio[id] = 0));
 
   respostasUsuario["vozAtiva"] = respostasVAVazio;
-  respostasUsuario["qmr"] = respostasQMRVazio;
+  respostasUsuario["votacoes"] = respostasVotacoesVazio;
 
   return respostasUsuario;
 };
@@ -34,7 +34,7 @@ const initialState = {
 
 const contaTodosVotos = respostasUsuario => {
   return (
-    contaVotos(respostasUsuario.vozAtiva) + contaVotos(respostasUsuario.qmr)
+    contaVotos(respostasUsuario.vozAtiva) + contaVotos(respostasUsuario.votacoes)
   );
 };
 
@@ -56,7 +56,7 @@ export default function (state = initialState, action) {
           TAM_PERGUNTAS + TAM_VOTACOES,
         respondeuVozAtiva:
           contaVotos(action.respostasUsuario.vozAtiva) === TAM_PERGUNTAS,
-        respondeuVotacoes: contaVotos(action.respostasUsuario.qmr) === TAM_VOTACOES
+        respondeuVotacoes: contaVotos(action.respostasUsuario.votacoes) === TAM_VOTACOES
       };
     case SET_SCORE_USUARIO_LIMPO:
       return {
