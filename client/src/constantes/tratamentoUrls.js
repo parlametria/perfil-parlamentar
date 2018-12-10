@@ -20,7 +20,7 @@ export const getDict = arrayUrl => {
 
   let respostasUsuario = {};
   respostasUsuario.vozAtiva = {};
-  respostasUsuario.qmr = {};
+  respostasUsuario.votacoes = {};
 
   let indice = 0;
   for (let index = 0; index < TAM_PERGUNTAS; index++) {
@@ -36,7 +36,7 @@ export const getDict = arrayUrl => {
   Object.keys(votacoes).forEach(idVotacao => {
     const id = votacoes[idVotacao].id;
 
-    respostasUsuario.qmr[idVotacao] = arrayUrl[id + TAM_PERGUNTAS];
+    respostasUsuario.votacoes[idVotacao] = arrayUrl[id + TAM_PERGUNTAS];
   });
 
   return respostasUsuario;
@@ -45,9 +45,9 @@ export const getDict = arrayUrl => {
 export const criaURL = respostasUsuario => {
   let urlVotos = "";
 
-  const { vozAtiva, qmr } = respostasUsuario;
+  const { vozAtiva, votacoes } = respostasUsuario;
   const idsVozAtiva = Object.keys(vozAtiva);
-  const idsQMR = Object.keys(qmr);
+  const idsQMR = Object.keys(votacoes);
 
   let arrayVotos = Array(idsVozAtiva.length + idsQMR.length).fill(0);
 
@@ -57,7 +57,7 @@ export const criaURL = respostasUsuario => {
 
   idsQMR.forEach(idVotacao => {
     arrayVotos[Number(votacoes[idVotacao].id) + idsVozAtiva.length] =
-      qmr[idVotacao];
+      votacoes[idVotacao];
   });
 
   arrayVotos.forEach(voto => {

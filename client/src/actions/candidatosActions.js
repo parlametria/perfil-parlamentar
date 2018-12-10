@@ -124,7 +124,9 @@ const verificaQuantidadeVotos = (
   ).length;
 
   quantVotosQMR = idsVotacoes.filter(
-    id => respostasUsuario.qmr[id] !== 0 && respostasUsuario.qmr[id] !== -2
+    id =>
+      respostasUsuario.votacoes[id] !== 0 &&
+      respostasUsuario.votacoes[id] !== -2
   ).length;
 
   numRespostasUsuario =
@@ -189,7 +191,7 @@ export const calculaScore = () => (dispatch, getState) => {
     let score = comparaRespostas(
       respostasFiltradas,
       respostasUsuario.vozAtiva,
-      respostasUsuario.qmr,
+      respostasUsuario.votacoes,
       votacoesFiltradas,
       numRespostasConsideradas
     );
@@ -262,7 +264,8 @@ export const calculaScorePorTema = (
       votacoesPorTema[tema] && !isEmpty(dadosCandidato.votacoes)
         ? votacoesPorTema[tema].filter(
             id =>
-              respostasUsuario.qmr[id] !== 0 && respostasUsuario.qmr[id] !== -2
+              respostasUsuario.votacoes[id] !== 0 &&
+              respostasUsuario.votacoes[id] !== -2
           ).length
         : 0;
 
@@ -314,7 +317,7 @@ export const calculaScorePorTema = (
     let score = comparaRespostas(
       respostasCandidatosTema,
       respostasUsuario.vozAtiva,
-      respostasUsuario.qmr,
+      respostasUsuario.votacoes,
       votacoesCandidatosTema,
       numRespostasConsideradas
     );
@@ -368,7 +371,7 @@ export const calculaScorePorTema = (
   //     score = comparaRespostas(
   //       respostasCandidatosTema,
   //       respostasUsuario.vozAtiva,
-  //       respostasUsuario.qmr,
+  //       respostasUsuario.votacoes,
   //       votacoesCandidatosTema,
   //       numRespostasUsuario
   //     );
@@ -562,8 +565,10 @@ export const getDadosCandidato = (
       respostasUsuario.vozAtiva[id] !== -2
   ).length;
 
-  const quantVotosQMR = Object.keys(respostasUsuario.qmr).filter(
-    id => respostasUsuario.qmr[id] !== 0 && respostasUsuario.qmr[id] !== -2
+  const quantVotosQMR = Object.keys(respostasUsuario.votacoes).filter(
+    id =>
+      respostasUsuario.votacoes[id] !== 0 &&
+      respostasUsuario.votacoes[id] !== -2
   ).length;
 
   const numRespostasUsuario =
@@ -604,7 +609,7 @@ export const getDadosCandidato = (
         const score = comparaRespostas(
           dadosCandidato.respostas,
           respostasUsuario.vozAtiva,
-          respostasUsuario.qmr,
+          respostasUsuario.votacoes,
           votacoes,
           numRespostasConsideradas
         );

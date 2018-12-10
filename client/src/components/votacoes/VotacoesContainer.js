@@ -41,7 +41,7 @@ class VotacoesContainer extends Component {
   registraResposta(novaResposta) {
     const { respostasUsuario } = this.props.usuario;
 
-    respostasUsuario.qmr[novaResposta.id] = novaResposta.resposta;
+    respostasUsuario.votacoes[novaResposta.id] = novaResposta.resposta;
     this.props.salvaRespostasUsuario(respostasUsuario);
 
     this.props.calculaScore();
@@ -84,7 +84,7 @@ class VotacoesContainer extends Component {
           titulo={dadosVotacao.titulo}
           descricao={dadosVotacao.descricao}
           tema={dadosVotacao.tema}
-          voto={respostasUsuario.qmr[dadosVotacao.id_votacao]}
+          voto={respostasUsuario.votacoes[dadosVotacao.id_votacao]}
           onVota={novaResposta => this.registraResposta(novaResposta)}
         />
       );
