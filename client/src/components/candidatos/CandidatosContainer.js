@@ -522,12 +522,13 @@ class CandidatosContainer extends Component {
           <header className="panel-header">
             <div className="form-row">
               <div >
-                <Button color="primary" onClick={this.toggle} style={{ marginBottom: '1rem' }}>+</Button>
+                <Button color="primary" onClick={this.toggle} style={{ marginBottom: '1rem' }}>
+                  filtro</Button>
                 <Collapse isOpen={this.state.collapse}>
                   <Card>
                     <CardBody>
                       <div className="form-row">
-                        <div className="input-group mb-3 col-6">
+                        <div className="input-group mb-3">
                           <div className="input-group-prepend">
                             <span
                               className="input-group-text input-group-text-secondary"
@@ -546,8 +547,11 @@ class CandidatosContainer extends Component {
                             value={filtro.nome}
                           />
                         </div>
+                      </div>
+                      <div className="form-row">
 
-                        <div className="form-group col-3">
+
+                        <div className="form-group col-6">
 
                           <select
                             className="form-control form-control-secondary barra-filtro-candidato"
@@ -559,7 +563,7 @@ class CandidatosContainer extends Component {
                           </select>
                         </div>
 
-                        <div className="form-group col-3">
+                        <div className="form-group col-6">
                           <select
                             className="form-control form-control-secondary barra-filtro-candidato"
                             placeholder="Temas"
