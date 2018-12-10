@@ -3,7 +3,7 @@ import Candidato from "./Candidato";
 
 import { connect } from "react-redux";
 
-import { Collapse, Button, CardBody, Card } from 'reactstrap';
+import { Collapse, Button, CardBody, Card } from "reactstrap";
 import FlipMove from "react-flip-move";
 
 import isEmpty from "../../validation/is-empty";
@@ -265,9 +265,9 @@ class CandidatosContainer extends Component {
 
     const candidatosMapeaveis =
       filtro.nome !== "" ||
-        filtro.partido !== "Partidos" ||
-        filtro.reeleicao !== "-1" ||
-        filtro.respondeu !== "-1"
+      filtro.partido !== "Partidos" ||
+      filtro.reeleicao !== "-1" ||
+      filtro.respondeu !== "-1"
         ? candidatosFiltrados
         : candidatosRanqueados;
 
@@ -306,8 +306,8 @@ class CandidatosContainer extends Component {
             foto={
               candidato.tem_foto
                 ? "https://s3-sa-east-1.amazonaws.com/fotoscandidatos2018/fotos_tratadas/img_" +
-                candidato.cpf +
-                ".jpg"
+                  candidato.cpf +
+                  ".jpg"
                 : "https://s3-sa-east-1.amazonaws.com/fotoscandidatos2018/fotos_tratadas/nophoto.png"
             }
             respostasUsuario={respostasUsuario}
@@ -521,9 +521,15 @@ class CandidatosContainer extends Component {
         <div className="container">
           <header className="panel-header">
             <div className="form-row">
-              <div >
-                <Button color="primary" onClick={this.toggle} style={{ marginBottom: '1rem' }}>
-                  filtro</Button>
+              <div className="col-1" style={{ marginRight: "1.5em" }}>
+                <Button color="primary" onClick={this.toggle}>
+                  <span className="fas fa-filter" />
+                </Button>
+              </div>
+              <div className="col-10">
+                {filtro.partido !== "Partidos" ? mostraPartido : mostraEstado}
+              </div>
+              <div>
                 <Collapse isOpen={this.state.collapse}>
                   <Card>
                     <CardBody>
@@ -549,10 +555,7 @@ class CandidatosContainer extends Component {
                         </div>
                       </div>
                       <div className="form-row">
-
-
                         <div className="form-group col-6">
-
                           <select
                             className="form-control form-control-secondary barra-filtro-candidato"
                             placeholder="Partidos"
@@ -584,7 +587,10 @@ class CandidatosContainer extends Component {
                               onChange={this.buscaReeleitos}
                               checked={filtro.reeleicao === "1" ? true : false}
                             />
-                            <label className="form-check-label" htmlFor="reeleitos">
+                            <label
+                              className="form-check-label"
+                              htmlFor="reeleitos"
+                            >
                               {listaSelectReeleicao}
                             </label>
                           </div>
@@ -598,51 +604,49 @@ class CandidatosContainer extends Component {
                               onChange={this.buscaRespondeu}
                               checked={filtro.respondeu === "1" ? true : false}
                             />
-                            <label className="form-check-label" htmlFor="responderam">
+                            <label
+                              className="form-check-label"
+                              htmlFor="responderam"
+                            >
                               responderam o questionário
-                  </label>
+                            </label>
                           </div>
                         </div>
                       </div>
                     </CardBody>
                   </Card>
                 </Collapse>
-
               </div>
-
-
             </div>
-
-            {filtro.partido !== "Partidos" ? mostraPartido : mostraEstado}
           </header>
 
           {isCarregando ||
-            isVotacoesCarregando ||
-            this.state.isPesquisando ||
-            isFiltrandoPorNome ? (
-              <div style={{ paddingTop: "30vh" }}>
-                <Spinner />
+          isVotacoesCarregando ||
+          this.state.isPesquisando ||
+          isFiltrandoPorNome ? (
+            <div style={{ paddingTop: "30vh" }}>
+              <Spinner />
+            </div>
+          ) : (
+            <div>
+              <div className="candidatos">
+                <FlipMove>
+                  {candidatos.slice(paginacao.inicio, paginacao.final)}
+                </FlipMove>
               </div>
-            ) : (
-              <div>
-                <div className="candidatos">
-                  <FlipMove>
-                    {candidatos.slice(paginacao.inicio, paginacao.final)}
-                  </FlipMove>
+              {!isFiltrandoPorNome ? (
+                <div className="candidatos-pagination d-flex justify-content-center flex-wrap mb-3">
+                  {paginacao.inicio !== 0 ? btnFirst : null}
+                  {paginacao.inicio > 0 ? btnMenosCandidatos : null}
+                  {paginacao.final < paginacao.totalCandidatos
+                    ? btnMaisCandidatos
+                    : null}
                 </div>
-                {!isFiltrandoPorNome ? (
-                  <div className="candidatos-pagination d-flex justify-content-center flex-wrap mb-3">
-                    {paginacao.inicio !== 0 ? btnFirst : null}
-                    {paginacao.inicio > 0 ? btnMenosCandidatos : null}
-                    {paginacao.final < paginacao.totalCandidatos
-                      ? btnMaisCandidatos
-                      : null}
-                  </div>
-                ) : null}
-              </div>
-            )}
+              ) : null}
+            </div>
+          )}
         </div>
-      </div >
+      </div>
     );
 
     const isMinimoVotosOuMostreTodos =
