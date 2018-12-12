@@ -97,8 +97,12 @@ class Home extends Component {
   componentDidMount() {
     this.props.getDadosPerguntas();
     this.props.getDadosVotacoes();
+    this.props.setActiveTab("eleitos");
+    //this.props.getDadosCandidatos();
 
-    if (!isMobile) this.props.vamosComecar();
+    this.props.vamosComecar();
+    this.mostrarTodos();
+
     const { votos, estado } = this.props.match.params;
 
     const parsed = querystring.parse(this.props.location.search);
