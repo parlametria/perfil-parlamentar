@@ -104,7 +104,7 @@ const filtraRespostasEVotacoesPorID = (
   });
 
   idsVotacoes.forEach(id => {
-    votacoesFiltradas[id] = votacoes[id];
+    votacoesFiltradas[id] = isEmpty(votacoes[id]) ? 0 : votacoes[id];
   });
 
   return { respostasFiltradas, votacoesFiltradas };
@@ -168,7 +168,7 @@ export const calculaScore = () => (dispatch, getState) => {
         id => dadosCandidatos[elem].respostas[id] !== 0
       ).length === 0;
 
-    const naoRespondeuCamara = votacoesCandidatos[elem] === undefined;
+    const naoRespondeuCamara = isEmpty(votacoesCandidatos[elem]);
 
     const {
       respostasFiltradas,
@@ -197,6 +197,7 @@ export const calculaScore = () => (dispatch, getState) => {
       votacoesFiltradas,
       numRespostasConsideradas
     );
+
     scoreCandidatos[elem] = score;
   });
 
@@ -331,62 +332,6 @@ export const calculaScorePorTema = (
       scoreTema
     });
   });
-
-  // Object.keys(temas).forEach(tema => {
-  //   let score = 0;
-  //   let respostasCandidatosTema = {};
-  //   let votacoesCandidatosTema = {};
-  //   perguntas.forEach(pergunta => {
-  //     if (pergunta.tema === tema) {
-  //       respostasCandidatosTema[pergunta.id] =
-  //         dadosCandidato.respostas[pergunta.id];
-  //     }
-  //   });
-
-  //   if (votacoesCandidatos[dadosCandidato.cpf]) {
-  //     // Pegar as informações de votações do reducer de votações e não pegar diretamente do json
-  //     Object.keys(votacoes).forEach(keyVotacao => {
-  //       const votacao = votacoes[keyVotacao];
-  //       if (votacao.tema === tema) {
-  //         votacoesCandidatosTema[votacao.id_votacao] =
-  //           votacoesCandidatos[dadosCandidato.cpf][votacao.id_votacao];
-  //       }
-  //     });
-  //   }
-
-  //   const primeiroID = temas[tema][0].id;
-  //   const ultimoID = temas[tema][temas[tema].length - 1].id;
-
-  //   console.log(temas[tema]);
-
-  //   temas[tema].forEach(pergunta => {
-  //     const quantValidos = arrayRespostasUsuario
-  //       .slice(primeiroID, ultimoID + 1)
-  //       .filter(value => value !== 0 && value !== -2).length;
-  //     const numRespostasUsuario = quantValidos === 0 ? 1 : quantValidos;
-
-  //     console.log(numRespostasUsuario);
-  //     console.log(arrayRespostasUsuario);
-  //     console.log(primeiroID);
-  //     console.log(ultimoID);
-
-  //     score = comparaRespostas(
-  //       respostasCandidatosTema,
-  //       respostasUsuario.vozAtiva,
-  //       respostasUsuario.votacoes,
-  //       votacoesCandidatosTema,
-  //       numRespostasUsuario
-  //     );
-  //   });
-  //   scoreTema[tema] = score;
-  // });
-
-  // console.log(scoreTema);
-
-  // dispatch({
-  //   type: SET_SCORE_CANDIDATO_POR_TEMA,
-  //   scoreTema
-  // });
 };
 
 export const buscaPorCPF = cpf => (dispatch, getState) => {
@@ -831,7 +776,8 @@ export const setActiveTab = activeTab => (dispatch, getState) => {
     partido: "Partidos",
     estado: filtro.estado,
     reeleicao: "-1",
-    respondeu: "-1"
+    respondeu: "-1",
+    tema: "Temas"
   };
 
   dispatch(setFiltroCandidatos(filtroLimpo));
