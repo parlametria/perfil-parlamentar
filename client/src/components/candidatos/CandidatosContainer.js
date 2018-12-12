@@ -263,11 +263,13 @@ class CandidatosContainer extends Component {
 
     const { respostasUsuario, quantidadeVotos } = this.props.usuario;
 
+    const { abaAtiva } = this.props.questionario;
+
     const candidatosMapeaveis =
       filtro.nome !== "" ||
-      filtro.partido !== "Partidos" ||
-      filtro.reeleicao !== "-1" ||
-      filtro.respondeu !== "-1"
+        filtro.partido !== "Partidos" ||
+        filtro.reeleicao !== "-1" ||
+        filtro.respondeu !== "-1"
         ? candidatosFiltrados
         : candidatosRanqueados;
 
@@ -306,8 +308,8 @@ class CandidatosContainer extends Component {
             foto={
               candidato.tem_foto
                 ? "https://s3-sa-east-1.amazonaws.com/fotoscandidatos2018/fotos_tratadas/img_" +
-                  candidato.cpf +
-                  ".jpg"
+                candidato.cpf +
+                ".jpg"
                 : "https://s3-sa-east-1.amazonaws.com/fotoscandidatos2018/fotos_tratadas/nophoto.png"
             }
             respostasUsuario={respostasUsuario}
@@ -406,6 +408,7 @@ class CandidatosContainer extends Component {
           </h5>
         )}
         {activeTab === "eleitos" &&
+          abaAtiva === "Voz Ativa" &&
           filtro.estado !== "TODOS" &&
           filtro.reeleicao !== "1" && (
             <h5>
@@ -413,6 +416,17 @@ class CandidatosContainer extends Component {
               <strong className="strong">{eleitosResponderam}</strong> dos{" "}
               <strong className="strong">{totalEleitosEstado}</strong>{" "}
               candidatos eleitos responderam ao questionário.
+            </h5>
+          )}
+        {activeTab === "eleitos" &&
+          abaAtiva === "Votacoes" &&
+          filtro.estado !== "TODOS" &&
+          filtro.reeleicao !== "1" && (
+            <h5>
+              Nesse Estado,{" "}
+              <strong className="strong">{totalCandAtuacao}</strong> dos{" "}
+              <strong className="strong">{totalEleitosEstado}</strong>{" "}
+              candidatos eleitos tem atuação na câmara.
             </h5>
           )}
         {activeTab === "eleitos" &&
@@ -621,30 +635,30 @@ class CandidatosContainer extends Component {
           </header>
 
           {isCarregando ||
-          isVotacoesCarregando ||
-          this.state.isPesquisando ||
-          isFiltrandoPorNome ? (
-            <div style={{ paddingTop: "30vh" }}>
-              <Spinner />
-            </div>
-          ) : (
-            <div>
-              <div className="candidatos">
-                <FlipMove>
-                  {candidatos.slice(paginacao.inicio, paginacao.final)}
-                </FlipMove>
+            isVotacoesCarregando ||
+            this.state.isPesquisando ||
+            isFiltrandoPorNome ? (
+              <div style={{ paddingTop: "30vh" }}>
+                <Spinner />
               </div>
-              {!isFiltrandoPorNome ? (
-                <div className="candidatos-pagination d-flex justify-content-center flex-wrap mb-3">
-                  {paginacao.inicio !== 0 ? btnFirst : null}
-                  {paginacao.inicio > 0 ? btnMenosCandidatos : null}
-                  {paginacao.final < paginacao.totalCandidatos
-                    ? btnMaisCandidatos
-                    : null}
+            ) : (
+              <div>
+                <div className="candidatos">
+                  <FlipMove>
+                    {candidatos.slice(paginacao.inicio, paginacao.final)}
+                  </FlipMove>
                 </div>
-              ) : null}
-            </div>
-          )}
+                {!isFiltrandoPorNome ? (
+                  <div className="candidatos-pagination d-flex justify-content-center flex-wrap mb-3">
+                    {paginacao.inicio !== 0 ? btnFirst : null}
+                    {paginacao.inicio > 0 ? btnMenosCandidatos : null}
+                    {paginacao.final < paginacao.totalCandidatos
+                      ? btnMaisCandidatos
+                      : null}
+                  </div>
+                ) : null}
+              </div>
+            )}
         </div>
       </div>
     );
@@ -707,7 +721,8 @@ CandidatosContainer.propTypes = {
 const mapStateToProps = state => ({
   candidatos: state.candidatosReducer,
   usuario: state.usuarioReducer,
-  votacoes: state.votacoesReducer
+  votacoes: state.votacoesReducer,
+  questionario: state.questionarioReducer
 });
 
 export default connect(
