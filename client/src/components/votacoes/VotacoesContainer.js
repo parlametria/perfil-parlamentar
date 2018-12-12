@@ -68,13 +68,9 @@ class VotacoesContainer extends Component {
     let exibeVotacao;
 
     if (!isEmpty(dadosVotacoes)) {
-      console.log(indexPergunta);
-
       const dadosVotacao = dadosVotacoes[indexPergunta];
 
       const { respostasUsuario } = this.props.usuario;
-
-      console.log(dadosVotacao);
 
       votacao = (
         <Votacao

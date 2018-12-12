@@ -9,7 +9,7 @@ import "./candidato.css";
 class Candidato extends Component {
   render() {
     const badgeNaoRespondeu = (
-      <span className="badge badge-secondary">Não respondeu</span>
+      <span className="badge badge-secondary">não respondeu</span>
     );
 
     const verAtuacao = (
