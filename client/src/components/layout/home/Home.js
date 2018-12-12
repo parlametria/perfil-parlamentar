@@ -48,14 +48,10 @@ import FlipMove from "react-flip-move";
 // CSS imports
 import "./home.css";
 
-// Import função de estado
-import { estados } from "../../../constantes/filtrosSeletoresCandidatos";
-
 class Home extends Component {
   constructor(props) {
     super(props);
 
-    this.selecionaEstado = this.selecionaEstado.bind(this);
     this.vamosComecar = this.vamosComecar.bind(this);
     this.mostrarTodos = this.mostrarTodos.bind(this);
     this.salvaRespostasCache = this.salvaRespostasCache.bind(this);
@@ -64,29 +60,6 @@ class Home extends Component {
   mostrarTodos() {
     this.props.verTodosEleitos();
     this.props.mostrarTodosCandidatos();
-  }
-
-  selecionaEstado(e) {
-    e.preventDefault();
-
-    const novoFiltroEstado = {
-      nome: "",
-      partido: "Partidos",
-      estado: e.target.value,
-      reeleicao: "-1",
-      respondeu: "-1",
-      tema: "Temas"
-    };
-
-    //if(!isMobile) this.props.verTodosEleitos();
-    // if (isMobile) this.props.escondePerguntas();
-
-    if (novoFiltroEstado.estado === "TODOS") {
-      this.props.setActiveTab("eleitos");
-    }
-
-    this.props.setFiltroCandidatos(novoFiltroEstado);
-    this.props.getDadosCandidatos();
   }
 
   vamosComecar(e) {
@@ -211,33 +184,6 @@ class Home extends Component {
               Descubra quais deputados/as e candidatos/as são{" "}
               <strong className="strong">alinhados</strong> com você.
             </h2>
-            <div className="d-flex justify-content-center">
-              <form>
-                <div className="form-group">
-                  {isMobile ? (
-                    <ScrollIntoViewOnChange selector="#candidatos">
-                      <select
-                        className="form-control"
-                        onChange={this.selecionaEstado}
-                        value={filtro.estado}
-                      >
-                        <option defaultValue="--">Selecione um Estado</option>
-                        {estados()}
-                      </select>
-                    </ScrollIntoViewOnChange>
-                  ) : (
-                    <select
-                      className="form-control"
-                      onChange={this.selecionaEstado}
-                      value={filtro.estado}
-                    >
-                      <option defaultValue="--">Selecione um Estado</option>
-                      {estados()}
-                    </select>
-                  )}
-                </div>
-              </form>
-            </div>
           </div>
         </section>
 
