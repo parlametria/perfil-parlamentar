@@ -1,7 +1,8 @@
 const passport = require("passport");
 const FacebookTokenStrategy = require("passport-facebook-token");
 const GoogleTokenStrategy = require("passport-google-token").Strategy;
-const Usuario = require("../models/Usuario");
+const models = require("../models/index");
+const Usuario = models.usuario;
 
 const keys = require("./keys");
 
