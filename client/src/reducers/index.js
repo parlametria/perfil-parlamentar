@@ -5,7 +5,7 @@ import candidatosReducer from "./candidatosReducer";
 import perguntasReducer from "./perguntasReducer";
 import votacoesReducer from "./votacoesReducer";
 import questionarioReducer from "./questionarioReducer";
-
+import homeReducer from "./homeReducer";
 
 export default combineReducers({
   auth: authReducer,
@@ -13,5 +13,6 @@ export default combineReducers({
   candidatosReducer,
   perguntasReducer,
   votacoesReducer,
-  questionarioReducer
+  questionarioReducer,
+  homeReducer
 });

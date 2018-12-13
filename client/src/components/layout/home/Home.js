@@ -73,8 +73,10 @@ class Home extends Component {
     this.props.setActiveTab("eleitos");
     //this.props.getDadosCandidatos();
 
-    this.props.vamosComecar();
-    this.mostrarTodos();
+    if (!isMobile) {
+      this.props.vamosComecar();
+      //this.mostrarTodos();
+    }
 
     const { votos, estado } = this.props.match.params;
 
@@ -186,7 +188,6 @@ class Home extends Component {
             </h2>
           </div>
         </section>
-
         <div className="grid-wrapper" id="candidatos">
           <div className="grid-main">
             <section className="grid-panel panel-master">
@@ -200,13 +201,14 @@ class Home extends Component {
                           className="btn btn-secondary"
                           onClick={this.vamosComecar}
                         >
-                          Votar
+                          Responder
                         </button>
                       </ScrollIntoView>
                       <div id="scroll" />
                     </div>
                   )}
-                  {filtro.estado !== "" &&
+                  {!isMobile &&
+                    filtro.estado !== "" &&
                     !isVerTodosEleitos &&
                     quantidadeVotos < 1 && (
                       <div>
