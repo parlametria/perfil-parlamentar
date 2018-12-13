@@ -39,7 +39,7 @@ import {
   DEBOUNCE_TIME
 } from "../../constantes/constantesCandidatos";
 
-import { opcoesFiltroReeleicao } from "../../constantes/filtrosSeletoresCandidatos";
+import { opcoesFiltroReeleicao, opcoesFiltroTemas } from "../../constantes/filtrosSeletoresCandidatos";
 
 import classnames from "classnames";
 
@@ -333,33 +333,14 @@ class CandidatosContainer extends Component {
       </option>
     ));
 
-    const listaSelect = [{ tema: "Temas", titulo: "Considerando todos os temas" },
-    { tema: "Meio Ambiente", titulo: "Apenas meio ambiente" },
-    { tema: "Direitos Humanos", titulo: "Apenas direitos humanos" },
-    { tema: "Integridade e Transparência", titulo: "Apenas integridade e transparência" },
-    { tema: "Nova Economia", titulo: "Apenas nova economida" },
-    { tema: "Transversal", titulo: "Apenas transversal" }]
     const listaSelectTemas = (
-      listaSelect.map(tema => (
+      opcoesFiltroTemas().map(tema => (
         < option key={tema.tema} value={tema.tema} >
           {tema.titulo}
         </option >
       ))
     );
 
-    // const listaSelectTemas = [
-    //   "Temas",
-    //   "Meio Ambiente",
-    //   "Direitos Humanos",
-    //   "Integridade e Transparência",
-    //   "Nova Economia",
-    //   "Transversal"
-    // ].map(tema => (
-    //   < option key={tema} value={tema} >
-    //     {tema}
-    //     {console.log(tema)}
-    //   </option >
-    // ));
 
     const listaSelectReeleicao = opcoesFiltroReeleicao().map(opcao => (
       <option key={opcao.label} value={opcao.value}>
