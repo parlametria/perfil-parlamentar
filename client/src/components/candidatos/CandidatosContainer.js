@@ -333,18 +333,33 @@ class CandidatosContainer extends Component {
       </option>
     ));
 
-    const listaSelectTemas = [
-      "Temas",
-      "Meio Ambiente",
-      "Direitos Humanos",
-      "Integridade e Transparência",
-      "Nova Economia",
-      "Transversal"
-    ].map(tema => (
-      <option key={tema} value={tema}>
-        {tema}
-      </option>
-    ));
+    const listaSelect = [{ tema: "Temas", titulo: "Considerando todos os temas" },
+    { tema: "Meio Ambiente", titulo: "Apenas meio ambiente" },
+    { tema: "Direitos Humanos", titulo: "Apenas direitos humanos" },
+    { tema: "Integridade e Transparência", titulo: "Apenas integridade e transparência" },
+    { tema: "Nova Economia", titulo: "Apenas nova economida" },
+    { tema: "Transversal", titulo: "Apenas transversal" }]
+    const listaSelectTemas = (
+      listaSelect.map(tema => (
+        < option key={tema.tema} value={tema.tema} >
+          {tema.titulo}
+        </option >
+      ))
+    );
+
+    // const listaSelectTemas = [
+    //   "Temas",
+    //   "Meio Ambiente",
+    //   "Direitos Humanos",
+    //   "Integridade e Transparência",
+    //   "Nova Economia",
+    //   "Transversal"
+    // ].map(tema => (
+    //   < option key={tema} value={tema} >
+    //     {tema}
+    //     {console.log(tema)}
+    //   </option >
+    // ));
 
     const listaSelectReeleicao = opcoesFiltroReeleicao().map(opcao => (
       <option key={opcao.label} value={opcao.value}>
@@ -429,6 +444,18 @@ class CandidatosContainer extends Component {
               candidatos eleitos tem atuação na câmara.
             </h5>
           )}
+
+        {activeTab === "eleitos" &&
+          abaAtiva === "Votacoes" &&
+          filtro.estado === "TODOS" &&
+          filtro.reeleicao !== "1" && (
+            <h5>
+              {" "}
+              <strong className="strong">{totalCandAtuacao}</strong> dos{" "}
+              <strong className="strong">{totalEleitosEstado}</strong>{" "}
+              candidatos eleitos tem atuação na câmara.
+            </h5>
+          )}
         {activeTab === "eleitos" &&
           filtro.estado === "TODOS" &&
           filtro.reeleicao !== "1" && (
@@ -440,6 +467,7 @@ class CandidatosContainer extends Component {
             </h5>
           )}
         {activeTab === "eleitos" &&
+          abaAtiva === "Voz Ativa" &&
           filtro.estado === "TODOS" &&
           filtro.reeleicao === "1" && (
             <h5>
@@ -453,6 +481,7 @@ class CandidatosContainer extends Component {
             </h5>
           )}
         {activeTab === "eleitos" &&
+          abaAtiva === "Voz Ativa" &&
           filtro.estado !== "TODOS" &&
           filtro.reeleicao === "1" && (
             <h5>
