@@ -22,6 +22,10 @@ module.exports = (sequelize, type) => {
       pergunta.hasMany(models.resposta, {
         foreignKey: "pergunta_id",
         as: "perg_resp"
+      }),
+      pergunta.hasMany(models.respostau, {
+        foreignKey: "pergunta_id",
+        as: "uperg_resp"
       });
   };
   return pergunta;
