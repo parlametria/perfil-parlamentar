@@ -39,4 +39,24 @@ function formataRespostasUser(resultado) {
   });
   return resultadoNovo;
 }
-module.exports = { formataRespostas, formataVotacoes, formataRespostasUser };
+
+function formataVotacoesUser(resultado) {
+  const resultadoNovo = resultado.map(cand => cand.get({ plain: true }));
+
+  resultadoNovo.forEach(cand => {
+    const votacoes = {};
+    cand.user_vot.forEach(vot => {
+      votacoes[vot.proposicao_id] = vot.resposta;
+    });
+    cand.votacoes = votacoes;
+    delete cand.user_vot;
+  });
+  return resultadoNovo;
+}
+
+module.exports = {
+  formataRespostas,
+  formataVotacoes,
+  formataRespostasUser,
+  formataVotacoesUser
+};
