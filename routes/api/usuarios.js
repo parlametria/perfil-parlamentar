@@ -6,7 +6,7 @@ mongoose.set("useFindAndModify", false);
 const models = require("../../models/index");
 const Usuario = models.usuario;
 const Resposta = models.respostau;
-const UsuarioM = require("../../models/Usuario");
+const Votacao = models.votacaou;
 const expressJwt = require("express-jwt");
 const keys = require("../../config/keys");
 
@@ -86,15 +86,34 @@ router.post("/respostas/eu", authenticate, (req, res) => {
   const perfil = {};
 
   perfil.usuario = req.auth.id;
-  respostas = req.body.respostas;
+  vozAtiva = req.body.respostas.vozAtiva;
+  votacoes = req.body.respostas.votacoes;
 
-  Usuario.findOneAndUpdate(
-    { _id: req.auth.id },
-    { $set: { respostas: respostas } },
-    { upsert: true }
-  )
+  Usuario.findOne({ provider_id: req.auth.id })
     .then(usuario => {
-      res.status(SUCCESS).json(usuario.respostas);
+      Object.keys(vozAtiva).forEach(function(key) {
+        Resposta.findOne({
+          where: { pergunta_id: key, user_id: usuario.id }
+        })
+          .then(function(record) {
+            return record.update({ resposta: vozAtiva[key] });
+          })
+          .then(function(record) {
+            res.sendStatus(200);
+          });
+      });
+      Object.keys(votacoes).forEach(function(key) {
+        Votacao.findOne({
+          where: { proposicao_id: key, user_id: usuario.id }
+        })
+          .then(function(record) {
+            return record.update({ resposta: votacoes[key] });
+          })
+          .then(function(record) {
+            res.sendStatus(200);
+          });
+      });
+      res.status(SUCCESS).json({ vozAtiva, votacoes });
     })
     .catch(err => res.status(BAD_REQUEST).json({ err }));
 });
