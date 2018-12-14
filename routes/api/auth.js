@@ -35,12 +35,11 @@ router.post(
       return res.send(401, "User Not Authenticated");
     }
     req.auth = {
-      id: req.user.id,
-      firstName: req.user.firstName,
+      id: req.user.provider_id,
+      firstName: req.user.first_name,
       photo: req.user.photo,
       respostas: req.user.respostas
     };
-
     next();
   },
   generateToken,
@@ -58,12 +57,13 @@ router.post(
       return res.send(401, "User Not Authenticated");
     }
     req.auth = {
-      id: req.user.id,
-      firstName: req.user.firstName,
+      id: req.user.provider_id,
+      firstName: req.user.first_name,
       photo: req.user.photo,
       respostas: req.user.respostas
     };
 
+    console.log(req.auth);
     next();
   },
   generateToken,
