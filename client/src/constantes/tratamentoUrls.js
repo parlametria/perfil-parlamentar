@@ -1,5 +1,5 @@
 import { listaEstados } from "./filtrosSeletoresCandidatos";
-import votacoes from "../data/votacoes.json";
+import arquivoVotacoes from "../data/votacoes.json";
 import perguntas from "../data/perguntas.json";
 
 export const getArrayUrl = url => {
@@ -33,8 +33,8 @@ export const getDict = arrayUrl => {
     indice++;
   }
 
-  Object.keys(votacoes).forEach(idVotacao => {
-    const id = votacoes[idVotacao].id;
+  Object.keys(arquivoVotacoes).forEach(idVotacao => {
+    const id = arquivoVotacoes[idVotacao].id;
 
     respostasUsuario.votacoes[idVotacao] = arrayUrl[id + TAM_PERGUNTAS];
   });
@@ -47,22 +47,26 @@ export const criaURL = respostasUsuario => {
 
   const { vozAtiva, votacoes } = respostasUsuario;
   const idsVozAtiva = Object.keys(vozAtiva);
-  const idsQMR = Object.keys(votacoes);
+  const idsVotacoes = Object.keys(votacoes);
 
-  let arrayVotos = Array(idsVozAtiva.length + idsQMR.length).fill(0);
+  console.log(votacoes);
+
+  let arrayVotos = Array(idsVozAtiva.length + idsVotacoes.length).fill(0);
 
   idsVozAtiva.forEach(id => {
-    arrayVotos[Number(id)] = vozAtiva[id];
+    arrayVotos[id] = vozAtiva[id];
   });
 
-  idsQMR.forEach(idVotacao => {
-    arrayVotos[Number(votacoes[idVotacao].id) + idsVozAtiva.length] =
+  idsVotacoes.forEach(idVotacao => {
+    arrayVotos[arquivoVotacoes[idVotacao].id + idsVozAtiva.length] =
       votacoes[idVotacao];
   });
 
   arrayVotos.forEach(voto => {
     urlVotos = urlVotos + voto;
   });
+
+  console.log(urlVotos);
 
   return urlVotos;
 };
