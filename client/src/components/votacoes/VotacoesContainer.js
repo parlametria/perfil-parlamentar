@@ -28,7 +28,6 @@ import isEmpty from "../../validation/is-empty";
 import FlipMove from "react-flip-move";
 import { Collapse } from "reactstrap";
 
-
 const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
 
 class VotacoesContainer extends Component {
@@ -42,7 +41,7 @@ class VotacoesContainer extends Component {
   registraResposta(novaResposta) {
     const { respostasUsuario } = this.props.usuario;
 
-    respostasUsuario.qmr[novaResposta.id] = novaResposta.resposta;
+    respostasUsuario.votacoes[novaResposta.id] = novaResposta.resposta;
     this.props.salvaRespostasUsuario(respostasUsuario);
 
     this.props.calculaScore();
@@ -59,28 +58,19 @@ class VotacoesContainer extends Component {
       this.props.escolheTema(dadosVotacoes[indexPergunta].tema);
     }
   }
-  componentDidMount() {
-    this.props.getDadosVotacoes();
-  }
 
   render() {
     const { dadosVotacoes, indexPergunta } = this.props.votacoes;
 
-    const {
-      isExibeGavetaPerguntas
-    } = this.props.questionario;
+    const { isExibeGavetaPerguntas } = this.props.questionario;
 
     let votacao;
     let exibeVotacao;
 
     if (!isEmpty(dadosVotacoes)) {
-      console.log(indexPergunta);
-
       const dadosVotacao = dadosVotacoes[indexPergunta];
 
       const { respostasUsuario } = this.props.usuario;
-
-      console.log(dadosVotacao);
 
       votacao = (
         <Votacao
@@ -90,7 +80,7 @@ class VotacoesContainer extends Component {
           titulo={dadosVotacao.titulo}
           descricao={dadosVotacao.descricao}
           tema={dadosVotacao.tema}
-          voto={respostasUsuario.qmr[dadosVotacao.id_votacao]}
+          voto={respostasUsuario.votacoes[dadosVotacao.id_votacao]}
           onVota={novaResposta => this.registraResposta(novaResposta)}
         />
       );
@@ -103,7 +93,9 @@ class VotacoesContainer extends Component {
         >
           <div className="card-body">
             <div className="container">
-              <h2 className="question-theme">{this.props.questionario.filtroTema}</h2>
+              <h2 className="question-theme">
+                {this.props.questionario.filtroTema}
+              </h2>
             </div>
             {votacao}
             <CopiaUrl />
@@ -116,9 +108,7 @@ class VotacoesContainer extends Component {
       <div className="votacao-container">
         <div>
           <Collapse isOpen={isExibeGavetaPerguntas}>
-            <FlipMove>
-              {exibeVotacao}
-            </FlipMove>
+            <FlipMove>{exibeVotacao}</FlipMove>
           </Collapse>
           <button
             type="button"

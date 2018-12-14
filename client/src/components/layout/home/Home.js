@@ -33,6 +33,9 @@ import {
 } from "../../../actions/questionarioActions";
 import { salvaScoreUsuario } from "../../../actions/usuarioActions";
 
+import { getDadosPerguntas } from "../../../actions/perguntasActions";
+import { getDadosVotacoes } from "../../../actions/votacoesActions";
+
 import {
   getArrayUrl,
   getDict,
@@ -71,7 +74,8 @@ class Home extends Component {
       partido: "Partidos",
       estado: e.target.value,
       reeleicao: "-1",
-      respondeu: "-1"
+      respondeu: "-1",
+      tema: "Temas"
     };
 
     //if(!isMobile) this.props.verTodosEleitos();
@@ -91,6 +95,9 @@ class Home extends Component {
   }
 
   componentDidMount() {
+    this.props.getDadosPerguntas();
+    this.props.getDadosVotacoes();
+
     if (!isMobile) this.props.vamosComecar();
     const { votos, estado } = this.props.match.params;
 
@@ -109,7 +116,10 @@ class Home extends Component {
         const filtroEstado = {
           nome: "",
           partido: "Partidos",
-          estado: estado
+          estado: estado,
+          reeleicao: "-1",
+          respondeu: "-1",
+          tema: "Temas"
         };
 
         this.props.setFiltroCandidatos(filtroEstado);
@@ -212,15 +222,15 @@ class Home extends Component {
                       </select>
                     </ScrollIntoViewOnChange>
                   ) : (
-                      <select
-                        className="form-control"
-                        onChange={this.selecionaEstado}
-                        value={filtro.estado}
-                      >
-                        <option defaultValue="--">Selecione um Estado</option>
-                        {estados()}
-                      </select>
-                    )}
+                    <select
+                      className="form-control"
+                      onChange={this.selecionaEstado}
+                      value={filtro.estado}
+                    >
+                      <option defaultValue="--">Selecione um Estado</option>
+                      {estados()}
+                    </select>
+                  )}
                 </div>
               </form>
             </div>
@@ -284,7 +294,9 @@ Home.propTypes = {
   verTodosEleitos: PropTypes.func.isRequired,
   mostrarTodosCandidatos: PropTypes.func.isRequired,
   setActiveTab: PropTypes.func.isRequired,
-  facebookLoginComCodigo: PropTypes.func.isRequired
+  facebookLoginComCodigo: PropTypes.func.isRequired,
+  getDadosPerguntas: PropTypes.func.isRequired,
+  getDadosVotacoes: PropTypes.func.isRequired
 };
 const mapStateToProps = state => ({
   candidatos: state.candidatosReducer,
@@ -306,6 +318,8 @@ export default connect(
     verTodosEleitos,
     mostrarTodosCandidatos,
     setActiveTab,
-    facebookLoginComCodigo
+    facebookLoginComCodigo,
+    getDadosPerguntas,
+    getDadosVotacoes
   }
 )(Home);

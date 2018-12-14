@@ -45,7 +45,6 @@ class CopiaUrl extends Component {
         >
           <button className="btn btn-outline-primary" id="shareBtn">
             compartilhe suas respostas{" "}
-            <span className="badge badge-success">novo!</span>
           </button>
         </CopyToClipboard>
         <Tooltip

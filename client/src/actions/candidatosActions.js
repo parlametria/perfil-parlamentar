@@ -38,31 +38,31 @@ import votacoes from "../data/votacoes.json";
 const comparaRespostas = (
   respostasCandidatos,
   respostasUsuarioVozAtiva,
-  respostasUsuarioQMR,
+  respostasUsuarioVotacoes,
   votacoesCandidatos,
   numRespostasUsuario
 ) => {
   let respostasIguais = 0;
-  const chaves = Object.keys(respostasUsuarioVozAtiva);
-  chaves.forEach(idPergunta => {
+  const idsVozAtiva = Object.keys(respostasUsuarioVozAtiva);
+  idsVozAtiva.forEach(idPergunta => {
     respostasIguais +=
       respostasCandidatos[idPergunta] !== undefined &&
-        respostasCandidatos[idPergunta] !== null &&
-        respostasUsuarioVozAtiva[idPergunta] !== 0 &&
-        respostasUsuarioVozAtiva[idPergunta] !== -2 &&
-        respostasCandidatos[idPergunta] === respostasUsuarioVozAtiva[idPergunta]
+      respostasCandidatos[idPergunta] !== null &&
+      respostasUsuarioVozAtiva[idPergunta] !== 0 &&
+      respostasUsuarioVozAtiva[idPergunta] !== -2 &&
+      respostasCandidatos[idPergunta] === respostasUsuarioVozAtiva[idPergunta]
         ? 1
         : 0;
   });
 
-  const chavesQMR = Object.keys(respostasUsuarioQMR);
-  chavesQMR.forEach(idPergunta => {
+  const idsVotacoes = Object.keys(respostasUsuarioVotacoes);
+  idsVotacoes.forEach(idPergunta => {
     respostasIguais +=
       votacoesCandidatos[idPergunta] !== undefined &&
-        votacoesCandidatos[idPergunta] !== null &&
-        respostasUsuarioQMR[idPergunta] !== 0 &&
-        respostasUsuarioQMR[idPergunta] !== -2 &&
-        votacoesCandidatos[idPergunta] === respostasUsuarioQMR[idPergunta]
+      votacoesCandidatos[idPergunta] !== null &&
+      respostasUsuarioVotacoes[idPergunta] !== 0 &&
+      respostasUsuarioVotacoes[idPergunta] !== -2 &&
+      votacoesCandidatos[idPergunta] === respostasUsuarioVotacoes[idPergunta]
         ? 1
         : 0;
   });
@@ -70,51 +70,134 @@ const comparaRespostas = (
   return respostasIguais / numRespostasUsuario;
 };
 
-// Recebe um dicionário das respostas dos candidatos no formato {id_cand: [array_resp]} e retorna um dicionário no formato {id_cand: score}
-export const calculaScore = () => (dispatch, getState) => {
-  const { respostasUsuario, quantidadeVotos } = getState().usuarioReducer;
-  const respostasCandidatos = getState().candidatosReducer.dadosCandidatos;
-  const { votacoesCandidatos } = getState().votacoesReducer;
+const filtraIdsPorTema = (tema, dadosVotacoes, dadosPerguntas) => {
+  let idsVozAtiva, idsVotacoes;
 
-  const quantVotosVozAtiva = Object.keys(respostasUsuario.vozAtiva).filter(
+  if (tema !== "Temas") {
+    idsVozAtiva = dadosPerguntas
+      .filter(pergunta => pergunta.tema === tema)
+      .map(pergunta => pergunta.id);
+
+    idsVotacoes = dadosVotacoes
+      .filter(votacao => votacao.tema === tema)
+      .map(votacao => votacao.id_votacao);
+  } else {
+    idsVozAtiva = dadosPerguntas.map(pergunta => pergunta.id);
+
+    idsVotacoes = dadosVotacoes.map(votacao => votacao.id_votacao);
+  }
+
+  return { idsVozAtiva, idsVotacoes };
+};
+
+const filtraRespostasEVotacoesPorID = (
+  respostas,
+  votacoes,
+  idsVozAtiva,
+  idsVotacoes
+) => {
+  let respostasFiltradas = {};
+  let votacoesFiltradas = {};
+
+  idsVozAtiva.forEach(id => {
+    respostasFiltradas[id] = respostas[id];
+  });
+
+  idsVotacoes.forEach(id => {
+    votacoesFiltradas[id] = isEmpty(votacoes[id]) ? 0 : votacoes[id];
+  });
+
+  return { respostasFiltradas, votacoesFiltradas };
+};
+
+const verificaQuantidadeVotos = (
+  idsVozAtiva,
+  idsVotacoes,
+  respostasUsuario
+) => {
+  let quantPerguntasRespondidas, quantVotacoesRespondidas, numRespostasUsuario;
+
+  quantPerguntasRespondidas = idsVozAtiva.filter(
     id =>
       respostasUsuario.vozAtiva[id] !== 0 &&
       respostasUsuario.vozAtiva[id] !== -2
   ).length;
 
-  const quantVotosQMR = Object.keys(respostasUsuario.qmr).filter(
-    id => respostasUsuario.qmr[id] !== 0 && respostasUsuario.qmr[id] !== -2
+  quantVotacoesRespondidas = idsVotacoes.filter(
+    id =>
+      respostasUsuario.votacoes[id] !== 0 &&
+      respostasUsuario.votacoes[id] !== -2
   ).length;
 
-  const numRespostasUsuario =
-    quantVotosVozAtiva + quantVotosQMR === 0
+  numRespostasUsuario =
+    quantPerguntasRespondidas + quantVotacoesRespondidas === 0
       ? 1
-      : quantVotosVozAtiva + quantVotosQMR;
+      : quantPerguntasRespondidas + quantVotacoesRespondidas;
+
+  return {
+    quantPerguntasRespondidas,
+    quantVotacoesRespondidas,
+    numRespostasUsuario
+  };
+};
+
+// Recebe um dicionário das respostas dos candidatos no formato {id_cand: [array_resp]} e retorna um dicionário no formato {id_cand: score}
+export const calculaScore = () => (dispatch, getState) => {
+  const { respostasUsuario } = getState().usuarioReducer;
+  const { dadosCandidatos } = getState().candidatosReducer;
+  const { filtro } = getState().candidatosReducer;
+  const { votacoesCandidatos, dadosVotacoes } = getState().votacoesReducer;
+  const { dadosPerguntas } = getState().perguntasReducer;
+
+  const { idsVozAtiva, idsVotacoes } = filtraIdsPorTema(
+    filtro.tema,
+    dadosVotacoes,
+    dadosPerguntas
+  );
+
+  const {
+    quantPerguntasRespondidas,
+    quantVotacoesRespondidas,
+    numRespostasUsuario
+  } = verificaQuantidadeVotos(idsVozAtiva, idsVotacoes, respostasUsuario);
 
   let scoreCandidatos = {};
-  Object.keys(respostasCandidatos).forEach(elem => {
+  Object.keys(dadosCandidatos).forEach(elem => {
     const naoRespondeuVozAtiva =
-      Object.keys(respostasCandidatos[elem].respostas).filter(
-        id => respostasCandidatos[elem].respostas[id] !== 0
+      Object.keys(dadosCandidatos[elem].respostas).filter(
+        id => dadosCandidatos[elem].respostas[id] !== 0
       ).length === 0;
 
-    const naoRespondeuCamara = votacoesCandidatos[elem] === undefined;
+    const naoRespondeuCamara = isEmpty(votacoesCandidatos[elem]);
+
+    const {
+      respostasFiltradas,
+      votacoesFiltradas
+    } = filtraRespostasEVotacoesPorID(
+      dadosCandidatos[elem].respostas,
+      naoRespondeuCamara ? {} : votacoesCandidatos[elem],
+      idsVozAtiva,
+      idsVotacoes
+    );
 
     let numRespostasConsideradas;
     if (!naoRespondeuCamara && !naoRespondeuVozAtiva)
       numRespostasConsideradas = numRespostasUsuario;
     else if (naoRespondeuCamara)
       numRespostasConsideradas =
-        quantVotosVozAtiva === 0 ? 1 : quantVotosVozAtiva;
-    else numRespostasConsideradas = quantVotosQMR === 0 ? 1 : quantVotosQMR;
+        quantPerguntasRespondidas === 0 ? 1 : quantPerguntasRespondidas;
+    else
+      numRespostasConsideradas =
+        quantVotacoesRespondidas === 0 ? 1 : quantVotacoesRespondidas;
 
     let score = comparaRespostas(
-      respostasCandidatos[elem].respostas,
+      respostasFiltradas,
       respostasUsuario.vozAtiva,
-      respostasUsuario.qmr,
-      votacoesCandidatos[elem] !== undefined ? votacoesCandidatos[elem] : {},
+      respostasUsuario.votacoes,
+      votacoesFiltradas,
       numRespostasConsideradas
     );
+
     scoreCandidatos[elem] = score;
   });
 
@@ -174,24 +257,25 @@ export const calculaScorePorTema = (
   nomeTemas.forEach(tema => {
     const respostasValidasVA = perguntasPorTema[tema]
       ? perguntasPorTema[tema].filter(
-        id =>
-          respostasUsuario.vozAtiva[id] !== 0 &&
-          respostasUsuario.vozAtiva[id] !== -2
-      ).length
+          id =>
+            respostasUsuario.vozAtiva[id] !== 0 &&
+            respostasUsuario.vozAtiva[id] !== -2
+        ).length
       : 0;
 
-    const respostasValidasQMR =
+    const respostasValidasVotacoes =
       votacoesPorTema[tema] && !isEmpty(dadosCandidato.votacoes)
         ? votacoesPorTema[tema].filter(
-          id =>
-            respostasUsuario.qmr[id] !== 0 && respostasUsuario.qmr[id] !== -2
-        ).length
+            id =>
+              respostasUsuario.votacoes[id] !== 0 &&
+              respostasUsuario.votacoes[id] !== -2
+          ).length
         : 0;
 
     const numRespostasUsuario =
-      respostasValidasVA + respostasValidasQMR === 0
+      respostasValidasVA + respostasValidasVotacoes === 0
         ? 1
-        : respostasValidasVA + respostasValidasQMR;
+        : respostasValidasVA + respostasValidasVotacoes;
 
     let respostasCandidatosTema = {};
     let votacoesCandidatosTema = {};
@@ -231,12 +315,12 @@ export const calculaScorePorTema = (
         respostasValidasVA === 0 ? 1 : respostasValidasVA;
     else
       numRespostasConsideradas =
-        respostasValidasQMR === 0 ? 1 : respostasValidasQMR;
+        respostasValidasVotacoes === 0 ? 1 : respostasValidasVotacoes;
 
     let score = comparaRespostas(
       respostasCandidatosTema,
       respostasUsuario.vozAtiva,
-      respostasUsuario.qmr,
+      respostasUsuario.votacoes,
       votacoesCandidatosTema,
       numRespostasConsideradas
     );
@@ -248,62 +332,6 @@ export const calculaScorePorTema = (
       scoreTema
     });
   });
-
-  // Object.keys(temas).forEach(tema => {
-  //   let score = 0;
-  //   let respostasCandidatosTema = {};
-  //   let votacoesCandidatosTema = {};
-  //   perguntas.forEach(pergunta => {
-  //     if (pergunta.tema === tema) {
-  //       respostasCandidatosTema[pergunta.id] =
-  //         dadosCandidato.respostas[pergunta.id];
-  //     }
-  //   });
-
-  //   if (votacoesCandidatos[dadosCandidato.cpf]) {
-  //     // Pegar as informações de votações do reducer de votações e não pegar diretamente do json
-  //     Object.keys(votacoes).forEach(keyVotacao => {
-  //       const votacao = votacoes[keyVotacao];
-  //       if (votacao.tema === tema) {
-  //         votacoesCandidatosTema[votacao.id_votacao] =
-  //           votacoesCandidatos[dadosCandidato.cpf][votacao.id_votacao];
-  //       }
-  //     });
-  //   }
-
-  //   const primeiroID = temas[tema][0].id;
-  //   const ultimoID = temas[tema][temas[tema].length - 1].id;
-
-  //   console.log(temas[tema]);
-
-  //   temas[tema].forEach(pergunta => {
-  //     const quantValidos = arrayRespostasUsuario
-  //       .slice(primeiroID, ultimoID + 1)
-  //       .filter(value => value !== 0 && value !== -2).length;
-  //     const numRespostasUsuario = quantValidos === 0 ? 1 : quantValidos;
-
-  //     console.log(numRespostasUsuario);
-  //     console.log(arrayRespostasUsuario);
-  //     console.log(primeiroID);
-  //     console.log(ultimoID);
-
-  //     score = comparaRespostas(
-  //       respostasCandidatosTema,
-  //       respostasUsuario.vozAtiva,
-  //       respostasUsuario.qmr,
-  //       votacoesCandidatosTema,
-  //       numRespostasUsuario
-  //     );
-  //   });
-  //   scoreTema[tema] = score;
-  // });
-
-  // console.log(scoreTema);
-
-  // dispatch({
-  //   type: SET_SCORE_CANDIDATO_POR_TEMA,
-  //   scoreTema
-  // });
 };
 
 export const buscaPorCPF = cpf => (dispatch, getState) => {
@@ -327,6 +355,9 @@ export const getTopNCandidatos = n => (dispatch, getState) => {
     totalEleitosEstado,
     activeTab
   } = getState().candidatosReducer;
+
+  const { votacoesCandidatos } = getState().votacoesReducer;
+
   let matrizScores = Object.keys(scoreCandidatos).map(key => [
     key,
     scoreCandidatos[key]
@@ -337,19 +368,29 @@ export const getTopNCandidatos = n => (dispatch, getState) => {
       if (a[1] > b[1]) return -1;
       else if (a[1] === b[1]) {
         if (
+          dadosCandidatos[b[0]].respondeu ||
+          dadosCandidatos[b[0]].reeleicao === "1" ||
+          !isEmpty(votacoesCandidatos[b[0]])
+        )
+          return 1;
+        else if (
           !isEmpty(dadosCandidatos[a[0]]) &&
-          !isEmpty(dadosCandidatos[b[0]])
+          !isEmpty(dadosCandidatos[b[0]]) &&
+          !isEmpty(votacoesCandidatos)
         ) {
           if (
-            (dadosCandidatos[a[0]].respondeu &&
+            (((dadosCandidatos[a[0]].respondeu &&
               dadosCandidatos[b[0]].respondeu) ||
-            (!dadosCandidatos[a[0]].respondeu &&
-              !dadosCandidatos[b[0]].respondeu)
+              (!dadosCandidatos[a[0]].respondeu &&
+                !dadosCandidatos[b[0]].respondeu)) &&
+              (dadosCandidatos[a[0]].reeleicao === "0" &&
+                dadosCandidatos[b[0]].reeleicao === "0")) ||
+            (isEmpty(votacoesCandidatos[a[0]]) &&
+              isEmpty(votacoesCandidatos[b[0]]))
           )
             return dadosCandidatos[a[0]].nome_urna.localeCompare(
               dadosCandidatos[b[0]].nome_urna
             );
-          else if (dadosCandidatos[b[0]].respondeu) return 1;
           else return -1;
         }
         return 0;
@@ -425,9 +466,9 @@ export const getDadosCandidatos = () => (dispatch, getState) => {
         axios
           .get(
             "/api/respostas/estados/" +
-            filtro.estado +
-            "/naoresponderam?pageNo=1&size=" +
-            ITENS_POR_REQ
+              filtro.estado +
+              "/naoresponderam?pageNo=1&size=" +
+              ITENS_POR_REQ
           )
           .then(respostas => {
             respostas.data.data.forEach(resp => {
@@ -465,18 +506,28 @@ export const getDadosCandidato = (
 ) => (dispatch, getState) => {
   dispatch(setCandidatosCarregando());
 
-  const { quantidadeVotos } = getState().usuarioReducer;
+  const quantVotosVozAtiva = Object.keys(respostasUsuario.vozAtiva).filter(
+    id =>
+      respostasUsuario.vozAtiva[id] !== 0 &&
+      respostasUsuario.vozAtiva[id] !== -2
+  ).length;
 
-  const { votacoesCandidatos } = getState().votacoesReducer;
+  const quantVotacoesRespondidas = Object.keys(
+    respostasUsuario.votacoes
+  ).filter(
+    id =>
+      respostasUsuario.votacoes[id] !== 0 &&
+      respostasUsuario.votacoes[id] !== -2
+  ).length;
 
-  const numRespostasUsuario = quantidadeVotos === 0 ? 1 : quantidadeVotos;
-
-
+  const numRespostasUsuario =
+    quantVotosVozAtiva + quantVotacoesRespondidas === 0
+      ? 1
+      : quantVotosVozAtiva + quantVotacoesRespondidas;
 
   axios
     .get("/api/respostas/candidatos/" + idCandidato)
     .then(respostas => {
-
       const dadosCandidato = respostas.data[0];
 
       dispatch({ type: SET_DADOS_CANDIDATO, dadosCandidato });
@@ -489,12 +540,29 @@ export const getDadosCandidato = (
 
         dadosCandidato.votacoes = votacoes;
 
+        const naoRespondeuVozAtiva =
+          Object.keys(dadosCandidato.respostas).filter(
+            id => dadosCandidato.respostas[id] !== 0
+          ).length === 0;
+
+        const naoRespondeuCamara = isEmpty(votacoes);
+
+        let numRespostasConsideradas;
+        if (!naoRespondeuCamara && !naoRespondeuVozAtiva)
+          numRespostasConsideradas = numRespostasUsuario;
+        else if (naoRespondeuCamara)
+          numRespostasConsideradas =
+            quantVotosVozAtiva === 0 ? 1 : quantVotosVozAtiva;
+        else
+          numRespostasConsideradas =
+            quantVotacoesRespondidas === 0 ? 1 : quantVotacoesRespondidas;
+
         const score = comparaRespostas(
           dadosCandidato.respostas,
           respostasUsuario.vozAtiva,
-          respostasUsuario.qmr,
+          respostasUsuario.votacoes,
           votacoes,
-          numRespostasUsuario
+          numRespostasConsideradas
         );
 
         dadosCandidato.score = score;
@@ -529,6 +597,8 @@ export const setCandidatosFiltrados = () => (dispatch, getState) => {
     activeTab
   } = getState().candidatosReducer;
 
+  const { votacoesCandidatos } = getState().votacoesReducer;
+
   dispatch(setCandidatosFiltrando());
 
   axios
@@ -545,10 +615,10 @@ export const setCandidatosFiltrados = () => (dispatch, getState) => {
   axios
     .get(
       "api/respostas/estados/" +
-      filtro.estado +
-      "/partidos/" +
-      filtro.partido +
-      "/responderam"
+        filtro.estado +
+        "/partidos/" +
+        filtro.partido +
+        "/responderam"
     )
     .then(totalCandidatos =>
       dispatch({
@@ -581,13 +651,23 @@ export const setCandidatosFiltrados = () => (dispatch, getState) => {
       else if (scoreCandidatos[a] === scoreCandidatos[b]) {
         if (!isEmpty(dadosCandidatos[a]) && !isEmpty(dadosCandidatos[b])) {
           if (
+            dadosCandidatos[b].respondeu ||
+            dadosCandidatos[b].reeleicao === "1" ||
+            !isEmpty(votacoesCandidatos[b])
+          )
+            return 1;
+          if (
             (dadosCandidatos[a].respondeu && dadosCandidatos[b].respondeu) ||
-            (!dadosCandidatos[a].respondeu && !dadosCandidatos[b].respondeu)
+            (!dadosCandidatos[a].respondeu &&
+              !dadosCandidatos[b].respondeu &&
+              ((dadosCandidatos[a].reeleicao === "0" &&
+                dadosCandidatos[b].reeleicao === "0") ||
+                (isEmpty(votacoesCandidatos[a[0]]) &&
+                  isEmpty(votacoesCandidatos[b[0]]))))
           )
             return dadosCandidatos[a].nome_urna.localeCompare(
               dadosCandidatos[b].nome_urna
             );
-          else if (dadosCandidatos[b].respondeu) return 1;
           else return -1;
         }
         return 0;
@@ -605,9 +685,9 @@ export const setCandidatosFiltrados = () => (dispatch, getState) => {
         final: TAM_PAGINA,
         totalCandidatos:
           filtro.partido !== "Partidos" ||
-            filtro.nome !== "" ||
-            filtro.reeleicao !== "-1" ||
-            filtro.responderam !== "-1"
+          filtro.nome !== "" ||
+          filtro.reeleicao !== "-1" ||
+          filtro.responderam !== "-1"
             ? candidatos.length
             : candidatosRanqueados.length
       })
@@ -629,10 +709,10 @@ export const setPartidos = () => (dispatch, getState) => {
   axios
     .get(
       "api/respostas/estados/" +
-      filtro.estado +
-      "/partidos" +
-      "?eleito=" +
-      eleito
+        filtro.estado +
+        "/partidos" +
+        "?eleito=" +
+        eleito
     )
     .then(partidos => {
       dispatch({ type: SET_PARTIDOS, partidos: partidos.data.data });
@@ -663,11 +743,11 @@ export const getProximaPaginaCandidatos = () => (dispatch, getState) => {
   axios
     .get(
       "/api/respostas/estados/" +
-      filtro.estado +
-      "/naoresponderam?pageNo=" +
-      paginacao.paginaAtualAPI +
-      "&size=" +
-      ITENS_POR_REQ
+        filtro.estado +
+        "/naoresponderam?pageNo=" +
+        paginacao.paginaAtualAPI +
+        "&size=" +
+        ITENS_POR_REQ
     )
     .then(respostas => {
       respostas.data.data.forEach(resposta => {
@@ -696,7 +776,8 @@ export const setActiveTab = activeTab => (dispatch, getState) => {
     partido: "Partidos",
     estado: filtro.estado,
     reeleicao: "-1",
-    respondeu: "-1"
+    respondeu: "-1",
+    tema: "Temas"
   };
 
   dispatch(setFiltroCandidatos(filtroLimpo));
