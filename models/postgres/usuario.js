@@ -41,8 +41,10 @@ module.exports = (sequelize, type) => {
   ) {
     const that = this;
     return this.findOne({
-      procider: "google",
-      provider_id: profile.id
+      where: {
+        provider: "google",
+        provider_id: profile.id
+      }
     }).then((user, err) => {
       // no user was found, lets create a new one
       if (!user) {
@@ -55,6 +57,7 @@ module.exports = (sequelize, type) => {
           provider_id: profile.id,
           token: accessToken
         });
+
         newUser.save().then((savedUser, error) => {
           if (error) {
             console.log(error);
@@ -76,8 +79,10 @@ module.exports = (sequelize, type) => {
   ) {
     const that = this;
     return this.findOne({
-      provider: "facebook",
-      provider_id: profile.id
+      where: {
+        provider: "facebook",
+        provider_id: profile.id
+      }
     }).then((user, err) => {
       // no user was found, lets create a new one
       if (!user) {
