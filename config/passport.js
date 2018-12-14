@@ -41,8 +41,8 @@ module.exports = () => {
           refreshToken,
           profile,
           req.body.respostas,
-          (err, user) => {
-            return done(err, user);
+          (user, err) => {
+            return done(user, err);
           }
         );
       }
