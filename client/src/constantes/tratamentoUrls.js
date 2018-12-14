@@ -49,8 +49,6 @@ export const criaURL = respostasUsuario => {
   const idsVozAtiva = Object.keys(vozAtiva);
   const idsVotacoes = Object.keys(votacoes);
 
-  console.log(votacoes);
-
   let arrayVotos = Array(idsVozAtiva.length + idsVotacoes.length).fill(0);
 
   idsVozAtiva.forEach(id => {
@@ -65,8 +63,6 @@ export const criaURL = respostasUsuario => {
   arrayVotos.forEach(voto => {
     urlVotos = urlVotos + voto;
   });
-
-  console.log(urlVotos);
 
   return urlVotos;
 };
