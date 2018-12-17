@@ -91,9 +91,6 @@ export const continuarRespondendoVotacoes = () => dispatch => {
   dispatch(mudaAba("Voz Ativa"));
   dispatch(escolhePergunta(0));
   dispatch(escolheTema("Meio Ambiente"));
-
-
-
 };
 
 export const continuarRespondendoVozAtiva = () => dispatch => {

@@ -40,13 +40,13 @@ class QuestionarioContainer extends Component {
         <div className="question-toogle">
           <div>
             <label className="label-toogle">
-              <span className="label-toogle-left">Voz Ativa</span>
+              <span className="label-toogle-left">Feito</span>
               <Toggle
                 icons={false}
                 onChange={this.handleToggle}
-                checked={this.props.questionario.abaAtiva !== "Voz Ativa"}
+                checked={this.props.questionario.abaAtiva !== "Votacoes"}
               />
-              <span className="label-toogle-right">Câmara</span>
+              <span className="label-toogle-right">Dito</span>
             </label>
           </div>
         </div>
