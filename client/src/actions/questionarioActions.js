@@ -11,7 +11,11 @@ import {
   SET_ABA_ATIVA
 } from "./types";
 
-export const mudaAba = abaAtiva => dispatch => {
+export const mudaAba = abaAtiva => (dispatch, getState) => {
+  const { filtroTema } = getState().questionarioReducer;
+  if (filtroTema === "Eleitoral") {
+    dispatch(escolheTema("Meio Ambiente"));
+  }
   dispatch({ type: SET_ABA_ATIVA, abaAtiva: abaAtiva })
 }
 export const passaPergunta = () => (dispatch, getState) => {
@@ -66,7 +70,14 @@ export const escolhePergunta = indexPergunta => (dispatch, getState) => {
   dispatch({ type: type, indexPergunta });
 };
 
-export const escolheTema = tema => dispatch => {
+export const escolheTema = tema => (dispatch, getState) => {
+  const { abaAtiva, filtroTema } = getState().questionarioReducer;
+  let novoTema;
+  if (abaAtiva === "Voz Ativa") {
+    novoTema = tema;
+  } else if (abaAtiva === "Votacoes") {
+    novoTema = filtroTema === "Eleitoral" ? "Meio Ambiente" : tema;
+  }
   dispatch({ type: SET_TEMA, tema });
 };
 
