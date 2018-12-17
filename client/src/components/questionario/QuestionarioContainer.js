@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 
 import Toggle from "react-toggle";
+import { Tooltip } from 'reactstrap';
 
 import PerguntasContainer from "../perguntas/PerguntasContainer";
 import VotacoesContainer from "../votacoes/VotacoesContainer";
@@ -19,12 +20,21 @@ class QuestionarioContainer extends Component {
   constructor(props) {
     super(props);
     this.handleToggle = this.handleToggle.bind(this);
+    this.toggle = this.toggle.bind(this);
+    this.state = {
+      tooltipOpen: false
+    };
   }
 
   handleToggle(e) {
     const { abaAtiva } = this.props.questionario;
 
     this.props.mudaAba(abaAtiva === "Voz Ativa" ? "Votacoes" : "Voz Ativa");
+  }
+  toggle() {
+    this.setState({
+      tooltipOpen: !this.state.tooltipOpen
+    });
   }
 
   render() {
@@ -39,7 +49,7 @@ class QuestionarioContainer extends Component {
       <div className="toogle-wrapper">
         <div className="question-toogle">
           <div>
-            <label className="label-toogle">
+            <label className="label-toogle" id="tooltipVotacoes">
               <span className="label-toogle-left">Feito</span>
               <Toggle
                 icons={false}
@@ -48,6 +58,9 @@ class QuestionarioContainer extends Component {
               />
               <span className="label-toogle-right">Dito</span>
             </label>
+            <Tooltip placement="bottom" isOpen={this.state.tooltipOpen} target="tooltipVotacoes" toggle={this.toggle}>
+              Ao selecionar Dito você acessa as perguntas que os candidatos foram convidados a responder em 2018. Feito se refere as proposições de lei que os parlamentares participaram na câmara.
+              </Tooltip>
           </div>
         </div>
         {abaAtiva === "Votacoes" && (
