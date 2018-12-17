@@ -49,13 +49,15 @@ class QuestionarioContainer extends Component {
       <div className="toogle-wrapper">
         <div className="question-toogle">
           <div>
-            <label className="label-toogle" id="tooltipVotacoes">
+            <label className="label-toogle" >
               <span className="label-toogle-left">Feito</span>
-              <Toggle
-                icons={false}
-                onChange={this.handleToggle}
-                checked={this.props.questionario.abaAtiva !== "Votacoes"}
-              />
+              <div id="tooltipVotacoes">
+                <Toggle
+                  icons={false}
+                  onChange={this.handleToggle}
+                  checked={this.props.questionario.abaAtiva !== "Votacoes"}
+                />
+              </div>
               <span className="label-toogle-right">Dito</span>
             </label>
             <Tooltip placement="bottom" isOpen={this.state.tooltipOpen} target="tooltipVotacoes" toggle={this.toggle}>
