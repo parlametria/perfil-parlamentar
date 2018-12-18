@@ -133,7 +133,6 @@ class MenuTema extends Component {
             this.props.questionario.abaAtiva === "Voz Ativa"
               ? perguntaFiltrada.id
               : perguntaFiltrada.id_votacao;
-
           return (
             <li className="nav-item" key={index}>
               <a
