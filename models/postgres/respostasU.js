@@ -9,11 +9,11 @@ module.exports = (sequelize, type) => {
     }
   );
   resposta.associate = function(models) {
-    resposta.belongsTo(models.pergunta, {
+    respostau.belongsTo(models.pergunta, {
       foreignKey: "pergunta_id",
       as: "uperg_resp"
     }),
-      resposta.belongsTo(models.usuario, {
+      respostau.belongsTo(models.usuario, {
         foreignKey: "user_id",
         as: "user_resp"
       });

@@ -49,9 +49,9 @@ if (!global.hasOwnProperty("models")) {
     tema: sequelize.import(TemaModel),
     votacao: sequelize.import(VotacaoModel),
     resposta: sequelize.import(RespostaModel),
+    usuario: sequelize.import(UsuarioModel),
     respostau: sequelize.import(RespostaUModel),
-    votacaou: sequelize.import(VotacaoUModel),
-    usuario: sequelize.import(UsuarioModel)
+    votacaou: sequelize.import(VotacaoUModel)
     // add your other models here
   };
 
