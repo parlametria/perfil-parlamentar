@@ -62,9 +62,11 @@ module.exports = (sequelize, type) => {
           if (error) {
             console.log(error);
           }
+          savedUser = savedUser.get({ plain: true });
           return cb(savedUser, error);
         });
       } else {
+        user = user.get({ plain: true });
         return cb(user, err);
       }
     });
