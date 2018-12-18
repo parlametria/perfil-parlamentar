@@ -42,7 +42,7 @@ class VotacoesContainer extends Component {
     const { respostasUsuario } = this.props.usuario;
 
     respostasUsuario.votacoes[novaResposta.id] = novaResposta.resposta;
-    this.props.salvaRespostasUsuario(respostasUsuario);
+    this.props.salvaRespostasUsuario(respostasUsuario, novaResposta.id);
 
     this.props.calculaScore();
     this.passaPergunta();
