@@ -362,7 +362,7 @@ export const getTopNCandidatos = n => (dispatch, getState) => {
     key,
     scoreCandidatos[key]
   ]);
-  console.time("order");
+
   const candidatos = matrizScores
     .sort((a, b) => {
       if (a[1] > b[1]) return -1;
@@ -378,7 +378,8 @@ export const getTopNCandidatos = n => (dispatch, getState) => {
           !isEmpty(dadosCandidatos[b[0]]) &&
           !isEmpty(votacoesCandidatos)
         )
-          // {
+          // por nome de urna: 
+          //{
           //   if (
           //     (((dadosCandidatos[a[0]].respondeu &&
           //       dadosCandidatos[b[0]].respondeu) ||
@@ -392,14 +393,12 @@ export const getTopNCandidatos = n => (dispatch, getState) => {
           //     return dadosCandidatos[a[0]].nome_urna.localeCompare(
           //       dadosCandidatos[b[0]].nome_urna
           //     );
-          //   else return -1;
+          //   else return -1;   
           // }
           return 0;
       } else return 1;
     })
     .map(candidato => candidato[0]);
-
-  console.timeEnd("order");
 
   dispatch({
     type: SET_CANDIDATOS_RANQUEADOS,
