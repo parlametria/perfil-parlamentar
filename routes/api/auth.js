@@ -55,7 +55,6 @@ router.post(
     passport.authenticate("google-token", { session: false })(req, res, next);
   },
   (req, res, next) => {
-    console.log(req);
     if (!req.user) {
       return res.send(401, "User Not Authenticated");
     }
