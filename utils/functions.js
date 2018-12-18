@@ -37,11 +37,6 @@ function formataRespostasUser(resultado) {
     cand.respostas = respostas;
     delete cand.user_resp;
   });
-  return resultadoNovo;
-}
-
-function formataVotacoesUser(resultado) {
-  const resultadoNovo = resultado.map(cand => cand.get({ plain: true }));
 
   resultadoNovo.forEach(cand => {
     const votacoes = {};
@@ -51,12 +46,12 @@ function formataVotacoesUser(resultado) {
     cand.votacoes = votacoes;
     delete cand.user_vot;
   });
+
   return resultadoNovo;
 }
 
 module.exports = {
   formataRespostas,
   formataVotacoes,
-  formataRespostasUser,
-  formataVotacoesUser
+  formataRespostasUser
 };
