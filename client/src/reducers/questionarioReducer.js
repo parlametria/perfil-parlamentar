@@ -14,7 +14,7 @@ const initialState = {
   isVamosComecar: false,
   isExibeGavetaPerguntas: true,
   isContinuarRespondendo: { todos: false, votacoes: false, vozAtiva: false },
-  abaAtiva: "Voz Ativa"
+  abaAtiva: "Votacoes"
 };
 
 export default function (state = initialState, action) {

@@ -47,10 +47,10 @@ const comparaRespostas = (
   idsVozAtiva.forEach(idPergunta => {
     respostasIguais +=
       respostasCandidatos[idPergunta] !== undefined &&
-      respostasCandidatos[idPergunta] !== null &&
-      respostasUsuarioVozAtiva[idPergunta] !== 0 &&
-      respostasUsuarioVozAtiva[idPergunta] !== -2 &&
-      respostasCandidatos[idPergunta] === respostasUsuarioVozAtiva[idPergunta]
+        respostasCandidatos[idPergunta] !== null &&
+        respostasUsuarioVozAtiva[idPergunta] !== 0 &&
+        respostasUsuarioVozAtiva[idPergunta] !== -2 &&
+        respostasCandidatos[idPergunta] === respostasUsuarioVozAtiva[idPergunta]
         ? 1
         : 0;
   });
@@ -59,10 +59,10 @@ const comparaRespostas = (
   idsVotacoes.forEach(idPergunta => {
     respostasIguais +=
       votacoesCandidatos[idPergunta] !== undefined &&
-      votacoesCandidatos[idPergunta] !== null &&
-      respostasUsuarioVotacoes[idPergunta] !== 0 &&
-      respostasUsuarioVotacoes[idPergunta] !== -2 &&
-      votacoesCandidatos[idPergunta] === respostasUsuarioVotacoes[idPergunta]
+        votacoesCandidatos[idPergunta] !== null &&
+        respostasUsuarioVotacoes[idPergunta] !== 0 &&
+        respostasUsuarioVotacoes[idPergunta] !== -2 &&
+        votacoesCandidatos[idPergunta] === respostasUsuarioVotacoes[idPergunta]
         ? 1
         : 0;
   });
@@ -257,19 +257,19 @@ export const calculaScorePorTema = (
   nomeTemas.forEach(tema => {
     const respostasValidasVA = perguntasPorTema[tema]
       ? perguntasPorTema[tema].filter(
-          id =>
-            respostasUsuario.vozAtiva[id] !== 0 &&
-            respostasUsuario.vozAtiva[id] !== -2
-        ).length
+        id =>
+          respostasUsuario.vozAtiva[id] !== 0 &&
+          respostasUsuario.vozAtiva[id] !== -2
+      ).length
       : 0;
 
     const respostasValidasVotacoes =
       votacoesPorTema[tema] && !isEmpty(dadosCandidato.votacoes)
         ? votacoesPorTema[tema].filter(
-            id =>
-              respostasUsuario.votacoes[id] !== 0 &&
-              respostasUsuario.votacoes[id] !== -2
-          ).length
+          id =>
+            respostasUsuario.votacoes[id] !== 0 &&
+            respostasUsuario.votacoes[id] !== -2
+        ).length
         : 0;
 
     const numRespostasUsuario =
@@ -377,23 +377,25 @@ export const getTopNCandidatos = n => (dispatch, getState) => {
           !isEmpty(dadosCandidatos[a[0]]) &&
           !isEmpty(dadosCandidatos[b[0]]) &&
           !isEmpty(votacoesCandidatos)
-        ) {
-          if (
-            (((dadosCandidatos[a[0]].respondeu &&
-              dadosCandidatos[b[0]].respondeu) ||
-              (!dadosCandidatos[a[0]].respondeu &&
-                !dadosCandidatos[b[0]].respondeu)) &&
-              (dadosCandidatos[a[0]].reeleicao === "0" &&
-                dadosCandidatos[b[0]].reeleicao === "0")) ||
-            (isEmpty(votacoesCandidatos[a[0]]) &&
-              isEmpty(votacoesCandidatos[b[0]]))
-          )
-            return dadosCandidatos[a[0]].nome_urna.localeCompare(
-              dadosCandidatos[b[0]].nome_urna
-            );
-          else return -1;
-        }
-        return 0;
+        )
+          // por nome de urna: 
+          //{
+          //   if (
+          //     (((dadosCandidatos[a[0]].respondeu &&
+          //       dadosCandidatos[b[0]].respondeu) ||
+          //       (!dadosCandidatos[a[0]].respondeu &&
+          //         !dadosCandidatos[b[0]].respondeu)) &&
+          //       (dadosCandidatos[a[0]].reeleicao === "0" &&
+          //         dadosCandidatos[b[0]].reeleicao === "0")) ||
+          //     (isEmpty(votacoesCandidatos[a[0]]) &&
+          //       isEmpty(votacoesCandidatos[b[0]]))
+          //   )
+          //     return dadosCandidatos[a[0]].nome_urna.localeCompare(
+          //       dadosCandidatos[b[0]].nome_urna
+          //     );
+          //   else return -1;   
+          // }
+          return 0;
       } else return 1;
     })
     .map(candidato => candidato[0]);
@@ -466,9 +468,9 @@ export const getDadosCandidatos = () => (dispatch, getState) => {
         axios
           .get(
             "/api/respostas/estados/" +
-              filtro.estado +
-              "/naoresponderam?pageNo=1&size=" +
-              ITENS_POR_REQ
+            filtro.estado +
+            "/naoresponderam?pageNo=1&size=" +
+            ITENS_POR_REQ
           )
           .then(respostas => {
             respostas.data.data.forEach(resp => {
@@ -615,10 +617,10 @@ export const setCandidatosFiltrados = () => (dispatch, getState) => {
   axios
     .get(
       "api/respostas/estados/" +
-        filtro.estado +
-        "/partidos/" +
-        filtro.partido +
-        "/responderam"
+      filtro.estado +
+      "/partidos/" +
+      filtro.partido +
+      "/responderam"
     )
     .then(totalCandidatos =>
       dispatch({
@@ -685,9 +687,9 @@ export const setCandidatosFiltrados = () => (dispatch, getState) => {
         final: TAM_PAGINA,
         totalCandidatos:
           filtro.partido !== "Partidos" ||
-          filtro.nome !== "" ||
-          filtro.reeleicao !== "-1" ||
-          filtro.responderam !== "-1"
+            filtro.nome !== "" ||
+            filtro.reeleicao !== "-1" ||
+            filtro.responderam !== "-1"
             ? candidatos.length
             : candidatosRanqueados.length
       })
@@ -709,10 +711,10 @@ export const setPartidos = () => (dispatch, getState) => {
   axios
     .get(
       "api/respostas/estados/" +
-        filtro.estado +
-        "/partidos" +
-        "?eleito=" +
-        eleito
+      filtro.estado +
+      "/partidos" +
+      "?eleito=" +
+      eleito
     )
     .then(partidos => {
       dispatch({ type: SET_PARTIDOS, partidos: partidos.data.data });
@@ -743,11 +745,11 @@ export const getProximaPaginaCandidatos = () => (dispatch, getState) => {
   axios
     .get(
       "/api/respostas/estados/" +
-        filtro.estado +
-        "/naoresponderam?pageNo=" +
-        paginacao.paginaAtualAPI +
-        "&size=" +
-        ITENS_POR_REQ
+      filtro.estado +
+      "/naoresponderam?pageNo=" +
+      paginacao.paginaAtualAPI +
+      "&size=" +
+      ITENS_POR_REQ
     )
     .then(respostas => {
       respostas.data.data.forEach(resposta => {
