@@ -18,5 +18,34 @@ module.exports = (sequelize, type) => {
         as: "user_resp"
       });
   };
+
+  respostau.upsertResp = function(pergunta_id, user_id, resposta, cb) {
+    const that = this;
+    return this.findOne({
+      where: {
+        pergunta_id: pergunta_id,
+        user_id: user_id
+      }
+    }).then((resp, err) => {
+      if (!resp) {
+        const newResp = new that({
+          pergunta_id: pergunta_id,
+          user_id: user_id,
+          resposta: resposta
+        });
+
+        newResp.save().then((savedResp, error) => {
+          if (error) {
+            console.log(error);
+          }
+          return cb(savedResp, error);
+        });
+      } else {
+        resp.update({ resposta: resposta });
+        return cb(resp, err);
+      }
+    });
+  };
+
   return respostau;
 };
