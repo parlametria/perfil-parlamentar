@@ -20,3 +20,7 @@
   right: 0;
   left: auto;
 }
+
+.navbar-light {
+  background-color: #ffffff;
+}
