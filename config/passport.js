@@ -20,7 +20,7 @@ module.exports = () => {
           refreshToken,
           profile,
           req.body.respostas,
-          (err, user) => {
+          (user, err) => {
             return done(err, user);
           }
         );
@@ -42,7 +42,7 @@ module.exports = () => {
           profile,
           req.body.respostas,
           (user, err) => {
-            return done(user, err);
+            return done(err, user);
           }
         );
       }
