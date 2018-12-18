@@ -50,18 +50,19 @@ class QuestionarioContainer extends Component {
         <div className="question-toogle">
           <div>
             <label className="label-toogle" >
-              <span className="label-toogle-left">Feito</span>
+              <span className="label-toogle-left">Dito</span>
               <div id="tooltipVotacoes">
                 <Toggle
                   icons={false}
                   onChange={this.handleToggle}
-                  checked={this.props.questionario.abaAtiva !== "Votacoes"}
+                  checked={this.props.questionario.abaAtiva !== "Voz Ativa"}
                 />
               </div>
-              <span className="label-toogle-right">Dito</span>
+              <span className="label-toogle-right">Feito</span>
             </label>
             <Tooltip placement="bottom" isOpen={this.state.tooltipOpen} target="tooltipVotacoes" toggle={this.toggle}>
-              Ao selecionar Dito você acessa as perguntas que os candidatos foram convidados a responder em 2018. Feito se refere as proposições de lei que os parlamentares participaram na câmara.
+              Dito: Respostas ao questionário Voz Ativa. <br />
+              Feito: Posições de quem já foi deputado em votações importantes.
               </Tooltip>
           </div>
         </div>
