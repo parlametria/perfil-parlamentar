@@ -31,7 +31,8 @@ const att = [
   "reeleicao",
   "email",
   "sg_partido",
-  "partido"
+  "partido",
+  "tem_foto"
 ];
 
 /**
@@ -287,8 +288,6 @@ router.get("/estados/:uf", (req, res) => {
   if (isFiltrandoPorRespondeu) {
     query.respondeu = respondeu;
   }
-
-  console.log(query);
 
   Candidato.count({
     where: { uf: req.params.uf }

@@ -51,8 +51,11 @@ router.post(
 // @access  Public
 router.post(
   "/google",
-  passport.authenticate("google-token", { session: false }),
   (req, res, next) => {
+    passport.authenticate("google-token", { session: false })(req, res, next);
+  },
+  (req, res, next) => {
+    console.log(req);
     if (!req.user) {
       return res.send(401, "User Not Authenticated");
     }
@@ -63,7 +66,6 @@ router.post(
       respostas: req.user.respostas
     };
 
-    console.log(req.auth);
     next();
   },
   generateToken,
