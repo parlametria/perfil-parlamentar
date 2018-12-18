@@ -57,11 +57,31 @@ module.exports = (sequelize, type) => {
           provider_id: profile.id,
           token: accessToken
         });
+        const vozAtiva = respostas.vozAtiva;
+        const votacoes = respostas.votacoes;
 
         newUser.save().then((savedUser, error) => {
           if (error) {
             console.log(error);
           }
+          Object.keys(votacoes).forEach(function(key) {
+            const newVot = new models.votacaou({
+              proposicao_id: key,
+              user_id: savedUser.id,
+              resposta: votacoes[key]
+            });
+            newVot.save();
+          });
+
+          Object.keys(vozAtiva).forEach(function(key) {
+            const newPerg = new models.respostau({
+              pergunta_id: key,
+              user_id: savedUser.id,
+              resposta: vozAtiva[key]
+            });
+            newPerg.save();
+          });
+
           savedUser = savedUser.get({ plain: true });
           return cb(savedUser, error);
         });
@@ -97,14 +117,36 @@ module.exports = (sequelize, type) => {
           provider_id: profile.id,
           token: accessToken
         });
+        const vozAtiva = respostas.vozAtiva;
+        const votacoes = respostas.votacoes;
 
         newUser.save().then((savedUser, error) => {
           if (error) {
             console.log(error);
           }
+          Object.keys(votacoes).forEach(function(key) {
+            const newVot = new models.votacaou({
+              proposicao_id: key,
+              user_id: savedUser.id,
+              resposta: votacoes[key]
+            });
+            newVot.save();
+          });
+
+          Object.keys(vozAtiva).forEach(function(key) {
+            const newPerg = new models.respostau({
+              pergunta_id: key,
+              user_id: savedUser.id,
+              resposta: vozAtiva[key]
+            });
+            newPerg.save();
+          });
+
+          savedUser = savedUser.get({ plain: true });
           return cb(savedUser, error);
         });
       } else {
+        user = user.get({ plain: true });
         return cb(user, err);
       }
     });
