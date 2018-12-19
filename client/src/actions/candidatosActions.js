@@ -55,17 +55,17 @@ const comparaRespostas = (
         : 0;
   });
 
-  const idsVotacoes = Object.keys(respostasUsuarioVotacoes);
-  idsVotacoes.forEach(idPergunta => {
-    respostasIguais +=
-      votacoesCandidatos[idPergunta] !== undefined &&
-      votacoesCandidatos[idPergunta] !== null &&
-      respostasUsuarioVotacoes[idPergunta] !== 0 &&
-      respostasUsuarioVotacoes[idPergunta] !== -2 &&
-      votacoesCandidatos[idPergunta] === respostasUsuarioVotacoes[idPergunta]
-        ? 1
-        : 0;
-  });
+  // const idsVotacoes = Object.keys(respostasUsuarioVotacoes);
+  // idsVotacoes.forEach(idPergunta => {
+  //   respostasIguais +=
+  //     votacoesCandidatos[idPergunta] !== undefined &&
+  //     votacoesCandidatos[idPergunta] !== null &&
+  //     respostasUsuarioVotacoes[idPergunta] !== 0 &&
+  //     respostasUsuarioVotacoes[idPergunta] !== -2 &&
+  //     votacoesCandidatos[idPergunta] === respostasUsuarioVotacoes[idPergunta]
+  //       ? 1
+  //       : 0;
+  // });
 
   return respostasIguais / numRespostasUsuario;
 };
