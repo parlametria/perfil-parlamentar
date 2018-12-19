@@ -99,11 +99,6 @@ class FinalPerguntas extends Component {
         </div>
 
         <div className="text-center">
-          {isMobile && (
-            <button className="btn btn-outline-primary" onClick={this.verAgora}>
-              Ver agora
-            </button>
-          )}{" "}
           <button
             className="btn btn-outline-primary"
             onClick={this.continuarRespondendo}

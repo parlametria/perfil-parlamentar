@@ -80,10 +80,8 @@
   }
 
   .panel-detail {
-    position: absolute;
     top: 67px;
     width: 100%;
-    height: calc(100vh - 67px);
     background-color: #fff;
   }
 }
@@ -100,6 +98,8 @@
   z-index: 9999;
   bottom: 0;
   width: 100%;
+  background-color: #fff;
+  border-top: solid 2px #eee;
 }
 
 a.navbar-controls-link:link,

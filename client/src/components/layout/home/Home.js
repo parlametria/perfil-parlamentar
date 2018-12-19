@@ -10,6 +10,8 @@ import StickyBox from "react-sticky-box";
 
 import querystring from "query-string";
 
+import classnames from "classnames";
+
 // Redux stuff
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
@@ -194,12 +196,14 @@ class Home extends Component {
               <div className="pr-1">
                 <ScrollIntoView selector="#scroll">
                   <BoasVindas />
-                  <button
-                    className="btn btn-secondary"
-                    onClick={this.vamosComecar}
-                  >
-                    Responder
-                  </button>
+                  <div className="text-center">
+                    <button
+                      className="btn btn-secondary"
+                      onClick={this.vamosComecar}
+                    >
+                      Responder
+                    </button>
+                  </div>
                 </ScrollIntoView>
                 <div id="scroll" />
               </div>
@@ -230,13 +234,25 @@ class Home extends Component {
           <CandidatosContainer />
         </FlipMove>
       </section>
+    );
 
+    let controles = (
+      <div className="navbar-controls">
+      <nav className="nav nav-justified">
+        <a className={classnames("nav-item nav-link navbar-controls-link", {
+          active: activeTab === "quiz"
+        })} onClick={() => this.mudaAba("quiz")}>Quiz</a>
+        <a className={classnames("nav-item nav-link navbar-controls-link", {
+          active: activeTab === "resultados"
+        })} onClick={() => this.mudaAba("resultados")}>Deputados</a>
+      </nav>
+    </div>
     );
 
     return (
       <div>
         {!isMobile && barraCompartilhamento}
-        {filtro.estado !== "" && isVamosComecar && (
+        {!isMobile && filtro.estado !== "" && isVamosComecar && (
           <section className="intro">
             <div className="container">
               <h2 className="intro-title text-center">
@@ -254,15 +270,9 @@ class Home extends Component {
 
             {isMobile && activeTab === "quiz" && abaQuiz}
             {!isMobile && abaQuiz}
-
           </div>
         </div>
-        <div className="navbar-controls d-block d-sm-none">
-          <nav className="nav nav-justified">
-            <a className="nav-item nav-link navbar-controls-link active" onClick={() => this.mudaAba("quiz")}>Quiz</a>
-            <a className="nav-item nav-link navbar-controls-link" onClick={() => this.mudaAba("resultados")}>Deputados</a>
-          </nav>
-        </div>
+        {isMobile && controles}
       </div>
     );
   }
