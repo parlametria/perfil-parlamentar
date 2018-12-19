@@ -213,11 +213,9 @@ class Home extends Component {
               </section>
             )}
             {!isMobile && isVamosComecar && (
-              <section className="grid-panel panel-detail">
-                <FlipMove>
-                  {filtro.estado !== "" && <Questionario />}
-                </FlipMove>
-              </section>
+              <FlipMove>
+                {filtro.estado !== "" && <Questionario />}
+              </FlipMove>
             )}
 
           </div>
