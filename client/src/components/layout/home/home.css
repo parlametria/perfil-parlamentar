@@ -80,9 +80,11 @@
   }
 
   .panel-detail {
-    position: fixed;
-    bottom: 0;
+    position: absolute;
+    top: 67px;
     width: 100%;
+    height: calc(100vh - 67px);
+    background-color: #fff;
   }
 }
 
@@ -91,4 +93,25 @@
   margin-top: 2rem;
   margin-bottom: 2rem;
   color: #5b2762;
+}
+
+.navbar-controls {
+  position: fixed;
+  z-index: 9999;
+  bottom: 0;
+  width: 100%;
+}
+
+a.navbar-controls-link:link,
+a.navbar-controls-link:hover,
+a.navbar-controls-link:visited {
+  background-color: #a963b3;
+  color: #ffffff;
+}
+
+a.navbar-controls-link:link.active,
+a.navbar-controls-link:hover.active,
+a.navbar-controls-link:visited.active {
+  background-color: #5b2762;
+  color: #ffffff;
 }

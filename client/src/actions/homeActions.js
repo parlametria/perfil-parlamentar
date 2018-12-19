@@ -7,3 +7,11 @@ export const responderQuiz = () => dispatch => {
 export const verResultados = () => dispatch => {
   dispatch({ type: SET_VER_RESULTADOS });
 };
+
+export const mudaAba = novaAba => dispatch => {
+  if (novaAba === "quiz") {
+    dispatch(responderQuiz());
+  } else if (novaAba === "resultados") {
+    dispatch(verResultados());
+  }
+}

@@ -12,7 +12,7 @@ class BoasVindas extends Component {
   render() {
     return (
       <div className="container tutorial pb-3">
-        <h2 className="panel-title text-center d-none d-sm-block">Vamos começar?</h2>
+        <h2 className="panel-title text-center">Vamos começar?</h2>
         <div className="d-flex align-items-center">
           <div className="tutorial-img">
             <img

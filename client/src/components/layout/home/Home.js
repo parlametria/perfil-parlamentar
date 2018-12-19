@@ -35,6 +35,7 @@ import { salvaScoreUsuario } from "../../../actions/usuarioActions";
 
 import { getDadosPerguntas } from "../../../actions/perguntasActions";
 import { getDadosVotacoes } from "../../../actions/votacoesActions";
+import { mudaAba } from "../../../actions/homeActions";
 
 import {
   getArrayUrl,
@@ -55,6 +56,7 @@ class Home extends Component {
     this.vamosComecar = this.vamosComecar.bind(this);
     this.mostrarTodos = this.mostrarTodos.bind(this);
     this.salvaRespostasCache = this.salvaRespostasCache.bind(this);
+    this.mudaAba = this.mudaAba.bind(this);
   }
 
   mostrarTodos() {
@@ -121,6 +123,10 @@ class Home extends Component {
     localStorage.setItem("arrayRespostasUsuario", arrayRespostasUsuario);
   }
 
+  mudaAba(novaAba) {
+    this.props.mudaAba(novaAba);
+  }
+
   componentWillUnmount() {
     this.salvaRespostasCache();
     window.removeEventListener("beforeunload", this.salvaRespostasCache);
@@ -130,6 +136,7 @@ class Home extends Component {
     const { filtro, isVerTodosEleitos } = this.props.candidatos;
     const { isVamosComecar } = this.props.questionario;
     const { quantidadeVotos } = this.props.usuario;
+    const { activeTab } = this.props.home;
 
     let linkCompartilhamento = "www.vozativa.org/";
     let textoCompartilhamento =
@@ -177,59 +184,77 @@ class Home extends Component {
       </StickyBox>
     );
 
+    let abaQuiz = (
+      <section className="grid-panel panel-master">
+        <FlipMove>
+          {filtro.estado !== "" && <CandidatosContainer />}
+          <div className="d-flex justify-content-center mb-3">
+            {isMobile && !isVamosComecar && filtro.estado !== "" && (
+              <div className="pr-1">
+                <ScrollIntoView selector="#scroll">
+                  <button
+                    className="btn btn-secondary"
+                    onClick={this.vamosComecar}
+                  >
+                    Responder
+                  </button>
+                </ScrollIntoView>
+                <div id="scroll" />
+              </div>
+            )}
+            {!isMobile &&
+              filtro.estado !== "" &&
+              !isVerTodosEleitos &&
+              quantidadeVotos < 1 && (
+                <div>
+                  <button
+                    className="btn btn-secondary"
+                    onClick={this.mostrarTodos}
+                  >
+                    Ver Eleitos
+                  </button>
+                </div>
+              )}
+          </div>
+        </FlipMove>
+      </section>
+    );
+
+    let abaResultados = (
+      <section className="grid-panel panel-detail">
+        <FlipMove>
+          {filtro.estado !== "" && isVamosComecar && <Questionario />}
+        </FlipMove>
+      </section>
+    );
+
     return (
       <div>
         {!isMobile && barraCompartilhamento}
-        <section className="intro">
-          <div className="container">
-            <h2 className="intro-title text-center">
-              Descubra quais deputados/as e candidatos/as são{" "}
-              <strong className="strong">alinhados</strong> com você.
-            </h2>
-          </div>
-        </section>
+        {filtro.estado !== "" && isVamosComecar && (
+          <section className="intro">
+            <div className="container">
+              <h2 className="intro-title text-center">
+                Descubra quais deputados/as e candidatos/as são{" "}
+                <strong className="strong">alinhados</strong> com você.
+              </h2>
+            </div>
+          </section>
+        )}
         <div className="grid-wrapper" id="candidatos">
           <div className="grid-main">
-            <section className="grid-panel panel-master">
-              <FlipMove>
-                {filtro.estado !== "" && <CandidatosContainer />}
-                <div className="d-flex justify-content-center mb-3">
-                  {isMobile && !isVamosComecar && filtro.estado !== "" && (
-                    <div className="pr-1">
-                      <ScrollIntoView selector="#scroll">
-                        <button
-                          className="btn btn-secondary"
-                          onClick={this.vamosComecar}
-                        >
-                          Responder
-                        </button>
-                      </ScrollIntoView>
-                      <div id="scroll" />
-                    </div>
-                  )}
-                  {!isMobile &&
-                    filtro.estado !== "" &&
-                    !isVerTodosEleitos &&
-                    quantidadeVotos < 1 && (
-                      <div>
-                        <button
-                          className="btn btn-secondary"
-                          onClick={this.mostrarTodos}
-                        >
-                          Ver Eleitos
-                        </button>
-                      </div>
-                    )}
-                </div>
-              </FlipMove>
-            </section>
+            {isMobile && activeTab === "quiz" && abaQuiz}
+            {!isMobile && abaQuiz}
             {filtro.estado !== "" && <div className="grid-separator" />}
-            <section className="grid-panel panel-detail">
-              <FlipMove>
-                {filtro.estado !== "" && isVamosComecar && <Questionario />}
-              </FlipMove>
-            </section>
+            {isMobile && activeTab === "quiz" && abaResultados}
+            {!isMobile && abaResultados}
           </div>
+        </div>
+        <div className="navbar-controls d-block d-sm-none">
+          <nav className="nav nav-justified">
+            <a className="nav-item nav-link navbar-controls-link active" onClick={this.mudaAba("quiz")}>Quiz</a>
+            <a className="nav-item nav-link navbar-controls-link" onClick={this.mudaAba("resultados")}>Deputados</a>
+          </nav>
         </div>
       </div>
     );
@@ -248,13 +273,15 @@ Home.propTypes = {
   setActiveTab: PropTypes.func.isRequired,
   facebookLoginComCodigo: PropTypes.func.isRequired,
   getDadosPerguntas: PropTypes.func.isRequired,
-  getDadosVotacoes: PropTypes.func.isRequired
+  getDadosVotacoes: PropTypes.func.isRequired,
+  mudaAba: PropTypes.func.isRequired
 };
 const mapStateToProps = state => ({
   candidatos: state.candidatosReducer,
   perguntas: state.perguntasReducer,
   usuario: state.usuarioReducer,
-  questionario: state.questionarioReducer
+  questionario: state.questionarioReducer,
+  home: state.homeReducer
 });
 
 export default connect(
@@ -272,6 +299,7 @@ export default connect(
     setActiveTab,
     facebookLoginComCodigo,
     getDadosPerguntas,
-    getDadosVotacoes
+    getDadosVotacoes,
+    mudaAba
   }
 )(Home);
