@@ -68,6 +68,9 @@ class Home extends Component {
     e.preventDefault();
     this.props.vamosComecar();
   }
+  mudaAba(novaAba) {
+    this.props.mudaAba(novaAba);
+  }
 
   componentDidMount() {
     this.props.getDadosPerguntas();
@@ -123,9 +126,7 @@ class Home extends Component {
     localStorage.setItem("arrayRespostasUsuario", arrayRespostasUsuario);
   }
 
-  mudaAba(novaAba) {
-    this.props.mudaAba(novaAba);
-  }
+
 
   componentWillUnmount() {
     this.salvaRespostasCache();
@@ -201,6 +202,7 @@ class Home extends Component {
                 </ScrollIntoView>
                 <div id="scroll" />
               </div>
+
             )}
             {!isMobile &&
               filtro.estado !== "" &&
@@ -246,14 +248,14 @@ class Home extends Component {
             {isMobile && activeTab === "quiz" && abaQuiz}
             {!isMobile && abaQuiz}
             {filtro.estado !== "" && <div className="grid-separator" />}
-            {isMobile && activeTab === "quiz" && abaResultados}
+            {isMobile && activeTab === "resultados" && abaResultados}
             {!isMobile && abaResultados}
           </div>
         </div>
         <div className="navbar-controls d-block d-sm-none">
           <nav className="nav nav-justified">
-            <a className="nav-item nav-link navbar-controls-link active" onClick={this.mudaAba("quiz")}>Quiz</a>
-            <a className="nav-item nav-link navbar-controls-link" onClick={this.mudaAba("resultados")}>Deputados</a>
+            <a className="nav-item nav-link navbar-controls-link active" onClick={() => this.mudaAba("quiz")}>Quiz</a>
+            <a className="nav-item nav-link navbar-controls-link" onClick={() => this.mudaAba("resultados")}>Deputados</a>
           </nav>
         </div>
       </div>

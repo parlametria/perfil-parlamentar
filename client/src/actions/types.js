@@ -57,3 +57,4 @@ export const IS_LOGGING = "IS_LOGGING";
 // Home types
 export const SET_RESPONDER_QUIZ = "SET_RESPONDER_QUIZ";
 export const SET_VER_RESULTADOS = "SET_VER_RESULTADOS";
+export const SET_ABA_ATIVA_HOME = "SET_ABA_ATIVA_HOME";
