@@ -30,20 +30,17 @@ function formataRespostasUser(resultado) {
   const resultadoNovo = resultado.map(cand => cand.get({ plain: true }));
 
   resultadoNovo.forEach(cand => {
-    const respostas = {};
-    cand.user_resp.forEach(resposta => {
-      respostas[resposta.pergunta_id] = resposta.resposta;
-    });
-    cand.respostas = respostas;
-    delete cand.user_resp;
-  });
-
-  resultadoNovo.forEach(cand => {
+    const vozAtiva = {};
     const votacoes = {};
+    cand.user_resp.forEach(resposta => {
+      vozAtiva[resposta.pergunta_id] = resposta.resposta;
+    });
     cand.user_vot.forEach(vot => {
       votacoes[vot.proposicao_id] = vot.resposta;
     });
-    cand.votacoes = votacoes;
+    const respostas = { vozAtiva, votacoes };
+    cand.respostas = respostas;
+    delete cand.user_resp;
     delete cand.user_vot;
   });
 
