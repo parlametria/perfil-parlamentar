@@ -48,6 +48,7 @@ import FlipMove from "react-flip-move";
 
 // CSS imports
 import "./home.css";
+import BoasVindas from "../../candidatos/BoasVindas";
 
 class Home extends Component {
   constructor(props) {
@@ -188,11 +189,11 @@ class Home extends Component {
     let abaQuiz = (
       <section className="grid-panel panel-master">
         <FlipMove>
-          {filtro.estado !== "" && <CandidatosContainer />}
           <div className="d-flex justify-content-center mb-3">
             {isMobile && !isVamosComecar && filtro.estado !== "" && (
               <div className="pr-1">
                 <ScrollIntoView selector="#scroll">
+                  <BoasVindas />
                   <button
                     className="btn btn-secondary"
                     onClick={this.vamosComecar}
@@ -204,30 +205,34 @@ class Home extends Component {
               </div>
 
             )}
-            {!isMobile &&
-              filtro.estado !== "" &&
-              !isVerTodosEleitos &&
-              quantidadeVotos < 1 && (
-                <div>
-                  <button
-                    className="btn btn-secondary"
-                    onClick={this.mostrarTodos}
-                  >
-                    Ver Eleitos
-                  </button>
-                </div>
-              )}
+            {isMobile && isVamosComecar && (
+              <section className="grid-panel panel-detail">
+                <FlipMove>
+                  {filtro.estado !== "" && <Questionario />}
+                </FlipMove>
+              </section>
+            )}
+            {!isMobile && isVamosComecar && (
+              <section className="grid-panel panel-detail">
+                <FlipMove>
+                  {filtro.estado !== "" && <Questionario />}
+                </FlipMove>
+              </section>
+            )}
+
           </div>
         </FlipMove>
       </section>
     );
 
     let abaResultados = (
-      <section className="grid-panel panel-detail">
+      <section className="grid-panel panel-master">
         <FlipMove>
-          {filtro.estado !== "" && isVamosComecar && <Questionario />}
+          {/* verificar no candidatosContainer qndo é mobile ou não para a necessidade do vamosComeçar */}
+          <CandidatosContainer />
         </FlipMove>
       </section>
+
     );
 
     return (
@@ -245,11 +250,13 @@ class Home extends Component {
         )}
         <div className="grid-wrapper" id="candidatos">
           <div className="grid-main">
-            {isMobile && activeTab === "quiz" && abaQuiz}
-            {!isMobile && abaQuiz}
-            {filtro.estado !== "" && <div className="grid-separator" />}
             {isMobile && activeTab === "resultados" && abaResultados}
             {!isMobile && abaResultados}
+            {filtro.estado !== "" && <div className="grid-separator" />}
+
+            {isMobile && activeTab === "quiz" && abaQuiz}
+            {!isMobile && abaQuiz}
+
           </div>
         </div>
         <div className="navbar-controls d-block d-sm-none">
