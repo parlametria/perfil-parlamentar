@@ -13,23 +13,13 @@ const keys = require("../../config/keys");
 const {
   formataRespostas,
   formataVotacoes,
-  formataRespostasUser,
-  formataVotacoesUser
+  formataRespostasUser
 } = require("../../utils/functions");
 
-const att_res = ["resposta", "pergunta_id"];
-const att_vot = ["resposta", "proposicao_id"];
-const att_secret = ["id"];
-const att = [
-  "first_name",
-  "full_name",
-  "email",
-  "photo",
-  "id",
-  "provider",
-  "provider_id",
-  "token"
-];
+const attRes = ["resposta", "pergunta_id"];
+const attVot = ["resposta", "proposicao_id"];
+const attSecret = ["id"];
+const attNone = [];
 
 const BAD_REQUEST = 400;
 const SUCCESS = 200;
@@ -47,17 +37,17 @@ const authenticate = expressJwt({
 
 router.get("/respostas", (req, res) => {
   Usuario.findAll({
-    attributes: att_secret,
+    attributes: attSecret,
     include: [
       {
         model: Resposta,
         as: "user_resp",
-        attributes: att_res
+        attributes: attRes
       },
       {
         model: Votacao,
         as: "user_vot",
-        attributes: att_vot
+        attributes: attVot
       }
     ]
   })
@@ -70,25 +60,27 @@ router.get("/respostas", (req, res) => {
 
 router.get("/respostas/eu", authenticate, (req, res) => {
   Usuario.findAll({
-    attributes: att,
+    attributes: attNone,
     include: [
       {
         model: Resposta,
         as: "user_resp",
-        attributes: att_res
+        attributes: attRes
       },
       {
         model: Votacao,
         as: "user_vot",
-        attributes: att_vot
+        attributes: attVot
       }
     ],
     where: { provider_id: req.auth.id }
   })
     .then(resultado => {
       resultadoNovo = formataRespostasUser(resultado);
-      console.log(resultadoNovo[0]);
-      return res.status(SUCCESS).json(resultadoNovo[0]);
+      return res.status(SUCCESS).json({
+        vozAtiva: resultadoNovo[0]["respostas"]["vozAtiva"],
+        votacoes: resultadoNovo[0]["respostas"]["votacoes"]
+      });
     })
     .catch(err => res.status(BAD_REQUEST).json({ err }));
 });
@@ -128,5 +120,3 @@ router.post("/respostas/eu", authenticate, (req, res) => {
   res.status(SUCCESS).json({ vozAtiva, votacoes });
 });
 module.exports = router;
-
-//https://stackoverflow.com/questions/40403825/update-only-one-row-in-sequelize
