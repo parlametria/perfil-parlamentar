@@ -239,12 +239,16 @@ class Home extends Component {
     let controles = (
       <div className="navbar-controls">
       <nav className="nav nav-justified">
-        <a className={classnames("nav-item nav-link navbar-controls-link", {
-          active: activeTab === "quiz"
-        })} onClick={() => this.mudaAba("quiz")}>Quiz</a>
-        <a className={classnames("nav-item nav-link navbar-controls-link", {
-          active: activeTab === "resultados"
-        })} onClick={() => this.mudaAba("resultados")}>Deputados</a>
+        <a className="nav-item nav-link"
+          style={{ backgroundColor: (activeTab === "quiz") ? '#5b2762' : '#a963b3', color: '#fff' }}
+          onClick={() => this.mudaAba("quiz")}>
+            Quiz
+        </a>
+        <a className="nav-item nav-link"
+          style={{ backgroundColor: (activeTab === "resultados") ? '#5b2762' : '#a963b3', color: '#fff' }}
+          onClick={() => this.mudaAba("resultados")}>
+            Deputados
+        </a>
       </nav>
     </div>
     );

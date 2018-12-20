@@ -101,17 +101,3 @@
   background-color: #fff;
   border-top: solid 2px #eee;
 }
-
-a.navbar-controls-link:link,
-a.navbar-controls-link:hover,
-a.navbar-controls-link:visited {
-  background-color: #a963b3;
-  color: #ffffff;
-}
-
-a.navbar-controls-link:link.active,
-a.navbar-controls-link:hover.active,
-a.navbar-controls-link:visited.active {
-  background-color: #5b2762;
-  color: #ffffff;
-}
