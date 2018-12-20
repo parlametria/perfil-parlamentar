@@ -148,7 +148,7 @@ class Home extends Component {
       linkCompartilhamento;
 
     let barraCompartilhamento = (
-      <StickyBox offsetTop={20} offsetBottom={20} offsetRight={20}>
+      <StickyBox offsetTop={67} offsetBottom={20} offsetRight={20}>
         <ul className="share-box">
           <li className="share-element">
             <a
