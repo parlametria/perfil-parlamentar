@@ -43,6 +43,9 @@ import { opcoesFiltroReeleicao, opcoesFiltroTemas } from "../../constantes/filtr
 
 import classnames from "classnames";
 
+// Import função de estado
+import { estados } from "../../constantes/filtrosSeletoresCandidatos";
+
 class CandidatosContainer extends Component {
   constructor(props) {
     super(props);
@@ -64,6 +67,7 @@ class CandidatosContainer extends Component {
     this.setActiveTab = this.setActiveTab.bind(this);
     this.filtraPorTema = this.filtraPorTema.bind(this);
     this.toggle = this.toggle.bind(this);
+    this.selecionaEstado = this.selecionaEstado.bind(this);
   }
 
   setActiveTab(e) {
@@ -234,6 +238,28 @@ class CandidatosContainer extends Component {
     this.props.calculaScore();
   }
 
+  selecionaEstado(e) {
+    e.preventDefault();
+
+    const { filtro } = this.props.candidatos;
+
+    let novoFiltro = {
+      nome: filtro.nome,
+      partido: filtro.partido,
+      estado: e.target.value,
+      reeleicao: filtro.reeleicao,
+      respondeu: filtro.respondeu,
+      tema: filtro.tema
+    };
+
+    if (novoFiltro.estado === "TODOS") {
+      this.props.setActiveTab("eleitos");
+    }
+
+    this.props.setFiltroCandidatos(novoFiltro);
+    this.props.getDadosCandidatos();
+  }
+
   render() {
     const {
       dadosCandidatos,
@@ -387,7 +413,7 @@ class CandidatosContainer extends Component {
 
     const mostraEstado = (
       <div>
-        {activeTab === "candidatos" && filtro.reeleicao !== "1" && (
+        {activeTab === "candidatos" && filtro.reeleicao !== "1" && abaAtiva === "Voz Ativa" && (
           <h5>
             Nesse Estado,{" "}
             <strong className="strong">{totalResponderamEstado}</strong> de{" "}
@@ -438,6 +464,7 @@ class CandidatosContainer extends Component {
             </h5>
           )}
         {activeTab === "eleitos" &&
+          abaAtiva === "Voz Ativa" &&
           filtro.estado === "TODOS" &&
           filtro.reeleicao !== "1" && (
             <h5>
@@ -451,17 +478,19 @@ class CandidatosContainer extends Component {
           abaAtiva === "Voz Ativa" &&
           filtro.estado === "TODOS" &&
           filtro.reeleicao === "1" && (
-            <h5>
+            < h5 >
               {" "}
-              <strong className="strong">
+              < strong className="strong">
                 {totalResponderamAtuacao}
               </strong> dos{" "}
               <strong className="strong">{totalCandAtuacao}</strong> candidatos
               eleitos que já tinham atuação na câmara responderam ao
               questionário.
-            </h5>
-          )}
-        {activeTab === "eleitos" &&
+            </h5 >
+          )
+        }
+        {
+          activeTab === "eleitos" &&
           abaAtiva === "Voz Ativa" &&
           filtro.estado !== "TODOS" &&
           filtro.reeleicao === "1" && (
@@ -475,8 +504,9 @@ class CandidatosContainer extends Component {
               eleitos que já tinham atuação na câmara responderam ao
               questionário.
             </h5>
-          )}
-      </div>
+          )
+        }
+      </div >
     );
 
     const btnFirst = (
@@ -579,7 +609,17 @@ class CandidatosContainer extends Component {
                         </div>
                       </div>
                       <div className="form-row">
-                        <div className="form-group col-6">
+                        <div className="form-group col-4">
+                          <select
+                            className="form-control form-control-secondary barra-filtro-candidato"
+                            onChange={this.selecionaEstado}
+                            value={filtro.estado}
+                          >
+                            <option defaultValue="--">Estados</option>
+                            {estados()}
+                          </select>
+                        </div>
+                        <div className="form-group col-4">
                           <select
                             className="form-control form-control-secondary barra-filtro-candidato"
                             placeholder="Partidos"
@@ -589,8 +629,7 @@ class CandidatosContainer extends Component {
                             {listaSelectPartidos}
                           </select>
                         </div>
-
-                        <div className="form-group col-6">
+                        <div className="form-group col-4">
                           <select
                             className="form-control form-control-secondary barra-filtro-candidato"
                             placeholder="Temas"

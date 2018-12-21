@@ -51,7 +51,6 @@ class Navbar extends Component {
   }
 
   googleResponse(response) {
-    console.log(response);
     this.props.googleLogin(response);
     this.setState({ modal: false });
   }
@@ -82,7 +81,7 @@ class Navbar extends Component {
 
     return (
       <div>
-        <nav className="navbar navbar-expand-lg navbar-light">
+        <nav className="navbar navbar-expand-lg navbar-light fixed-top">
           <div className="container">
             <button
               className="navbar-toggler"
@@ -118,8 +117,13 @@ class Navbar extends Component {
                   src={user.photo}
                   width="35px"
                 />
-                <div className="dropdown-menu dropdown-usermenu" aria-labelledby="userMenuButton">
-                  <a className="dropdown-item" onClick={this.onSignOut}>Sair</a>
+                <div
+                  className="dropdown-menu dropdown-usermenu"
+                  aria-labelledby="userMenuButton"
+                >
+                  <a className="dropdown-item" onClick={this.onSignOut}>
+                    Sair
+                  </a>
                 </div>
               </div>
             )}
@@ -157,8 +161,13 @@ class Navbar extends Component {
                     src={user.photo}
                     width="35px"
                   />
-                  <div className="dropdown-menu dropdown-usermenu" aria-labelledby="userMenuButton">
-                    <a className="dropdown-item" onClick={this.onSignOut}>Sair</a>
+                  <div
+                    className="dropdown-menu dropdown-usermenu"
+                    aria-labelledby="userMenuButton"
+                  >
+                    <a className="dropdown-item" onClick={this.onSignOut}>
+                      Sair
+                    </a>
                   </div>
                 </div>
               )}
@@ -167,13 +176,16 @@ class Navbar extends Component {
                 toggle={this.toggle}
                 className="modal-login"
               >
-                <ModalHeader toggle={this.toggle}>
-                  identifique-se
-                </ModalHeader>
+                <ModalHeader toggle={this.toggle}>identifique-se</ModalHeader>
                 <ModalBody>
                   <div className="row">
-                  <div className="col-lg-8 offset-lg-2">
-                      <p>Ao entrar no Voz Ativa, suas respostas ficarão salvas para que você possa continuar de onde parou. Não guardaremos nenhuma informação sensível, apenas dados públicos (nome, e-mail e foto).</p>
+                    <div className="col-lg-8 offset-lg-2">
+                      <p>
+                        Ao entrar no Voz Ativa, suas respostas ficarão salvas
+                        para que você possa continuar de onde parou. Não
+                        guardaremos nenhuma informação sensível, apenas dados
+                        públicos (nome, e-mail e foto).
+                      </p>
                       <GoogleLogin
                         className="btn btn-primary btn-sm btn-block"
                         clientId="791030988243-msi1r67ltvd5v1fjtajj3un1f0c0d7ds.apps.googleusercontent.com"
@@ -181,11 +193,16 @@ class Navbar extends Component {
                         onSuccess={this.googleResponse}
                         onFailure={this.onFailure}
                       >
-                        <a data-show-count="false" target="_blank" rel="noopener noreferrer">
-                          <span className="icon-google1" /> Entre com sua conta Google
+                        <a
+                          data-show-count="false"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          <span className="icon-google1" /> Entre com sua conta
+                          Google
                         </a>
                       </GoogleLogin>
-                      <br/>
+                      <br />
                       <FacebookLogin
                         appId="2339282366084079"
                         autoLoad={false}
@@ -199,7 +216,6 @@ class Navbar extends Component {
                       />
                     </div>
                   </div>
-                  
                 </ModalBody>
               </Modal>
 

@@ -41,10 +41,15 @@ class VotacoesContainer extends Component {
   registraResposta(novaResposta) {
     const { respostasUsuario } = this.props.usuario;
 
+    const respostaAnterior = respostasUsuario.votacoes[novaResposta.id];
+
     respostasUsuario.votacoes[novaResposta.id] = novaResposta.resposta;
     this.props.salvaRespostasUsuario(respostasUsuario, novaResposta.id);
 
-    this.props.calculaScore();
+    this.props.calculaScore({
+      idPergunta: novaResposta.id,
+      respostaAnterior: respostaAnterior
+    });
     this.passaPergunta();
   }
 
@@ -110,22 +115,6 @@ class VotacoesContainer extends Component {
           <Collapse isOpen={isExibeGavetaPerguntas}>
             <FlipMove>{exibeVotacao}</FlipMove>
           </Collapse>
-          <button
-            type="button"
-            className="btn btn-block btn-primary btn-square d-lg-none"
-            onClick={this.togglePerguntaContainer}
-          >
-            {isExibeGavetaPerguntas && (
-              <span>
-                <span className="icon-cursor" /> Esconder
-              </span>
-            )}
-            {!isExibeGavetaPerguntas && (
-              <span>
-                <span className="icon-up" /> Mostrar
-              </span>
-            )}
-          </button>
         </div>
       </div>
     );

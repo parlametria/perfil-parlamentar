@@ -47,11 +47,16 @@ class PerguntasContainer extends Component {
   registraResposta(novaResposta) {
     const { respostasUsuario } = this.props.usuario;
 
+    const respostaAnterior = respostasUsuario.vozAtiva[novaResposta.id];
+
     respostasUsuario.vozAtiva[novaResposta.id] = novaResposta.resposta;
     //arrayRespostasUsuario[novaResposta.id] = novaResposta.resposta;
     this.props.salvaRespostasUsuario(respostasUsuario, novaResposta.id);
 
-    this.props.calculaScore();
+    this.props.calculaScore({
+      idPergunta: novaResposta.id,
+      respostaAnterior: respostaAnterior
+    });
     this.passaPergunta();
   }
 
@@ -127,35 +132,7 @@ class PerguntasContainer extends Component {
           <Collapse isOpen={isExibeGavetaPerguntas}>
             <FlipMove>{exibePerguntas}</FlipMove>
           </Collapse>
-          <button
-            type="button"
-            className="btn btn-block btn-primary btn-square d-lg-none"
-            onClick={this.togglePerguntaContainer}
-          >
-            {isExibeGavetaPerguntas && (
-              <span>
-                <span className="icon-cursor" /> Esconder
-              </span>
-            )}
-            {!isExibeGavetaPerguntas && (
-              <span>
-                <span className="icon-up" /> Mostrar
-              </span>
-            )}
-          </button>
         </div>
-
-        {/*
-        <div className="container perguntas-container">
-          {isCarregando || isEmpty(dadosPerguntas) ? (
-            <Spinner />
-          ) : (
-            <div>
-              <div className="row">{botoesNavegacao}</div>
-            </div>
-          )}
-        </div>
-        */}
       </div>
     );
   }
