@@ -130,3 +130,13 @@ export const listaEstados = () => {
 export const opcoesFiltroReeleicao = () => {
   return [{ label: "tem atuação na Câmara", value: "1" }];
 };
+
+export const opcoesFiltroTemas = () => {
+  return [{ tema: "Temas", titulo: "Considerando todos os temas" },
+  { tema: "Meio Ambiente", titulo: "Apenas meio ambiente" },
+  { tema: "Direitos Humanos", titulo: "Apenas direitos humanos" },
+  { tema: "Integridade e Transparência", titulo: "Apenas integridade e transparência" },
+  { tema: "Nova Economia", titulo: "Apenas nova economida" },
+  { tema: "Transversal", titulo: "Apenas transversal" }]
+
+};
