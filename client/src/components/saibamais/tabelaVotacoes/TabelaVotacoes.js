@@ -49,24 +49,6 @@ class TabelaVotacoes extends Component {
         descricao: dadosVotacoes[i].descricao
       });
     });
-    // console.log(dadosVotacoes);
-
-    // votacoes.sort((a, b) => {
-    //   if (a.key > b.key) return 1;
-    //   else if (a.key < b.key) return -1;
-    //   else return 0;
-    // });
-
-    // votacoes.sort((a, b) => {
-    //   if (a.tema > b.tema) return 2;
-    //   else if (a.tema < b.tema) return -2;
-    //   else {
-    //     if (a.id_projeto > b.id_projeto) return 1;
-    //     else if (a.id_projeto < b.id_projeto) return -1;
-    //     else return 0;
-    //   }
-    // });
-
 
     function getValorVotacao(num) {
       switch (num) {
