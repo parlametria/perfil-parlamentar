@@ -43,6 +43,9 @@ import { opcoesFiltroReeleicao, opcoesFiltroTemas } from "../../constantes/filtr
 
 import classnames from "classnames";
 
+// Import função de estado
+import { estados } from "../../constantes/filtrosSeletoresCandidatos";
+
 class CandidatosContainer extends Component {
   constructor(props) {
     super(props);
@@ -64,6 +67,7 @@ class CandidatosContainer extends Component {
     this.setActiveTab = this.setActiveTab.bind(this);
     this.filtraPorTema = this.filtraPorTema.bind(this);
     this.toggle = this.toggle.bind(this);
+    this.selecionaEstado = this.selecionaEstado.bind(this);
   }
 
   setActiveTab(e) {
@@ -232,6 +236,28 @@ class CandidatosContainer extends Component {
     this.props.setFiltroCandidatos(novoFiltro);
     //this.props.setCandidatosFiltrados();
     this.props.calculaScore();
+  }
+
+  selecionaEstado(e) {
+    e.preventDefault();
+
+    const { filtro } = this.props.candidatos;
+
+    let novoFiltro = {
+      nome: filtro.nome,
+      partido: filtro.partido,
+      estado: e.target.value,
+      reeleicao: filtro.reeleicao,
+      respondeu: filtro.respondeu,
+      tema: filtro.tema
+    };
+
+    if (novoFiltro.estado === "TODOS") {
+      this.props.setActiveTab("eleitos");
+    }
+
+    this.props.setFiltroCandidatos(novoFiltro);
+    this.props.getDadosCandidatos();
   }
 
   render() {
@@ -579,7 +605,17 @@ class CandidatosContainer extends Component {
                         </div>
                       </div>
                       <div className="form-row">
-                        <div className="form-group col-6">
+                        <div className="form-group col-4">
+                          <select
+                            className="form-control form-control-secondary barra-filtro-candidato"
+                            onChange={this.selecionaEstado}
+                            value={filtro.estado}
+                          >
+                            <option defaultValue="--">Estados</option>
+                            {estados()}
+                          </select>
+                        </div>
+                        <div className="form-group col-4">
                           <select
                             className="form-control form-control-secondary barra-filtro-candidato"
                             placeholder="Partidos"
@@ -589,8 +625,7 @@ class CandidatosContainer extends Component {
                             {listaSelectPartidos}
                           </select>
                         </div>
-
-                        <div className="form-group col-6">
+                        <div className="form-group col-4">
                           <select
                             className="form-control form-control-secondary barra-filtro-candidato"
                             placeholder="Temas"

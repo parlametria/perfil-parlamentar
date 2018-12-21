@@ -40,7 +40,7 @@ const initialState = {
   filtro: {
     nome: "",
     partido: "TODOS",
-    estado: "",
+    estado: "TODOS",
     reeleicao: "-1",
     respondeu: "-1",
     tema: "Temas"
