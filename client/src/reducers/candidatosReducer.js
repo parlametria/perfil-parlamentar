@@ -20,7 +20,8 @@ import {
   SET_ACTIVE_TAB,
   SET_TOTAL_ELEITOS_ESTADO,
   SET_TOTAL_ELEITOS_PARTIDO,
-  SET_VER_TODOS_ELEITOS
+  SET_VER_TODOS_ELEITOS,
+  SET_VOTOS_IGUAIS_USUARIO_CANDIDATOS
 } from "../actions/types";
 
 // candidatesVotings: {id_votacao: voto}
@@ -60,7 +61,8 @@ const initialState = {
   },
   dadosCandidatoBusca: {},
   activeTab: "eleitos",
-  isVerTodosEleitos: false
+  isVerTodosEleitos: false,
+  votosIguaisUsuarioCandidatos: {}
 };
 
 export default function(state = initialState, action) {
@@ -178,6 +180,11 @@ export default function(state = initialState, action) {
       return {
         ...state,
         isVerTodosEleitos: true
+      };
+    case SET_VOTOS_IGUAIS_USUARIO_CANDIDATOS:
+      return {
+        ...state,
+        votosIguaisUsuarioCandidatos: action.votosIguaisUsuarioCandidatos
       };
     default:
       return state;
