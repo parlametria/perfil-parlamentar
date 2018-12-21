@@ -1,8 +1,7 @@
 const passport = require("passport");
 const FacebookTokenStrategy = require("passport-facebook-token");
 const GoogleTokenStrategy = require("passport-google-token").Strategy;
-const models = require("../models/index");
-const Usuario = models.usuario;
+const Usuario = require("../models/Usuario");
 
 const keys = require("./keys");
 
@@ -20,7 +19,7 @@ module.exports = () => {
           refreshToken,
           profile,
           req.body.respostas,
-          (user, err) => {
+          (err, user) => {
             return done(err, user);
           }
         );
@@ -41,7 +40,7 @@ module.exports = () => {
           refreshToken,
           profile,
           req.body.respostas,
-          (user, err) => {
+          (err, user) => {
             return done(err, user);
           }
         );

@@ -51,7 +51,7 @@ class PerguntasContainer extends Component {
 
     respostasUsuario.vozAtiva[novaResposta.id] = novaResposta.resposta;
     //arrayRespostasUsuario[novaResposta.id] = novaResposta.resposta;
-    this.props.salvaRespostasUsuario(respostasUsuario, novaResposta.id);
+    this.props.salvaRespostasUsuario(respostasUsuario);
 
     this.props.calculaScore({
       idPergunta: novaResposta.id,
