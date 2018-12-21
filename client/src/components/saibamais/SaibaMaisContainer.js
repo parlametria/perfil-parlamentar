@@ -57,8 +57,8 @@ class SaibaMaisContainer extends Component {
             src={
               dadosCandidato.tem_foto
                 ? "https://s3-sa-east-1.amazonaws.com/fotoscandidatos2018/fotos_tratadas/img_" +
-                dadosCandidato.cpf +
-                ".jpg"
+                  dadosCandidato.cpf +
+                  ".jpg"
                 : "https://s3-sa-east-1.amazonaws.com/fotoscandidatos2018/fotos_tratadas/nophoto.png"
             }
             alt={dadosCandidato.nome_urna}
@@ -201,11 +201,11 @@ class SaibaMaisContainer extends Component {
         </TabContent>
       </div>
     ) : (
-        <TabelaPerguntas
-          respostas={dadosCandidato.respostas}
-          votos={getArrayUrl(this.state.votos)}
-        />
-      );
+      <TabelaPerguntas
+        respostas={dadosCandidato.respostas}
+        votos={getArrayUrl(this.state.votos)}
+      />
+    );
 
     return (
       <div className="container">
@@ -224,8 +224,8 @@ class SaibaMaisContainer extends Component {
             {this.props.candidatos.isCarregando || isEmpty(dadosCandidato) ? (
               <Spinner />
             ) : (
-                perfilCandidato
-              )}
+              perfilCandidato
+            )}
             <h4 className="compare-title">
               O quanto vocês <strong className="strong">concordam</strong> nos
               temas:
@@ -237,8 +237,8 @@ class SaibaMaisContainer extends Component {
             {this.props.candidatos.isCarregando || isEmpty(dadosCandidato) ? (
               <Spinner />
             ) : (
-                tabela
-              )}
+              tabela
+            )}
           </div>
         </div>
         <div className="my-3">
@@ -266,7 +266,6 @@ class SaibaMaisContainer extends Component {
     if (verAtuacao) {
       this.setState({ votos, activeTab: "2" });
       this.props.history.push("/compare/" + candidato + "/" + votos);
-      console.log();
     } else {
       this.setState({ votos });
     }

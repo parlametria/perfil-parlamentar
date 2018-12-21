@@ -47,11 +47,16 @@ class PerguntasContainer extends Component {
   registraResposta(novaResposta) {
     const { respostasUsuario } = this.props.usuario;
 
+    const respostaAnterior = respostasUsuario.vozAtiva[novaResposta.id];
+
     respostasUsuario.vozAtiva[novaResposta.id] = novaResposta.resposta;
     //arrayRespostasUsuario[novaResposta.id] = novaResposta.resposta;
     this.props.salvaRespostasUsuario(respostasUsuario);
 
-    this.props.calculaScore();
+    this.props.calculaScore({
+      idPergunta: novaResposta.id,
+      respostaAnterior: respostaAnterior
+    });
     this.passaPergunta();
   }
 
