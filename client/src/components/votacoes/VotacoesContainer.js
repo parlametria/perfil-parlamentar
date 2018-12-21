@@ -44,7 +44,7 @@ class VotacoesContainer extends Component {
     const respostaAnterior = respostasUsuario.votacoes[novaResposta.id];
 
     respostasUsuario.votacoes[novaResposta.id] = novaResposta.resposta;
-    this.props.salvaRespostasUsuario(respostasUsuario, novaResposta.id);
+    this.props.salvaRespostasUsuario(respostasUsuario);
 
     this.props.calculaScore({
       idPergunta: novaResposta.id,

@@ -35,11 +35,12 @@ router.post(
       return res.send(401, "User Not Authenticated");
     }
     req.auth = {
-      id: req.user.provider_id,
-      firstName: req.user.first_name,
+      id: req.user.id,
+      firstName: req.user.firstName,
       photo: req.user.photo,
       respostas: req.user.respostas
     };
+
     next();
   },
   generateToken,
@@ -51,16 +52,14 @@ router.post(
 // @access  Public
 router.post(
   "/google",
-  (req, res, next) => {
-    passport.authenticate("google-token", { session: false })(req, res, next);
-  },
+  passport.authenticate("google-token", { session: false }),
   (req, res, next) => {
     if (!req.user) {
       return res.send(401, "User Not Authenticated");
     }
     req.auth = {
-      id: req.user.provider_id,
-      firstName: req.user.first_name,
+      id: req.user.id,
+      firstName: req.user.firstName,
       photo: req.user.photo,
       respostas: req.user.respostas
     };
