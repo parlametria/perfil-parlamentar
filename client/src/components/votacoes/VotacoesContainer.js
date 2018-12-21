@@ -110,22 +110,6 @@ class VotacoesContainer extends Component {
           <Collapse isOpen={isExibeGavetaPerguntas}>
             <FlipMove>{exibeVotacao}</FlipMove>
           </Collapse>
-          <button
-            type="button"
-            className="btn btn-block btn-primary btn-square d-lg-none"
-            onClick={this.togglePerguntaContainer}
-          >
-            {isExibeGavetaPerguntas && (
-              <span>
-                <span className="icon-cursor" /> Esconder
-              </span>
-            )}
-            {!isExibeGavetaPerguntas && (
-              <span>
-                <span className="icon-up" /> Mostrar
-              </span>
-            )}
-          </button>
         </div>
       </div>
     );
