@@ -1,6 +1,5 @@
 const express = require("express");
 const http = require("http");
-const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const path = require("path");
 const logger = require("heroku-logger");
@@ -29,23 +28,11 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(passport.initialize());
 app.use(bodyParser.json());
 
-// DB Config
-const db = require("./config/keys").mongoURI;
-
 db2.sequelize.sync().then(function() {
   http.createServer(app).listen(app.get("port"), function() {
     console.log("Express server listening on port " + app.get("port"));
   });
 });
-
-// Connect to MongoDB
-mongoose
-  .connect(
-    db,
-    { useNewUrlParser: true }
-  )
-  .then(() => logger.info("Banco de dados conectado!"))
-  .catch(err => logger.error(err));
 
 // Usar as rotas
 app.use("/api/perguntas", perguntas);
