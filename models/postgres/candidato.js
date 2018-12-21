@@ -16,7 +16,7 @@ module.exports = (sequelize, type) => {
       email: type.STRING,
       nome_social: type.STRING,
       nome_urna: type.STRING,
-      reeleicao: type.INTEGER,
+      reeleicao: type.STRING,
       ocupacao: type.STRING,
       nome_exibicao: type.STRING,
       raca: type.STRING,
