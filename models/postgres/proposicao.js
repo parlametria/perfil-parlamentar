@@ -2,14 +2,13 @@ module.exports = (sequelize, type) => {
   proposicao = sequelize.define(
     "proposicoe",
     {
-      id: type.INTEGER,
       projeto_lei: type.STRING,
       id_votacao: {
         type: type.INTEGER,
         primaryKey: true
       },
       titulo: type.STRING,
-      descricao: type.STRING(500)
+      descricao: type.STRING(800)
     },
     {
       timestamps: false
