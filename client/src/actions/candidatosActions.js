@@ -149,18 +149,13 @@ export const atualizaScore = ({ idPergunta, respostaAnterior }) => (
 ) => {
   const { respostasUsuario } = getState().usuarioReducer;
   const { dadosCandidatos } = getState().candidatosReducer;
-  const { filtro } = getState().candidatosReducer;
-  const { votacoesCandidatos, dadosVotacoes } = getState().votacoesReducer;
-  const { dadosPerguntas } = getState().perguntasReducer;
+  const { votacoesCandidatos } = getState().votacoesReducer;
 
   const { perguntasRespondidas, votacoesRespondidas } = verificaQuantidadeVotos(
-    Object.keys(perguntas).map(e => e.id),
+    Object.keys(perguntas).map(e => perguntas[e].id),
     Object.keys(votacoes),
     respostasUsuario
   );
-
-  console.log(idPergunta);
-  console.log(respostaAnterior);
 
   let { votosIguaisUsuarioCandidatos } = getState().candidatosReducer;
 
@@ -177,8 +172,6 @@ export const atualizaScore = ({ idPergunta, respostaAnterior }) => (
 
   const respostasConsideradasUsuario = respostasConsideradas();
 
-  console.log(respostasConsideradasUsuario.respostasUsuario);
-
   let scoreCandidatos = {};
   Object.keys(dadosCandidatos).forEach(elem => {
     const naoRespondeuVozAtiva = !dadosCandidatos[elem].respondeu;
@@ -187,13 +180,17 @@ export const atualizaScore = ({ idPergunta, respostaAnterior }) => (
     if (
       respostasConsideradasUsuario.tipoPergunta === "votacoes" &&
       naoRespondeuCamara
-    )
+    ) {
+      scoreCandidatos[elem] = 0;
       return;
+    }
     if (
       respostasConsideradasUsuario.tipoPergunta === "vozAtiva" &&
       naoRespondeuVozAtiva
-    )
+    ) {
+      scoreCandidatos[elem] = 0;
       return;
+    }
 
     const respostasCandidatosConsideradas =
       respostasConsideradasUsuario.tipoPergunta === "votacoes"
