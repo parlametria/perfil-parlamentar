@@ -34,8 +34,7 @@ const initialState = {
 
 const contaTodosVotos = respostasUsuario => {
   return (
-    contaVotos(respostasUsuario.vozAtiva) +
-    contaVotos(respostasUsuario.votacoes)
+    contaVotos(respostasUsuario.vozAtiva) + contaVotos(respostasUsuario.votacoes)
   );
 };
 
@@ -45,7 +44,7 @@ const contaVotos = respostasUsuario => {
   ).length;
 };
 
-export default function(state = initialState, action) {
+export default function (state = initialState, action) {
   switch (action.type) {
     case SET_SCORE_USUARIO:
       return {
@@ -57,8 +56,7 @@ export default function(state = initialState, action) {
           TAM_PERGUNTAS + TAM_VOTACOES,
         respondeuVozAtiva:
           contaVotos(action.respostasUsuario.vozAtiva) === TAM_PERGUNTAS,
-        respondeuVotacoes:
-          contaVotos(action.respostasUsuario.votacoes) === TAM_VOTACOES
+        respondeuVotacoes: contaVotos(action.respostasUsuario.votacoes) === TAM_VOTACOES
       };
     case SET_SCORE_USUARIO_LIMPO:
       return {
