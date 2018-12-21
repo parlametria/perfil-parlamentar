@@ -413,7 +413,7 @@ class CandidatosContainer extends Component {
 
     const mostraEstado = (
       <div>
-        {activeTab === "candidatos" && filtro.reeleicao !== "1" && (
+        {activeTab === "candidatos" && filtro.reeleicao !== "1" && abaAtiva === "Voz Ativa" && (
           <h5>
             Nesse Estado,{" "}
             <strong className="strong">{totalResponderamEstado}</strong> de{" "}
@@ -464,6 +464,7 @@ class CandidatosContainer extends Component {
             </h5>
           )}
         {activeTab === "eleitos" &&
+          abaAtiva === "Voz Ativa" &&
           filtro.estado === "TODOS" &&
           filtro.reeleicao !== "1" && (
             <h5>
@@ -477,17 +478,19 @@ class CandidatosContainer extends Component {
           abaAtiva === "Voz Ativa" &&
           filtro.estado === "TODOS" &&
           filtro.reeleicao === "1" && (
-            <h5>
+            < h5 >
               {" "}
-              <strong className="strong">
+              < strong className="strong">
                 {totalResponderamAtuacao}
               </strong> dos{" "}
               <strong className="strong">{totalCandAtuacao}</strong> candidatos
               eleitos que já tinham atuação na câmara responderam ao
               questionário.
-            </h5>
-          )}
-        {activeTab === "eleitos" &&
+            </h5 >
+          )
+        }
+        {
+          activeTab === "eleitos" &&
           abaAtiva === "Voz Ativa" &&
           filtro.estado !== "TODOS" &&
           filtro.reeleicao === "1" && (
@@ -501,8 +504,9 @@ class CandidatosContainer extends Component {
               eleitos que já tinham atuação na câmara responderam ao
               questionário.
             </h5>
-          )}
-      </div>
+          )
+        }
+      </div >
     );
 
     const btnFirst = (
