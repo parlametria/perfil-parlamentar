@@ -2,38 +2,20 @@
  * @module routes/respostas
  * @requires express
  */
-const Sequelize = require("sequelize");
-const express = require("express");
-const models = require("../../models/index");
-const { formataRespostas } = require("../../utils/functions");
 
-const Op = Sequelize.Op;
+const express = require("express");
+
 /**
  * Rotas para funções relacionadas às respostas.
  * @namespace module:routes/respostas
  */
 const router = express.Router();
+const mongoose = require("mongoose");
 
-const Resposta = models.resposta;
-const Candidato = models.candidato;
+const Resposta = require("../../models/Resposta");
+
 const BAD_REQUEST = 400;
 const SUCCESS = 200;
-
-const att_res = ["resposta", "pergunta_id"];
-const att = [
-  "cpf",
-  "estado",
-  "uf",
-  "nome_urna",
-  "recebeu",
-  "respondeu",
-  "eleito",
-  "reeleicao",
-  "email",
-  "sg_partido",
-  "partido",
-  "tem_foto"
-];
 
 /**
  * Pega todas as respostas de uma vez.
@@ -55,30 +37,18 @@ router.get("/", (req, res) => {
     return res.json(response);
   }
 
-  query.offset = size * (pageNo - 1);
+  query.skip = size * (pageNo - 1);
   query.limit = size;
 
-  Candidato.count().then((totalCount, err) => {
+  Resposta.countDocuments({}, (err, totalCount) => {
     let response;
     if (err) response = { error: true, message: "Error fetching data" };
 
-    Candidato.findAll({
-      attributes: att,
-      include: [
-        {
-          model: Resposta,
-          as: "cpf_resp",
-          attributes: att_res
-        }
-      ],
-      offset: query.offset,
-      limit: query.limit
-    }).then((data, err) => {
-      dataNovo = formataRespostas(data);
+    Resposta.find({}, {}, query, (err, data) => {
       response = err
         ? { status: BAD_REQUEST, message: "Error fetching data" }
         : {
-            data: dataNovo,
+            data,
             total: totalCount,
             itensPorPagina: size,
             pagina: pageNo,
@@ -98,77 +68,9 @@ router.get("/", (req, res) => {
  * @memberof module:routes/respostas
  * @param {boolean} eleito - Flag eleito true
  */
-
 router.get("/eleitos", (req, res) => {
-  Candidato.findAll({
-    attributes: att,
-    include: [
-      {
-        model: Resposta,
-        as: "cpf_resp",
-        attributes: att_res
-      }
-    ],
-    where: { eleito: true }
-  })
-    .then(resultado => {
-      resultadoNovo = formataRespostas(resultado);
-
-      return res.json(resultadoNovo);
-    })
-    .catch(err => res.status(BAD_REQUEST).json({ err }));
-});
-
-/**
- * Pega todos as respostas de todos que responderam.
- * @name get/api/respostas/candidatos/responderam
- * @function
- * @memberof module:routes/respostas
- * @param {boolean} respondeu - Flag respondeu true
- */
-
-router.get("/candidatos/responderam", (req, res) => {
-  Candidato.findAll({
-    attributes: att,
-    include: [
-      {
-        model: Resposta,
-        as: "cpf_resp",
-        attributes: att_res
-      }
-    ],
-    where: { respondeu: true }
-  })
-    .then(respostas => {
-      respostasNovo = formataRespostas(respostas);
-      res.json(respostasNovo);
-    })
-    .catch(err => res.status(BAD_REQUEST).json({ err }));
-});
-
-/**
- * Pega todos as respostas de todos que não responderam.
- * @name get/api/respostas/candidatos/naoresponderam
- * @function
- * @memberof module:routes/respostas
- * @param {boolean} respondeu - Flag respondeu false
- */
-router.get("/candidatos/naoresponderam", (req, res) => {
-  Candidato.findAll({
-    attributes: att,
-    include: [
-      {
-        model: Resposta,
-        as: "cpf_resp",
-        attributes: att_res
-      }
-    ],
-    where: { respondeu: false }
-  })
-    .then(respostas => {
-      respostasNovo = formataRespostas(respostas);
-      res.json(respostasNovo);
-    })
+  Resposta.find({ eleito: true })
+    .then(respostas => res.json(respostas))
     .catch(err => res.status(BAD_REQUEST).json({ err }));
 });
 
@@ -180,21 +82,34 @@ router.get("/candidatos/naoresponderam", (req, res) => {
  * @param {string} cpf - CPF do candidato
  */
 router.get("/candidatos/:cpf", (req, res) => {
-  Candidato.findAll({
-    attributes: att,
-    include: [
-      {
-        model: Resposta,
-        as: "cpf_resp",
-        attributes: att_res
-      }
-    ],
-    where: { cpf: req.params.cpf }
-  })
-    .then(respostas => {
-      respostasNovo = formataRespostas(respostas);
-      res.json(respostasNovo);
-    })
+  Resposta.find({ cpf: req.params.cpf })
+    .then(respostas => res.json(respostas))
+    .catch(err => res.status(BAD_REQUEST).json({ err }));
+});
+
+/**
+ * Pega todos as respostas de todos que responderam.
+ * @name get/api/respostas/candidatos/responderam
+ * @function
+ * @memberof module:routes/respostas
+ * @param {boolean} respondeu - Flag respondeu true
+ */
+router.get("/candidatos/responderam", (req, res) => {
+  Resposta.find({ respondeu: true })
+    .then(respostas => res.json(respostas))
+    .catch(err => res.status(BAD_REQUEST).json({ err }));
+});
+
+/**
+ * Pega todos as respostas de todos que não responderam.
+ * @name get/api/respostas/candidatos/responderam
+ * @function
+ * @memberof module:routes/respostas
+ * @param {boolean} respondeu - Flag respondeu false
+ */
+router.get("/candidatos/naoresponderam", (req, res) => {
+  Resposta.find({ respondeu: false })
+    .then(respostas => res.json(respostas))
     .catch(err => res.status(BAD_REQUEST).json({ err }));
 });
 
@@ -216,17 +131,7 @@ router.get("/estados/:uf/partidos", (req, res) => {
     query.eleito = eleito;
   }
 
-  Candidato.findAll({
-    attributes: att,
-    include: [
-      {
-        model: Resposta,
-        as: "cpf_resp",
-        attributes: att_res
-      }
-    ],
-    where: query
-  })
+  Resposta.find(query)
     .then(respostas => {
       const partidosSet = new Set();
       respostas.forEach(resposta => {
@@ -246,7 +151,6 @@ router.get("/estados/:uf/partidos", (req, res) => {
  * @memberof module:routes/respostas
  * @param {string} uf - Estado
  */
-
 router.get("/estados/:uf", (req, res) => {
   const partido = String(req.query.partido);
   const nome = String(req.query.nome);
@@ -260,14 +164,12 @@ router.get("/estados/:uf", (req, res) => {
       : String(req.query.respondeu);
 
   const reeleicao = String(req.query.reeleicao);
+  const pattern = new RegExp(nome, "i");
 
-  const isFiltrandoPorNome = nome !== "" && nome !== "undefined";
-  const isFiltrandoPorPartido =
-    partido !== "Partidos" && partido !== "undefined";
-  const isFiltrandoPorReeleicao =
-    reeleicao !== "-1" && reeleicao !== "undefined";
-  const isFiltrandoPorRespondeu =
-    respondeu !== "-1" && respondeu !== "undefined";
+  const isFiltrandoPorNome = nome !== "";
+  const isFiltrandoPorPartido = partido !== "Partidos";
+  const isFiltrandoPorReeleicao = reeleicao !== "-1";
+  const isFiltrandoPorRespondeu = respondeu !== "-1";
 
   query = {};
   if (req.params.uf !== "TODOS") {
@@ -277,7 +179,7 @@ router.get("/estados/:uf", (req, res) => {
     query.eleito = eleito;
   }
   if (isFiltrandoPorNome) {
-    query.nome_urna = { [Op.iLike]: "%" + nome + "%" };
+    query.nome_urna = { $regex: pattern };
   }
   if (isFiltrandoPorPartido) {
     query.sg_partido = partido;
@@ -289,29 +191,17 @@ router.get("/estados/:uf", (req, res) => {
     query.respondeu = respondeu;
   }
 
-  Candidato.count({
-    where: { uf: req.params.uf }
-  }).then((totalCount, err) => {
+  console.log(query);
+
+  Resposta.countDocuments({ uf: req.params.uf }, (err, totalCount) => {
     let response;
     if (err) response = { error: true, message: "Error fetching data" };
 
-    Candidato.findAll({
-      attributes: att,
-      include: [
-        {
-          model: Resposta,
-          as: "cpf_resp",
-          attributes: att_res
-        }
-      ],
-      where: query
-    }).then((candidatos, err) => {
-      respostasNovo = formataRespostas(candidatos);
-
+    Resposta.find(query, (err, candidatos) => {
       response = err
         ? { status: BAD_REQUEST, message: "Error fetching data" }
         : {
-            candidatos: respostasNovo,
+            candidatos,
             total: totalCount,
             status: SUCCESS
           };
@@ -330,72 +220,62 @@ router.get("/estados/:uf", (req, res) => {
  * @param {boolean} respondeu - Flag respondeu true
  */
 router.get("/estados/:uf/responderam", (req, res) => {
-  Candidato.count({
-    where: { uf: req.params.uf, respondeu: true }
-  }).then((totalCount, err) => {
-    let response;
-    if (err) response = { error: true, message: "Error fetching data" };
+  Resposta.countDocuments(
+    { uf: req.params.uf, respondeu: true },
+    (err, totalCount) => {
+      let response;
+      if (err) response = { error: true, message: "Error fetching data" };
 
-    Candidato.findAll({
-      attributes: att,
-      include: [
-        {
-          model: Resposta,
-          as: "cpf_resp",
-          attributes: att_res
+      Resposta.find(
+        { uf: req.params.uf, respondeu: true },
+        (err, candidatos) => {
+          response = err
+            ? { status: BAD_REQUEST, message: "Error fetching data" }
+            : {
+                candidatos,
+                total: totalCount,
+                status: SUCCESS
+              };
+
+          res.status(response.status).json(response);
         }
-      ],
-      where: { uf: req.params.uf, respondeu: true }
-    }).then((candidatos, err) => {
-      respostasNovo = formataRespostas(candidatos);
-
-      response = err
-        ? { status: BAD_REQUEST, message: "Error fetching data" }
-        : {
-            candidatos: respostasNovo,
-            total: totalCount,
-            status: SUCCESS
-          };
-
-      res.status(response.status).json(response);
-    });
-  });
+      );
+    }
+  );
 });
 
 // @route   GET api/respostas/estados/<uf>/partidos/
-// @desc    Pega as respostas por partido e estado
+// @desc    Pega as respostas por partido e estado de quem respondeu
 // @access  Public
 router.get("/estados/:uf/partidos/:sigla", (req, res) => {
-  Candidato.count({
-    where: { uf: req.params.uf, sg_partido: req.params.sigla }
-  }).then((totalCount, err) => {
-    let response;
-    if (err) response = { error: true, message: "Error fetching data" };
+  Resposta.countDocuments(
+    {
+      uf: req.params.uf,
+      sg_partido: req.params.sigla
+    },
+    (err, totalCount) => {
+      let response;
+      if (err) response = { error: true, message: "Error fetching data" };
 
-    Candidato.findAll({
-      attributes: att,
-      include: [
+      Resposta.find(
         {
-          model: Resposta,
-          as: "cpf_resp",
-          attributes: att_res
+          uf: req.params.uf,
+          sg_partido: req.params.sigla
+        },
+        (err, candidatos) => {
+          response = err
+            ? { status: BAD_REQUEST, message: "Error fetching data" }
+            : {
+                candidatos,
+                total: totalCount,
+                status: SUCCESS
+              };
+
+          res.status(response.status).json(response);
         }
-      ],
-      where: { uf: req.params.uf, sg_partido: req.params.sigla }
-    }).then((candidatos, err) => {
-      respostasNovo = formataRespostas(candidatos);
-
-      response = err
-        ? { status: BAD_REQUEST, message: "Error fetching data" }
-        : {
-            candidatos: respostasNovo,
-            total: totalCount,
-            status: SUCCESS
-          };
-
-      res.status(response.status).json(response);
-    });
-  });
+      );
+    }
+  );
 });
 
 /**
@@ -407,44 +287,36 @@ router.get("/estados/:uf/partidos/:sigla", (req, res) => {
  * @param {boolean} respondeu - Flag respondeu true
  */
 router.get("/estados/:uf/partidos/:sigla/responderam", (req, res) => {
-  Candidato.count({
-    where: {
+  Resposta.countDocuments(
+    {
       uf: req.params.uf,
       sg_partido: req.params.sigla,
       respondeu: true
-    }
-  }).then((totalCount, err) => {
-    let response;
-    if (err) response = { error: true, message: "Error fetching data" };
+    },
+    (err, totalCount) => {
+      let response;
+      if (err) response = { error: true, message: "Error fetching data" };
 
-    Candidato.findAll({
-      attributes: att,
-      include: [
+      Resposta.find(
         {
-          model: Resposta,
-          as: "cpf_resp",
-          attributes: att_res
+          uf: req.params.uf,
+          sg_partido: req.params.sigla,
+          respondeu: true
+        },
+        (err, candidatos) => {
+          response = err
+            ? { status: BAD_REQUEST, message: "Error fetching data" }
+            : {
+                candidatos,
+                total: totalCount,
+                status: SUCCESS
+              };
+
+          res.status(response.status).json(response);
         }
-      ],
-      where: {
-        uf: req.params.uf,
-        sg_partido: req.params.sigla,
-        respondeu: true
-      }
-    }).then((candidatos, err) => {
-      respostasNovo = formataRespostas(candidatos);
-
-      response = err
-        ? { status: BAD_REQUEST, message: "Error fetching data" }
-        : {
-            candidatos: respostasNovo,
-            total: totalCount,
-            status: SUCCESS
-          };
-
-      res.status(response.status).json(response);
-    });
-  });
+      );
+    }
+  );
 });
 
 /**
@@ -456,44 +328,36 @@ router.get("/estados/:uf/partidos/:sigla/responderam", (req, res) => {
  * @param {boolean} respondeu - Flag respondeu false
  */
 router.get("/estados/:uf/partidos/:sigla/naoresponderam", (req, res) => {
-  Candidato.count({
-    where: {
+  Resposta.countDocuments(
+    {
       uf: req.params.uf,
       sg_partido: req.params.sigla,
       respondeu: false
-    }
-  }).then((totalCount, err) => {
-    let response;
-    if (err) response = { error: true, message: "Error fetching data" };
+    },
+    (err, totalCount) => {
+      let response;
+      if (err) response = { error: true, message: "Error fetching data" };
 
-    Candidato.findAll({
-      attributes: att,
-      include: [
+      Resposta.find(
         {
-          model: Resposta,
-          as: "cpf_resp",
-          attributes: att_res
+          uf: req.params.uf,
+          sg_partido: req.params.sigla,
+          respondeu: false
+        },
+        (err, candidatos) => {
+          response = err
+            ? { status: BAD_REQUEST, message: "Error fetching data" }
+            : {
+                candidatos,
+                total: totalCount,
+                status: SUCCESS
+              };
+
+          res.status(response.status).json(response);
         }
-      ],
-      where: {
-        uf: req.params.uf,
-        sg_partido: req.params.sigla,
-        respondeu: false
-      }
-    }).then((candidatos, err) => {
-      respostasNovo = formataRespostas(candidatos);
-
-      response = err
-        ? { status: BAD_REQUEST, message: "Error fetching data" }
-        : {
-            candidatos: respostasNovo,
-            total: totalCount,
-            status: SUCCESS
-          };
-
-      res.status(response.status).json(response);
-    });
-  });
+      );
+    }
+  );
 });
 
 /**
@@ -517,40 +381,18 @@ router.get("/estados/:uf/naoresponderam", (req, res) => {
     return res.json(response);
   }
 
-  query.offset = size * (pageNo - 1);
+  query.skip = size * (pageNo - 1);
   query.limit = size;
 
-  Candidato.count({
-    where: {
-      uf: req.params.uf,
-      respondeu: false
-    }
-  }).then((totalCount, err) => {
+  Resposta.countDocuments({ uf, respondeu: false }, (err, totalCount) => {
     let response;
     if (err) response = { error: true, message: "Error fetching data" };
 
-    Candidato.findAll({
-      attributes: att,
-      include: [
-        {
-          model: Resposta,
-          as: "cpf_resp",
-          attributes: att_res
-        }
-      ],
-      where: {
-        uf: req.params.uf,
-        respondeu: false
-      },
-      limit: query.limit,
-      offset: query.offset
-    }).then((data, err) => {
-      respostasNovo = formataRespostas(data);
-
+    Resposta.find({ uf, respondeu: false }, {}, query, (err, data) => {
       response = err
         ? { status: BAD_REQUEST, message: "Error fetching data" }
         : {
-            data: respostasNovo,
+            data,
             total: totalCount,
             itensPorPagina: size,
             pagina: pageNo,
@@ -570,42 +412,25 @@ router.get("/estados/:uf/naoresponderam", (req, res) => {
  * @param {string} UF - Estado
  */
 router.get("/estados/:uf/eleitos", (req, res) => {
-  Candidato.count({
-    where: {
-      uf: req.params.uf,
-      eleito: true
+  Resposta.countDocuments(
+    { uf: req.params.uf, eleito: true },
+    (err, totalCount) => {
+      let response;
+      if (err) response = { error: true, message: "Error fetching data" };
+
+      Resposta.find({ uf: req.params.uf, eleito: true }, (err, candidatos) => {
+        response = err
+          ? { status: BAD_REQUEST, message: "Error fetching data" }
+          : {
+              candidatos,
+              total: totalCount,
+              status: SUCCESS
+            };
+
+        res.status(response.status).json(response);
+      });
     }
-  }).then((totalCount, err) => {
-    let response;
-    if (err) response = { error: true, message: "Error fetching data" };
-
-    Candidato.findAll({
-      attributes: att,
-      include: [
-        {
-          model: Resposta,
-          as: "cpf_resp",
-          attributes: att_res
-        }
-      ],
-      where: {
-        uf: req.params.uf,
-        eleito: true
-      }
-    }).then((candidatos, err) => {
-      respostasNovo = formataRespostas(candidatos);
-
-      response = err
-        ? { status: BAD_REQUEST, message: "Error fetching data" }
-        : {
-            candidatos: respostasNovo,
-            total: totalCount,
-            status: SUCCESS
-          };
-
-      res.status(response.status).json(response);
-    });
-  });
+  );
 });
 
 module.exports = router;
