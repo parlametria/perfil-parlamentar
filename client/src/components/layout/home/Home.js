@@ -10,6 +10,8 @@ import StickyBox from "react-sticky-box";
 
 import querystring from "query-string";
 
+import classnames from "classnames";
+
 // Redux stuff
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
@@ -35,6 +37,7 @@ import { salvaScoreUsuario } from "../../../actions/usuarioActions";
 
 import { getDadosPerguntas } from "../../../actions/perguntasActions";
 import { getDadosVotacoes } from "../../../actions/votacoesActions";
+import { mudaAba } from "../../../actions/homeActions";
 
 import {
   getArrayUrl,
@@ -47,18 +50,16 @@ import FlipMove from "react-flip-move";
 
 // CSS imports
 import "./home.css";
-
-// Import função de estado
-import { estados } from "../../../constantes/filtrosSeletoresCandidatos";
+import BoasVindas from "../../candidatos/BoasVindas";
 
 class Home extends Component {
   constructor(props) {
     super(props);
 
-    this.selecionaEstado = this.selecionaEstado.bind(this);
     this.vamosComecar = this.vamosComecar.bind(this);
     this.mostrarTodos = this.mostrarTodos.bind(this);
     this.salvaRespostasCache = this.salvaRespostasCache.bind(this);
+    this.mudaAba = this.mudaAba.bind(this);
   }
 
   mostrarTodos() {
@@ -66,39 +67,25 @@ class Home extends Component {
     this.props.mostrarTodosCandidatos();
   }
 
-  selecionaEstado(e) {
-    e.preventDefault();
-
-    const novoFiltroEstado = {
-      nome: "",
-      partido: "Partidos",
-      estado: e.target.value,
-      reeleicao: "-1",
-      respondeu: "-1",
-      tema: "Temas"
-    };
-
-    //if(!isMobile) this.props.verTodosEleitos();
-    // if (isMobile) this.props.escondePerguntas();
-
-    if (novoFiltroEstado.estado === "TODOS") {
-      this.props.setActiveTab("eleitos");
-    }
-
-    this.props.setFiltroCandidatos(novoFiltroEstado);
-    this.props.getDadosCandidatos();
-  }
-
   vamosComecar(e) {
     e.preventDefault();
     this.props.vamosComecar();
+  }
+  mudaAba(novaAba) {
+    this.props.mudaAba(novaAba);
   }
 
   componentDidMount() {
     this.props.getDadosPerguntas();
     this.props.getDadosVotacoes();
+    this.props.setActiveTab("eleitos");
+    //this.props.getDadosCandidatos();
 
-    if (!isMobile) this.props.vamosComecar();
+    if (!isMobile) {
+      this.props.vamosComecar();
+      //this.mostrarTodos();
+    }
+
     const { votos, estado } = this.props.match.params;
 
     const parsed = querystring.parse(this.props.location.search);
@@ -142,6 +129,8 @@ class Home extends Component {
     localStorage.setItem("arrayRespostasUsuario", arrayRespostasUsuario);
   }
 
+
+
   componentWillUnmount() {
     this.salvaRespostasCache();
     window.removeEventListener("beforeunload", this.salvaRespostasCache);
@@ -151,6 +140,7 @@ class Home extends Component {
     const { filtro, isVerTodosEleitos } = this.props.candidatos;
     const { isVamosComecar } = this.props.questionario;
     const { quantidadeVotos } = this.props.usuario;
+    const { activeTab } = this.props.home;
 
     let linkCompartilhamento = "www.vozativa.org/";
     let textoCompartilhamento =
@@ -158,7 +148,7 @@ class Home extends Component {
       linkCompartilhamento;
 
     let barraCompartilhamento = (
-      <StickyBox offsetTop={20} offsetBottom={20} offsetRight={20}>
+      <StickyBox offsetTop={67} offsetBottom={20} offsetRight={20}>
         <ul className="share-box">
           <li className="share-element">
             <a
@@ -198,87 +188,95 @@ class Home extends Component {
       </StickyBox>
     );
 
+    let abaQuiz = (
+      <section className="grid-panel panel-master">
+        <FlipMove>
+          <div className="d-flex justify-content-center mb-3">
+            {isMobile && !isVamosComecar && filtro.estado !== "" && (
+              <div className="pr-1">
+                <ScrollIntoView selector="#scroll">
+                  <BoasVindas />
+                  <div className="text-center">
+                    <button
+                      className="btn btn-secondary"
+                      onClick={this.vamosComecar}
+                    >
+                      Responder
+                    </button>
+                  </div>
+                </ScrollIntoView>
+                <div id="scroll" />
+              </div>
+
+            )}
+            {isMobile && isVamosComecar && (
+              <section className="grid-panel panel-detail">
+                <FlipMove>
+                  {filtro.estado !== "" && <Questionario />}
+                </FlipMove>
+              </section>
+            )}
+            {!isMobile && isVamosComecar && (
+              <FlipMove>
+                {filtro.estado !== "" && <Questionario />}
+              </FlipMove>
+            )}
+
+          </div>
+        </FlipMove>
+      </section>
+    );
+
+    let abaResultados = (
+      <section className="grid-panel panel-master">
+        <FlipMove>
+          {/* verificar no candidatosContainer qndo é mobile ou não para a necessidade do vamosComeçar */}
+          <CandidatosContainer />
+        </FlipMove>
+      </section>
+    );
+
+    let controles = (
+      <div className="navbar-controls">
+      <nav className="nav nav-justified">
+        <a className="nav-item nav-link"
+          style={{ backgroundColor: (activeTab === "quiz") ? '#5b2762' : '#a963b3', color: '#fff' }}
+          onClick={() => this.mudaAba("quiz")}>
+            Quiz
+        </a>
+        <a className="nav-item nav-link"
+          style={{ backgroundColor: (activeTab === "resultados") ? '#5b2762' : '#a963b3', color: '#fff' }}
+          onClick={() => this.mudaAba("resultados")}>
+            Deputados
+        </a>
+      </nav>
+    </div>
+    );
+
     return (
       <div>
         {!isMobile && barraCompartilhamento}
-        <section className="intro">
-          <div className="container">
-            <h2 className="intro-title text-center">
-              Descubra quais deputados/as e candidatos/as são{" "}
-              <strong className="strong">alinhados</strong> com você.
-            </h2>
-            <div className="d-flex justify-content-center">
-              <form>
-                <div className="form-group">
-                  {isMobile ? (
-                    <ScrollIntoViewOnChange selector="#candidatos">
-                      <select
-                        className="form-control"
-                        onChange={this.selecionaEstado}
-                        value={filtro.estado}
-                      >
-                        <option defaultValue="--">Selecione um Estado</option>
-                        {estados()}
-                      </select>
-                    </ScrollIntoViewOnChange>
-                  ) : (
-                    <select
-                      className="form-control"
-                      onChange={this.selecionaEstado}
-                      value={filtro.estado}
-                    >
-                      <option defaultValue="--">Selecione um Estado</option>
-                      {estados()}
-                    </select>
-                  )}
-                </div>
-              </form>
+        {!isMobile && filtro.estado !== "" && isVamosComecar && (
+          <section className="intro">
+            <div className="container">
+              <h2 className="intro-title text-center">
+                Descubra quais deputados/as e candidatos/as são{" "}
+                <strong className="strong">alinhados</strong> com você.
+              </h2>
             </div>
-          </div>
-        </section>
-
+          </section>
+        )}
         <div className="grid-wrapper" id="candidatos">
           <div className="grid-main">
-            <section className="grid-panel panel-master">
-              <FlipMove>
-                {filtro.estado !== "" && <CandidatosContainer />}
-                <div className="d-flex justify-content-center mb-3">
-                  {isMobile && !isVamosComecar && filtro.estado !== "" && (
-                    <div className="pr-1">
-                      <ScrollIntoView selector="#scroll">
-                        <button
-                          className="btn btn-secondary"
-                          onClick={this.vamosComecar}
-                        >
-                          Votar
-                        </button>
-                      </ScrollIntoView>
-                      <div id="scroll" />
-                    </div>
-                  )}
-                  {filtro.estado !== "" &&
-                    !isVerTodosEleitos &&
-                    quantidadeVotos < 1 && (
-                      <div>
-                        <button
-                          className="btn btn-secondary"
-                          onClick={this.mostrarTodos}
-                        >
-                          Ver Eleitos
-                        </button>
-                      </div>
-                    )}
-                </div>
-              </FlipMove>
-            </section>
+            {isMobile && activeTab === "resultados" && abaResultados}
+            {!isMobile && abaResultados}
             {filtro.estado !== "" && <div className="grid-separator" />}
-            <section className="grid-panel panel-detail">
-              <FlipMove>
-                {filtro.estado !== "" && isVamosComecar && <Questionario />}
-              </FlipMove>
-            </section>
+
+            {isMobile && activeTab === "quiz" && abaQuiz}
+            {!isMobile && abaQuiz}
           </div>
         </div>
+        {isMobile && controles}
       </div>
     );
   }
@@ -296,13 +294,15 @@ Home.propTypes = {
   setActiveTab: PropTypes.func.isRequired,
   facebookLoginComCodigo: PropTypes.func.isRequired,
   getDadosPerguntas: PropTypes.func.isRequired,
-  getDadosVotacoes: PropTypes.func.isRequired
+  getDadosVotacoes: PropTypes.func.isRequired,
+  mudaAba: PropTypes.func.isRequired
 };
 const mapStateToProps = state => ({
   candidatos: state.candidatosReducer,
   perguntas: state.perguntasReducer,
   usuario: state.usuarioReducer,
-  questionario: state.questionarioReducer
+  questionario: state.questionarioReducer,
+  home: state.homeReducer
 });
 
 export default connect(
@@ -320,6 +320,7 @@ export default connect(
     setActiveTab,
     facebookLoginComCodigo,
     getDadosPerguntas,
-    getDadosVotacoes
+    getDadosVotacoes,
+    mudaAba
   }
 )(Home);

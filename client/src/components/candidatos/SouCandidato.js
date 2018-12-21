@@ -158,9 +158,11 @@ class SouCandidato extends Component {
 
     return (
       <div className="container">
-        <h4 className="compare-title text-center">
-          É candidato e quer participar?
-        </h4>
+        <section className="intro">
+          <h4 className="text-center px-3">
+            É candidato e quer participar?
+          </h4>
+        </section>
         <div className="d-flex justify-content-center py-3">
           <div className="col-md-8">
             <p>

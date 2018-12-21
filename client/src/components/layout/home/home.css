@@ -80,9 +80,9 @@
   }
 
   .panel-detail {
-    position: fixed;
-    bottom: 0;
+    top: 67px;
     width: 100%;
+    background-color: #fff;
   }
 }
 
@@ -91,4 +91,13 @@
   margin-top: 2rem;
   margin-bottom: 2rem;
   color: #5b2762;
+}
+
+.navbar-controls {
+  position: fixed;
+  z-index: 9999;
+  bottom: 0;
+  width: 100%;
+  background-color: #fff;
+  border-top: solid 2px #eee;
 }
