@@ -250,8 +250,8 @@ class SaibaMaisContainer extends Component {
   }
 
   componentDidMount() {
-    const { candidato, votos, verAtuacao } = this.props.match.params;    
-
+    const { candidato, votos, verAtuacao } = this.props.match.params;
+        
     let votosUsuario = votos;
         
     if (isEmpty(votos)) {

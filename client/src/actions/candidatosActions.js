@@ -247,9 +247,9 @@ export const calculaTodoScore = () => (dispatch, getState) => {
   const { respostasUsuario } = getState().usuarioReducer;
   const { dadosCandidatos } = getState().candidatosReducer;
   const { filtro } = getState().candidatosReducer;
-  const { votacoesCandidatos, dadosVotacoes } = getState().votacoesReducer;
-  const { dadosPerguntas } = getState().perguntasReducer;
-
+  const { votacoesCandidatos, dadosVotacoes } = getState().votacoesReducer;  
+  const { dadosPerguntas } = getState().perguntasReducer;   
+    
   const { idsVozAtiva, idsVotacoes } = filtraIdsPorTema(
     filtro.tema,
     dadosVotacoes,
