@@ -31,7 +31,6 @@ import classnames from "classnames";
 class SaibaMaisContainer extends Component {
   constructor(props) {
     super(props);
-
     this.toggle = this.toggle.bind(this);
 
     this.state = {
@@ -251,9 +250,16 @@ class SaibaMaisContainer extends Component {
   }
 
   componentDidMount() {
-    const { candidato, votos, verAtuacao } = this.props.match.params;
-    const respostasUsuario = getDict(getArrayUrl(votos));
-    const arrayRespostasUsuario = getArrayUrl(votos);
+    const { candidato, votos, verAtuacao } = this.props.match.params;    
+
+    let votosUsuario = votos;
+        
+    if (isEmpty(votos)) {
+      votosUsuario = "-";
+    }    
+
+    const respostasUsuario = getDict(getArrayUrl(votosUsuario));
+    const arrayRespostasUsuario = getArrayUrl(votosUsuario);
 
     this.props.getVotacoesDeputados();
     this.props.salvaScoreUsuario(respostasUsuario);
@@ -264,10 +270,10 @@ class SaibaMaisContainer extends Component {
     );
 
     if (verAtuacao) {
-      this.setState({ votos, activeTab: "2" });
-      this.props.history.push("/compare/" + candidato + "/" + votos);
+      this.setState({ votos: votosUsuario, activeTab: "2" });
+      this.props.history.push("/compare/" + candidato + "/" + votosUsuario);
     } else {
-      this.setState({ votos });
+      this.setState({ votos: votosUsuario });
     }
   }
 }
