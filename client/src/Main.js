@@ -20,6 +20,11 @@ const Main = () => (
       />
       <Route
         exact
+        path="/candidato/:candidato/:verAtuacao"
+        render={props => <SaibaMaisContainer {...props} />}
+      />
+      <Route
+        exact
         path="/:estado/:votos"
         render={props => <Home {...props} />}
       />

@@ -251,11 +251,11 @@ class SaibaMaisContainer extends Component {
 
   componentDidMount() {
     const { candidato, votos, verAtuacao } = this.props.match.params;
-        
+
     let votosUsuario = votos;
-        
+            
     if (isEmpty(votos)) {
-      votosUsuario = "-";
+      votosUsuario = "0".repeat(79);     
     }    
 
     const respostasUsuario = getDict(getArrayUrl(votosUsuario));
@@ -267,11 +267,18 @@ class SaibaMaisContainer extends Component {
       candidato,
       respostasUsuario,
       arrayRespostasUsuario
-    );
+    );    
+
+    const url_case = this.props.match.path;
+    const PATH_COMPARE = "/compare/:candidato/:votos/:verAtuacao"; 
 
     if (verAtuacao) {
       this.setState({ votos: votosUsuario, activeTab: "2" });
-      this.props.history.push("/compare/" + candidato + "/" + votosUsuario);
+      if (url_case === PATH_COMPARE) {
+        this.props.history.push("/compare/" + candidato + "/" + votosUsuario);
+      } else {
+        this.props.history.push("/candidato/" + candidato);
+      }      
     } else {
       this.setState({ votos: votosUsuario });
     }
