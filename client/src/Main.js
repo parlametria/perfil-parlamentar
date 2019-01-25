@@ -15,16 +15,16 @@ const Main = () => (
       <Route exact path="/" component={Home} />
       <Route
         exact
+        path="/candidato/:candidato/"
+        render={props => <SaibaMaisContainer {...props} />}
+      />
+      <Route
+        exact
         path="/:estado/:votos"
         render={props => <Home {...props} />}
       />
       <Route exact path="/calculo" component={CalculoContainer} />
-      <Route exact path="/sobre" component={Sobre} />
-      <Route
-        exact
-        path="/compare/:candidato/"
-        render={props => <SaibaMaisContainer {...props} />}
-      />
+      <Route exact path="/sobre" component={Sobre} />      
       <Route
         exact
         path="/compare/:candidato/:votos"

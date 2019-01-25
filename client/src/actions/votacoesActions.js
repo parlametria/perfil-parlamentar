@@ -27,7 +27,7 @@ export const setVotacoesCarregando = () => {
 
 export const getVotacoesDeputados = () => (dispatch, getState) => {
   dispatch({ type: VOTACOES_CARREGANDO });
-
+    
   axios.get("/api/candidatos/votacoes").then(votacoes => {
     let mapaVotacoes = {};
 
@@ -38,8 +38,7 @@ export const getVotacoesDeputados = () => (dispatch, getState) => {
     dispatch({
       type: SET_VOTACOES_CANDIDATOS,
       votacoesCandidatos: mapaVotacoes
-    });
-
-    dispatch(calculaScore());
+    });    
+    
   });
 };

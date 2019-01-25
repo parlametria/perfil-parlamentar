@@ -31,7 +31,6 @@ import classnames from "classnames";
 class SaibaMaisContainer extends Component {
   constructor(props) {
     super(props);
-
     this.toggle = this.toggle.bind(this);
 
     this.state = {
@@ -252,22 +251,36 @@ class SaibaMaisContainer extends Component {
 
   componentDidMount() {
     const { candidato, votos, verAtuacao } = this.props.match.params;
-    const respostasUsuario = getDict(getArrayUrl(votos));
-    const arrayRespostasUsuario = getArrayUrl(votos);
 
-    this.props.getVotacoesDeputados();
+    let votosUsuario = votos;
+            
+    if (isEmpty(votos)) {
+      votosUsuario = "0".repeat(79);     
+    }    
+
+    const respostasUsuario = getDict(getArrayUrl(votosUsuario));
+    const arrayRespostasUsuario = getArrayUrl(votosUsuario);
+
+    this.props.getVotacoesDeputados();      
     this.props.salvaScoreUsuario(respostasUsuario);
     this.props.getDadosCandidato(
       candidato,
       respostasUsuario,
       arrayRespostasUsuario
-    );
+    );    
 
-    if (verAtuacao) {
-      this.setState({ votos, activeTab: "2" });
-      this.props.history.push("/compare/" + candidato + "/" + votos);
+    const url_case = this.props.match.path;
+    const PATH_COMPARE = "/candidato/:candidato/"; 
+
+    if (url_case === PATH_COMPARE) {
+      this.setState({ votos: votosUsuario, activeTab: "2" });
     } else {
-      this.setState({ votos });
+      if (verAtuacao) {
+        this.setState({ votos: votosUsuario, activeTab: "2" });
+        this.props.history.push("/compare/" + candidato + "/" + votosUsuario);              
+      } else {
+        this.setState({ votos: votosUsuario });
+      }
     }
   }
 }
