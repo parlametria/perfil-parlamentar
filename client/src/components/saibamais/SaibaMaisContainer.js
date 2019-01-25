@@ -261,7 +261,7 @@ class SaibaMaisContainer extends Component {
     const respostasUsuario = getDict(getArrayUrl(votosUsuario));
     const arrayRespostasUsuario = getArrayUrl(votosUsuario);
 
-    this.props.getVotacoesDeputados();
+    this.props.getVotacoesDeputados();      
     this.props.salvaScoreUsuario(respostasUsuario);
     this.props.getDadosCandidato(
       candidato,
@@ -270,17 +270,17 @@ class SaibaMaisContainer extends Component {
     );    
 
     const url_case = this.props.match.path;
-    const PATH_COMPARE = "/compare/:candidato/:votos/:verAtuacao"; 
+    const PATH_COMPARE = "/candidato/:candidato/"; 
 
-    if (verAtuacao) {
+    if (url_case === PATH_COMPARE) {
       this.setState({ votos: votosUsuario, activeTab: "2" });
-      if (url_case === PATH_COMPARE) {
-        this.props.history.push("/compare/" + candidato + "/" + votosUsuario);
-      } else {
-        this.props.history.push("/candidato/" + candidato);
-      }      
     } else {
-      this.setState({ votos: votosUsuario });
+      if (verAtuacao) {
+        this.setState({ votos: votosUsuario, activeTab: "2" });
+        this.props.history.push("/compare/" + candidato + "/" + votosUsuario);              
+      } else {
+        this.setState({ votos: votosUsuario });
+      }
     }
   }
 }
