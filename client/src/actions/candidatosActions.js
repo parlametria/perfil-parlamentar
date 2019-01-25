@@ -158,7 +158,7 @@ export const atualizaScore = ({ idPergunta, respostaAnterior }) => (
   );
 
   let { votosIguaisUsuarioCandidatos } = getState().candidatosReducer;
-
+  
   const respostasConsideradas = () => {
     let tipoPergunta;
     if (respostasUsuario.vozAtiva[idPergunta]) {
@@ -211,22 +211,40 @@ export const atualizaScore = ({ idPergunta, respostaAnterior }) => (
     if (respostaAnterior === 0 || respostaAnterior === -2) {
       if (
         respostasConsideradasUsuario.respostasUsuario[idPergunta] ===
-        respostasCandidatosConsideradas[idPergunta]
+        respostasCandidatosConsideradas[idPergunta] &&
+        respostasConsideradasUsuario.respostasUsuario[idPergunta] !== -2
       )
         votosIguaisUsuarioCandidatos[elem] =
           votosIguaisUsuarioCandidatos[elem] + 1;
-    } else {
-      if (
-        respostasConsideradasUsuario.respostasUsuario[idPergunta] ===
-        respostasCandidatosConsideradas[idPergunta]
-      )
-        votosIguaisUsuarioCandidatos[elem] =
-          votosIguaisUsuarioCandidatos[elem] + 1;
-      else
-        votosIguaisUsuarioCandidatos[elem] =
-          votosIguaisUsuarioCandidatos[elem] - 1;
-    }
-
+    } else {            
+      if (respostaAnterior === -1) {
+        if (respostasConsideradasUsuario.respostasUsuario[idPergunta] === 1) {
+          if (
+            respostasConsideradasUsuario.respostasUsuario[idPergunta] ===
+            respostasCandidatosConsideradas[idPergunta]             
+          ) {
+            votosIguaisUsuarioCandidatos[elem] =
+              votosIguaisUsuarioCandidatos[elem] + 1;              
+          } else {
+            votosIguaisUsuarioCandidatos[elem] =
+              votosIguaisUsuarioCandidatos[elem] - 1;              
+          }
+        }
+      } else {
+        if (respostasConsideradasUsuario.respostasUsuario[idPergunta] === -1) {
+          if (
+            respostasConsideradasUsuario.respostasUsuario[idPergunta] ===
+            respostasCandidatosConsideradas[idPergunta]             
+          ) {
+            votosIguaisUsuarioCandidatos[elem] =
+              votosIguaisUsuarioCandidatos[elem] + 1;              
+          } else {
+            votosIguaisUsuarioCandidatos[elem] =
+              votosIguaisUsuarioCandidatos[elem] - 1;    
+          }
+        }
+      }
+    }    
     scoreCandidatos[elem] =
       votosIguaisUsuarioCandidatos[elem] / numRespostasConsideradas;
   });
@@ -300,8 +318,8 @@ export const calculaTodoScore = () => (dispatch, getState) => {
     );
 
     scoreCandidatos[elem] = respostasIguais / numRespostasConsideradas;
-    votosIguaisUsuarioCandidatos[elem] = respostasIguais;
-  });
+    votosIguaisUsuarioCandidatos[elem] = respostasIguais;    
+  });  
 
   dispatch({
     type: SET_SCORE_CANDIDATOS,
