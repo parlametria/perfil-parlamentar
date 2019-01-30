@@ -32,7 +32,8 @@ const att = [
   "email",
   "sg_partido",
   "partido",
-  "tem_foto"
+  "tem_foto",
+  "n_candidatura"
 ];
 
 /**
