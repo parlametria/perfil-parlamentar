@@ -9,7 +9,7 @@ export const salvaScoreUsuario = respostasUsuario => {
     respostasUsuario
   };
 };
-export const salvaRespostasUsuario = respostasUsuario => (
+export const salvaRespostasUsuario = (respostasUsuario, idResp) => (
   dispatch,
   getState
 ) => {
@@ -19,7 +19,9 @@ export const salvaRespostasUsuario = respostasUsuario => (
 
   if (isAuthenticated) {
     axios
-      .post("/api/usuarios/respostas/eu", { respostas: respostasUsuario })
+      .post("/api/usuarios/respostas/eu?idResp=" + idResp, {
+        respostas: respostasUsuario
+      })
       .then(res => {});
   }
 };

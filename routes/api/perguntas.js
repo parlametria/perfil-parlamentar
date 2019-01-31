@@ -10,9 +10,10 @@ const express = require("express");
  */
 const router = express.Router();
 
-const mongoose = require("mongoose");
+const models = require("../../models/index");
 
-const Pergunta = require("../../models/Pergunta");
+const Pergunta = models.pergunta;
+const Temas = models.tema;
 
 /**
  * Testa a rota de perguntas.
@@ -31,7 +32,15 @@ router.get("/test", (req, res) =>
  * @memberof module:routes/perguntas
  */
 router.get("/", (req, res) => {
-  Pergunta.find()
+  Pergunta.findAll({
+    attributes: ["id", "texto"],
+    include: [
+      {
+        model: Temas,
+        as: "tema_perg"
+      }
+    ]
+  })
     .then(perguntas => res.json(perguntas))
     .catch(err => res.status(400).json({ err }));
 });

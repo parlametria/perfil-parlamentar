@@ -56,8 +56,10 @@ export const criaURL = respostasUsuario => {
   });
 
   idsVotacoes.forEach(idVotacao => {
-    arrayVotos[arquivoVotacoes[idVotacao].id + idsVozAtiva.length] =
+    if (idVotacao !== "null") {
+      arrayVotos[arquivoVotacoes[idVotacao].id + idsVozAtiva.length] =
       votacoes[idVotacao];
+    }    
   });
 
   arrayVotos.forEach(voto => {
