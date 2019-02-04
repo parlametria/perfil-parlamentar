@@ -1,7 +1,7 @@
 import React from 'react';
 
 export default () => (
-  <div>
+  <div className="container tutorial pb-3">
     <h2 className="panel-title text-center">Vamos começar?</h2>
     <div>
       <p>

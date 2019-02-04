@@ -193,7 +193,7 @@ class Home extends Component {
         <FlipMove>
           <div className="d-flex justify-content-center mb-3">
             {isMobile && !isVamosComecar && filtro.estado !== "" && (
-              <div className="pr-1">
+              <div>
                 <ScrollIntoView selector="#scroll">
                   <BoasVindas />
                   <div className="text-center">
