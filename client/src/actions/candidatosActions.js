@@ -138,6 +138,57 @@ const verificaQuantidadeVotos = (
   };
 };
 
+const contPerguntasRespondidasComuns = (perguntas, candidato) => {
+  let cont = 0;
+  perguntas.forEach(pergunta => {
+    if(candidato.respostas[pergunta] !== 0 || 
+      candidato.respostas[pergunta] !== -2){
+        cont = cont + 1;
+    }
+  });
+  return cont;
+};
+
+const contVotacoesRespondidasComuns = (votacoes, candidato) => {
+  let cont = 0;
+  votacoes.forEach(votacao => {
+    if(candidato[votacao] !== 0 ||
+      candidato[votacao] !== -2){
+        cont = cont + 1;
+    }
+  }); 
+  return cont;
+};
+
+const calculaNumRespostasConsideradas = (
+  naoRespondeuCamara,
+  naoRespondeuVozAtiva,
+  perguntasRespondidas,
+  votacoesRespondidas,
+  respostasCandidato,
+  votacoesCandidato
+) => {
+  let numRespostasConsideradas;
+  if (!naoRespondeuCamara && !naoRespondeuVozAtiva) {
+    numRespostasConsideradas = contPerguntasRespondidasComuns(perguntasRespondidas, respostasCandidato);
+    numRespostasConsideradas = numRespostasConsideradas + 
+    contVotacoesRespondidasComuns(votacoesRespondidas, votacoesCandidato);
+
+  } else if (naoRespondeuCamara) {
+      if (perguntasRespondidas.length === 0) {
+        numRespostasConsideradas = 1;
+      } else {
+        numRespostasConsideradas = contPerguntasRespondidasComuns(perguntasRespondidas, respostasCandidato);
+      } 
+  } else if (naoRespondeuVozAtiva){
+    if (votacoesRespondidas.length === 0) {
+      numRespostasConsideradas = 1;
+    } else {
+      numRespostasConsideradas = contVotacoesRespondidasComuns(votacoesRespondidas, votacoesCandidato);
+    }
+  }
+  return numRespostasConsideradas;
+}
 export const calculaScore = dadosPergunta => dispatch => {
   if (dadosPergunta) dispatch(atualizaScore(dadosPergunta));
   else dispatch(calculaTodoScore());
@@ -197,16 +248,13 @@ export const atualizaScore = ({ idPergunta, respostaAnterior }) => (
         ? votacoesCandidatos[elem]
         : dadosCandidatos[elem].respostas;
 
-    let numRespostasConsideradas;
-    if (!naoRespondeuCamara && !naoRespondeuVozAtiva)
-      numRespostasConsideradas =
-        perguntasRespondidas.length + votacoesRespondidas.length;
-    else if (naoRespondeuCamara)
-      numRespostasConsideradas =
-        perguntasRespondidas.length === 0 ? 1 : perguntasRespondidas.length;
-    else
-      numRespostasConsideradas =
-        votacoesRespondidas.length === 0 ? 1 : votacoesRespondidas.length;
+    let numRespostasConsideradas = calculaNumRespostasConsideradas(
+      naoRespondeuCamara,
+      naoRespondeuVozAtiva,
+      perguntasRespondidas,
+      votacoesRespondidas,
+      dadosCandidatos[elem],
+      votacoesCandidatos[elem]);
 
     if (respostaAnterior === 0 || respostaAnterior === -2) {
       if (
@@ -244,7 +292,7 @@ export const atualizaScore = ({ idPergunta, respostaAnterior }) => (
           }
         }
       }
-    }    
+    } 
     scoreCandidatos[elem] =
       votosIguaisUsuarioCandidatos[elem] / numRespostasConsideradas;
   });
@@ -297,16 +345,13 @@ export const calculaTodoScore = () => (dispatch, getState) => {
       votacoesRespondidas
     );
 
-    let numRespostasConsideradas;
-    if (!naoRespondeuCamara && !naoRespondeuVozAtiva)
-      numRespostasConsideradas =
-        perguntasRespondidas.length + votacoesRespondidas.length;
-    else if (naoRespondeuCamara)
-      numRespostasConsideradas =
-        perguntasRespondidas.length === 0 ? 1 : perguntasRespondidas.length;
-    else
-      numRespostasConsideradas =
-        votacoesRespondidas.length === 0 ? 1 : votacoesRespondidas.length;
+    let numRespostasConsideradas = calculaNumRespostasConsideradas(
+      naoRespondeuCamara,
+      naoRespondeuVozAtiva,
+      perguntasRespondidas,
+      votacoesRespondidas,
+      dadosCandidatos[elem],
+      votacoesCandidatos[elem]);
 
     let respostasIguais = comparaRespostas(
       elem,
