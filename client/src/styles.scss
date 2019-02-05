@@ -1,1 +1,5 @@
-/* You can add global styles to this file, and also import other style files */
+@import url("https://fonts.googleapis.com/css?family=Montserrat:600,700");
+
+@import '../node_modules/bootstrap/scss/functions';
+@import 'assets/bootstrap/variables';
+@import '../node_modules/bootstrap/scss/bootstrap';
