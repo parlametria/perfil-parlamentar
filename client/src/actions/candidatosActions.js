@@ -141,8 +141,8 @@ const verificaQuantidadeVotos = (
 const contPerguntasRespondidasComuns = (perguntas, candidato) => {
   let cont = 0;
   perguntas.forEach(pergunta => {
-    if(candidato.respostas[pergunta] !== 0 || 
-      candidato.respostas[pergunta] !== -2){
+    if(candidato.respostas[pergunta] === 1 || 
+      candidato.respostas[pergunta] === -1) {
         cont = cont + 1;
     }
   });
@@ -152,14 +152,15 @@ const contPerguntasRespondidasComuns = (perguntas, candidato) => {
 const contVotacoesRespondidasComuns = (votacoes, candidato) => {
   let cont = 0;
   votacoes.forEach(votacao => {
-    if(candidato[votacao] !== 0 ||
-      candidato[votacao] !== -2){
+    if(candidato[votacao] === 1 ||
+      candidato[votacao] === -1) {
         cont = cont + 1;
     }
   }); 
   return cont;
 };
 
+//TODO: Adicionar ? quando interseção < 4
 const calculaNumRespostasConsideradas = (
   naoRespondeuCamara,
   naoRespondeuVozAtiva,
@@ -293,8 +294,7 @@ export const atualizaScore = ({ idPergunta, respostaAnterior }) => (
         }
       }
     } 
-    scoreCandidatos[elem] =
-      votosIguaisUsuarioCandidatos[elem] / numRespostasConsideradas;
+    scoreCandidatos[elem] = votosIguaisUsuarioCandidatos[elem] / numRespostasConsideradas;
   });
 
   dispatch({
@@ -424,44 +424,9 @@ export const calculaScorePorTema = (
   });
 
   nomeTemas.forEach(tema => {
-    const respostasValidasVA = perguntasPorTema[tema]
-      ? perguntasPorTema[tema].filter(
-          id =>
-            respostasUsuario.vozAtiva[id] !== 0 &&
-            respostasUsuario.vozAtiva[id] !== -2
-        ).length
-      : 0;
-
-    const respostasValidasVotacoes =
-      votacoesPorTema[tema] && !isEmpty(dadosCandidato.votacoes)
-        ? votacoesPorTema[tema].filter(
-            id =>
-              respostasUsuario.votacoes[id] !== 0 &&
-              respostasUsuario.votacoes[id] !== -2
-          ).length
-        : 0;
-
-    const numRespostasUsuario =
-      respostasValidasVA + respostasValidasVotacoes === 0
-        ? 1
-        : respostasValidasVA + respostasValidasVotacoes;
-
     let respostasCandidatosTema = {};
     let votacoesCandidatosTema = {};
-
-    if (perguntasPorTema[tema]) {
-      perguntasPorTema[tema].forEach(idPergunta => {
-        respostasCandidatosTema[idPergunta] =
-          dadosCandidato.respostas[idPergunta];
-      });
-    }
-
-    if (votacoesCandidatos[dadosCandidato.cpf]) {
-      votacoesPorTema[tema].forEach(idVotacao => {
-        votacoesCandidatosTema[idVotacao] =
-          votacoesCandidatos[dadosCandidato.cpf][idVotacao];
-      });
-    }
+    let numRespostasConsideradas = 0;
 
     if (!isEmpty(dadosCandidato.votacoes)) {
       votacoesPorTema[tema].forEach(idVotacao => {
@@ -469,24 +434,42 @@ export const calculaScorePorTema = (
       });
     }
 
-    const naoRespondeuVozAtiva =
-      Object.keys(dadosCandidato.respostas).filter(
-        id => dadosCandidato.respostas[id] !== 0
-      ).length === 0;
+    if (perguntasPorTema[tema]) {
+      perguntasPorTema[tema].forEach(idPergunta => {
+        respostasCandidatosTema[idPergunta] =
+          dadosCandidato.respostas[idPergunta];
 
-    const naoRespondeuCamara = isEmpty(dadosCandidato.votacoes);
+        if(respostasCandidatosTema[idPergunta] &&
+          (respostasCandidatosTema[idPergunta] === 1 || 
+          respostasCandidatosTema[idPergunta] === -1) &&
+          respostasUsuario.vozAtiva[idPergunta] &&
+          (respostasUsuario.vozAtiva[idPergunta] === 1 ||
+          respostasUsuario.vozAtiva[idPergunta] === -1)) {
+            numRespostasConsideradas = numRespostasConsideradas + 1;
+          }
+      });
+    }
 
-    let numRespostasConsideradas;
-    if (!naoRespondeuCamara && !naoRespondeuVozAtiva)
-      numRespostasConsideradas = numRespostasUsuario;
-    else if (naoRespondeuCamara)
-      numRespostasConsideradas =
-        respostasValidasVA === 0 ? 1 : respostasValidasVA;
-    else
-      numRespostasConsideradas =
-        respostasValidasVotacoes === 0 ? 1 : respostasValidasVotacoes;
+    if (votacoesCandidatos[dadosCandidato.cpf]) {
+      votacoesPorTema[tema].forEach(idVotacao => {
+        votacoesCandidatosTema[idVotacao] =
+          votacoesCandidatos[dadosCandidato.cpf][idVotacao];
+          
+        if(votacoesCandidatosTema[idVotacao] &&
+          (votacoesCandidatosTema[idVotacao] === 1 ||
+          votacoesCandidatosTema[idVotacao] === -1) &&
+          respostasUsuario.votacoes[idVotacao] &&
+          (respostasUsuario.votacoes[idVotacao] === 1 ||
+          respostasUsuario.votacoes[idVotacao] === -1)) {
+            numRespostasConsideradas = numRespostasConsideradas + 1;
+        }
+      });
+    }
 
-    let score = comparaRespostas(
+    numRespostasConsideradas = numRespostasConsideradas === 0 ? 
+    1 : numRespostasConsideradas;
+
+    let score = comparaRespostas (
       dadosCandidato.cpf,
       respostasCandidatosTema,
       respostasUsuario.vozAtiva,
