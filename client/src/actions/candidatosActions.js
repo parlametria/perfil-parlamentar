@@ -661,24 +661,20 @@ export const getDadosCandidato = (
 ) => (dispatch, getState) => {
   dispatch(setCandidatosCarregando());
 
-  const quantVotosVozAtiva = Object.keys(respostasUsuario.vozAtiva).filter(
+  const respostasVozAtiva = Object.keys(respostasUsuario.vozAtiva).filter(
     id =>
-      respostasUsuario.vozAtiva[id] !== 0 &&
-      respostasUsuario.vozAtiva[id] !== -2
-  ).length;
+      respostasUsuario.vozAtiva[id] === 1 ||
+      respostasUsuario.vozAtiva[id] === -1
+  );
 
-  const quantVotacoesRespondidas = Object.keys(
+  const votacoesRespondidas = Object.keys(
     respostasUsuario.votacoes
   ).filter(
     id =>
-      respostasUsuario.votacoes[id] !== 0 &&
-      respostasUsuario.votacoes[id] !== -2
-  ).length;
+      respostasUsuario.votacoes[id] === 1 ||
+      respostasUsuario.votacoes[id] === -1
+  );
 
-  const numRespostasUsuario =
-    quantVotosVozAtiva + quantVotacoesRespondidas === 0
-      ? 1
-      : quantVotosVozAtiva + quantVotacoesRespondidas;
 
   axios
     .get("/api/respostas/candidatos/" + idCandidato)
@@ -695,22 +691,35 @@ export const getDadosCandidato = (
 
         dadosCandidato.votacoes = votacoes;
 
-        const naoRespondeuVozAtiva =
-          Object.keys(dadosCandidato.respostas).filter(
-            id => dadosCandidato.respostas[id] !== 0
-          ).length === 0;
+        let numRespostasConsideradas = 0;
+        if (respostasVozAtiva.length > 0) {
+          respostasVozAtiva.forEach(idPergunta => {
+            let respostasCandidato =
+              dadosCandidato.respostas[idPergunta];
 
-        const naoRespondeuCamara = isEmpty(votacoes);
-
-        let numRespostasConsideradas;
-        if (!naoRespondeuCamara && !naoRespondeuVozAtiva)
-          numRespostasConsideradas = numRespostasUsuario;
-        else if (naoRespondeuCamara)
-          numRespostasConsideradas =
-            quantVotosVozAtiva === 0 ? 1 : quantVotosVozAtiva;
-        else
-          numRespostasConsideradas =
-            quantVotacoesRespondidas === 0 ? 1 : quantVotacoesRespondidas;
+            if(respostasCandidato &&
+              (respostasCandidato === 1 || 
+              respostasCandidato === -1)) {
+                numRespostasConsideradas = numRespostasConsideradas + 1;
+              }
+          });
+        }
+    
+        if (votacoesRespondidas.length > 0) {
+          votacoesRespondidas.forEach(idVotacao => {
+            let respostasCandidato = 
+            dadosCandidato.votacoes[idVotacao];
+              
+            if(respostasCandidato &&
+              (respostasCandidato === 1 ||
+              respostasCandidato === -1)) {
+                numRespostasConsideradas = numRespostasConsideradas + 1;
+            }
+          });
+        }
+    
+        numRespostasConsideradas = numRespostasConsideradas === 0 ? 
+        1 : numRespostasConsideradas;
 
         const score = comparaRespostas(
           idCandidato,
