@@ -14,14 +14,7 @@ No [repositório](https://github.com/analytics-ufcg/vozativa-dados) de dados do 
 
 ## Configuração das variáveis de ambiente
 
-No arquivo `variables.env` estão listadas um conjunto de variáveis que precisam ser definidas.
-Dentre elas
-- SECRET_OR_KEY
-- POSTGRESURI
-- FACEBOOK_APP_ID
-- FACEBOOK_APP_SECRET
-- GOOGLE_APP_ID
-- GOOGLE_APP_SECRET
+Faça uma cópia arquivo `variables.env.sample` para o arquivo `variables.env` e preencha com as chaves para as variáveis de ambiente. 
 
 ## Iniciando docker
 
