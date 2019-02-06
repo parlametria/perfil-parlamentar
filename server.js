@@ -16,7 +16,7 @@ const app = express();
 var db2 = require("./models");
 
 const corsOption = {
-  origin: "http://localhost:3000",
+  origin: "http://localhost:4200",
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
   credentials: true,
   exposedHeaders: ["authorization"]
