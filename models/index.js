@@ -21,7 +21,7 @@ if (!global.hasOwnProperty("models")) {
     dialect: "postgres",
     operatorsAliases: false,
     dialectOptions: {
-      ssl: true
+      ssl: process.env.NODE_ENV === 'production'
     },
     pool: {
       max: 5,
