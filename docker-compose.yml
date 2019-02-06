@@ -1,0 +1,31 @@
+version: '3.5'
+
+services:
+
+  backend:
+    build: .
+    env_file:
+      - variables.env
+    volumes:
+      - ./routes:/app/routes
+      - ./config:/app/config
+      - ./utils:/app/utils
+      - ./models:/app/models
+      - ./server.js:/app/server.js
+    ports:
+      - "5000:5000"
+    networks:
+      - my-proxy-net
+
+  frontend:
+    build: ./client
+    volumes:
+      - ./client:/app/client
+      - /app/client/node_modules/      
+    ports:
+      - "4200:4200"  
+
+networks:
+  my-proxy-net:
+    external:
+      name: voz_ativa_network

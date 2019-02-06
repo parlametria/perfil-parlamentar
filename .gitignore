@@ -1,3 +1,4 @@
 node_modules
 config/keys_dev.js
 .vscode
+variables.env
