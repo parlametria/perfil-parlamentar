@@ -10,10 +10,12 @@ import { PerguntaService } from './shared/services/pergunta.service';
 import { LoginService } from './shared/services/login.service';
 import { getAuthServiceConfigs } from "./shared/config/socialLoginConfig";
 import { TokenInterceptor } from "./shared/auth/token.interceptor";
+import { LoginComponent } from './user/login/login.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
