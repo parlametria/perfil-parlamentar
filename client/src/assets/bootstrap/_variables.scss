@@ -36,7 +36,7 @@ $grays: map-merge(
 
 $blue:    #007bff !default;
 $indigo:  #6610f2 !default;
-$purple:  #6f42c1 !default;
+$purple:  #a963b3 !default;
 $pink:    #290717 !default;
 $red:     #dc3545 !default;
 $orange:  #fd7e14 !default;
@@ -239,8 +239,8 @@ $line-height-sm:              1.5 !default;
 $border-width:                1px !default;
 $border-color:                $gray-300 !default;
 
-$border-radius:               .25rem !default;
-$border-radius-lg:            .3rem !default;
+$border-radius:               20px !default;
+$border-radius-lg:            20px !default;
 $border-radius-sm:            .2rem !default;
 
 $rounded-pill:                50rem !default;
