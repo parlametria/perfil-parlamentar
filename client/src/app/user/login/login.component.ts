@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { LoginService } from '../../shared/services/login.service';
-import { takeUntil } from 'rxjs/operators';
-import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -9,17 +7,15 @@ import { Subject } from 'rxjs';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
-  
-  private userLogged;  
+      
+  isLoggedIn: boolean;
 
   constructor(private loginService: LoginService) { }
 
   ngOnInit() {
-    this.userLogged = this.loginService.isUserLogged();
-    
-    this.loginService.getSessionEmitter().subscribe(() => {
-      this.userLogged = this.loginService.isUserLogged();
-    });  
+    this.loginService.isLoggedIn().subscribe(res => 
+      this.isLoggedIn = res
+    );
   }
 
   loginUserGoogle() {

@@ -5,7 +5,8 @@
     </a>
     <ul class="navbar-nav ml-auto">
       <li class="nav-item">
-        <a class="nav-link" [routerLink]="['/login']">Entrar</a>
+        <a *ngIf="!userAuthenticated" class="nav-link" [routerLink]="['/login']">Entrar</a>
+        <a *ngIf="userAuthenticated" class="nav-link" [routerLink]="['/']" (click)="logoutUser()">sair</a>
       </li>
     </ul>
   </div>

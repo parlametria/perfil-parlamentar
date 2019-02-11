@@ -6,15 +6,14 @@
       </p>
       <p>
         Não guardaremos nenhuma informação sensível, apenas dados públicos (nome, e-mail e foto).
-      </p>
-      <div *ngIf="!userLogged" class="mt-5">
+      </p>      
+      <div *ngIf="!isLoggedIn" class="mt-5">
         <button type="button" class="btn btn-primary btn-block" (click)="loginUserGoogle()">Entre com sua conta Google</button>
         <br />
-        <button type="button" class="btn btn-primary btn-block" (click)="loginUserFacebook()">Entre com sua conta
-          Facebook
+        <button type="button" class="btn btn-primary btn-block" (click)="loginUserFacebook()">Entre com sua conta Facebook
         </button>
       </div>
-      <div *ngIf="userLogged" class="mt-5">
+      <div *ngIf="isLoggedIn" class="mt-5">
         <button type="button" class="btn btn-primary btn-block" (click)="logoutUser()">
           Sair
         </button>

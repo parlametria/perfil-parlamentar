@@ -1,10 +1,11 @@
-import { Injectable, EventEmitter } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 import { AuthService, GoogleLoginProvider, FacebookLoginProvider } from "angularx-social-login";
 
 import { environment } from '../../../environments/environment';
 import { Router } from '@angular/router';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,7 @@ import { Router } from '@angular/router';
 export class LoginService {
 
   private url = environment.apiUrl + 'auth';
-  private sessionEmitter: EventEmitter<any> = new EventEmitter();
+  private loggedIn = new BehaviorSubject<boolean>(this.isUserLogged());
 
   constructor(
     private http: HttpClient,
@@ -73,8 +74,7 @@ export class LoginService {
   logoutUser() {
     this.socialAuthService.signOut();
     this.clearUserData();
-    
-    this.sessionEmitter.emit();
+    this.loggedIn.next(false);      
   }
 
   getToken() {
@@ -89,7 +89,11 @@ export class LoginService {
     return user
   }
 
-  isUserLogged() {
+  isLoggedIn() {
+    return this.loggedIn.asObservable();
+  }
+
+  private isUserLogged() {
     return localStorage.getItem('accessToken') !== null;
   }
 
@@ -105,18 +109,14 @@ export class LoginService {
     localStorage.setItem("accessToken", token);
     localStorage.setItem("id_user", user.id);
     localStorage.setItem("photo_user", user.photo);
+    this.loggedIn.next(true);
 
-    this.sessionEmitter.emit();
   }
 
   private clearUserData() {
     localStorage.removeItem("accessToken");
     localStorage.removeItem("id_user");
     localStorage.removeItem("photo_user");
-  }
-
-  getSessionEmitter() {
-    return this.sessionEmitter;
   }
 
 }
