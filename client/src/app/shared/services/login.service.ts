@@ -93,7 +93,7 @@ export class LoginService {
     return this.loggedIn.asObservable();
   }
 
-  private isUserLogged() {
+  isUserLogged(): boolean {
     return localStorage.getItem('accessToken') !== null;
   }
 
