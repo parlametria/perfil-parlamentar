@@ -8,7 +8,7 @@ import { LoginService } from '../../shared/services/login.service';
 })
 export class LoginComponent implements OnInit {
       
-  isLoggedIn: boolean;
+  private isLoggedIn: boolean;
 
   constructor(private loginService: LoginService) { }
 

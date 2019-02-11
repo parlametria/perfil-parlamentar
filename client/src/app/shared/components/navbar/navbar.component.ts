@@ -8,7 +8,7 @@ import { LoginService } from '../../services/login.service';
 })
 export class NavbarComponent implements OnInit {
 
-  userAuthenticated: boolean;
+  private userAuthenticated: boolean;
 
   constructor(private loginService: LoginService) { }
 
