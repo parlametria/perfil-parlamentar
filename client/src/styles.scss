@@ -3,3 +3,9 @@
 @import '../node_modules/bootstrap/scss/functions';
 @import 'assets/bootstrap/variables';
 @import '../node_modules/bootstrap/scss/bootstrap';
+@import 'assets/bootstrap/overhide';
+
+body {
+  min-height: 75rem;
+  padding-top: $display3-size;
+}
