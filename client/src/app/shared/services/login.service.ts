@@ -72,7 +72,16 @@ export class LoginService {
   }
 
   logoutUser() {
-    this.socialAuthService.signOut();
+    if (this.isUserLogged()) {
+      // Logout if user is authenticated
+      const auth = this.socialAuthService.authState.subscribe((user) => {
+        if (user !== null) {
+          this.socialAuthService.signOut();
+        }
+      });
+      auth.unsubscribe();      
+    }
+    
     this.clearUserData();
     this.loggedIn.next(false);      
   }

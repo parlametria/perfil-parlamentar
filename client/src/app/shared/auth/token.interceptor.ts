@@ -3,17 +3,24 @@ import {
   HttpRequest,
   HttpHandler,
   HttpEvent,
-  HttpInterceptor
+  HttpInterceptor,
+  HttpErrorResponse
 } from '@angular/common/http';
+import { Router } from '@angular/router';
+
 
 import { Observable } from "rxjs";
+import { tap } from "rxjs/operators";
 
 import { LoginService } from '../services/login.service';
 
 @Injectable()
 export class TokenInterceptor implements HttpInterceptor {
 
-  constructor(public loginService: LoginService) { }
+  constructor(
+    private loginService: LoginService,
+    private router: Router
+  ) { }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
@@ -23,7 +30,16 @@ export class TokenInterceptor implements HttpInterceptor {
       }
     });
 
-    return next.handle(request);
+    return next.handle(request).pipe(tap((event: HttpEvent<any>) => {
+    }, (err: any) => {
+      if (err instanceof HttpErrorResponse) {
+        // Handle Unauthorized
+        if (err.status === 401) {
+          this.loginService.logoutUser();
+          this.router.navigate(['/login']);
+        }
+      }
+    }));
   }
 
 }
