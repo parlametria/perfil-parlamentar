@@ -1,22 +1,12 @@
-import { Component, OnInit } from '@angular/core';
-
-import { PerguntaService } from './shared/services/pergunta.service';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit {
+export class AppComponent {
   
-  private perguntas;
-
-  constructor(private perguntasServices: PerguntaService) { }
-
-  ngOnInit() {
-    this.perguntasServices.getPerguntas().subscribe(
-      (perguntas) => this.perguntas = perguntas,
-      (error) => console.log(error));
-  }
+  constructor() { }
 
 }
