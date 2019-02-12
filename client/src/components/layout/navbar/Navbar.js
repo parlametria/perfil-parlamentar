@@ -39,10 +39,10 @@ class Navbar extends Component {
     this.facebookResponse = this.facebookResponse.bind(this);
     this.googleResponse = this.googleResponse.bind(this);
     this.onSignOut = this.onSignOut.bind(this);
-    this.onFailure = this.onFailure.bind(this);
+    this.onFailure = this.onFailure.bind(this);      
   }
 
-  facebookResponse(response) {
+  facebookResponse(response) {        
     if (response.accessToken) {
       this.props.facebookLogin(response);
       this.props.history.push("/");
@@ -78,6 +78,9 @@ class Navbar extends Component {
     let textoCompartilhamento =
       "Nos diga o que você defende e em oito minutos a gente apresenta candidatos alinhados com você. " +
       linkCompartilhamento;
+
+    let facebookRedirectURI = process.env.REACT_APP_FACEBOOK_REDIRECT_URI;
+    let facebookAppID = process.env.REACT_APP_FACEBOOK_APP_ID;    
 
     return (
       <div>
@@ -204,7 +207,7 @@ class Navbar extends Component {
                       </GoogleLogin>
                       <br />
                       <FacebookLogin
-                        appId="2339282366084079"
+                        appId={facebookAppID}
                         autoLoad={false}
                         fields="name,email,picture"
                         callback={this.facebookResponse}
@@ -212,7 +215,7 @@ class Navbar extends Component {
                         textButton="Entre com sua conta Facebook"
                         icon="icon-facebook"
                         tag="button"
-                        redirectUri="https://voz-ativa.herokuapp.com/"
+                        redirectUri={facebookRedirectURI}
                       />
                     </div>
                   </div>
