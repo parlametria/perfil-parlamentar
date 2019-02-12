@@ -7,9 +7,9 @@ import { AuthGuardService } from './shared/services/auth-guard.service';
 import { HomeComponent } from './main/home/home.component';
 
 const routes: Routes = [
-  { path: '', component: AppComponent },
+  { path: '', component: HomeComponent },
   { path: 'login', component: LoginComponent },
-  { path: 'home', component: HomeComponent }
+  { path: '**', component: HomeComponent }
 ];
 
 @NgModule({
