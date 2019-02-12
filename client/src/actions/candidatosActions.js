@@ -294,7 +294,13 @@ export const atualizaScore = ({ idPergunta, respostaAnterior }) => (
         }
       }
     } 
-    scoreCandidatos[elem] = votosIguaisUsuarioCandidatos[elem] / numRespostasConsideradas;
+
+    if (numRespostasConsideradas === 0) {
+      scoreCandidatos[elem] = 0;      
+    } else {
+      scoreCandidatos[elem] = votosIguaisUsuarioCandidatos[elem] / numRespostasConsideradas;
+    }
+          
   });
 
   dispatch({
