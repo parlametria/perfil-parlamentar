@@ -8,6 +8,7 @@ module.exports = {
   facebookCallbackURL: "https://localhost:5000/api/auth/facebook/callback",
   facebookProfileURL:
     "https://graph.facebook.com/v2.5/me?fields=first_name,last_name,email",
+  facebookRedirectURI: process.env.FACEBOOK_REDIRECT_URI,
 
   googleAppID: process.env.GOOGLE_APP_ID,
   googleAppSecret: process.env.GOOGLE_APP_SECRET,
