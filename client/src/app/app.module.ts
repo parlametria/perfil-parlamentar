@@ -9,6 +9,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './user/login/login.component';
 import { NavbarComponent } from './shared/components/navbar/navbar.component';
+import { HomeComponent } from './main/home/home.component';
 
 import { PerguntaService } from './shared/services/pergunta.service';
 import { LoginService } from './shared/services/login.service';
@@ -22,7 +23,8 @@ import { TokenInterceptor } from "./shared/auth/token.interceptor";
   declarations: [
     AppComponent,
     LoginComponent,
-    NavbarComponent
+    NavbarComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
