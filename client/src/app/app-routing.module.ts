@@ -5,11 +5,13 @@ import { LoginComponent } from './user/login/login.component';
 import { AppComponent } from './app.component';
 import { AuthGuardService } from './shared/services/auth-guard.service';
 import { HomeComponent } from './main/home/home.component';
+import { QuestionarioComponent } from './main/questionario/questionario.component';
 
 const routes: Routes = [
-  { path: '', component: AppComponent },
+  { path: '', component: HomeComponent },
   { path: 'login', component: LoginComponent },
-  { path: 'home', component: HomeComponent }
+  { path: 'questionario', component: QuestionarioComponent },
+  { path: '**', component: HomeComponent }
 ];
 
 @NgModule({

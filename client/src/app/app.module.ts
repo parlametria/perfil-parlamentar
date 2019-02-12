@@ -17,6 +17,7 @@ import { AuthGuardService } from './shared/services/auth-guard.service';
 
 import { getAuthServiceConfigs } from "./shared/config/socialLoginConfig";
 import { TokenInterceptor } from "./shared/auth/token.interceptor";
+import { QuestionarioComponent } from './main/questionario/questionario.component';
 
 
 @NgModule({
@@ -24,7 +25,8 @@ import { TokenInterceptor } from "./shared/auth/token.interceptor";
     AppComponent,
     LoginComponent,
     NavbarComponent,
-    HomeComponent
+    HomeComponent,
+    QuestionarioComponent
   ],
   imports: [
     BrowserModule,
