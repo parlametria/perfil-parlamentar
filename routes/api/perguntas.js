@@ -14,6 +14,7 @@ const models = require("../../models/index");
 
 const Pergunta = models.pergunta;
 const Temas = models.tema;
+const Proposicao = models.proposicao;
 
 /**
  * Testa a rota de perguntas.
@@ -26,12 +27,12 @@ router.get("/test", (req, res) =>
 );
 
 /**
- * Pega as perguntas.
- * @name get/api/perguntas
+ * Pega as perguntas do voz Ativa.
+ * @name get/api/perguntas/vozativa
  * @function
  * @memberof module:routes/perguntas
  */
-router.get("/", (req, res) => {
+router.get("/vozativa", (req, res) => {
   Pergunta.findAll({
     attributes: ["id", "texto"],
     include: [
@@ -42,6 +43,34 @@ router.get("/", (req, res) => {
     ]
   })
     .then(perguntas => res.json(perguntas))
+    .catch(err => res.status(400).json({ err }));
+});
+
+/**
+ * Pega os temas.
+ * @name get/api/perguntas/temas
+ * @function
+ * @memberof module:routes/perguntas
+ */
+router.get("/temas", (req, res) => {
+  Temas.findAll({
+    attributes: ["id", "tema"]
+  })
+    .then(temas => res.json(temas))
+    .catch(err => res.status(400).json({ err }));
+});
+
+/**
+ * Pega as proposições.
+ * @name get/api/perguntas/proposicoes
+ * @function
+ * @memberof module:routes/perguntas
+ */
+router.get("/proposicoes", (req, res) => {
+  Proposicao.findAll({
+    attributes: ["projeto_lei", "id_votacao", "titulo", "descricao", "tema_id"]
+  })
+    .then(proposicoes => res.json(proposicoes))
     .catch(err => res.status(400).json({ err }));
 });
 

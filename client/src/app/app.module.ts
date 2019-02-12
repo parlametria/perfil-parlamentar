@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
 
 import { SocialLoginModule, AuthServiceConfig } from "angularx-social-login";
 
@@ -16,19 +17,22 @@ import { AuthGuardService } from './shared/services/auth-guard.service';
 
 import { getAuthServiceConfigs } from "./shared/config/socialLoginConfig";
 import { TokenInterceptor } from "./shared/auth/token.interceptor";
+import { PerguntasComponent } from './questionario/perguntas/perguntas.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    NavbarComponent
+    NavbarComponent,
+    PerguntasComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
-    SocialLoginModule
+    SocialLoginModule,
+    FormsModule
   ],
   providers: [
     PerguntaService,
