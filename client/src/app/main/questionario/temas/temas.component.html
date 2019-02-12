@@ -1,0 +1,11 @@
+<div class="tema">
+  <p class="pt-0">Quais temas você tem mais interesse?</p>
+  <div class="p-1" *ngFor="let tema of temas">
+    <button type="button" class="btn btn-outline-secondary btn-sm" data-toggle="button" aria-pressed="false" autocomplete="on" (click)="clickButton(tema.id)">
+      {{ tema.tema }}
+    </button>
+  </div>
+  <div class="text-center pt-5" [hidden]="!hasAnyTemaSelected">
+    <button type="button" class="btn btn-primary btn-sm">Dar minha opinião</button>
+  </div>
+</div>

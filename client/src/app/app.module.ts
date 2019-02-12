@@ -14,10 +14,12 @@ import { HomeComponent } from './main/home/home.component';
 import { PerguntaService } from './shared/services/pergunta.service';
 import { LoginService } from './shared/services/login.service';
 import { AuthGuardService } from './shared/services/auth-guard.service';
+import { TemaService } from './shared/services/tema.service';
 
 import { getAuthServiceConfigs } from "./shared/config/socialLoginConfig";
 import { TokenInterceptor } from "./shared/auth/token.interceptor";
 import { QuestionarioComponent } from './main/questionario/questionario.component';
+import { TemasComponent } from './main/questionario/temas/temas.component';
 
 
 @NgModule({
@@ -26,7 +28,8 @@ import { QuestionarioComponent } from './main/questionario/questionario.componen
     LoginComponent,
     NavbarComponent,
     HomeComponent,
-    QuestionarioComponent
+    QuestionarioComponent,
+    TemasComponent
   ],
   imports: [
     BrowserModule,
@@ -38,6 +41,7 @@ import { QuestionarioComponent } from './main/questionario/questionario.componen
     PerguntaService,
     LoginService,
     AuthGuardService,
+    TemaService,    
     {
       provide: AuthServiceConfig,
       useFactory: getAuthServiceConfigs

@@ -1,0 +1,8 @@
+.questionario {
+    height: 50vh;
+    display: flex;
+
+    @media (max-width: 575.98px) {
+        height: 80vh;
+    }
+}
