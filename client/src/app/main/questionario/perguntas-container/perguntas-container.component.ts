@@ -53,7 +53,6 @@ export class PerguntasContainerComponent implements OnInit, OnDestroy {
           this.listaTemas = temas; 
           this.temaSelecionado = '3';         
         }
-        console.log(this.listaTemas)
       },
       error => console.log(error)
     );
