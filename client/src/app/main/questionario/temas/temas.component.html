@@ -1,0 +1,14 @@
+<div class="tema container">
+  <div>
+    <p class="pt-3">Quais temas você tem mais interesse?</p>
+    <div class="">
+      <button *ngFor="let tema of temas" class="btn btn-outline-success nohover m-1" role="button" [ngClass]="{'active': isTemaSelected(tema.id), 'aria-pressed': isTemaSelected(tema.id)}"
+        (click)="clickButton(tema.id)">
+        {{ tema.tema }}
+      </button>
+    </div>
+  </div>
+  <div class="text-center">
+    <button type="button" class="btn btn-primary" [disabled]="!hasAnySelectedTema">Dar minha opinião</button>
+  </div>
+</div>

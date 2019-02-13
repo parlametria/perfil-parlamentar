@@ -47,20 +47,6 @@ router.get("/vozativa", (req, res) => {
 });
 
 /**
- * Pega os temas.
- * @name get/api/perguntas/temas
- * @function
- * @memberof module:routes/perguntas
- */
-router.get("/temas", (req, res) => {
-  Temas.findAll({
-    attributes: ["id", "tema"]
-  })
-    .then(temas => res.json(temas))
-    .catch(err => res.status(400).json({ err }));
-});
-
-/**
  * Pega as proposições.
  * @name get/api/perguntas/proposicoes
  * @function

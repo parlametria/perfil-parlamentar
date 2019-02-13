@@ -4,6 +4,7 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 import { PerguntaService } from '../../shared/services/pergunta.service';
+import { TemaService } from '../../shared/services/tema.service';
 import { Tema } from '../../shared/models/tema.model';
 import { Proposicao } from '../../shared/models/proposicao.model';
 
@@ -24,13 +25,16 @@ export class PerguntasContainerComponent implements OnInit, OnDestroy {
   private perguntasTemaSelecionado: Proposicao[];
   private perguntaSelecionada: Proposicao;
 
-  constructor(private perguntaService: PerguntaService) {
+  constructor(
+    private perguntaService: PerguntaService,
+    private temaService: TemaService
+  ) {
     // Inicia tema a partir do ID
     this.temaSelecionado = '3';
   }
 
   ngOnInit() {
-    this.perguntaService.getTemas().pipe(takeUntil(this.unsubscribe)).subscribe(
+    this.temaService.getTemas().pipe(takeUntil(this.unsubscribe)).subscribe(
       temas => this.listaTemas = temas,
       error => console.log(error)
     );

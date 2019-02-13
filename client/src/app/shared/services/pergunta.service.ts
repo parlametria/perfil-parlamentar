@@ -22,11 +22,8 @@ export class PerguntaService {
     return this.http.get<Pergunta[]>(this.url);
   }
 
-  getTemas(): Observable<Tema[]> {
-    return this.http.get<Tema[]>(this.url + "/temas");
-  }
-
   getProposicoes(): Observable<Proposicao[]> {
     return this.http.get<Proposicao[]>(this.url + "/proposicoes");
   }
+  
 }
