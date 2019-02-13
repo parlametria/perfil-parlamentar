@@ -12,7 +12,7 @@ export class PerguntaComponent implements OnInit {
   @Input() description = ''
   @Input() id = '';
   
-  private isCollapsed: boolean;  
+  isCollapsed: boolean;  
 
   constructor() {
     this.isCollapsed = true;

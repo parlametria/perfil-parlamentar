@@ -17,13 +17,13 @@ export class PerguntasContainerComponent implements OnInit, OnDestroy {
 
   private unsubscribe = new Subject();
 
-  private temaSelecionado: string;
+  temaSelecionado: string;
 
-  private listaTemas: Tema[];
-  private listaProposicoes: Proposicao[];
+  listaTemas: Tema[];
+  listaProposicoes: Proposicao[];
 
-  private perguntasTemaSelecionado: Proposicao[];
-  private perguntaSelecionada: Proposicao;
+  perguntasTemaSelecionado: Proposicao[];
+  perguntaSelecionada: Proposicao;
 
   @Input() receivedTemas: number[];
 
