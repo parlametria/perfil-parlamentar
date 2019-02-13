@@ -33,3 +33,9 @@ li a {
   cursor: pointer;
 }
 
+.perguntas-container {
+  height: calc(100vh - 140px);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
