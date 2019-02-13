@@ -16,16 +16,17 @@ export class PerguntasComponent implements OnInit, OnDestroy {
 
   private unsubscribe = new Subject();
 
-  private temaSelecionado;
+  private temaSelecionado: string;
 
   private listaTemas: Tema[];
   private listaProposicoes: Proposicao[];
 
-  perguntaSelecionada: Proposicao;
+  private listaPerguntasTema: Proposicao[];
+  private perguntaSelecionada: Proposicao;
 
   constructor(private perguntaService: PerguntaService) {
     // Inicia tema a partir do ID
-    this.temaSelecionado = 3;        
+    this.temaSelecionado = '3';
   }
 
   ngOnInit() {
@@ -33,14 +34,29 @@ export class PerguntasComponent implements OnInit, OnDestroy {
       temas => this.listaTemas = temas,
       error => console.log(error)
     );
-    
+
     this.perguntaService.getProposicoes().pipe(takeUntil(this.unsubscribe)).subscribe(
-      proposicoes =>  {
+      proposicoes => {
         this.listaProposicoes = proposicoes;
-        this.perguntaSelecionada = proposicoes[6];
+        this.listaPerguntasTema = this.listaProposicoes.filter((proposicao) => proposicao.tema_id === Number(this.temaSelecionado));
+        this.perguntaSelecionada = this.listaPerguntasTema[0];
       },
       error => console.log(error)
-    );    
+    );
+  }
+
+  onTemaChange() {
+    this.listaPerguntasTema = this.listaProposicoes.filter((proposicao) => {
+      return proposicao.tema_id === Number(this.temaSelecionado);
+    });
+
+    this.perguntaSelecionada = this.listaPerguntasTema[0];
+  }
+
+  escolhePergunta(pergunta_id) {
+    this.perguntaSelecionada = this.listaPerguntasTema.filter((pergunta) => {
+      return pergunta.id_votacao === pergunta_id
+    })[0];  
   }
 
   ngOnDestroy() {
