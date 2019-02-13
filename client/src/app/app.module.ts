@@ -18,7 +18,7 @@ import { AuthGuardService } from './shared/services/auth-guard.service';
 
 import { getAuthServiceConfigs } from "./shared/config/socialLoginConfig";
 import { TokenInterceptor } from "./shared/auth/token.interceptor";
-import { PerguntasComponent } from './questionario/perguntas/perguntas.component';
+import { PerguntasContainerComponent } from './questionario/perguntas-container/perguntas-container.component';
 import { PerguntaComponent } from './questionario/pergunta/pergunta.component';
 
 
@@ -27,7 +27,7 @@ import { PerguntaComponent } from './questionario/pergunta/pergunta.component';
     AppComponent,
     LoginComponent,
     NavbarComponent,
-    PerguntasComponent,
+    PerguntasContainerComponent,
     PerguntaComponent
   ],
   imports: [

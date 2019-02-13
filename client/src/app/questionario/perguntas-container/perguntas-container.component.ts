@@ -9,10 +9,10 @@ import { Proposicao } from '../../shared/models/proposicao.model';
 
 @Component({
   selector: 'app-perguntas',
-  templateUrl: './perguntas.component.html',
-  styleUrls: ['./perguntas.component.scss']
+  templateUrl: './perguntas-container.component.html',
+  styleUrls: ['./perguntas-container.component.scss']
 })
-export class PerguntasComponent implements OnInit, OnDestroy {
+export class PerguntasContainerComponent implements OnInit, OnDestroy {
 
   private unsubscribe = new Subject();
 
@@ -21,7 +21,7 @@ export class PerguntasComponent implements OnInit, OnDestroy {
   private listaTemas: Tema[];
   private listaProposicoes: Proposicao[];
 
-  private listaPerguntasTema: Proposicao[];
+  private perguntasTemaSelecionado: Proposicao[];
   private perguntaSelecionada: Proposicao;
 
   constructor(private perguntaService: PerguntaService) {
@@ -38,23 +38,23 @@ export class PerguntasComponent implements OnInit, OnDestroy {
     this.perguntaService.getProposicoes().pipe(takeUntil(this.unsubscribe)).subscribe(
       proposicoes => {
         this.listaProposicoes = proposicoes;
-        this.listaPerguntasTema = this.listaProposicoes.filter((proposicao) => proposicao.tema_id === Number(this.temaSelecionado));
-        this.perguntaSelecionada = this.listaPerguntasTema[0];
+        this.perguntasTemaSelecionado = this.listaProposicoes.filter((proposicao) => proposicao.tema_id === Number(this.temaSelecionado));
+        this.perguntaSelecionada = this.perguntasTemaSelecionado[0];
       },
       error => console.log(error)
     );
   }
 
   onTemaChange() {
-    this.listaPerguntasTema = this.listaProposicoes.filter((proposicao) => {
+    this.perguntasTemaSelecionado = this.listaProposicoes.filter((proposicao) => {
       return proposicao.tema_id === Number(this.temaSelecionado);
     });
 
-    this.perguntaSelecionada = this.listaPerguntasTema[0];
+    this.perguntaSelecionada = this.perguntasTemaSelecionado[0];
   }
 
   escolhePergunta(pergunta_id) {
-    this.perguntaSelecionada = this.listaPerguntasTema.filter((pergunta) => {
+    this.perguntaSelecionada = this.perguntasTemaSelecionado.filter((pergunta) => {
       return pergunta.id_votacao === pergunta_id
     })[0];  
   }
