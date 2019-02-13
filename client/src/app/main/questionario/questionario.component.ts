@@ -7,9 +7,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class QuestionarioComponent implements OnInit {
 
+  receivedTemas : string[];
+
+  showQuestionario : boolean = false;
+
   constructor() { }
 
   ngOnInit() {
+  }
+
+  receiveTemas($event) {
+    this.receivedTemas = $event;
+    this.showQuestionario = true;
   }
 
 }

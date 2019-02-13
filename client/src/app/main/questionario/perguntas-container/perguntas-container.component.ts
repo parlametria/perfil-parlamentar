@@ -1,15 +1,15 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
-import { PerguntaService } from '../../shared/services/pergunta.service';
-import { TemaService } from '../../shared/services/tema.service';
-import { Tema } from '../../shared/models/tema.model';
-import { Proposicao } from '../../shared/models/proposicao.model';
+import { PerguntaService } from '../../../shared/services/pergunta.service';
+import { TemaService } from '../../../shared/services/tema.service';
+import { Tema } from '../../../shared/models/tema.model';
+import { Proposicao } from '../../../shared/models/proposicao.model';
 
 @Component({
-  selector: 'app-perguntas',
+  selector: 'app-perguntas-container',
   templateUrl: './perguntas-container.component.html',
   styleUrls: ['./perguntas-container.component.scss']
 })
@@ -25,17 +25,36 @@ export class PerguntasContainerComponent implements OnInit, OnDestroy {
   private perguntasTemaSelecionado: Proposicao[];
   private perguntaSelecionada: Proposicao;
 
+  @Input() receivedTemas: number[];
+
   constructor(
     private perguntaService: PerguntaService,
     private temaService: TemaService
-  ) {
-    // Inicia tema a partir do ID
-    this.temaSelecionado = '3';
-  }
+  ) { }
 
   ngOnInit() {
     this.temaService.getTemas().pipe(takeUntil(this.unsubscribe)).subscribe(
-      temas => this.listaTemas = temas,
+      temas => {
+        if (this.receivedTemas) {
+          this.listaTemas = temas;
+          this.listaTemas.sort((a, b) => {
+            let A = Number(a['id']), B = Number(b['id']);
+
+            if (this.receivedTemas.indexOf(A) > this.receivedTemas.indexOf(B)) {
+              return 1;
+            } else {
+              return -1;
+            }
+    
+          });
+          this.temaSelecionado = this.listaTemas[0].id;
+
+        } else {
+          this.listaTemas = temas; 
+          this.temaSelecionado = '3';         
+        }
+        console.log(this.listaTemas)
+      },
       error => console.log(error)
     );
 
@@ -60,7 +79,8 @@ export class PerguntasContainerComponent implements OnInit, OnDestroy {
   escolhePergunta(pergunta_id) {
     this.perguntaSelecionada = this.perguntasTemaSelecionado.filter((pergunta) => {
       return pergunta.id_votacao === pergunta_id
-    })[0];  
+    })[0];
+    console.log(this.receivedTemas);
   }
 
   ngOnDestroy() {

@@ -12,8 +12,8 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './user/login/login.component';
 import { NavbarComponent } from './shared/components/navbar/navbar.component';
 import { HomeComponent } from './main/home/home.component';
-import { PerguntasContainerComponent } from './questionario/perguntas-container/perguntas-container.component';
-import { PerguntaComponent } from './questionario/pergunta/pergunta.component';
+import { PerguntasContainerComponent } from './main/questionario/perguntas-container/perguntas-container.component';
+import { PerguntaComponent } from './main/questionario/pergunta/pergunta.component';
 import { QuestionarioComponent } from './main/questionario/questionario.component';
 import { TemasComponent } from './main/questionario/temas/temas.component';
 

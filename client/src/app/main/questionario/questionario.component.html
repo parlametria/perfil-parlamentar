@@ -1,3 +1,4 @@
 <div class="questionario">
-  <app-temas></app-temas>
+  <app-temas (temasEvent)=receiveTemas($event) *ngIf="!showQuestionario"></app-temas>
+  <app-perguntas-container [receivedTemas]=receivedTemas *ngIf="showQuestionario"></app-perguntas-container>
 </div>

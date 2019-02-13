@@ -1,6 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { TemaService } from 'src/app/shared/services/tema.service';
+import { Component, OnInit, OnDestroy, Output, EventEmitter } from '@angular/core';
 
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+
+import { TemaService } from 'src/app/shared/services/tema.service';
 import { Tema } from '../../../shared/models/tema.model';
 
 @Component({
@@ -8,11 +11,15 @@ import { Tema } from '../../../shared/models/tema.model';
   templateUrl: './temas.component.html',
   styleUrls: ['./temas.component.scss']
 })
-export class TemasComponent implements OnInit {
+export class TemasComponent implements OnInit, OnDestroy {
+
+  private unsubscribe = new Subject();
 
   temas: Tema[];
-  selectedTemas: number[] = [];
+  selectedTemas: string[] = [];
   hasAnySelectedTema : boolean = false;
+
+  @Output() temasEvent = new EventEmitter<string[]>();
 
   constructor(private temaService: TemaService) { }
 
@@ -21,7 +28,7 @@ export class TemasComponent implements OnInit {
   }
 
   getTemas() {
-    this.temaService.getTemas().subscribe((temas) => {
+    this.temaService.getTemas().pipe(takeUntil(this.unsubscribe)).subscribe((temas) => {
       this.temas = temas;
     });
   }
@@ -43,6 +50,15 @@ export class TemasComponent implements OnInit {
   }
 
   emitTemas(){
+    let notSelectedTemas = this.temas.filter((tema) => {
+      return !this.selectedTemas.includes(tema.id);
+    }).map(tema => tema.id);
     
+    this.temasEvent.emit(this.selectedTemas.concat(notSelectedTemas));
+  }
+
+  ngOnDestroy() {
+    this.unsubscribe.next();
+    this.unsubscribe.complete();
   }
 }
