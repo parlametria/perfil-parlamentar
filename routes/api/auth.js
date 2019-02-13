@@ -78,8 +78,8 @@ router.get("/test", authenticate, (req, res) => {
 router.get("/usingFacebookCode", (req, res) => {
   graph.authorize(
     {
-      client_id: keys.facebookAppID,
-      redirect_uri: "https://www.vozativa.org/",
+      client_id: keys.facebookAppID,      
+      redirect_uri: keys.facebookRedirectURI,
       client_secret: keys.facebookAppSecret,
       code: req.query.code
     },

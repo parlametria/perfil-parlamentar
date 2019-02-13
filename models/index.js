@@ -31,15 +31,6 @@ if (!global.hasOwnProperty("models")) {
     }
   });
 
-  sequelize
-    .authenticate()
-    .then(() => {
-      logger.info("Connection has been established successfully.");
-    })
-    .catch(err => {
-      logger.error("Unable to connect to the database:", err);
-    });
-
   global.models = {
     Sequelize: Sequelize,
     sequelize: sequelize,
@@ -61,8 +52,7 @@ if (!global.hasOwnProperty("models")) {
       global.models[modelName].associate(global.models);
     }
   });
-
-  // isso vai embora depois, só está aqui para popular o banco local sempre
+  
   sequelize.sync({ force: false }).then(() => {
     console.log("BD sincronizado");
   });
