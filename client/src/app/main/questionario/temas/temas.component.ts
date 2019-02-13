@@ -9,8 +9,8 @@ import { TemaService } from 'src/app/shared/services/tema.service';
 export class TemasComponent implements OnInit {
 
   temas: any[];
-  temaSelected: any[] = [];
-  hasAnyTemaSelected : boolean = false;
+  selectedTemas: any[] = [];
+  hasAnySelectedTema : boolean = false;
 
   constructor(private temaService: TemaService) { }
 
@@ -25,9 +25,18 @@ export class TemasComponent implements OnInit {
   }
 
   clickButton(idTema) {
-    if(!this.temaSelected.includes(idTema)) {
-      this.hasAnyTemaSelected = true;
-      this.temaSelected.push(idTema);
+    if(!this.isTemaSelected(idTema)) {
+      this.hasAnySelectedTema = true;
+      this.selectedTemas.push(idTema);
+    } else {
+      this.selectedTemas.splice(this.selectedTemas.indexOf(idTema), 1);
+      if(this.selectedTemas.length === 0) {
+        this.hasAnySelectedTema = false;
+      }
     }
+  }
+
+  isTemaSelected(idTema) {
+    return(this.selectedTemas.includes(idTema));
   }
 }
