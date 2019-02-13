@@ -5,9 +5,18 @@
         <div class="form-group col-lg-8">
           <select class="form-control" id="tema" [(ngModel)]="temaSelecionado" name="tema">
             <option *ngFor="let tema of listaTemas" [value]="tema.id">{{ tema.tema }}</option>
-          </select>                           
+          </select>
         </div>
-      </form>      
+      </form>
+    </div>
+  </div>
+  <div class="row d-flex justify-content-center">
+    <div *ngIf="perguntaSelecionada" class="col-md-8 col-lg-6 mx-2">
+      <app-pergunta
+      [projLei]="perguntaSelecionada.projeto_lei" 
+      [title]="perguntaSelecionada.titulo"
+      [description]="perguntaSelecionada.descricao"
+      [id]="perguntaSelecionada.id_votacao"></app-pergunta>
     </div>
   </div>
 </div>

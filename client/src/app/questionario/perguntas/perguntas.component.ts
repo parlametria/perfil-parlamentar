@@ -12,7 +12,7 @@ import { Proposicao } from '../../shared/models/proposicao.model';
   templateUrl: './perguntas.component.html',
   styleUrls: ['./perguntas.component.scss']
 })
-export class PerguntasComponent implements OnInit {
+export class PerguntasComponent implements OnInit, OnDestroy {
 
   private unsubscribe = new Subject();
 
@@ -21,10 +21,11 @@ export class PerguntasComponent implements OnInit {
   private listaTemas: Tema[];
   private listaProposicoes: Proposicao[];
 
+  perguntaSelecionada: Proposicao;
 
   constructor(private perguntaService: PerguntaService) {
     // Inicia tema a partir do ID
-    this.temaSelecionado = 3;    
+    this.temaSelecionado = 3;        
   }
 
   ngOnInit() {
@@ -34,9 +35,12 @@ export class PerguntasComponent implements OnInit {
     );
     
     this.perguntaService.getProposicoes().pipe(takeUntil(this.unsubscribe)).subscribe(
-      proposicoes => this.listaProposicoes = proposicoes,
+      proposicoes =>  {
+        this.listaProposicoes = proposicoes;
+        this.perguntaSelecionada = proposicoes[6];
+      },
       error => console.log(error)
-    );
+    );    
   }
 
   ngOnDestroy() {
