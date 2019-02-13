@@ -41,4 +41,8 @@ export class TemasComponent implements OnInit {
   isTemaSelected(idTema) {
     return(this.selectedTemas.includes(idTema));
   }
+
+  emitTemas(){
+    
+  }
 }
