@@ -16,6 +16,10 @@ import { UserService } from '../../../shared/services/user.service';
 })
 export class PerguntasContainerComponent implements OnInit, OnDestroy {
 
+  readonly FAVOR = 1;
+  readonly NAOSEI = -2;
+  readonly CONTRA = -1;
+  
   private unsubscribe = new Subject();
 
   temaSelecionado: string;
@@ -83,7 +87,7 @@ export class PerguntasContainerComponent implements OnInit, OnDestroy {
   getRespostas() {
     this.userService.getRespostas().pipe(takeUntil(this.unsubscribe)).subscribe(
       res => {
-        this.respostasUser = res;       
+        this.respostasUser = res;
       },
       error => console.log(error)
     );
@@ -106,10 +110,28 @@ export class PerguntasContainerComponent implements OnInit, OnDestroy {
     this.perguntaSelecionada = this.perguntasTemaSelecionado[0];
   }
 
-  escolhePergunta(pergunta_id) {
+  escolhePergunta(idVotacao) {
     this.perguntaSelecionada = this.perguntasTemaSelecionado.filter((pergunta) => {
-      return pergunta.id_votacao === pergunta_id
+      return pergunta.id_votacao === idVotacao
     })[0];
+  }
+
+  respondeuPergunta(idVotacao) {    
+    return this.respostasUser.votacoes[idVotacao] === this.FAVOR ||
+      this.respostasUser.votacoes[idVotacao] === this.CONTRA ||
+      this.respostasUser.votacoes[idVotacao] === this.NAOSEI
+  }
+
+  respostaPositiva() {
+    return this.respostasUser.votacoes[this.perguntaSelecionada.id_votacao] === 1;
+  }
+
+  respostaNegativa() {
+    return this.respostasUser.votacoes[this.perguntaSelecionada.id_votacao] === -1;
+  }
+
+  respostaNeutra() {
+    return this.respostasUser.votacoes[this.perguntaSelecionada.id_votacao] === -2;
   }
 
   ngOnDestroy() {
