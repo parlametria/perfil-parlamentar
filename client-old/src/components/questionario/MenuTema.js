@@ -67,7 +67,7 @@ class MenuTema extends Component {
   }
 
   escolhePergunta(e) {
-    e.preventDefault();
+    e.preventDefault();        
     this.props.escolhePergunta(Number(e.target.id));
   }
 
@@ -128,7 +128,7 @@ class MenuTema extends Component {
 
       indicadorPergunta = dadosPerguntas
         .filter(pergunta => pergunta.tema === filtroTema)
-        .map((perguntaFiltrada, index) => {
+        .map((perguntaFiltrada, index) => {          
           const idQuestionario =
             this.props.questionario.abaAtiva === "Voz Ativa"
               ? perguntaFiltrada.id
@@ -148,7 +148,7 @@ class MenuTema extends Component {
               >
                 <span
                   className="icon-cursor icon-current"
-                  id={idQuestionario}
+                  id={indexPergunta}                  
                 />
                 {index + 1}
               </a>
