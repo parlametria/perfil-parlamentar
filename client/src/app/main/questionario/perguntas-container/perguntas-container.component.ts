@@ -7,6 +7,7 @@ import { PerguntaService } from '../../../shared/services/pergunta.service';
 import { TemaService } from '../../../shared/services/tema.service';
 import { Tema } from '../../../shared/models/tema.model';
 import { Proposicao } from '../../../shared/models/proposicao.model';
+import { UserService } from '../../../shared/services/user.service';
 
 @Component({
   selector: 'app-perguntas-container',
@@ -25,14 +26,24 @@ export class PerguntasContainerComponent implements OnInit, OnDestroy {
   perguntasTemaSelecionado: Proposicao[];
   perguntaSelecionada: Proposicao;
 
+  respostasUser: any;
+
   @Input() receivedTemas: number[];
 
   constructor(
     private perguntaService: PerguntaService,
-    private temaService: TemaService
+    private temaService: TemaService,
+    private userService: UserService
   ) { }
 
   ngOnInit() {
+    this.getTemas();
+    this.getProposicoes();
+    this.getRespostas();
+
+  }
+
+  getTemas() {
     this.temaService.getTemas().pipe(takeUntil(this.unsubscribe)).subscribe(
       temas => {
         if (this.receivedTemas) {
@@ -45,18 +56,20 @@ export class PerguntasContainerComponent implements OnInit, OnDestroy {
             } else {
               return -1;
             }
-    
+
           });
           this.temaSelecionado = this.listaTemas[0].id;
 
         } else {
-          this.listaTemas = temas; 
-          this.temaSelecionado = '3';         
+          this.listaTemas = temas;
+          this.temaSelecionado = '3';
         }
       },
       error => console.log(error)
     );
+  }
 
+  getProposicoes() {
     this.perguntaService.getProposicoes().pipe(takeUntil(this.unsubscribe)).subscribe(
       proposicoes => {
         this.listaProposicoes = proposicoes;
@@ -65,6 +78,24 @@ export class PerguntasContainerComponent implements OnInit, OnDestroy {
       },
       error => console.log(error)
     );
+  }
+
+  getRespostas() {
+    this.userService.getRespostas().pipe(takeUntil(this.unsubscribe)).subscribe(
+      res => {
+        this.respostasUser = res;       
+      },
+      error => console.log(error)
+    );
+  }
+
+  setResposta(resposta) {
+    let novaResposta = {
+      id_votacao: this.perguntaSelecionada.id_votacao,
+      resposta: resposta
+    }
+
+    this.userService.setResposta(novaResposta);
   }
 
   onTemaChange() {
@@ -79,7 +110,6 @@ export class PerguntasContainerComponent implements OnInit, OnDestroy {
     this.perguntaSelecionada = this.perguntasTemaSelecionado.filter((pergunta) => {
       return pergunta.id_votacao === pergunta_id
     })[0];
-    console.log(this.receivedTemas);
   }
 
   ngOnDestroy() {
