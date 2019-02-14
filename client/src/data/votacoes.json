@@ -3,23 +3,23 @@
     "id": 0,
     "numero_proj_lei": "PL 4148/2008",
     "id_votacao": 6259,
-    "titulo": "Rotulagem de Alimentos Transgênicos",
-    "descricao": "Coloca um fim à exigência do símbolo da transgenia nos rótulos de produtos comercializados com organismos geneticamente modificados (OGM).",
+    "titulo": "Fim à rotulagem de Alimentos Transgênicos",
+    "descricao": "Põe fim à exigência do símbolo da transgenia nos rótulos de produtos comercializados com organismos geneticamente modificados (OGM).",
     "tema": "Meio Ambiente"
   },
   "4968": {
     "id": 1,
     "numero_proj_lei": "PL 1876/1999",
     "id_votacao": 4968,
-    "titulo": "Mudanças no Código Florestal",
-    "descricao": "O projeto visou regulamentar e limitar os espaços e as maneiras disponíveis para exploração de vegetação nativa no país.",
+    "titulo": "Novo Código Florestal",
+    "descricao": "Entre outras medidas, este projeto definiu: isenção para constituição de reservas legais até 4 módulos fiscais; possibilidade de compensação de desmatamento irregular que for efetuado em área de reserva legal através de outra região ou mesmo ser recuperado em 20 anos com a utilização de espécies exóticas (em até 50% da área); redução de 30m para 20m da faixa obrigatória para a preservação de matas ciliares dos rios que tenham menos de cinco metros de largura.",
     "tema": "Meio Ambiente"
   },
   "8309": {
     "id": 2,
     "numero_proj_lei": "MPV 809/2017",
     "id_votacao": 8309,
-    "titulo": "Contribuição para o fundo de manutenção de unidades em conservação por parte de empreendimentos com grande impacto ambiental",
+    "titulo": "Regulamentação da Forma de Pagamento da Compensação Ambiental em Unidades de Conservação",
     "descricao": "Autoriza a criação de um fundo financeiro pelo Instituto Chico Mendes de Conservação da Biodiversidade (ICMBio), órgão vinculado ao Ministério do Meio Ambiente; dá, ao órgão, a permissão legal de selecionar um banco público para a manutenção e gestão do fundo, que terá o efeito de promover uma compensação ambiental em Unidades de Conservação.",
     "tema": "Meio Ambiente"
   },
@@ -36,15 +36,7 @@
     "numero_proj_lei": "MPV 756/2016",
     "id_votacao": 7546,
     "titulo": "Redução da proteção ambiental na Floresta do Jamanxim",
-    "descricao": "A MP 756 visou alterar os limites da Floresta Nacional do Jamanxim, no Pará, e transformá-la em um Área de Preservação Ambiental – um tipo de Unidade de Conservação que admite maior grau de ocupação humana e uso da terra. Também ltera os limites do Parque Nacional do Rio Novo.",
-    "tema": "Meio Ambiente"
-  },
-  "99999": {
-    "id": 5,
-    "numero_proj_lei": "PL 6299/2002",
-    "id_votacao": 99999,
-    "titulo": "Flexibilização das normas para uso de agrotóxicos",
-    "descricao": "O Projeto de Lei 6299/2002 está em tramitação no Congresso e visa flexibilizar a legislação que compreende as normas para uso de agrotóxicos em plantações no país.",
+    "descricao": "Altera os limites da Floresta Nacional do Jamanxim, no Pará, e transforma-a em um Área de Preservação Ambiental – um tipo de Unidade de Conservação que admite maior grau de ocupação humana e uso da terra. Também altera os limites do Parque Nacional do Rio Novo.",
     "tema": "Meio Ambiente"
   },
   "6517": {
@@ -52,7 +44,7 @@
     "numero_proj_lei": "PEC 171/1993",
     "id_votacao": 6517,
     "titulo": "Redução da Maioridade Penal",
-    "descricao": "O projeto tem o objetivo de diminuir de 18 para 16 anos de idade a maioridade penal para tipos específicos de crimes.",
+    "descricao": "Diminui de 18 para 16 anos de idade a maioridade penal para alguns tipos de crimes.",
     "tema": "Direitos Humanos"
   },
   "7252": {
@@ -76,14 +68,14 @@
     "numero_proj_lei": "PL 2516/2015",
     "id_votacao": 7317,
     "titulo": "Lei da Migração",
-    "descricao": "A lei disserta sobre direitos e deveres do indivíduo migrante e estabelece formatações para políticas públicas aos migrantes.",
+    "descricao": "Reconhece o migrante, independentemente de sua nacionalidade, como um sujeito de direitos, e promove o combate à xenofobia e a não-discriminação como princípios da política migratória brasileira.",
     "tema": "Direitos Humanos"
   },
   "6531": {
     "id": 10,
     "numero_proj_lei": "PL 1057/2007",
     "id_votacao": 6531,
-    "titulo": "Infanticídio Indígena",
+    "titulo": "Lei Muwaji",
     "descricao": "Visa frear a suposta prática cultural de infanticídio e controle populacional em determinados territórios indígenas.",
     "tema": "Direitos Humanos"
   },
@@ -107,8 +99,8 @@
     "id": 13,
     "numero_proj_lei": "PL 4474/2004",
     "id_votacao": 6608,
-    "titulo": "Limite de transferências voluntárias em anos de eleição aos municípios",
-    "descricao": "Limita as transferências voluntárias (em anos eleitorais) da União aos estados e municípios, e dos estados aos municípios, à média dos valores correspondentes às transferências realizadas nos três anos anteriores as eleições.",
+    "titulo": "Limitação do valor de transferências em ano de eleição",
+    "descricao": "Limita os valores das transferências voluntárias da União aos estados e municípios, e dos estados aos municípios, à média dos valores correspondentes às transferências realizadas nos três anos anteriores as eleições.",
     "tema": "Integridade e Transparência"
   },
   "6095": {
@@ -123,8 +115,8 @@
     "id": 15,
     "numero_proj_lei": "MPV 810/2017",
     "id_votacao": 8334,
-    "titulo": "Subsídios dados a empresas de tecnologia que façam investimentos em pesquisa, inovação e modernização dentro do território brasileiro",
-    "descricao": "Subsídios dados a empresas de tecnologia que façam investimentos em pesquisa, inovação e modernização dentro do território brasileiro.",
+    "titulo": "Subsídios para empresas de tecnologia que investem em pesquisa, inovação e modernização no Brasil",
+    "descricao": " Extende o prazo de parcelamento dos débitos das empresas com P&D (Pesquisa e Desenvolvimento) e reinvestimento dos saldos residuais para 48 meses. Além disso, estas empresas deverão contratar uma auditoria independente, credenciada na Comissão de Valores Mobiliários (CVM) e habilitada junto ao Ministério da Ciência, Tecnologia, Inovações e Comunicações (MCTIC), para analisar os relatórios com as demonstrações financeiras e de investimentos em P&D, tarefa feita anteriormente pelo MCTIC.",
     "tema": "Nova Economia"
   },
   "6675": {
@@ -147,7 +139,7 @@
     "id": 18,
     "numero_proj_lei": "PL 4302/1998",
     "id_votacao": 7431,
-    "titulo": "Terceirização total 2017",
+    "titulo": "Terceirização Total",
     "descricao": "O projeto de lei aprovado permite a terceirização inclusive da atividade-fim de uma empresa. Por exemplo, um hospital poderá terceirizar não apenas o serviço de limpeza (que já acontece hoje), mas a contratação de seus enfermeiros e médicos.",
     "tema": "Transversal"
   },
@@ -163,16 +155,16 @@
     "id": 20,
     "numero_proj_lei": "MPV 665/2014",
     "id_votacao": 6286,
-    "titulo": "Seguro Desemprego",
-    "descricao": "Com a lei fica mais difícil o acesso ao seguro-desemprego, ao abono salarial e ao seguro-defeso. Por exemplo: antes era necessário que um empregado tivesse um tempo de trabalho de no mínimo 6 meses para solicitar o seguro-desemprego no ato da demissão. Com a lei esse tempo mínimo passou para 1 ano. O objetivo da lei é reduzir os gastos.",
+    "titulo": "Reforma Trabalhista",
+    "descricao": "Alguns pontos da reforma da CLT: acordos coletivos na empresa entre patrão e funcionário poderão ser feitos independentemente do que prevê a lei trabalhista; mulher grávida ou lactante poderá trabalhar em ambientes considerados insalubre, desde que apresente um atestado médico que garanta que não há risco ao bebê nem à mãe; intervalo de almoço de no mínimo 30 minutos; fim da obrigatoriedade da contribuiçao sindical; novas modalidades de contratação: trabalho intermitente e home-office.",
     "tema": "Transversal"
   },
   "6310": {
     "id": 21,
     "numero_proj_lei": "MPV 664/2014",
     "id_votacao": 6310,
-    "titulo": "Pensão por morte",
-    "descricao": "Pelo texto aprovado, os cônjuges só poderão requerer pensão por morte do companheiro se o tempo de união estável ou casamento for de mais de dois anos e o segurado tiver contribuído para o INSS por, no mínimo, um ano e meio. Antes, não era exigido tempo mínimo de contribuição para que os dependentes tivessem direito ao benefício, mas era necessário que, na data da morte, o segurado estivesse contribuindo para a Previdência Social",
+    "titulo": "Dificultar acesso à pensão por morte de cônjuge",
+    "descricao": "Pelo texto aprovado, os cônjuges só poderão requerer pensão por morte do companheiro se o tempo de união estável ou casamento for de mais de dois anos e o segurado tiver contribuído para o INSS por, no mínimo, um ano e meio. Antes, não era exigido tempo mínimo de contribuição para que os dependentes tivessem direito ao benefício, mas era necessário que, na data da morte, o segurado estivesse contribuindo para a Previdência Social.",
     "tema": "Transversal"
   },
   "6575": {
@@ -195,7 +187,7 @@
     "id": 24,
     "numero_proj_lei": "PEC 182/2007",
     "id_votacao": 6358,
-    "titulo": "Distritão",
+    "titulo": "Implantação do voto “Distritão”",
     "descricao": "Neste sistema, Estados e o Distrito Federal são transformados em distritos eleitorais e os candidatos eleitos são aqueles que conseguem o maior número de votos em cada distrito (semelhante nas eleições para presidente, governador e prefeito, onde quem tem o maior número de votos é eleito). Atualmente o sistema em vigor é o Sistema Proporcional.",
     "tema": "Eleitoral"
   },
@@ -204,7 +196,7 @@
     "numero_proj_lei": "PEC 182/2007",
     "id_votacao": 6370,
     "titulo": "Financiamento privado para partidos e candidatos",
-    "descricao": "Torna possível financiamento privado de campanhas com doações de pessoas físicas e jurídicas para os partidos políticos e com doações de pessoas físicas para candidatos.",
+    "descricao": "Torna o financiamento de campanhas com doações de pessoas físicas para os partidos políticos e para candidatos e a utilização de fundos públicos os únicos meios de financiamento eleitoral permitido.",
     "tema": "Eleitoral"
   },
   "6359": {
@@ -212,14 +204,14 @@
     "numero_proj_lei": "PEC 182/2007",
     "id_votacao": 6359,
     "titulo": "Fim da reeleição nos cargos executivos",
-    "descricao": "Fim da reeleição para presidente da República, governador e prefeito.",
+    "descricao": "Fim da reeleição em cargos executivos.",
     "tema": "Eleitoral"
   },
   "6354": {
     "id": 27,
     "numero_proj_lei": "PEC 182/2007",
     "id_votacao": 6354,
-    "titulo": "Financiamento privado para partidos",
+    "titulo": "Financiamento privado somente para partidos",
     "descricao": "Financiamento privado de campanhas para partidos políticos. Não é permitido o financiamento para candidatos.",
     "tema": "Eleitoral"
   },
@@ -235,7 +227,7 @@
     "id": 29,
     "numero_proj_lei": "PEC 182/2007",
     "id_votacao": 6352,
-    "titulo": "Tempo mandato",
+    "titulo": "Aumento do tempo de mandato",
     "descricao": "Mudança no tempo de mandato dos cargos do executivo (prefeito, governador e presidente) para 5 anos. Atualmente o mandato é de 4 anos.",
     "tema": "Eleitoral"
   },
