@@ -11,12 +11,15 @@
         </form>
       </div>
     </div>
+
     <div class="row d-flex justify-content-center">
       <div class="col-md-8 col-lg-6 mb-3">
         <div class="nav-horizontal">
           <ul class="nav nav-pills nav-fill nav-horizontal-pills-sm">
             <li class="nav-item" *ngFor="let prop of perguntasTemaSelecionado; let i = index">
-              <a class="nav-link" [ngClass]="{'active': prop.id_votacao === perguntaSelecionada.id_votacao}" (click)="escolhePergunta(prop.id_votacao)">
+              <a class="nav-link" [ngClass]="{'active': prop.id_votacao === perguntaSelecionada.id_votacao, 'done': respondeuPergunta(prop.id_votacao)}"
+                (click)="escolhePergunta(prop.id_votacao)">
+                <span class="icon-cursor icon-current"></span>
                 {{i+1}}
               </a>
             </li>
@@ -24,6 +27,7 @@
         </div>
       </div>
     </div>
+
     <div class="row d-flex justify-content-center">
       <div *ngIf="perguntaSelecionada" class="col-md-8 col-lg-6 mx-2">
         <app-pergunta [projLei]="perguntaSelecionada.projeto_lei" [title]="perguntaSelecionada.titulo" [description]="perguntaSelecionada.descricao"
@@ -31,13 +35,19 @@
       </div>
     </div>
   </div>
+
   <div class="row d-flex justify-content-center">
     <div *ngIf="perguntaSelecionada" class="col-md-8 col-lg-6">
       <div class="btn-group blocks d-flex justify-content-center my-3" role="group" aria-label="Resposta">
-        <button type="button" class="btn btn-primary btn-in-favor">a favor</button>
-        <button type="button" class="btn btn-primary">não sei</button>
-        <button type="button" class="btn btn-primary btn-against">contra</button>
+        <button type="button" [ngClass]="{'btn': true, 'btn-primary': !respostaPositiva(), 'btn-secondary': respostaPositiva(), 'btn-in-favor': true}"
+          (click)="setResposta(1)">a favor</button>
+        <button type="button" [ngClass]="{'btn': true, 'btn-primary': !respostaNeutra(), 'btn-secondary': respostaNeutra()}" (click)="setResposta(-2)">não
+          sei
+        </button>
+        <button type="button" [ngClass]="{'btn': true, 'btn-primary': !respostaNegativa(), 'btn-secondary': respostaNegativa(), 'btn-against': true}"
+          (click)="setResposta(-1)">contra</button>
       </div>
     </div>
   </div>
+
 </div>

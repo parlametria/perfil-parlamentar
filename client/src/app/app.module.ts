@@ -21,10 +21,10 @@ import { PerguntaService } from './shared/services/pergunta.service';
 import { LoginService } from './shared/services/login.service';
 import { AuthGuardService } from './shared/services/auth-guard.service';
 import { TemaService } from './shared/services/tema.service';
+import { UserService } from './shared/services/user.service';
 
 import { getAuthServiceConfigs } from "./shared/config/socialLoginConfig";
 import { TokenInterceptor } from "./shared/auth/token.interceptor";
-
 
 
 @NgModule({
@@ -50,7 +50,8 @@ import { TokenInterceptor } from "./shared/auth/token.interceptor";
     PerguntaService,
     LoginService,
     AuthGuardService,
-    TemaService,    
+    TemaService,
+    UserService,    
     {
       provide: AuthServiceConfig,
       useFactory: getAuthServiceConfigs
