@@ -52,17 +52,8 @@ export class PerguntasContainerComponent implements OnInit, OnDestroy {
     this.temaService.getTemas().pipe(takeUntil(this.unsubscribe)).subscribe(
       temas => {
         if (this.receivedTemas) {
-          this.listaTemas = temas;
-          this.listaTemas.sort((a, b) => {
-            let A = Number(a['id']), B = Number(b['id']);
+          this.listaTemas = this.sortObjectUsingArray(temas, this.receivedTemas, 'id');
 
-            if (this.receivedTemas.indexOf(A) > this.receivedTemas.indexOf(B)) {
-              return 1;
-            } else {
-              return -1;
-            }
-
-          });
           this.temaSelecionado = this.listaTemas[0].id;
 
         } else {
@@ -77,11 +68,11 @@ export class PerguntasContainerComponent implements OnInit, OnDestroy {
   getProposicoes() {
     this.perguntaService.getProposicoes().pipe(takeUntil(this.unsubscribe)).subscribe(
       proposicoes => {
-        this.listaProposicoes = proposicoes;
+        this.listaProposicoes = this.sortProposicoes(proposicoes);
 
-        // Filtra as perguntas do tema selecionado e ordena pelo critério: id da votação
-        this.perguntasTemaSelecionado = this.sortProposicoes(this.listaProposicoes.filter(
-          (proposicao) => proposicao.tema_id === Number(this.temaSelecionado)));
+        // Filtra as perguntas do tema selecionado
+        this.perguntasTemaSelecionado = this.listaProposicoes.filter(
+          (proposicao) => proposicao.tema_id === Number(this.temaSelecionado));
 
         this.todasProposicoesOrdenadas = this.sortProposicoesUsingArray(this.listaProposicoes, this.receivedTemas);
 
@@ -111,9 +102,9 @@ export class PerguntasContainerComponent implements OnInit, OnDestroy {
   }
 
   onTemaChange() {
-    this.perguntasTemaSelecionado = this.sortProposicoes(this.listaProposicoes.filter((proposicao) => {
+    this.perguntasTemaSelecionado = this.listaProposicoes.filter((proposicao) => {
       return proposicao.tema_id === Number(this.temaSelecionado);
-    }));
+    });
 
     this.perguntaSelecionada = this.perguntasTemaSelecionado[0];
   }
@@ -126,7 +117,7 @@ export class PerguntasContainerComponent implements OnInit, OnDestroy {
 
   proximaPergunta() {
     let index = this.todasProposicoesOrdenadas.indexOf(this.perguntaSelecionada);
-    console.log(index);
+
     if (index === this.todasProposicoesOrdenadas.length - 1) {
       // Usuário finalizou questionário      
       this.temaSelecionado = this.receivedTemas[0].toString();
@@ -148,21 +139,26 @@ export class PerguntasContainerComponent implements OnInit, OnDestroy {
   }
 
   respondeuPergunta(idVotacao) {
-    return this.respostasUser.votacoes[idVotacao] === this.FAVOR ||
-      this.respostasUser.votacoes[idVotacao] === this.CONTRA ||
-      this.respostasUser.votacoes[idVotacao] === this.NAOSEI
+    if (this.respostasUser.votacoes) {
+      return this.respostasUser.votacoes[idVotacao] === this.FAVOR ||
+        this.respostasUser.votacoes[idVotacao] === this.CONTRA ||
+        this.respostasUser.votacoes[idVotacao] === this.NAOSEI
+    }
   }
 
   respostaPositiva() {
-    return this.respostasUser.votacoes[this.perguntaSelecionada.id_votacao] === 1;
+    if (this.respostasUser.votacoes)
+      return this.respostasUser.votacoes[this.perguntaSelecionada.id_votacao] === 1;
   }
 
   respostaNegativa() {
-    return this.respostasUser.votacoes[this.perguntaSelecionada.id_votacao] === -1;
+    if (this.respostasUser.votacoes)
+      return this.respostasUser.votacoes[this.perguntaSelecionada.id_votacao] === -1;
   }
 
   respostaNeutra() {
-    return this.respostasUser.votacoes[this.perguntaSelecionada.id_votacao] === -2;
+    if (this.respostasUser.votacoes)
+      return this.respostasUser.votacoes[this.perguntaSelecionada.id_votacao] === -2;
   }
 
   sortObjectUsingArray(object, array, key) {
