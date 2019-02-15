@@ -13,7 +13,7 @@ const auth = require("./routes/api/auth");
 const usuarios = require("./routes/api/usuarios");
 
 const app = express();
-var db2 = require("./models");
+var db = require("./models/index");
 
 const corsOption = {
   origin: "http://localhost:4200",
@@ -28,11 +28,15 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(passport.initialize());
 app.use(bodyParser.json());
 
-db2.sequelize.sync().then(function() {
-  http.createServer(app).listen(app.get("port"), function() {
-    console.log("Express server listening on port " + app.get("port"));
+// Testa conexão com o BD
+db.sequelize
+  .authenticate()
+  .then(() => {
+    logger.info("Conexão com BD estabelecida com sucesso.");
+  })
+  .catch(err => {
+    logger.error("Não foi possível conectar com o BD: ", err);
   });
-});
 
 // Usar as rotas
 app.use("/api/perguntas", perguntas);
