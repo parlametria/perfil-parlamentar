@@ -6,6 +6,17 @@
   border-bottom: solid 3px $pink;
 }
 
+.btn-primary:hover {
+  color: #fff;
+  background-color: #a963b3;
+  border-color: #a963b3;
+}
+
+.btn-primary.focus,
+.btn-primary:focus {
+  box-shadow: none;
+}
+
 .btn-secondary {
   color: #fff;
   background-color: #5b2762;
