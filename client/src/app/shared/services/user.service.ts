@@ -1,9 +1,11 @@
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 import { LoginService } from './login.service';
 import { PerguntaService } from './pergunta.service';
+import { environment } from '../../../environments/environment';
 
 
 @Injectable({
@@ -12,8 +14,10 @@ import { PerguntaService } from './pergunta.service';
 export class UserService {
 
   private respostas = new BehaviorSubject<any>({});
+  private url = environment.apiUrl + "usuarios";
 
   constructor(
+    private http: HttpClient,
     private loginService: LoginService,
     private perguntaService: PerguntaService
   ) { }
@@ -26,11 +30,16 @@ export class UserService {
 
   private getRespostasUser() {
     if (this.loginService.isUserLogged()) {
-      // TODO: Pegar respostas da API
+      this.getRespostasAPI().subscribe(
+        res => {
+          this.respostas.next(res);
+        },
+        error => console.log(error)
+      )
     } else {
       if (localStorage.getItem("respostasUser") === null) {
         this.initRespostasLocal();
-      } else {        
+      } else {
         let respostasLS = this.getRespostaLocalStorage();
         this.respostas.next(respostasLS);
       }
@@ -39,18 +48,38 @@ export class UserService {
 
   setResposta(novaResposta) {
     if (this.loginService.isUserLogged()) {
-      // TODO: salvar respostas usando API
+
+      let respostasAtual = this.respostas.getValue();
+
+      // Atualiza Resposta
+      respostasAtual.votacoes[novaResposta.id_votacao] = novaResposta.resposta;
+
+      this.setRespostasAPI(novaResposta.id_votacao, respostasAtual).subscribe(
+        res => {
+          this.respostas.next(res);
+        },
+        error => console.log(error)
+      );
+
     } else {
       let respostasLS = this.getRespostaLocalStorage();
       let { id_votacao, resposta } = novaResposta;
-      
+
       // Atualiza Resposta
       respostasLS.votacoes[id_votacao] = resposta;
 
-      this.setRespostaLocalStorage(respostasLS);        
-      
+      this.setRespostaLocalStorage(respostasLS);
+
       this.respostas.next(respostasLS);
     }
+  }
+
+  getRespostasAPI(): Observable<any> {
+    return this.http.get(this.url + "/respostas/eu");
+  }
+
+  setRespostasAPI(idVotacao, novasRespostas): Observable<any> {
+    return this.http.post(this.url + "/respostas/eu?idResp=" + idVotacao, { respostas: novasRespostas })
   }
 
   private initRespostasLocal() {
@@ -66,7 +95,7 @@ export class UserService {
           vozAtiva: {},
           votacoes
         }
-        this.setRespostaLocalStorage(respostasUser);        
+        this.setRespostaLocalStorage(respostasUser);
 
         this.respostas.next(respostasUser);
       },
