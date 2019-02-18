@@ -32,7 +32,16 @@ export class UserService {
     if (this.loginService.isUserLogged()) {
       this.getRespostasAPI().subscribe(
         res => {
-          this.respostas.next(res);
+          // Checa se o usuário tem alguma resposta salva no banco de dados
+          if (Object.values(res.votacoes).every(item => item === 0)) {
+            this.setRespostasAPI(this.getRespostaLocalStorage()).subscribe(
+              respostas => {
+                this.respostas.next(respostas);
+              }
+            );
+          } else {
+            this.respostas.next(res);
+          }
         },
         error => console.log(error)
       )
@@ -54,7 +63,7 @@ export class UserService {
       // Atualiza Resposta
       respostasAtual.votacoes[novaResposta.id_votacao] = novaResposta.resposta;
 
-      this.setRespostasAPI(novaResposta.id_votacao, respostasAtual).subscribe(
+      this.setRespostasAPIbyID(novaResposta.id_votacao, respostasAtual).subscribe(
         res => {
           this.respostas.next(res);
         },
@@ -78,8 +87,12 @@ export class UserService {
     return this.http.get(this.url + "/respostas/eu");
   }
 
-  setRespostasAPI(idVotacao, novasRespostas): Observable<any> {
+  setRespostasAPIbyID(idVotacao, novasRespostas): Observable<any> {
     return this.http.post(this.url + "/respostas/eu?idResp=" + idVotacao, { respostas: novasRespostas })
+  }
+
+  setRespostasAPI(novasRespostas): Observable<any> {    
+    return this.http.post(this.url + "/respostas/eu/todas", novasRespostas)
   }
 
   private initRespostasLocal() {

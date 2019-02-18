@@ -148,17 +148,17 @@ export class PerguntasContainerComponent implements OnInit, OnDestroy {
 
   respostaPositiva() {
     if (this.respostasUser.votacoes)
-      return this.respostasUser.votacoes[this.perguntaSelecionada.id_votacao] === 1;
+      return this.respostasUser.votacoes[this.perguntaSelecionada.id_votacao] === this.FAVOR;
   }
 
   respostaNegativa() {
     if (this.respostasUser.votacoes)
-      return this.respostasUser.votacoes[this.perguntaSelecionada.id_votacao] === -1;
+      return this.respostasUser.votacoes[this.perguntaSelecionada.id_votacao] === this.CONTRA;
   }
 
   respostaNeutra() {
     if (this.respostasUser.votacoes)
-      return this.respostasUser.votacoes[this.perguntaSelecionada.id_votacao] === -2;
+      return this.respostasUser.votacoes[this.perguntaSelecionada.id_votacao] === this.NAOSEI;
   }
 
   sortObjectUsingArray(object, array, key) {
