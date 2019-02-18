@@ -6,6 +6,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { LoginService } from './login.service';
 import { PerguntaService } from './pergunta.service';
 import { environment } from '../../../environments/environment';
+import { Resposta } from '../models/resposta.model';
 
 
 @Injectable({
@@ -13,7 +14,7 @@ import { environment } from '../../../environments/environment';
 })
 export class UserService {
 
-  private respostas = new BehaviorSubject<any>({});
+  private respostas = new BehaviorSubject<Resposta>({ vozAtiva: {}, votacoes: {} });
   private url = environment.apiUrl + "usuarios";
 
   constructor(
@@ -83,16 +84,16 @@ export class UserService {
     }
   }
 
-  getRespostasAPI(): Observable<any> {
-    return this.http.get(this.url + "/respostas/eu");
+  getRespostasAPI(): Observable<Resposta> {
+    return this.http.get<Resposta>(this.url + "/respostas/eu");
   }
 
-  setRespostasAPIbyID(idVotacao, novasRespostas): Observable<any> {
-    return this.http.post(this.url + "/respostas/eu?idResp=" + idVotacao, { respostas: novasRespostas })
+  setRespostasAPIbyID(idVotacao, novasRespostas): Observable<Resposta> {
+    return this.http.post<Resposta>(this.url + "/respostas/eu?idResp=" + idVotacao, { respostas: novasRespostas })
   }
 
-  setRespostasAPI(novasRespostas): Observable<any> {    
-    return this.http.post(this.url + "/respostas/eu/todas", novasRespostas)
+  setRespostasAPI(novasRespostas): Observable<Resposta> {
+    return this.http.post<Resposta>(this.url + "/respostas/eu/todas", novasRespostas)
   }
 
   private initRespostasLocal() {
@@ -104,7 +105,7 @@ export class UserService {
           return result;
         }, {});
 
-        let respostasUser = {
+        let respostasUser: Resposta = {
           vozAtiva: {},
           votacoes
         }

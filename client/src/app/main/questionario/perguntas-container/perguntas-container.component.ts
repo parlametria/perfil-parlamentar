@@ -8,6 +8,7 @@ import { TemaService } from '../../../shared/services/tema.service';
 import { Tema } from '../../../shared/models/tema.model';
 import { Proposicao } from '../../../shared/models/proposicao.model';
 import { UserService } from '../../../shared/services/user.service';
+import { Resposta } from '../../../shared/models/resposta.model';
 
 @Component({
   selector: 'app-perguntas-container',
@@ -31,7 +32,7 @@ export class PerguntasContainerComponent implements OnInit, OnDestroy {
   perguntasTemaSelecionado: Proposicao[];
   perguntaSelecionada: Proposicao;
 
-  respostasUser: any;
+  respostasUser: Resposta;
 
   @Input() receivedTemas: number[];
 
