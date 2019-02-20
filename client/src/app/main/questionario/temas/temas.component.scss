@@ -1,0 +1,12 @@
+.nohover:hover {
+    color: #41c083;
+    background-color: white;
+    border-color: #41c083;
+}
+
+.tema {
+    height: calc(100vh - 140px);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}

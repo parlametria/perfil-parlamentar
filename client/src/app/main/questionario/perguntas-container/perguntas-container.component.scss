@@ -1,0 +1,57 @@
+.nav-link {  
+  padding: 0;
+  padding-bottom: 0.5rem;
+  font-weight: 700;
+}
+
+.nav-pills .nav-link {
+  border-radius: 0;
+  border-bottom: solid 6px #eeeeee;
+}
+
+.nav-pills .nav-link.active,
+.nav-pills .show > .nav-link {
+  color: #41c083;
+  background: transparent;
+  border-bottom: solid 6px #41c083;
+}
+
+.nav-pills .nav-link.done {
+  color: rgba(65, 192, 131, 0.4);
+  background: transparent;
+  border-bottom: solid 6px rgba(65, 192, 131, 0.4);
+}
+
+.icon-current {
+  display: block;
+  font-size: 1.5rem;
+  opacity: 0;
+}
+
+.nav-pills .nav-link.active > .icon-current {
+  opacity: 1;
+}
+
+.blocks .btn {
+  margin: 0 0.5px;
+}
+
+.btn-in-favor {
+  padding-left: 1.7rem;  
+}
+
+.btn-against {
+  padding-right: 1.7rem;  
+}
+
+.perguntas-container {
+  height: calc(100vh - 140px);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+li a {
+  color: #ccc;
+  cursor: pointer;
+}

@@ -1,0 +1,12 @@
+<div class="container">
+  <p>
+    <span class="question">{{ projLei }} - {{ title }}</span>
+  </p>
+  <button type="button" class="btn btn-sm btn-outline-success" (click)="isCollapsed = !isCollapsed" [attr.aria-expanded]="!isCollapsed"
+    aria-controls="help-eixoA">
+    O que é isso?
+  </button>
+  <div id="help-eixoA" class="mt-1 collapse question-help-content" [ngbCollapse]="isCollapsed">
+    {{ description }}
+  </div>
+</div>

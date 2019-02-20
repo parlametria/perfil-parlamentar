@@ -1,0 +1,32 @@
+.nav-link {
+  text-transform: lowercase;
+}
+
+.navbar {
+  border-bottom: solid 3px $pink;
+}
+
+.btn-secondary {
+  color: #fff;
+  background-color: #5b2762;
+  border-color: #5b2762;
+}
+
+.btn-secondary:hover {
+  color: #fff;
+  background-color: #5b2762;
+  border-color: #5b2762;
+}
+
+.btn-secondary:not(:disabled):not(.disabled).active,
+.btn-secondary:not(:disabled):not(.disabled):active,
+.show > .btn-secondary.dropdown-toggle {
+  color: #fff;
+  background-color: #5b2762;
+  border-color: #5b2762;
+}
+
+.btn-secondary.focus,
+.btn-secondary:focus {
+  box-shadow: 0 0 0 0.2rem rgba(221, 193, 225, 0.5);
+}
