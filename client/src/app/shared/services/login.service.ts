@@ -55,6 +55,7 @@ export class LoginService {
     }
 
     this.clearUserData();
+    this.clearRespostaLocalStorage();
     this.loggedIn.next(false);
   }
 
@@ -135,6 +136,10 @@ export class LoginService {
     localStorage.removeItem("accessToken");
     localStorage.removeItem("id_user");
     localStorage.removeItem("photo_user");
+  }
+
+  private clearRespostaLocalStorage() {
+    localStorage.removeItem('respostasUser');
   }
 
 }
