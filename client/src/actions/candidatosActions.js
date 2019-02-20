@@ -388,8 +388,15 @@ export const calculaScorePorTema = (
   arrayRespostasUsuario
 ) => (dispatch, getState) => {
   const { dadosCandidato } = getState().candidatosReducer;
-  const perguntas = getState().perguntasReducer.dadosPerguntas;
   const { votacoesCandidatos } = getState().votacoesReducer;
+  const { abaAtiva } = getState().questionarioReducer;
+  let perguntas;
+
+  if(abaAtiva === "Votacoes") {
+    perguntas = getState().votacoesReducer.dadosVotacoes;
+  } else {
+    perguntas = getState().perguntasReducer.dadosPerguntas;
+  }
 
   let nomeTemas = new Set();
 
