@@ -31,9 +31,8 @@ export class AlinhamentoComponent implements OnInit {
     console.log("get parlamentares");
     this.userService.getRespostas().pipe(takeUntil(this.unsubscribe)).subscribe(
       respostas => {
-        this.alinhamentoService.get(respostas).subscribe(
+        this.alinhamentoService.get(respostas).pipe(takeUntil(this.unsubscribe)).subscribe(
           parlamentares => {
-            console.log(parlamentares);
             this.parlamentares = parlamentares;
           },
           error => console.log(error)
