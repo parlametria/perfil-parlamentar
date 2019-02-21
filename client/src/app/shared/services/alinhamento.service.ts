@@ -18,6 +18,6 @@ export class AlinhamentoService {
   ) { }
 
   get(respostas): Observable<Parlamentar[]> {
-    return this.http.post<Parlamentar[]>(this.url, { params: {respostas: respostas} });
+    return this.http.post<Parlamentar[]>(this.url, {respostas: respostas.votacoes});
   }
 }

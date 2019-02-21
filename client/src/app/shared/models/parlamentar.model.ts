@@ -12,6 +12,7 @@ export class Parlamentar {
     public email: string,
     public sg_partido: string,
     public partido: string,
-    public votacoes: any
+    public votacoes: any,
+    public alinhamento?: any
   ) {}
 }

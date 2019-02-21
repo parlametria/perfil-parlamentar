@@ -20,8 +20,6 @@ const Votacao = models.votacao;
  * @memberof module:routes/alinhamento
  */
 router.post("/", (req, res) => {
-  console.log(req.body.respostas);
-  
   Candidato.findAll({
     include: [
       {
