@@ -1,7 +1,4 @@
-export class Tema {
-
-  constructor(
-    public id: string,
-    public tema: string
-  ) {}
+export interface Tema {
+  id: string,
+  tema: string
 }

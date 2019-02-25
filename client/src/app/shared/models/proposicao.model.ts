@@ -1,10 +1,7 @@
-export class Proposicao {
-
-  constructor(
-    public projeto_lei: string,
-    public id_votacao: number,
-    public titulo: string,
-    public descricao: string,
-    public tema_id: number
-  ) {}
+export interface Proposicao {
+  projeto_lei: string,
+  id_votacao: number,
+  titulo: string,
+  descricao: string,
+  tema_id: number
 }

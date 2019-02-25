@@ -27,7 +27,7 @@ const SUCCESS = 200;
 const authenticate = expressJwt({
   secret: keys.secretOrKey,
   requestProperty: "auth",
-  getToken: function(req) {
+  getToken: function (req) {
     if (req.headers["authorization"]) {
       return req.headers["authorization"];
     }
@@ -90,7 +90,7 @@ router.post("/respostas/eu", authenticate, (req, res) => {
   perfil.usuario = req.auth.id;
 
   const idResp = req.query.idResp;
-  console.log(idResp);
+
   const vozAtiva = req.body.respostas.vozAtiva;
   const votacoes = req.body.respostas.votacoes;
 
@@ -119,4 +119,46 @@ router.post("/respostas/eu", authenticate, (req, res) => {
     .catch(err => res.status(BAD_REQUEST).json({ err }));
   res.status(SUCCESS).json({ vozAtiva, votacoes });
 });
+
+
+/**
+ * Salva todas as respostas
+ * @name get/api/usuarios/respostas/eu/todas
+ * @function
+ * @memberof module:routes/usuarios
+ */
+router.post("/respostas/eu/todas", authenticate, (req, res) => {
+
+  const vozAtiva = req.body.vozAtiva;
+  const votacoes = req.body.votacoes;
+
+  Usuario.findOne({ where: { provider_id: req.auth.id } })
+    .then(usuario => {
+      Object.keys(vozAtiva).forEach(key => {
+        Resposta.upsertResp(
+          key,
+          usuario.id,
+          vozAtiva[key],
+          (user, err) => {
+            return err, user
+          }
+        )
+      });
+
+      Object.keys(votacoes).forEach(key => {        
+        Votacao.upsertResp(
+          key,
+          usuario.id,
+          votacoes[key],
+          (user, err) => {
+            return err, user
+          }
+        )
+      });
+    })
+    .catch(err => res.status(BAD_REQUEST).json({ err }));
+
+  res.status(SUCCESS).json({ vozAtiva, votacoes });
+});
+
 module.exports = router;
