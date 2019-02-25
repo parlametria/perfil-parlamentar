@@ -8,10 +8,9 @@ const express = require("express");
 const router = express.Router();
 
 const models = require("../../models/index");
-const { calcularAlinhamento } = require("../../utils/alinhamento");
+const { calcularAlinhamentos } = require("../../utils/alinhamento");
 
 const Candidato = models.candidato;
-const Usuario = models.usuario;
 const Votacao = models.votacao;
 
 /**
@@ -32,7 +31,7 @@ router.post("/", (req, res) => {
       eleito: true
     }
   }).then(parlamentares => {
-    const alinhamentos = calcularAlinhamento(parlamentares, req.body.respostas);
+    const alinhamentos = calcularAlinhamentos(parlamentares, req.body.respostas);
     return res.json(alinhamentos);
   }).catch(err => res.status(400).json({ err }));
 });

@@ -111,3 +111,13 @@ npm run server
 ```
 npm run client
 ```
+
+# Testes
+
+Os testes são escritos usando [chai](https://www.chaijs.com) e rodam via [docker-compose](https://github.com/mochajs/mocha).
+
+### Executar testes
+
+```
+npm test
+```
