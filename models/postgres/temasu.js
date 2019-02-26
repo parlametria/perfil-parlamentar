@@ -11,7 +11,7 @@ module.exports = (sequelize, type) => {
   temasu.associate = function (models) {
     temasu.belongsTo(models.usuario, {
       foreignKey: "usuario_id",
-      targetKey: "id",      
+      targetKey: "id",
       as: "temas_user"
     });
   };
@@ -19,11 +19,13 @@ module.exports = (sequelize, type) => {
   temasu.upsertTemas = function (usuario_id, temas_usuario, cb) {
     const that = this;
 
+    const messageError = "Não foi possível atualizar os temas";
+
     return this.findOne({
       where: {
         usuario_id: usuario_id
       }
-    }).then((temas, err) => {
+    }).then((temas) => {
       if (!temas) {
         const novosTemas = new that({
           usuario_id: usuario_id,
@@ -31,16 +33,33 @@ module.exports = (sequelize, type) => {
         });
 
         novosTemas.save().then((savedTemas, error) => {
-          if (error) {
-            console.log(error);
-          }
           return cb(savedTemas, error);
+        }).catch(error => {
+          let customError = {
+            message: messageError,
+            error: error.message
+          }
+          return cb(false, customError)
         });
 
       } else {
-        temas.update({ temas_preferidos: temas_usuario });
-        return cb(temas, err);
+        temas.update({ temas_preferidos: temas_usuario }).then((updatedTemas, error) => {
+          return cb(updatedTemas, error);
+        }).catch(error => {
+          let customError = {
+            message: messageError,
+            error: error.message
+          }
+          return cb(false, customError)
+        });
       }
+
+    }).catch(error => {
+      let customError = {
+        message: messageError,
+        error: error.message
+      }
+      return cb(false, customError)
     });
   };
 

@@ -205,15 +205,23 @@ router.post("/temas/eu", authenticate, (req, res) => {
       Tema.upsertTemas(
         usuario.id,
         temas,
-        (user, err) => {
-          return user, err
+        (temas_user, error) => {
+          if (temas_user) {
+            const temasSalvos = {
+              usuario_id: temas_user.usuario_id,
+              temas_preferidos: temas_user.temas_preferidos
+            }
+            res.status(SUCCESS).json([temasSalvos]);
+          }
+          if (error)
+            res.status(BAD_REQUEST).json(error);
         }
       )
-
     })
-    .catch(err => res.status(BAD_REQUEST).json({ err }));
+    .catch(err => {
+      res.status(BAD_REQUEST).json({ error: err.message })
+    });
 
-  res.status(SUCCESS).json(temas);
 });
 
 module.exports = router;
