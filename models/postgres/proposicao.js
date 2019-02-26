@@ -8,7 +8,8 @@ module.exports = (sequelize, type) => {
         primaryKey: true
       },
       titulo: type.STRING,
-      descricao: type.STRING(800)
+      descricao: type.STRING(800),
+      status_proposicao: type.STRING      
     },
     {
       timestamps: false
