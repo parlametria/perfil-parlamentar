@@ -28,20 +28,16 @@ function calcular(parlamentar, respostas) {
   let respostasIguais = 0;
   let perguntasIguais = 0;
   parlamentar.cpf_vot.forEach(votacao => {
-    // console.log(respostas[votacao.proposicao_id] + " == " + votacao.resposta);
     if (
-      (respostas[votacao.proposicao_id] == 1 ||
-        respostas[votacao.proposicao_id] == 0) &&
-      (votacao.resposta == 1 || votacao.resposta == 0)
+      (respostas[votacao.proposicao_id] === 1 || respostas[votacao.proposicao_id] === -1) &&
+      (votacao.resposta === 1 || votacao.resposta === -1)
     ) {
       perguntasIguais++;
-      respostasIguais +=
-        respostas[votacao.proposicao_id] === votacao.resposta ? 1 : 0;
+      respostasIguais += respostas[votacao.proposicao_id] === votacao.resposta ? 1 : 0;
     }
   });
-  // Calcula alinhamento de fato, caso haja mais de 3 perguntas iguais
-  let alinhamento =
-    perguntasIguais > 3 ? respostasIguais / perguntasIguais : 0;
+  
+  let alinhamento = perguntasIguais > 3 ? respostasIguais / perguntasIguais : 0;
   
   return {
     respostasIguais: respostasIguais,
