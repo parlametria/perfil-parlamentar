@@ -20,4 +20,8 @@ export class AlinhamentoService {
   get(respostas): Observable<Parlamentar[]> {
     return this.http.post<Parlamentar[]>(this.url, {respostas: respostas.votacoes});
   }
+
+  getFoto(parlamentar: Parlamentar): string {
+    return "https://www.camara.leg.br/internet/deputado/bandep/" + parlamentar.id_parlamentar + ".jpg";
+  }
 }
