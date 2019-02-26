@@ -17,9 +17,9 @@ export class TemasComponent implements OnInit, OnDestroy {
 
   temas: Tema[];
   selectedTemas: string[] = [];
-  hasAnySelectedTema : boolean = false;
+  hasAnySelectedTema: boolean = false;
 
-  @Output() temasEvent = new EventEmitter<string[]>();
+  @Output() temasEvent = new EventEmitter<Object>();
 
   constructor(private temaService: TemaService) { }
 
@@ -34,27 +34,32 @@ export class TemasComponent implements OnInit, OnDestroy {
   }
 
   clickButton(idTema) {
-    if(!this.isTemaSelected(idTema)) {
+    if (!this.isTemaSelected(idTema)) {
       this.hasAnySelectedTema = true;
       this.selectedTemas.push(idTema);
     } else {
       this.selectedTemas.splice(this.selectedTemas.indexOf(idTema), 1);
-      if(this.selectedTemas.length === 0) {
+      if (this.selectedTemas.length === 0) {
         this.hasAnySelectedTema = false;
       }
     }
   }
 
   isTemaSelected(idTema) {
-    return(this.selectedTemas.includes(idTema));
+    return (this.selectedTemas.includes(idTema));
   }
 
-  emitTemas(){
+  emitTemas() {
     let notSelectedTemas = this.temas.filter((tema) => {
       return !this.selectedTemas.includes(tema.id);
     }).map(tema => tema.id);
-    
-    this.temasEvent.emit(this.selectedTemas.concat(notSelectedTemas));
+
+    let eventoObject = {
+      selectedTemas: this.selectedTemas,
+      allTemas: this.selectedTemas.concat(notSelectedTemas),
+    }
+
+    this.temasEvent.emit(eventoObject);
   }
 
   ngOnDestroy() {

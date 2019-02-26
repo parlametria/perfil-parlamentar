@@ -15,6 +15,8 @@ import { Resposta } from '../models/resposta.model';
 export class UserService {
 
   private respostas = new BehaviorSubject<Resposta>({ vozAtiva: {}, votacoes: {} });
+  private temas = new BehaviorSubject<Array<string>>([]);
+
   private url = environment.apiUrl + "usuarios";
 
   constructor(
@@ -123,6 +125,42 @@ export class UserService {
 
   private setRespostaLocalStorage(novasRespostas) {
     localStorage.setItem('respostasUser', JSON.stringify(novasRespostas));
+  }
+
+  getTemas() {
+    this.getTemasUser();
+    return this.temas.asObservable();
+  }
+
+  setTemas(novosTemas) {
+    if (this.loginService.isUserLogged()) {
+      // TODO: if user is logged      
+
+    } else {
+      this.setTemasLocalStorage(novosTemas);
+      this.temas.next(novosTemas);
+    }
+  }
+
+  private getTemasUser() {
+    if (this.loginService.isUserLogged()) {
+      // TODO: if user is logged
+    } else {
+      if (localStorage.getItem("temasUser") === null) {
+        this.setTemasLocalStorage([]);
+      } else {
+        let temasLS = this.getTemasLocalStorage();
+        this.temas.next(temasLS);
+      }
+    }
+  }  
+
+  getTemasLocalStorage() {
+    return JSON.parse(localStorage.getItem("temasUser"));
+  }
+
+  private setTemasLocalStorage(novosTemas) {
+    localStorage.setItem('temasUser', JSON.stringify(novosTemas));
   }
 
 }
