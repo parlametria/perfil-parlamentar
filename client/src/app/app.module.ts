@@ -25,6 +25,7 @@ import { UserService } from './shared/services/user.service';
 
 import { getAuthServiceConfigs } from "./shared/config/socialLoginConfig";
 import { TokenInterceptor } from "./shared/auth/token.interceptor";
+import { AlinhamentoComponent } from './main/alinhamento/alinhamento.component';
 
 
 @NgModule({
@@ -36,7 +37,8 @@ import { TokenInterceptor } from "./shared/auth/token.interceptor";
     PerguntasContainerComponent,
     PerguntaComponent,
     QuestionarioComponent,
-    TemasComponent
+    TemasComponent,
+    AlinhamentoComponent
   ],
   imports: [
     BrowserModule,

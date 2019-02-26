@@ -54,9 +54,13 @@ router.get("/votacoes", (req, res) => {
         model: Votacao,
         as: "cpf_vot",
         attributes: att_res,
-        required: true
+        required: false
       }
-    ]
+    ],
+    where: {
+      eleito: true
+    },
+    limit: 513
   })
     .then(votacoes => {
       novaVotacao = formataVotacoes(votacoes);
