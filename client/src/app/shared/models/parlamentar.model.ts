@@ -1,6 +1,7 @@
 export class Parlamentar {
 
   constructor(
+    public id_parlamentar: string,
     public cpf: string,
     public estado: number,
     public uf: string,

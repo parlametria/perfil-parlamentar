@@ -28,7 +28,8 @@ const att = [
   "reeleicao",
   "email",
   "sg_partido",
-  "partido"
+  "partido",
+  "id_parlamentar"
 ];
 
 /**
