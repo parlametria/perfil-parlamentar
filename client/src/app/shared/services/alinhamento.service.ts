@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 
 import { Parlamentar } from '../models/parlamentar.model';
 import { environment } from '../../../environments/environment';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -17,11 +18,7 @@ export class AlinhamentoService {
     private http: HttpClient
   ) { }
 
-  get(respostas): Observable<Parlamentar[]> {
-    return this.http.post<Parlamentar[]>(this.url, {respostas: respostas.votacoes});
-  }
-
-  getFoto(parlamentar: Parlamentar): string {
-    return "https://www.camara.leg.br/internet/deputado/bandep/" + parlamentar.id_parlamentar + ".jpg";
+  get(respostas): Observable<any> {
+    return this.http.post<Parlamentar[]>(this.url, { respostas: respostas.votacoes }).pipe(map(data => data.map(parlamentar => new Parlamentar(parlamentar))));
   }
 }
