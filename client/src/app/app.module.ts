@@ -3,8 +3,9 @@ import { NgModule } from '@angular/core';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 
-import { SocialLoginModule, AuthServiceConfig } from "angularx-social-login";
+import { SocialLoginModule, AuthServiceConfig } from 'angularx-social-login';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { LazyLoadImageModule } from 'ng-lazyload-image';
 
 import { AppRoutingModule } from './app-routing.module';
 
@@ -23,8 +24,8 @@ import { AuthGuardService } from './shared/services/auth-guard.service';
 import { TemaService } from './shared/services/tema.service';
 import { UserService } from './shared/services/user.service';
 
-import { getAuthServiceConfigs } from "./shared/config/socialLoginConfig";
-import { TokenInterceptor } from "./shared/auth/token.interceptor";
+import { getAuthServiceConfigs } from './shared/config/socialLoginConfig';
+import { TokenInterceptor } from './shared/auth/token.interceptor';
 import { AlinhamentoComponent } from './main/alinhamento/alinhamento.component';
 
 
@@ -45,6 +46,7 @@ import { AlinhamentoComponent } from './main/alinhamento/alinhamento.component';
     HttpClientModule,
     AppRoutingModule,
     SocialLoginModule,
+    LazyLoadImageModule,
     FormsModule,
     NgbModule.forRoot()
   ],
