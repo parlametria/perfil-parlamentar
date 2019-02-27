@@ -15,7 +15,8 @@ import { TemasUsuario } from '../models/temasUsuario.model';
 })
 export class UserService {
 
-  private respostas = new BehaviorSubject<Resposta>({ vozAtiva: {}, votacoes: {} });  
+  private respostas = new BehaviorSubject<Resposta>({ vozAtiva: {}, votacoes: {} });
+  private temas = new BehaviorSubject<Array<string>>([]);
 
   private url = environment.apiUrl + "usuarios";
 
@@ -127,20 +128,47 @@ export class UserService {
     localStorage.setItem('respostasUser', JSON.stringify(novasRespostas));
   }
 
-  setTemas(novosTemas: Array<string>) {
-    
+  getTemas() {
+    this.getTemasUser();
+    return this.temas.asObservable();
+  }
+
+  private getTemasUser() {
     if (this.loginService.isUserLogged()) {
-    
+      // Limpa temas anteriores
+      this.temas.next([]);
+
+      this.getTemasAPI().subscribe(res => {
+        if (typeof res !== 'undefined' && res.length > 0) {
+          let temasUsuario = res[0].temas_preferidos;
+          if (typeof temasUsuario !== 'undefined' && temasUsuario.length > 0)
+            this.temas.next(temasUsuario);
+        }
+      });
+    } else {
+      let temasLS = this.getTemasLocalStorage();
+
+      if (temasLS)
+        this.temas.next(temasLS);
+
+    }
+  }
+
+  setTemas(novosTemas: Array<string>) {
+    if (this.loginService.isUserLogged()) {
       this.setTemasAPI(novosTemas).subscribe(
-        res => {},
+        res => {
+          this.temas.next(res[0].temas_preferidos);
+        },
         error => console.log(error)
       );
     } else {
       this.setTemasLocalStorage(novosTemas);
+      this.temas.next(novosTemas);
     }
   }
 
-  getTemasAPI(): Observable<TemasUsuario[]> {
+  private getTemasAPI(): Observable<TemasUsuario[]> {
     return this.http.get<TemasUsuario[]>(this.url + "/temas/eu");
   }
 
