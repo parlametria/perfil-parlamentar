@@ -38,11 +38,15 @@ export class UserService {
         res => {
           // Checa se o usuário tem alguma resposta salva no banco de dados
           if (Object.values(res.votacoes).every(item => item === 0)) {
-            this.setRespostasAPI(this.getRespostaLocalStorage()).subscribe(
-              respostas => {
-                this.respostas.next(respostas);
-              }
-            );
+            if (this.getRespostaLocalStorage()) {
+              this.setRespostasAPI(this.getRespostaLocalStorage()).subscribe(
+                respostas => {
+                  this.respostas.next(respostas);
+                }
+              );
+            } else {
+              this.respostas.next(res);
+            }
           } else {
             this.respostas.next(res);
           }
