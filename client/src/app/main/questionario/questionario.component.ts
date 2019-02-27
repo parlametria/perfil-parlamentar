@@ -34,7 +34,7 @@ export class QuestionarioComponent implements OnInit, OnDestroy {
 
   }
 
-  getTemas() {    
+  getTemas() {
     this.temaService.getTemas().pipe(takeUntil(this.unsubscribe)).subscribe((temas) => {
       this.temas = temas;
       this.getTemasUsuario();
@@ -43,18 +43,29 @@ export class QuestionarioComponent implements OnInit, OnDestroy {
 
   getTemasUsuario() {
     if (this.loginService.isUserLogged()) {
-      //TODO: se usuario estiver logado.      
+      this.userService.getTemasAPI().pipe(takeUntil(this.unsubscribe)).subscribe((temasUsuario) => {        
+        console.log(temasUsuario);
+
+        if (typeof temasUsuario !== 'undefined' && temasUsuario.length > 0) {
+          console.log(temasUsuario);
+          let temasPreferidos = this.mapIdTemasToNome(temasUsuario[0].temas_preferidos);
+
+          // Define qual o restante dos temas para questionário
+          let notSelectedTemas = this.temas.filter((tema) => {
+            return !temasPreferidos.includes(tema.id);
+          }).map(tema => tema.id);
+
+          this.receivedTemas = temasPreferidos.concat(notSelectedTemas);
+          this.showQuestionario = true;
+        }
+      });
     } else {
       let temasLS = this.userService.getTemasLocalStorage();
 
       if (temasLS) {
         // Transforma o Array de nomes dos temas selecionados em um Array de IDs dos temas selecionados
-        let temasPreferidos = temasLS.map((temaValue) => {
-          return this.temas.filter((value) => {
-            return value.tema === temaValue;
-          })[0].id;
-        });
-        
+        let temasPreferidos = this.mapIdTemasToNome(temasLS);
+
         // Define qual o restante dos temas para questionário
         let notSelectedTemas = this.temas.filter((tema) => {
           return !temasPreferidos.includes(tema.id);
@@ -63,11 +74,9 @@ export class QuestionarioComponent implements OnInit, OnDestroy {
         this.receivedTemas = temasPreferidos.concat(notSelectedTemas);
         this.showQuestionario = true;
       }
-      
+
     }
   }
-
-
 
   receiveTemas($event) {
 
@@ -85,6 +94,16 @@ export class QuestionarioComponent implements OnInit, OnDestroy {
 
     this.receivedTemas = $event.allTemas;
     this.showQuestionario = true;
+  }
+
+  mapIdTemasToNome(temasNome) {
+    let temasId = temasNome.map((temaValue) => {
+      return this.temas.filter((value) => {
+        return value.tema === temaValue;
+      })[0].id;
+    });
+
+    return temasId;
   }
 
   ngOnDestroy() {

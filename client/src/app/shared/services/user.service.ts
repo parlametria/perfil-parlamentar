@@ -7,6 +7,7 @@ import { LoginService } from './login.service';
 import { PerguntaService } from './pergunta.service';
 import { environment } from '../../../environments/environment';
 import { Resposta } from '../models/resposta.model';
+import { TemasUsuario } from '../models/temasUsuario.model';
 
 
 @Injectable({
@@ -15,7 +16,6 @@ import { Resposta } from '../models/resposta.model';
 export class UserService {
 
   private respostas = new BehaviorSubject<Resposta>({ vozAtiva: {}, votacoes: {} });
-  private temas = new BehaviorSubject<Array<string>>([]);
 
   private url = environment.apiUrl + "usuarios";
 
@@ -127,36 +127,24 @@ export class UserService {
     localStorage.setItem('respostasUser', JSON.stringify(novasRespostas));
   }
 
-  getTemas() {
-    this.getTemasUser();
-    return this.temas.asObservable();
-  }
-
-  setTemas(novosTemas) {
+  setTemas(novosTemas: Array<string>) {
     if (this.loginService.isUserLogged()) {
-      // TODO: if user is logged      
-
+      this.setTemasAPI(novosTemas);
     } else {
       this.setTemasLocalStorage(novosTemas);
-      this.temas.next(novosTemas);
     }
   }
 
-  private getTemasUser() {
-    if (this.loginService.isUserLogged()) {
-      // TODO: if user is logged
-    } else {
-      if (localStorage.getItem("temasUser") === null) {
-        this.setTemasLocalStorage([]);
-      } else {
-        let temasLS = this.getTemasLocalStorage();
-        this.temas.next(temasLS);
-      }
-    }
-  }  
+  getTemasAPI(): Observable<TemasUsuario[]> {
+    return this.http.get<TemasUsuario[]>(this.url + "/temas/eu");
+  }
 
   getTemasLocalStorage() {
     return JSON.parse(localStorage.getItem("temasUser"));
+  }
+
+  private setTemasAPI(novosTemas: Array<string>): Observable<TemasUsuario[]> {
+    return this.http.post<TemasUsuario[]>(this.url + "/temas/eu", { temas: novosTemas });
   }
 
   private setTemasLocalStorage(novosTemas) {
