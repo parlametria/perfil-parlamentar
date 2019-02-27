@@ -43,21 +43,18 @@ export class QuestionarioComponent implements OnInit, OnDestroy {
 
   getTemasUsuario() {
     if (this.loginService.isUserLogged()) {
-      this.userService.getTemasAPI().pipe(takeUntil(this.unsubscribe)).subscribe((temasUsuario) => {        
-        console.log(temasUsuario);
+      this.userService.getTemasAPI().pipe(takeUntil(this.unsubscribe)).subscribe((temasUsuario) => {
 
         if (typeof temasUsuario !== 'undefined' && temasUsuario.length > 0) {
           console.log(temasUsuario);
           let temasPreferidos = this.mapIdTemasToNome(temasUsuario[0].temas_preferidos);
 
-          // Define qual o restante dos temas para questionário
-          let notSelectedTemas = this.temas.filter((tema) => {
-            return !temasPreferidos.includes(tema.id);
-          }).map(tema => tema.id);
+          let notSelectedTemas = this.joinComTemasNaoSelecionados(temasPreferidos);
 
           this.receivedTemas = temasPreferidos.concat(notSelectedTemas);
           this.showQuestionario = true;
         }
+
       });
     } else {
       let temasLS = this.userService.getTemasLocalStorage();
@@ -67,9 +64,7 @@ export class QuestionarioComponent implements OnInit, OnDestroy {
         let temasPreferidos = this.mapIdTemasToNome(temasLS);
 
         // Define qual o restante dos temas para questionário
-        let notSelectedTemas = this.temas.filter((tema) => {
-          return !temasPreferidos.includes(tema.id);
-        }).map(tema => tema.id);
+        let notSelectedTemas = this.joinComTemasNaoSelecionados(temasPreferidos);
 
         this.receivedTemas = temasPreferidos.concat(notSelectedTemas);
         this.showQuestionario = true;
@@ -104,6 +99,14 @@ export class QuestionarioComponent implements OnInit, OnDestroy {
     });
 
     return temasId;
+  }
+
+  joinComTemasNaoSelecionados(temasPreferidos) {
+    let notSelectedTemas = this.temas.filter((tema) => {
+      return !temasPreferidos.includes(tema.id);
+    }).map(tema => tema.id);
+
+    return notSelectedTemas;
   }
 
   ngOnDestroy() {

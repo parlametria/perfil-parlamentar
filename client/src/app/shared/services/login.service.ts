@@ -56,6 +56,7 @@ export class LoginService {
 
     this.clearUserData();
     this.clearRespostaLocalStorage();
+    this.clearTemasLocalStorage();
     this.loggedIn.next(false);
   }
 
@@ -139,7 +140,11 @@ export class LoginService {
   }
 
   private clearRespostaLocalStorage() {
-    localStorage.removeItem('respostasUser');
+    localStorage.removeItem("respostasUser");
+  }
+
+  private clearTemasLocalStorage() {
+    localStorage.removeItem("temasUser");
   }
 
 }

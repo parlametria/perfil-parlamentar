@@ -15,7 +15,7 @@ import { TemasUsuario } from '../models/temasUsuario.model';
 })
 export class UserService {
 
-  private respostas = new BehaviorSubject<Resposta>({ vozAtiva: {}, votacoes: {} });
+  private respostas = new BehaviorSubject<Resposta>({ vozAtiva: {}, votacoes: {} });  
 
   private url = environment.apiUrl + "usuarios";
 
@@ -128,8 +128,13 @@ export class UserService {
   }
 
   setTemas(novosTemas: Array<string>) {
+    
     if (this.loginService.isUserLogged()) {
-      this.setTemasAPI(novosTemas);
+    
+      this.setTemasAPI(novosTemas).subscribe(
+        res => {},
+        error => console.log(error)
+      );
     } else {
       this.setTemasLocalStorage(novosTemas);
     }
