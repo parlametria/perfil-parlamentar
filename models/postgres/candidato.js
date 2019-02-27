@@ -29,7 +29,8 @@ module.exports = (sequelize, type) => {
       grau_instrucao: type.STRING,
       genero: type.STRING,
       eleito: type.BOOLEAN,
-      respondeu: type.BOOLEAN
+      respondeu: type.BOOLEAN,
+      id_parlamentar: type.STRING
     },
     {
       timestamps: false
