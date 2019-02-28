@@ -441,7 +441,7 @@ export const calculaScorePorTema = (
     let votacoesCandidatosTema = {};
     let numRespostasConsideradas = 0;
 
-    if (!isEmpty(dadosCandidato.votacoes)) {
+    if (!isEmpty(dadosCandidato.votacoes) && votacoesPorTema[tema] !== undefined) {
       votacoesPorTema[tema].forEach(idVotacao => {
         votacoesCandidatosTema[idVotacao] = dadosCandidato.votacoes[idVotacao];
       });
@@ -463,7 +463,7 @@ export const calculaScorePorTema = (
       });
     }
 
-    if (votacoesCandidatos[dadosCandidato.cpf]) {
+    if (votacoesCandidatos[dadosCandidato.cpf] && votacoesPorTema[tema] !== undefined) {
       votacoesPorTema[tema].forEach(idVotacao => {
         votacoesCandidatosTema[idVotacao] =
           votacoesCandidatos[dadosCandidato.cpf][idVotacao];

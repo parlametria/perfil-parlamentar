@@ -3,7 +3,7 @@
     "id": 0,
     "numero_proj_lei": "PL 4148/2008",
     "id_votacao": 5513,
-    "titulo": "Fim à rotulagem de Alimentos Transgênicos",
+    "titulo": "Fim à Rotulagem de Alimentos Transgênicos",
     "descricao": "Põe fim à exigência do símbolo da transgenia nos rótulos de produtos comercializados com organismos geneticamente modificados (OGM).",
     "tema": "Meio Ambiente"
   },
@@ -157,7 +157,7 @@
     "id_votacao": 5624,
     "titulo": "Tipificação do terrorismo",
     "descricao": "A votação do projeto de lei tipifica o crime de terrorismo. O texto aprovado tipifica o terrorismo como a prática, por um ou mais indivíduos, de atos por razões de xenofobia, discriminação ou preconceito de raça, cor, etnia ou religião, com a finalidade de provocar terror social ou generalizado, expondo a perigo pessoa, patrimônio, a paz pública ou a incolumidade pública. O texto prevê pena de reclusão de 12 a 30 anos em regime fechado, sem prejuízo das penas relativas a outras infrações decorrentes desse crime.",
-    "tema": "Transversal"
+    "tema": "Direitos Humanos"
   },
   "16155": {
     "id": 20,
@@ -165,6 +165,6 @@
     "id_votacao": 16155,
     "titulo": "Cobrança de cursos em universidades públicas",
     "descricao": "Segundo o texto, o ensino público superior de graduação e de pós-graduação acadêmica continuam gratuitos, mas as instituições poderão cobrar pelos cursos de extensão, de pós-graduação lato sensu (como MBAs) e de mestrado profissional. A exceção será para os programas de residência (em saúde) e de formação de profissionais na área de ensino, que continuarão gratuitos.",
-    "tema": "Transversal"
+    "tema": "Educação"
   }
 }
