@@ -55,8 +55,16 @@
     "descricao": "O texto previa uma espécie de reserva de vagas para as mulheres nas próximas três legislaturas. Na primeira delas, de 10% do total de cadeiras na Câmara dos Deputados, nas assembleias legislativas estaduais, nas câmaras de vereadores e na Câmara Legislativa do Distrito Federal. Na segunda legislatura, o percentual subiria para 12% e, na terceira, para 15%.",
     "tema": "Direitos Humanos"
   },
-  "16370": {
+  "5624": {
     "id": 7,
+    "numero_proj_lei": "PL 2016/2015",
+    "id_votacao": 5624,
+    "titulo": "Tipificação do terrorismo",
+    "descricao": "A votação do projeto de lei tipifica o crime de terrorismo. O texto aprovado tipifica o terrorismo como a prática, por um ou mais indivíduos, de atos por razões de xenofobia, discriminação ou preconceito de raça, cor, etnia ou religião, com a finalidade de provocar terror social ou generalizado, expondo a perigo pessoa, patrimônio, a paz pública ou a incolumidade pública. O texto prevê pena de reclusão de 12 a 30 anos em regime fechado, sem prejuízo das penas relativas a outras infrações decorrentes desse crime.",
+    "tema": "Direitos Humanos"
+  },
+  "16370": {
+    "id": 8,
     "numero_proj_lei": "PL 8843/2017",
     "id_votacao": 16370,
     "titulo": "Regulamentação de acordos de leniência",
@@ -64,7 +72,7 @@
     "tema": "Integridade e Transparência"
   },
   "6074": {
-    "id": 8,
+    "id": 9,
     "numero_proj_lei": "PL 4850/2016",
     "id_votacao": 6074,
     "titulo": "Tipificação de crimes eleitorais",
@@ -72,7 +80,7 @@
     "tema": "Integridade e Transparência"
   },
   "5673": {
-    "id": 9,
+    "id": 10,
     "numero_proj_lei": "PL 4474/2004",
     "id_votacao": 5673,
     "titulo": "Limitação do valor de transferências em ano de eleição",
@@ -80,7 +88,7 @@
     "tema": "Integridade e Transparência"
   },
   "5450": {
-    "id": 10,
+    "id": 11,
     "numero_proj_lei": "PLP 177/2012",
     "id_votacao": 5450,
     "titulo": "Normas de repasses ou parcerias entre o setor público e ONGs",
@@ -88,7 +96,7 @@
     "tema": "Integridade e Transparência"
   },
   "55961": {
-    "id": 11,
+    "id": 12,
     "numero_proj_lei": "PEC 182/2007",
     "id_votacao": 55961,
     "titulo": "Financiamento privado para partidos e candidatos",
@@ -96,7 +104,7 @@
     "tema": "Integridade e Transparência"
   },
   "55962": {
-    "id": 12,
+    "id": 13,
     "numero_proj_lei": "PEC 182/2007",
     "id_votacao": 55962,
     "titulo": "Financiamento privado somente para partidos",
@@ -104,7 +112,7 @@
     "tema": "Integridade e Transparência"
   },
   "16532": {
-    "id": 13,
+    "id": 14,
     "numero_proj_lei": "MPV 810/2017",
     "id_votacao": 16532,
     "titulo": "Subsídios para empresas de tecnologia que investem em pesquisa, inovação e modernização no Brasil",
@@ -112,7 +120,7 @@
     "tema": "Agenda Nacional"
   },
   "6043": {
-    "id": 14,
+    "id": 15,
     "numero_proj_lei": "PEC 241/2016",
     "id_votacao": 6043,
     "titulo": "PEC do Teto de Gastos Públicos",
@@ -120,7 +128,7 @@
     "tema": "Agenda Nacional"
   },
   "5494": {
-    "id": 15,
+    "id": 16,
     "numero_proj_lei": "PL 4330/2004",
     "id_votacao": 5494,
     "titulo": "Terceirização",
@@ -128,7 +136,7 @@
     "tema": "Agenda Nacional"
   },
   "6148": {
-    "id": 16,
+    "id": 17,
     "numero_proj_lei": "PL 4302/1998",
     "id_votacao": 6148,
     "titulo": "Terceirização Total",
@@ -136,7 +144,7 @@
     "tema": "Agenda Nacional"
   },
   "16186": {
-    "id": 17,
+    "id": 18,
     "numero_proj_lei": "PL 6787/2016",
     "id_votacao": 16186,
     "titulo": "Reforma Trabalhista",
@@ -144,20 +152,12 @@
     "tema": "Agenda Nacional"
   },
   "5520": {
-    "id": 18,
+    "id": 19,
     "numero_proj_lei": "MPV 665/2014",
     "id_votacao": 5520,
     "titulo": "Dificultar acesso ao Seguro Desemprego",
     "descricao": "Com a lei fica mais difícil o acesso ao seguro-desemprego, ao abono salarial e ao seguro-defeso. Por exemplo: antes era necessário que um empregado tivesse um tempo de trabalho de no mínimo 6 meses para solicitar o seguro-desemprego no ato da demissão. Com a lei esse tempo mínimo passou para 1 ano. O objetivo da lei é reduzir os gastos.",
     "tema": "Agenda Nacional"
-  },
-  "5624": {
-    "id": 19,
-    "numero_proj_lei": "PL 2016/2015",
-    "id_votacao": 5624,
-    "titulo": "Tipificação do terrorismo",
-    "descricao": "A votação do projeto de lei tipifica o crime de terrorismo. O texto aprovado tipifica o terrorismo como a prática, por um ou mais indivíduos, de atos por razões de xenofobia, discriminação ou preconceito de raça, cor, etnia ou religião, com a finalidade de provocar terror social ou generalizado, expondo a perigo pessoa, patrimônio, a paz pública ou a incolumidade pública. O texto prevê pena de reclusão de 12 a 30 anos em regime fechado, sem prejuízo das penas relativas a outras infrações decorrentes desse crime.",
-    "tema": "Direitos Humanos"
   },
   "16155": {
     "id": 20,
