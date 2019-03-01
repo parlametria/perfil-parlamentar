@@ -14,6 +14,7 @@ const { formataRespostas, formataVotacoes } = require("../../utils/functions");
 
 const Candidato = models.candidato;
 const Votacao = models.votacao;
+const Proposicao = models.proposicao;
 
 const att_res = ["resposta", "proposicao_id"];
 const att = [
@@ -54,7 +55,14 @@ router.get("/votacoes", (req, res) => {
         model: Votacao,
         as: "cpf_vot",
         attributes: att_res,
-        required: true
+        required: true,
+        include: {
+          model: Proposicao,
+          attributes: [],
+          as: "vot_prop",
+          required: true,
+          where: { status_proposicao: "Ativa" }
+        }
       }
     ]
   })

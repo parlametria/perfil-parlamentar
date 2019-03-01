@@ -7,6 +7,7 @@ const models = require("../../models/index");
 const Usuario = models.usuario;
 const Resposta = models.respostau;
 const Votacao = models.votacaou;
+const Proposicao = models.proposicao;
 const expressJwt = require("express-jwt");
 const keys = require("../../config/keys");
 
@@ -70,7 +71,15 @@ router.get("/respostas/eu", authenticate, (req, res) => {
       {
         model: Votacao,
         as: "user_vot",
-        attributes: attVot
+        attributes: attVot,
+        required: true,
+        include: {
+          model: Proposicao,
+          attributes: [],
+          as: "uvot_prop",
+          required: true,
+          where: { status_proposicao: "Ativa" }
+        }
       }
     ],
     where: { provider_id: req.auth.id }
