@@ -7,6 +7,7 @@ import { LoginService } from './login.service';
 import { PerguntaService } from './pergunta.service';
 import { environment } from '../../../environments/environment';
 import { Resposta } from '../models/resposta.model';
+import { TemasUsuario } from '../models/temasUsuario.model';
 
 
 @Injectable({
@@ -15,6 +16,8 @@ import { Resposta } from '../models/resposta.model';
 export class UserService {
 
   private respostas = new BehaviorSubject<Resposta>({ vozAtiva: {}, votacoes: {} });
+  private temas = new BehaviorSubject<Array<string>>([]);
+
   private url = environment.apiUrl + "usuarios";
 
   constructor(
@@ -35,11 +38,15 @@ export class UserService {
         res => {
           // Checa se o usuário tem alguma resposta salva no banco de dados
           if (Object.values(res.votacoes).every(item => item === 0)) {
-            this.setRespostasAPI(this.getRespostaLocalStorage()).subscribe(
-              respostas => {
-                this.respostas.next(respostas);
-              }
-            );
+            if (this.getRespostaLocalStorage()) {
+              this.setRespostasAPI(this.getRespostaLocalStorage()).subscribe(
+                respostas => {
+                  this.respostas.next(respostas);
+                }
+              );
+            } else {
+              this.respostas.next(res);
+            }
           } else {
             this.respostas.next(res);
           }
@@ -123,6 +130,62 @@ export class UserService {
 
   private setRespostaLocalStorage(novasRespostas) {
     localStorage.setItem('respostasUser', JSON.stringify(novasRespostas));
+  }
+
+  getTemas() {
+    this.getTemasUser();
+    return this.temas.asObservable();
+  }
+
+  private getTemasUser() {
+    if (this.loginService.isUserLogged()) {
+      // Limpa temas anteriores
+      this.temas.next([]);
+
+      this.getTemasAPI().subscribe(res => {
+        if (typeof res !== 'undefined' && res.length > 0) {
+          let temasUsuario = res[0].temas_preferidos;
+          if (typeof temasUsuario !== 'undefined' && temasUsuario.length > 0)
+            this.temas.next(temasUsuario);
+        }
+      });
+    } else {
+      let temasLS = this.getTemasLocalStorage();
+
+      if (temasLS)
+        this.temas.next(temasLS);
+
+    }
+  }
+
+  setTemas(novosTemas: Array<string>) {
+    if (this.loginService.isUserLogged()) {
+      this.setTemasAPI(novosTemas).subscribe(
+        res => {
+          this.temas.next(res[0].temas_preferidos);
+        },
+        error => console.log(error)
+      );
+    } else {
+      this.setTemasLocalStorage(novosTemas);
+      this.temas.next(novosTemas);
+    }
+  }
+
+  private getTemasAPI(): Observable<TemasUsuario[]> {
+    return this.http.get<TemasUsuario[]>(this.url + "/temas/eu");
+  }
+
+  getTemasLocalStorage() {
+    return JSON.parse(localStorage.getItem("temasUser"));
+  }
+
+  private setTemasAPI(novosTemas: Array<string>): Observable<TemasUsuario[]> {
+    return this.http.post<TemasUsuario[]>(this.url + "/temas/eu", { temas: novosTemas });
+  }
+
+  private setTemasLocalStorage(novosTemas) {
+    localStorage.setItem('temasUser', JSON.stringify(novosTemas));
   }
 
 }

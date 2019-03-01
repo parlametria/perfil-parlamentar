@@ -7,6 +7,7 @@ const models = require("../../models/index");
 const Usuario = models.usuario;
 const Resposta = models.respostau;
 const Votacao = models.votacaou;
+const Tema = models.temasu;
 const expressJwt = require("express-jwt");
 const keys = require("../../config/keys");
 
@@ -145,7 +146,7 @@ router.post("/respostas/eu/todas", authenticate, (req, res) => {
         )
       });
 
-      Object.keys(votacoes).forEach(key => {        
+      Object.keys(votacoes).forEach(key => {
         Votacao.upsertResp(
           key,
           usuario.id,
@@ -159,6 +160,68 @@ router.post("/respostas/eu/todas", authenticate, (req, res) => {
     .catch(err => res.status(BAD_REQUEST).json({ err }));
 
   res.status(SUCCESS).json({ vozAtiva, votacoes });
+});
+
+/**
+ * Recupera todos os temas de preferência de um usuário
+ * @name get/api/usuarios/temas/eu
+ * @function
+ * @memberof module:routes/usuarios
+ */
+router.get("/temas/eu", authenticate, (req, res) => {
+
+  Usuario.findOne({
+    attributes: ["id"],
+    include: [
+      {
+        model: Tema,
+        attributes: ["usuario_id", "temas_preferidos"],
+        as: "user_temas",
+        required: false
+      }
+    ],
+    where: { provider_id: req.auth.id }
+  })
+    .then(usuarioTemas => {
+      res.status(SUCCESS).json(usuarioTemas.user_temas);
+    })
+    .catch(err => res.status(BAD_REQUEST).json({ err }));
+
+});
+
+/**
+ * Salva os temas de preferência do usuário
+ * @name get/api/usuarios/temas/eu
+ * @function
+ * @memberof module:routes/usuarios
+ */
+router.post("/temas/eu", authenticate, (req, res) => {
+
+  const temas = req.body.temas;
+
+  Usuario.findOne({ where: { provider_id: req.auth.id } })
+    .then(usuario => {
+
+      Tema.upsertTemas(
+        usuario.id,
+        temas,
+        (temas_user, error) => {
+          if (temas_user) {
+            const temasSalvos = {
+              usuario_id: temas_user.usuario_id,
+              temas_preferidos: temas_user.temas_preferidos
+            }
+            res.status(SUCCESS).json([temasSalvos]);
+          }
+          if (error)
+            res.status(BAD_REQUEST).json(error);
+        }
+      )
+    })
+    .catch(err => {
+      res.status(BAD_REQUEST).json({ error: err.message })
+    });
+
 });
 
 module.exports = router;
