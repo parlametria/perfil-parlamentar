@@ -260,7 +260,7 @@ class Home extends Component {
           <section className="intro">
             <div className="container">
               <h2 className="intro-title text-center">
-                Descubra quais deputados/as e candidatos/as são{" "}
+                Descubra quais deputados/as são{" "}
                 <strong className="strong">alinhados</strong> com você.
               </h2>
             </div>
