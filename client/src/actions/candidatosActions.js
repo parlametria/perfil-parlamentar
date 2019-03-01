@@ -388,8 +388,15 @@ export const calculaScorePorTema = (
   arrayRespostasUsuario
 ) => (dispatch, getState) => {
   const { dadosCandidato } = getState().candidatosReducer;
-  const perguntas = getState().perguntasReducer.dadosPerguntas;
   const { votacoesCandidatos } = getState().votacoesReducer;
+  const { abaAtiva } = getState().questionarioReducer;
+  let perguntas;
+
+  if(abaAtiva === "Votacoes") {
+    perguntas = getState().votacoesReducer.dadosVotacoes;
+  } else {
+    perguntas = getState().perguntasReducer.dadosPerguntas;
+  }
 
   let nomeTemas = new Set();
 
@@ -434,7 +441,7 @@ export const calculaScorePorTema = (
     let votacoesCandidatosTema = {};
     let numRespostasConsideradas = 0;
 
-    if (!isEmpty(dadosCandidato.votacoes)) {
+    if (!isEmpty(dadosCandidato.votacoes) && votacoesPorTema[tema] !== undefined) {
       votacoesPorTema[tema].forEach(idVotacao => {
         votacoesCandidatosTema[idVotacao] = dadosCandidato.votacoes[idVotacao];
       });
@@ -456,7 +463,7 @@ export const calculaScorePorTema = (
       });
     }
 
-    if (votacoesCandidatos[dadosCandidato.cpf]) {
+    if (votacoesCandidatos[dadosCandidato.cpf] && votacoesPorTema[tema] !== undefined) {
       votacoesPorTema[tema].forEach(idVotacao => {
         votacoesCandidatosTema[idVotacao] =
           votacoesCandidatos[dadosCandidato.cpf][idVotacao];
