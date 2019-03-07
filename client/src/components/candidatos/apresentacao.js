@@ -6,7 +6,7 @@ export default () => (
     <div>
       <p>
         <strong>Vote</strong> nos temas propostos e veja aqui os
-        deputados que mais se alinham com você.
+        deputados/as que mais se alinham com você.
       </p>
       <p>
         <strong>Filtre</strong> o resultado segundo seus critérios.

@@ -22,7 +22,7 @@ class BoasVindas extends Component {
           </div>
           <div className="tutorial-text pl-2">
             <strong className="strong">Vote</strong> nos temas propostos e veja
-            aqui os candidatos que mais se alinham com você.
+            aqui os deputados/as que mais se alinham com você.
           </div>
         </div>
         <div className="d-flex align-items-center">

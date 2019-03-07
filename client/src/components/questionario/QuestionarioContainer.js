@@ -47,7 +47,7 @@ class QuestionarioContainer extends Component {
 
     return (
       <div className="toogle-wrapper">
-        <div className="question-toogle">
+        {/* <div className="question-toogle">
           <div>
             <label className="label-toogle" >
               <span className="label-toogle-left">Dito</span>
@@ -65,11 +65,11 @@ class QuestionarioContainer extends Component {
               Feito: Posições de quem já foi deputado em votações importantes.
               </Tooltip>
           </div>
-        </div>
+        </div> */}
         {abaAtiva === "Votacoes" && (
           <div>
             <MenuTema />
-
+            
             {respondeuVotacoes &&
               isContinuarRespondendo.votacoes &&
               !respondeuTodos && <VotacoesContainer />}
@@ -83,7 +83,7 @@ class QuestionarioContainer extends Component {
             {isContinuarRespondendo.todos && <VotacoesContainer />}
           </div>
         )}
-        {abaAtiva === "Voz Ativa" && (
+        {/* {abaAtiva === "Voz Ativa" && (
           <div>
             <MenuTema />
 
@@ -99,7 +99,7 @@ class QuestionarioContainer extends Component {
             )}
             {isContinuarRespondendo.todos && <PerguntasContainer />}
           </div>
-        )}
+        )} */}
       </div>
     );
   }

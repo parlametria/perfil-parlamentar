@@ -320,7 +320,7 @@ class CandidatosContainer extends Component {
           candidato.respondeu &&
           candidato.reeleicao === "1"
         )
-          totalReeleitosEResponderam++;
+          totalReeleitosEResponderam++;          
         return (
           <Candidato
             respondeu={candidato.respondeu}
@@ -346,6 +346,7 @@ class CandidatosContainer extends Component {
                 ? true
                 : false
             }
+            eleito={candidato.eleito}
             temHistorico={votacoesCandidatos[candidato.cpf] !== undefined}
           />
         );
@@ -600,8 +601,8 @@ class CandidatosContainer extends Component {
                           <input
                             type="text"
                             className="form-control form-control-secondary"
-                            placeholder="Pesquisar candidato/a..."
-                            aria-label="Pesquisar candidato/a"
+                            placeholder="Pesquisar deputado/a..."
+                            aria-label="Pesquisar deputado/a"
                             aria-describedby="search-candidate"
                             onChange={this.buscaNome}
                             value={filtro.nome}
@@ -658,7 +659,7 @@ class CandidatosContainer extends Component {
                             </label>
                           </div>
                         </div>
-                        <div className="col-md-6">
+                        {/* <div className="col-md-6">
                           <div className="form-group form-check">
                             <input
                               id="responderam"
@@ -674,7 +675,7 @@ class CandidatosContainer extends Component {
                               responderam o questionário
                             </label>
                           </div>
-                        </div>
+                        </div> */}
                       </div>
                     </CardBody>
                   </Card>

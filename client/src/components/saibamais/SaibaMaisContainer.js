@@ -35,7 +35,7 @@ class SaibaMaisContainer extends Component {
 
     this.state = {
       votos: "",
-      activeTab: "1"
+      activeTab: "2"
     };
   }
 
@@ -158,10 +158,10 @@ class SaibaMaisContainer extends Component {
       </div>
     );
 
-    const tabela = !isEmpty(dadosCandidato.votacoes) ? (
+    const tabela = (
       <div>
         <Nav tabs>
-          <NavItem>
+          {/* <NavItem>
             <NavLink
               className={classnames({
                 active: this.state.activeTab === "1"
@@ -172,7 +172,7 @@ class SaibaMaisContainer extends Component {
             >
               no Voz Ativa
             </NavLink>
-          </NavItem>
+          </NavItem> */}
           <NavItem>
             <NavLink
               className={classnames({
@@ -188,22 +188,17 @@ class SaibaMaisContainer extends Component {
         </Nav>
 
         <TabContent activeTab={this.state.activeTab}>
-          <TabPane tabId="1">
+          {/* <TabPane tabId="1">
             <TabelaPerguntas
               respostas={dadosCandidato.respostas}
               votos={getArrayUrl(this.state.votos)}
             />
-          </TabPane>
+          </TabPane> */}
           <TabPane tabId="2">
             <TabelaVotacoes />
           </TabPane>
         </TabContent>
       </div>
-    ) : (
-      <TabelaPerguntas
-        respostas={dadosCandidato.respostas}
-        votos={getArrayUrl(this.state.votos)}
-      />
     );
 
     return (

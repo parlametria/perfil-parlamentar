@@ -12,7 +12,11 @@ class Candidato extends Component {
       <span className="badge badge-secondary">não respondeu</span>
     );
 
-    const verAtuacao = (
+    const badgeNaoTemVotacoes = (
+      <span className="badge badge-secondary">não tem votações</span>
+    );
+
+    const verAtuacao = (      
       <Link
         className="btn btn-outline-primary btn-sm"
         to={
@@ -23,14 +27,14 @@ class Candidato extends Component {
           "/true"
         }
       >
-        ver atuação
+        ver atuação       
       </Link>
     );
 
     const naoRespondeu = (
       <div>
         <div>
-          <a
+          {/* <a
             className="btn btn-outline-primary btn-sm"
             href={
               "mailto:" +
@@ -55,8 +59,8 @@ class Candidato extends Component {
             target="_blank"
           >
             cobre a participação
-          </a>{" "}
-          {this.props.reeleito && verAtuacao}
+          </a>{" "} */}
+          {this.props.eleito && this.props.temHistorico && verAtuacao}
         </div>
       </div>
     );
@@ -79,7 +83,7 @@ class Candidato extends Component {
             <span className="score">{Math.round(this.props.score * 100)}%</span>
           </div>
         </div>
-        <Link
+        {/* <Link
           className="btn btn-outline-primary btn-sm"
           to={
             "compare/" +
@@ -89,8 +93,8 @@ class Candidato extends Component {
           }
         >
           saiba mais
-        </Link>{" "}
-        {this.props.reeleito && verAtuacao}
+        </Link>{" "} */}
+        {this.props.eleito && this.props.temHistorico && verAtuacao}
       </div>
     );
     return (
@@ -138,7 +142,7 @@ class Candidato extends Component {
                       reeleito/a
                     </span>
                   )}
-                  {!this.props.respondeu && badgeNaoRespondeu}
+                  {!this.props.temHistorico && badgeNaoTemVotacoes}
                 </div>
                 {this.props.respondeu || this.props.temHistorico
                   ? barraScore
@@ -162,7 +166,8 @@ Candidato.propTypes = {
   respostas: PropTypes.any.isRequired,
   foto: PropTypes.string.isRequired,
   respostasUsuario: PropTypes.instanceOf(Object),
-  email: PropTypes.string.isRequired
+  email: PropTypes.string.isRequired,
+  eleito: PropTypes.bool.isRequired
 };
 
 export default Candidato;
