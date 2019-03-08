@@ -557,20 +557,6 @@ class CandidatosContainer extends Component {
                 Eleitos/as
               </a>
             </li>
-            {/* {filtro.estado !== "TODOS" && (
-              <li className="nav-item">
-                <a
-                  className={classnames("nav-link nav-link-a", {
-                    active: activeTab === "candidatos"
-                  })}
-                  onClick={() => {
-                    this.setActiveTab("candidatos");
-                  }}
-                >
-                  Candidatos/as
-                </a>
-              </li>
-            )} */}
           </ul>
         </div>
         <div className="container">
@@ -659,23 +645,6 @@ class CandidatosContainer extends Component {
                             </label>
                           </div>
                         </div>
-                        {/* <div className="col-md-6">
-                          <div className="form-group form-check">
-                            <input
-                              id="responderam"
-                              type="checkbox"
-                              className="form-check-input"
-                              onChange={this.buscaRespondeu}
-                              checked={filtro.respondeu === "1" ? true : false}
-                            />
-                            <label
-                              className="form-check-label"
-                              htmlFor="responderam"
-                            >
-                              responderam o questionário
-                            </label>
-                          </div>
-                        </div> */}
                       </div>
                     </CardBody>
                   </Card>
