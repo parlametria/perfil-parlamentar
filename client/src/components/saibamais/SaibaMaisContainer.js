@@ -173,21 +173,6 @@ class SaibaMaisContainer extends Component {
 
     const tabela = (
       <div>
-        <Nav tabs>        
-          <NavItem>
-            <NavLink
-              className={classnames({
-                active: this.state.activeTab === "2"
-              })}
-              onClick={() => {
-                this.toggle("2");
-              }}
-            >
-              Na câmara
-            </NavLink>
-          </NavItem>
-        </Nav>
-
         <TabContent activeTab={this.state.activeTab}>
           <TabPane tabId="2">
             <TabelaVotacoes />
