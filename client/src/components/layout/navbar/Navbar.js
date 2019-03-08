@@ -138,11 +138,11 @@ class Navbar extends Component {
                     Sobre
                   </Link>
                 </li>
-                <li className="nav-item">
+                {/* <li className="nav-item">
                   <Link to="/soucandidato" className="nav-link">
                     Sou candidato
                   </Link>
-                </li>
+                </li> */}
                 {!isAuthenticated && !isMobile && (
                   <a
                     onClick={this.toggle}

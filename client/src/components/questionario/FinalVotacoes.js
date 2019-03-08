@@ -14,17 +14,9 @@ class FinalVotacoes extends Component {
             você.
           </p>
           <p>
-            <strong className="strong">Cobre</strong> a participação de quem não
-            respondeu.
-          </p>
-          <p>
             <strong className="strong">Examine</strong> a atuação anterior dos
             candidatos reeleitos.
-          </p>
-          <p>
-            <strong className="strong">Responda</strong> as perguntas do Voz
-            Ativa e aumente a precisão do resultado.
-          </p>
+          </p>          
           <p>
             <strong className="strong">Compartilhe</strong> suas respostas nas
             redes sociais.
