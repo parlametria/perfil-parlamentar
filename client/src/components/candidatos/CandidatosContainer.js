@@ -557,7 +557,7 @@ class CandidatosContainer extends Component {
                 Eleitos/as
               </a>
             </li>
-            {filtro.estado !== "TODOS" && (
+            {/* {filtro.estado !== "TODOS" && (
               <li className="nav-item">
                 <a
                   className={classnames("nav-link nav-link-a", {
@@ -570,7 +570,7 @@ class CandidatosContainer extends Component {
                   Candidatos/as
                 </a>
               </li>
-            )}
+            )} */}
           </ul>
         </div>
         <div className="container">
