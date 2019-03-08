@@ -71,18 +71,32 @@ export const criaURL = respostasUsuario => {
 
 export const votosValidos = votos => {
   let valido = true;
-  let dictVotos = getDict(votos);
-  Object.keys(dictVotos).forEach((chave, index) => {
+  let dictVotos = getDict(votos);  
+
+  Object.keys(dictVotos.votacoes).forEach((chave, index) => {
     if (
-      dictVotos[chave] === "1" ||
-      dictVotos[chave] === "-1" ||
-      dictVotos[chave] === "0" ||
-      dictVotos[chave] === "-2"
+      dictVotos[chave] === 1 ||
+      dictVotos[chave] === -1 ||
+      dictVotos[chave] === 0 ||
+      dictVotos[chave] === -2
     ) {
-    } else {
-      valido = false;
+    } else {      
+      return false;
     }
   });
+
+  Object.keys(dictVotos.vozAtiva).forEach((chave, index) => {
+    if (
+      dictVotos[chave] === 1 ||
+      dictVotos[chave] === -1 ||
+      dictVotos[chave] === 0 ||
+      dictVotos[chave] === -2
+    ) {
+    } else {      
+      return false;
+    }
+  });
+
   return valido;
 };
 

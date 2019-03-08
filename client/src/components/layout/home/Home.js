@@ -86,8 +86,8 @@ class Home extends Component {
       //this.mostrarTodos();
     }
 
-    const { votos, estado } = this.props.match.params;
-
+    const { votos, estado } = this.props.match.params;    
+    
     const parsed = querystring.parse(this.props.location.search);
 
     if (parsed.state === "facebookdirect") {
@@ -96,10 +96,11 @@ class Home extends Component {
     }
 
     if (votos && estado) {
-      if (votosValidos(votos) && estadoValido(estado)) {
+      
+      if (votosValidos(getArrayUrl(votos)) && estadoValido(estado)) {
         const arrayVotosUsuario = getArrayUrl(votos);
         const votosUsuario = getDict(arrayVotosUsuario);
-
+        
         const filtroEstado = {
           nome: "",
           partido: "Partidos",
