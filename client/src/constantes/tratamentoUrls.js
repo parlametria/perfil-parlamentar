@@ -1,6 +1,10 @@
 import { listaEstados } from "./filtrosSeletoresCandidatos";
 import arquivoVotacoes from "../data/votacoes.json";
 import perguntas from "../data/perguntas.json";
+import votacoes from "../data/votacoes.json";
+
+const TAM_PERGUNTAS = Object.keys(perguntas).length;
+const TAM_VOTACOES = Object.keys(votacoes).length;
 
 export const getArrayUrl = url => {
   let arrayUrl = [];
@@ -45,21 +49,17 @@ export const getDict = arrayUrl => {
 export const criaURL = respostasUsuario => {
   let urlVotos = "";
 
-  const { vozAtiva, votacoes } = respostasUsuario;
-  const idsVozAtiva = Object.keys(vozAtiva);
+  const { votacoes } = respostasUsuario;
+
   const idsVotacoes = Object.keys(votacoes);
 
-  let arrayVotos = Array(idsVozAtiva.length + idsVotacoes.length).fill(0);
-
-  idsVozAtiva.forEach(id => {
-    arrayVotos[id] = vozAtiva[id];
-  });
+  let arrayVotos = Array(idsVotacoes.length).fill(0);
 
   idsVotacoes.forEach(idVotacao => {
     if (idVotacao !== "null") {
-      arrayVotos[arquivoVotacoes[idVotacao].id + idsVozAtiva.length] =
-      votacoes[idVotacao];
-    }    
+      arrayVotos[arquivoVotacoes[idVotacao].id] =
+        votacoes[idVotacao];
+    }
   });
 
   arrayVotos.forEach(voto => {
@@ -71,7 +71,7 @@ export const criaURL = respostasUsuario => {
 
 export const votosValidos = votos => {
   let valido = true;
-  let dictVotos = getDict(votos);  
+  let dictVotos = getDict(votos);
 
   Object.keys(dictVotos.votacoes).forEach((chave, index) => {
     if (
@@ -80,7 +80,7 @@ export const votosValidos = votos => {
       dictVotos[chave] === 0 ||
       dictVotos[chave] === -2
     ) {
-    } else {      
+    } else {
       return false;
     }
   });
@@ -92,7 +92,7 @@ export const votosValidos = votos => {
       dictVotos[chave] === 0 ||
       dictVotos[chave] === -2
     ) {
-    } else {      
+    } else {
       return false;
     }
   });
@@ -109,3 +109,13 @@ export const estadoValido = estado => {
   }
   return valido;
 };
+
+export const tamanhoRespostas = () => {
+
+  let tamanho = {
+    tamPerguntas: TAM_PERGUNTAS,
+    tamVotacoes: TAM_VOTACOES
+  }
+
+  return tamanho;
+}

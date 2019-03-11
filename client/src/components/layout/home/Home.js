@@ -43,7 +43,8 @@ import {
   getArrayUrl,
   getDict,
   votosValidos,
-  estadoValido
+  estadoValido,
+  tamanhoRespostas
 } from "../../../constantes/tratamentoUrls";
 
 import FlipMove from "react-flip-move";
@@ -95,10 +96,16 @@ class Home extends Component {
       this.props.history.push("/");
     }
 
+    let {tamPerguntas, tamVotacoes} = tamanhoRespostas();
+
+    let respostaQuizVozAtiva = '0'.repeat(tamPerguntas);
+
+    let votosCompleto = respostaQuizVozAtiva + votos;
+    
     if (votos && estado) {
 
-      if (votosValidos(getArrayUrl(votos)) && estadoValido(estado)) {
-        const arrayVotosUsuario = getArrayUrl(votos);
+      if (votosValidos(getArrayUrl(votosCompleto)) && estadoValido(estado)) {
+        const arrayVotosUsuario = getArrayUrl(votosCompleto);
         const votosUsuario = getDict(arrayVotosUsuario);
 
         const filtroEstado = {

@@ -22,7 +22,7 @@ import { getVotacoesDeputados } from "../../actions/votacoesActions";
 import { salvaScoreUsuario } from "../../actions/usuarioActions";
 import isEmpty from "../../validation/is-empty";
 
-import { getArrayUrl, getDict } from "../../constantes/tratamentoUrls";
+import { getArrayUrl, getDict, tamanhoRespostas } from "../../constantes/tratamentoUrls";
 
 import "./SaibaMaisContainer.css";
 import Spinner from "../common/Spinner";
@@ -227,10 +227,16 @@ class SaibaMaisContainer extends Component {
   componentDidMount() {
     const { candidato, votos, verAtuacao } = this.props.match.params;
 
-    let votosUsuario = votos;
-
-    if (isEmpty(votos)) {
-      votosUsuario = "0".repeat(79);
+    let votosUsuario;
+    let {tamPerguntas, tamVotacoes} = tamanhoRespostas();
+  
+    if (!isEmpty(votos) && getArrayUrl(votos).length === tamVotacoes) {
+      let respostaQuizVozAtiva = '0'.repeat(tamPerguntas);
+      votosUsuario = respostaQuizVozAtiva + votos;
+    } else if (isEmpty(votos)) {
+      votosUsuario = "0".repeat(tamVotacoes + tamPerguntas);
+    } else {
+      votosUsuario = votos;
     }
 
     const respostasUsuario = getDict(getArrayUrl(votosUsuario));
@@ -252,7 +258,7 @@ class SaibaMaisContainer extends Component {
     } else {
       if (verAtuacao) {
         this.setState({ votos: votosUsuario, activeTab: "2" });
-        this.props.history.push("/compare/" + candidato + "/" + votosUsuario);
+        this.props.history.push("/compare/" + candidato + "/" + votos);
       } else {
         this.setState({ votos: votosUsuario });
       }
