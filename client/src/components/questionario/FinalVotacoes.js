@@ -10,20 +10,12 @@ class FinalVotacoes extends Component {
             Você já votou em todas as proposições!
           </h4>
           <p>
-            <strong className="strong">Veja</strong> os deputados alinhados com
-            você.
-          </p>
-          <p>
-            <strong className="strong">Cobre</strong> a participação de quem não
-            respondeu.
+            <strong className="strong">Veja</strong> quem está alinhado à você
+            na câmara.
           </p>
           <p>
             <strong className="strong">Examine</strong> a atuação anterior dos
-            candidatos reeleitos.
-          </p>
-          <p>
-            <strong className="strong">Responda</strong> as perguntas do Voz
-            Ativa e aumente a precisão do resultado.
+            deputados reeleitos.
           </p>
           <p>
             <strong className="strong">Compartilhe</strong> suas respostas nas

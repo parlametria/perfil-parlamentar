@@ -553,7 +553,7 @@ class CandidatosContainer extends Component {
                   this.setActiveTab("eleitos");
                 }}
               >
-                Eleitos/as
+                Deputados/as
               </a>
             </li>
             {filtro.estado !== "TODOS" && (
