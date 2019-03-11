@@ -258,58 +258,51 @@ export const atualizaScore = ({ idPergunta, respostaAnterior }) => (
       dadosCandidatos[elem],
       votacoesCandidatos[elem]);
 
+    let respostaAtualUsuario = respostasConsideradasUsuario.respostasUsuario[idPergunta];
+    let respostaCandidato = respostasCandidatosConsideradas[idPergunta]
+
     if (respostaAnterior === 0 || respostaAnterior === -2) {
       if (
-        respostasConsideradasUsuario.respostasUsuario[idPergunta] ===
-        respostasCandidatosConsideradas[idPergunta] &&
-        respostasConsideradasUsuario.respostasUsuario[idPergunta] !== -2
+        respostaAtualUsuario === respostaCandidato &&
+        respostaAtualUsuario !== -2
       )
-        votosIguaisUsuarioCandidatos[elem] =
-          votosIguaisUsuarioCandidatos[elem] + 1;
+        votosIguaisUsuarioCandidatos[elem]++;
     } else {
       if (respostaAnterior === -1) {
-        if (respostasConsideradasUsuario.respostasUsuario[idPergunta] === 1) {
-          if (
-            respostasConsideradasUsuario.respostasUsuario[idPergunta] ===
-            respostasCandidatosConsideradas[idPergunta]
-          ) {
-            votosIguaisUsuarioCandidatos[elem] =
-              votosIguaisUsuarioCandidatos[elem] + 1;
+
+        if (respostaAtualUsuario === 1) {          
+          if (respostaAtualUsuario === respostaCandidato) {
+            votosIguaisUsuarioCandidatos[elem]++;
           } else {
-            votosIguaisUsuarioCandidatos[elem] =
-              votosIguaisUsuarioCandidatos[elem] - 1;
+            if (respostaAnterior === respostaCandidato) {
+              votosIguaisUsuarioCandidatos[elem]--;
+            }
           }
-        } else if (respostasConsideradasUsuario.respostasUsuario[idPergunta] === -2) {
+        } else if (respostaAtualUsuario === -2) {
           if (
-            respostaAnterior ===
-            respostasCandidatosConsideradas[idPergunta]
+            respostaAnterior === respostaCandidato
           ) {
-            votosIguaisUsuarioCandidatos[elem] =
-              votosIguaisUsuarioCandidatos[elem] - 1;
+            votosIguaisUsuarioCandidatos[elem]--;
           }
         }
-      } else {
-        if (respostasConsideradasUsuario.respostasUsuario[idPergunta] === -1) {
-          if (
-            respostasConsideradasUsuario.respostasUsuario[idPergunta] ===
-            respostasCandidatosConsideradas[idPergunta]
-          ) {
-            votosIguaisUsuarioCandidatos[elem] =
-              votosIguaisUsuarioCandidatos[elem] + 1;
+
+      } else { // else neste corresponde a condição respostaAnterior === 1
+        
+        if (respostaAtualUsuario === -1) {
+          if (respostaAtualUsuario === respostaCandidato) {
+            votosIguaisUsuarioCandidatos[elem]++;
           } else {
-            votosIguaisUsuarioCandidatos[elem] =
-              votosIguaisUsuarioCandidatos[elem] - 1;
+            if (respostaAnterior === respostaCandidato) {
+              votosIguaisUsuarioCandidatos[elem]--;
+            }
           }
-        } else if (respostasConsideradasUsuario.respostasUsuario[idPergunta] === -2) {
-          if (
-            respostaAnterior ===
-            respostasCandidatosConsideradas[idPergunta]
-          ) {
-            votosIguaisUsuarioCandidatos[elem] =
-              votosIguaisUsuarioCandidatos[elem] - 1;
+        } else if (respostaAtualUsuario === -2) {
+          if (respostaAnterior === respostaCandidato) {
+            votosIguaisUsuarioCandidatos[elem]--;
           }
         }
       }
+
     }
 
     if (numRespostasConsideradas === 0) {
