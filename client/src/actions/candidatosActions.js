@@ -190,8 +190,7 @@ const calculaNumRespostasConsideradas = (
   }
   return numRespostasConsideradas;
 }
-export const calculaScore = dadosPergunta => dispatch => {
-  console.log(dadosPergunta);
+export const calculaScore = dadosPergunta => dispatch => {  
   if (dadosPergunta) dispatch(atualizaScore(dadosPergunta));
   else dispatch(calculaTodoScore());
 };
