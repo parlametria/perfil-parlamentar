@@ -198,7 +198,7 @@ class Home extends Component {
                   <BoasVindas />
                   <div className="text-center">
                     <button
-                      className="btn btn-secondary"
+                      className="btn btn-outline-primary"
                       onClick={this.vamosComecar}
                     >
                       Responder
