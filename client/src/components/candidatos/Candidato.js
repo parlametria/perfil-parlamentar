@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 
 import { criaURL } from "../../constantes/tratamentoUrls";
+import { getScoreWidth, getScoreLabel } from "../../utils/scoreValueFunctions";
 
 import "./candidato.css";
 
@@ -37,9 +38,9 @@ class Candidato extends Component {
           {this.props.eleito && this.props.temHistorico && verAtuacao}
         </div>
       </div>
-    );
+    );    
     
-    const barraScore = (
+    const barraScore = (      
       <div>
         <div className="score-progress">
           <div className="progress" style={{ height: "15px" }}>
@@ -47,15 +48,15 @@ class Candidato extends Component {
               className="progress-bar"
               role="progressbar"
               style={{
-                width: Math.round(this.props.score * 100) + "%"
+                width: Math.round(getScoreWidth(this.props.score) * 100) + "%"
               }}
-              aria-valuenow={this.props.score * 100}
+              aria-valuenow={getScoreWidth(this.props.score) * 100}
               aria-valuemin="0"
               aria-valuemax="100"
             />
           </div>
           <div className="score-number">
-            <span className="score">{Math.round(this.props.score * 100)}%</span>
+            <span className="score">{getScoreLabel(this.props.score)}</span>
           </div>
         </div>
         {this.props.eleito && this.props.temHistorico && verAtuacao}
