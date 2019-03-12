@@ -99,7 +99,7 @@ export const continuarRespondendoTodos = () => dispatch => {
 
 export const continuarRespondendoVotacoes = () => dispatch => {
   dispatch({ type: SET_CONTINUAR_RESPONDENDO_VOTACOES });
-  dispatch(mudaAba("Voz Ativa"));
+  dispatch(mudaAba("Votacoes"));
   dispatch(escolhePergunta(0));
   dispatch(escolheTema("Meio Ambiente"));
 };
@@ -107,4 +107,6 @@ export const continuarRespondendoVotacoes = () => dispatch => {
 export const continuarRespondendoVozAtiva = () => dispatch => {
   dispatch({ type: SET_CONTINUAR_RESPONDENDO_VOZATIVA });
   dispatch(mudaAba("Votacoes"));
+  dispatch(escolhePergunta(0));
+  dispatch(escolheTema("Meio Ambiente"));
 };

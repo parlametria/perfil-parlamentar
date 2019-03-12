@@ -37,6 +37,13 @@ import isEmpty from "../validation/is-empty";
 import votacoes from "../data/votacoes.json";
 import perguntas from "../data/perguntas.json";
 
+const TAM_PERGUNTAS = Object.keys(perguntas).length;
+
+const MINIMO_PARA_MATCH = 3;
+
+let respostasVAVazio = [].fill.call({ length: TAM_PERGUNTAS }, 0);
+delete respostasVAVazio.length;
+
 export const comparaRespostas = (
   idCandidato,
   respostasCandidatos,
@@ -190,7 +197,7 @@ const calculaNumRespostasConsideradas = (
   }
   return numRespostasConsideradas;
 }
-export const calculaScore = dadosPergunta => dispatch => {  
+export const calculaScore = dadosPergunta => dispatch => {
   if (dadosPergunta) dispatch(atualizaScore(dadosPergunta));
   else dispatch(calculaTodoScore());
 };
@@ -202,6 +209,9 @@ export const atualizaScore = ({ idPergunta, respostaAnterior }) => (
   const { respostasUsuario } = getState().usuarioReducer;
   const { dadosCandidatos } = getState().candidatosReducer;
   const { votacoesCandidatos } = getState().votacoesReducer;
+
+  // Desconsidera perguntas no cálculo do match
+  respostasUsuario.vozAtiva = respostasVAVazio;
 
   const { perguntasRespondidas, votacoesRespondidas } = verificaQuantidadeVotos(
     Object.keys(perguntas).map(e => perguntas[e].id),
@@ -269,7 +279,7 @@ export const atualizaScore = ({ idPergunta, respostaAnterior }) => (
     } else {
       if (respostaAnterior === -1) {
 
-        if (respostaAtualUsuario === 1) {          
+        if (respostaAtualUsuario === 1) {
           if (respostaAtualUsuario === respostaCandidato) {
             votosIguaisUsuarioCandidatos[elem]++;
           } else {
@@ -286,7 +296,7 @@ export const atualizaScore = ({ idPergunta, respostaAnterior }) => (
         }
 
       } else { // else neste corresponde a condição respostaAnterior === 1
-        
+
         if (respostaAtualUsuario === -1) {
           if (respostaAtualUsuario === respostaCandidato) {
             votosIguaisUsuarioCandidatos[elem]++;
@@ -303,9 +313,9 @@ export const atualizaScore = ({ idPergunta, respostaAnterior }) => (
       }
 
     }
-
-    if (numRespostasConsideradas === 0) {
-      scoreCandidatos[elem] = 0;
+    
+    if (!isNaN(numRespostasConsideradas) && numRespostasConsideradas < MINIMO_PARA_MATCH) {
+      scoreCandidatos[elem] = -1;    
     } else {
       scoreCandidatos[elem] = votosIguaisUsuarioCandidatos[elem] / numRespostasConsideradas;
     }
@@ -330,6 +340,10 @@ export const calculaTodoScore = () => (dispatch, getState) => {
   const { filtro } = getState().candidatosReducer;
   const { votacoesCandidatos, dadosVotacoes } = getState().votacoesReducer;
   const { dadosPerguntas } = getState().perguntasReducer;
+
+
+  // Desconsidera perguntas no cálculo do match
+  respostasUsuario.vozAtiva = respostasVAVazio;
 
   const { idsVozAtiva, idsVotacoes } = filtraIdsPorTema(
     filtro.tema,
@@ -377,7 +391,12 @@ export const calculaTodoScore = () => (dispatch, getState) => {
       numRespostasConsideradas
     );
 
-    scoreCandidatos[elem] = respostasIguais / numRespostasConsideradas;
+    if (!isNaN(numRespostasConsideradas) && numRespostasConsideradas < MINIMO_PARA_MATCH) {
+      scoreCandidatos[elem] = -1;
+    } else {
+      scoreCandidatos[elem] = respostasIguais / numRespostasConsideradas;
+    }
+
     votosIguaisUsuarioCandidatos[elem] = respostasIguais;
   });
 
@@ -400,6 +419,9 @@ export const calculaScorePorTema = (
   const { votacoesCandidatos } = getState().votacoesReducer;
   const { abaAtiva } = getState().questionarioReducer;
   let perguntas;
+
+  // Desconsidera perguntas no cálculo do match
+  respostasUsuario.vozAtiva = respostasVAVazio;
 
   if (abaAtiva === "Votacoes") {
     perguntas = getState().votacoesReducer.dadosVotacoes;
@@ -500,7 +522,11 @@ export const calculaScorePorTema = (
       numRespostasConsideradas
     );
 
-    scoreTema[tema] = score / numRespostasConsideradas;
+    if (!isNaN(numRespostasConsideradas) && numRespostasConsideradas < MINIMO_PARA_MATCH) {
+      scoreTema[tema] = -1;
+    } else {
+      scoreTema[tema] = score / numRespostasConsideradas;
+    }
 
     dispatch({
       type: SET_SCORE_CANDIDATO_POR_TEMA,
@@ -752,7 +778,11 @@ export const getDadosCandidato = (
           numRespostasConsideradas
         );
 
-        dadosCandidato.score = score / numRespostasConsideradas;
+        if (!isNaN(numRespostasConsideradas) && numRespostasConsideradas < MINIMO_PARA_MATCH) {
+          dadosCandidato.score = -1;
+        } else {
+          dadosCandidato.score = score / numRespostasConsideradas;
+        }
 
         dispatch({
           type: SET_DADOS_CANDIDATO,

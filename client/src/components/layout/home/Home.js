@@ -43,7 +43,8 @@ import {
   getArrayUrl,
   getDict,
   votosValidos,
-  estadoValido
+  estadoValido,
+  tamanhoRespostas
 } from "../../../constantes/tratamentoUrls";
 
 import FlipMove from "react-flip-move";
@@ -95,9 +96,16 @@ class Home extends Component {
       this.props.history.push("/");
     }
 
+    let {tamPerguntas, tamVotacoes} = tamanhoRespostas();
+
+    let respostaQuizVozAtiva = '0'.repeat(tamPerguntas);
+
+    let votosCompleto = respostaQuizVozAtiva + votos;
+    
     if (votos && estado) {
-      if (votosValidos(votos) && estadoValido(estado)) {
-        const arrayVotosUsuario = getArrayUrl(votos);
+
+      if (votosValidos(getArrayUrl(votosCompleto)) && estadoValido(estado)) {
+        const arrayVotosUsuario = getArrayUrl(votosCompleto);
         const votosUsuario = getDict(arrayVotosUsuario);
 
         const filtroEstado = {
@@ -142,10 +150,10 @@ class Home extends Component {
     const { quantidadeVotos } = this.props.usuario;
     const { activeTab } = this.props.home;
 
-    let linkCompartilhamento = "www.vozativa.org/";
+    let linkCompartilhamento = process.env.REACT_APP_FACEBOOK_REDIRECT_URI;    
     let textoCompartilhamento =
-      "Nos diga o que você defende e em oito minutos a gente apresenta candidatos alinhados com você. " +
-      linkCompartilhamento;
+      "Nos diga o que você defende e a gente apresenta candidatos alinhados à você. " +
+      linkCompartilhamento;    
 
     let barraCompartilhamento = (
       <StickyBox offsetTop={67} offsetBottom={20} offsetRight={20}>
@@ -165,7 +173,7 @@ class Home extends Component {
           <li className="share-element">
             <a
               href={
-                "https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fvozativa.org%2F&amp;src=sdkpreparse"
+                "https://www.facebook.com/sharer/sharer.php?u=" + linkCompartilhamento + "%2F&amp;src=sdkpreparse"
               }
               data-show-count="false"
               target="_blank"
@@ -198,7 +206,7 @@ class Home extends Component {
                   <BoasVindas />
                   <div className="text-center">
                     <button
-                      className="btn btn-secondary"
+                      className="btn btn-outline-primary"
                       onClick={this.vamosComecar}
                     >
                       Responder
@@ -238,19 +246,19 @@ class Home extends Component {
 
     let controles = (
       <div className="navbar-controls">
-      <nav className="nav nav-justified">
-        <a className="nav-item nav-link"
-          style={{ backgroundColor: (activeTab === "quiz") ? '#5b2762' : '#a963b3', color: '#fff' }}
-          onClick={() => this.mudaAba("quiz")}>
+        <nav className="nav nav-justified">
+          <a className="nav-item nav-link"
+            style={{ backgroundColor: (activeTab === "quiz") ? '#5b2762' : '#a963b3', color: '#fff' }}
+            onClick={() => this.mudaAba("quiz")}>
             Quiz
         </a>
-        <a className="nav-item nav-link"
-          style={{ backgroundColor: (activeTab === "resultados") ? '#5b2762' : '#a963b3', color: '#fff' }}
-          onClick={() => this.mudaAba("resultados")}>
+          <a className="nav-item nav-link"
+            style={{ backgroundColor: (activeTab === "resultados") ? '#5b2762' : '#a963b3', color: '#fff' }}
+            onClick={() => this.mudaAba("resultados")}>
             Deputados
         </a>
-      </nav>
-    </div>
+        </nav>
+      </div>
     );
 
     return (

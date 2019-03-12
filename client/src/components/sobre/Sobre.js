@@ -7,41 +7,30 @@ class Sobre extends Component {
         <div className="container">
           <section className="intro">
             <h2 className="intro-title text-center">
-              Voz ativa quer auxiliar a sua{" "}
-              <strong className="strong">decisão de voto</strong> a partir de
-              temas de fundamental importância para o Brasil.
+              Voz ativa quer te ajudar a acompanhar o posicionamento da{" "}
+              <strong className="strong">Câmara dos Deputados</strong> a partir
+              de temas de fundamental importância para o Brasil.
             </h2>
           </section>
           <section className="section">
             <div className="row">
-              <div className="col-md-6 col-lg-5">
+              <div className="col-md-6">
                 <h4 className="footer-title">Quem somos?</h4>
                 <p>
-                  A plataforma Voz Ativa foi construída a partir de questões
-                  formuladas pela Rede de Advocacy, um coletivo de 30
-                  Organizações da Sociedade Civil que atuam nos temas de
-                  direitos humanos, integridade e transparência,
-                  meio-ambiente/clima e negócios de impacto para uma nova
-                  economia. O nosso foco principal é auxiliar os eleitores na
-                  sua decisão de voto a partir de temas de fundamental
-                  importância para o Brasil.
+                  A Voz Ativa é desenvolvida pela{" "}
+                  <strong className="strong">Rede Advocacy</strong>, um coletivo
+                  de <strong className="strong">30</strong> Organizações da
+                  Sociedade Civil que atuam nos temas de direitos humanos,
+                  integridade e transparência, meio-ambiente/clima e negócios de
+                  impacto para uma nova economia.
                 </p>
               </div>
-              <div className="col-md-6 col-lg-4">
+              <div className="col-md-6">
                 <h4 className="footer-title">O que é uma Rede Advocacy?</h4>
                 <p>
-                Somos uma rede de 30 organizações da sociedade civil que atuam de forma colaborativa para inovar a participação da sociedade no processo de elaboração de políticas públicas no Brasil.
-                </p>
-              </div>
-              <div className="col-md col-lg-3">
-                <p>
-                  <strong className="strong">
-                    Voz ativa pode te ajudar a monitorar a coerência do seu
-                    candidato
-                  </strong>
-                  . Após a eleição, o eleitor poderá acessar a nossa base para
-                  saber se o candidato eleito está agindo de acordo com suas
-                  respostas ou não.
+                  Somos uma rede de 30 organizações da sociedade civil que atuam
+                  de forma colaborativa para inovar a participação da sociedade
+                  no processo de elaboração de políticas públicas no Brasil.
                 </p>
               </div>
             </div>
@@ -49,24 +38,50 @@ class Sobre extends Component {
           <section className="section">
             <h4 className="footer-title">Como funciona?</h4>
             <div className="row">
-              <div className="col-md-6">
+              <div className="col-md-6 howto-text">
+                <div>
+                  <p>
+                    <strong className="strong2">1.</strong> Coletamos as votações dos/as deputados/as em proposições
+                  </p>
+                  <p><strong className="strong2">2.</strong> Pedimos para que você responda essas proposições</p>
+                </div>
+              </div>
+              <div className="col-md-4">
                 <img
                   src={require("../../data/img/howto01.jpg")}
                   alt="Como funciona"
                   width="100%"
                 />
               </div>
-              <div className="col-md-6">
+            </div>
+            <div className="row">
+              <div className="col-md-6 howto-text">
+                <div>
+                  <p><strong className="strong2">3.</strong> Comparamos seu posicionamento com os da Câmara</p>
+                  <p>
+                  <strong className="strong2">4.</strong> Mostramos quais deputados/as mais se alinham com você
+                  </p>
+                </div>
+              </div>
+              <div className="col-md-4">
                 <img
                   src={require("../../data/img/howto02.jpg")}
                   alt="Como funciona"
                   width="100%"
                 />
               </div>
-              <div className="col-md-12">
-              Nosso código é aberto! Para saber mais sobre como funcionamos você pode consulta-lo em {"   "}<a href= "https://github.com/analytics-ufcg/voz-ativa">  github.com/analytics-ufcg/voz-ativa</a>
-              </div>
             </div>
+          </section>
+          <section className="section">
+            <h4 className="footer-title">Como ajudar neste projeto?</h4>
+            <p>
+              Nosso código é aberto! Para saber mais sobre como funcionamos você
+              pode consulta-lo em {"   "}
+              <a href="https://github.com/analytics-ufcg/voz-ativa">
+                {" "}
+                github.com/analytics-ufcg/voz-ativa
+              </a>
+            </p>
           </section>
         </div>
         <div className="section-inverse">
@@ -76,33 +91,23 @@ class Sobre extends Component {
                 Porque somos importantes?
               </h4>
             </div>
-            <div className="row">
-              <div className="col-lg-6">
-                <div className="row no-gutters">
-                  <div className="col-md-6">
-                    <p className="featured-box">
-                      As redes sociais estão inundadas de fake news.
-                    </p>
-                  </div>
-                  <div className="col-md-6">
-                    <p className="featured-box">
-                      São quase 26 mil candidatos divididos em 35 partidos.
-                    </p>
-                  </div>
-                  <div className="col-md-6">
-                    <p className="featured-box">
-                      Apenas para a Câmara dos Deputados serão mais de oito mil
-                      candidaturas.
-                    </p>
-                  </div>
-                  <div className="col-md-6">
-                    <p className="featured-box">
-                      Muitas delas de parlamentares que tentam a reeleição.
-                    </p>
-                  </div>
-                </div>
+            <div className="row no-gutters">
+              <div className="col-md-4">
+                <p className="featured-box">
+                  As redes sociais estão inundadas de fake news.
+                </p>
               </div>
-              <div className="col-lg-6">
+              <div className="col-md-4">
+                <p className="featured-box">
+                  São 513 deputados/as para se acompanhar.
+                </p>
+              </div>
+              <div className="col-md-4">
+                <p className="featured-box">
+                  É dificil acompanhar as votações importantes na Câmara
+                </p>
+              </div>
+              {/* <div className="col-lg-6">
                 <div className="featured">
                   <div className="row no-gutters">
                     <div className="col-md-6">
@@ -120,7 +125,7 @@ class Sobre extends Component {
                     </div>
                   </div>
                 </div>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>
