@@ -37,6 +37,11 @@ import isEmpty from "../validation/is-empty";
 import votacoes from "../data/votacoes.json";
 import perguntas from "../data/perguntas.json";
 
+const TAM_PERGUNTAS = Object.keys(perguntas).length;
+
+let respostasVAVazio = [].fill.call({ length: TAM_PERGUNTAS }, 0);
+delete respostasVAVazio.length;
+
 export const comparaRespostas = (
   idCandidato,
   respostasCandidatos,
@@ -50,10 +55,10 @@ export const comparaRespostas = (
   idsVozAtiva.forEach(idPergunta => {
     respostasIguais +=
       respostasCandidatos[idPergunta] !== undefined &&
-      respostasCandidatos[idPergunta] !== null &&
-      respostasUsuarioVozAtiva[idPergunta] !== 0 &&
-      respostasUsuarioVozAtiva[idPergunta] !== -2 &&
-      respostasCandidatos[idPergunta] === respostasUsuarioVozAtiva[idPergunta]
+        respostasCandidatos[idPergunta] !== null &&
+        respostasUsuarioVozAtiva[idPergunta] !== 0 &&
+        respostasUsuarioVozAtiva[idPergunta] !== -2 &&
+        respostasCandidatos[idPergunta] === respostasUsuarioVozAtiva[idPergunta]
         ? 1
         : 0;
   });
@@ -62,10 +67,10 @@ export const comparaRespostas = (
   idsVotacoes.forEach(idPergunta => {
     respostasIguais +=
       votacoesCandidatos[idPergunta] !== undefined &&
-      votacoesCandidatos[idPergunta] !== null &&
-      respostasUsuarioVotacoes[idPergunta] !== 0 &&
-      respostasUsuarioVotacoes[idPergunta] !== -2 &&
-      votacoesCandidatos[idPergunta] === respostasUsuarioVotacoes[idPergunta]
+        votacoesCandidatos[idPergunta] !== null &&
+        respostasUsuarioVotacoes[idPergunta] !== 0 &&
+        respostasUsuarioVotacoes[idPergunta] !== -2 &&
+        votacoesCandidatos[idPergunta] === respostasUsuarioVotacoes[idPergunta]
         ? 1
         : 0;
   });
@@ -141,9 +146,9 @@ const verificaQuantidadeVotos = (
 const contPerguntasRespondidasComuns = (perguntas, candidato) => {
   let cont = 0;
   perguntas.forEach(pergunta => {
-    if(candidato.respostas[pergunta] === 1 || 
+    if (candidato.respostas[pergunta] === 1 ||
       candidato.respostas[pergunta] === -1) {
-        cont = cont + 1;
+      cont = cont + 1;
     }
   });
   return cont;
@@ -152,11 +157,11 @@ const contPerguntasRespondidasComuns = (perguntas, candidato) => {
 const contVotacoesRespondidasComuns = (votacoes, candidato) => {
   let cont = 0;
   votacoes.forEach(votacao => {
-    if(candidato[votacao] === 1 ||
+    if (candidato[votacao] === 1 ||
       candidato[votacao] === -1) {
-        cont = cont + 1;
+      cont = cont + 1;
     }
-  }); 
+  });
   return cont;
 };
 
@@ -172,16 +177,16 @@ const calculaNumRespostasConsideradas = (
   let numRespostasConsideradas;
   if (!naoRespondeuCamara && !naoRespondeuVozAtiva) {
     numRespostasConsideradas = contPerguntasRespondidasComuns(perguntasRespondidas, respostasCandidato);
-    numRespostasConsideradas = numRespostasConsideradas + 
-    contVotacoesRespondidasComuns(votacoesRespondidas, votacoesCandidato);
+    numRespostasConsideradas = numRespostasConsideradas +
+      contVotacoesRespondidasComuns(votacoesRespondidas, votacoesCandidato);
 
   } else if (naoRespondeuCamara) {
-      if (perguntasRespondidas.length === 0) {
-        numRespostasConsideradas = 1;
-      } else {
-        numRespostasConsideradas = contPerguntasRespondidasComuns(perguntasRespondidas, respostasCandidato);
-      } 
-  } else if (naoRespondeuVozAtiva){
+    if (perguntasRespondidas.length === 0) {
+      numRespostasConsideradas = 1;
+    } else {
+      numRespostasConsideradas = contPerguntasRespondidasComuns(perguntasRespondidas, respostasCandidato);
+    }
+  } else if (naoRespondeuVozAtiva) {
     if (votacoesRespondidas.length === 0) {
       numRespostasConsideradas = 1;
     } else {
@@ -203,6 +208,9 @@ export const atualizaScore = ({ idPergunta, respostaAnterior }) => (
   const { dadosCandidatos } = getState().candidatosReducer;
   const { votacoesCandidatos } = getState().votacoesReducer;
 
+  // Desconsidera perguntas no cálculo do match
+  respostasUsuario.vozAtiva = respostasVAVazio;
+
   const { perguntasRespondidas, votacoesRespondidas } = verificaQuantidadeVotos(
     Object.keys(perguntas).map(e => perguntas[e].id),
     Object.keys(votacoes),
@@ -210,7 +218,7 @@ export const atualizaScore = ({ idPergunta, respostaAnterior }) => (
   );
 
   let { votosIguaisUsuarioCandidatos } = getState().candidatosReducer;
-  
+
   const respostasConsideradas = () => {
     let tipoPergunta;
     if (respostasUsuario.vozAtiva[idPergunta]) {
@@ -257,50 +265,59 @@ export const atualizaScore = ({ idPergunta, respostaAnterior }) => (
       dadosCandidatos[elem],
       votacoesCandidatos[elem]);
 
+    let respostaAtualUsuario = respostasConsideradasUsuario.respostasUsuario[idPergunta];
+    let respostaCandidato = respostasCandidatosConsideradas[idPergunta]
+
     if (respostaAnterior === 0 || respostaAnterior === -2) {
       if (
-        respostasConsideradasUsuario.respostasUsuario[idPergunta] ===
-        respostasCandidatosConsideradas[idPergunta] &&
-        respostasConsideradasUsuario.respostasUsuario[idPergunta] !== -2
+        respostaAtualUsuario === respostaCandidato &&
+        respostaAtualUsuario !== -2
       )
-        votosIguaisUsuarioCandidatos[elem] =
-          votosIguaisUsuarioCandidatos[elem] + 1;
-    } else {            
+        votosIguaisUsuarioCandidatos[elem]++;
+    } else {
       if (respostaAnterior === -1) {
-        if (respostasConsideradasUsuario.respostasUsuario[idPergunta] === 1) {
-          if (
-            respostasConsideradasUsuario.respostasUsuario[idPergunta] ===
-            respostasCandidatosConsideradas[idPergunta]             
-          ) {
-            votosIguaisUsuarioCandidatos[elem] =
-              votosIguaisUsuarioCandidatos[elem] + 1;              
+
+        if (respostaAtualUsuario === 1) {
+          if (respostaAtualUsuario === respostaCandidato) {
+            votosIguaisUsuarioCandidatos[elem]++;
           } else {
-            votosIguaisUsuarioCandidatos[elem] =
-              votosIguaisUsuarioCandidatos[elem] - 1;              
+            if (respostaAnterior === respostaCandidato) {
+              votosIguaisUsuarioCandidatos[elem]--;
+            }
+          }
+        } else if (respostaAtualUsuario === -2) {
+          if (
+            respostaAnterior === respostaCandidato
+          ) {
+            votosIguaisUsuarioCandidatos[elem]--;
           }
         }
-      } else {
-        if (respostasConsideradasUsuario.respostasUsuario[idPergunta] === -1) {
-          if (
-            respostasConsideradasUsuario.respostasUsuario[idPergunta] ===
-            respostasCandidatosConsideradas[idPergunta]             
-          ) {
-            votosIguaisUsuarioCandidatos[elem] =
-              votosIguaisUsuarioCandidatos[elem] + 1;              
+
+      } else { // else neste corresponde a condição respostaAnterior === 1
+
+        if (respostaAtualUsuario === -1) {
+          if (respostaAtualUsuario === respostaCandidato) {
+            votosIguaisUsuarioCandidatos[elem]++;
           } else {
-            votosIguaisUsuarioCandidatos[elem] =
-              votosIguaisUsuarioCandidatos[elem] - 1;    
+            if (respostaAnterior === respostaCandidato) {
+              votosIguaisUsuarioCandidatos[elem]--;
+            }
+          }
+        } else if (respostaAtualUsuario === -2) {
+          if (respostaAnterior === respostaCandidato) {
+            votosIguaisUsuarioCandidatos[elem]--;
           }
         }
       }
-    } 
+
+    }
 
     if (numRespostasConsideradas === 0) {
-      scoreCandidatos[elem] = 0;      
+      scoreCandidatos[elem] = 0;
     } else {
       scoreCandidatos[elem] = votosIguaisUsuarioCandidatos[elem] / numRespostasConsideradas;
     }
-          
+
   });
 
   dispatch({
@@ -319,9 +336,13 @@ export const calculaTodoScore = () => (dispatch, getState) => {
   const { respostasUsuario } = getState().usuarioReducer;
   const { dadosCandidatos } = getState().candidatosReducer;
   const { filtro } = getState().candidatosReducer;
-  const { votacoesCandidatos, dadosVotacoes } = getState().votacoesReducer;  
-  const { dadosPerguntas } = getState().perguntasReducer;   
-    
+  const { votacoesCandidatos, dadosVotacoes } = getState().votacoesReducer;
+  const { dadosPerguntas } = getState().perguntasReducer;
+
+
+  // Desconsidera perguntas no cálculo do match
+  respostasUsuario.vozAtiva = respostasVAVazio;
+
   const { idsVozAtiva, idsVotacoes } = filtraIdsPorTema(
     filtro.tema,
     dadosVotacoes,
@@ -369,8 +390,8 @@ export const calculaTodoScore = () => (dispatch, getState) => {
     );
 
     scoreCandidatos[elem] = respostasIguais / numRespostasConsideradas;
-    votosIguaisUsuarioCandidatos[elem] = respostasIguais;    
-  });  
+    votosIguaisUsuarioCandidatos[elem] = respostasIguais;
+  });
 
   dispatch({
     type: SET_SCORE_CANDIDATOS,
@@ -392,7 +413,10 @@ export const calculaScorePorTema = (
   const { abaAtiva } = getState().questionarioReducer;
   let perguntas;
 
-  if(abaAtiva === "Votacoes") {
+  // Desconsidera perguntas no cálculo do match
+  respostasUsuario.vozAtiva = respostasVAVazio;
+
+  if (abaAtiva === "Votacoes") {
     perguntas = getState().votacoesReducer.dadosVotacoes;
   } else {
     perguntas = getState().perguntasReducer.dadosPerguntas;
@@ -452,14 +476,14 @@ export const calculaScorePorTema = (
         respostasCandidatosTema[idPergunta] =
           dadosCandidato.respostas[idPergunta];
 
-        if(respostasCandidatosTema[idPergunta] &&
-          (respostasCandidatosTema[idPergunta] === 1 || 
-          respostasCandidatosTema[idPergunta] === -1) &&
+        if (respostasCandidatosTema[idPergunta] &&
+          (respostasCandidatosTema[idPergunta] === 1 ||
+            respostasCandidatosTema[idPergunta] === -1) &&
           respostasUsuario.vozAtiva[idPergunta] &&
           (respostasUsuario.vozAtiva[idPergunta] === 1 ||
-          respostasUsuario.vozAtiva[idPergunta] === -1)) {
-            numRespostasConsideradas = numRespostasConsideradas + 1;
-          }
+            respostasUsuario.vozAtiva[idPergunta] === -1)) {
+          numRespostasConsideradas = numRespostasConsideradas + 1;
+        }
       });
     }
 
@@ -467,22 +491,22 @@ export const calculaScorePorTema = (
       votacoesPorTema[tema].forEach(idVotacao => {
         votacoesCandidatosTema[idVotacao] =
           votacoesCandidatos[dadosCandidato.cpf][idVotacao];
-          
-        if(votacoesCandidatosTema[idVotacao] &&
+
+        if (votacoesCandidatosTema[idVotacao] &&
           (votacoesCandidatosTema[idVotacao] === 1 ||
-          votacoesCandidatosTema[idVotacao] === -1) &&
+            votacoesCandidatosTema[idVotacao] === -1) &&
           respostasUsuario.votacoes[idVotacao] &&
           (respostasUsuario.votacoes[idVotacao] === 1 ||
-          respostasUsuario.votacoes[idVotacao] === -1)) {
-            numRespostasConsideradas = numRespostasConsideradas + 1;
+            respostasUsuario.votacoes[idVotacao] === -1)) {
+          numRespostasConsideradas = numRespostasConsideradas + 1;
         }
       });
     }
 
-    numRespostasConsideradas = numRespostasConsideradas === 0 ? 
-    1 : numRespostasConsideradas;
+    numRespostasConsideradas = numRespostasConsideradas === 0 ?
+      1 : numRespostasConsideradas;
 
-    let score = comparaRespostas (
+    let score = comparaRespostas(
       dadosCandidato.cpf,
       respostasCandidatosTema,
       respostasUsuario.vozAtiva,
@@ -634,9 +658,9 @@ export const getDadosCandidatos = () => (dispatch, getState) => {
         axios
           .get(
             "/api/respostas/estados/" +
-              filtro.estado +
-              "/naoresponderam?pageNo=1&size=" +
-              ITENS_POR_REQ
+            filtro.estado +
+            "/naoresponderam?pageNo=1&size=" +
+            ITENS_POR_REQ
           )
           .then(respostas => {
             respostas.data.data.forEach(resp => {
@@ -710,29 +734,29 @@ export const getDadosCandidato = (
             let respostasCandidato =
               dadosCandidato.respostas[idPergunta];
 
-            if(respostasCandidato &&
-              (respostasCandidato === 1 || 
-              respostasCandidato === -1)) {
-                numRespostasConsideradas = numRespostasConsideradas + 1;
-              }
-          });
-        }
-    
-        if (votacoesRespondidas.length > 0) {
-          votacoesRespondidas.forEach(idVotacao => {
-            let respostasCandidato = 
-            dadosCandidato.votacoes[idVotacao];
-              
-            if(respostasCandidato &&
+            if (respostasCandidato &&
               (respostasCandidato === 1 ||
-              respostasCandidato === -1)) {
-                numRespostasConsideradas = numRespostasConsideradas + 1;
+                respostasCandidato === -1)) {
+              numRespostasConsideradas = numRespostasConsideradas + 1;
             }
           });
         }
-    
-        numRespostasConsideradas = numRespostasConsideradas === 0 ? 
-        1 : numRespostasConsideradas;
+
+        if (votacoesRespondidas.length > 0) {
+          votacoesRespondidas.forEach(idVotacao => {
+            let respostasCandidato =
+              dadosCandidato.votacoes[idVotacao];
+
+            if (respostasCandidato &&
+              (respostasCandidato === 1 ||
+                respostasCandidato === -1)) {
+              numRespostasConsideradas = numRespostasConsideradas + 1;
+            }
+          });
+        }
+
+        numRespostasConsideradas = numRespostasConsideradas === 0 ?
+          1 : numRespostasConsideradas;
 
         const score = comparaRespostas(
           idCandidato,
@@ -793,10 +817,10 @@ export const setCandidatosFiltrados = () => (dispatch, getState) => {
   axios
     .get(
       "api/respostas/estados/" +
-        filtro.estado +
-        "/partidos/" +
-        filtro.partido +
-        "/responderam"
+      filtro.estado +
+      "/partidos/" +
+      filtro.partido +
+      "/responderam"
     )
     .then(totalCandidatos =>
       dispatch({
@@ -863,9 +887,9 @@ export const setCandidatosFiltrados = () => (dispatch, getState) => {
         final: TAM_PAGINA,
         totalCandidatos:
           filtro.partido !== "Partidos" ||
-          filtro.nome !== "" ||
-          filtro.reeleicao !== "-1" ||
-          filtro.responderam !== "-1"
+            filtro.nome !== "" ||
+            filtro.reeleicao !== "-1" ||
+            filtro.responderam !== "-1"
             ? candidatos.length
             : candidatosRanqueados.length
       })
@@ -887,10 +911,10 @@ export const setPartidos = () => (dispatch, getState) => {
   axios
     .get(
       "api/respostas/estados/" +
-        filtro.estado +
-        "/partidos" +
-        "?eleito=" +
-        eleito
+      filtro.estado +
+      "/partidos" +
+      "?eleito=" +
+      eleito
     )
     .then(partidos => {
       dispatch({ type: SET_PARTIDOS, partidos: partidos.data.data });
@@ -921,11 +945,11 @@ export const getProximaPaginaCandidatos = () => (dispatch, getState) => {
   axios
     .get(
       "/api/respostas/estados/" +
-        filtro.estado +
-        "/naoresponderam?pageNo=" +
-        paginacao.paginaAtualAPI +
-        "&size=" +
-        ITENS_POR_REQ
+      filtro.estado +
+      "/naoresponderam?pageNo=" +
+      paginacao.paginaAtualAPI +
+      "&size=" +
+      ITENS_POR_REQ
     )
     .then(respostas => {
       respostas.data.data.forEach(resposta => {
