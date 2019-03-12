@@ -35,7 +35,7 @@ a:hover {
 footer {
   padding-top: 2rem;
   padding-bottom: 2rem;
-  border-top: solid 5px #a963b3;
+  border-top: solid 2px #000;
 }
 
 .footer-title {
@@ -88,4 +88,14 @@ a.link-inverse:active {
 
 .badge-success {
   background-color: #41c083;
+}
+
+.howto-text {
+  display: flex;
+  align-items: center;
+  height: 160px;
+}
+
+.strong2 {
+  color: #a963b3;
 }
