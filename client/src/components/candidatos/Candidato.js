@@ -12,7 +12,11 @@ class Candidato extends Component {
       <span className="badge badge-secondary">não respondeu</span>
     );
 
-    const verAtuacao = (
+    const badgeNaoTemVotacoes = (
+      <span className="badge badge-secondary">não atuou</span>
+    );
+
+    const verAtuacao = (      
       <Link
         className="btn btn-outline-primary btn-sm"
         to={
@@ -23,43 +27,18 @@ class Candidato extends Component {
           "/true"
         }
       >
-        ver atuação
+        ver atuação       
       </Link>
     );
 
     const naoRespondeu = (
       <div>
         <div>
-          <a
-            className="btn btn-outline-primary btn-sm"
-            href={
-              "mailto:" +
-              this.props.email.toLowerCase() +
-              "?subject=Responda o questionário do Voz Ativa" +
-              "&body=Prezado/a " +
-              this.props.nome +
-              "," +
-              "%0D%0A" +
-              "%0D%0A" +
-              "Quer tornar sua candidatura conhecida e garantir mais votos? Participe da plataforma Voz Ativa respondendo as perguntas sobre temas como direitos humanos, meio ambiente,  nova economia e transparência." +
-              "%0D%0A" +
-              "%0D%0A" +
-              "O  questionário já foi enviado para o seu e-mail que está registrado no TSE  pelo remetente 'contato@vozativa.org'" +
-              "%0D%0A" +
-              "%0D%0A" +
-              "Os eleitores e eleitoras de todo o Brasil poderão acessar as respostas e escolher as candidaturas que mais se aproximam de suas expectativas. " +
-              "%0D%0A" +
-              "%0D%0A" +
-              "Fortaleça esta iniciativa de match eleitoral e contribua para uma nova cultura de voto consciente. "
-            }
-            target="_blank"
-          >
-            cobre a participação
-          </a>{" "}
-          {this.props.reeleito && verAtuacao}
+          {this.props.eleito && this.props.temHistorico && verAtuacao}
         </div>
       </div>
     );
+    
     const barraScore = (
       <div>
         <div className="score-progress">
@@ -79,18 +58,7 @@ class Candidato extends Component {
             <span className="score">{Math.round(this.props.score * 100)}%</span>
           </div>
         </div>
-        <Link
-          className="btn btn-outline-primary btn-sm"
-          to={
-            "compare/" +
-            this.props.id +
-            "/" +
-            criaURL(this.props.respostasUsuario)
-          }
-        >
-          saiba mais
-        </Link>{" "}
-        {this.props.reeleito && verAtuacao}
+        {this.props.eleito && this.props.temHistorico && verAtuacao}
       </div>
     );
     return (
@@ -138,9 +106,9 @@ class Candidato extends Component {
                       reeleito/a
                     </span>
                   )}
-                  {!this.props.respondeu && badgeNaoRespondeu}
+                  {!this.props.temHistorico && badgeNaoTemVotacoes}
                 </div>
-                {this.props.respondeu || this.props.temHistorico
+                {this.props.temHistorico
                   ? barraScore
                   : naoRespondeu}
               </div>
@@ -162,7 +130,8 @@ Candidato.propTypes = {
   respostas: PropTypes.any.isRequired,
   foto: PropTypes.string.isRequired,
   respostasUsuario: PropTypes.instanceOf(Object),
-  email: PropTypes.string.isRequired
+  email: PropTypes.string.isRequired,
+  eleito: PropTypes.bool.isRequired
 };
 
 export default Candidato;

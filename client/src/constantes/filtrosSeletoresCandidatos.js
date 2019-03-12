@@ -136,7 +136,7 @@ export const opcoesFiltroTemas = () => {
   { tema: "Meio Ambiente", titulo: "Apenas meio ambiente" },
   { tema: "Direitos Humanos", titulo: "Apenas direitos humanos" },
   { tema: "Integridade e Transparência", titulo: "Apenas integridade e transparência" },
-  { tema: "Nova Economia", titulo: "Apenas nova economida" },
-  { tema: "Transversal", titulo: "Apenas transversal" }]
+  { tema: "Agenda Nacional", titulo: "Apenas agenda nacional" },
+  { tema: "Educação", titulo: "Apenas educação" }]
 
 };

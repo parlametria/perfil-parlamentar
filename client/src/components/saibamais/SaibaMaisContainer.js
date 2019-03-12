@@ -22,7 +22,7 @@ import { getVotacoesDeputados } from "../../actions/votacoesActions";
 import { salvaScoreUsuario } from "../../actions/usuarioActions";
 import isEmpty from "../../validation/is-empty";
 
-import { getArrayUrl, getDict } from "../../constantes/tratamentoUrls";
+import { getArrayUrl, getDict, tamanhoRespostas } from "../../constantes/tratamentoUrls";
 
 import "./SaibaMaisContainer.css";
 import Spinner from "../common/Spinner";
@@ -35,7 +35,7 @@ class SaibaMaisContainer extends Component {
 
     this.state = {
       votos: "",
-      activeTab: "1"
+      activeTab: "2"
     };
   }
 
@@ -56,8 +56,8 @@ class SaibaMaisContainer extends Component {
             src={
               dadosCandidato.tem_foto
                 ? "https://s3-sa-east-1.amazonaws.com/fotoscandidatos2018/fotos_tratadas/img_" +
-                  dadosCandidato.cpf +
-                  ".jpg"
+                dadosCandidato.cpf +
+                ".jpg"
                 : "https://s3-sa-east-1.amazonaws.com/fotoscandidatos2018/fotos_tratadas/nophoto.png"
             }
             alt={dadosCandidato.nome_urna}
@@ -97,17 +97,33 @@ class SaibaMaisContainer extends Component {
         </div>
       </div>
     );
-    let linkCompartilhamento =
-      "www.vozativa.org/compare/" +
+    let hostURL = process.env.REACT_APP_FACEBOOK_REDIRECT_URI;
+
+    let compareLink = hostURL + "compare/" +
       this.props.match.params.candidato +
       "/" +
       this.props.match.params.votos;
-    let textoCompartilhamento =
+
+    let candidatoLink = hostURL + "candidato/" +
+      this.props.match.params.candidato;
+
+    let linkCompartilhamento =
+      (this.props.match.params.votos === undefined) ? candidatoLink : compareLink;
+
+    let compareText =
       "Tive um match eleitoral de " +
       Math.round(dadosCandidato.score * 100) +
       " por cento com " +
       dadosCandidato.nome_urna +
-      ". Mais informações: " +
+      ". Mais informações: ";
+
+    let candidatoText =
+      "Confira como " +
+      dadosCandidato.nome_urna +
+      " se posicionou em decisões importantes no Voz Ativa: ";
+
+    let textoCompartilhamento =
+      ((this.props.match.params.votos === undefined) ? candidatoText : compareText) +
       linkCompartilhamento;
 
     const shareButtons = (
@@ -124,11 +140,8 @@ class SaibaMaisContainer extends Component {
         </a>
         <a
           href={
-            "https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2F" +
-            "vozativa.org/compare/" +
-            this.props.match.params.candidato +
-            "/" +
-            this.props.match.params.votos +
+            "https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2F" +
+            linkCompartilhamento +
             "%2F&amp;src=sdkpreparse"
           }
           data-show-count="false"
@@ -158,52 +171,14 @@ class SaibaMaisContainer extends Component {
       </div>
     );
 
-    const tabela = !isEmpty(dadosCandidato.votacoes) ? (
+    const tabela = (
       <div>
-        <Nav tabs>
-          <NavItem>
-            <NavLink
-              className={classnames({
-                active: this.state.activeTab === "1"
-              })}
-              onClick={() => {
-                this.toggle("1");
-              }}
-            >
-              no Voz Ativa
-            </NavLink>
-          </NavItem>
-          <NavItem>
-            <NavLink
-              className={classnames({
-                active: this.state.activeTab === "2"
-              })}
-              onClick={() => {
-                this.toggle("2");
-              }}
-            >
-              Na câmara
-            </NavLink>
-          </NavItem>
-        </Nav>
-
         <TabContent activeTab={this.state.activeTab}>
-          <TabPane tabId="1">
-            <TabelaPerguntas
-              respostas={dadosCandidato.respostas}
-              votos={getArrayUrl(this.state.votos)}
-            />
-          </TabPane>
           <TabPane tabId="2">
             <TabelaVotacoes />
           </TabPane>
         </TabContent>
       </div>
-    ) : (
-      <TabelaPerguntas
-        respostas={dadosCandidato.respostas}
-        votos={getArrayUrl(this.state.votos)}
-      />
     );
 
     return (
@@ -223,8 +198,8 @@ class SaibaMaisContainer extends Component {
             {this.props.candidatos.isCarregando || isEmpty(dadosCandidato) ? (
               <Spinner />
             ) : (
-              perfilCandidato
-            )}
+                perfilCandidato
+              )}
             <h4 className="compare-title">
               O quanto vocês <strong className="strong">concordam</strong> nos
               temas:
@@ -236,8 +211,8 @@ class SaibaMaisContainer extends Component {
             {this.props.candidatos.isCarregando || isEmpty(dadosCandidato) ? (
               <Spinner />
             ) : (
-              tabela
-            )}
+                tabela
+              )}
           </div>
         </div>
         <div className="my-3">
@@ -252,32 +227,38 @@ class SaibaMaisContainer extends Component {
   componentDidMount() {
     const { candidato, votos, verAtuacao } = this.props.match.params;
 
-    let votosUsuario = votos;
-            
-    if (isEmpty(votos)) {
-      votosUsuario = "0".repeat(79);     
-    }    
+    let votosUsuario;
+    let {tamPerguntas, tamVotacoes} = tamanhoRespostas();
+  
+    if (!isEmpty(votos) && getArrayUrl(votos).length === tamVotacoes) {
+      let respostaQuizVozAtiva = '0'.repeat(tamPerguntas);
+      votosUsuario = respostaQuizVozAtiva + votos;
+    } else if (isEmpty(votos)) {
+      votosUsuario = "0".repeat(tamVotacoes + tamPerguntas);
+    } else {
+      votosUsuario = votos;
+    }
 
     const respostasUsuario = getDict(getArrayUrl(votosUsuario));
     const arrayRespostasUsuario = getArrayUrl(votosUsuario);
 
-    this.props.getVotacoesDeputados();      
+    this.props.getVotacoesDeputados();
     this.props.salvaScoreUsuario(respostasUsuario);
     this.props.getDadosCandidato(
       candidato,
       respostasUsuario,
       arrayRespostasUsuario
-    );    
+    );
 
     const url_case = this.props.match.path;
-    const PATH_COMPARE = "/candidato/:candidato/"; 
+    const PATH_COMPARE = "/candidato/:candidato/";
 
     if (url_case === PATH_COMPARE) {
       this.setState({ votos: votosUsuario, activeTab: "2" });
     } else {
       if (verAtuacao) {
         this.setState({ votos: votosUsuario, activeTab: "2" });
-        this.props.history.push("/compare/" + candidato + "/" + votosUsuario);              
+        this.props.history.push("/compare/" + candidato + "/" + votos);
       } else {
         this.setState({ votos: votosUsuario });
       }

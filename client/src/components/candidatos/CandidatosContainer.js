@@ -320,7 +320,7 @@ class CandidatosContainer extends Component {
           candidato.respondeu &&
           candidato.reeleicao === "1"
         )
-          totalReeleitosEResponderam++;
+          totalReeleitosEResponderam++;          
         return (
           <Candidato
             respondeu={candidato.respondeu}
@@ -346,6 +346,7 @@ class CandidatosContainer extends Component {
                 ? true
                 : false
             }
+            eleito={candidato.eleito}
             temHistorico={votacoesCandidatos[candidato.cpf] !== undefined}
           />
         );
@@ -556,20 +557,6 @@ class CandidatosContainer extends Component {
                 Deputados/as
               </a>
             </li>
-            {filtro.estado !== "TODOS" && (
-              <li className="nav-item">
-                <a
-                  className={classnames("nav-link nav-link-a", {
-                    active: activeTab === "candidatos"
-                  })}
-                  onClick={() => {
-                    this.setActiveTab("candidatos");
-                  }}
-                >
-                  Candidatos/as
-                </a>
-              </li>
-            )}
           </ul>
         </div>
         <div className="container">
@@ -600,8 +587,8 @@ class CandidatosContainer extends Component {
                           <input
                             type="text"
                             className="form-control form-control-secondary"
-                            placeholder="Pesquisar candidato/a..."
-                            aria-label="Pesquisar candidato/a"
+                            placeholder="Pesquisar deputado/a..."
+                            aria-label="Pesquisar deputado/a"
                             aria-describedby="search-candidate"
                             onChange={this.buscaNome}
                             value={filtro.nome}
@@ -655,23 +642,6 @@ class CandidatosContainer extends Component {
                               htmlFor="reeleitos"
                             >
                               {listaSelectReeleicao}
-                            </label>
-                          </div>
-                        </div>
-                        <div className="col-md-6">
-                          <div className="form-group form-check">
-                            <input
-                              id="responderam"
-                              type="checkbox"
-                              className="form-check-input"
-                              onChange={this.buscaRespondeu}
-                              checked={filtro.respondeu === "1" ? true : false}
-                            />
-                            <label
-                              className="form-check-label"
-                              htmlFor="responderam"
-                            >
-                              responderam o questionário
                             </label>
                           </div>
                         </div>

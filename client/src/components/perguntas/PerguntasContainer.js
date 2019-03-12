@@ -61,8 +61,9 @@ class PerguntasContainer extends Component {
   }
 
   geraUrl() {
+    let hostURL = process.env.REACT_APP_FACEBOOK_REDIRECT_URI;
     const url =
-      "www.vozativa.org/" +
+      hostURL +
       this.props.candidatos.filtro.estado +
       "/" +
       criaURL(this.props.usuario.respostasUsuario);

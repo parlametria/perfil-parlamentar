@@ -47,29 +47,10 @@ class QuestionarioContainer extends Component {
 
     return (
       <div className="toogle-wrapper">
-        <div className="question-toogle">
-          <div>
-            <label className="label-toogle" >
-              <span className="label-toogle-left">Dito</span>
-              <div id="tooltipVotacoes">
-                <Toggle
-                  icons={false}
-                  onChange={this.handleToggle}
-                  checked={this.props.questionario.abaAtiva !== "Voz Ativa"}
-                />
-              </div>
-              <span className="label-toogle-right">Feito</span>
-            </label>
-            <Tooltip placement="bottom" isOpen={this.state.tooltipOpen} target="tooltipVotacoes" toggle={this.toggle}>
-              Dito: Respostas ao questionário Voz Ativa. <br />
-              Feito: Posições de quem já foi deputado em votações importantes.
-              </Tooltip>
-          </div>
-        </div>
         {abaAtiva === "Votacoes" && (
           <div>
             <MenuTema />
-
+            
             {respondeuVotacoes &&
               isContinuarRespondendo.votacoes &&
               !respondeuTodos && <VotacoesContainer />}
@@ -81,23 +62,6 @@ class QuestionarioContainer extends Component {
               <FinalQuestionario />
             )}
             {isContinuarRespondendo.todos && <VotacoesContainer />}
-          </div>
-        )}
-        {abaAtiva === "Voz Ativa" && (
-          <div>
-            <MenuTema />
-
-            {respondeuVozAtiva &&
-              isContinuarRespondendo.vozAtiva &&
-              !respondeuTodos && <PerguntasContainer />}
-            {respondeuVozAtiva &&
-              !isContinuarRespondendo.vozAtiva &&
-              !respondeuTodos && <FinalVozAtiva />}
-            {!respondeuVozAtiva && !respondeuTodos && <PerguntasContainer />}
-            {respondeuTodos && !isContinuarRespondendo.todos && (
-              <FinalQuestionario />
-            )}
-            {isContinuarRespondendo.todos && <PerguntasContainer />}
           </div>
         )}
       </div>
