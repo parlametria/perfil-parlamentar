@@ -25,7 +25,7 @@
   
 }
 .grid-wrapper {
-  min-height: 60vh;
+  min-height: 57vh;
 }
 .grid-main {
   display: flex;
@@ -64,7 +64,7 @@
   .grid-separator {
     width: 4%;
     background: #fff;
-    background: linear-gradient(180deg, #a963b3, #a963b3);
+    background: linear-gradient(180deg, #000, #000);
     background-position: 50%;
     background-repeat: repeat-y;
     background-size: 2px auto;
