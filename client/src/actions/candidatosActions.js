@@ -37,6 +37,11 @@ import isEmpty from "../validation/is-empty";
 import votacoes from "../data/votacoes.json";
 import perguntas from "../data/perguntas.json";
 
+const TAM_PERGUNTAS = Object.keys(perguntas).length;
+
+let respostasVAVazio = [].fill.call({ length: TAM_PERGUNTAS }, 0);
+delete respostasVAVazio.length;
+
 export const comparaRespostas = (
   idCandidato,
   respostasCandidatos,
@@ -190,7 +195,7 @@ const calculaNumRespostasConsideradas = (
   }
   return numRespostasConsideradas;
 }
-export const calculaScore = dadosPergunta => dispatch => {  
+export const calculaScore = dadosPergunta => dispatch => {
   if (dadosPergunta) dispatch(atualizaScore(dadosPergunta));
   else dispatch(calculaTodoScore());
 };
@@ -202,6 +207,9 @@ export const atualizaScore = ({ idPergunta, respostaAnterior }) => (
   const { respostasUsuario } = getState().usuarioReducer;
   const { dadosCandidatos } = getState().candidatosReducer;
   const { votacoesCandidatos } = getState().votacoesReducer;
+
+  // Desconsidera perguntas no cálculo do match
+  respostasUsuario.vozAtiva = respostasVAVazio;
 
   const { perguntasRespondidas, votacoesRespondidas } = verificaQuantidadeVotos(
     Object.keys(perguntas).map(e => perguntas[e].id),
@@ -269,7 +277,7 @@ export const atualizaScore = ({ idPergunta, respostaAnterior }) => (
     } else {
       if (respostaAnterior === -1) {
 
-        if (respostaAtualUsuario === 1) {          
+        if (respostaAtualUsuario === 1) {
           if (respostaAtualUsuario === respostaCandidato) {
             votosIguaisUsuarioCandidatos[elem]++;
           } else {
@@ -286,7 +294,7 @@ export const atualizaScore = ({ idPergunta, respostaAnterior }) => (
         }
 
       } else { // else neste corresponde a condição respostaAnterior === 1
-        
+
         if (respostaAtualUsuario === -1) {
           if (respostaAtualUsuario === respostaCandidato) {
             votosIguaisUsuarioCandidatos[elem]++;
@@ -330,6 +338,10 @@ export const calculaTodoScore = () => (dispatch, getState) => {
   const { filtro } = getState().candidatosReducer;
   const { votacoesCandidatos, dadosVotacoes } = getState().votacoesReducer;
   const { dadosPerguntas } = getState().perguntasReducer;
+
+
+  // Desconsidera perguntas no cálculo do match
+  respostasUsuario.vozAtiva = respostasVAVazio;
 
   const { idsVozAtiva, idsVotacoes } = filtraIdsPorTema(
     filtro.tema,
@@ -400,6 +412,9 @@ export const calculaScorePorTema = (
   const { votacoesCandidatos } = getState().votacoesReducer;
   const { abaAtiva } = getState().questionarioReducer;
   let perguntas;
+
+  // Desconsidera perguntas no cálculo do match
+  respostasUsuario.vozAtiva = respostasVAVazio;
 
   if (abaAtiva === "Votacoes") {
     perguntas = getState().votacoesReducer.dadosVotacoes;
