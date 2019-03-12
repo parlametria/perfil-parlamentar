@@ -97,7 +97,20 @@ class TabelaVotacoes extends Component {
       indiceUltimo,
       votacoesExibidas,
       renderNumeroPaginas;
-    if (!isEmpty(votacoes) && !isEmpty(votacoesCandidato)) {
+
+    let idsVotacao = votacoes.map(votacao => votacao.id_votacao);
+
+    let votacoesVazio = {};
+    idsVotacao.forEach(id => (votacoesVazio[id] = 0));
+
+    let votacoesCandidatoObject = votacoesCandidato;
+
+    // Inicia votações de um candidato como vazio se o mesmo não tiver atuado anteriormente
+    if (isEmpty(votacoesCandidato)) {
+      votacoesCandidatoObject = votacoesVazio;
+    }
+
+    if (!isEmpty(votacoes) && !isEmpty(votacoesCandidatoObject)) {
       indiceUltimo = paginaAtual * votacoesPorPagina;
       indicePrimeiro = indiceUltimo - votacoesPorPagina;
       votacoesExibidas = votacoes.slice(indicePrimeiro, indiceUltimo);
@@ -138,10 +151,10 @@ class TabelaVotacoes extends Component {
               <td
                 className={
                   "text-center table-row-center " +
-                  getClassVotacao(votacoesCandidato[elem.id_votacao])
+                  getClassVotacao(votacoesCandidatoObject[elem.id_votacao])
                 }
               >
-                {getValorVotacao(votacoesCandidato[elem.id_votacao])}
+                {getValorVotacao(votacoesCandidatoObject[elem.id_votacao])}
               </td>
               <td
                 className={
