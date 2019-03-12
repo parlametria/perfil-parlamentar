@@ -26,7 +26,7 @@
 }
 .question {
   font-size: 1rem;
-  color: #5b2762;
+  color: #000;
 }
 
 @media (min-width: 992px) {
@@ -42,9 +42,9 @@
   color: #41c083;
 }
 .btn-group-lg > .btn-in-favor {
-  padding-left: 1.7rem;
+  /* padding-left: 1.7rem; */
 }
 
 .btn-group-lg > .btn-against {
-  padding-right: 1.7rem;
+  /* padding-right: 1.7rem; */
 }
