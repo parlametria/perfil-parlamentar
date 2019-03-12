@@ -406,7 +406,7 @@ class CandidatosContainer extends Component {
             Para esse partido,{" "}
             <strong className="strong">{totalEleitosEResponderam}</strong> dos{" "}
             <strong className="strong">{candidatosFiltrados.length}</strong>{" "}
-            candidatos eleitos responderam ao questionário.
+            deputados/as responderam ao questionário.
           </h5>
         )}
       </div>
@@ -438,7 +438,7 @@ class CandidatosContainer extends Component {
               Nesse Estado,{" "}
               <strong className="strong">{eleitosResponderam}</strong> dos{" "}
               <strong className="strong">{totalEleitosEstado}</strong>{" "}
-              candidatos eleitos responderam ao questionário.
+              deputados/as responderam ao questionário.
             </h5>
           )}
         {activeTab === "eleitos" &&
@@ -449,7 +449,7 @@ class CandidatosContainer extends Component {
               Nesse Estado,{" "}
               <strong className="strong">{totalCandAtuacao}</strong> dos{" "}
               <strong className="strong">{totalEleitosEstado}</strong>{" "}
-              candidatos eleitos tem atuação na câmara.
+              deputados/as tem atuação na câmara.
             </h5>
           )}
 
@@ -461,7 +461,7 @@ class CandidatosContainer extends Component {
               {" "}
               <strong className="strong">{totalCandAtuacao}</strong> dos{" "}
               <strong className="strong">{totalEleitosEstado}</strong>{" "}
-              candidatos eleitos tem atuação na câmara.
+              deputados/as tem atuação na câmara.
             </h5>
           )}
         {activeTab === "eleitos" &&
@@ -472,7 +472,7 @@ class CandidatosContainer extends Component {
               {" "}
               <strong className="strong">{eleitosResponderam}</strong> dos{" "}
               <strong className="strong">{totalEleitosEstado}</strong>{" "}
-              candidatos eleitos responderam ao questionário.
+              deputados/as responderam ao questionário.
             </h5>
           )}
         {activeTab === "eleitos" &&
