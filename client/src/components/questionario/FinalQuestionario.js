@@ -14,10 +14,6 @@ class FinalQuestionario extends Component {
             você.
           </p>
           <p>
-            <strong className="strong">Cobre</strong> a participação de quem não
-            respondeu.
-          </p>
-          <p>
             <strong className="strong">Examine</strong> a atuação anterior dos
             candidatos reeleitos.
           </p>

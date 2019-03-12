@@ -112,11 +112,11 @@ class SaibaMaisContainer extends Component {
       (this.props.match.params.votos === undefined) ? candidatoLink : compareLink;
 
     let compareText =
-      "Tive um match eleitoral de " +
-      Math.round(dadosCandidato.score * 100) +
-      " por cento com " +
+      "Eu e " +
       dadosCandidato.nome_urna +
-      ". Mais informações: ";
+      " concordamos em " +
+      Math.round(dadosCandidato.score * 100) +
+      "% . Veja no Voz Ativa: ";
 
     let candidatoText =
       "Confira como " +
@@ -184,11 +184,12 @@ class SaibaMaisContainer extends Component {
 
     return (
       <div className="container">
-        <h4 className="compare-title text-center">
-          Calculamos um match eleitoral de{" "}
+        <h4 className="compare-title text-center pt-4">
+          Calculamos um match de{" "}
           <strong className="strong">
             {Math.round(getScoreWidth(dadosCandidato.score) * 100)}%
           </strong>{" "}
+          <br/>
           entre você e {dadosCandidato.nome_urna}
         </h4>
         <Link to="/" className="btn btn-link">

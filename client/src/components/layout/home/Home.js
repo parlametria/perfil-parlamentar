@@ -152,7 +152,7 @@ class Home extends Component {
 
     let linkCompartilhamento = process.env.REACT_APP_FACEBOOK_REDIRECT_URI;    
     let textoCompartilhamento =
-      "Nos diga o que você defende e em oito minutos a gente apresenta candidatos alinhados com você. " +
+      "Nos diga o que você defende e a gente apresenta candidatos alinhados à você. " +
       linkCompartilhamento;    
 
     let barraCompartilhamento = (

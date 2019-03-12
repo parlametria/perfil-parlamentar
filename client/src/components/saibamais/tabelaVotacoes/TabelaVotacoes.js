@@ -194,7 +194,7 @@ class TabelaVotacoes extends Component {
           <thead className="thead-dark">
             <tr>
               <th className="table-th-question">Proposições</th>
-              <th className="table-th-candidate">Candidato/a</th>
+              <th className="table-th-candidate">Deputado/a</th>
               <th className="table-th-candidate">Você</th>
             </tr>
           </thead>
