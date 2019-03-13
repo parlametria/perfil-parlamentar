@@ -412,8 +412,7 @@ export const calculaTodoScore = () => (dispatch, getState) => {
 };
 
 export const calculaScorePorTema = (
-  respostasUsuario,
-  arrayRespostasUsuario
+  respostasUsuario
 ) => (dispatch, getState) => {
   const { dadosCandidato } = getState().candidatosReducer;
   const { votacoesCandidatos } = getState().votacoesReducer;
@@ -790,7 +789,7 @@ export const getDadosCandidato = (
           type: SET_DADOS_CANDIDATO,
           dadosCandidato: dadosCandidato
         });
-        dispatch(calculaScorePorTema(respostasUsuario, arrayRespostasUsuario));
+        dispatch(calculaScorePorTema(respostasUsuario));
       });
     });
 };

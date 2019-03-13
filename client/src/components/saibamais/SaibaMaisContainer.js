@@ -20,7 +20,7 @@ import {
 import { getVotacoesDeputados, getDadosVotacoes } from "../../actions/votacoesActions";
 import { getDadosPerguntas } from "../../actions/perguntasActions";
 
-import { salvaScoreUsuario } from "../../actions/usuarioActions";
+import { salvaScoreUsuario, calculaScoreUsuarioCandidato } from "../../actions/usuarioActions";
 import isEmpty from "../../validation/is-empty";
 
 import { getArrayUrl, getDict, tamanhoRespostas } from "../../constantes/tratamentoUrls";
@@ -190,7 +190,7 @@ class SaibaMaisContainer extends Component {
           <strong className="strong">
             {Math.round(getScoreWidth(dadosCandidato.score) * 100)}%
           </strong>{" "}
-          <br/>
+          <br />
           entre você e {dadosCandidato.nome_urna}
         </h4>
         <Link to="/" className="btn btn-link">
@@ -229,13 +229,14 @@ class SaibaMaisContainer extends Component {
 
   componentDidMount() {
     this.props.getDadosPerguntas();
-    this.props.getDadosVotacoes();    
+    this.props.getDadosVotacoes();
 
     const { candidato, votos, verAtuacao } = this.props.match.params;
+    const { isAuthenticated } = this.props.auth;
 
     let votosUsuario;
-    let {tamPerguntas, tamVotacoes} = tamanhoRespostas();
-  
+    let { tamPerguntas, tamVotacoes } = tamanhoRespostas();
+
     if (!isEmpty(votos) && getArrayUrl(votos).length === tamVotacoes) {
       let respostaQuizVozAtiva = '0'.repeat(tamPerguntas);
       votosUsuario = respostaQuizVozAtiva + votos;
@@ -249,13 +250,17 @@ class SaibaMaisContainer extends Component {
     const arrayRespostasUsuario = getArrayUrl(votosUsuario);
 
     this.props.getVotacoesDeputados();
-    this.props.salvaScoreUsuario(respostasUsuario);    
+    this.props.salvaScoreUsuario(respostasUsuario);
     this.props.getDadosCandidato(
       candidato,
       respostasUsuario,
       arrayRespostasUsuario
     );
-
+    
+    if (isAuthenticated) {
+      this.props.calculaScoreUsuarioCandidato(candidato);
+    }
+    
     const url_case = this.props.match.path;
     const PATH_COMPARE = "/parlamentar/:candidato/";
 
@@ -279,11 +284,13 @@ SaibaMaisContainer.propTypes = {
   salvaScoreUsuario: PropTypes.func.isRequired,
   getVotacoesDeputados: PropTypes.func.isRequired,
   getDadosPerguntas: PropTypes.func.isRequired,
-  getDadosVotacoes: PropTypes.func.isRequired
+  getDadosVotacoes: PropTypes.func.isRequired,
+  calculaScoreUsuarioCandidato: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
-  candidatos: state.candidatosReducer  
+  candidatos: state.candidatosReducer,
+  auth: state.auth
 });
 
 export default connect(
@@ -295,6 +302,7 @@ export default connect(
     salvaScoreUsuario,
     getVotacoesDeputados,
     getDadosPerguntas,
-    getDadosVotacoes    
+    getDadosVotacoes,
+    calculaScoreUsuarioCandidato
   }
 )(SaibaMaisContainer);
