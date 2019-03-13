@@ -23,6 +23,7 @@ import { salvaScoreUsuario } from "../../actions/usuarioActions";
 import isEmpty from "../../validation/is-empty";
 
 import { getArrayUrl, getDict, tamanhoRespostas } from "../../constantes/tratamentoUrls";
+import { getScoreWidth } from "../../utils/scoreValueFunctions";
 
 import "./SaibaMaisContainer.css";
 import Spinner from "../common/Spinner";
@@ -186,7 +187,7 @@ class SaibaMaisContainer extends Component {
         <h4 className="compare-title text-center pt-4">
           Calculamos um match de{" "}
           <strong className="strong">
-            {Math.round(dadosCandidato.score * 100)}%
+            {Math.round(getScoreWidth(dadosCandidato.score) * 100)}%
           </strong>{" "}
           <br/>
           entre você e {dadosCandidato.nome_urna}

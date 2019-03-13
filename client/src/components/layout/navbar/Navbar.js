@@ -132,7 +132,7 @@ class Navbar extends Component {
             )}
             {isLogging && <Spinner />}
             <div className="collapse navbar-collapse" id="mainNavbar">
-              <ul className="navbar-nav ml-auto pr-1">
+              <ul className="navbar-nav ml-auto pr-4">
                 <li className="nav-item">
                   <Link to="/sobre" className="nav-link">
                     Sobre
