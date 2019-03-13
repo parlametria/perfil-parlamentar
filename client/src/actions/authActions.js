@@ -11,6 +11,8 @@ import jwt_decode from "jwt-decode";
 
 import { getRespostasUsuario } from "./usuarioActions";
 
+import { calculaScore } from "./candidatosActions";
+
 // Login user - Get token
 export const facebookLogin = response => (dispatch, getState) => {
   const { respostasUsuario } = getState().usuarioReducer;
@@ -142,4 +144,5 @@ export const logoutUser = () => dispatch => {
   setAuthToken(false);
   dispatch(setCurrentUser({}));
   dispatch({ type: SET_SCORE_USUARIO_LIMPO });
+  dispatch(calculaScore());
 };
