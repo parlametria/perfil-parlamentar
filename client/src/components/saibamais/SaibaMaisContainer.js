@@ -17,7 +17,8 @@ import {
   setFiltroCandidatos
 } from "../../actions/candidatosActions";
 
-import { getVotacoesDeputados } from "../../actions/votacoesActions";
+import { getVotacoesDeputados, getDadosVotacoes } from "../../actions/votacoesActions";
+import { getDadosPerguntas } from "../../actions/perguntasActions";
 
 import { salvaScoreUsuario } from "../../actions/usuarioActions";
 import isEmpty from "../../validation/is-empty";
@@ -227,6 +228,9 @@ class SaibaMaisContainer extends Component {
   }
 
   componentDidMount() {
+    this.props.getDadosPerguntas();
+    this.props.getDadosVotacoes();    
+
     const { candidato, votos, verAtuacao } = this.props.match.params;
 
     let votosUsuario;
@@ -245,7 +249,7 @@ class SaibaMaisContainer extends Component {
     const arrayRespostasUsuario = getArrayUrl(votosUsuario);
 
     this.props.getVotacoesDeputados();
-    this.props.salvaScoreUsuario(respostasUsuario);
+    this.props.salvaScoreUsuario(respostasUsuario);    
     this.props.getDadosCandidato(
       candidato,
       respostasUsuario,
@@ -273,10 +277,13 @@ SaibaMaisContainer.propTypes = {
   calculaScorePorTema: PropTypes.func.isRequired,
   setFiltroCandidatos: PropTypes.func.isRequired,
   salvaScoreUsuario: PropTypes.func.isRequired,
-  getVotacoesDeputados: PropTypes.func.isRequired
+  getVotacoesDeputados: PropTypes.func.isRequired,
+  getDadosPerguntas: PropTypes.func.isRequired,
+  getDadosVotacoes: PropTypes.func.isRequired
 };
+
 const mapStateToProps = state => ({
-  candidatos: state.candidatosReducer
+  candidatos: state.candidatosReducer  
 });
 
 export default connect(
@@ -286,6 +293,8 @@ export default connect(
     calculaScorePorTema,
     setFiltroCandidatos,
     salvaScoreUsuario,
-    getVotacoesDeputados
+    getVotacoesDeputados,
+    getDadosPerguntas,
+    getDadosVotacoes    
   }
 )(SaibaMaisContainer);
