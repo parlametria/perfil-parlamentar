@@ -105,7 +105,7 @@ class SaibaMaisContainer extends Component {
       "/" +
       this.props.match.params.votos;
 
-    let candidatoLink = hostURL + "candidato/" +
+    let candidatoLink = hostURL + "parlamentar/" +
       this.props.match.params.candidato;
 
     let linkCompartilhamento =
@@ -253,7 +253,7 @@ class SaibaMaisContainer extends Component {
     );
 
     const url_case = this.props.match.path;
-    const PATH_COMPARE = "/candidato/:candidato/";
+    const PATH_COMPARE = "/parlamentar/:candidato/";
 
     if (url_case === PATH_COMPARE) {
       this.setState({ votos: votosUsuario, activeTab: "2" });

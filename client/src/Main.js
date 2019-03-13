@@ -14,7 +14,7 @@ const Main = () => (
       <Route exact path="/" component={Home} />
       <Route
         exact
-        path="/candidato/:candidato/"
+        path="/parlamentar/:candidato/"
         render={props => <SaibaMaisContainer {...props} />}
       />
       <Route
