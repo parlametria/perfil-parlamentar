@@ -369,7 +369,7 @@ class CandidatosContainer extends Component {
             Para esse partido,{" "}
             <strong className="strong">{totalCandAtuacao}</strong> dos{" "}
             <strong className="strong">{candidatosFiltrados.length}</strong>{" "}
-            deputados atuais tem atuação anterior na câmara.
+            deputados/as tem atuação anterior na câmara.
           </h5>
         )}
       </div>
@@ -384,7 +384,7 @@ class CandidatosContainer extends Component {
               Nesse Estado,{" "}
               <strong className="strong">{totalCandAtuacao}</strong> dos{" "}
               <strong className="strong">{totalEleitosEstado}</strong>{" "}
-              deputados atuais tem atuação anterior na câmara.
+              deputados/as tem atuação anterior na câmara.
             </h5>
           )}
 
@@ -395,7 +395,7 @@ class CandidatosContainer extends Component {
               {" "}
               <strong className="strong">{totalCandAtuacao}</strong> dos{" "}
               <strong className="strong">{totalEleitosEstado}</strong>{" "}
-              deputados atuais tem atuação anterior na câmara.
+              deputados/as tem atuação anterior na câmara.
             </h5>
           )}
       </div >
