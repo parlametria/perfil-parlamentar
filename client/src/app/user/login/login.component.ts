@@ -7,27 +7,27 @@ import { LoginService } from '../../shared/services/login.service';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
-      
+
   isLoggedIn: boolean;
 
   constructor(private loginService: LoginService) { }
 
   ngOnInit() {
-    this.loginService.isLoggedIn().subscribe(res => 
+    this.loginService.isLoggedIn().subscribe(res =>
       this.isLoggedIn = res
     );
   }
 
   loginUserGoogle() {
-    this.loginService.loginUserGoogle();    
+    this.loginService.loginUserGoogle();
   }
 
   loginUserFacebook() {
-    this.loginService.loginUserFacebook();    
+    this.loginService.loginUserFacebook();
   }
 
   logoutUser() {
-    this.loginService.logoutUser();    
+    this.loginService.logoutUser();
   }
 
 }

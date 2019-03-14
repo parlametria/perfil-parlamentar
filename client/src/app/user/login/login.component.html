@@ -1,19 +1,15 @@
 <div class="container pt-5">
   <div class="row d-flex justify-content-center">
-    <div class="col-md-8 col-lg-6 mx-2">
-      <p>
-        Ao entrar no Voz Ativa, suas respostas ficarão salvas para que você possa continuar de onde parou.
-      </p>
-      <p>
-        Não guardaremos nenhuma informação sensível, apenas dados públicos (nome, e-mail e foto).
-      </p>      
-      <div *ngIf="!isLoggedIn" class="mt-5">
-        <button type="button" class="btn btn-primary btn-block" (click)="loginUserGoogle()">
-          Entre com sua conta Google
-        </button>
-        <br />
+    <div class="col-10 col-sm-8 col-md-6 col-lg-4 mx-2">
+      <div *ngIf="!isLoggedIn">
         <button type="button" class="btn btn-primary btn-block" (click)="loginUserFacebook()">
-          Entre com sua conta Facebook
+          <span class="icon-facebook icon-md"></span>
+          Login com Facebook
+        </button>
+        <br/>
+        <button type="button" class="btn btn-primary btn-block" (click)="loginUserGoogle()">
+          <span class="icon-google icon-md"></span>
+          Login com Google
         </button>
       </div>
       <div *ngIf="isLoggedIn" class="mt-5">
@@ -21,6 +17,24 @@
           Sair
         </button>
       </div>
+    </div>
+  </div>
+  <div class="row d-flex justify-content-center mt-5">
+    <div class="col-10 col-sm-8 col-md-6 col-lg-4 mx-2">
+      <span class="icon-login icon-lg icon"></span>
+      <div class="text-login-container">
+        <span class="text-strong">Próximo login</span>
+        <br/>
+        <span>Ao entrar no Voz Ativa, suas respostas ficarão salvas para que você possa continuar de onde parou.</span></div>
+    </div>
+  </div>
+  <div class="row d-flex justify-content-center mt-3">
+    <div class="col-10 col-sm-8 col-md-6 col-lg-4 mx-2">
+      <span class="icon-seguranca icon-lg icon"></span>
+      <div class="text-login-container">
+        <span class="text-strong">Privacidade</span>
+        <br/>
+        <span>Não guardaremos nenhuma informação sensível, apenas dados públicos como nome, e-mail e foto de perfil.</span></div>
     </div>
   </div>
 </div>
