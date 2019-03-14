@@ -5,6 +5,8 @@ import PropTypes from "prop-types";
 
 import { Nav, NavItem, NavLink, TabContent, TabPane } from "reactstrap";
 
+import { OverlayTrigger, Tooltip } from 'react-bootstrap';
+
 import TabelaPerguntas from "./tabelaPerguntas/TabelaPerguntas";
 import TabelaVotacoes from "./tabelaVotacoes/TabelaVotacoes";
 import PontuacaoPorTema from "./pontuacaoPorTema/PontuacaoTema";
@@ -23,7 +25,7 @@ import { salvaScoreUsuario } from "../../actions/usuarioActions";
 import isEmpty from "../../validation/is-empty";
 
 import { getArrayUrl, getDict, tamanhoRespostas } from "../../constantes/tratamentoUrls";
-import { getScoreWidth } from "../../utils/scoreValueFunctions";
+import { getScoreLabel } from "../../utils/scoreValueFunctions";
 
 import "./SaibaMaisContainer.css";
 import Spinner from "../common/Spinner";
@@ -49,6 +51,10 @@ class SaibaMaisContainer extends Component {
   }
 
   render() {
+    const tooltip = (
+      <Tooltip>Não existem respostas suficientes para o cálculo preciso do alinhamento</Tooltip>
+    );
+
     const { dadosCandidato, scoreTema } = this.props.candidatos;
     const perfilCandidato = (
       <div className="compare-person-profile row no-gutters">
@@ -187,9 +193,15 @@ class SaibaMaisContainer extends Component {
         <h4 className="compare-title text-center pt-4">
           Calculamos um match de{" "}
           <strong className="strong">
-            {Math.round(getScoreWidth(dadosCandidato.score) * 100)}%
+            {dadosCandidato.score === -1 ?
+              <OverlayTrigger
+                overlay={tooltip} placement="bottom">
+                <span className="score">{getScoreLabel(dadosCandidato.score)}</span>
+              </OverlayTrigger> :
+              <span className="score">{getScoreLabel(dadosCandidato.score)}</span>
+            }            
           </strong>{" "}
-          <br/>
+          <br />
           entre você e {dadosCandidato.nome_urna}
         </h4>
         <Link to="/" className="btn btn-link">
@@ -230,8 +242,8 @@ class SaibaMaisContainer extends Component {
     const { candidato, votos, verAtuacao } = this.props.match.params;
 
     let votosUsuario;
-    let {tamPerguntas, tamVotacoes} = tamanhoRespostas();
-  
+    let { tamPerguntas, tamVotacoes } = tamanhoRespostas();
+
     if (!isEmpty(votos) && getArrayUrl(votos).length === tamVotacoes) {
       let respostaQuizVozAtiva = '0'.repeat(tamPerguntas);
       votosUsuario = respostaQuizVozAtiva + votos;
