@@ -8,12 +8,14 @@
             [lazyLoad]="parlamentar.getFoto()"
             [offset]="100"
             width="100%"
-          />
+          >
         </div>
         <div class="col-10">
           <div class="person-data">
             <h5 class="person-name">{{ parlamentar.nome_urna }}</h5>
-            <div>{{ parlamentar.sg_partido }}/{{ parlamentar.uf }}</div>
+            <div>
+              {{ parlamentar.sg_partido }}/{{ parlamentar.uf }}
+            </div>
             <div>
               {{ parlamentar.alinhamento.respostasIguais }} /
               {{ parlamentar.alinhamento.perguntasIguais }}
@@ -26,3 +28,4 @@
     </div>
   </div>
 </div>
+<app-sticky-footer-navbar></app-sticky-footer-navbar>

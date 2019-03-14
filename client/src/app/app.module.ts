@@ -27,6 +27,7 @@ import { UserService } from './shared/services/user.service';
 import { getAuthServiceConfigs } from './shared/config/socialLoginConfig';
 import { TokenInterceptor } from './shared/auth/token.interceptor';
 import { AlinhamentoComponent } from './main/alinhamento/alinhamento.component';
+import { StickyFooterNavbarComponent } from './shared/components/sticky-footer-navbar/sticky-footer-navbar.component';
 
 
 @NgModule({
@@ -39,7 +40,8 @@ import { AlinhamentoComponent } from './main/alinhamento/alinhamento.component';
     PerguntaComponent,
     QuestionarioComponent,
     TemasComponent,
-    AlinhamentoComponent
+    AlinhamentoComponent,
+    StickyFooterNavbarComponent
   ],
   imports: [
     BrowserModule,
