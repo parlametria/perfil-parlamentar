@@ -116,8 +116,8 @@ class SaibaMaisContainer extends Component {
       "Eu e " +
       dadosCandidato.nome_urna +
       " concordamos em " +
-      Math.round(dadosCandidato.score * 100) +
-      "% . Veja no Voz Ativa: ";
+      Math.round(getScoreWidth(dadosCandidato.score) * 100) +
+      "%25 . Veja no Voz Ativa: ";
 
     let candidatoText =
       "Confira como " +
