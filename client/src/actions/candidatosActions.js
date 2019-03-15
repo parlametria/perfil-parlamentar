@@ -313,9 +313,9 @@ export const atualizaScore = ({ idPergunta, respostaAnterior }) => (
       }
 
     }
-    
+
     if (!isNaN(numRespostasConsideradas) && numRespostasConsideradas < MINIMO_PARA_MATCH) {
-      scoreCandidatos[elem] = -1;    
+      scoreCandidatos[elem] = -1;
     } else {
       scoreCandidatos[elem] = votosIguaisUsuarioCandidatos[elem] / numRespostasConsideradas;
     }
@@ -547,14 +547,14 @@ export const buscaPorCPF = cpf => (dispatch, getState) => {
 
 // Pega o top n candidatos baseado na compatibilidade entre as respostas ordenado pelo score. Recebe um dicionário das respostas dos candidatos e retorna um array de arrays (tuplas) com os ids dos candidatos e seu score.
 
-// A função de ordenação prioriza os candidatos que responderam ao questionário. Caso os dois tenham respondido ou ambos não tenham respondido, a ordenação será dada alfabeticamente.
 export const getTopNCandidatos = n => (dispatch, getState) => {
   const {
     scoreCandidatos,
     dadosCandidatos,
     totalRespostasEstado,
     totalEleitosEstado,
-    activeTab
+    activeTab,
+    votosIguaisUsuarioCandidatos
   } = getState().candidatosReducer;
 
   const { votacoesCandidatos } = getState().votacoesReducer;
@@ -568,38 +568,16 @@ export const getTopNCandidatos = n => (dispatch, getState) => {
     .sort((a, b) => {
       if (a[1] > b[1]) return -1;
       else if (a[1] === b[1]) {
-        if (
-          dadosCandidatos[b[0]].respondeu ||
-          dadosCandidatos[b[0]].reeleicao === "1" ||
-          !isEmpty(votacoesCandidatos[b[0]])
-        )
+        if (votosIguaisUsuarioCandidatos[a[0]] > votosIguaisUsuarioCandidatos[b[0]]) {
+          return -1;
+        } else if (votosIguaisUsuarioCandidatos[a[0]] < votosIguaisUsuarioCandidatos[b[0]]) {
           return 1;
-        else if (
-          !isEmpty(dadosCandidatos[a[0]]) &&
-          !isEmpty(dadosCandidatos[b[0]]) &&
-          !isEmpty(votacoesCandidatos)
-        )
-          // por nome de urna:
-          //{
-          //   if (
-          //     (((dadosCandidatos[a[0]].respondeu &&
-          //       dadosCandidatos[b[0]].respondeu) ||
-          //       (!dadosCandidatos[a[0]].respondeu &&
-          //         !dadosCandidatos[b[0]].respondeu)) &&
-          //       (dadosCandidatos[a[0]].reeleicao === "0" &&
-          //         dadosCandidatos[b[0]].reeleicao === "0")) ||
-          //     (isEmpty(votacoesCandidatos[a[0]]) &&
-          //       isEmpty(votacoesCandidatos[b[0]]))
-          //   )
-          //     return dadosCandidatos[a[0]].nome_urna.localeCompare(
-          //       dadosCandidatos[b[0]].nome_urna
-          //     );
-          //   else return -1;
-          // }
-          return 0;
+        } else {
+          // Ordena por nome
+          return dadosCandidatos[a[0]].nome_urna.localeCompare(dadosCandidatos[b[0]].nome_urna);
+        }
       } else return 1;
-    })
-    .map(candidato => candidato[0]);
+    }).map(candidato => candidato[0]);  
 
   dispatch({
     type: SET_CANDIDATOS_RANQUEADOS,
@@ -861,7 +839,7 @@ export const setCandidatosFiltrados = () => (dispatch, getState) => {
     });
 
     dispatch(calculaScore());
-
+    
     let candidatosOrdenados = Object.keys(cpfCandidatos).sort((a, b) => {
       if (scoreCandidatos[a] > scoreCandidatos[b]) return -1;
       else if (scoreCandidatos[a] < scoreCandidatos[b]) return 1;
@@ -889,7 +867,7 @@ export const setCandidatosFiltrados = () => (dispatch, getState) => {
         }
         return 0;
       } else return 0;
-    });
+    });    
 
     dispatch({
       type: SET_CANDIDATOS_FILTRADOS,
