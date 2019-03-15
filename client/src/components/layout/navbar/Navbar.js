@@ -76,7 +76,7 @@ class Navbar extends Component {
 
     let linkCompartilhamento = "www.vozativa.org/";
     let textoCompartilhamento =
-      "Nos diga o que você defende e em oito minutos a gente apresenta candidatos alinhados com você. " +
+      "Nos diga o que você defende e a gente apresenta candidatos alinhados à você. " +
       linkCompartilhamento;
 
     let facebookRedirectURI = process.env.REACT_APP_FACEBOOK_REDIRECT_URI;
@@ -132,15 +132,10 @@ class Navbar extends Component {
             )}
             {isLogging && <Spinner />}
             <div className="collapse navbar-collapse" id="mainNavbar">
-              <ul className="navbar-nav ml-auto pr-1">
+              <ul className="navbar-nav ml-auto pr-4">
                 <li className="nav-item">
                   <Link to="/sobre" className="nav-link">
                     Sobre
-                  </Link>
-                </li>
-                <li className="nav-item">
-                  <Link to="/soucandidato" className="nav-link">
-                    Sou candidato
                   </Link>
                 </li>
                 {!isAuthenticated && !isMobile && (

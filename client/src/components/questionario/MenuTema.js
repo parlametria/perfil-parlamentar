@@ -163,7 +163,7 @@ class MenuTema extends Component {
         >
           <div className="card-body">
             <div className="nav-horizontal">
-              <ul className="nav nav-pills nav-fill nav-horizontal-pills-sm">
+              <ul className="nav nav-pills nav-fill">
                 {indicadorPergunta}
               </ul>
             </div>

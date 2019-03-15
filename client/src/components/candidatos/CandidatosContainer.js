@@ -234,7 +234,7 @@ class CandidatosContainer extends Component {
     };
 
     this.props.setFiltroCandidatos(novoFiltro);
-    //this.props.setCandidatosFiltrados();
+    this.props.setCandidatosFiltrados();
     this.props.calculaScore();
   }
 
@@ -258,6 +258,7 @@ class CandidatosContainer extends Component {
 
     this.props.setFiltroCandidatos(novoFiltro);
     this.props.getDadosCandidatos();
+    this.props.setCandidatosFiltrados();
   }
 
   render() {
@@ -295,32 +296,18 @@ class CandidatosContainer extends Component {
       filtro.nome !== "" ||
         filtro.partido !== "Partidos" ||
         filtro.reeleicao !== "-1" ||
-        filtro.respondeu !== "-1"
+        filtro.respondeu !== "-1" ||
+        filtro.estado !== "TODOS"
         ? candidatosFiltrados
         : candidatosRanqueados;
 
-    let eleitosResponderam = 0;
     let totalCandAtuacao = 0;
-    let totalResponderamAtuacao = 0;
-    let totalEleitosEResponderam = 0;
-    let totalReeleitosEResponderam = 0;
-
+        
     const candidatos = candidatosMapeaveis.map(cpf => {
       const candidato = dadosCandidatos[cpf];
 
       if (!isEmpty(candidato)) {
-        if (candidato.respondeu) eleitosResponderam++;
         if (candidato.reeleicao === "1") totalCandAtuacao++;
-        if (candidato.reeleicao === "1" && candidato.respondeu)
-          totalResponderamAtuacao++;
-        if (activeTab === "eleitos" && candidato.respondeu)
-          totalEleitosEResponderam++;
-        if (
-          activeTab === "eleitos" &&
-          candidato.respondeu &&
-          candidato.reeleicao === "1"
-        )
-          totalReeleitosEResponderam++;
         return (
           <Candidato
             respondeu={candidato.respondeu}
@@ -346,6 +333,7 @@ class CandidatosContainer extends Component {
                 ? true
                 : false
             }
+            eleito={candidato.eleito}
             temHistorico={votacoesCandidatos[candidato.cpf] !== undefined}
           />
         );
@@ -376,36 +364,12 @@ class CandidatosContainer extends Component {
 
     const mostraPartido = (
       <div>
-        {activeTab === "candidatos" && filtro.reeleicao !== "1" && (
+        {activeTab === "eleitos" && (
           <h5>
             Para esse partido,{" "}
-            <strong className="strong">{totalResponderamPartido}</strong> de{" "}
-            <strong className="strong">{totalRespostasPartido}</strong>{" "}
-            candidatos responderam ao questionário.
-          </h5>
-        )}
-        {activeTab === "candidatos" && filtro.reeleicao === "1" && (
-          <h5>
-            Para esse partido,{" "}
-            <strong className="strong">{totalResponderamAtuacao}</strong> de{" "}
-            <strong className="strong">{totalCandAtuacao}</strong> candidatos
-            que já tinham atuação na câmara responderam ao questionário.
-          </h5>
-        )}
-        {activeTab === "eleitos" && filtro.reeleicao === "1" && (
-          <h5>
-            Para esse partido,{" "}
-            <strong className="strong">{totalReeleitosEResponderam}</strong> dos{" "}
-            <strong className="strong">{totalCandAtuacao}</strong> candidatos
-            eleitos que já tinham atuação na câmara responderam ao questionário.
-          </h5>
-        )}
-        {activeTab === "eleitos" && filtro.reeleicao !== "1" && (
-          <h5>
-            Para esse partido,{" "}
-            <strong className="strong">{totalEleitosEResponderam}</strong> dos{" "}
+            <strong className="strong">{totalCandAtuacao}</strong> dos{" "}
             <strong className="strong">{candidatosFiltrados.length}</strong>{" "}
-            candidatos eleitos responderam ao questionário.
+            deputados/as tem atuação anterior na câmara.
           </h5>
         )}
       </div>
@@ -413,99 +377,27 @@ class CandidatosContainer extends Component {
 
     const mostraEstado = (
       <div>
-        {activeTab === "candidatos" && filtro.reeleicao !== "1" && abaAtiva === "Voz Ativa" && (
-          <h5>
-            Nesse Estado,{" "}
-            <strong className="strong">{totalResponderamEstado}</strong> de{" "}
-            <strong className="strong">{totalRespostasEstado}</strong>{" "}
-            candidatos responderam ao questionário.
-          </h5>
-        )}
-        {activeTab === "candidatos" && filtro.reeleicao === "1" && (
-          <h5>
-            Nesse Estado,{" "}
-            <strong className="strong">{totalResponderamAtuacao}</strong> de{" "}
-            <strong className="strong">{totalCandAtuacao}</strong> candidatos
-            que já tinham atuação na câmara responderam ao questionário.
-          </h5>
-        )}
-        {activeTab === "eleitos" &&
-          abaAtiva === "Voz Ativa" &&
-          filtro.estado !== "TODOS" &&
-          filtro.reeleicao !== "1" && (
-            <h5>
-              Nesse Estado,{" "}
-              <strong className="strong">{eleitosResponderam}</strong> dos{" "}
-              <strong className="strong">{totalEleitosEstado}</strong>{" "}
-              candidatos eleitos responderam ao questionário.
-            </h5>
-          )}
         {activeTab === "eleitos" &&
           abaAtiva === "Votacoes" &&
-          filtro.estado !== "TODOS" &&
-          filtro.reeleicao !== "1" && (
+          filtro.estado !== "TODOS" && (
             <h5>
               Nesse Estado,{" "}
               <strong className="strong">{totalCandAtuacao}</strong> dos{" "}
               <strong className="strong">{totalEleitosEstado}</strong>{" "}
-              candidatos eleitos tem atuação na câmara.
+              deputados/as tem atuação anterior na câmara.
             </h5>
           )}
 
         {activeTab === "eleitos" &&
           abaAtiva === "Votacoes" &&
-          filtro.estado === "TODOS" &&
-          filtro.reeleicao !== "1" && (
+          filtro.estado === "TODOS" && (
             <h5>
               {" "}
               <strong className="strong">{totalCandAtuacao}</strong> dos{" "}
               <strong className="strong">{totalEleitosEstado}</strong>{" "}
-              candidatos eleitos tem atuação na câmara.
+              deputados/as tem atuação anterior na câmara.
             </h5>
           )}
-        {activeTab === "eleitos" &&
-          abaAtiva === "Voz Ativa" &&
-          filtro.estado === "TODOS" &&
-          filtro.reeleicao !== "1" && (
-            <h5>
-              {" "}
-              <strong className="strong">{eleitosResponderam}</strong> dos{" "}
-              <strong className="strong">{totalEleitosEstado}</strong>{" "}
-              candidatos eleitos responderam ao questionário.
-            </h5>
-          )}
-        {activeTab === "eleitos" &&
-          abaAtiva === "Voz Ativa" &&
-          filtro.estado === "TODOS" &&
-          filtro.reeleicao === "1" && (
-            < h5 >
-              {" "}
-              < strong className="strong">
-                {totalResponderamAtuacao}
-              </strong> dos{" "}
-              <strong className="strong">{totalCandAtuacao}</strong> candidatos
-              eleitos que já tinham atuação na câmara responderam ao
-              questionário.
-            </h5 >
-          )
-        }
-        {
-          activeTab === "eleitos" &&
-          abaAtiva === "Voz Ativa" &&
-          filtro.estado !== "TODOS" &&
-          filtro.reeleicao === "1" && (
-            <h5>
-              {" "}
-              Nesse Estado,{" "}
-              <strong className="strong">
-                {totalResponderamAtuacao}
-              </strong> dos{" "}
-              <strong className="strong">{totalCandAtuacao}</strong> candidatos
-              eleitos que já tinham atuação na câmara responderam ao
-              questionário.
-            </h5>
-          )
-        }
       </div >
     );
 
@@ -553,23 +445,9 @@ class CandidatosContainer extends Component {
                   this.setActiveTab("eleitos");
                 }}
               >
-                Eleitos/as
+                Deputados/as
               </a>
             </li>
-            {filtro.estado !== "TODOS" && (
-              <li className="nav-item">
-                <a
-                  className={classnames("nav-link nav-link-a", {
-                    active: activeTab === "candidatos"
-                  })}
-                  onClick={() => {
-                    this.setActiveTab("candidatos");
-                  }}
-                >
-                  Candidatos/as
-                </a>
-              </li>
-            )}
           </ul>
         </div>
         <div className="container">
@@ -600,8 +478,8 @@ class CandidatosContainer extends Component {
                           <input
                             type="text"
                             className="form-control form-control-secondary"
-                            placeholder="Pesquisar candidato/a..."
-                            aria-label="Pesquisar candidato/a"
+                            placeholder="Pesquisar deputado/a..."
+                            aria-label="Pesquisar deputado/a"
                             aria-describedby="search-candidate"
                             onChange={this.buscaNome}
                             value={filtro.nome}
@@ -655,23 +533,6 @@ class CandidatosContainer extends Component {
                               htmlFor="reeleitos"
                             >
                               {listaSelectReeleicao}
-                            </label>
-                          </div>
-                        </div>
-                        <div className="col-md-6">
-                          <div className="form-group form-check">
-                            <input
-                              id="responderam"
-                              type="checkbox"
-                              className="form-check-input"
-                              onChange={this.buscaRespondeu}
-                              checked={filtro.respondeu === "1" ? true : false}
-                            />
-                            <label
-                              className="form-check-label"
-                              htmlFor="responderam"
-                            >
-                              responderam o questionário
                             </label>
                           </div>
                         </div>

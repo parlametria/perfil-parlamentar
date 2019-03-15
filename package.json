@@ -40,7 +40,7 @@
     "heroku-logger": "^0.3.1",
     "immer": "^1.8.2",
     "jsonwebtoken": "^8.3.0",
-    "mongoose": "^5.2.10",
+    "mongoose": "^5.4.19",
     "mysql2": "^1.6.4",
     "npm": "^6.4.1",
     "passport": "^0.4.0",
@@ -54,7 +54,7 @@
     "recompose": "^0.30.0",
     "request": "^2.88.0",
     "sequelize": "^4.41.2",
-    "sequelize-cli": "^5.3.0",
+    "sequelize-cli": "^5.4.0",
     "webassemblyjs": "^1.8.0",
     "webpack-log": "^2.0.0"
   },
