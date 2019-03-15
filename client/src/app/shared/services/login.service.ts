@@ -67,6 +67,7 @@ export class LoginService {
   getCurrentUser() {
     let user = {
       id: localStorage.getItem("id_user"),
+      full_name: localStorage.getItem("full_name"),
       photo: localStorage.getItem("photo_user")
     }
     return user
@@ -82,7 +83,7 @@ export class LoginService {
 
   private loginUserApi(provider: string, token: string) {
 
-    // Cria respostas para salvar no BD    
+    // Cria respostas para salvar no BD
     this.perguntaService.getProposicoes().subscribe(
       proposicoes => {
         let votacoes = proposicoes.reduce((result, item) => {
@@ -94,13 +95,13 @@ export class LoginService {
         let respostasUser = {
           vozAtiva: {},
           votacoes
-        }        
+        }
 
-        // Cria usuário no BD        
+        // Cria usuário no BD
         this.criaUsuarioAPI(provider, token, respostasUser);
       },
       error => console.log(error)
-    );    
+    );
   }
 
   private criaUsuarioAPI(provider: string, token: string, respostas: any){
@@ -112,11 +113,12 @@ export class LoginService {
       (res: any) => {
         let token = res.headers.get("authorization");
 
-        let { id, photo } = res.body;
+        let { id, full_name, photo } = res.body;
         let user = {
           id,
+          full_name,
           photo
-        }        
+        }
 
         this.setSession(token, user);
         this.router.navigate(['/']);
@@ -128,6 +130,7 @@ export class LoginService {
   private setSession(token, user) {
     localStorage.setItem("accessToken", token);
     localStorage.setItem("id_user", user.id);
+    localStorage.setItem("full_name", user.full_name);
     localStorage.setItem("photo_user", user.photo);
     this.loggedIn.next(true);
 

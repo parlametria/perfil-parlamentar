@@ -1,4 +1,4 @@
-<nav class="navbar fixed-top bg-white">
+<!-- <nav class="navbar fixed-top bg-white">
   <div class="container">
     <a class="navbar-brand" [routerLink]="['/']">
       <img src="assets/imgs/logo.png" width="100" alt="Voz ativa" />
@@ -9,5 +9,63 @@
         <a *ngIf="userAuthenticated" class="nav-link" [routerLink]="['/']" (click)="logoutUser()">sair</a>
       </li>
     </ul>
+  </div>
+</nav> -->
+
+<nav class="navbar fixed-top bg-white">
+  <div class="container">
+    <a
+      class="navbar-brand"
+      [routerLink]="['/']"
+    >
+      <img
+        src="assets/imgs/logo.png"
+        width="100"
+        alt="Voz ativa"
+      >
+    </a>
+
+    <ul class="navbar-nav ml-auto">
+      <li
+        *ngIf="!userAuthenticated"
+        class="nav-item"
+      >
+        <a
+          class="nav-link nav-link-login"
+          [routerLink]="['/login']"
+        >
+          Entrar
+        </a>
+      </li>
+    </ul>
+    <div
+      ngbDropdown
+      *ngIf="userAuthenticated"
+      class="d-inline-block"
+    >
+      <a
+        ngbDropdownToggle
+        id="dropdownUser"
+      >
+        <img
+          [src]="user.photo"
+          [alt]="user.full_name"
+          class="img-user"
+        >
+      </a>
+      <div
+        ngbDropdownMenu
+        aria-labelledby="dropdownUser"
+      >
+        <a
+          ngbDropdownItem
+          class="nav-link nav-link-login"
+          [routerLink]="['/']"
+          (click)="logoutUser()"
+        >
+          sair
+        </a>
+      </div>
+    </div>
   </div>
 </nav>

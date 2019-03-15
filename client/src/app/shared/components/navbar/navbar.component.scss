@@ -1,0 +1,25 @@
+a:link.nav-link-login,
+a:visited.nav-link-login {
+  color: #20201e;
+  text-decoration: underline;
+}
+
+a:hover.nav-link-login,
+a:active.nav-link-login {
+  color: #43a467;
+}
+
+.img-user {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+}
+
+.dropdown-toggle {
+  cursor: pointer;
+}
+
+.dropdown-menu {
+  padding: 0;
+  border: solid 1px #20201E;
+}
