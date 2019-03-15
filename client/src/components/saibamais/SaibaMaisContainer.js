@@ -5,6 +5,8 @@ import PropTypes from "prop-types";
 
 import { Nav, NavItem, NavLink, TabContent, TabPane } from "reactstrap";
 
+import { OverlayTrigger, Tooltip } from 'react-bootstrap';
+
 import TabelaPerguntas from "./tabelaPerguntas/TabelaPerguntas";
 import TabelaVotacoes from "./tabelaVotacoes/TabelaVotacoes";
 import PontuacaoPorTema from "./pontuacaoPorTema/PontuacaoTema";
@@ -24,7 +26,7 @@ import { salvaScoreUsuario, calculaScoreUsuarioCandidato } from "../../actions/u
 import isEmpty from "../../validation/is-empty";
 
 import { getArrayUrl, getDict, tamanhoRespostas } from "../../constantes/tratamentoUrls";
-import { getScoreWidth } from "../../utils/scoreValueFunctions";
+import { getScoreLabel } from "../../utils/scoreValueFunctions";
 
 import "./SaibaMaisContainer.css";
 import Spinner from "../common/Spinner";
@@ -50,6 +52,10 @@ class SaibaMaisContainer extends Component {
   }
 
   render() {
+    const tooltip = (
+      <Tooltip>Não existem respostas suficientes para o cálculo preciso do alinhamento</Tooltip>
+    );
+
     const { dadosCandidato, scoreTema } = this.props.candidatos;
     const perfilCandidato = (
       <div className="compare-person-profile row no-gutters">
@@ -188,7 +194,13 @@ class SaibaMaisContainer extends Component {
         <h4 className="compare-title text-center pt-4">
           Calculamos um match de{" "}
           <strong className="strong">
-            {Math.round(getScoreWidth(dadosCandidato.score) * 100)}%
+            {dadosCandidato.score === -1 ?
+              <OverlayTrigger
+                overlay={tooltip} placement="bottom">
+                <span className="score">{getScoreLabel(dadosCandidato.score)}</span>
+              </OverlayTrigger> :
+              <span className="score">{getScoreLabel(dadosCandidato.score)}</span>
+            }            
           </strong>{" "}
           <br />
           entre você e {dadosCandidato.nome_urna}

@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 
+import { OverlayTrigger, Tooltip } from 'react-bootstrap';
+
 import { criaURL } from "../../constantes/tratamentoUrls";
 import { getScoreWidth, getScoreLabel } from "../../utils/scoreValueFunctions";
 
@@ -17,7 +19,7 @@ class Candidato extends Component {
       <span className="badge badge-secondary">não atuou</span>
     );
 
-    const verAtuacao = (      
+    const verAtuacao = (
       <Link
         className="btn btn-outline-primary btn-sm"
         to={
@@ -28,7 +30,7 @@ class Candidato extends Component {
           "/true"
         }
       >
-        ver atuação       
+        ver atuação
       </Link>
     );
 
@@ -38,9 +40,13 @@ class Candidato extends Component {
           {this.props.eleito && this.props.temHistorico && verAtuacao}
         </div>
       </div>
-    );    
-    
-    const barraScore = (      
+    );
+
+    const tooltip = (
+      <Tooltip>Não existem respostas suficientes para o cálculo preciso do alinhamento</Tooltip>
+    );
+
+    const barraScore = (
       <div>
         <div className="score-progress">
           <div className="progress" style={{ height: "15px" }}>
@@ -56,7 +62,13 @@ class Candidato extends Component {
             />
           </div>
           <div className="score-number">
-            <span className="score">{getScoreLabel(this.props.score)}</span>
+            {getScoreLabel(this.props.score) === "--" ?
+              <OverlayTrigger
+                overlay={tooltip}>
+                <span className="score">{getScoreLabel(this.props.score)}</span>
+              </OverlayTrigger> :
+              <span className="score">{getScoreLabel(this.props.score)}</span>
+            }
           </div>
         </div>
         {this.props.eleito && this.props.temHistorico && verAtuacao}
