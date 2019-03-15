@@ -341,7 +341,7 @@ export const calculaTodoScore = () => (dispatch, getState) => {
   const { votacoesCandidatos, dadosVotacoes } = getState().votacoesReducer;
   const { dadosPerguntas } = getState().perguntasReducer;
 
-
+  
   // Desconsidera perguntas no cálculo do match
   respostasUsuario.vozAtiva = respostasVAVazio;
 
@@ -396,9 +396,9 @@ export const calculaTodoScore = () => (dispatch, getState) => {
     } else {
       scoreCandidatos[elem] = respostasIguais / numRespostasConsideradas;
     }
-
+    
     votosIguaisUsuarioCandidatos[elem] = respostasIguais;
-  });
+  });  
 
   dispatch({
     type: SET_SCORE_CANDIDATOS,
@@ -412,8 +412,7 @@ export const calculaTodoScore = () => (dispatch, getState) => {
 };
 
 export const calculaScorePorTema = (
-  respostasUsuario,
-  arrayRespostasUsuario
+  respostasUsuario
 ) => (dispatch, getState) => {
   const { dadosCandidato } = getState().candidatosReducer;
   const { votacoesCandidatos } = getState().votacoesReducer;
@@ -708,7 +707,7 @@ export const getDadosCandidato = (
   arrayRespostasUsuario
 ) => (dispatch, getState) => {
   dispatch(setCandidatosCarregando());
-
+  
   const respostasVozAtiva = Object.keys(respostasUsuario.vozAtiva).filter(
     id =>
       respostasUsuario.vozAtiva[id] === 1 ||
@@ -716,7 +715,7 @@ export const getDadosCandidato = (
   );
 
   const votacoesRespondidas = Object.keys(
-    respostasUsuario.votacoes
+    respostasUsuario.votacoes 
   ).filter(
     id =>
       respostasUsuario.votacoes[id] === 1 ||
@@ -783,12 +782,14 @@ export const getDadosCandidato = (
         } else {
           dadosCandidato.score = score / numRespostasConsideradas;
         }
+        
+        
 
         dispatch({
           type: SET_DADOS_CANDIDATO,
           dadosCandidato: dadosCandidato
         });
-        dispatch(calculaScorePorTema(respostasUsuario, arrayRespostasUsuario));
+        dispatch(calculaScorePorTema(respostasUsuario));
       });
     });
 };
