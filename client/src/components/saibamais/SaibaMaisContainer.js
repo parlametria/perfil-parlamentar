@@ -26,7 +26,7 @@ import { salvaScoreUsuario, calculaScoreUsuarioCandidato } from "../../actions/u
 import isEmpty from "../../validation/is-empty";
 
 import { getArrayUrl, getDict, tamanhoRespostas } from "../../constantes/tratamentoUrls";
-import { getScoreLabel } from "../../utils/scoreValueFunctions";
+import { getScoreLabel, getScoreWidth } from "../../utils/scoreValueFunctions";
 
 import "./SaibaMaisContainer.css";
 import Spinner from "../common/Spinner";
