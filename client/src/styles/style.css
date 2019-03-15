@@ -23,11 +23,11 @@ body {
   font-weight: 600;
   font-size: 15px;
   background-color: #ffffff;
-  color: #5b2762;
+  color: #20201E;
   margin-top: 67px;
 }
 a {
-  color: #000;
+  color: #20201E;
 }
 a:hover {
   color: #a963b3;
@@ -35,7 +35,7 @@ a:hover {
 footer {
   padding-top: 2rem;
   padding-bottom: 2rem;
-  border-top: solid 5px #a963b3;
+  border-top: solid 2px #000;
 }
 
 .footer-title {
@@ -88,4 +88,14 @@ a.link-inverse:active {
 
 .badge-success {
   background-color: #41c083;
+}
+
+.howto-text {
+  display: flex;
+  align-items: center;
+  height: 160px;
+}
+
+.strong2 {
+  color: #a963b3;
 }

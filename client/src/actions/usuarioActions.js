@@ -1,5 +1,5 @@
 import { SET_SCORE_USUARIO } from "./types";
-import { calculaScore } from "./candidatosActions";
+import { calculaScore, getDadosCandidato } from "./candidatosActions";
 
 import axios from "axios";
 
@@ -30,5 +30,13 @@ export const getRespostasUsuario = () => dispatch => {
     const respostasUsuario = res.data;
     dispatch(salvaScoreUsuario(respostasUsuario));
     dispatch(calculaScore());
+  });
+};
+
+export const calculaScoreUsuarioCandidato = (idCandidato) => dispatch => {
+  axios.get("/api/usuarios/respostas/eu").then(res => {
+    const respostasUsuario = res.data;    
+    dispatch(salvaScoreUsuario(respostasUsuario));
+    dispatch(getDadosCandidato(idCandidato, respostasUsuario));
   });
 };

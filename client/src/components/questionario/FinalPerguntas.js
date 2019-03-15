@@ -39,8 +39,9 @@ class FinalPerguntas extends Component {
   }
 
   geraUrl() {
+    let hostURL = process.env.REACT_APP_FACEBOOK_REDIRECT_URI;
     const url =
-      "www.vozativa.org/" +
+      hostURL +
       this.props.candidatos.filtro.estado +
       "/" +
       criaURL(this.props.usuario.respostasUsuario);
@@ -50,7 +51,7 @@ class FinalPerguntas extends Component {
   render() {
     let linkCompartilhamento = this.geraUrl();
     let textoCompartilhamento =
-      "Veja minhas respostas na plataforma VozAtiva! " + linkCompartilhamento;
+      "Veja minhas posições no Voz Ativa! " + linkCompartilhamento;
     return (
       <div className="container tutorial p-3">
         <div>{this.props.children}</div>
@@ -67,9 +68,9 @@ class FinalPerguntas extends Component {
           </a>
           <a
             href={
-              "https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2F" +
-              textoCompartilhamento
-            }
+              "https://www.facebook.com/sharer/sharer.php?u=" +
+              linkCompartilhamento
+            } 
             data-show-count="false"
             className="nav-link"
             target="_blank"
@@ -97,7 +98,7 @@ class FinalPerguntas extends Component {
             </a>
           )}
         </div>
-
+        <br/>
         <div className="text-center">
           <button
             className="btn btn-outline-primary"

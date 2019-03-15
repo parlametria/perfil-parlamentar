@@ -2,11 +2,18 @@ import React, { Component } from "react";
 
 import PieChart from "react-minimal-pie-chart";
 
+import { OverlayTrigger, Tooltip } from 'react-bootstrap';
+
 import isEmpty from "../../../validation/is-empty";
 import Spinner from "../../common/Spinner";
+import { getScoreWidth, getScoreLabel } from "../../../utils/scoreValueFunctions";
 
 class PontuacaoTema extends Component {
   render() {
+    const tooltip = (
+      <Tooltip>Não existem respostas suficientes para o cálculo preciso do alinhamento neste tema</Tooltip>
+    );
+
     let pontuacoesTemas;
     if (!isEmpty(this.props.scoreTema)) {
       pontuacoesTemas = Object.keys(this.props.scoreTema).map(tema => (
@@ -20,15 +27,14 @@ class PontuacaoTema extends Component {
                 <PieChart
                   data={[
                     {
-                      value: 100 - Math.round(this.props.scoreTema[tema] * 100),
+                      value: 100 - Math.round(getScoreWidth(this.props.scoreTema[tema]) * 100),
                       color: "#eeeeee"
                     },
                     {
-                      value: Math.round(this.props.scoreTema[tema] * 100),
+                      value: Math.round(getScoreWidth(this.props.scoreTema[tema]) * 100),
                       color: "#a963b3"
                     }
                   ]}
-                  // reveal={Math.round(this.props.scoreTema[tema] * 100)}
                   animate
                   lineWidth={25}
                 />
@@ -36,7 +42,13 @@ class PontuacaoTema extends Component {
             </div>
             <div className="col-5">
               <div className="score-theme">
-                {Math.round(this.props.scoreTema[tema] * 100) + "%"}
+                {getScoreLabel(this.props.scoreTema[tema]) === "--" ?
+                  <OverlayTrigger
+                    overlay={tooltip}>
+                    <span className="score">{getScoreLabel(this.props.scoreTema[tema])}</span>
+                  </OverlayTrigger> :
+                  <span className="score">{getScoreLabel(this.props.scoreTema[tema])}</span>
+                }
               </div>
             </div>
           </div>

@@ -4,7 +4,6 @@ import CalculoContainer from "./components/calculo/CalculoContainer";
 import Sobre from "./components/sobre/Sobre";
 import Home from "./components/layout/home/Home";
 import SaibaMaisContainer from "./components/saibamais/SaibaMaisContainer";
-import SouCandidato from "./components/candidatos/SouCandidato";
 
 // The Main component renders one of provided
 // Routes (provided that one matches). The / route will only match
@@ -15,7 +14,7 @@ const Main = () => (
       <Route exact path="/" component={Home} />
       <Route
         exact
-        path="/candidato/:candidato/"
+        path="/parlamentar/:candidato/"
         render={props => <SaibaMaisContainer {...props} />}
       />
       <Route
@@ -34,8 +33,7 @@ const Main = () => (
         exact
         path="/compare/:candidato/:votos/:verAtuacao"
         render={props => <SaibaMaisContainer {...props} />}
-      />
-      <Route exact path="/soucandidato" component={SouCandidato} />
+      />      
     </Switch>
   </main>
 );

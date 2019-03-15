@@ -45,7 +45,7 @@ a.nav-link.done:not([href]):not([tabindex]) {
 }
 .btn {
   text-transform: lowercase;
-  border-radius: 20px;
+  border-radius: 0px;
 }
 .btn-primary {
   color: #fff;
@@ -93,24 +93,24 @@ a.nav-link.done:not([href]):not([tabindex]) {
   box-shadow: 0 0 0 0.2rem rgba(221, 193, 225, 0.5);
 }
 .btn-outline-primary {
-  color: #a963b3;
-  border-color: #a963b3;
+  color: #41c083;
+  border-color: #41c083;
 }
 .btn-outline-primary:hover {
-  color: #a963b3;
+  color: #41c083;
   background-color: #ffffff;
-  border-color: #a963b3;
+  border-color: #41c083;
 }
 .btn-outline-primary:not(:disabled):not(.disabled).active,
 .btn-outline-primary:not(:disabled):not(.disabled):active,
 .show > .btn-outline-primary.dropdown-toggle {
   color: #fff;
-  background-color: #a963b3;
-  border-color: #a963b3;
+  background-color: #41c083;
+  border-color: #41c083;
 }
 .btn-outline-primary.focus,
 .btn-outline-primary:focus {
-  box-shadow: 0 0 0 0.2rem rgba(221, 193, 225, 0.5);
+  box-shadow: 0 0 0 0.2rem rgba(65, 192, 131, 0.5);
 }
 .btn-outline-secondary {
   color: #41c083;
@@ -153,7 +153,7 @@ a.nav-link.done:not([href]):not([tabindex]) {
 
 .btn-group-lg > .btn,
 .btn-lg {
-  border-radius: 24px;
+  border-radius: 0px;
 }
 
 .form-control {
@@ -262,7 +262,8 @@ a.nav-link.done:not([href]):not([tabindex]) {
 }
 
 .navbar-light .navbar-nav .nav-link {
-  color: #a963b3;
+  font-weight: normal;
+  color: #20201E;
 }
 
 .navbar-light .navbar-nav .nav-link:focus,
@@ -271,7 +272,7 @@ a.nav-link.done:not([href]):not([tabindex]) {
 }
 
 .navbar-light {
-  border-bottom: solid 4px #a963b3;
+  border-bottom: solid 1px #20201E;
 }
 
 .navbar-light .navbar-text {
