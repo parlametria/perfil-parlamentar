@@ -107,31 +107,9 @@ class SaibaMaisContainer extends Component {
     );
     let hostURL = process.env.REACT_APP_FACEBOOK_REDIRECT_URI;
 
-    let compareLink = hostURL + "compare/" +
-      this.props.match.params.candidato +
-      "/" +
-      this.props.match.params.votos;
+    let linkCompartilhamento = hostURL + "parlamentar/" + this.props.match.params.candidato;
 
-    let candidatoLink = hostURL + "parlamentar/" +
-      this.props.match.params.candidato;
-
-    let linkCompartilhamento =
-      (this.props.match.params.votos === undefined) ? candidatoLink : compareLink;
-
-    let compareText =
-      "Eu e " +
-      dadosCandidato.nome_urna +
-      " concordamos em " +
-      Math.round(getScoreWidth(dadosCandidato.score) * 100) +
-      "%25 . Veja no Voz Ativa: ";
-
-    let candidatoText =
-      "Confira como " +
-      dadosCandidato.nome_urna +
-      " se posicionou em decisões importantes no Voz Ativa: ";
-
-    let textoCompartilhamento =
-      ((this.props.match.params.votos === undefined) ? candidatoText : compareText) +
+    let textoCompartilhamento = "Confira como " + dadosCandidato.nome_urna + " se posicionou em decisões importantes no Voz Ativa: " +
       linkCompartilhamento;
 
     const shareButtons = (
@@ -148,7 +126,7 @@ class SaibaMaisContainer extends Component {
         </a>
         <a
           href={
-            "https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2F" +
+            "https://www.facebook.com/sharer/sharer.php?u=" +
             linkCompartilhamento +
             "%2F&amp;src=sdkpreparse"
           }
