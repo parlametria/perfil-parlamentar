@@ -126,7 +126,7 @@ class SaibaMaisContainer extends Component {
         </a>
         <a
           href={
-            "https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2F" +
+            "https://www.facebook.com/sharer/sharer.php?u=" +
             linkCompartilhamento +
             "%2F&amp;src=sdkpreparse"
           }
