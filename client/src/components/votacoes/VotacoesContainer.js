@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 
 import Votacao from "./Votacao";
-import CopiaUrl from "../questionario/CopiaUrl";
 
 import {
   getDadosVotacoes,
@@ -102,8 +101,7 @@ class VotacoesContainer extends Component {
                 {this.props.questionario.filtroTema}
               </h2>
             </div>
-            {votacao}
-            <CopiaUrl />
+            {votacao}            
           </div>
         </div>
       );
