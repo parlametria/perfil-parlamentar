@@ -602,7 +602,7 @@ export const getDadosCandidatos = () => (dispatch, getState) => {
 
   let dadosCandidatos = {};
 
-  if (activeTab === "eleitos" && filtro.estado !== "TODOS") {
+  if (activeTab === "eleitos" && filtro.estado !== "Estados") {
     axios
       .get("/api/respostas/estados/" + filtro.estado + "/eleitos")
       .then(respostas => {
@@ -618,7 +618,7 @@ export const getDadosCandidatos = () => (dispatch, getState) => {
         dispatch(setPartidos());
         dispatch(calculaScore());
       });
-  } else if (activeTab === "eleitos" && filtro.estado === "TODOS") {
+  } else if (activeTab === "eleitos" && filtro.estado === "Estados") {
     axios.get("/api/respostas/eleitos").then(respostas => {
       respostas.data.forEach(resp => {
         dadosCandidatos[resp.cpf] = resp;
