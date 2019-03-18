@@ -111,7 +111,7 @@ class Home extends Component {
         const filtroEstado = {
           nome: "",
           partido: "Partidos",
-          estado: estado === 'Estados' ? 'TODOS' : estado,
+          estado: estado,
           reeleicao: "-1",
           respondeu: "-1",
           tema: "Temas"
