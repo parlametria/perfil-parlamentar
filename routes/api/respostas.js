@@ -103,19 +103,10 @@ router.get("/", (req, res) => {
 router.get("/eleitos", (req, res) => {
   Candidato.findAll({
     attributes: att,
-    include: [
-      {
-        model: Resposta,
-        as: "cpf_resp",
-        attributes: att_res
-      }
-    ],
     where: { eleito: true }
   })
-    .then(resultado => {
-      resultadoNovo = formataRespostas(resultado);
-
-      return res.json(resultadoNovo);
+    .then(resultado => {    
+      return res.json(resultado);
     })
     .catch(err => res.status(BAD_REQUEST).json({ err }));
 });
