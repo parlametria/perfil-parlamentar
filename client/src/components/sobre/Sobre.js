@@ -75,12 +75,11 @@ class Sobre extends Component {
           <section className="section">
             <h4 className="footer-title">Como ajudar neste projeto?</h4>
             <p>
-              Nosso código é aberto! Para saber mais sobre como funcionamos você
-              pode consulta-lo em {"   "}
-              <a href="https://github.com/analytics-ufcg/voz-ativa">
-                {" "}
-                github.com/analytics-ufcg/voz-ativa
+              Nosso {" "}
+              <a className="strong2" href="https://github.com/analytics-ufcg/voz-ativa">
+                código
               </a>
+              {" "} é aberto! ❤
             </p>
           </section>
         </div>
