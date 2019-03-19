@@ -1,5 +1,24 @@
 import React, { Component } from "react";
 
+import "./Sobre.css";
+
+import BackgroundStep01 from "../../data/img/howto01.jpg";
+import BackgroundStep02 from "../../data/img/howto02.jpg";
+
+var howtoStep01 = {
+  backgroundImage: `url(${BackgroundStep01})`,
+  backgroundSize: "contain",
+  backgroundPosition: "center",
+  backgroundRepeat: "no-repeat"
+};
+
+var howtoStep02 = {
+  backgroundImage: `url(${BackgroundStep02})`,
+  backgroundSize: "contain",
+  backgroundPosition: "center",
+  backgroundRepeat: "no-repeat"
+};
+
 class Sobre extends Component {
   render() {
     return (
@@ -38,37 +57,32 @@ class Sobre extends Component {
           <section className="section">
             <h4 className="footer-title">Como funciona?</h4>
             <div className="row">
-              <div className="col-md-6 howto-text">
-                <div>
-                  <p>
-                    <strong className="strong2">1.</strong> Coletamos as votações dos/as deputados/as em proposições
-                  </p>
-                  <p><strong className="strong2">2.</strong> Pedimos para que você responda essas proposições</p>
-                </div>
+              <div className="col-md-3 howtoStep01Text01">
+                <p className="strong2">
+                  <span className="d-block-inline d-md-none bolinha">1</span> Coletamos as
+                  posições dos/as deputados/as em votações importantes
+                </p>
               </div>
-              <div className="col-md-4">
-                <img
-                  src={require("../../data/img/howto01.jpg")}
-                  alt="Como funciona"
-                  width="100%"
-                />
+              <div className="col-md-4 howtoStep01" style={howtoStep01} />
+              <div className="col-md-4 howtoStep01Text02">
+                <p className="strong2">
+                  <span className="d-block-inline d-md-none bolinha">2</span> Você nos conta
+                  como teria votado
+                </p>
               </div>
             </div>
             <div className="row">
-              <div className="col-md-6 howto-text">
-                <div>
-                  <p><strong className="strong2">3.</strong> Comparamos seu posicionamento com os da Câmara</p>
-                  <p>
-                  <strong className="strong2">4.</strong> Mostramos quais deputados/as mais se alinham com você
-                  </p>
-                </div>
+              <div className="col-md-4 howtoStep02Text01">
+                <p className="strong2">
+                  <span className="d-block-inline d-md-none bolinha">3</span> Comparamos seu
+                  posicionamento com os dos parlamentares
+                </p>
               </div>
-              <div className="col-md-4">
-                <img
-                  src={require("../../data/img/howto02.jpg")}
-                  alt="Como funciona"
-                  width="100%"
-                />
+              <div className="col-md-3 howtoStep02" style={howtoStep02} />
+              <div className="col-md-4 howtoStep02Text02">
+                <p className="strong2">
+                  <span className="d-block-inline d-md-none bolinha">4</span> Mostramos quais deputados/as mais se alinham com você
+                </p>
               </div>
             </div>
           </section>
