@@ -2,7 +2,6 @@ import React from "react";
 
 export const estados = () => {
   return [
-    "TODOS",
     "AC",
     "AL",
     "AM",
@@ -96,7 +95,6 @@ export const partidos = () => {
 
 export const listaEstados = () => {
   return [
-    "TODOS",
     "AC",
     "AL",
     "AM",
@@ -132,11 +130,11 @@ export const opcoesFiltroReeleicao = () => {
 };
 
 export const opcoesFiltroTemas = () => {
-  return [{ tema: "Temas", titulo: "Considerando todos os temas" },
-  { tema: "Meio Ambiente", titulo: "Apenas meio ambiente" },
-  { tema: "Direitos Humanos", titulo: "Apenas direitos humanos" },
-  { tema: "Integridade e Transparência", titulo: "Apenas integridade e transparência" },
-  { tema: "Agenda Nacional", titulo: "Apenas agenda nacional" },
-  { tema: "Educação", titulo: "Apenas educação" }]
+  return [{ tema: "Temas", titulo: "Temas" },
+  { tema: "Meio Ambiente", titulo: "Meio Ambiente" },
+  { tema: "Direitos Humanos", titulo: "Direitos Humanos" },
+  { tema: "Integridade e Transparência", titulo: "Integridade e Transparência" },
+  { tema: "Agenda Nacional", titulo: "Agenda Nacional" },
+  { tema: "Educação", titulo: "Educação" }]
 
 };

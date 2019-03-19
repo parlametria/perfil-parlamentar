@@ -252,7 +252,7 @@ class CandidatosContainer extends Component {
       tema: filtro.tema
     };
 
-    if (novoFiltro.estado === "TODOS") {
+    if (novoFiltro.estado === "Estados") {
       this.props.setActiveTab("eleitos");
     }
 
@@ -297,7 +297,7 @@ class CandidatosContainer extends Component {
         filtro.partido !== "Partidos" ||
         filtro.reeleicao !== "-1" ||
         filtro.respondeu !== "-1" ||
-        filtro.estado !== "TODOS"
+        filtro.estado !== "Estados"
         ? candidatosFiltrados
         : candidatosRanqueados;
 
@@ -379,7 +379,7 @@ class CandidatosContainer extends Component {
       <div>
         {activeTab === "eleitos" &&
           abaAtiva === "Votacoes" &&
-          filtro.estado !== "TODOS" && (
+          filtro.estado !== "Estados" && (
             <h5>
               Nesse Estado,{" "}
               <strong className="strong">{totalCandAtuacao}</strong> dos{" "}
@@ -390,7 +390,7 @@ class CandidatosContainer extends Component {
 
         {activeTab === "eleitos" &&
           abaAtiva === "Votacoes" &&
-          filtro.estado === "TODOS" && (
+          filtro.estado === "Estados" && (
             <h5>
               {" "}
               <strong className="strong">{totalCandAtuacao}</strong> dos{" "}
