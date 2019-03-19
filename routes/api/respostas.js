@@ -210,7 +210,7 @@ router.get("/estados/:uf/partidos", (req, res) => {
   const eleito =
     String(req.query.eleito) !== "" && String(req.query.eleito) !== "undefined";
   const query = {};
-  if (req.params.uf !== "TODOS") {
+  if (req.params.uf !== "Estados") {
     query.uf = req.params.uf;
   }
   if (eleito) {
@@ -271,7 +271,7 @@ router.get("/estados/:uf", (req, res) => {
     respondeu !== "-1" && respondeu !== "undefined";
 
   query = {};
-  if (req.params.uf !== "TODOS") {
+  if (req.params.uf !== "Estados") {
     query.uf = req.params.uf;
   }
   if (eleito) {
