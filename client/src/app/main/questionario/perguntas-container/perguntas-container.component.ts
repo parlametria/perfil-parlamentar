@@ -229,7 +229,7 @@ export class PerguntasContainerComponent implements OnInit, OnDestroy {
     const respostas = Object.keys(this.respostasUser.votacoes).map(
       resposta => this.respostasUser.votacoes[resposta]
     );
-    return (respostas.filter(r => r !== 0).length) >= this.MIN_RESPOSTAS;
+    return respostas.filter(r => r !== 0).length >= this.MIN_RESPOSTAS;
   }
 
   ngOnDestroy() {

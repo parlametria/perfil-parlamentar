@@ -1,49 +1,33 @@
-.nav-link {
-  padding: 0;
-  padding-bottom: 0.5rem;
-  font-weight: 700;
+.container-pergunta {
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
 }
 
-.nav-pills .nav-link {
-  border-radius: 0;
-  border-bottom: solid 6px #eeeeee;
-}
-
-.nav-pills .nav-link.active,
-.nav-pills .show > .nav-link {
-  color: #41c083;
-  background: transparent;
-  border-bottom: solid 6px #41c083;
-}
-
-.nav-pills .nav-link.done {
-  color: rgba(65, 192, 131, 0.4);
-  background: transparent;
-  border-bottom: solid 6px rgba(65, 192, 131, 0.4);
-}
-
-.icon-current {
-  display: block;
-  font-size: 1.5rem;
-  opacity: 0;
-}
-
-.nav-pills .nav-link.active > .icon-current {
-  opacity: 1;
-}
-
-.blocks .btn {
-  margin: 0 0.5px;
-}
-
-.perguntas-container {
-  height: calc(100vh - 140px);
+.pergunta-progress-bar {
   display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+  flex-wrap: wrap;
 }
 
-li a {
-  color: #ccc;
+.pergunta-progress-item {
+  flex: 1 1 auto;
+  height: 1rem;
+  margin-right: 2px;
+  background-color: #ebe9e9;
   cursor: pointer;
+
+  &.active {
+    background-color: #20201E;
+
+    &.done {
+      background-color: #20201E;
+    }
+  }
+
+  &.done {
+    background-color: #adb5bd;
+  }
+
+  &:last-child {
+    margin-right: 0;
+  }
 }

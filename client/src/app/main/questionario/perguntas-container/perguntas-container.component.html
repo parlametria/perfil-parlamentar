@@ -1,70 +1,48 @@
-<div class="container perguntas-container pt-5">
-  <div>
-    <div class="row d-flex justify-content-center">
-      <div class="col-md-8 col-lg-6 mx-2">
-        <form>
-          <div class="form-group col-lg-8">
-            <select
-              class="form-control"
-              id="tema"
-              [(ngModel)]="temaSelecionado"
-              (ngModelChange)="onTemaChange()"
-              name="tema"
-            >
-              <option
-                *ngFor="let tema of listaTemas"
-                [value]="tema.id"
-              >
-                {{ tema.tema }}
-              </option>
-            </select>
-          </div>
-        </form>
+<div class="container">
+  <div class="container-pergunta">
+    <!-- Selecionar temas -->
+    <form>
+      <div class="form-group">
+        <select
+          class="form-control"
+          id="tema"
+          [(ngModel)]="temaSelecionado"
+          (ngModelChange)="onTemaChange()"
+          name="tema"
+        >
+          <option
+            *ngFor="let tema of listaTemas"
+            [value]="tema.id"
+          >
+            {{ tema.tema }}
+          </option>
+        </select>
       </div>
-    </div>
+    </form>
 
-    <div class="row d-flex justify-content-center">
-      <div class="col-md-8 col-lg-6 mb-3">
-        <div class="nav-horizontal">
-          <ul class="nav nav-pills nav-fill nav-horizontal-pills-sm">
-            <li
-              class="nav-item"
-              *ngFor="let prop of perguntasTemaSelecionado; let i = index"
-            >
-              <a
-                class="nav-link"
-                [ngClass]="{'active': prop.id_votacao === perguntaSelecionada.id_votacao, 'done': respondeuPergunta(prop.id_votacao)}"
-                (click)="escolhePergunta(prop.id_votacao)"
-              >
-                <span class="icon-cursor icon-current"></span>
-                {{i+1}}
-              </a>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </div>
-
-    <div class="row d-flex justify-content-center">
+    <!-- Indicadores de navegação -->
+    <div class="pergunta-progress-bar mb-4">
       <div
-        *ngIf="perguntaSelecionada"
-        class="col-md-8 col-lg-6 mx-2"
+        *ngFor="let prop of perguntasTemaSelecionado; let i = index"
+        [ngClass]="{
+          'pergunta-progress-item': true,
+          'active': prop.id_votacao === perguntaSelecionada.id_votacao,
+          'done': respondeuPergunta(prop.id_votacao)}"
+        (click)="escolhePergunta(prop.id_votacao)"
       >
-        <app-pergunta
-          [projLei]="perguntaSelecionada.projeto_lei"
-          [title]="perguntaSelecionada.titulo"
-          [description]="perguntaSelecionada.descricao"
-          [id]="perguntaSelecionada.id_votacao"
-        ></app-pergunta>
       </div>
     </div>
-  </div>
 
-  <div class="row d-flex justify-content-center">
-    <div
-      *ngIf="perguntaSelecionada"
-      class="col-md-8 col-lg-6"
-    >
+    <div *ngIf="perguntaSelecionada">
+      <app-pergunta
+        [projLei]="perguntaSelecionada.projeto_lei"
+        [title]="perguntaSelecionada.titulo"
+        [description]="perguntaSelecionada.descricao"
+        [id]="perguntaSelecionada.id_votacao"
+      ></app-pergunta>
+    </div>
+
+    <div *ngIf="perguntaSelecionada">
       <div
         class="btn-group blocks d-flex justify-content-center my-3"
         role="group"
@@ -72,14 +50,14 @@
       >
         <button
           type="button"
-          [ngClass]="{'btn': true, 'btn-primary': !respostaPositiva(), 'btn-secondary': respostaPositiva()}"
+          [ngClass]="{'btn': true, 'btn-primary': !respostaPositiva(), 'btn-success': respostaPositiva()}"
           (click)="setResposta(1)"
         >
           a favor
         </button>
         <button
           type="button"
-          [ngClass]="{'btn': true, 'btn-primary': !respostaNeutra(), 'btn-secondary': respostaNeutra()}"
+          [ngClass]="{'btn': true, 'btn-primary': !respostaNeutra(), 'btn-info': respostaNeutra()}"
           (click)="setResposta(-2)"
         >
           não
@@ -103,8 +81,9 @@
         >
           ver resultados
         </button>
+
       </div>
     </div>
-  </div>
 
+  </div>
 </div>
