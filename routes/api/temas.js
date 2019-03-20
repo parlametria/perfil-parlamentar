@@ -25,7 +25,7 @@ const SUCCESS = 200;
  */
 router.get("/", (req, res) => {
     Tema.findAll({
-        attributes: ["id", "tema"]
+        attributes: ["id", "tema", "slug"]
     })
     .then(temas => res.json(temas))
     .catch(err => res.status(400).json({ err }));

@@ -1,4 +1,5 @@
 export interface Tema {
   id: string,
-  tema: string
+  tema: string,
+  slug: string
 }
