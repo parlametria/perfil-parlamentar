@@ -334,13 +334,14 @@ class CandidatosContainer extends Component {
             }
             eleito={candidato.eleito}
             temHistorico={votacoesCandidatos[candidato.cpf] !== undefined}
+            comissoes={candidato.cpf_comissoes}
           />
         );
       }
       return null;
     });
 
-    const listaSelectPartidos = partidos.map(partido => (
+       const listaSelectPartidos = partidos.map(partido => (
       <option key={partido} value={partido}>
         {partido}
       </option>

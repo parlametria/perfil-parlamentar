@@ -16,7 +16,8 @@ class Candidato extends Component {
     );
 
     const badgeNaoTemVotacoes = (
-      <span className="badge badge-secondary">não atuou</span>
+      <span style={{ marginRight: "5px" }}
+        className="badge badge-secondary">não atuou</span>
     );
 
     const verAtuacao = (
@@ -34,6 +35,40 @@ class Candidato extends Component {
       </Link>
     );
 
+    const filtraComissoes = (comissoes) => {
+      let comissoes_titular = comissoes.
+        filter(comissao => comissao.cargo !== "Suplente");
+
+      let comissoes_suplente = comissoes.
+        filter(comissao => comissao.cargo === "Suplente");
+
+      let comissoes_filtradas = comissoes_titular;
+
+      if (comissoes_filtradas.length === 0) {
+        comissoes_filtradas = comissoes_suplente;
+
+      } else if (comissoes_filtradas.length < 3 && comissoes_suplente.length > 0) {
+        comissoes_filtradas.push.apply(comissoes_filtradas, comissoes_suplente);
+      }
+
+      if (comissoes_filtradas.length > 3) {
+        let restantes = comissoes_filtradas.length - 3;
+        let outras_comissoes = {
+          comissao_id: "0",
+          cargo: "",
+          info_comissao: {
+            sigla: "+ " + restantes,
+            nome: restantes > 1 ?
+            "O parlamentar participa de mais outras " + restantes + " comissões." :
+            "O parlamentar participa de mais uma " + restantes + " comissão."
+          }
+        }
+        comissoes_filtradas = comissoes_filtradas.slice(0, 3);
+        comissoes_filtradas.push(outras_comissoes);
+      }
+      return (comissoes_filtradas);
+    };
+
     const naoRespondeu = (
       <div>
         <div>
@@ -44,6 +79,19 @@ class Candidato extends Component {
 
     const tooltip = (
       <Tooltip>Não existem respostas suficientes para o cálculo preciso do alinhamento</Tooltip>
+    );
+
+    const TitularComissao = (props) => (
+      <OverlayTrigger
+        overlay={
+          <Tooltip> {props.comissao.comissao_id === "0"? 
+          props.comissao.info_comissao.nome : 
+          props.comissao.cargo + ' na ' + props.comissao.info_comissao.nome}
+          </Tooltip>}>
+        <span style={{ marginRight: "5px" }}
+          className="badge badge-success"> {props.comissao.info_comissao.sigla}
+        </span>
+      </OverlayTrigger>
     );
 
     const barraScore = (
@@ -120,6 +168,11 @@ class Candidato extends Component {
                     </span>
                   )}
                   {!this.props.temHistorico && badgeNaoTemVotacoes}
+                  {filtraComissoes(this.props.comissoes).
+                    map(comissao =>
+                      <TitularComissao key={comissao.comissao_id} comissao={comissao} />
+                    )} 
+
                 </div>
                 {this.props.temHistorico
                   ? barraScore
@@ -139,11 +192,12 @@ Candidato.propTypes = {
   nome: PropTypes.string.isRequired,
   siglaPartido: PropTypes.string.isRequired,
   estado: PropTypes.string.isRequired,
-  score: PropTypes.number.isRequired,  
+  score: PropTypes.number.isRequired,
   foto: PropTypes.string.isRequired,
   respostasUsuario: PropTypes.instanceOf(Object),
   email: PropTypes.string.isRequired,
-  eleito: PropTypes.bool.isRequired
+  eleito: PropTypes.bool.isRequired,
+  comissoes: PropTypes.instanceOf(Object)
 };
 
 export default Candidato;
