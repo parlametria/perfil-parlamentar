@@ -16,6 +16,9 @@ const router = express.Router();
 
 const Resposta = models.resposta;
 const Candidato = models.candidato;
+const Comissoes = models.comissoes;
+const ComposicaoComissoes = models.composicaoComissoes;
+
 const BAD_REQUEST = 400;
 const SUCCESS = 200;
 
@@ -79,13 +82,13 @@ router.get("/", (req, res) => {
       response = err
         ? { status: BAD_REQUEST, message: "Error fetching data" }
         : {
-            data: dataNovo,
-            total: totalCount,
-            itensPorPagina: size,
-            pagina: pageNo,
-            paginas: Math.ceil(totalCount / size),
-            status: SUCCESS
-          };
+          data: dataNovo,
+          total: totalCount,
+          itensPorPagina: size,
+          pagina: pageNo,
+          paginas: Math.ceil(totalCount / size),
+          status: SUCCESS
+        };
 
       res.status(response.status).json(response);
     });
@@ -103,9 +106,25 @@ router.get("/", (req, res) => {
 router.get("/eleitos", (req, res) => {
   Candidato.findAll({
     attributes: att,
+    include: [
+      {
+        model: ComposicaoComissoes,
+        attributes: ["comissao_id", "cargo"],
+        include: [
+          {
+            attributes: ["sigla"],
+            model: Comissoes,
+            as: "info_comissao",
+            required: false
+          }
+        ],
+        as: "cpf_comissoes",
+        required: false
+      }
+    ],
     where: { eleito: true }
   })
-    .then(resultado => {    
+    .then(resultado => {
       return res.json(resultado);
     })
     .catch(err => res.status(BAD_REQUEST).json({ err }));
@@ -303,10 +322,10 @@ router.get("/estados/:uf", (req, res) => {
       response = err
         ? { status: BAD_REQUEST, message: "Error fetching data" }
         : {
-            candidatos: respostasNovo,
-            total: totalCount,
-            status: SUCCESS
-          };
+          candidatos: respostasNovo,
+          total: totalCount,
+          status: SUCCESS
+        };
 
       res.status(response.status).json(response);
     });
@@ -344,10 +363,10 @@ router.get("/estados/:uf/responderam", (req, res) => {
       response = err
         ? { status: BAD_REQUEST, message: "Error fetching data" }
         : {
-            candidatos: respostasNovo,
-            total: totalCount,
-            status: SUCCESS
-          };
+          candidatos: respostasNovo,
+          total: totalCount,
+          status: SUCCESS
+        };
 
       res.status(response.status).json(response);
     });
@@ -380,10 +399,10 @@ router.get("/estados/:uf/partidos/:sigla", (req, res) => {
       response = err
         ? { status: BAD_REQUEST, message: "Error fetching data" }
         : {
-            candidatos: respostasNovo,
-            total: totalCount,
-            status: SUCCESS
-          };
+          candidatos: respostasNovo,
+          total: totalCount,
+          status: SUCCESS
+        };
 
       res.status(response.status).json(response);
     });
@@ -429,10 +448,10 @@ router.get("/estados/:uf/partidos/:sigla/responderam", (req, res) => {
       response = err
         ? { status: BAD_REQUEST, message: "Error fetching data" }
         : {
-            candidatos: respostasNovo,
-            total: totalCount,
-            status: SUCCESS
-          };
+          candidatos: respostasNovo,
+          total: totalCount,
+          status: SUCCESS
+        };
 
       res.status(response.status).json(response);
     });
@@ -478,10 +497,10 @@ router.get("/estados/:uf/partidos/:sigla/naoresponderam", (req, res) => {
       response = err
         ? { status: BAD_REQUEST, message: "Error fetching data" }
         : {
-            candidatos: respostasNovo,
-            total: totalCount,
-            status: SUCCESS
-          };
+          candidatos: respostasNovo,
+          total: totalCount,
+          status: SUCCESS
+        };
 
       res.status(response.status).json(response);
     });
@@ -542,13 +561,13 @@ router.get("/estados/:uf/naoresponderam", (req, res) => {
       response = err
         ? { status: BAD_REQUEST, message: "Error fetching data" }
         : {
-            data: respostasNovo,
-            total: totalCount,
-            itensPorPagina: size,
-            pagina: pageNo,
-            paginas: Math.ceil(totalCount / size),
-            status: SUCCESS
-          };
+          data: respostasNovo,
+          total: totalCount,
+          itensPorPagina: size,
+          pagina: pageNo,
+          paginas: Math.ceil(totalCount / size),
+          status: SUCCESS
+        };
 
       res.status(response.status).json(response);
     });
@@ -590,10 +609,10 @@ router.get("/estados/:uf/eleitos", (req, res) => {
       response = err
         ? { status: BAD_REQUEST, message: "Error fetching data" }
         : {
-            candidatos: respostasNovo,
-            total: totalCount,
-            status: SUCCESS
-          };
+          candidatos: respostasNovo,
+          total: totalCount,
+          status: SUCCESS
+        };
 
       res.status(response.status).json(response);
     });
