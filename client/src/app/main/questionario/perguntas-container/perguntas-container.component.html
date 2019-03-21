@@ -50,38 +50,43 @@
       >
         <button
           type="button"
-          [ngClass]="{'btn': true, 'btn-primary': !respostaPositiva(), 'btn-success': respostaPositiva()}"
+          [ngClass]="{'btn btn-pergunta': true, 'btn-dark': !respostaPositiva(), 'btn-success': respostaPositiva()}"
           (click)="setResposta(1)"
         >
+          <span class="icon-check icon-hidden"></span>
           a favor
+          <span [ngClass]="{
+            'icon-check': true,
+            'icon-hidden': true,
+            'icon-show': respostaPositiva() && salvandoResposta,
+            'flash animated infinite': respostaPositiva() && salvandoResposta}"></span>
         </button>
         <button
           type="button"
-          [ngClass]="{'btn': true, 'btn-primary': !respostaNeutra(), 'btn-info': respostaNeutra()}"
+          [ngClass]="{'btn btn-pergunta': true, 'btn-dark': !respostaNeutra(), 'btn-info': respostaNeutra()}"
           (click)="setResposta(-2)"
         >
-          não
-          sei
+          <span class="icon-check icon-hidden"></span>
+          não sei
+          <span [ngClass]="{
+            'icon-check': true,
+            'icon-hidden': true,
+            'icon-show': respostaNeutra() && salvandoResposta,
+            'flash animated infinite': respostaNeutra() && salvandoResposta}"></span>
         </button>
         <button
           type="button"
-          [ngClass]="{'btn': true, 'btn-primary': !respostaNegativa(), 'btn-secondary': respostaNegativa()}"
+          [ngClass]="{'btn btn-pergunta': true, 'btn-dark': !respostaNegativa(), 'btn-secondary': respostaNegativa()}"
           (click)="setResposta(-1)"
         >
+          <span class="icon-check icon-hidden"></span>
           contra
+          <span [ngClass]="{
+            'icon-check': true,
+            'icon-hidden': true,
+            'icon-show': respostaNegativa() && salvandoResposta,
+            'flash animated infinite': respostaNegativa() && salvandoResposta}"></span>
         </button>
-      </div>
-
-      <div class="text-center mt-4">
-        <button
-          type="button"
-          [routerLink]="['/alinhamento']"
-          [ngClass]="{'btn': true, 'btn-outline-primary': canVerResultados(), 'btn-outline-info': !canVerResultados()}"
-          [disabled]=!canVerResultados()
-        >
-          ver resultados
-        </button>
-
       </div>
     </div>
 

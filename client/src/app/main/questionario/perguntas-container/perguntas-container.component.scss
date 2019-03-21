@@ -1,6 +1,8 @@
+$viewport-negative-height: 335px;
+
 .container-pergunta {
-  padding-top: 1.5rem;
-  padding-bottom: 1.5rem;
+  padding-top: 15px;
+  padding-bottom: 50px;
 }
 
 .pergunta-progress-bar {
@@ -14,6 +16,7 @@
   margin-right: 2px;
   background-color: #ebe9e9;
   cursor: pointer;
+  transition: background-color .5s;
 
   &.active {
     background-color: #20201E;
@@ -29,5 +32,19 @@
 
   &:last-child {
     margin-right: 0;
+  }
+}
+
+.icon-hidden {
+  opacity: 0;
+}
+
+.icon-show {
+  opacity: 1;
+}
+
+.btn-pergunta {
+  @media (max-width: 400px) {
+    font-size: .65rem;
   }
 }
