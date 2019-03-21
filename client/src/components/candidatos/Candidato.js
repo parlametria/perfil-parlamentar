@@ -16,7 +16,7 @@ class Candidato extends Component {
     );
 
     const badgeNaoTemVotacoes = (
-      <span style={{ marginRight: "5px" }}
+      <span style={{ marginLeft: "5px" }}
         className="badge badge-secondary">não atuou</span>
     );
 
@@ -59,8 +59,8 @@ class Candidato extends Component {
           info_comissao: {
             sigla: "+ " + restantes,
             nome: restantes > 1 ?
-            "O parlamentar participa de mais outras " + restantes + " comissões." :
-            "O parlamentar participa de mais uma " + restantes + " comissão."
+              "O parlamentar é suplente em mais outras " + restantes + " comissões." :
+              "O parlamentar é suplente em mais uma " + restantes + " comissão."
           }
         }
         comissoes_filtradas = comissoes_filtradas.slice(0, 3);
@@ -84,9 +84,9 @@ class Candidato extends Component {
     const TitularComissao = (props) => (
       <OverlayTrigger
         overlay={
-          <Tooltip> {props.comissao.comissao_id === "0"? 
-          props.comissao.info_comissao.nome : 
-          props.comissao.cargo + ' na ' + props.comissao.info_comissao.nome}
+          <Tooltip> {props.comissao.comissao_id === "0" ?
+            props.comissao.info_comissao.nome :
+            props.comissao.cargo + ' na ' + props.comissao.info_comissao.nome}
           </Tooltip>}>
         <span style={{ marginRight: "5px" }}
           className="badge badge-success"> {props.comissao.info_comissao.sigla}
@@ -149,11 +149,11 @@ class Candidato extends Component {
                 <h5 className="person-name">{this.props.nome}</h5>
                 <div>
                   {this.props.siglaPartido}/{this.props.estado}
-                </div>
-                <div className="pb-1">
                   {this.props.reeleicao && !this.props.reeleito && (
                     <span
-                      style={{ marginRight: "5px" }}
+                      style={{
+                        marginLeft: "5px"
+                      }}
                       className="badge badge-success"
                     >
                       reeleição
@@ -161,22 +161,25 @@ class Candidato extends Component {
                   )}
                   {this.props.reeleito && (
                     <span
-                      style={{ marginRight: "5px" }}
+                      style={{
+                        marginLeft: "5px"
+                      }}
                       className="badge badge-success"
                     >
                       reeleito/a
                     </span>
                   )}
                   {!this.props.temHistorico && badgeNaoTemVotacoes}
+                </div>
+                <div className="pb-1">
                   {filtraComissoes(this.props.comissoes).
                     map(comissao =>
                       <TitularComissao key={comissao.comissao_id} comissao={comissao} />
-                    )} 
-
+                    )}
+                  {this.props.temHistorico
+                    ? barraScore
+                    : naoRespondeu}
                 </div>
-                {this.props.temHistorico
-                  ? barraScore
-                  : naoRespondeu}
               </div>
             </div>
           </div>

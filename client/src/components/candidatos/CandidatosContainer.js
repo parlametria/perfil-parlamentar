@@ -302,7 +302,7 @@ class CandidatosContainer extends Component {
         : candidatosRanqueados;
 
     let totalCandAtuacao = 0;
-        
+
     const candidatos = candidatosMapeaveis.map(cpf => {
       const candidato = dadosCandidatos[cpf];
 
@@ -316,7 +316,7 @@ class CandidatosContainer extends Component {
             nome={candidato.nome_urna}
             siglaPartido={candidato.sg_partido}
             estado={candidato.uf}
-            score={scoreCandidatos[candidato.cpf]}            
+            score={scoreCandidatos[candidato.cpf]}
             foto={
               candidato.tem_foto
                 ? "https://s3-sa-east-1.amazonaws.com/fotoscandidatos2018/fotos_tratadas/img_" +
@@ -341,7 +341,7 @@ class CandidatosContainer extends Component {
       return null;
     });
 
-       const listaSelectPartidos = partidos.map(partido => (
+    const listaSelectPartidos = partidos.map(partido => (
       <option key={partido} value={partido}>
         {partido}
       </option>
