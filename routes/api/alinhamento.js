@@ -12,6 +12,22 @@ const { calcularAlinhamentos } = require("../../utils/alinhamento");
 
 const Candidato = models.candidato;
 const Votacao = models.votacao;
+const Proposicao = models.proposicao;
+
+const att = [
+  "cpf",
+  "estado",
+  "uf",
+  "nome_urna",
+  "recebeu",
+  "respondeu",
+  "eleito",
+  "reeleicao",
+  "email",
+  "sg_partido",
+  "partido",
+  "id_parlamentar"
+];
 
 /**
  * @name get/api/alinhamento
@@ -20,8 +36,10 @@ const Votacao = models.votacao;
  */
 router.post("/", (req, res) => {
   Candidato.findAll({
+    attributes: att,
     include: [
       {
+        attributes: ["resposta", "cpf", "proposicao_id"],
         model: Votacao,
         as: "cpf_vot",
         required: false
@@ -31,9 +49,19 @@ router.post("/", (req, res) => {
       eleito: true
     }
   }).then(parlamentares => {
-    const alinhamentos = calcularAlinhamentos(parlamentares, req.body.respostas);
-    return res.json(alinhamentos);
-  }).catch(err => res.status(400).json({ err }));
+    Proposicao.findAll({
+      attributes: ["id_votacao", "tema_id"],
+      where: {
+        status_proposicao: "Ativa"
+      }
+    }).then(proposicoes => {
+      const alinhamentos = calcularAlinhamentos(parlamentares, req.body.respostas, proposicoes);
+      
+      return res.status(200).json(alinhamentos);
+      
+    }).catch(err => res.status(400).json({ err: err.message }));
+
+  }).catch(err => res.status(400).json({ err: err.message }));
 });
 
 module.exports = router;
