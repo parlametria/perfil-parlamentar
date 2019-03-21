@@ -5,11 +5,13 @@
 @import "../node_modules/bootstrap/scss/bootstrap";
 @import "assets/bootstrap/overhide";
 @import "assets/styles/icons";
+@import "assets/styles/animations";
 
+$top-navbar-height: 64px;
 $sticky-footer-navbar-height: 45px;
 
 body {
-  padding-top: $display3-size;
+  padding-top: $top-navbar-height;
 }
 
 .container-sticky-footer-navbar {
