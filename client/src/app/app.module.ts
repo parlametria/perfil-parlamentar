@@ -30,6 +30,7 @@ import { AlinhamentoComponent } from './main/alinhamento/alinhamento.component';
 import { StickyFooterNavbarComponent } from './shared/components/sticky-footer-navbar/sticky-footer-navbar.component';
 import { FilterComponent } from './main/alinhamento/filter/filter.component';
 import { AlinhamentoService } from './shared/services/alinhamento.service';
+import { ParlamentarService } from './shared/services/parlamentar.service';
 
 
 @NgModule({
@@ -61,7 +62,8 @@ import { AlinhamentoService } from './shared/services/alinhamento.service';
     AuthGuardService,
     TemaService,
     UserService,
-    AlinhamentoService,   
+    AlinhamentoService, 
+    ParlamentarService,  
     {
       provide: AuthServiceConfig,
       useFactory: getAuthServiceConfigs

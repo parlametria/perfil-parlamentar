@@ -79,13 +79,13 @@ router.get("/", (req, res) => {
       response = err
         ? { status: BAD_REQUEST, message: "Error fetching data" }
         : {
-            data: dataNovo,
-            total: totalCount,
-            itensPorPagina: size,
-            pagina: pageNo,
-            paginas: Math.ceil(totalCount / size),
-            status: SUCCESS
-          };
+          data: dataNovo,
+          total: totalCount,
+          itensPorPagina: size,
+          pagina: pageNo,
+          paginas: Math.ceil(totalCount / size),
+          status: SUCCESS
+        };
 
       res.status(response.status).json(response);
     });
@@ -312,10 +312,10 @@ router.get("/estados/:uf", (req, res) => {
       response = err
         ? { status: BAD_REQUEST, message: "Error fetching data" }
         : {
-            candidatos: respostasNovo,
-            total: totalCount,
-            status: SUCCESS
-          };
+          candidatos: respostasNovo,
+          total: totalCount,
+          status: SUCCESS
+        };
 
       res.status(response.status).json(response);
     });
@@ -353,10 +353,10 @@ router.get("/estados/:uf/responderam", (req, res) => {
       response = err
         ? { status: BAD_REQUEST, message: "Error fetching data" }
         : {
-            candidatos: respostasNovo,
-            total: totalCount,
-            status: SUCCESS
-          };
+          candidatos: respostasNovo,
+          total: totalCount,
+          status: SUCCESS
+        };
 
       res.status(response.status).json(response);
     });
@@ -389,10 +389,10 @@ router.get("/estados/:uf/partidos/:sigla", (req, res) => {
       response = err
         ? { status: BAD_REQUEST, message: "Error fetching data" }
         : {
-            candidatos: respostasNovo,
-            total: totalCount,
-            status: SUCCESS
-          };
+          candidatos: respostasNovo,
+          total: totalCount,
+          status: SUCCESS
+        };
 
       res.status(response.status).json(response);
     });
@@ -438,10 +438,10 @@ router.get("/estados/:uf/partidos/:sigla/responderam", (req, res) => {
       response = err
         ? { status: BAD_REQUEST, message: "Error fetching data" }
         : {
-            candidatos: respostasNovo,
-            total: totalCount,
-            status: SUCCESS
-          };
+          candidatos: respostasNovo,
+          total: totalCount,
+          status: SUCCESS
+        };
 
       res.status(response.status).json(response);
     });
@@ -487,10 +487,10 @@ router.get("/estados/:uf/partidos/:sigla/naoresponderam", (req, res) => {
       response = err
         ? { status: BAD_REQUEST, message: "Error fetching data" }
         : {
-            candidatos: respostasNovo,
-            total: totalCount,
-            status: SUCCESS
-          };
+          candidatos: respostasNovo,
+          total: totalCount,
+          status: SUCCESS
+        };
 
       res.status(response.status).json(response);
     });
@@ -551,13 +551,13 @@ router.get("/estados/:uf/naoresponderam", (req, res) => {
       response = err
         ? { status: BAD_REQUEST, message: "Error fetching data" }
         : {
-            data: respostasNovo,
-            total: totalCount,
-            itensPorPagina: size,
-            pagina: pageNo,
-            paginas: Math.ceil(totalCount / size),
-            status: SUCCESS
-          };
+          data: respostasNovo,
+          total: totalCount,
+          itensPorPagina: size,
+          pagina: pageNo,
+          paginas: Math.ceil(totalCount / size),
+          status: SUCCESS
+        };
 
       res.status(response.status).json(response);
     });
@@ -599,10 +599,10 @@ router.get("/estados/:uf/eleitos", (req, res) => {
       response = err
         ? { status: BAD_REQUEST, message: "Error fetching data" }
         : {
-            candidatos: respostasNovo,
-            total: totalCount,
-            status: SUCCESS
-          };
+          candidatos: respostasNovo,
+          total: totalCount,
+          status: SUCCESS
+        };
 
       res.status(response.status).json(response);
     });

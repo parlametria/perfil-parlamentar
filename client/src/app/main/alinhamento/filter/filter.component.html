@@ -26,7 +26,8 @@
       <select
         class="form-control"
         id="estado"
-        [(ngModel)]="estadoSelecionado"        
+        [(ngModel)]="estadoSelecionado"
+        (ngModelChange)="onChangeEstado()"
         name="estado"
       >
         <option
@@ -35,16 +36,30 @@
         >
           {{estado}}
         </option>
-      </select>    
+      </select>
+
+      <select
+        class="form-control mt-2"
+        id="partido"
+        [(ngModel)]="partidoSelecionado"        
+        name="partido"
+      >
+        <option
+          *ngFor="let partido of partidosFiltradosPorEstado"
+          [value]="partido"
+        >
+          {{partido}}
+        </option>
+      </select>
 
       <div class="mt-4">
-          <button
-            class="btn btn-outline-primary mr-3"
-            (click)="limparFiltro()"
-          >
-            Limpar
-          </button>
-              
+        <button
+          class="btn btn-outline-primary mr-3"
+          (click)="limparFiltro()"
+        >
+          Limpar
+        </button>
+
         <button
           class="btn btn-primary"
           (click)="aplicarFiltro()"
