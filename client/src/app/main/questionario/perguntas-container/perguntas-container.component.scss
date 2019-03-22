@@ -21,10 +21,22 @@
     &.done {
       background-color: #20201E;
     }
+
+    &.positive {
+      background-color: #20c997;
+    }
+
+    &.negative {
+      background-color: #7F3C8B;
+    }
+
+    &.neutral {
+      background-color: #adb5bd;
+    }
   }
 
   &.done {
-    background-color: #adb5bd;
+    background-color: #6c757d;
   }
 
   &:last-child {

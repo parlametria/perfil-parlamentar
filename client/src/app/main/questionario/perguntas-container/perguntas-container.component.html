@@ -27,7 +27,10 @@
         [ngClass]="{
           'pergunta-progress-item': true,
           'active': prop.id_votacao === perguntaSelecionada.id_votacao,
-          'done': respondeuPergunta(prop.id_votacao)}"
+          'done': respondeuPergunta(prop.id_votacao),
+          'positive': respostaPositiva(),
+          'negative': respostaNegativa(),
+          'neutral': respostaNeutra()}"
         (click)="escolhePergunta(prop.id_votacao)"
       >
       </div>
