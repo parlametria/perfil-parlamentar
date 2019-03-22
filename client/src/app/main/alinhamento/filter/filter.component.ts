@@ -1,8 +1,8 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 
-import { estados } from '../../../shared/constants/estados';
-
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+
+import { estados } from '../../../shared/constants/estados';
 
 
 @Component({
@@ -15,19 +15,21 @@ export class FilterComponent implements OnInit {
   @Output() filterChange = new EventEmitter<any>();
 
   isCollapsed: boolean;
-  estados: Array<string>;
+  estados: string[];  
 
   estadoSelecionado: string;
-  pesquisaPorNome: string;
+  pesquisaPorNome: string;  
 
-  constructor(private modalService: NgbModal) {
+  constructor(
+    private modalService: NgbModal    
+  ) {
     this.isCollapsed = true;
     this.estados = estados;
 
-    this.estadoSelecionado = "Estados";
+    this.estadoSelecionado = "Estados";    
   }
 
-  ngOnInit() {
+  ngOnInit() {   
   }
 
   open(content) {
@@ -35,13 +37,20 @@ export class FilterComponent implements OnInit {
   }
 
   aplicarFiltro() {
-    let filtro =  {
+    let filtro = {
       nome: this.pesquisaPorNome,
       estado: this.estadoSelecionado
     }
 
     this.filterChange.emit(filtro);
     this.modalService.dismissAll();
+  }
+
+  limparFiltro() {
+    this.estadoSelecionado = "Estados"
+    this.pesquisaPorNome = ""
+
+    this.aplicarFiltro();
   }
 
 }

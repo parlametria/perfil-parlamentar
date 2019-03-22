@@ -41,7 +41,7 @@ export class AlinhamentoComponent implements OnInit {
   }
 
   search(filtro: any) {
-    this.alinhamentoService.search(filtro.estado);
+    this.alinhamentoService.search(filtro);
   }
 
 }

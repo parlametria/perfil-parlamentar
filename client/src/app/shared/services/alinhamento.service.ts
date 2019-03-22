@@ -15,7 +15,7 @@ export class AlinhamentoService {
 
   private url = environment.apiUrl + "alinhamento";
 
-  private searchTerm = new Subject<string>();
+  private searchfilters = new Subject<any>();
 
   parlamentaresFiltered = new BehaviorSubject<Array<Parlamentar>>([]);
   parlamentares = new BehaviorSubject<Array<Parlamentar>>([]);
@@ -24,11 +24,11 @@ export class AlinhamentoService {
     private http: HttpClient
   ) {
     this.parlamentares.pipe(
-      switchMap(parlamentar => this.searchTerm
+      switchMap(parlamentar => this.searchfilters
         .pipe(
           debounceTime(400),
-          distinctUntilChanged(),
-          map(term => this.filter(parlamentar, term)),
+          distinctUntilChanged(),                    
+          map(filters => this.filter(parlamentar, filters)),
           startWith(parlamentar)
         ))
     ).subscribe(res => {
@@ -45,11 +45,22 @@ export class AlinhamentoService {
     return this.parlamentaresFiltered.asObservable();
   }
 
-  search(term: string) {
-    this.searchTerm.next(term);
+  search(filters: any) {
+    this.searchfilters.next(filters);
   }
 
-  private filter(parlamentar: Parlamentar[], value: string) {
-    return parlamentar.filter(p => value && value !== "Estados" ? p.uf.toLowerCase() === value.toLowerCase() : parlamentar);
+  private filter(parlamentar: Parlamentar[], filters: any) {
+    let estado = filters.estado;
+    let nome = filters.nome;    
+
+    return parlamentar.filter(p => {      
+      let filtered;
+            
+      filtered = (estado && estado !== "Estados") ? p.uf.toLowerCase() === estado.toLowerCase() : true;
+
+      filtered = (nome && filtered) ? p.nome_urna.toLowerCase().includes(nome.toLowerCase()) : filtered;
+      
+      return filtered;
+    });
   }
 }

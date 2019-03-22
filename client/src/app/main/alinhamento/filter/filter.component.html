@@ -12,6 +12,7 @@
       class="form-control"
       id="searchParlamentar"
       [(ngModel)]="pesquisaPorNome"
+      (ngModelChange)="aplicarFiltro()"
       placeholder="pesquisar..."
     >
   </div>
@@ -34,9 +35,16 @@
         >
           {{estado}}
         </option>
-      </select>
+      </select>    
 
-      <div class="justify-content-center mt-3">
+      <div class="mt-4">
+          <button
+            class="btn btn-outline-primary mr-3"
+            (click)="limparFiltro()"
+          >
+            Limpar
+          </button>
+              
         <button
           class="btn btn-primary"
           (click)="aplicarFiltro()"
