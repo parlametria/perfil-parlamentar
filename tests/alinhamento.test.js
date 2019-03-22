@@ -3,6 +3,8 @@ const expect = chai.expect;
 
 const { calcular } = require("../utils/alinhamento");
 const { parlamentar_eduardo_bolsonaro, parlamentar_luiza_erundina, parlamentar_lincoln_portela } = require("./data/alinhamento.dummy");
+const { proposicoes, temasAlinhamento } = require("./data/proposicoes.dummy");
+
 
 describe("Alinhamento bem sucedido", () => {
   it("de usuário sem respostas", () => {
@@ -30,10 +32,11 @@ describe("Alinhamento bem sucedido", () => {
       "5624": 0
     };
 
-    let alinhamento_bolsonaro = calcular(parlamentar_eduardo_bolsonaro, user);
-    let alinhamento_erundina = calcular(parlamentar_luiza_erundina, user);
-    let alinhamento_portela = calcular(parlamentar_lincoln_portela, user);
+    let alinhamento_bolsonaro = calcular(parlamentar_eduardo_bolsonaro, user, proposicoes, temasAlinhamento);
+    let alinhamento_erundina = calcular(parlamentar_luiza_erundina, user, proposicoes, temasAlinhamento);
+    let alinhamento_portela = calcular(parlamentar_lincoln_portela, user, proposicoes, temasAlinhamento);
 
+    // Alinhamento Geral
     expect(alinhamento_bolsonaro.alinhamento).to.equal(0);
     expect(alinhamento_erundina.alinhamento).to.equal(0);
     expect(alinhamento_portela.alinhamento).to.equal(0);
@@ -45,6 +48,45 @@ describe("Alinhamento bem sucedido", () => {
     expect(alinhamento_bolsonaro.respostasIguais).to.equal(0);
     expect(alinhamento_erundina.respostasIguais).to.equal(0);
     expect(alinhamento_portela.respostasIguais).to.equal(0);
+
+    let emptyTemas = [
+      {
+        "tema_id": 1,
+        "respostasIguais": 0,
+        "perguntasIguais": 0,
+        "alinhamento": 0
+      },
+      {
+        "tema_id": 3,
+        "respostasIguais": 0,
+        "perguntasIguais": 0,
+        "alinhamento": 0
+      },
+      {
+        "tema_id": 2,
+        "respostasIguais": 0,
+        "perguntasIguais": 0,
+        "alinhamento": 0
+      },
+      {
+        "tema_id": 0,
+        "respostasIguais": 0,
+        "perguntasIguais": 0,
+        "alinhamento": 0
+      },
+      {
+        "tema_id": 5,
+        "respostasIguais": 0,
+        "perguntasIguais": 0,
+        "alinhamento": 0
+      }
+    ];
+
+    // Alinhamento por temas
+    expect(alinhamento_bolsonaro.temas).to.eql(emptyTemas);
+    expect(alinhamento_erundina.temas).to.eql(emptyTemas);
+    expect(alinhamento_portela.temas).to.eql(emptyTemas);
+
   });
 
   it("de usuário com poucas respostas (com menos de 3 perguntas iguais, o score é zerado).", () => {
@@ -72,11 +114,11 @@ describe("Alinhamento bem sucedido", () => {
       "5624": 0
     };
 
-    let alinhamento_bolsonaro = calcular(parlamentar_eduardo_bolsonaro, user);
-    let alinhamento_erundina = calcular(parlamentar_luiza_erundina, user);
-    let alinhamento_portela = calcular(parlamentar_lincoln_portela, user);
+    let alinhamento_bolsonaro = calcular(parlamentar_eduardo_bolsonaro, user, proposicoes, temasAlinhamento);
+    let alinhamento_erundina = calcular(parlamentar_luiza_erundina, user, proposicoes, temasAlinhamento);
+    let alinhamento_portela = calcular(parlamentar_lincoln_portela, user, proposicoes, temasAlinhamento);
 
-    expect(alinhamento_bolsonaro.alinhamento).to.equal(0);
+    expect(alinhamento_bolsonaro.alinhamento).to.equal(0.3333333333333333);
     expect(alinhamento_erundina.alinhamento).to.equal(0);
     expect(alinhamento_portela.alinhamento).to.equal(0);
 
@@ -87,6 +129,113 @@ describe("Alinhamento bem sucedido", () => {
     expect(alinhamento_bolsonaro.respostasIguais).to.equal(1);
     expect(alinhamento_erundina.respostasIguais).to.equal(0);
     expect(alinhamento_portela.respostasIguais).to.equal(1);
+
+    expect(alinhamento_bolsonaro.temas).to.eql(
+      [
+        {
+          "tema_id": 1,
+          "respostasIguais": 0,
+          "perguntasIguais": 0,
+          "alinhamento": 0
+        },
+        {
+          "tema_id": 3,
+          "respostasIguais": 0,
+          "perguntasIguais": 0,
+          "alinhamento": 0
+        },
+        {
+          "tema_id": 2,
+          "respostasIguais": 0,
+          "perguntasIguais": 0,
+          "alinhamento": 0
+        },
+        {
+          "tema_id": 0,
+          "respostasIguais": 1,
+          "perguntasIguais": 3,
+          "alinhamento": 0.3333333333333333
+        },
+        {
+          "tema_id": 5,
+          "respostasIguais": 0,
+          "perguntasIguais": 0,
+          "alinhamento": 0
+        }
+      ]
+    );
+
+    expect(alinhamento_erundina.temas).to.eql(
+      [
+        {
+          "tema_id": 1,
+          "respostasIguais": 0,
+          "perguntasIguais": 0,
+          "alinhamento": 0
+        },
+        {
+          "tema_id": 3,
+          "respostasIguais": 0,
+          "perguntasIguais": 0,
+          "alinhamento": 0
+        },
+        {
+          "tema_id": 2,
+          "respostasIguais": 0,
+          "perguntasIguais": 0,
+          "alinhamento": 0
+        },
+        {
+          "tema_id": 0,
+          "respostasIguais": 0,
+          "perguntasIguais": 0,
+          "alinhamento": 0
+        },
+        {
+          "tema_id": 5,
+          "respostasIguais": 0,
+          "perguntasIguais": 0,
+          "alinhamento": 0
+        }
+      ]
+    );
+
+    expect(alinhamento_portela.temas).to.eql(
+      [
+        {
+          "tema_id": 1,
+          "respostasIguais": 0,
+          "perguntasIguais": 0,
+          "alinhamento": 0
+        },
+        {
+          "tema_id": 3,
+          "respostasIguais": 0,
+          "perguntasIguais": 0,
+          "alinhamento": 0
+        },
+        {
+          "tema_id": 2,
+          "respostasIguais": 0,
+          "perguntasIguais": 0,
+          "alinhamento": 0
+        },
+        {
+          "tema_id": 0,
+          "respostasIguais": 1,
+          "perguntasIguais": 1,
+          "alinhamento": 0
+        },
+        {
+          "tema_id": 5,
+          "respostasIguais": 0,
+          "perguntasIguais": 0,
+          "alinhamento": 0
+        }
+      ]
+    );
+
+
   });
 
   it("de usuário com muitas respostas", () => {
@@ -114,9 +263,9 @@ describe("Alinhamento bem sucedido", () => {
       "5624": -1
     };
 
-    let alinhamento_bolsonaro = calcular(parlamentar_eduardo_bolsonaro, user);
-    let alinhamento_erundina = calcular(parlamentar_luiza_erundina, user);
-    let alinhamento_portela = calcular(parlamentar_lincoln_portela, user);
+    let alinhamento_bolsonaro = calcular(parlamentar_eduardo_bolsonaro, user, proposicoes, temasAlinhamento);
+    let alinhamento_erundina = calcular(parlamentar_luiza_erundina, user, proposicoes, temasAlinhamento);
+    let alinhamento_portela = calcular(parlamentar_lincoln_portela, user, proposicoes, temasAlinhamento);
 
     expect(alinhamento_bolsonaro.alinhamento).to.equal(0.3333333333333333);
     expect(alinhamento_erundina.alinhamento).to.equal(0.75);
@@ -129,6 +278,112 @@ describe("Alinhamento bem sucedido", () => {
     expect(alinhamento_bolsonaro.respostasIguais).to.equal(3);
     expect(alinhamento_erundina.respostasIguais).to.equal(3);
     expect(alinhamento_portela.respostasIguais).to.equal(4);
+
+    expect(alinhamento_bolsonaro.temas).to.eql(
+      [
+        {
+          "tema_id": 1,
+          "respostasIguais": 2,
+          "perguntasIguais": 4,
+          "alinhamento": 0.5
+        },
+        {
+          "tema_id": 3,
+          "respostasIguais": 0,
+          "perguntasIguais": 1,
+          "alinhamento": 0
+        },
+        {
+          "tema_id": 2,
+          "respostasIguais": 0,
+          "perguntasIguais": 0,
+          "alinhamento": 0
+        },
+        {
+          "tema_id": 0,
+          "respostasIguais": 1,
+          "perguntasIguais": 4,
+          "alinhamento": 0.25
+        },
+        {
+          "tema_id": 5,
+          "respostasIguais": 0,
+          "perguntasIguais": 0,
+          "alinhamento": 0
+        }
+      ]
+    );
+
+    expect(alinhamento_erundina.temas).to.eql(
+      [
+        {
+          "tema_id": 1,
+          "respostasIguais": 2,
+          "perguntasIguais": 3,
+          "alinhamento": 0.6666666666666666
+        },
+        {
+          "tema_id": 3,
+          "respostasIguais": 1,
+          "perguntasIguais": 1,
+          "alinhamento": 0
+        },
+        {
+          "tema_id": 2,
+          "respostasIguais": 0,
+          "perguntasIguais": 0,
+          "alinhamento": 0
+        },
+        {
+          "tema_id": 0,
+          "respostasIguais": 0,
+          "perguntasIguais": 0,
+          "alinhamento": 0
+        },
+        {
+          "tema_id": 5,
+          "respostasIguais": 0,
+          "perguntasIguais": 0,
+          "alinhamento": 0
+        }
+      ]
+    );
+
+    expect(alinhamento_portela.temas).to.eql(
+      [
+        {
+          "tema_id": 1,
+          "respostasIguais": 1,
+          "perguntasIguais": 3,
+          "alinhamento": 0.3333333333333333
+        },
+        {
+          "tema_id": 3,
+          "respostasIguais": 1,
+          "perguntasIguais": 1,
+          "alinhamento": 0
+        },
+        {
+          "tema_id": 2,
+          "respostasIguais": 0,
+          "perguntasIguais": 0,
+          "alinhamento": 0
+        },
+        {
+          "tema_id": 0,
+          "respostasIguais": 2,
+          "perguntasIguais": 2,
+          "alinhamento": 0
+        },
+        {
+          "tema_id": 5,
+          "respostasIguais": 0,
+          "perguntasIguais": 0,
+          "alinhamento": 0
+        }
+      ]
+    );
+
   });
 
   it("de usuário com todas as respostas", () => {
@@ -156,9 +411,9 @@ describe("Alinhamento bem sucedido", () => {
       "5624": -1
     };
 
-    let alinhamento_bolsonaro = calcular(parlamentar_eduardo_bolsonaro, user);
-    let alinhamento_erundina = calcular(parlamentar_luiza_erundina, user);
-    let alinhamento_portela = calcular(parlamentar_lincoln_portela, user);
+    let alinhamento_bolsonaro = calcular(parlamentar_eduardo_bolsonaro, user, proposicoes, temasAlinhamento);
+    let alinhamento_erundina = calcular(parlamentar_luiza_erundina, user, proposicoes, temasAlinhamento);
+    let alinhamento_portela = calcular(parlamentar_lincoln_portela, user, proposicoes, temasAlinhamento);
 
     expect(alinhamento_bolsonaro.alinhamento).to.equal(0.5);
     expect(alinhamento_erundina.alinhamento).to.equal(0.6363636363636364);
@@ -171,6 +426,111 @@ describe("Alinhamento bem sucedido", () => {
     expect(alinhamento_bolsonaro.respostasIguais).to.equal(8);
     expect(alinhamento_erundina.respostasIguais).to.equal(7);
     expect(alinhamento_portela.respostasIguais).to.equal(7);
+
+    expect(alinhamento_bolsonaro.temas).to.eql(
+      [
+        {
+          "tema_id": 1,
+          "respostasIguais": 1,
+          "perguntasIguais": 4,
+          "alinhamento": 0.25
+        },
+        {
+          "tema_id": 3,
+          "respostasIguais": 3,
+          "perguntasIguais": 4,
+          "alinhamento": 0.75
+        },
+        {
+          "tema_id": 2,
+          "respostasIguais": 2,
+          "perguntasIguais": 3,
+          "alinhamento": 0.6666666666666666
+        },
+        {
+          "tema_id": 0,
+          "respostasIguais": 1,
+          "perguntasIguais": 4,
+          "alinhamento": 0.25
+        },
+        {
+          "tema_id": 5,
+          "respostasIguais": 1,
+          "perguntasIguais": 1,
+          "alinhamento": 0
+        }
+      ]
+    );
+
+    expect(alinhamento_erundina.temas).to.eql(
+      [
+        {
+          "tema_id": 1,
+          "respostasIguais": 3,
+          "perguntasIguais": 3,
+          "alinhamento": 1
+        },
+        {
+          "tema_id": 3,
+          "respostasIguais": 1,
+          "perguntasIguais": 4,
+          "alinhamento": 0.25
+        },
+        {
+          "tema_id": 2,
+          "respostasIguais": 2,
+          "perguntasIguais": 3,
+          "alinhamento": 0.6666666666666666
+        },
+        {
+          "tema_id": 0,
+          "respostasIguais": 0,
+          "perguntasIguais": 0,
+          "alinhamento": 0
+        },
+        {
+          "tema_id": 5,
+          "respostasIguais": 1,
+          "perguntasIguais": 1,
+          "alinhamento": 0
+        }
+      ]
+    );
+
+    expect(alinhamento_portela.temas).to.eql(
+      [
+        {
+          "tema_id": 1,
+          "respostasIguais": 0,
+          "perguntasIguais": 3,
+          "alinhamento": 0
+        },
+        {
+          "tema_id": 3,
+          "respostasIguais": 2,
+          "perguntasIguais": 5,
+          "alinhamento": 0.4
+        },
+        {
+          "tema_id": 2,
+          "respostasIguais": 2,
+          "perguntasIguais": 4,
+          "alinhamento": 0.5
+        },
+        {
+          "tema_id": 0,
+          "respostasIguais": 2,
+          "perguntasIguais": 2,
+          "alinhamento": 0
+        },
+        {
+          "tema_id": 5,
+          "respostasIguais": 1,
+          "perguntasIguais": 1,
+          "alinhamento": 0
+        }
+      ]
+    );
   });
 });
 
@@ -200,9 +560,9 @@ describe("Alinhamento com respostas inválidas", () => {
       "5624": 0
     };
 
-    let alinhamento_bolsonaro = calcular(parlamentar_eduardo_bolsonaro, user);
-    let alinhamento_erundina = calcular(parlamentar_luiza_erundina, user);
-    let alinhamento_portela = calcular(parlamentar_lincoln_portela, user);
+    let alinhamento_bolsonaro = calcular(parlamentar_eduardo_bolsonaro, user, proposicoes, temasAlinhamento);
+    let alinhamento_erundina = calcular(parlamentar_luiza_erundina, user, proposicoes, temasAlinhamento);
+    let alinhamento_portela = calcular(parlamentar_lincoln_portela, user, proposicoes, temasAlinhamento);
 
     expect(alinhamento_bolsonaro.alinhamento).to.equal(0.25);
     expect(alinhamento_erundina.alinhamento).to.equal(0.75);
@@ -215,6 +575,111 @@ describe("Alinhamento com respostas inválidas", () => {
     expect(alinhamento_bolsonaro.respostasIguais).to.equal(1);
     expect(alinhamento_erundina.respostasIguais).to.equal(3);
     expect(alinhamento_portela.respostasIguais).to.equal(1);
+
+    expect(alinhamento_bolsonaro.temas).to.eql(
+      [
+        {
+          "tema_id": 1,
+          "respostasIguais": 0,
+          "perguntasIguais": 1,
+          "alinhamento": 0
+        },
+        {
+          "tema_id": 3,
+          "respostasIguais": 0,
+          "perguntasIguais": 0,
+          "alinhamento": 0
+        },
+        {
+          "tema_id": 2,
+          "respostasIguais": 1,
+          "perguntasIguais": 2,
+          "alinhamento": 0
+        },
+        {
+          "tema_id": 0,
+          "respostasIguais": 0,
+          "perguntasIguais": 0,
+          "alinhamento": 0
+        },
+        {
+          "tema_id": 5,
+          "respostasIguais": 0,
+          "perguntasIguais": 1,
+          "alinhamento": 0
+        }
+      ]
+    );
+
+    expect(alinhamento_erundina.temas).to.eql(
+      [
+        {
+          "tema_id": 1,
+          "respostasIguais": 1,
+          "perguntasIguais": 1,
+          "alinhamento": 0
+        },
+        {
+          "tema_id": 3,
+          "respostasIguais": 0,
+          "perguntasIguais": 0,
+          "alinhamento": 0
+        },
+        {
+          "tema_id": 2,
+          "respostasIguais": 2,
+          "perguntasIguais": 2,
+          "alinhamento": 0
+        },
+        {
+          "tema_id": 0,
+          "respostasIguais": 0,
+          "perguntasIguais": 0,
+          "alinhamento": 0
+        },
+        {
+          "tema_id": 5,
+          "respostasIguais": 0,
+          "perguntasIguais": 1,
+          "alinhamento": 0
+        }
+      ]
+    );
+
+    expect(alinhamento_portela.temas).to.eql(
+      [
+        {
+          "tema_id": 1,
+          "respostasIguais": 0,
+          "perguntasIguais": 1,
+          "alinhamento": 0
+        },
+        {
+          "tema_id": 3,
+          "respostasIguais": 0,
+          "perguntasIguais": 0,
+          "alinhamento": 0
+        },
+        {
+          "tema_id": 2,
+          "respostasIguais": 1,
+          "perguntasIguais": 2,
+          "alinhamento": 0
+        },
+        {
+          "tema_id": 0,
+          "respostasIguais": 0,
+          "perguntasIguais": 0,
+          "alinhamento": 0
+        },
+        {
+          "tema_id": 5,
+          "respostasIguais": 0,
+          "perguntasIguais": 1,
+          "alinhamento": 0
+        }
+      ]
+    );
   });
 
   it("de usuário com respostas aleatórias (ex: 5, 6, 7)", () => {
@@ -242,9 +707,9 @@ describe("Alinhamento com respostas inválidas", () => {
       "5624": 0
     };
 
-    let alinhamento_bolsonaro = calcular(parlamentar_eduardo_bolsonaro, user);
-    let alinhamento_erundina = calcular(parlamentar_luiza_erundina, user);
-    let alinhamento_portela = calcular(parlamentar_lincoln_portela, user);
+    let alinhamento_bolsonaro = calcular(parlamentar_eduardo_bolsonaro, user, proposicoes, temasAlinhamento);
+    let alinhamento_erundina = calcular(parlamentar_luiza_erundina, user, proposicoes, temasAlinhamento);
+    let alinhamento_portela = calcular(parlamentar_lincoln_portela, user, proposicoes, temasAlinhamento);
 
     expect(alinhamento_bolsonaro.alinhamento).to.equal(0.25);
     expect(alinhamento_erundina.alinhamento).to.equal(0.75);
@@ -257,6 +722,112 @@ describe("Alinhamento com respostas inválidas", () => {
     expect(alinhamento_bolsonaro.respostasIguais).to.equal(1);
     expect(alinhamento_erundina.respostasIguais).to.equal(3);
     expect(alinhamento_portela.respostasIguais).to.equal(1);
+
+    expect(alinhamento_bolsonaro.temas).to.eql(
+      [
+        {
+          "tema_id": 1,
+          "respostasIguais": 0,
+          "perguntasIguais": 1,
+          "alinhamento": 0
+        },
+        {
+          "tema_id": 3,
+          "respostasIguais": 0,
+          "perguntasIguais": 0,
+          "alinhamento": 0
+        },
+        {
+          "tema_id": 2,
+          "respostasIguais": 1,
+          "perguntasIguais": 2,
+          "alinhamento": 0
+        },
+        {
+          "tema_id": 0,
+          "respostasIguais": 0,
+          "perguntasIguais": 0,
+          "alinhamento": 0
+        },
+        {
+          "tema_id": 5,
+          "respostasIguais": 0,
+          "perguntasIguais": 1,
+          "alinhamento": 0
+        }
+      ]
+    );
+
+    expect(alinhamento_erundina.temas).to.eql(
+      [
+        {
+          "tema_id": 1,
+          "respostasIguais": 1,
+          "perguntasIguais": 1,
+          "alinhamento": 0
+        },
+        {
+          "tema_id": 3,
+          "respostasIguais": 0,
+          "perguntasIguais": 0,
+          "alinhamento": 0
+        },
+        {
+          "tema_id": 2,
+          "respostasIguais": 2,
+          "perguntasIguais": 2,
+          "alinhamento": 0
+        },
+        {
+          "tema_id": 0,
+          "respostasIguais": 0,
+          "perguntasIguais": 0,
+          "alinhamento": 0
+        },
+        {
+          "tema_id": 5,
+          "respostasIguais": 0,
+          "perguntasIguais": 1,
+          "alinhamento": 0
+        }
+      ]
+    );
+
+    expect(alinhamento_portela.temas).to.eql(
+      [
+        {
+          "tema_id": 1,
+          "respostasIguais": 0,
+          "perguntasIguais": 1,
+          "alinhamento": 0
+        },
+        {
+          "tema_id": 3,
+          "respostasIguais": 0,
+          "perguntasIguais": 0,
+          "alinhamento": 0
+        },
+        {
+          "tema_id": 2,
+          "respostasIguais": 1,
+          "perguntasIguais": 2,
+          "alinhamento": 0
+        },
+        {
+          "tema_id": 0,
+          "respostasIguais": 0,
+          "perguntasIguais": 0,
+          "alinhamento": 0
+        },
+        {
+          "tema_id": 5,
+          "respostasIguais": 0,
+          "perguntasIguais": 1,
+          "alinhamento": 0
+        }
+      ]
+    );
+
   });
 
   it("de usuário com respostas undefined", () => {
@@ -284,9 +855,9 @@ describe("Alinhamento com respostas inválidas", () => {
       "5624": undefined
     };
 
-    let alinhamento_bolsonaro = calcular(parlamentar_eduardo_bolsonaro, user);
-    let alinhamento_erundina = calcular(parlamentar_luiza_erundina, user);
-    let alinhamento_portela = calcular(parlamentar_lincoln_portela, user);
+    let alinhamento_bolsonaro = calcular(parlamentar_eduardo_bolsonaro, user, proposicoes, temasAlinhamento);
+    let alinhamento_erundina = calcular(parlamentar_luiza_erundina, user, proposicoes, temasAlinhamento);
+    let alinhamento_portela = calcular(parlamentar_lincoln_portela, user, proposicoes, temasAlinhamento);
 
     expect(alinhamento_bolsonaro.alinhamento).to.equal(0.25);
     expect(alinhamento_erundina.alinhamento).to.equal(0.75);
@@ -299,5 +870,110 @@ describe("Alinhamento com respostas inválidas", () => {
     expect(alinhamento_bolsonaro.respostasIguais).to.equal(1);
     expect(alinhamento_erundina.respostasIguais).to.equal(3);
     expect(alinhamento_portela.respostasIguais).to.equal(1);
+
+    expect(alinhamento_bolsonaro.temas).to.eql(
+      [
+        {
+          "tema_id": 1,
+          "respostasIguais": 0,
+          "perguntasIguais": 1,
+          "alinhamento": 0
+        },
+        {
+          "tema_id": 3,
+          "respostasIguais": 0,
+          "perguntasIguais": 0,
+          "alinhamento": 0
+        },
+        {
+          "tema_id": 2,
+          "respostasIguais": 1,
+          "perguntasIguais": 2,
+          "alinhamento": 0
+        },
+        {
+          "tema_id": 0,
+          "respostasIguais": 0,
+          "perguntasIguais": 0,
+          "alinhamento": 0
+        },
+        {
+          "tema_id": 5,
+          "respostasIguais": 0,
+          "perguntasIguais": 1,
+          "alinhamento": 0
+        }
+      ]
+    );
+
+    expect(alinhamento_erundina.temas).to.eql(
+      [
+        {
+          "tema_id": 1,
+          "respostasIguais": 1,
+          "perguntasIguais": 1,
+          "alinhamento": 0
+        },
+        {
+          "tema_id": 3,
+          "respostasIguais": 0,
+          "perguntasIguais": 0,
+          "alinhamento": 0
+        },
+        {
+          "tema_id": 2,
+          "respostasIguais": 2,
+          "perguntasIguais": 2,
+          "alinhamento": 0
+        },
+        {
+          "tema_id": 0,
+          "respostasIguais": 0,
+          "perguntasIguais": 0,
+          "alinhamento": 0
+        },
+        {
+          "tema_id": 5,
+          "respostasIguais": 0,
+          "perguntasIguais": 1,
+          "alinhamento": 0
+        }
+      ]
+    );
+
+    expect(alinhamento_portela.temas).to.eql(
+      [
+        {
+          "tema_id": 1,
+          "respostasIguais": 0,
+          "perguntasIguais": 1,
+          "alinhamento": 0
+        },
+        {
+          "tema_id": 3,
+          "respostasIguais": 0,
+          "perguntasIguais": 0,
+          "alinhamento": 0
+        },
+        {
+          "tema_id": 2,
+          "respostasIguais": 1,
+          "perguntasIguais": 2,
+          "alinhamento": 0
+        },
+        {
+          "tema_id": 0,
+          "respostasIguais": 0,
+          "perguntasIguais": 0,
+          "alinhamento": 0
+        },
+        {
+          "tema_id": 5,
+          "respostasIguais": 0,
+          "perguntasIguais": 1,
+          "alinhamento": 0
+        }
+      ]
+    );
   });
 });
