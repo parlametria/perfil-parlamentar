@@ -1,4 +1,4 @@
-$viewport-negative-height: 285px;
+$viewport-negative-height: 340px;
 
 .pergunta-wrapper {
   @media (min-width: 340px) {
@@ -11,7 +11,15 @@ $viewport-negative-height: 285px;
 }
 
 .pergunta-texto {
-  @media (max-width: 575.98px) {
-    font-size: 1.2rem;
+  font-size: 1.2rem;
+
+  @media (min-width: 340px) {
+    font-size: 1.5rem;
+  }
+  @media (min-width: 768px) {
+    font-size: 1.8rem;
+  }
+  @media (min-width: 992px) {
+    font-size: 2rem;
   }
 }

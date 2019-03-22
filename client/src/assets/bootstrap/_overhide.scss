@@ -13,3 +13,37 @@
 .btn-link {
   text-decoration: underline;
 }
+
+.form-group-plus {
+  display: flex;
+
+  &:after {
+    /* use !important to prevent issues with browser extensions that change fonts */
+    font-family: 'icomoon' !important;
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+
+    content: "\f067";
+    display: block;
+    border-bottom: solid 2px $black;
+    padding-top: 15px;
+    margin-left: -15px;
+  }
+}
+
+.form-control-plus {
+  border-color: transparent;
+  border-bottom-color: $black;
+  background-color: transparent;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
