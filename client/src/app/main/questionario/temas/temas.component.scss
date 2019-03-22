@@ -1,12 +1,23 @@
-.nohover:hover {
-    color: #41c083;
-    background-color: white;
-    border-color: #41c083;
+.btn-tema {
+  min-height: 140px;
 }
 
-.tema {
-    height: calc(100vh - 140px);
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+.btn-tema-text {
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  margin: 0;
+  padding: 0;
+}
+
+.container-tema {
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
+  padding-left: 0;
+  padding-right: 0;
+
+  @media (min-width: 375px) {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+
 }
