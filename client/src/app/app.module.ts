@@ -28,6 +28,8 @@ import { getAuthServiceConfigs } from './shared/config/socialLoginConfig';
 import { TokenInterceptor } from './shared/auth/token.interceptor';
 import { AlinhamentoComponent } from './main/alinhamento/alinhamento.component';
 import { StickyFooterNavbarComponent } from './shared/components/sticky-footer-navbar/sticky-footer-navbar.component';
+import { FilterComponent } from './main/alinhamento/filter/filter.component';
+import { AlinhamentoService } from './shared/services/alinhamento.service';
 
 
 @NgModule({
@@ -41,7 +43,8 @@ import { StickyFooterNavbarComponent } from './shared/components/sticky-footer-n
     QuestionarioComponent,
     TemasComponent,
     AlinhamentoComponent,
-    StickyFooterNavbarComponent
+    StickyFooterNavbarComponent,
+    FilterComponent
   ],
   imports: [
     BrowserModule,
@@ -57,7 +60,8 @@ import { StickyFooterNavbarComponent } from './shared/components/sticky-footer-n
     LoginService,
     AuthGuardService,
     TemaService,
-    UserService,    
+    UserService,
+    AlinhamentoService,   
     {
       provide: AuthServiceConfig,
       useFactory: getAuthServiceConfigs

@@ -1,0 +1,50 @@
+<div class="mb-2">
+
+  <div class="d-flex">
+    <button
+      class="btn btn-primary mr-2"
+      (click)="open(content)"
+    >
+      Filtros
+    </button>
+    <input
+      type="text"
+      class="form-control"
+      id="searchParlamentar"
+      [(ngModel)]="pesquisaPorNome"
+      placeholder="pesquisar..."
+    >
+  </div>
+
+  <ng-template
+    #content
+    let-modal
+  >
+    <div class="modal-header">Filtrar</div>
+    <div class="modal-body">
+      <select
+        class="form-control"
+        id="estado"
+        [(ngModel)]="estadoSelecionado"        
+        name="estado"
+      >
+        <option
+          *ngFor="let estado of estados"
+          [value]="estado"
+        >
+          {{estado}}
+        </option>
+      </select>
+
+      <div class="justify-content-center mt-3">
+        <button
+          class="btn btn-primary"
+          (click)="aplicarFiltro()"
+        >
+          Aplicar
+        </button>
+      </div>
+
+    </div>
+  </ng-template>
+</div>

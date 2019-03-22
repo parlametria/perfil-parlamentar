@@ -20,8 +20,7 @@ export class AlinhamentoComponent implements OnInit {
 
   constructor(
     private userService: UserService,
-    public alinhamentoService: AlinhamentoService
-  ) { }
+    public alinhamentoService: AlinhamentoService) { }
 
   ngOnInit() {
     this.getParlamentares();
@@ -39,6 +38,10 @@ export class AlinhamentoComponent implements OnInit {
       },
       error => console.log(error)
     );
+  }
+
+  search(filtro: any) {
+    this.alinhamentoService.search(filtro.estado);
   }
 
 }
