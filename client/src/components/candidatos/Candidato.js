@@ -37,34 +37,26 @@ class Candidato extends Component {
 
     const filtraComissoes = (comissoes) => {
       let comissoes_suplente = comissoes.
-        filter(comissao => comissao.cargo === "Suplente");
+        filter(comissao => comissao.cargo === "Suplente").
+        length;
 
       let comissoes_filtradas = comissoes.
-      filter(comissao => comissao.cargo !== "Suplente");
+        filter(comissao => comissao.cargo !== "Suplente");
 
-      if (comissoes_filtradas.length === 0) {
-        comissoes_filtradas = comissoes_suplente;
-
-      } else if (comissoes_filtradas.length <= 3 && comissoes_suplente.length > 0) {
-        comissoes_filtradas.push.apply(comissoes_filtradas, comissoes_suplente);
-      }
-
-      if (comissoes_filtradas.length > 3) {
-        let restantes = comissoes_filtradas.length - 3;
-        if (restantes > 1) {
-          let outras_comissoes = {
-            comissao_id: "0",
-            cargo: "",
-            info_comissao: {
-              sigla: "+ " + restantes,
-              nome: "O/A parlamentar participa de mais " + restantes + " comissões."
-            }
+      if (comissoes_suplente > 0) {
+        let outras_comissoes = {
+          comissao_id: "0",
+          cargo: "",
+          info_comissao: {
+            sigla: "+ " + comissoes_suplente,
+            nome: comissoes_suplente == 1 ? 
+            "O/A parlamentar é suplente em " + comissoes_suplente + " comissão." : 
+            "O/A parlamentar é suplente em " + comissoes_suplente + " comissões."
           }
-          comissoes_filtradas = comissoes_filtradas.slice(0, 3);
-          comissoes_filtradas.push(outras_comissoes);
         }
+        comissoes_filtradas.push(outras_comissoes);
       }
-      return (comissoes_filtradas.slice(0, 4));
+      return (comissoes_filtradas);
     };
 
     const naoRespondeu = (
