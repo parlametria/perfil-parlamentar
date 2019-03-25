@@ -16,6 +16,9 @@ const router = express.Router();
 
 const Resposta = models.resposta;
 const Candidato = models.candidato;
+const Comissoes = models.comissoes;
+const ComposicaoComissoes = models.composicaoComissoes;
+
 const BAD_REQUEST = 400;
 const SUCCESS = 200;
 
@@ -105,17 +108,24 @@ router.get("/eleitos", (req, res) => {
     attributes: att,
     include: [
       {
-        model: Resposta,
-        as: "cpf_resp",
-        attributes: att_res
+        model: ComposicaoComissoes,
+        attributes: ["comissao_id", "cargo"],
+        include: [
+          {
+            attributes: ["sigla"],
+            model: Comissoes,
+            as: "info_comissao",
+            required: false
+          }
+        ],
+        as: "cpf_comissoes",
+        required: false
       }
     ],
     where: { eleito: true }
   })
     .then(resultado => {
-      resultadoNovo = formataRespostas(resultado);
-
-      return res.json(resultadoNovo);
+      return res.json(resultado);
     })
     .catch(err => res.status(BAD_REQUEST).json({ err }));
 });
