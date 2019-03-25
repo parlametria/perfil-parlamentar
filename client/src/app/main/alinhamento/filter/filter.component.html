@@ -1,73 +1,72 @@
-<div class="mb-2">
-
-  <div class="d-flex">
-    <button
-      class="btn btn-primary mr-2"
-      (click)="open(content)"
-    >
-      Filtros
-    </button>
+<div class="d-flex mb-3 mt-2">
+  <button
+    class="btn btn-primary mr-2"
+    (click)="open(content)"
+  >
+    Filtros
+  </button>
+  <div class>
     <input
       type="text"
-      class="form-control"
+      class="form-control pesquisa"
       id="searchParlamentar"
-      [(ngModel)]="pesquisaPorNome"
+      [(ngModel)]="nomePesquisado"
       (ngModelChange)="aplicarFiltro()"
       placeholder="pesquisar..."
     >
   </div>
-
-  <ng-template
-    #content
-    let-modal
-  >
-    <div class="modal-header">Filtrar</div>
-    <div class="modal-body">
-      <select
-        class="form-control"
-        id="estado"
-        [(ngModel)]="estadoSelecionado"
-        (ngModelChange)="onChangeEstado()"
-        name="estado"
-      >
-        <option
-          *ngFor="let estado of estados"
-          [value]="estado"
-        >
-          {{estado}}
-        </option>
-      </select>
-
-      <select
-        class="form-control mt-2"
-        id="partido"
-        [(ngModel)]="partidoSelecionado"        
-        name="partido"
-      >
-        <option
-          *ngFor="let partido of partidosFiltradosPorEstado"
-          [value]="partido"
-        >
-          {{partido}}
-        </option>
-      </select>
-
-      <div class="mt-4">
-        <button
-          class="btn btn-outline-primary mr-3"
-          (click)="limparFiltro()"
-        >
-          Limpar
-        </button>
-
-        <button
-          class="btn btn-primary"
-          (click)="aplicarFiltro()"
-        >
-          Aplicar
-        </button>
-      </div>
-
-    </div>
-  </ng-template>
 </div>
+
+<ng-template
+  #content
+  let-modal
+>
+  <div class="modal-header">FILTRAR</div>
+  <div class="modal-body">
+    <select
+      class="form-control"
+      id="estado"
+      [(ngModel)]="estadoSelecionado"
+      (ngModelChange)="onChangeEstado()"
+      name="estado"
+    >
+      <option
+        *ngFor="let estado of estados"
+        [value]="estado"
+      >
+        {{estado}}
+      </option>
+    </select>
+
+    <select
+      class="form-control mt-2"
+      id="partido"
+      [(ngModel)]="partidoSelecionado"
+      name="partido"
+    >
+      <option
+        *ngFor="let partido of partidosFiltradosPorEstado"
+        [value]="partido"
+      >
+        {{partido}}
+      </option>
+    </select>
+    
+    <div class="mt-4">
+      <button
+        class="btn btn-outline-primary mr-3"
+        (click)="limparFiltro()"
+      >
+        LIMPAR
+      </button>
+
+      <button
+        class="btn btn-primary"
+        (click)="aplicarFiltro()"
+      >
+        APLICAR
+      </button>
+    </div>
+
+  </div>
+</ng-template>

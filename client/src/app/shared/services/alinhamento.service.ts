@@ -52,15 +52,15 @@ export class AlinhamentoService {
   private filter(parlamentar: Parlamentar[], filters: any) {
     let estado = filters.estado;
     let nome = filters.nome;   
-    let partido = filters.partido; 
+    let partido = filters.partido;
 
     return parlamentar.filter(p => {      
       let filtered;
             
       filtered = (estado && estado !== "Estados") ? p.uf.toLowerCase() === estado.toLowerCase() : true;
 
-      filtered = (partido && filtered) ? p.sg_partido.toLowerCase().includes(partido.toLowerCase()) : filtered;
-
+      filtered = (partido && partido !== "Partidos" && filtered) ? p.sg_partido.toLowerCase().includes(partido.toLowerCase()) : filtered;
+      
       filtered = (nome && filtered) ? p.nome_urna.toLowerCase().includes(nome.toLowerCase()) : filtered;
       
       return filtered;

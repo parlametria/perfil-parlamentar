@@ -1,6 +1,8 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 import { estados } from '../../../shared/constants/estados';
 
@@ -16,21 +18,21 @@ export class FilterComponent implements OnInit {
 
   @Output() filterChange = new EventEmitter<any>();
 
-  isCollapsed: boolean;  
-  estados: string[];
+  private unsubscribe = new Subject();
+
   partidosPorEstado: any[];
 
+  estados: string[];
   partidosFiltradosPorEstado: string[];
 
   estadoSelecionado: string;
-  pesquisaPorNome: string;
-  partidoSelecionado: string;
-  
+  nomePesquisado: string;
+  partidoSelecionado: string;  
+
   constructor(
     private modalService: NgbModal,
     private parlamentarService: ParlamentarService
   ) {
-    this.isCollapsed = true;
     this.estados = estados;
 
     this.estadoSelecionado = "Estados";
@@ -38,12 +40,10 @@ export class FilterComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.parlamentarService.getPartidosPorEstado().subscribe(
+    this.parlamentarService.getPartidosPorEstado().pipe(takeUntil(this.unsubscribe)).subscribe(
       partidos => {
-        console.log(partidos);
         this.partidosPorEstado = partidos;
-        this.partidosFiltradosPorEstado = partidos.filter(value => value.estado === this.estadoSelecionado)[0].partidos;
-        this.partidosFiltradosPorEstado.splice(0, 0, "Partidos");
+        this.onChangeEstado();
       }
     )
   }
@@ -52,14 +52,18 @@ export class FilterComponent implements OnInit {
     this.modalService.open(content, { ariaLabelledBy: 'Filtros para Alinhamento' });
   }
 
-  onChangeEstado() {        
-    this.partidosFiltradosPorEstado = this.partidosPorEstado.filter(value => value.estado === this.estadoSelecionado)[0].partidos;    
+  onChangeEstado() {
+    this.partidosFiltradosPorEstado = this.partidosPorEstado.filter(value => value.estado === this.estadoSelecionado)[0].partidos;
     this.partidosFiltradosPorEstado.splice(0, 0, "Partidos");
+
+    if (!this.partidosFiltradosPorEstado.includes(this.partidoSelecionado)) {
+      this.partidoSelecionado = "Partidos";
+    }
   }
 
   aplicarFiltro() {
     let filtro = {
-      nome: this.pesquisaPorNome,
+      nome: this.nomePesquisado,
       estado: this.estadoSelecionado,
       partido: this.partidoSelecionado
     }
@@ -71,8 +75,7 @@ export class FilterComponent implements OnInit {
   limparFiltro() {
     this.estadoSelecionado = "Estados";
     this.partidoSelecionado = "Partidos";
-    this.pesquisaPorNome = "";
-    
+    this.nomePesquisado = "";
 
     this.aplicarFiltro();
   }
