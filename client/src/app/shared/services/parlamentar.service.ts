@@ -18,4 +18,8 @@ export class ParlamentarService {
   get(): Observable<Parlamentar[]> {
     return this.http.get<Parlamentar[]>(this.url + '/votacoes');
   }
+
+  getPartidosPorEstado(): Observable<any[]> {
+    return this.http.get<any[]>(this.url + '/partidos');
+  }
 }

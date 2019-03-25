@@ -91,6 +91,47 @@ router.get("/", (req, res) => {
 });
 
 /**
+ * Pega os partidos distintos de um estado
+ * @name get/api/candidatos/partidos
+ * @memberof module:routes/candidatos 
+ */
+router.get("/partidos", (req, res) => {
+  Candidato.findAll({
+    attributes: att,
+    where: {
+      eleito: true
+    }
+  })
+    .then(candidatos => {
+      let partidosPorEstado = []
+
+      const estados = [...new Set(candidatos.map(item => item.uf))];
+
+      estados.push("Estados");
+
+      estados.forEach(estado => {
+        let candidatosFiltered;
+        if (estado !== "Estados")
+          candidatosFiltered = candidatos.filter(value => value.uf === estado);
+        else
+          candidatosFiltered = candidatos;        
+        
+        const partidosSet = new Set();
+
+        candidatosFiltered.forEach(cand => {
+          partidosSet.add(cand.sg_partido);
+        });
+        
+        partidosPorEstado.push({ estado: estado, partidos: [...partidosSet].sort((a, b) => a.localeCompare(b)) });
+      });      
+
+      res.json(partidosPorEstado);
+    })
+    .catch(err => res.status(BAD_REQUEST).json({ error: err.message }));
+});
+
+
+/**
  * Pega um candidato de acordo com o cpf.
  * @name get/api/candidatos/:cpf
  * @function

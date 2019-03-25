@@ -2,7 +2,7 @@ export class Parlamentar {
 
   public id_parlamentar: string;
   public cpf: string;
-  public estado: number;
+  public estado: string;
   public uf: string;
   public nome_urna: string;
   public recebeu: boolean;
