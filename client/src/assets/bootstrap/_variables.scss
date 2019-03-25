@@ -950,9 +950,9 @@ $alert-color-level:                 6 !default;
 
 // Progress bars
 
-$progress-height:                   1rem !default;
+$progress-height:                   1.2rem !default;
 $progress-font-size:                ($font-size-base * .75) !default;
-$progress-bg:                       $gray-200 !default;
+$progress-bg:                       $white !default;
 $progress-border-radius:            $border-radius !default;
 $progress-box-shadow:               inset 0 .1rem .1rem rgba($black, .1) !default;
 $progress-bar-color:                $white !default;

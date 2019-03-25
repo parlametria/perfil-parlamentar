@@ -1,19 +1,23 @@
-<div class="d-flex mb-3 mt-2">
-  <button
-    class="btn btn-primary mr-2"
-    (click)="open(content)"
-  >
-    Filtros
-  </button>
-  <div class>
-    <input
-      type="text"
-      class="form-control pesquisa"
-      id="searchParlamentar"
-      [(ngModel)]="nomePesquisado"
-      (ngModelChange)="aplicarFiltro()"
-      placeholder="pesquisar..."
+<div class="row gutters-sm my-3">
+  <div class="col-3 col-sm-2">
+    <button
+      class="btn btn-primary btn-block"
+      (click)="open(content)"
     >
+      Filtros
+    </button>
+  </div>
+  <div class="col-9 col-sm-10">
+    <div class="form-group">
+      <input
+        type="text"
+        class="form-control pesquisa"
+        id="searchParlamentar"
+        [(ngModel)]="nomePesquisado"
+        (ngModelChange)="aplicarFiltro()"
+        placeholder="pesquisar..."
+      >
+    </div>
   </div>
 </div>
 
@@ -51,7 +55,7 @@
         {{partido}}
       </option>
     </select>
-    
+
     <div class="mt-4">
       <button
         class="btn btn-outline-primary mr-3"

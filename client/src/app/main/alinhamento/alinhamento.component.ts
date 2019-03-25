@@ -40,8 +40,12 @@ export class AlinhamentoComponent implements OnInit {
     );
   }
 
-  search(filtro: any) {    
+  search(filtro: any) {
     this.alinhamentoService.search(filtro);
+  }
+
+  onFollow(following: boolean) {
+    console.log(following);
   }
 
 }

@@ -1,0 +1,35 @@
+.parlamentar-card {
+  border: solid 1px #ebe9e9;
+  margin-bottom: 1rem;
+}
+
+.parlamentar-card-header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.parlamentar-card-id {
+  min-width: 48px;
+  background-color: #6c757d;
+  padding: 0.25rem 0.5rem;
+  color: #fff;
+  text-align: center;
+}
+
+.parlamentar-card-actions {
+  margin-right: 1rem;
+}
+
+.parlamentar-card-body {
+  padding: 1rem;
+}
+
+.parlamentar-title {
+  font-weight: 700;
+}
+
+.progress {
+  border-bottom: solid 1px;
+  border-right: solid 1px;
+  border-left: solid 1px;
+}

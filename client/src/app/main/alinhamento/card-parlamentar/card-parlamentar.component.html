@@ -1,0 +1,43 @@
+<div class="parlamentar-card">
+  <div class="parlamentar-card-header">
+    <div class="parlamentar-card-id">{{id}}°</div>
+    <div class="parlamentar-card-actions">
+      <button
+        type="button"
+        class="btn btn-link btn-icon"
+        (click)="toggleFollow()"
+      >
+        <span class="icon-bookmark"></span>
+      </button>
+    </div>
+  </div>
+  <div class="parlamentar-card-body">
+    <div class="row gutters-sm">
+      <div class="col-3">
+        <img
+          [defaultImage]="'https://via.placeholder.com/100x130'"
+          [lazyLoad]="parlamentar.getFoto()"
+          [offset]="100"
+          width="100%"
+        >
+      </div>
+      <div class="col-9">
+        <div class="parlamentar-title">{{ parlamentar.nome_urna }}</div>
+        <p>{{ parlamentar.sg_partido }}/{{ parlamentar.uf }}</p>
+        <div class="row no-gutters">
+          <div class="col">
+            <app-progress
+              [value]="parlamentar.alinhamento.alinhamento * 100"
+              [min]="0"
+              [max]="100"
+              [showAxis]="true"
+            ></app-progress>
+          </div>
+          <div class="col-2 text-right">
+            {{ parlamentar.alinhamento.alinhamento | percent }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
