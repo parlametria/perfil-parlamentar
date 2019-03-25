@@ -61,6 +61,7 @@ class CandidatosContainer extends Component {
     this.onSearch$ = new Subject();
     this.buscaNome = this.buscaNome.bind(this);
     this.buscaPartido = this.buscaPartido.bind(this);
+    this.filtraComissao = this.filtraComissao.bind(this);
     this.buscaReeleitos = this.buscaReeleitos.bind(this);
     this.buscaRespondeu = this.buscaRespondeu.bind(this);
     this.pegaPrimeiraPagina = this.pegaPrimeiraPagina.bind(this);
@@ -163,7 +164,8 @@ class CandidatosContainer extends Component {
       estado: filtro.estado,
       reeleicao: filtro.reeleicao,
       respondeu: filtro.respondeu,
-      tema: filtro.tema
+      tema: filtro.tema,
+      comissao: filtro.comissao
     };
 
     this.setState({ isPesquisando: true });
@@ -182,7 +184,27 @@ class CandidatosContainer extends Component {
       estado: filtro.estado,
       reeleicao: filtro.reeleicao,
       respondeu: filtro.respondeu,
-      tema: filtro.tema
+      tema: filtro.tema,
+      comissao: filtro.comissao
+    };
+
+    this.props.setFiltroCandidatos(novoFiltro);
+    this.props.setCandidatosFiltrados();
+  }
+
+  filtraComissao(e) {
+    e.preventDefault();
+
+    const { filtro } = this.props.candidatos;
+
+    let novoFiltro = {
+      nome: filtro.nome,
+      partido: filtro.partido,
+      estado: filtro.estado,
+      reeleicao: filtro.reeleicao,
+      respondeu: filtro.respondeu,
+      tema: filtro.tema,
+      comissao: e.target.value
     };
 
     this.props.setFiltroCandidatos(novoFiltro);
@@ -198,7 +220,8 @@ class CandidatosContainer extends Component {
       estado: filtro.estado,
       reeleicao: filtro.reeleicao === "1" ? "-1" : "1",
       respondeu: filtro.respondeu,
-      tema: filtro.tema
+      tema: filtro.tema,
+      comissao: filtro.comissao
     };
 
     this.props.setFiltroCandidatos(novoFiltro);
@@ -214,7 +237,8 @@ class CandidatosContainer extends Component {
       estado: filtro.estado,
       reeleicao: filtro.reeleicao,
       respondeu: filtro.respondeu === "1" ? "-1" : "1",
-      tema: filtro.tema
+      tema: filtro.tema,
+      comissao: filtro.comissao
     };
 
     this.props.setFiltroCandidatos(novoFiltro);
@@ -232,7 +256,8 @@ class CandidatosContainer extends Component {
       estado: filtro.estado,
       reeleicao: filtro.reeleicao,
       respondeu: filtro.respondeu,
-      tema: e.target.value
+      tema: e.target.value,
+      comissao: filtro.comissao
     };
 
     this.props.setFiltroCandidatos(novoFiltro);
@@ -251,7 +276,8 @@ class CandidatosContainer extends Component {
       estado: e.target.value,
       reeleicao: filtro.reeleicao,
       respondeu: filtro.respondeu,
-      tema: filtro.tema
+      tema: filtro.tema,
+      comissao: filtro.comissao
     };
 
     if (novoFiltro.estado === "Estados") {
@@ -526,8 +552,8 @@ class CandidatosContainer extends Component {
                           <select
                             className="form-control form-control-secondary barra-filtro-candidato"
                             placeholder="Comissões"
-                            // onChange={}
-                            // value={}
+                            onChange={this.filtraComissao}
+                            value={filtro.comissao}
                           >
                             {listaSelectComissoes}
                           </select>

@@ -45,7 +45,8 @@ const initialState = {
     estado: "Estados",
     reeleicao: "-1",
     respondeu: "-1",
-    tema: "Temas"
+    tema: "Temas",
+    comissao: "Comissões"
   },
   candidatosFiltrados: [],
   candidatosRanqueados: [],

@@ -974,7 +974,8 @@ export const setActiveTab = activeTab => (dispatch, getState) => {
     estado: filtro.estado,
     reeleicao: "-1",
     respondeu: "-1",
-    tema: "Temas"
+    tema: "Temas",
+    comissao: "Comissões"
   };
 
   dispatch(setFiltroCandidatos(filtroLimpo));
