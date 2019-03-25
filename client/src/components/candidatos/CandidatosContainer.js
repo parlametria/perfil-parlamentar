@@ -11,6 +11,8 @@ import isEmpty from "../../validation/is-empty";
 import BoasVindas from "./BoasVindas";
 import ContinueVotando from "./ContinueVotando";
 
+import { setComissoes } from "../../actions/candidatosActions";
+
 import {
   calculaScore,
   getTopNCandidatos,
@@ -265,16 +267,13 @@ class CandidatosContainer extends Component {
     const {
       dadosCandidatos,
       scoreCandidatos,
-      totalResponderamEstado,
-      totalRespostasEstado,
-      totalResponderamPartido,
-      totalRespostasPartido,
       totalEleitosEstado,
       isCarregando,
       isFiltrandoPorNome,
       mostrarTodos,
       partidos,
-      activeTab
+      activeTab,
+      comissoes
     } = this.props.candidatos;
 
     const isVotacoesCarregando = this.props.votacoes.isCarregando;
@@ -344,6 +343,12 @@ class CandidatosContainer extends Component {
     const listaSelectPartidos = partidos.map(partido => (
       <option key={partido} value={partido}>
         {partido}
+      </option>
+    ));
+
+    const listaSelectComissoes = comissoes.map(comissao => (
+      <option key={comissao} value={comissao}>
+        {comissao}
       </option>
     ));
 
@@ -487,7 +492,7 @@ class CandidatosContainer extends Component {
                         </div>
                       </div>
                       <div className="form-row">
-                        <div className="form-group col-4">
+                        <div className="form-group col-6">
                           <select
                             className="form-control form-control-secondary barra-filtro-candidato"
                             onChange={this.selecionaEstado}
@@ -497,7 +502,7 @@ class CandidatosContainer extends Component {
                             {estados()}
                           </select>
                         </div>
-                        <div className="form-group col-4">
+                        <div className="form-group col-6">
                           <select
                             className="form-control form-control-secondary barra-filtro-candidato"
                             placeholder="Partidos"
@@ -507,7 +512,7 @@ class CandidatosContainer extends Component {
                             {listaSelectPartidos}
                           </select>
                         </div>
-                        <div className="form-group col-4">
+                        <div className="form-group col-6">
                           <select
                             className="form-control form-control-secondary barra-filtro-candidato"
                             placeholder="Temas"
@@ -515,6 +520,16 @@ class CandidatosContainer extends Component {
                             value={filtro.tema}
                           >
                             {listaSelectTemas}
+                          </select>
+                        </div>
+                        <div className="form-group col-6">
+                          <select
+                            className="form-control form-control-secondary barra-filtro-candidato"
+                            placeholder="Comissões"
+                            // onChange={}
+                            // value={}
+                          >
+                            {listaSelectComissoes}
                           </select>
                         </div>
                       </div>
@@ -599,6 +614,8 @@ class CandidatosContainer extends Component {
   }
 
   componentDidMount() {
+    this.props.setComissoes();
+
     this.subscription = this.onSearch$
       .pipe(debounceTime(DEBOUNCE_TIME))
       .subscribe(debounced => {
@@ -626,7 +643,8 @@ CandidatosContainer.propTypes = {
   setPartidos: PropTypes.func.isRequired,
   setPaginacao: PropTypes.func.isRequired,
   getProximaPaginaCandidatos: PropTypes.func.isRequired,
-  setActiveTab: PropTypes.func.isRequired
+  setActiveTab: PropTypes.func.isRequired,
+  setComissoes: PropTypes.func.isRequired
 };
 const mapStateToProps = state => ({
   candidatos: state.candidatosReducer,
@@ -646,6 +664,7 @@ export default connect(
     setPartidos,
     setPaginacao,
     getProximaPaginaCandidatos,
-    setActiveTab
+    setActiveTab,
+    setComissoes
   }
 )(CandidatosContainer);

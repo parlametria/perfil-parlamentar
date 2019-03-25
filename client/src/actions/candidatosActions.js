@@ -20,7 +20,8 @@ import {
   SET_ACTIVE_TAB,
   SET_TOTAL_ELEITOS_ESTADO,
   SET_VER_TODOS_ELEITOS,
-  SET_VOTOS_IGUAIS_USUARIO_CANDIDATOS
+  SET_VOTOS_IGUAIS_USUARIO_CANDIDATOS,
+  SET_COMISSOES
 } from "./types";
 
 import { getVotacoesDeputados } from "./votacoesActions";
@@ -982,4 +983,16 @@ export const setActiveTab = activeTab => (dispatch, getState) => {
 
 export const verTodosEleitos = () => dispatch => {
   dispatch({ type: SET_VER_TODOS_ELEITOS });
+};
+
+export const setComissoes = () => (dispatch, getState) => {    
+  axios
+    .get(
+      "api/comissoes/sigla"
+    )
+    .then(comissoes => {        
+      let siglas = comissoes.data;      
+      siglas.splice(0, 0, "Comissões");      
+      dispatch({ type: SET_COMISSOES, comissoes: siglas });
+    });
 };

@@ -21,7 +21,8 @@ import {
   SET_TOTAL_ELEITOS_ESTADO,
   SET_TOTAL_ELEITOS_PARTIDO,
   SET_VER_TODOS_ELEITOS,
-  SET_VOTOS_IGUAIS_USUARIO_CANDIDATOS
+  SET_VOTOS_IGUAIS_USUARIO_CANDIDATOS,
+  SET_COMISSOES
 } from "../actions/types";
 
 // candidatesVotings: {id_votacao: voto}
@@ -62,10 +63,11 @@ const initialState = {
   dadosCandidatoBusca: {},
   activeTab: "eleitos",
   isVerTodosEleitos: false,
-  votosIguaisUsuarioCandidatos: {}
+  votosIguaisUsuarioCandidatos: {},
+  comissoes: []
 };
 
-export default function(state = initialState, action) {
+export default function (state = initialState, action) {
   switch (action.type) {
     case SET_DADOS_CANDIDATOS:
       return {
@@ -185,6 +187,11 @@ export default function(state = initialState, action) {
       return {
         ...state,
         votosIguaisUsuarioCandidatos: action.votosIguaisUsuarioCandidatos
+      };
+    case SET_COMISSOES:
+      return {
+        ...state,
+        comissoes: action.comissoes
       };
     default:
       return state;
