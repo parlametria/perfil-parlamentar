@@ -9,6 +9,8 @@ import { getScoreWidth, getScoreLabel } from "../../utils/scoreValueFunctions";
 
 import "./candidato.css";
 
+import Comissao from './Comissao';
+
 class Candidato extends Component {
   render() {
     const badgeNaoRespondeu = (
@@ -49,9 +51,9 @@ class Candidato extends Component {
           cargo: "",
           info_comissao: {
             sigla: "+ " + comissoes_suplente,
-            nome: comissoes_suplente == 1 ? 
-            "O/A parlamentar é suplente em " + comissoes_suplente + " comissão." : 
-            "O/A parlamentar é suplente em " + comissoes_suplente + " comissões."
+            nome: comissoes_suplente == 1 ?
+              "O/A parlamentar é suplente em " + comissoes_suplente + " comissão." :
+              "O/A parlamentar é suplente em " + comissoes_suplente + " comissões."
           }
         }
         comissoes_filtradas.push(outras_comissoes);
@@ -78,7 +80,7 @@ class Candidato extends Component {
             props.comissao.info_comissao.nome :
             props.comissao.cargo + ' na ' + props.comissao.info_comissao.nome}
           </Tooltip>}>
-        <span style={{ marginRight: "5px" }} className="badge badge-success suplente">
+        <span style={{ marginRight: "5px" }} className="badge badge-success">
           {props.comissao.info_comissao.sigla}
         </span>
       </OverlayTrigger>
@@ -164,7 +166,8 @@ class Candidato extends Component {
                 <div className="pb-1">
                   {filtraComissoes(this.props.comissoes).
                     map(comissao =>
-                      <TitularComissao key={comissao.comissao_id} comissao={comissao} />
+                      <Comissao key={comissao.comissao_id}
+                        comissao={comissao} />
                     )}
                   {this.props.temHistorico
                     ? barraScore

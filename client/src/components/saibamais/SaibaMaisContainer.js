@@ -10,6 +10,7 @@ import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import TabelaPerguntas from "./tabelaPerguntas/TabelaPerguntas";
 import TabelaVotacoes from "./tabelaVotacoes/TabelaVotacoes";
 import PontuacaoPorTema from "./pontuacaoPorTema/PontuacaoTema";
+import Comissao from './../candidatos/Comissao';
 
 import { isMobile } from "react-device-detect";
 
@@ -86,6 +87,15 @@ class SaibaMaisContainer extends Component {
                 : dadosCandidato.n_candidatura}
               ª candidatura{" "}
             </p>
+            <div style={{ marginBottom: '1rem' }}>
+              {dadosCandidato.cpf_comissoes !== undefined && (
+                dadosCandidato.cpf_comissoes.map(
+                  comissao =>
+                    <Comissao key={comissao.comissao_id}
+                      comissao={comissao} />
+                )
+              )}
+            </div>
             {dadosCandidato.n_candidatura > 0 && (
               <p>
                 <a
