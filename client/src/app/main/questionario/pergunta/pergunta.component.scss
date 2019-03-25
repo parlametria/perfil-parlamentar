@@ -1,10 +1,25 @@
-.question-help-content {
-  padding: 1rem;
-  border: solid 1px #41c083;
-  color: #41c083;
+$viewport-negative-height: 340px;
+
+.pergunta-wrapper {
+  @media (min-width: 340px) {
+    height: calc(100vh - #{$viewport-negative-height});
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
 }
 
-.question {
-  font-size: 1rem;
-  color: #5b2762;
+.pergunta-texto {
+  font-size: 1.2rem;
+
+  @media (min-width: 340px) {
+    font-size: 1.5rem;
+  }
+  @media (min-width: 768px) {
+    font-size: 1.8rem;
+  }
+  @media (min-width: 992px) {
+    font-size: 2rem;
+  }
 }

@@ -34,6 +34,8 @@ export class PerguntasContainerComponent implements OnInit, OnDestroy {
 
   respostasUser: Resposta;
 
+  salvandoResposta: boolean;
+
   @Input() receivedTemas: number[];
 
   constructor(
@@ -46,6 +48,7 @@ export class PerguntasContainerComponent implements OnInit, OnDestroy {
     this.getTemas();
     this.getProposicoes();
     this.getRespostas();
+    this.salvandoResposta = false;
   }
 
   getTemas() {
@@ -113,8 +116,16 @@ export class PerguntasContainerComponent implements OnInit, OnDestroy {
       resposta: resposta
     };
 
-    this.userService.setResposta(novaResposta);
-    this.proximaPergunta();
+    this.salvandoResposta = true;
+    this.userService
+      .setResposta(novaResposta)
+      .then(() => {
+        setTimeout(() => {
+          this.salvandoResposta = false
+          this.proximaPergunta();
+        }, 1000);
+      })
+      .catch(() => console.log("Ops! Não foi possível salvar a resposta."));
   }
 
   onTemaChange() {
@@ -229,7 +240,7 @@ export class PerguntasContainerComponent implements OnInit, OnDestroy {
     const respostas = Object.keys(this.respostasUser.votacoes).map(
       resposta => this.respostasUser.votacoes[resposta]
     );
-    return (respostas.filter(r => r !== 0).length) >= this.MIN_RESPOSTAS;
+    return respostas.filter(r => r !== 0).length >= this.MIN_RESPOSTAS;
   }
 
   ngOnDestroy() {
