@@ -20,7 +20,8 @@ import {
   SET_ACTIVE_TAB,
   SET_TOTAL_ELEITOS_ESTADO,
   SET_VER_TODOS_ELEITOS,
-  SET_VOTOS_IGUAIS_USUARIO_CANDIDATOS
+  SET_VOTOS_IGUAIS_USUARIO_CANDIDATOS,
+  SET_COMISSOES
 } from "./types";
 
 import { getVotacoesDeputados } from "./votacoesActions";
@@ -833,13 +834,13 @@ export const setCandidatosFiltrados = () => (dispatch, getState) => {
       dadosCandidatos[candidato.cpf] = candidato;
       cpfCandidatos[candidato.cpf] = candidato;
     });
-
+    
     dispatch({
       type: SET_DADOS_CANDIDATOS,
       dadosCandidatos: dadosCandidatos
     });
 
-    dispatch(calculaScore());
+    dispatch(calculaScore());    
     
     let candidatosOrdenados = Object.keys(cpfCandidatos).sort((a, b) => {
       if (scoreCandidatos[a] > scoreCandidatos[b]) return -1;
@@ -874,7 +875,7 @@ export const setCandidatosFiltrados = () => (dispatch, getState) => {
       type: SET_CANDIDATOS_FILTRADOS,
       candidatosFiltrados: candidatosOrdenados
     });
-
+    
     dispatch(
       setPaginacao({
         inicio: 0,
@@ -883,7 +884,8 @@ export const setCandidatosFiltrados = () => (dispatch, getState) => {
           filtro.partido !== "Partidos" ||
             filtro.nome !== "" ||
             filtro.reeleicao !== "-1" ||
-            filtro.responderam !== "-1"
+            filtro.responderam !== "-1" ||
+            filtro.comissao !== "Comissões"            
             ? candidatos.length
             : candidatosRanqueados.length
       })
@@ -973,7 +975,8 @@ export const setActiveTab = activeTab => (dispatch, getState) => {
     estado: filtro.estado,
     reeleicao: "-1",
     respondeu: "-1",
-    tema: "Temas"
+    tema: "Temas",
+    comissao: "Comissões"
   };
 
   dispatch(setFiltroCandidatos(filtroLimpo));
@@ -982,4 +985,16 @@ export const setActiveTab = activeTab => (dispatch, getState) => {
 
 export const verTodosEleitos = () => dispatch => {
   dispatch({ type: SET_VER_TODOS_ELEITOS });
+};
+
+export const setComissoes = () => (dispatch, getState) => {    
+  axios
+    .get(
+      "api/comissoes/sigla"
+    )
+    .then(comissoes => {        
+      let siglas = comissoes.data;      
+      siglas.splice(0, 0, "Comissões");      
+      dispatch({ type: SET_COMISSOES, comissoes: siglas });
+    });
 };
