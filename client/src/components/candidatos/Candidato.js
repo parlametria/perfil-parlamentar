@@ -13,10 +13,6 @@ import Comissao from './Comissao';
 
 class Candidato extends Component {
   render() {
-    const badgeNaoRespondeu = (
-      <span className="badge badge-secondary">não respondeu</span>
-    );
-
     const badgeNaoTemVotacoes = (
       <span style={{ marginLeft: "5px" }}
         className="badge badge-light">não atuou</span>
