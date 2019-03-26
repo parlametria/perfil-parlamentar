@@ -23,6 +23,24 @@ router.get("/", (req, res) => {
 });
 
 /**
+ * Recupera lista das siglas das Comissões
+ * @name get/api/comissoes/
+ * @function
+ * @memberof module:routes/comissoes
+ */
+router.get("/sigla", (req, res) => {
+  Comissoes.findAll({
+    attributes: ["sigla"]
+  })
+    .then(comissoes => {
+      let siglas = comissoes.map(comissao => comissao.sigla);
+      
+      res.status(200).json(siglas);
+    })
+    .catch(err => res.status(400).json(err.message));
+});
+
+/**
  * Recupera lista com parlamentares e Comissões
  * @name get/api/comissoes/composicao
  * @function

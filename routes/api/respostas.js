@@ -300,6 +300,8 @@ router.get("/estados/:uf", (req, res) => {
 
   const reeleicao = String(req.query.reeleicao);
 
+  const comissao = String(req.query.comissao);
+
   const isFiltrandoPorNome = nome !== "" && nome !== "undefined";
   const isFiltrandoPorPartido =
     partido !== "Partidos" && partido !== "undefined";
@@ -307,6 +309,9 @@ router.get("/estados/:uf", (req, res) => {
     reeleicao !== "-1" && reeleicao !== "undefined";
   const isFiltrandoPorRespondeu =
     respondeu !== "-1" && respondeu !== "undefined";
+
+  const isFiltrandoPorComissao = 
+    comissao !== "Comissões" && comissao !== "" && comissao !== "undefined";
 
   query = {};
   if (req.params.uf !== "Estados") {
@@ -338,11 +343,6 @@ router.get("/estados/:uf", (req, res) => {
       attributes: att,
       include: [
         {
-          model: Resposta,
-          as: "cpf_resp",
-          attributes: att_res
-        },
-        {
           model: ComposicaoComissoes,
           attributes: ["comissao_id", "cargo"],
           include: [
@@ -358,13 +358,20 @@ router.get("/estados/:uf", (req, res) => {
         }
       ],
       where: query
-    }).then((candidatos, err) => {
-      respostasNovo = formataRespostas(candidatos);
+    }).then((candidatos, err) => {      
 
+      if (isFiltrandoPorComissao) {
+        candidatos = candidatos.filter(value => {        
+          let siglasComissoes = value.cpf_comissoes.filter(comissao => comissao.cargo !== "Suplente").map(comissao => comissao.info_comissao.sigla);
+          
+          return siglasComissoes.includes(comissao);
+        });        
+      }
+      
       response = err
         ? { status: BAD_REQUEST, message: "Error fetching data" }
         : {
-          candidatos: respostasNovo,
+          candidatos: candidatos,
           total: totalCount,
           status: SUCCESS
         };
