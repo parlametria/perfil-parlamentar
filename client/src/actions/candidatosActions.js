@@ -834,13 +834,13 @@ export const setCandidatosFiltrados = () => (dispatch, getState) => {
       dadosCandidatos[candidato.cpf] = candidato;
       cpfCandidatos[candidato.cpf] = candidato;
     });
-
+    
     dispatch({
       type: SET_DADOS_CANDIDATOS,
       dadosCandidatos: dadosCandidatos
     });
 
-    dispatch(calculaScore());
+    dispatch(calculaScore());    
     
     let candidatosOrdenados = Object.keys(cpfCandidatos).sort((a, b) => {
       if (scoreCandidatos[a] > scoreCandidatos[b]) return -1;
@@ -875,7 +875,7 @@ export const setCandidatosFiltrados = () => (dispatch, getState) => {
       type: SET_CANDIDATOS_FILTRADOS,
       candidatosFiltrados: candidatosOrdenados
     });
-
+    
     dispatch(
       setPaginacao({
         inicio: 0,
@@ -884,7 +884,8 @@ export const setCandidatosFiltrados = () => (dispatch, getState) => {
           filtro.partido !== "Partidos" ||
             filtro.nome !== "" ||
             filtro.reeleicao !== "-1" ||
-            filtro.responderam !== "-1"
+            filtro.responderam !== "-1" ||
+            filtro.comissao !== "Comissões"            
             ? candidatos.length
             : candidatosRanqueados.length
       })

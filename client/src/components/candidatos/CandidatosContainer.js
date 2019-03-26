@@ -284,9 +284,9 @@ class CandidatosContainer extends Component {
       this.props.setActiveTab("eleitos");
     }
 
-    this.props.setFiltroCandidatos(novoFiltro);
+    this.props.setFiltroCandidatos(novoFiltro);    
     this.props.getDadosCandidatos();
-    this.props.setCandidatosFiltrados();
+    this.props.setCandidatosFiltrados();        
   }
 
   render() {
@@ -322,17 +322,19 @@ class CandidatosContainer extends Component {
         filtro.partido !== "Partidos" ||
         filtro.reeleicao !== "-1" ||
         filtro.respondeu !== "-1" ||
+        filtro.comissao !== "Comissões" ||
         filtro.estado !== "Estados"
         ? candidatosFiltrados
         : candidatosRanqueados;
 
     let totalCandAtuacao = 0;
+    let totalEstado = candidatosMapeaveis.length;
 
     const candidatos = candidatosMapeaveis.map(cpf => {
       const candidato = dadosCandidatos[cpf];
 
       if (!isEmpty(candidato)) {
-        if (candidato.reeleicao === "1") totalCandAtuacao++;
+        if (candidato.reeleicao === "1") totalCandAtuacao++;        
         return (
           <Candidato
             respondeu={candidato.respondeu}
@@ -414,7 +416,7 @@ class CandidatosContainer extends Component {
             <h5>
               Nesse Estado,{" "}
               <strong className="strong">{totalCandAtuacao}</strong> dos{" "}
-              <strong className="strong">{totalEleitosEstado}</strong>{" "}
+              <strong className="strong">{totalEstado}</strong>{" "}
               deputados/as tem atuação anterior na câmara.
             </h5>
           )}
@@ -425,7 +427,7 @@ class CandidatosContainer extends Component {
             <h5>
               {" "}
               <strong className="strong">{totalCandAtuacao}</strong> dos{" "}
-              <strong className="strong">{totalEleitosEstado}</strong>{" "}
+              <strong className="strong">{totalEstado}</strong>{" "}
               deputados/as tem atuação anterior na câmara.
             </h5>
           )}

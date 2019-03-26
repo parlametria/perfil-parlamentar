@@ -11,7 +11,9 @@ export const filtra = (filtro, eleito) => {
     "&respondeu=" +
     filtro.respondeu +
     "&reeleicao=" +
-    filtro.reeleicao +
+    filtro.reeleicao +    
+    "&comissao=" +
+    filtro.comissao +
     "&eleito=" +
     eleito
   );
