@@ -57,6 +57,17 @@ class SaibaMaisContainer extends Component {
       <Tooltip>Não existem respostas suficientes para o cálculo preciso do alinhamento</Tooltip>
     );
 
+    const ordenaCargoComissoes = (cpf_comissoes) => {
+      let nao_suplente = cpf_comissoes.filter(comissao => comissao.cargo !== "Suplente");
+      nao_suplente.sort();
+      let suplente = cpf_comissoes.filter(comissao => comissao.cargo === "Suplente");
+      if (nao_suplente.length === 0) {
+        return (suplente);
+      } 
+      nao_suplente.push.apply(nao_suplente, suplente);
+      return(nao_suplente);
+    }
+
     const { dadosCandidato, scoreTema } = this.props.candidatos;
     const perfilCandidato = (
       <div className="compare-person-profile row no-gutters">
@@ -89,7 +100,7 @@ class SaibaMaisContainer extends Component {
             </p>
             <div style={{ marginBottom: '1rem' }}>
               {dadosCandidato.cpf_comissoes !== undefined && (
-                dadosCandidato.cpf_comissoes.map(
+                ordenaCargoComissoes(dadosCandidato.cpf_comissoes).map(
                   comissao =>
                     <Comissao key={comissao.comissao_id}
                       comissao={comissao} />
@@ -188,7 +199,7 @@ class SaibaMaisContainer extends Component {
                 <span className="score">{getScoreLabel(dadosCandidato.score)}</span>
               </OverlayTrigger> :
               <span className="score">{getScoreLabel(dadosCandidato.score)}</span>
-            }            
+            }
           </strong>{" "}
           <br />
           entre você e {dadosCandidato.nome_urna}
@@ -256,11 +267,11 @@ class SaibaMaisContainer extends Component {
       respostasUsuario,
       arrayRespostasUsuario
     );
-    
+
     if (isAuthenticated) {
       this.props.calculaScoreUsuarioCandidato(candidato);
     }
-    
+
     const url_case = this.props.match.path;
     const PATH_COMPARE = "/parlamentar/:candidato/";
 
