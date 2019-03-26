@@ -69,6 +69,17 @@ class SaibaMaisContainer extends Component {
       </Tooltip>
     );
 
+    const ordenaCargoComissoes = (cpf_comissoes) => {
+      let nao_suplente = cpf_comissoes.filter(comissao => comissao.cargo !== "Suplente");
+      nao_suplente.sort();
+      let suplente = cpf_comissoes.filter(comissao => comissao.cargo === "Suplente");
+      if (nao_suplente.length === 0) {
+        return (suplente);
+      } 
+      nao_suplente.push.apply(nao_suplente, suplente);
+      return(nao_suplente);
+    }
+
     const { dadosCandidato, scoreTema } = this.props.candidatos;
     const perfilCandidato = (
       <div>
@@ -123,8 +134,8 @@ class SaibaMaisContainer extends Component {
           <div className="compare-person-history">
             <div style={{ marginBottom: "1rem" }}>
               {dadosCandidato.cpf_comissoes !== undefined &&
-                dadosCandidato.cpf_comissoes.map(comissao => (
-                  <div>
+                ordenaCargoComissoes(dadosCandidato.cpf_comissoes).map(comissao => (
+                  <div key={comissao.comissao_id}>
                     <span style={{ marginRight: "5px" }} className="badge badge-cargo">
                       {comissao.cargo}
                     </span>
