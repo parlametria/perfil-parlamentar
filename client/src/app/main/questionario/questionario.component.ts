@@ -72,10 +72,10 @@ export class QuestionarioComponent implements OnInit, OnDestroy {
     });
 
     // Atualiza temas do usuário
-    this.userService.setTemas(temasPreferidos);
-
-    this.receivedTemas = $event.allTemas;
-    this.showQuestionario = true;
+    this.userService.setTemas(temasPreferidos).then((res) => {
+      this.receivedTemas = $event.allTemas;
+      this.showQuestionario = true;
+    });    
   }
 
   mapTemasIdToNome(temasNome) {
