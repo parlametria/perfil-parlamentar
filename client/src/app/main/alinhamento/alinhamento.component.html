@@ -1,5 +1,8 @@
 <div class="container container-sticky-footer-navbar">
   <app-filter (filterChange)="search($event)"></app-filter>
+  <div class="my-3">
+    <strong class="strong">{{ parlamentares.length }}</strong> parlamentares
+  </div>
   <app-card-parlamentar
     *ngFor="let parlamentar of parlamentares; index as i;"
     [parlamentar]="parlamentar"

@@ -1,3 +1,4 @@
+/* BUTTONS */
 .nav-link {
   text-transform: lowercase;
 }
@@ -14,6 +15,7 @@
   text-decoration: underline;
 }
 
+/* FORMS */
 .form-group-plus {
   display: flex;
 
@@ -46,4 +48,14 @@
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
+}
+
+/* MODAL */
+.modal-content {
+  height: calc(100vh - #{$modal-dialog-margin + 'px'});
+}
+
+.modal-header {
+  background-color: $black;
+  color: $white;
 }

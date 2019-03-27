@@ -898,15 +898,15 @@ $badge-pill-border-radius:          10rem !default;
 // Modals
 
 // Padding applied to the modal body
-$modal-inner-padding:               1rem !default;
+$modal-inner-padding:               2rem !default;
 
-$modal-dialog-margin:               .5rem !default;
+$modal-dialog-margin:               0 !default;
 $modal-dialog-margin-y-sm-up:       1.75rem !default;
 
 $modal-title-line-height:           $line-height-base !default;
 
 $modal-content-bg:                  $white !default;
-$modal-content-border-color:        rgba($black, .2) !default;
+$modal-content-border-color:        $black !default;
 $modal-content-border-width:        $border-width !default;
 $modal-content-border-radius:       $border-radius-lg !default;
 $modal-content-box-shadow-xs:       0 .25rem .5rem rgba($black, .5) !default;
@@ -914,7 +914,7 @@ $modal-content-box-shadow-sm-up:    0 .5rem 1rem rgba($black, .5) !default;
 
 $modal-backdrop-bg:                 $black !default;
 $modal-backdrop-opacity:            .5 !default;
-$modal-header-border-color:         $gray-200 !default;
+$modal-header-border-color:         $black !default;
 $modal-footer-border-color:         $modal-header-border-color !default;
 $modal-header-border-width:         $modal-content-border-width !default;
 $modal-footer-border-width:         $modal-header-border-width !default;
@@ -1058,10 +1058,10 @@ $spinner-border-width-sm: .2em !default;
 
 // Close
 
-$close-font-size:                   $font-size-base * 1.5 !default;
+$close-font-size:                   $font-size-base * 2 !default;
 $close-font-weight:                 $font-weight-bold !default;
-$close-color:                       $black !default;
-$close-text-shadow:                 0 1px 0 $white !default;
+$close-color:                       $white !default;
+$close-text-shadow:                 0 1px 0 $gray-500 !default;
 
 
 // Code
