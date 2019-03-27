@@ -63,7 +63,7 @@ export class FilterComponent implements OnInit {
 
   onChangeEstado() {
     this.partidosFiltradosPorEstado = this.partidosPorEstado.filter(value => value.estado === this.estadoSelecionado)[0].partidos;
-    
+
     if (!this.partidosFiltradosPorEstado.includes("Partidos"))
       this.partidosFiltradosPorEstado.splice(0, 0, "Partidos");
 
@@ -93,6 +93,7 @@ export class FilterComponent implements OnInit {
 
   limparFiltroEstado() {
     this.estadoSelecionado = this.FILTRO_PADRAO_ESTADO;
+    this.onChangeEstado();
     this.aplicarFiltro();
   }
 

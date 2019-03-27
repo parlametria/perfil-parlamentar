@@ -82,35 +82,38 @@
   </div>
   <div class="modal-body filter-body">
     <div>
-
-      <select
-        class="form-control"
-        id="estado"
-        [(ngModel)]="estadoSelecionado"
-        (ngModelChange)="onChangeEstado()"
-        name="estado"
-      >
-        <option
-          *ngFor="let estado of estados"
-          [value]="estado"
+      <div class="form-group">
+        <select
+          class="form-control"
+          id="estado"
+          [(ngModel)]="estadoSelecionado"
+          (ngModelChange)="onChangeEstado()"
+          name="estado"
         >
-          {{estado}}
-        </option>
-      </select>
+          <option
+            *ngFor="let estado of estados"
+            [value]="estado"
+          >
+            {{estado}}
+          </option>
+        </select>
+      </div>
 
-      <select
-        class="form-control mt-2"
-        id="partido"
-        [(ngModel)]="partidoSelecionado"
-        name="partido"
-      >
-        <option
-          *ngFor="let partido of partidosFiltradosPorEstado"
-          [value]="partido"
+      <div class="form-group">
+        <select
+          class="form-control"
+          id="partido"
+          [(ngModel)]="partidoSelecionado"
+          name="partido"
         >
-          {{partido}}
-        </option>
-      </select>
+          <option
+            *ngFor="let partido of partidosFiltradosPorEstado"
+            [value]="partido"
+          >
+            {{partido}}
+          </option>
+        </select>
+      </div>
 
     </div>
     <div class="text-right">
