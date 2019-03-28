@@ -6,6 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { SocialLoginModule, AuthServiceConfig } from 'angularx-social-login';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { LazyLoadImageModule } from 'ng-lazyload-image';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 import { AppRoutingModule } from './app-routing.module';
 
@@ -57,6 +58,7 @@ import { ProgressComponent } from './shared/components/progress/progress.compone
     AppRoutingModule,
     SocialLoginModule,
     LazyLoadImageModule,
+    NgxPaginationModule,
     FormsModule,
     NgbModule.forRoot()
   ],

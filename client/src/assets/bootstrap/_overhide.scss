@@ -15,6 +15,18 @@
   text-decoration: underline;
 }
 
+.btn-light-icon {
+  color: $gray-300;
+}
+
+.btn-light-icon:not(:disabled):not(.disabled):active,
+.btn-light-icon:not(:disabled):not(.disabled).active,
+.show > .btn-light-icon.dropdown-toggle {
+  color: $primary;
+  background-color: white;
+  border-color: white;
+}
+
 /* FORMS */
 .form-group-plus {
   display: flex;
@@ -52,10 +64,26 @@
 
 /* MODAL */
 .modal-content {
-  height: calc(100vh - #{$modal-dialog-margin + 'px'});
+  @media (max-width: 575.98px) {
+    height: calc(80vh - #{$modal-dialog-margin + 'px'});
+  }
 }
 
 .modal-header {
   background-color: $black;
   color: $white;
+}
+
+/* PAGINATION */
+.page-link {
+  border-radius: 50%;
+  width: 35px;
+  height: 35px;
+  text-align: center;
+  font-size: 0.9rem;
+}
+
+.page-item:last-child .page-link,
+.page-item:first-child .page-link {
+  border-radius: 50%;
 }
