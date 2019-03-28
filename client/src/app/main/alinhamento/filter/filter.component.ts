@@ -20,6 +20,7 @@ export class FilterComponent implements OnInit {
 
   readonly FILTRO_PADRAO_ESTADO = "Estados";
   readonly FILTRO_PADRAO_PARTIDO = "Partidos";
+  readonly FILTRO_PADRAO_TEMA = -1;
   filtro: any;
 
   private unsubscribe = new Subject();
@@ -30,7 +31,7 @@ export class FilterComponent implements OnInit {
   partidosFiltradosPorEstado: string[];
   temas: Tema[];
 
-  temaSelecionado: string;
+  temaSelecionado: number;
   estadoSelecionado: string;
   nomePesquisado: string;
   partidoSelecionado: string;
@@ -43,6 +44,7 @@ export class FilterComponent implements OnInit {
     this.estados = estados;
     this.estadoSelecionado = this.FILTRO_PADRAO_ESTADO;
     this.partidoSelecionado = this.FILTRO_PADRAO_PARTIDO;
+    this.temaSelecionado = this.FILTRO_PADRAO_TEMA;
 
     this.filtro = {
       nome: "",
@@ -115,16 +117,14 @@ export class FilterComponent implements OnInit {
   }
 
   isTemaSelected(idTema: number) {
-    return this.temaSelecionado === idTema.toString(10);
+    return this.temaSelecionado === idTema;
   }
 
   selecionaTema(idTema: number) {
-    let id = idTema.toString(10);
-
-    if (this.temaSelecionado === id)
-      this.temaSelecionado = "";
+    if (this.temaSelecionado === idTema)
+      this.temaSelecionado = this.FILTRO_PADRAO_TEMA;
     else
-      this.temaSelecionado = id;
+      this.temaSelecionado = idTema;
   }
 
 }
