@@ -5,11 +5,12 @@ import PropTypes from "prop-types";
 
 import { Nav, NavItem, NavLink, TabContent, TabPane } from "reactstrap";
 
-import { OverlayTrigger, Tooltip } from 'react-bootstrap';
+import { OverlayTrigger, Tooltip } from "react-bootstrap";
 
 import TabelaPerguntas from "./tabelaPerguntas/TabelaPerguntas";
 import TabelaVotacoes from "./tabelaVotacoes/TabelaVotacoes";
 import PontuacaoPorTema from "./pontuacaoPorTema/PontuacaoTema";
+import Comissao from "./../candidatos/Comissao";
 
 import { isMobile } from "react-device-detect";
 
@@ -19,13 +20,23 @@ import {
   setFiltroCandidatos
 } from "../../actions/candidatosActions";
 
-import { getVotacoesDeputados, getDadosVotacoes } from "../../actions/votacoesActions";
+import {
+  getVotacoesDeputados,
+  getDadosVotacoes
+} from "../../actions/votacoesActions";
 import { getDadosPerguntas } from "../../actions/perguntasActions";
 
-import { salvaScoreUsuario, calculaScoreUsuarioCandidato } from "../../actions/usuarioActions";
+import {
+  salvaScoreUsuario,
+  calculaScoreUsuarioCandidato
+} from "../../actions/usuarioActions";
 import isEmpty from "../../validation/is-empty";
 
-import { getArrayUrl, getDict, tamanhoRespostas } from "../../constantes/tratamentoUrls";
+import {
+  getArrayUrl,
+  getDict,
+  tamanhoRespostas
+} from "../../constantes/tratamentoUrls";
 import { getScoreLabel, getScoreWidth } from "../../utils/scoreValueFunctions";
 
 import "./SaibaMaisContainer.css";
@@ -53,63 +64,101 @@ class SaibaMaisContainer extends Component {
 
   render() {
     const tooltip = (
-      <Tooltip>Não existem respostas suficientes para o cálculo preciso do alinhamento</Tooltip>
+      <Tooltip>
+        Não existem respostas suficientes para o cálculo preciso do alinhamento
+      </Tooltip>
     );
+
+    const ordenaCargoComissoes = (cpf_comissoes) => {
+      let nao_suplente = cpf_comissoes.filter(comissao => comissao.cargo !== "Suplente");
+      nao_suplente.sort();
+      let suplente = cpf_comissoes.filter(comissao => comissao.cargo === "Suplente");
+      if (nao_suplente.length === 0) {
+        return (suplente);
+      } 
+      nao_suplente.push.apply(nao_suplente, suplente);
+      return(nao_suplente);
+    }
 
     const { dadosCandidato, scoreTema } = this.props.candidatos;
     const perfilCandidato = (
-      <div className="compare-person-profile row no-gutters">
-        <div className="col-4">
-          <img
-            src={
-              dadosCandidato.tem_foto
-                ? "https://s3-sa-east-1.amazonaws.com/fotoscandidatos2018/fotos_tratadas/img_" +
-                dadosCandidato.cpf +
-                ".jpg"
-                : "https://s3-sa-east-1.amazonaws.com/fotoscandidatos2018/fotos_tratadas/nophoto.png"
-            }
-            alt={dadosCandidato.nome_urna}
-            width="100%"
-            className="person-img"
-          />
-        </div>
-        <div className="col-8">
-          <div className="compare-person-data">
-            <h3 className="compare-person-name">{dadosCandidato.nome_urna}</h3>
-            <p>
-              {dadosCandidato.sg_partido}/{dadosCandidato.uf}
-            </p>
-            <p>
-              Está em sua{" "}
-              {Number(dadosCandidato.n_candidatura) === 0
-                ? 1
-                : dadosCandidato.n_candidatura}
-              ª candidatura{" "}
-            </p>
-            {dadosCandidato.n_candidatura > 0 && (
-              <p>
-                <a
-                  className="btn btn-primary"
-                  align="right"
-                  target="_blank"
-                  href={
-                    "https://eleicoes.datapedia.info/candidato/historico/" +
-                    dadosCandidato.cpf
-                  }
-                >
-                  histórico
-                </a>
-              </p>
-            )}
+      <div>
+        <div className="compare-person-profile d-flex">
+          <div className="compare-person-profile-pic">
+            <img
+              src={
+                dadosCandidato.tem_foto
+                  ? "https://s3-sa-east-1.amazonaws.com/fotoscandidatos2018/fotos_tratadas/img_" +
+                    dadosCandidato.cpf +
+                    ".jpg"
+                  : "https://s3-sa-east-1.amazonaws.com/fotoscandidatos2018/fotos_tratadas/nophoto.png"
+              }
+              alt={dadosCandidato.nome_urna}
+              width="100%"
+              className="person-img"
+            />
+          </div>
+          <div>
+            <div className="compare-person-data">
+              <div>
+                <h3 className="compare-person-name">{dadosCandidato.nome_urna}</h3>
+                <div>{dadosCandidato.sg_partido}/{dadosCandidato.uf}</div>
+                
+              </div>
+              <div>
+                <div>
+                  Está em sua{" "}
+                  {Number(dadosCandidato.n_candidatura) === 0
+                    ? 1
+                    : dadosCandidato.n_candidatura}
+                  ª candidatura{" "}
+                </div>
+                {dadosCandidato.n_candidatura > 0 && (
+                    <a
+                      className="btn btn-primary btn-sm"
+                      align="right"
+                      target="_blank"
+                      href={
+                        "https://eleicoes.datapedia.info/candidato/historico/" +
+                        dadosCandidato.cpf
+                      }
+                    >
+                      ver histórico
+                    </a>
+                )}
+              </div>
+            </div>
           </div>
         </div>
+        <div className="compare-person-profile">
+          <div className="compare-person-history">
+            <div style={{ marginBottom: "1rem" }}>
+              {dadosCandidato.cpf_comissoes !== undefined &&
+                ordenaCargoComissoes(dadosCandidato.cpf_comissoes).map(comissao => (
+                  <div key={comissao.comissao_id}>
+                    <span style={{ marginRight: "5px" }} className="badge badge-cargo">
+                      {comissao.cargo}
+                    </span>
+                    <span>
+                      {comissao.info_comissao.nome}
+                    </span>
+                  </div>
+                ))}
+            </div>
+          </div>
+        </div>
+        
       </div>
     );
     let hostURL = process.env.REACT_APP_FACEBOOK_REDIRECT_URI;
 
-    let linkCompartilhamento = hostURL + "parlamentar/" + this.props.match.params.candidato;
+    let linkCompartilhamento =
+      hostURL + "parlamentar/" + this.props.match.params.candidato;
 
-    let textoCompartilhamento = "Confira como " + dadosCandidato.nome_urna + " se posicionou em decisões importantes no Voz Ativa: " +
+    let textoCompartilhamento =
+      "Confira como " +
+      dadosCandidato.nome_urna +
+      " se posicionou em decisões importantes no Voz Ativa: " +
       linkCompartilhamento;
 
     const shareButtons = (
@@ -172,13 +221,17 @@ class SaibaMaisContainer extends Component {
         <h4 className="compare-title text-center pt-4">
           Calculamos um match de{" "}
           <strong className="strong">
-            {dadosCandidato.score === -1 ?
-              <OverlayTrigger
-                overlay={tooltip} placement="bottom">
-                <span className="score">{getScoreLabel(dadosCandidato.score)}</span>
-              </OverlayTrigger> :
-              <span className="score">{getScoreLabel(dadosCandidato.score)}</span>
-            }            
+            {dadosCandidato.score === -1 ? (
+              <OverlayTrigger overlay={tooltip} placement="bottom">
+                <span className="score">
+                  {getScoreLabel(dadosCandidato.score)}
+                </span>
+              </OverlayTrigger>
+            ) : (
+              <span className="score">
+                {getScoreLabel(dadosCandidato.score)}
+              </span>
+            )}
           </strong>{" "}
           <br />
           entre você e {dadosCandidato.nome_urna}
@@ -186,13 +239,13 @@ class SaibaMaisContainer extends Component {
         <Link to="/" className="btn btn-link">
           <span className="icon-back" /> Voltar para o quiz
         </Link>
+        {this.props.candidatos.isCarregando || isEmpty(dadosCandidato) ? (
+          <Spinner />
+        ) : (
+          perfilCandidato
+        )}
         <div className="row">
           <div className="col-md-3">
-            {this.props.candidatos.isCarregando || isEmpty(dadosCandidato) ? (
-              <Spinner />
-            ) : (
-                perfilCandidato
-              )}
             <h4 className="compare-title">
               O quanto vocês <strong className="strong">concordam</strong> nos
               temas:
@@ -204,8 +257,8 @@ class SaibaMaisContainer extends Component {
             {this.props.candidatos.isCarregando || isEmpty(dadosCandidato) ? (
               <Spinner />
             ) : (
-                tabela
-              )}
+              tabela
+            )}
           </div>
         </div>
         <div className="my-3">
@@ -228,7 +281,7 @@ class SaibaMaisContainer extends Component {
     let { tamPerguntas, tamVotacoes } = tamanhoRespostas();
 
     if (!isEmpty(votos) && getArrayUrl(votos).length === tamVotacoes) {
-      let respostaQuizVozAtiva = '0'.repeat(tamPerguntas);
+      let respostaQuizVozAtiva = "0".repeat(tamPerguntas);
       votosUsuario = respostaQuizVozAtiva + votos;
     } else if (isEmpty(votos)) {
       votosUsuario = "0".repeat(tamVotacoes + tamPerguntas);
@@ -246,11 +299,11 @@ class SaibaMaisContainer extends Component {
       respostasUsuario,
       arrayRespostasUsuario
     );
-    
+
     if (isAuthenticated) {
       this.props.calculaScoreUsuarioCandidato(candidato);
     }
-    
+
     const url_case = this.props.match.path;
     const PATH_COMPARE = "/parlamentar/:candidato/";
 

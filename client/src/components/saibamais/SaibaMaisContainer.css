@@ -1,23 +1,60 @@
 .compare-title {
-  margin: 2rem auto 2rem auto;
+  margin: 0 auto 2rem auto;
   max-width: 510px;
   font-weight: 700;
 }
+@media (min-width: 768px) {
+  .compare-title {
+    margin: 2.7rem auto 2rem auto;
+  }
+}
 
 .compare-person-profile {
-  padding-bottom: 2rem;
-  margin-bottom: 2rem;
-  border-bottom: solid 2px #5b2762;
+  max-width: 900px;
+  margin: auto;
+  padding-bottom: 0.5rem;
+}
+
+.compare-person-profile-pic {
+  max-width: 120px;
 }
 
 .compare-person-data {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   margin-left: 0.5rem;
+}
+
+@media (min-width: 369px) {
+  .compare-person-data {
+    height: 168px;
+  }
 }
 
 .compare-person-name {
   font-size: 1rem;
   font-weight: 700;
 }
+
+@media (min-width: 576px) {
+  .compare-person-name {
+    font-size: 1rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .compare-person-name {
+    font-size: 1rem;
+  }
+}
+
+@media (min-width: 992px) {
+  .compare-person-name {
+    font-size: 1.5rem;
+  }
+}
+
 .compare-person-detail {
   margin-bottom: 0.5rem;
 }
@@ -66,4 +103,13 @@
   .share-compare {
     float: right;
   }
+}
+
+.badge-cargo {
+  border: solid 2px #41c083;
+  color: #41c083;
+}
+
+.badge-lg {
+  font-size: 0.8rem;
 }
