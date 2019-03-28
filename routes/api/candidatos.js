@@ -29,6 +29,7 @@ const att = [
   "email",
   "sg_partido",
   "partido",
+  "n_candidatura",
   "id_parlamentar"
 ];
 
@@ -170,9 +171,9 @@ router.get("/:cpf/votacoes", (req, res) => {
   })
     .then(votacoes => {
       novaVotacao = formataVotacoes(votacoes);
-      return res.json(novaVotacao);
+      return res.json(novaVotacao[0]);
     })
-    .catch(err => res.status(400).json({ err }));
+    .catch(err => res.status(400).json({ err: err.message }));
 });
 
 module.exports = router;
