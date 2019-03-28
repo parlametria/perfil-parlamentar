@@ -35,3 +35,32 @@
     font-size: 1.2rem;
   }
 }
+
+/*Versão reduzida */
+.parlamentar-card-sm {
+  border: none;
+  margin-bottom: 1px;
+}
+.parlamentar-card-sm-body {
+  display: flex;
+  justify-content: space-between;
+}
+
+.parlamentar-card-sm-id {
+  min-width: 48px;
+  background-color: #6c757d;
+  padding: 0.1rem 0.1rem;
+  margin-right: 0.5rem;
+  color: #fff;
+  text-align: center;
+  font-size: 0.8rem;
+}
+
+.parlamentar-sm-progress {
+  width: 50px;
+}
+
+.parlamentar-sm-score {
+  margin-left: 0.5rem;
+  font-size: 0.8rem;
+}

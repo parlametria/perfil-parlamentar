@@ -13,9 +13,14 @@ import { Parlamentar } from "src/app/shared/models/parlamentar.model";
   styleUrls: ["./alinhamento.component.scss"]
 })
 export class AlinhamentoComponent implements OnInit {
-  parlamentares: Parlamentar[];
 
+  readonly VIEW_SM = "sm";
+  readonly VIEW_MD = "md";
+  readonly VIEW_LG = "lg";
+
+  parlamentares: Parlamentar[];
   p: number = 1;
+  view: string;
 
   private unsubscribe = new Subject();
 
@@ -25,6 +30,7 @@ export class AlinhamentoComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.view = this.VIEW_MD;
     this.getParlamentares();
   }
 
@@ -68,5 +74,9 @@ export class AlinhamentoComponent implements OnInit {
     currentPage: number
   ) {
     return (itensPerPage * (currentPage - 1)) + index + 1;
+  }
+
+  setView(view: string) {
+    this.view = view;
   }
 }
