@@ -1,0 +1,21 @@
+<div class="container container-sticky-footer-navbar">
+    <div>
+        <div class="person mb-4">
+            <div class="row">
+                <div class="col-4">
+                    <img src="https://via.placeholder.com/100x130">
+                </div>
+                <div class="col-8">
+                    <div class="person-data">
+                        <h6 class="person-name">{{ parlamentar?.nome_urna }}</h6>
+                        <div class="person-details">
+                            {{ parlamentar?.sg_partido }}/{{ parlamentar?.uf }} - {{ parlamentar?.n_candidatura == 0 ? 1 : parlamentar?.n_candidatura }}º MANDATO
+                       
+                    </div>
+                    <div class="person-details">DEPUTADO</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <app-sticky-footer-navbar></app-sticky-footer-navbar>
+</div>

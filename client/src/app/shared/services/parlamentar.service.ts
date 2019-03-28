@@ -22,4 +22,8 @@ export class ParlamentarService {
   getPartidosPorEstado(): Observable<any[]> {
     return this.http.get<any[]>(this.url + '/partidos');
   }
+
+  getVotacoesParlamentarPorCpf(cpf): Observable<Parlamentar> {
+    return this.http.get<Parlamentar>(this.url + '/' + cpf + '/votacoes');
+  }
 }
