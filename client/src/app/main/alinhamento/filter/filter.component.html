@@ -115,6 +115,27 @@
         </select>
       </div>
 
+      <div>
+        <p>TEMAS</p>
+        <div class="temas-container">
+          <div
+            *ngFor="let tema of temas"
+            class="mr-3"
+          >
+            <button
+              class="btn btn-outline-dark btn-block btn-tema"
+              role="button"
+              [ngClass]="{'active': isTemaSelected(tema.id), 'aria-pressed': isTemaSelected(tema.id)}"
+              (click)="selecionaTema(tema.id)"
+            >
+              <span [ngClass]="['icon-'+tema.slug, 'icon-lg']"></span>
+              <p class="btn-tema-text">{{ tema.tema }}</p>
+            </button>
+          </div>
+        </div>
+
+      </div>
+
     </div>
     <div class="text-right">
 

@@ -5,9 +5,9 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 import { estados } from '../../../shared/constants/estados';
-
 import { ParlamentarService } from '../../../shared/services/parlamentar.service';
-
+import { TemaService } from 'src/app/shared/services/tema.service';
+import { Tema } from '../../../shared/models/tema.model';
 
 @Component({
   selector: 'app-filter',
@@ -28,14 +28,17 @@ export class FilterComponent implements OnInit {
 
   estados: string[];
   partidosFiltradosPorEstado: string[];
+  temas: Tema[];
 
+  temaSelecionado: string;
   estadoSelecionado: string;
   nomePesquisado: string;
   partidoSelecionado: string;
 
   constructor(
     private modalService: NgbModal,
-    private parlamentarService: ParlamentarService
+    private parlamentarService: ParlamentarService,
+    private temaService: TemaService
   ) {
     this.estados = estados;
     this.estadoSelecionado = this.FILTRO_PADRAO_ESTADO;
@@ -54,7 +57,9 @@ export class FilterComponent implements OnInit {
         this.partidosPorEstado = partidos;
         this.onChangeEstado();
       }
-    )
+    );
+
+    this.getTemas();
   }
 
   open(content) {
@@ -76,7 +81,8 @@ export class FilterComponent implements OnInit {
     this.filtro = {
       nome: this.nomePesquisado,
       estado: this.estadoSelecionado,
-      partido: this.partidoSelecionado
+      partido: this.partidoSelecionado,
+      tema: this.temaSelecionado
     }
 
     this.filterChange.emit(this.filtro);
@@ -100,6 +106,25 @@ export class FilterComponent implements OnInit {
   limparFiltroPartido() {
     this.partidoSelecionado = this.FILTRO_PADRAO_PARTIDO;
     this.aplicarFiltro();
+  }
+
+  getTemas() {
+    this.temaService.getTemas().pipe(takeUntil(this.unsubscribe)).subscribe((temas) => {
+      this.temas = temas;
+    });
+  }
+
+  isTemaSelected(idTema: number) {
+    return this.temaSelecionado === idTema.toString(10);
+  }
+
+  selecionaTema(idTema: number) {
+    let id = idTema.toString(10);
+
+    if (this.temaSelecionado === id)
+      this.temaSelecionado = "";
+    else
+      this.temaSelecionado = id;
   }
 
 }
