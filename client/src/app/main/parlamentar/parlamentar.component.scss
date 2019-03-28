@@ -1,29 +1,52 @@
-.person{
-    margin: 1rem;
+.parlamentar {
     margin-top: 15px;
-}
-
-.person-data {
-    margin-left: 1rem;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 15px;
 }
   
-.person-name {
-    margin: 0;
+.font-bold {
     font-weight: 700;
-    font-size: medium;
 }
   
-.person-name > small {
+.parlamentar-name > small {
     border-left: solid 1px #a963b3;
     margin-left: 0.5rem;
     padding-left: 0.5rem;
 }
   
-.person-img {
+.parlamentar-img {
     -webkit-filter: grayscale(100%);
     filter: grayscale(100%);
 }
 
-.person-details {
-    font-size: small;
+.form-temas{
+    display: flex;
+    justify-content: center;
+}
+
+.form-temas-menor {
+    width: 80%;
+}
+
+.comparacao {
+    justify-content: space-between;
+    border: solid 1.5px #ebe9e9;
+    margin-bottom: 1rem;
+}
+
+.pergunta {
+    display: grid;
+    justify-content: center;
+    padding: 2rem;
+}
+
+.respostas {
+    color: white;
+    padding: 0.25rem;
+}
+
+.opiniao {
+    padding-left: 0.25rem;
+
 }

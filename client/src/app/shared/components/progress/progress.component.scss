@@ -1,0 +1,17 @@
+.progress-bordered {
+  border-left: solid 1px;
+  border-right: solid 1px;
+  border-bottom: solid 1px;
+}
+
+.progress-axis {
+  border-left: solid 1px;
+  border-right: solid 1px;
+  height: 0.5rem;
+}
+
+.progress-axis-values {
+  display: flex;
+  font-size: 0.6rem;
+  justify-content: space-between;
+}

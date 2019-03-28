@@ -1,18 +1,65 @@
 <div class="container container-sticky-footer-navbar">
-    <div>
-        <div class="person mb-4">
-            <div class="row">
-                <div class="col-4">
-                    <img src="https://via.placeholder.com/100x130">
+
+    <div class="parlamentar">
+        <div class="row gutters-sm">
+            <div class="col-2 col-sm-3">
+                <img
+                    width="100%"
+                    src="https://via.placeholder.com/100x130"
+                >
+            </div>
+            <div class="col-10 col-sm-9">
+                <div class="font-bold ">{{ parlamentar?.nome_urna }}</div>
+                <div>
+                    {{ parlamentar?.sg_partido }}/{{ parlamentar?.uf }}
                 </div>
-                <div class="col-8">
-                    <div class="person-data">
-                        <h6 class="person-name">{{ parlamentar?.nome_urna }}</h6>
-                        <div class="person-details">
-                            {{ parlamentar?.sg_partido }}/{{ parlamentar?.uf }} - {{ parlamentar?.n_candidatura == 0 ? 1 : parlamentar?.n_candidatura }}º MANDATO
-                       
-                    </div>
-                    <div class="person-details">DEPUTADO</div>
+                <div>DEPUTADO</div>
+            </div>
+        </div>
+    </div>
+    <div>
+        <form>
+            <div class="form-group form-group-plus form-temas">
+                <select
+                    class="form-control form-control-plus form-temas-menor"
+                    id="tema"
+                    [(ngModel)]="temaSelecionado"
+                    (ngModelChange)="onTemaChange()"
+                    name="tema"
+                >
+                    <option
+                        *ngFor="let tema of temas"
+                        [value]="tema.id"
+                    >
+                        {{ tema.tema }}
+                    </option>
+                </select>
+            </div>
+        </form>
+    </div>
+    <div
+        *ngFor="let proposicao of proposicoes"
+        class="comparacao"
+    >
+        <div class="pergunta">
+            <div class="font-bold ">{{ proposicao.projeto_lei }}</div>
+            <div>{{ proposicao.descricao }}</div>
+        </div>
+        <div class="row respostas gutters-sm">
+            <div class="col-6">
+                <div
+                    class="opiniao"
+                    [ngStyle]="{'background-color': getUserBackgroundColor(proposicao.id_votacao)}"
+                >
+                    EU
+                </div>
+            </div>
+            <div class="col-6">
+                <div
+                    class="opiniao"
+                    [ngStyle]="{'background-color': getParlamentarBackgroundColor(proposicao.id_votacao)}"
+                >
+                    ELE
                 </div>
             </div>
         </div>

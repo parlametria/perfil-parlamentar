@@ -32,6 +32,8 @@ import { FilterComponent } from './main/alinhamento/filter/filter.component';
 import { AlinhamentoService } from './shared/services/alinhamento.service';
 import { ParlamentarService } from './shared/services/parlamentar.service';
 import { ParlamentarComponent } from './main/parlamentar/parlamentar.component';
+import { CardParlamentarComponent } from './main/alinhamento/card-parlamentar/card-parlamentar.component';
+import { ProgressComponent } from './shared/components/progress/progress.component';
 
 
 @NgModule({
@@ -47,7 +49,9 @@ import { ParlamentarComponent } from './main/parlamentar/parlamentar.component';
     AlinhamentoComponent,
     StickyFooterNavbarComponent,
     FilterComponent,
-    ParlamentarComponent
+    ParlamentarComponent,
+    CardParlamentarComponent,
+    ProgressComponent
   ],
   imports: [
     BrowserModule,
@@ -64,15 +68,15 @@ import { ParlamentarComponent } from './main/parlamentar/parlamentar.component';
     AuthGuardService,
     TemaService,
     UserService,
-    AlinhamentoService, 
-    ParlamentarService,  
+    AlinhamentoService,
+    ParlamentarService,
     {
       provide: AuthServiceConfig,
       useFactory: getAuthServiceConfigs
     },
     {
       provide: HTTP_INTERCEPTORS,
-      useClass: TokenInterceptor,      
+      useClass: TokenInterceptor,
       multi: true
     }
   ],
