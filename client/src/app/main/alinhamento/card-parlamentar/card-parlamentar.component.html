@@ -16,9 +16,9 @@
     <div class="row gutters-sm">
       <div class="col-3">
         <img
-          [defaultImage]="'https://via.placeholder.com/100x130'"
+          [defaultImage]="'assets/imgs/nophoto.png'"
           [lazyLoad]="parlamentar.getFoto()"
-          [offset]="100"
+          [offset]="0"
           width="100%"
         >
       </div>
@@ -34,8 +34,10 @@
               [showAxis]="true"
             ></app-progress>
           </div>
-          <div class="col-2 text-right">
-            {{ parlamentar.alinhamento.alinhamento | percent }}
+          <div class="col-3 col-sm-2">
+            <div class="parlamentar-score">
+              {{ parlamentar.alinhamento.alinhamento | percent }}
+            </div>
           </div>
         </div>
       </div>
