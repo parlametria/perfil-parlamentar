@@ -21,7 +21,6 @@ import { Resposta } from 'src/app/shared/models/resposta.model';
 export class ParlamentarComponent implements OnInit {
 
   readonly FAVOR = 1;
-  readonly NAOSEI = -2;
   readonly CONTRA = -1;
 
   private unsubscribe = new Subject();
@@ -30,6 +29,8 @@ export class ParlamentarComponent implements OnInit {
   temas: Tema[];
   proposicoes: Proposicao[];
   respostas: Resposta;
+  temaSelecionado: string;
+  proposicoesFiltradas: Proposicao[];
 
   constructor(
     private parlamentarService: ParlamentarService,
@@ -64,6 +65,13 @@ export class ParlamentarComponent implements OnInit {
       .subscribe(
         temas => {
           this.temas = temas;
+          let all_temas = {
+            id: "7",
+            tema: "Todos os temas",
+            slug: "todos"
+          }
+          this.temas.push(all_temas);
+          this.temaSelecionado = "7";
         },
         error => console.log(error)
       );
@@ -76,7 +84,7 @@ export class ParlamentarComponent implements OnInit {
       .subscribe(
         proposicoes => {
           this.proposicoes = proposicoes;
-          console.log(this.proposicoes);
+          this.proposicoesFiltradas = proposicoes;
         },
         error => console.log(error)
       );
@@ -94,6 +102,16 @@ export class ParlamentarComponent implements OnInit {
         })
   }
 
+  onTemaChange() {
+    if (this.temaSelecionado === "7") {
+      this.proposicoesFiltradas = this.proposicoes;
+    } else {
+      this.proposicoesFiltradas = this.proposicoes.filter(proposicao => {
+        return proposicao.tema_id === Number(this.temaSelecionado);
+      });
+    }
+  }
+
   private getBackgroundColor(resposta) {
     if (resposta === this.CONTRA) {
       return "#7F3C8B";
@@ -109,7 +127,6 @@ export class ParlamentarComponent implements OnInit {
   }
 
   getParlamentarBackgroundColor(id_votacao) {
-    console.log(this.parlamentar.votacoes[id_votacao]);
     return(this.getBackgroundColor(this.parlamentar.votacoes[id_votacao]));
   }
 
