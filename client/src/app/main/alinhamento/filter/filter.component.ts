@@ -49,7 +49,8 @@ export class FilterComponent implements OnInit {
     this.filtro = {
       nome: "",
       estado: this.estadoSelecionado,
-      partido: this.partidoSelecionado
+      partido: this.partidoSelecionado,
+      tema: this.temaSelecionado
     }
   }
 
@@ -85,7 +86,7 @@ export class FilterComponent implements OnInit {
       estado: this.estadoSelecionado,
       partido: this.partidoSelecionado,
       tema: this.temaSelecionado
-    }
+    } 
 
     this.filterChange.emit(this.filtro);
     this.modalService.dismissAll();
@@ -111,6 +112,11 @@ export class FilterComponent implements OnInit {
     this.aplicarFiltro();
   }
 
+  limparFiltroTema() {
+    this.temaSelecionado = this.FILTRO_PADRAO_TEMA;
+    this.aplicarFiltro();
+  }
+
   getTemas() {
     this.temaService.getTemas().pipe(takeUntil(this.unsubscribe)).subscribe((temas) => {
       this.temas = temas;
@@ -126,6 +132,12 @@ export class FilterComponent implements OnInit {
       this.temaSelecionado = this.FILTRO_PADRAO_TEMA;
     else
       this.temaSelecionado = idTema;
+  }
+
+  getTemaById(id: number) {    
+    if (this.temas && id !== this.FILTRO_PADRAO_TEMA){      
+      return this.temas.filter(tema => tema.id === id)[0].tema;
+    }
   }
 
 }

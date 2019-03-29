@@ -61,8 +61,6 @@ export class AlinhamentoComponent implements OnInit {
   }
 
   pageChange(p: number) {
-    console.log(p);
-
     this.p = p;
   }
 
