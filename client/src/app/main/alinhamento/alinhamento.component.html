@@ -21,7 +21,6 @@
     </div> -->
   </div>
 
-
   <app-card-parlamentar
     *ngFor="let parlamentar of parlamentares | paginate: { itemsPerPage: 20, currentPage: p }; index as i;"
     [parlamentar]="parlamentar"
