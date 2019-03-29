@@ -32,6 +32,7 @@ import { StickyFooterNavbarComponent } from './shared/components/sticky-footer-n
 import { FilterComponent } from './main/alinhamento/filter/filter.component';
 import { AlinhamentoService } from './shared/services/alinhamento.service';
 import { ParlamentarService } from './shared/services/parlamentar.service';
+import { ParlamentarComponent } from './main/parlamentar/parlamentar.component';
 import { CardParlamentarComponent } from './main/alinhamento/card-parlamentar/card-parlamentar.component';
 import { ProgressComponent } from './shared/components/progress/progress.component';
 
@@ -49,6 +50,7 @@ import { ProgressComponent } from './shared/components/progress/progress.compone
     AlinhamentoComponent,
     StickyFooterNavbarComponent,
     FilterComponent,
+    ParlamentarComponent,
     CardParlamentarComponent,
     ProgressComponent
   ],
