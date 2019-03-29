@@ -12,12 +12,15 @@ function calcularAlinhamentos(parlamentares, respostas, proposicoes) {
 
   const temas = proposicoesTemas.map(item => item.tema_id)
     .filter((value, index, self) => self.indexOf(value) === index);
-  
+      
   let temasAlinhamento = []
 
   temas.forEach((tema) => {
+    nome_tema = proposicoesTemas.filter(value => value.tema_id === tema)[0].tema_prop.tema;
+
     obj = {
       tema_id: tema,
+      tema_nome: nome_tema,
       respostasIguais: 0,
       perguntasIguais: 0,
       alinhamento: 0

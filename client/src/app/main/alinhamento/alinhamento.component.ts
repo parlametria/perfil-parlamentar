@@ -12,10 +12,13 @@ import { Parlamentar } from "src/app/shared/models/parlamentar.model";
   templateUrl: "./alinhamento.component.html",
   styleUrls: ["./alinhamento.component.scss"]
 })
-export class AlinhamentoComponent implements OnInit {
+export class AlinhamentoComponent implements OnInit {    
+
   parlamentares: Parlamentar[];
 
   p: number = 1;
+
+  filtro: any;
 
   private unsubscribe = new Subject();
 
@@ -49,6 +52,7 @@ export class AlinhamentoComponent implements OnInit {
   }
 
   search(filtro: any) {
+    this.filtro = filtro;
     this.alinhamentoService.search(filtro);
   }
 
@@ -57,8 +61,6 @@ export class AlinhamentoComponent implements OnInit {
   }
 
   pageChange(p: number) {
-    console.log(p);
-
     this.p = p;
   }
 

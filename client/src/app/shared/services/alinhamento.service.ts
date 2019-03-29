@@ -20,7 +20,10 @@ import { environment } from "../../../environments/environment";
 export class AlinhamentoService {
   private url = environment.apiUrl + "alinhamento";
 
+  readonly FILTRO_PADRAO_TEMA = -1;
+
   private searchfilters = new Subject<any>();
+  private tema: number;
 
   parlamentaresFiltered = new BehaviorSubject<Array<Parlamentar>>([]);
   parlamentares = new BehaviorSubject<Array<Parlamentar>>([]);
@@ -36,7 +39,20 @@ export class AlinhamentoService {
             startWith(parlamentar)
           )
         ),
-        tap(parlamentares => parlamentares.sort((a, b) => this.sort(a, b)))
+        tap(parlamentares => {          
+          let temaIndex;
+
+          if (parlamentares.length !== 0)
+            temaIndex = parlamentares[0].alinhamento.temas.findIndex(res => res.tema_id === this.tema);          
+          
+          return parlamentares.sort((a, b) => {
+            if (this.tema !== undefined && this.tema !== this.FILTRO_PADRAO_TEMA) {
+              return this.sortTema(a, b, temaIndex);
+            } else {
+              return this.sort(a, b);
+            }
+          })
+        }),
       )
       .subscribe(res => {
         this.parlamentaresFiltered.next(res);
@@ -56,6 +72,7 @@ export class AlinhamentoService {
 
   search(filters: any) {
     this.searchfilters.next(filters);
+    this.tema = filters.tema;
   }
 
   private filter(parlamentar: Parlamentar[], filters: any) {
@@ -106,4 +123,27 @@ export class AlinhamentoService {
     }
     return 0;
   }
+
+  /**
+ * Ordena o resultado do alinhamento pelos seguintes critérios considerando um tema específico:
+ *
+ * 1. alinhamento no tema
+ * 2. respostas iguais no tema
+ *
+ * @param a
+ * @param b
+ */
+  private sortTema(a: Parlamentar, b: Parlamentar, index: number) {
+    if (a.alinhamento.temas[index].alinhamento > b.alinhamento.temas[index].alinhamento) {
+      return -1;
+    } else if (a.alinhamento.temas[index].alinhamento < b.alinhamento.temas[index].alinhamento) {
+      return 1
+    } else if (a.alinhamento.temas[index].respostasIguais > b.alinhamento.temas[index].respostasIguais) {
+      return -1;
+    } else if (a.alinhamento.temas[index].respostasIguais < b.alinhamento.temas[index].respostasIguais) {
+      return 1;
+    }
+    return 0;
+  }
+  
 }

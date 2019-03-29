@@ -6,8 +6,9 @@ module.exports = (sequelize, type) => {
       id: {
         type: type.INTEGER,
         primaryKey: true
-      }
-    },
+      },
+      slug: type.STRING
+    },    
     {
       timestamps: false
     }
@@ -20,7 +21,8 @@ module.exports = (sequelize, type) => {
     }),
       tema.hasMany(models.proposicao, {
         foreignKey: "tema_id",
-        as: "tema_prop"
+        targetKey: "id",
+        as: "prop_tema",        
       });
   };
   return tema;

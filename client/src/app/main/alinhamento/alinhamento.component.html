@@ -26,6 +26,7 @@
     *ngFor="let parlamentar of parlamentares | paginate: { itemsPerPage: 20, currentPage: p }; index as i;"
     [parlamentar]="parlamentar"
     [id]="getParlamentarPosition(i, 20, p)"
+    [tema]="filtro?.tema"
     (followChecked)="onFollow($event)"
   ></app-card-parlamentar>
 

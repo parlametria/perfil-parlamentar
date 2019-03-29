@@ -19,7 +19,8 @@
         class="btn btn-primary"
         (click)="open(content)"
       >
-        <span class="icon-sliders"></span> Filtros
+        <span class="icon-sliders"></span>
+        Filtros
       </button>
     </div>
     <div
@@ -42,8 +43,9 @@
         <span class="icon-x"></span>
       </button>
     </div>
+
     <div
-      class="btn-group mb-1"
+      class="btn-group mr-1 mb-1"
       role="group"
       aria-label="Filtro de Estado"
       [hidden]="filtro.partido == FILTRO_PADRAO_PARTIDO"
@@ -62,6 +64,28 @@
         <span class="icon-x"></span>
       </button>
     </div>
+
+    <div
+      class="btn-group mb-1"
+      role="group"
+      aria-label="Filtro de Tema"
+      [hidden]="filtro.tema == FILTRO_PADRAO_TEMA"
+    >
+      <button
+        type="button"
+        class="btn btn-primary btn-sm"
+      >
+        {{getTemaById(temaSelecionado)}}        
+      </button>
+      <button
+        type="button"
+        class="btn btn-primary btn-sm"
+        (click)="limparFiltroTema()"
+      >
+        <span class="icon-x"></span>
+      </button>
+    </div>
+
   </div>
 
 </div>
@@ -115,6 +139,27 @@
             {{partido}}
           </option>
         </select>
+      </div>
+
+      <div class="mb-2">
+        <p>TEMAS</p>
+        <div class="temas-container">
+          <div
+            *ngFor="let tema of temas"
+            class="mr-3"
+          >
+            <button
+              class="btn btn-outline-dark btn-block btn-tema"
+              role="button"
+              [ngClass]="{'active': isTemaSelected(tema.id), 'aria-pressed': isTemaSelected(tema.id)}"
+              (click)="selecionaTema(tema.id)"
+            >
+              <span [ngClass]="['icon-'+tema.slug, 'icon-lg']"></span>
+              <p class="btn-tema-text">{{ tema.tema }}</p>
+            </button>
+          </div>
+        </div>
+
       </div>
 
     </div>
