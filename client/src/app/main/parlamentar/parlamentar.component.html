@@ -5,7 +5,7 @@
 
   <div class="parlamentar">
     <div class="row gutters-sm">
-      <div class="col-3">
+      <div class="col-4 col-sm-5">
         <img
           [defaultImage]="'https://via.placeholder.com/100x130'"
           [lazyLoad]="parlamentar.getFoto()"
@@ -47,7 +47,7 @@
       <div>
         <strong>{{ proposicao.projeto_lei }}</strong>
       </div>
-      <div>{{ proposicao.descricao }}</div>
+      <div>{{ proposicao.titulo }}</div>
     </div>
     <div class="row respostas gutters-sm">
       <div class="col-6">
