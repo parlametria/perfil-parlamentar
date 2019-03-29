@@ -16,7 +16,7 @@ export class TemasComponent implements OnInit, OnDestroy {
   private unsubscribe = new Subject();
 
   temas: Tema[];
-  selectedTemas: string[] = [];
+  selectedTemas: number[] = [];
   hasAnySelectedTema: boolean = false;
 
   @Output() temasEvent = new EventEmitter<Object>();

@@ -23,7 +23,7 @@ export class PerguntasContainerComponent implements OnInit, OnDestroy {
 
   private unsubscribe = new Subject();
 
-  temaSelecionado: string;
+  temaSelecionado: number;
 
   listaTemas: Tema[];
   listaProposicoes: Proposicao[];
@@ -67,7 +67,7 @@ export class PerguntasContainerComponent implements OnInit, OnDestroy {
             this.temaSelecionado = this.listaTemas[0].id;
           } else {
             this.listaTemas = temas;
-            this.temaSelecionado = "3";
+            this.temaSelecionado = 3;
           }
         },
         error => console.log(error)
@@ -151,7 +151,7 @@ export class PerguntasContainerComponent implements OnInit, OnDestroy {
 
     if (index === this.todasProposicoesOrdenadas.length - 1) {
       // Usuário finalizou questionário
-      this.temaSelecionado = this.receivedTemas[0].toString();
+      this.temaSelecionado = this.receivedTemas[0];
       this.onTemaChange();
     } else {
       // Passa para próxima pergunta
@@ -159,7 +159,7 @@ export class PerguntasContainerComponent implements OnInit, OnDestroy {
 
       // Checa se a próxima pergunta é do mesmo tema ou não
       if (proximaPergunta.tema_id !== this.perguntaSelecionada.tema_id) {
-        this.temaSelecionado = proximaPergunta.tema_id.toString();
+        this.temaSelecionado = proximaPergunta.tema_id;
         this.onTemaChange();
       } else {
         this.escolhePergunta(proximaPergunta.id_votacao);
