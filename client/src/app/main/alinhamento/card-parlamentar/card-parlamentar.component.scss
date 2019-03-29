@@ -28,8 +28,16 @@
   font-weight: 700;
 }
 
-.progress {
-  border-bottom: solid 1px;
-  border-right: solid 1px;
-  border-left: solid 1px;
+.parlamentar-score {
+  text-align: right;
+
+  @media (min-width: 576px) {
+    font-size: 1.2rem;
+  }
+}
+
+.parlamentar-compatibilidade-text {
+  display:inline-block;
+  font-size: 0.8rem;
+  line-height: 1;  
 }

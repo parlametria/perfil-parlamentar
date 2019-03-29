@@ -3,3 +3,20 @@
   flex-direction: column;
   justify-content: space-between;
 }
+
+.temas-container {
+  display: flex;
+  overflow-x: auto;
+}
+
+.btn-tema {
+  min-height: 150px;
+  width: 180px;
+}
+
+.btn-tema-text {
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  margin: 0;
+  padding: 0;
+}

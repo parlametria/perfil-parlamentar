@@ -13,6 +13,7 @@ const { calcularAlinhamentos } = require("../../utils/alinhamento");
 const Candidato = models.candidato;
 const Votacao = models.votacao;
 const Proposicao = models.proposicao;
+const Tema = models.tema;
 
 const att = [
   "cpf",
@@ -51,6 +52,12 @@ router.post("/", (req, res) => {
   }).then(parlamentares => {
     Proposicao.findAll({
       attributes: ["id_votacao", "tema_id"],
+      include: [{
+        attributes: ["tema"],
+        model: Tema,
+        as: "tema_prop",
+        required: false
+      }],
       where: {
         status_proposicao: "Ativa"
       }
