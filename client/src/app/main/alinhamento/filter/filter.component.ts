@@ -63,6 +63,7 @@ export class FilterComponent implements OnInit {
     );
 
     this.getTemas();
+    this.filterChange.emit(this.filtro);
   }
 
   open(content) {
