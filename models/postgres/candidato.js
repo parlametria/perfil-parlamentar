@@ -35,7 +35,7 @@ module.exports = (sequelize, type) => {
       timestamps: false
     }
   );
-  candidato.associate = function(models) {
+  candidato.associate = function (models) {
     candidato.hasMany(models.resposta, {
       foreignKey: "cpf",
       as: "cpf_resp"
@@ -43,7 +43,12 @@ module.exports = (sequelize, type) => {
       candidato.hasMany(models.votacao, {
         foreignKey: "cpf",
         as: "cpf_vot"
-      });
+      }),
+      candidato.hasMany(models.composicaoComissoes, {
+        foreignKey: "parlamentar_cpf",
+        targetKey: "cpf",      
+        as: "cpf_comissoes"
+      })
   };
   return candidato;
 };

@@ -1,0 +1,45 @@
+.howtoStep01 {
+  display: flex;
+  height: 200px;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+@media (min-width: 768px) {
+  .howtoStep01Text01 {
+    height: 215px;
+    text-align: right;
+    padding-top: 50px;
+  }
+  .howtoStep01Text02 {
+    padding-top: 100px;
+  }
+
+  .howtoStep02Text01 {
+    height: 215px;
+    text-align: right;
+    padding-top: 25px;
+  }
+
+  .howtoStep02Text02 {
+    height: 215px;
+    display: flex;
+    align-items: center;
+  }
+}
+
+
+.howtoStep02 {
+  height: 215px;
+}
+
+.bolinha {
+  display: inline-block;
+  background-color: #a865b2;
+  color: #fff;
+  width: 22px;
+  height: 22px;
+  line-height: 22px;
+  border-radius: 50%;
+  text-align: center;
+}

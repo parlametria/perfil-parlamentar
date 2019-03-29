@@ -11,7 +11,7 @@ const createToken = function(auth) {
     },
     keys.secretOrKey,
     {
-      expiresIn: 60 * 120
+      expiresIn: 60 * 43200 // 30 dias
     }
   );
 };

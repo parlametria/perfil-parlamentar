@@ -64,7 +64,8 @@ router.get("/votacoes", (req, res) => {
           where: { status_proposicao: "Ativa" }
         }
       }
-    ]
+    ],
+    where: { eleito: true }
   })
     .then(votacoes => {
       novaVotacao = formataVotacoes(votacoes);

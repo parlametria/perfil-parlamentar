@@ -7,7 +7,7 @@ class FinalVotacoes extends Component {
       <div>
         <FinalPerguntas>
           <h4 className="text-center p-3">
-            Você já votou em todas as proposições!
+            Você já votou em todas as posições!
           </h4>
           <p>
             <strong className="strong">Veja</strong> quem está alinhado à você
@@ -16,11 +16,7 @@ class FinalVotacoes extends Component {
           <p>
             <strong className="strong">Examine</strong> a atuação anterior dos
             deputados reeleitos.
-          </p>
-          <p>
-            <strong className="strong">Compartilhe</strong> suas respostas nas
-            redes sociais.
-          </p>
+          </p>          
         </FinalPerguntas>
       </div>
     );

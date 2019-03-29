@@ -54,57 +54,14 @@ class FinalPerguntas extends Component {
       "Veja minhas posições no Voz Ativa! " + linkCompartilhamento;
     return (
       <div className="container tutorial p-3">
-        <div>{this.props.children}</div>
-        <div className="row justify-content-center">
-          <a
-            href={
-              "https://twitter.com/intent/tweet/?text=" + textoCompartilhamento
-            }
-            data-show-count="false"
-            className="nav-link"
-            target="_blank"
-          >
-            <span className="icon-twitter share-icon" />
-          </a>
-          <a
-            href={
-              "https://www.facebook.com/sharer/sharer.php?u=" +
-              linkCompartilhamento
-            } 
-            data-show-count="false"
-            className="nav-link"
-            target="_blank"
-          >
-            <span className="icon-facebook share-icon" />
-          </a>
-          {isMobile && (
-            <a
-              href={"whatsapp://send?text=" + textoCompartilhamento}
-              className="nav-link"
-            >
-              <span className="icon-zapzap share-icon" />
-            </a>
-          )}
-          {!isMobile && (
-            <a
-              href={
-                "https://web.whatsapp.com/send?text=" + textoCompartilhamento
-              }
-              data-show-count="false"
-              className="nav-link"
-              target="_blank"
-            >
-              <span className="icon-zapzap share-icon" />
-            </a>
-          )}
-        </div>
+        <div>{this.props.children}</div>        
         <br/>
         <div className="text-center">
           <button
             className="btn btn-outline-primary"
             onClick={this.continuarRespondendo}
           >
-            Continuar respondendo
+            Revisar posições
           </button>
         </div>
       </div>
