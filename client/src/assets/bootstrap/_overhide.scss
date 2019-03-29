@@ -65,7 +65,8 @@
 /* MODAL */
 .modal-content {
   @media (max-width: 575.98px) {
-    height: calc(80vh - #{$modal-dialog-margin + 'px'});
+    height: calc(100vh - 20px - #{$modal-dialog-margin + 'px'});
+    overflow-y: auto;
   }
 }
 
