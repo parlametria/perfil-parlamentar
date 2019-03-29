@@ -30,7 +30,8 @@ const att = [
   "sg_partido",
   "partido",
   "n_candidatura",
-  "id_parlamentar"
+  "id_parlamentar",
+  "genero"
 ];
 
 /**
