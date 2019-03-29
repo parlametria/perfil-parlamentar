@@ -10,12 +10,12 @@ import { AlinhamentoComponent } from './main/alinhamento/alinhamento.component';
 import { ParlamentarComponent } from './main/parlamentar/parlamentar.component';
 
 const routes: Routes = [
-  { path: '', component: HomeComponent },
-  { path: 'login', component: LoginComponent },
-  { path: 'questionario', component: QuestionarioComponent },
-  { path: 'alinhamento', component: AlinhamentoComponent },
-  { path: 'parlamentar/:cpf', component: ParlamentarComponent }, 
-  { path: '**', component: HomeComponent }
+  { path: '', component: HomeComponent, data: { animation: 'HomeComponent' } },
+  { path: 'login', component: LoginComponent, data: { animation: 'LoginComponent' } },
+  { path: 'questionario', component: QuestionarioComponent, data: { animation: 'QuestionarioComponent' } },
+  { path: 'alinhamento', component: AlinhamentoComponent, data: { animation: 'AlinhamentoComponent' } },
+  { path: 'parlamentar/:cpf', component: ParlamentarComponent, data: { animation: 'AlinhamentoComponent' } },
+  { path: '**', component: HomeComponent, data: { animation: 'HomeComponent' } }
 ];
 
 @NgModule({
