@@ -11,6 +11,8 @@ import isEmpty from "../../validation/is-empty";
 import BoasVindas from "./BoasVindas";
 import ContinueVotando from "./ContinueVotando";
 
+import { setComissoes } from "../../actions/candidatosActions";
+
 import {
   calculaScore,
   getTopNCandidatos,
@@ -59,6 +61,7 @@ class CandidatosContainer extends Component {
     this.onSearch$ = new Subject();
     this.buscaNome = this.buscaNome.bind(this);
     this.buscaPartido = this.buscaPartido.bind(this);
+    this.filtraComissao = this.filtraComissao.bind(this);
     this.buscaReeleitos = this.buscaReeleitos.bind(this);
     this.buscaRespondeu = this.buscaRespondeu.bind(this);
     this.pegaPrimeiraPagina = this.pegaPrimeiraPagina.bind(this);
@@ -161,7 +164,8 @@ class CandidatosContainer extends Component {
       estado: filtro.estado,
       reeleicao: filtro.reeleicao,
       respondeu: filtro.respondeu,
-      tema: filtro.tema
+      tema: filtro.tema,
+      comissao: filtro.comissao
     };
 
     this.setState({ isPesquisando: true });
@@ -180,7 +184,27 @@ class CandidatosContainer extends Component {
       estado: filtro.estado,
       reeleicao: filtro.reeleicao,
       respondeu: filtro.respondeu,
-      tema: filtro.tema
+      tema: filtro.tema,
+      comissao: filtro.comissao
+    };
+
+    this.props.setFiltroCandidatos(novoFiltro);
+    this.props.setCandidatosFiltrados();
+  }
+
+  filtraComissao(e) {
+    e.preventDefault();
+
+    const { filtro } = this.props.candidatos;
+
+    let novoFiltro = {
+      nome: filtro.nome,
+      partido: filtro.partido,
+      estado: filtro.estado,
+      reeleicao: filtro.reeleicao,
+      respondeu: filtro.respondeu,
+      tema: filtro.tema,
+      comissao: e.target.value
     };
 
     this.props.setFiltroCandidatos(novoFiltro);
@@ -196,7 +220,8 @@ class CandidatosContainer extends Component {
       estado: filtro.estado,
       reeleicao: filtro.reeleicao === "1" ? "-1" : "1",
       respondeu: filtro.respondeu,
-      tema: filtro.tema
+      tema: filtro.tema,
+      comissao: filtro.comissao
     };
 
     this.props.setFiltroCandidatos(novoFiltro);
@@ -212,7 +237,8 @@ class CandidatosContainer extends Component {
       estado: filtro.estado,
       reeleicao: filtro.reeleicao,
       respondeu: filtro.respondeu === "1" ? "-1" : "1",
-      tema: filtro.tema
+      tema: filtro.tema,
+      comissao: filtro.comissao
     };
 
     this.props.setFiltroCandidatos(novoFiltro);
@@ -230,7 +256,8 @@ class CandidatosContainer extends Component {
       estado: filtro.estado,
       reeleicao: filtro.reeleicao,
       respondeu: filtro.respondeu,
-      tema: e.target.value
+      tema: e.target.value,
+      comissao: filtro.comissao
     };
 
     this.props.setFiltroCandidatos(novoFiltro);
@@ -249,32 +276,30 @@ class CandidatosContainer extends Component {
       estado: e.target.value,
       reeleicao: filtro.reeleicao,
       respondeu: filtro.respondeu,
-      tema: filtro.tema
+      tema: filtro.tema,
+      comissao: filtro.comissao
     };
 
-    if (novoFiltro.estado === "TODOS") {
+    if (novoFiltro.estado === "Estados") {
       this.props.setActiveTab("eleitos");
     }
 
-    this.props.setFiltroCandidatos(novoFiltro);
+    this.props.setFiltroCandidatos(novoFiltro);    
     this.props.getDadosCandidatos();
-    this.props.setCandidatosFiltrados();
+    this.props.setCandidatosFiltrados();        
   }
 
   render() {
     const {
       dadosCandidatos,
       scoreCandidatos,
-      totalResponderamEstado,
-      totalRespostasEstado,
-      totalResponderamPartido,
-      totalRespostasPartido,
       totalEleitosEstado,
       isCarregando,
       isFiltrandoPorNome,
       mostrarTodos,
       partidos,
-      activeTab
+      activeTab,
+      comissoes
     } = this.props.candidatos;
 
     const isVotacoesCarregando = this.props.votacoes.isCarregando;
@@ -297,17 +322,19 @@ class CandidatosContainer extends Component {
         filtro.partido !== "Partidos" ||
         filtro.reeleicao !== "-1" ||
         filtro.respondeu !== "-1" ||
-        filtro.estado !== "TODOS"
+        filtro.comissao !== "Comissões" ||
+        filtro.estado !== "Estados"
         ? candidatosFiltrados
         : candidatosRanqueados;
 
     let totalCandAtuacao = 0;
-        
+    let totalEstado = candidatosMapeaveis.length;
+
     const candidatos = candidatosMapeaveis.map(cpf => {
       const candidato = dadosCandidatos[cpf];
 
       if (!isEmpty(candidato)) {
-        if (candidato.reeleicao === "1") totalCandAtuacao++;
+        if (candidato.reeleicao === "1") totalCandAtuacao++;        
         return (
           <Candidato
             respondeu={candidato.respondeu}
@@ -317,7 +344,6 @@ class CandidatosContainer extends Component {
             siglaPartido={candidato.sg_partido}
             estado={candidato.uf}
             score={scoreCandidatos[candidato.cpf]}
-            respostas={candidato.respostas}
             foto={
               candidato.tem_foto
                 ? "https://s3-sa-east-1.amazonaws.com/fotoscandidatos2018/fotos_tratadas/img_" +
@@ -335,6 +361,7 @@ class CandidatosContainer extends Component {
             }
             eleito={candidato.eleito}
             temHistorico={votacoesCandidatos[candidato.cpf] !== undefined}
+            comissoes={candidato.cpf_comissoes}
           />
         );
       }
@@ -344,6 +371,12 @@ class CandidatosContainer extends Component {
     const listaSelectPartidos = partidos.map(partido => (
       <option key={partido} value={partido}>
         {partido}
+      </option>
+    ));
+
+    const listaSelectComissoes = comissoes.map(comissao => (
+      <option key={comissao} value={comissao}>
+        {comissao}
       </option>
     ));
 
@@ -379,22 +412,22 @@ class CandidatosContainer extends Component {
       <div>
         {activeTab === "eleitos" &&
           abaAtiva === "Votacoes" &&
-          filtro.estado !== "TODOS" && (
+          filtro.estado !== "Estados" && (
             <h5>
               Nesse Estado,{" "}
               <strong className="strong">{totalCandAtuacao}</strong> dos{" "}
-              <strong className="strong">{totalEleitosEstado}</strong>{" "}
+              <strong className="strong">{totalEstado}</strong>{" "}
               deputados/as tem atuação anterior na câmara.
             </h5>
           )}
 
         {activeTab === "eleitos" &&
           abaAtiva === "Votacoes" &&
-          filtro.estado === "TODOS" && (
+          filtro.estado === "Estados" && (
             <h5>
               {" "}
               <strong className="strong">{totalCandAtuacao}</strong> dos{" "}
-              <strong className="strong">{totalEleitosEstado}</strong>{" "}
+              <strong className="strong">{totalEstado}</strong>{" "}
               deputados/as tem atuação anterior na câmara.
             </h5>
           )}
@@ -487,7 +520,7 @@ class CandidatosContainer extends Component {
                         </div>
                       </div>
                       <div className="form-row">
-                        <div className="form-group col-4">
+                        <div className="form-group col-6">
                           <select
                             className="form-control form-control-secondary barra-filtro-candidato"
                             onChange={this.selecionaEstado}
@@ -497,7 +530,7 @@ class CandidatosContainer extends Component {
                             {estados()}
                           </select>
                         </div>
-                        <div className="form-group col-4">
+                        <div className="form-group col-6">
                           <select
                             className="form-control form-control-secondary barra-filtro-candidato"
                             placeholder="Partidos"
@@ -507,7 +540,7 @@ class CandidatosContainer extends Component {
                             {listaSelectPartidos}
                           </select>
                         </div>
-                        <div className="form-group col-4">
+                        <div className="form-group col-6">
                           <select
                             className="form-control form-control-secondary barra-filtro-candidato"
                             placeholder="Temas"
@@ -515,6 +548,16 @@ class CandidatosContainer extends Component {
                             value={filtro.tema}
                           >
                             {listaSelectTemas}
+                          </select>
+                        </div>
+                        <div className="form-group col-6">
+                          <select
+                            className="form-control form-control-secondary barra-filtro-candidato"
+                            placeholder="Comissões"
+                            onChange={this.filtraComissao}
+                            value={filtro.comissao}
+                          >
+                            {listaSelectComissoes}
                           </select>
                         </div>
                       </div>
@@ -599,6 +642,8 @@ class CandidatosContainer extends Component {
   }
 
   componentDidMount() {
+    this.props.setComissoes();
+
     this.subscription = this.onSearch$
       .pipe(debounceTime(DEBOUNCE_TIME))
       .subscribe(debounced => {
@@ -626,7 +671,8 @@ CandidatosContainer.propTypes = {
   setPartidos: PropTypes.func.isRequired,
   setPaginacao: PropTypes.func.isRequired,
   getProximaPaginaCandidatos: PropTypes.func.isRequired,
-  setActiveTab: PropTypes.func.isRequired
+  setActiveTab: PropTypes.func.isRequired,
+  setComissoes: PropTypes.func.isRequired
 };
 const mapStateToProps = state => ({
   candidatos: state.candidatosReducer,
@@ -646,6 +692,7 @@ export default connect(
     setPartidos,
     setPaginacao,
     getProximaPaginaCandidatos,
-    setActiveTab
+    setActiveTab,
+    setComissoes
   }
 )(CandidatosContainer);

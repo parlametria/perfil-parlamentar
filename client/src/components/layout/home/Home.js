@@ -114,7 +114,8 @@ class Home extends Component {
           estado: estado,
           reeleicao: "-1",
           respondeu: "-1",
-          tema: "Temas"
+          tema: "Temas",
+          comissao: "Comissões"
         };
 
         this.props.setFiltroCandidatos(filtroEstado);

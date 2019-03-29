@@ -9,14 +9,13 @@ import { getScoreWidth, getScoreLabel } from "../../utils/scoreValueFunctions";
 
 import "./candidato.css";
 
+import Comissao from './Comissao';
+
 class Candidato extends Component {
   render() {
-    const badgeNaoRespondeu = (
-      <span className="badge badge-secondary">não respondeu</span>
-    );
-
     const badgeNaoTemVotacoes = (
-      <span className="badge badge-secondary">não atuou</span>
+      <span style={{ marginLeft: "5px" }}
+        className="badge badge-light">não atuou</span>
     );
 
     const verAtuacao = (
@@ -34,6 +33,30 @@ class Candidato extends Component {
       </Link>
     );
 
+    const filtraComissoes = (comissoes) => {
+      let comissoes_suplente = comissoes.
+        filter(comissao => comissao.cargo === "Suplente").
+        length;
+
+      let comissoes_filtradas = comissoes.
+        filter(comissao => comissao.cargo !== "Suplente");
+
+      if (comissoes_suplente > 0) {
+        let outras_comissoes = {
+          comissao_id: "0",
+          cargo: "",
+          info_comissao: {
+            sigla: "+ " + comissoes_suplente,
+            nome: comissoes_suplente == 1 ?
+              "O/A parlamentar é suplente em " + comissoes_suplente + " comissão." :
+              "O/A parlamentar é suplente em " + comissoes_suplente + " comissões."
+          }
+        }
+        comissoes_filtradas.push(outras_comissoes);
+      }
+      return (comissoes_filtradas);
+    };
+
     const naoRespondeu = (
       <div>
         <div>
@@ -44,6 +67,19 @@ class Candidato extends Component {
 
     const tooltip = (
       <Tooltip>Não existem respostas suficientes para o cálculo preciso do alinhamento</Tooltip>
+    );
+
+    const TitularComissao = (props) => (
+      <OverlayTrigger
+        overlay={
+          <Tooltip> {props.comissao.comissao_id === "0" ?
+            props.comissao.info_comissao.nome :
+            props.comissao.cargo + ' na ' + props.comissao.info_comissao.nome}
+          </Tooltip>}>
+        <span style={{ marginRight: "5px" }} className="badge badge-success">
+          {props.comissao.info_comissao.sigla}
+        </span>
+      </OverlayTrigger>
     );
 
     const barraScore = (
@@ -101,11 +137,11 @@ class Candidato extends Component {
                 <h5 className="person-name">{this.props.nome}</h5>
                 <div>
                   {this.props.siglaPartido}/{this.props.estado}
-                </div>
-                <div className="pb-1">
                   {this.props.reeleicao && !this.props.reeleito && (
                     <span
-                      style={{ marginRight: "5px" }}
+                      style={{
+                        marginLeft: "5px"
+                      }}
                       className="badge badge-success"
                     >
                       reeleição
@@ -113,17 +149,26 @@ class Candidato extends Component {
                   )}
                   {this.props.reeleito && (
                     <span
-                      style={{ marginRight: "5px" }}
-                      className="badge badge-success"
+                      style={{
+                        marginLeft: "5px"
+                      }}
+                      className="badge badge-secondary"
                     >
                       reeleito/a
                     </span>
                   )}
                   {!this.props.temHistorico && badgeNaoTemVotacoes}
                 </div>
-                {this.props.temHistorico
-                  ? barraScore
-                  : naoRespondeu}
+                <div className="pb-1">
+                  {filtraComissoes(this.props.comissoes).
+                    map(comissao =>
+                      <Comissao key={comissao.comissao_id}
+                        comissao={comissao} />
+                    )}
+                  {this.props.temHistorico
+                    ? barraScore
+                    : naoRespondeu}
+                </div>
               </div>
             </div>
           </div>
@@ -140,11 +185,11 @@ Candidato.propTypes = {
   siglaPartido: PropTypes.string.isRequired,
   estado: PropTypes.string.isRequired,
   score: PropTypes.number.isRequired,
-  respostas: PropTypes.any.isRequired,
   foto: PropTypes.string.isRequired,
   respostasUsuario: PropTypes.instanceOf(Object),
   email: PropTypes.string.isRequired,
-  eleito: PropTypes.bool.isRequired
+  eleito: PropTypes.bool.isRequired,
+  comissoes: PropTypes.instanceOf(Object)
 };
 
 export default Candidato;
