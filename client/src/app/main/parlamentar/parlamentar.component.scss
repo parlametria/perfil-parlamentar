@@ -1,52 +1,45 @@
 .parlamentar {
-    margin-top: 15px;
-    display: flex;
-    justify-content: center;
-    margin-bottom: 15px;
-}
-  
-.font-bold {
-    font-weight: 700;
-}
-  
-.parlamentar-name > small {
-    border-left: solid 1px #a963b3;
-    margin-left: 0.5rem;
-    padding-left: 0.5rem;
-}
-  
-.parlamentar-img {
-    -webkit-filter: grayscale(100%);
-    filter: grayscale(100%);
+  margin-top: 15px;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 15px;
 }
 
-.form-temas{
-    display: flex;
-    justify-content: center;
-}
-
-.form-temas-menor {
-    width: 80%;
+.parlamentar-title {
+  font-weight: 700;
 }
 
 .comparacao {
-    justify-content: space-between;
-    border: solid 1.5px #ebe9e9;
-    margin-bottom: 1rem;
+  justify-content: space-between;
+  border: solid 1.5px #ebe9e9;
+  margin-bottom: 1rem;
 }
 
 .pergunta {
-    display: grid;
-    justify-content: center;
+  padding: 1rem;
+
+  @media (min-width: 576px) {
     padding: 2rem;
+  }
 }
 
 .respostas {
-    color: white;
-    padding: 0.25rem;
+  color: white;
 }
 
 .opiniao {
-    padding-left: 0.25rem;
+  padding: 0.25rem;
+}
 
+.opiniao-positiva {
+  background-color: #43a467;
+}
+
+.opiniao-negativa {
+  background-color: #7f3c8b;
+}
+
+.opiniao-neutra {
+  background-color: #ebe9e9;
+  color: #20201E;
 }

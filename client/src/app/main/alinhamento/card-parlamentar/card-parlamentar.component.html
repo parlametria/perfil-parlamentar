@@ -15,12 +15,14 @@
   <div class="parlamentar-card-body">
     <div class="row gutters-sm">
       <div class="col-3">
-        <img
-          [defaultImage]="'https://via.placeholder.com/100x130'"
-          [lazyLoad]="parlamentar.getFoto()"
-          [offset]="100"
-          width="100%"
-        >
+        <a [routerLink]="['/parlamentar', parlamentar.cpf]">
+          <img
+            [defaultImage]="'https://via.placeholder.com/100x130'"
+            [lazyLoad]="parlamentar.getFoto()"
+            [offset]="100"
+            width="100%"
+          >
+        </a>
       </div>
       <div class="col-9">
         <div class="parlamentar-title">{{ parlamentar.nome_urna }}</div>
@@ -39,6 +41,9 @@
           </div>
         </div>
       </div>
+    </div>
+    <div class="text-right">
+      <a class="btn btn-link" [routerLink]="['/parlamentar', parlamentar.cpf]">+ detalhes</a>
     </div>
   </div>
 </div>

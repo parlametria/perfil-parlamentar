@@ -1,25 +1,25 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit } from "@angular/core";
+import { ActivatedRoute } from "@angular/router";
 
-import { Subject } from 'rxjs';
-import { takeUntil, take } from 'rxjs/operators';
+import { Subject } from "rxjs";
+import { takeUntil, take } from "rxjs/operators";
 
-import { ParlamentarService } from './../../shared/services/parlamentar.service';
-import { TemaService } from './../../shared/services/tema.service';
-import { PerguntaService } from './../../shared/services/pergunta.service';
-import { UserService } from './../../shared/services/user.service';
+import { ParlamentarService } from "./../../shared/services/parlamentar.service";
+import { TemaService } from "./../../shared/services/tema.service";
+import { PerguntaService } from "./../../shared/services/pergunta.service";
+import { UserService } from "./../../shared/services/user.service";
 
-import { Parlamentar } from 'src/app/shared/models/parlamentar.model';
-import { Tema } from 'src/app/shared/models/tema.model';
-import { Proposicao } from 'src/app/shared/models/proposicao.model';
-import { Resposta } from 'src/app/shared/models/resposta.model';
+import { Parlamentar } from "src/app/shared/models/parlamentar.model";
+import { Tema } from "src/app/shared/models/tema.model";
+import { Proposicao } from "src/app/shared/models/proposicao.model";
+import { Resposta } from "src/app/shared/models/resposta.model";
 
 @Component({
-  selector: 'app-parlamentar',
-  templateUrl: './parlamentar.component.html',
-  styleUrls: ['./parlamentar.component.scss']
+  selector: "app-parlamentar",
+  templateUrl: "./parlamentar.component.html",
+  styleUrls: ["./parlamentar.component.scss"]
 })
 export class ParlamentarComponent implements OnInit {
-
   readonly FAVOR = 1;
   readonly CONTRA = -1;
 
@@ -33,29 +33,34 @@ export class ParlamentarComponent implements OnInit {
   proposicoesFiltradas: Proposicao[];
 
   constructor(
+    private route: ActivatedRoute,
     private parlamentarService: ParlamentarService,
     private temaService: TemaService,
     private perguntaService: PerguntaService,
     private userService: UserService
-  ) { }
+  ) {}
 
   ngOnInit() {
-    this.getParlamentarByCpf();
+    let cpf = this.route.snapshot.paramMap.get("cpf");
+
+    this.getParlamentarByCpf(cpf);
     this.getTemas();
     this.getProposicoes();
     this.getRespostas();
   }
 
-  getParlamentarByCpf() {
+  getParlamentarByCpf(cpf: string) {
     this.parlamentarService
-      .getVotacoesParlamentarPorCpf("08430005463").
-      pipe(takeUntil(this.unsubscribe)).
-      subscribe(parlamentar => {
-        this.parlamentar = parlamentar;
-      },
-      error => {
-        console.log(error);
-      });
+      .getVotacoesParlamentarPorCpf(cpf)
+      .pipe(takeUntil(this.unsubscribe))
+      .subscribe(
+        parlamentar => {
+          this.parlamentar = parlamentar;
+        },
+        error => {
+          console.log(error);
+        }
+      );
   }
 
   getTemas() {
@@ -69,7 +74,7 @@ export class ParlamentarComponent implements OnInit {
             id: "7",
             tema: "Todos os temas",
             slug: "todos"
-          }
+          };
           this.temas.push(all_temas);
           this.temaSelecionado = "7";
         },
@@ -97,9 +102,11 @@ export class ParlamentarComponent implements OnInit {
       .subscribe(
         respostas => {
           this.respostas = respostas;
-        }, error => {
+        },
+        error => {
           console.log(error);
-        })
+        }
+      );
   }
 
   onTemaChange() {
@@ -110,24 +117,6 @@ export class ParlamentarComponent implements OnInit {
         return proposicao.tema_id === Number(this.temaSelecionado);
       });
     }
-  }
-
-  private getBackgroundColor(resposta) {
-    if (resposta === this.CONTRA) {
-      return "#7F3C8B";
-    } else if (resposta == this.FAVOR) {
-      return "#43A467";
-    } else {
-      return "#EBE9E9";
-    }
-  }
-
-  getUserBackgroundColor(id_votacao) {
-    return(this.getBackgroundColor(this.respostas.votacoes[id_votacao]));
-  }
-
-  getParlamentarBackgroundColor(id_votacao) {
-    return(this.getBackgroundColor(this.parlamentar.votacoes[id_votacao]));
   }
 
   ngOnDestroy() {
