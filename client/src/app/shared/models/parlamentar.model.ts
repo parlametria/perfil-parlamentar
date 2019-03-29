@@ -12,6 +12,7 @@ export class Parlamentar {
   public email: string;
   public sg_partido: string;
   public partido: string;
+  public genero: string;
   public votacoes: any;
   public alinhamento?: any;
 
@@ -28,6 +29,7 @@ export class Parlamentar {
     this.email = parlamentar.email;
     this.sg_partido = parlamentar.sg_partido;
     this.partido = parlamentar.partido;
+    this.genero = parlamentar.genero;
     this.votacoes = parlamentar.votacoes;
     this.alinhamento = parlamentar.alinhamento;
   }

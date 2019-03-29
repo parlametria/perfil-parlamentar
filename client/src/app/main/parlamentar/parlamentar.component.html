@@ -69,7 +69,7 @@
             'opiniao-negativa': (parlamentar.votacoes[proposicao.id_votacao] === CONTRA),
             'opiniao-neutra': (parlamentar.votacoes[proposicao.id_votacao] !== FAVOR && parlamentar.votacoes[proposicao.id_votacao] !== CONTRA)}"
         >
-          ELE/A
+          {{ parlamentar.genero === 'FEMININO' ? 'ELA' : 'ELE' }}
         </div>
       </div>
     </div>

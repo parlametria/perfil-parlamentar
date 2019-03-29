@@ -71,7 +71,7 @@ export class ParlamentarComponent implements OnInit {
         temas => {
           this.temas = temas;
           let all_temas = {
-            id: "7",
+            id: 7,
             tema: "Todos os temas",
             slug: "todos"
           };
