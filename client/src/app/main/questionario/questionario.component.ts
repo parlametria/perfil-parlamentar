@@ -22,6 +22,7 @@ export class QuestionarioComponent implements OnInit, OnDestroy {
   temas: Tema[];
 
   showQuestionario: boolean = false;
+  showTemasComponent: boolean = false;
 
   constructor(
     private userService: UserService,
@@ -31,29 +32,30 @@ export class QuestionarioComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.getTemas();
-
+    
   }
 
   getTemas() {
     this.temaService.getTemas().pipe(takeUntil(this.unsubscribe)).subscribe((temas) => {
       this.temas = temas;
       this.getTemasUsuario();
-    });
+    });    
   }
 
-  getTemasUsuario() {
-    if (!this.loginService.isUserLogged() && this.userService.getTemasLocalStorage() === null) {
-      this.userService.setTemas([]);
-    }
-
-    this.userService.getTemas().pipe(takeUntil(this.unsubscribe)).subscribe((temas) => {      
-      if (typeof temas !== 'undefined' && temas.length > 0) {        
+  getTemasUsuario() {    
+    this.userService.getTemas().then((temas) => {
+      if (typeof temas !== 'undefined' && temas.length > 0) {
         let temasPreferidos = this.mapTemasIdToNome(temas);
-        let notSelectedTemas = this.joinComTemasNaoSelecionados(temasPreferidos);        
+        let notSelectedTemas = this.joinComTemasNaoSelecionados(temasPreferidos);
 
         this.receivedTemas = temasPreferidos.concat(notSelectedTemas);
-        this.showQuestionario = true;
+        this.showQuestionario = true;        
+      } else {
+        this.showQuestionario = false;
+        this.showTemasComponent = true;
       }
+    }).catch((err) => {
+      console.log(err);      
     });
 
   }
@@ -70,10 +72,10 @@ export class QuestionarioComponent implements OnInit, OnDestroy {
     });
 
     // Atualiza temas do usuário
-    this.userService.setTemas(temasPreferidos);
-
-    this.receivedTemas = $event.allTemas;
-    this.showQuestionario = true;
+    this.userService.setTemas(temasPreferidos).then((res) => {
+      this.receivedTemas = $event.allTemas;
+      this.showQuestionario = true;
+    });    
   }
 
   mapTemasIdToNome(temasNome) {
