@@ -24,11 +24,13 @@
       </div>
       <div class="col-9">
         <div class="parlamentar-title">{{ parlamentar.nome_urna }}</div>
-        <p>{{ parlamentar.sg_partido }}/{{ parlamentar.uf }}</p>
+        <p>{{ parlamentar.sg_partido }}/{{ parlamentar.uf }}</p>        
         <div class="row no-gutters">
           <div class="col">
+            <span *ngIf="alinhamento?.tema_nome" class="parlamentar-compatibilidade-text">Compatibilidade com {{alinhamento?.tema_nome}}</span>
+            <span *ngIf="!alinhamento?.tema_nome" class="parlamentar-compatibilidade-text">Compatibilidade geral</span>
             <app-progress
-              [value]="parlamentar.alinhamento.alinhamento * 100"
+              [value]="alinhamento?.alinhamento * 100"
               [min]="0"
               [max]="100"
               [showAxis]="true"
@@ -36,7 +38,7 @@
           </div>
           <div class="col-3 col-sm-2">
             <div class="parlamentar-score">
-              {{ parlamentar.alinhamento.alinhamento | percent }}
+              {{ alinhamento?.alinhamento | percent }}
             </div>
           </div>
         </div>

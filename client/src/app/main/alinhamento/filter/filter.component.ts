@@ -95,6 +95,7 @@ export class FilterComponent implements OnInit {
     this.estadoSelecionado = this.FILTRO_PADRAO_ESTADO;
     this.partidoSelecionado = this.FILTRO_PADRAO_PARTIDO;
     this.nomePesquisado = "";
+    this.temaSelecionado = this.FILTRO_PADRAO_TEMA;
 
     this.aplicarFiltro();
   }
