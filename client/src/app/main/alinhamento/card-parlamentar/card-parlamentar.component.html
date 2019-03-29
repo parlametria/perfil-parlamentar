@@ -1,0 +1,53 @@
+<div class="parlamentar-card">
+  <div class="parlamentar-card-header">
+    <div class="parlamentar-card-id">{{id}}°</div>
+    <div class="parlamentar-card-actions">
+      <!-- TODO: área reservada para implementação futura (e.g. seguir o parlamentar) -->
+      <!-- <button
+        type="button"
+        class="btn btn-link btn-icon"
+        (click)="toggleFollow()"
+      >
+        <span class="icon-bookmark"></span>
+      </button> -->
+    </div>
+  </div>
+  <div class="parlamentar-card-body">
+    <div class="row gutters-sm">
+      <div class="col-3">
+        <a [routerLink]="['/parlamentar', parlamentar.cpf]">
+          <img
+            [defaultImage]="'assets/imgs/nophoto.png'"
+            [lazyLoad]="parlamentar.getFoto()"
+            [offset]="0"
+            width="100%"
+          >
+        </a>
+      </div>
+      <div class="col-9">
+        <div class="parlamentar-title">{{ parlamentar.nome_urna }}</div>
+        <p>{{ parlamentar.sg_partido }}/{{ parlamentar.uf }}</p>        
+        <div class="row no-gutters">
+          <div class="col">
+            <span *ngIf="alinhamento?.tema_nome" class="parlamentar-compatibilidade-text">Compatibilidade com {{alinhamento?.tema_nome}}</span>
+            <span *ngIf="!alinhamento?.tema_nome" class="parlamentar-compatibilidade-text">Compatibilidade geral</span>
+            <app-progress
+              [value]="alinhamento?.alinhamento * 100"
+              [min]="0"
+              [max]="100"
+              [showAxis]="true"
+            ></app-progress>
+          </div>
+          <div class="col-3 col-sm-2">
+            <div class="parlamentar-score">
+              {{ alinhamento?.alinhamento | percent }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="text-right">
+      <a class="btn btn-link" [routerLink]="['/parlamentar', parlamentar.cpf]">+ detalhes</a>
+    </div>
+  </div>
+</div>

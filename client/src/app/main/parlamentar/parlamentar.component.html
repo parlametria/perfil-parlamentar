@@ -1,0 +1,78 @@
+<div
+  class="container container-sticky-footer-navbar"
+  *ngIf="parlamentar"
+>
+
+  <div class="parlamentar">
+    <div class="row gutters-sm">
+      <div class="col-3">
+        <img
+          [defaultImage]="'https://via.placeholder.com/100x130'"
+          [lazyLoad]="parlamentar.getFoto()"
+          [offset]="100"
+          width="100%"
+        >
+      </div>
+      <div class="col">
+        <div class="parlamentar-title">{{ parlamentar.nome_urna }}</div>
+        <p>
+          {{ parlamentar.sg_partido }}/{{ parlamentar.uf }}
+        </p>
+      </div>
+    </div>
+  </div>
+  <div class="d-flex justify-content-center">
+    <div class="form-group form-group-plus">
+      <select
+        class="form-control form-control-plus"
+        id="tema"
+        [(ngModel)]="temaSelecionado"
+        (ngModelChange)="onTemaChange()"
+        name="tema"
+      >
+        <option
+          *ngFor="let tema of temas"
+          [value]="tema.id"
+        >
+          {{ tema.tema }}
+        </option>
+      </select>
+    </div>
+  </div>
+  <div
+    *ngFor="let proposicao of proposicoesFiltradas"
+    class="comparacao"
+  >
+    <div class="pergunta">
+      <div>
+        <strong>{{ proposicao.projeto_lei }}</strong>
+      </div>
+      <div>{{ proposicao.descricao }}</div>
+    </div>
+    <div class="row respostas gutters-sm">
+      <div class="col-6">
+        <div
+          class="opiniao"
+          [ngClass]="{
+            'opiniao-positiva': respostas.votacoes[proposicao.id_votacao] === FAVOR,
+            'opiniao-negativa': respostas.votacoes[proposicao.id_votacao] === CONTRA,
+            'opiniao-neutra': respostas.votacoes[proposicao.id_votacao] !== FAVOR && respostas.votacoes[proposicao.id_votacao] !== CONTRA}"
+        >
+          EU
+        </div>
+      </div>
+      <div class="col-6">
+        <div
+          class="opiniao"
+          [ngClass]="{
+            'opiniao-positiva': (parlamentar.votacoes[proposicao.id_votacao] === FAVOR),
+            'opiniao-negativa': (parlamentar.votacoes[proposicao.id_votacao] === CONTRA),
+            'opiniao-neutra': (parlamentar.votacoes[proposicao.id_votacao] !== FAVOR && parlamentar.votacoes[proposicao.id_votacao] !== CONTRA)}"
+        >
+          {{ parlamentar.genero === 'FEMININO' ? 'ELA' : 'ELE' }}
+        </div>
+      </div>
+    </div>
+  </div>
+  <app-sticky-footer-navbar></app-sticky-footer-navbar>
+</div>

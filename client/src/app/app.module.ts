@@ -7,6 +7,7 @@ import { FormsModule } from '@angular/forms';
 import { SocialLoginModule, AuthServiceConfig } from 'angularx-social-login';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { LazyLoadImageModule } from 'ng-lazyload-image';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 import { AppRoutingModule } from './app-routing.module';
 
@@ -32,6 +33,9 @@ import { StickyFooterNavbarComponent } from './shared/components/sticky-footer-n
 import { FilterComponent } from './main/alinhamento/filter/filter.component';
 import { AlinhamentoService } from './shared/services/alinhamento.service';
 import { ParlamentarService } from './shared/services/parlamentar.service';
+import { ParlamentarComponent } from './main/parlamentar/parlamentar.component';
+import { CardParlamentarComponent } from './main/alinhamento/card-parlamentar/card-parlamentar.component';
+import { ProgressComponent } from './shared/components/progress/progress.component';
 
 
 @NgModule({
@@ -46,7 +50,10 @@ import { ParlamentarService } from './shared/services/parlamentar.service';
     TemasComponent,
     AlinhamentoComponent,
     StickyFooterNavbarComponent,
-    FilterComponent
+    FilterComponent,
+    ParlamentarComponent,
+    CardParlamentarComponent,
+    ProgressComponent
   ],
   imports: [
     BrowserModule,
@@ -55,6 +62,7 @@ import { ParlamentarService } from './shared/services/parlamentar.service';
     AppRoutingModule,
     SocialLoginModule,
     LazyLoadImageModule,
+    NgxPaginationModule,
     FormsModule,
     NgbModule.forRoot()
   ],
@@ -64,15 +72,15 @@ import { ParlamentarService } from './shared/services/parlamentar.service';
     AuthGuardService,
     TemaService,
     UserService,
-    AlinhamentoService, 
-    ParlamentarService,  
+    AlinhamentoService,
+    ParlamentarService,
     {
       provide: AuthServiceConfig,
       useFactory: getAuthServiceConfigs
     },
     {
       provide: HTTP_INTERCEPTORS,
-      useClass: TokenInterceptor,      
+      useClass: TokenInterceptor,
       multi: true
     }
   ],

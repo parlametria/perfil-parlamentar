@@ -13,11 +13,12 @@ module.exports = (sequelize, type) => {
     },
     {
       timestamps: false
-    }
+    },    
   );
   proposicao.associate = function(models) {
     proposicao.belongsTo(models.tema, {
       foreignKey: "tema_id",
+      sourceKey: "id",
       as: "tema_prop"
     }),
       proposicao.hasMany(models.votacao, {
