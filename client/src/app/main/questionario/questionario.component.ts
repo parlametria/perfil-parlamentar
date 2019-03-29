@@ -7,7 +7,6 @@ import { UserService } from '../../shared/services/user.service';
 import { TemaService } from '../../shared/services/tema.service';
 
 import { Tema } from '../../shared/models/tema.model';
-import { LoginService } from '../../shared/services/login.service';
 
 @Component({
   selector: 'app-questionario',
@@ -26,8 +25,7 @@ export class QuestionarioComponent implements OnInit, OnDestroy {
 
   constructor(
     private userService: UserService,
-    private temaService: TemaService,
-    private loginService: LoginService
+    private temaService: TemaService
   ) { }
 
   ngOnInit() {
