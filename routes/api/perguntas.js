@@ -54,7 +54,18 @@ router.get("/vozativa", (req, res) => {
  */
 router.get("/proposicoes", (req, res) => {
   Proposicao.findAll({
-    attributes: ["projeto_lei", "id_votacao", "titulo", "descricao", "tema_id"]
+    attributes: ["projeto_lei", "id_votacao", "titulo", "descricao", "tema_id"],
+    where: { status_proposicao: "Ativa" },
+    order: [
+      ['tema_id', 'ASC'],
+      ['id_votacao', 'ASC']
+    ],
+    include: [
+      {
+        model: Temas,
+        as: "tema_prop"
+      }
+    ]
   })
     .then(proposicoes => res.json(proposicoes))
     .catch(err => res.status(400).json({ err }));
