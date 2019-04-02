@@ -2,10 +2,9 @@
   class="container container-sticky-footer-navbar"
   *ngIf="parlamentar"
 >
-
   <div class="parlamentar">
     <div class="row gutters-sm">
-      <div class="col-3">
+      <div class="col-4 col-sm-5">
         <img
           [defaultImage]="'https://via.placeholder.com/100x130'"
           [lazyLoad]="parlamentar.getFoto()"
@@ -39,40 +38,12 @@
       </select>
     </div>
   </div>
-  <div
+  <app-posicao
     *ngFor="let proposicao of proposicoesFiltradas"
-    class="comparacao"
-  >
-    <div class="pergunta">
-      <div>
-        <strong>{{ proposicao.projeto_lei }}</strong>
-      </div>
-      <div>{{ proposicao.descricao }}</div>
-    </div>
-    <div class="row respostas gutters-sm">
-      <div class="col-6">
-        <div
-          class="opiniao"
-          [ngClass]="{
-            'opiniao-positiva': respostas.votacoes[proposicao.id_votacao] === FAVOR,
-            'opiniao-negativa': respostas.votacoes[proposicao.id_votacao] === CONTRA,
-            'opiniao-neutra': respostas.votacoes[proposicao.id_votacao] !== FAVOR && respostas.votacoes[proposicao.id_votacao] !== CONTRA}"
-        >
-          EU
-        </div>
-      </div>
-      <div class="col-6">
-        <div
-          class="opiniao"
-          [ngClass]="{
-            'opiniao-positiva': (parlamentar.votacoes[proposicao.id_votacao] === FAVOR),
-            'opiniao-negativa': (parlamentar.votacoes[proposicao.id_votacao] === CONTRA),
-            'opiniao-neutra': (parlamentar.votacoes[proposicao.id_votacao] !== FAVOR && parlamentar.votacoes[proposicao.id_votacao] !== CONTRA)}"
-        >
-          {{ parlamentar.genero === 'FEMININO' ? 'ELA' : 'ELE' }}
-        </div>
-      </div>
-    </div>
-  </div>
-  <app-sticky-footer-navbar></app-sticky-footer-navbar>
+    [parlamentar]="parlamentar"
+    [proposicao]="proposicao"
+    [resposta]="respostas.votacoes[proposicao.id_votacao]"
+    [votacao]="parlamentar.votacoes[proposicao.id_votacao]"
+  ></app-posicao>
 </div>
+<app-sticky-footer-navbar></app-sticky-footer-navbar>

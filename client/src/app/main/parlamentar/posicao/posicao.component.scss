@@ -1,0 +1,34 @@
+.posicao {
+  border: solid 1.5px #ebe9e9;
+  margin-bottom: 1rem;
+}
+
+.posicao-body {
+  padding: 1rem;
+
+  @media (min-width: 576px) {
+    padding: 2rem;
+  }
+}
+
+.posicao-title {
+  font-size: 0.9rem;
+}
+
+.opiniao {
+  padding: 0.25rem 0.75rem;
+  color: #ffffff;
+}
+
+.opiniao-positiva {
+  background-color: #43a467;
+}
+
+.opiniao-negativa {
+  background-color: #7f3c8b;
+}
+
+.opiniao-neutra {
+  background-color: #ebe9e9;
+  color: #20201e;
+}

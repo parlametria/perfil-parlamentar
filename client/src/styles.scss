@@ -26,6 +26,10 @@ body {
   font-size: 4rem;
 }
 
+.icon-lg-sm {
+  font-size: 2rem;
+}
+
 .icon-left {
   float: left;
 }
@@ -52,6 +56,15 @@ body {
   font-size: 1.5rem;
   line-height: 1;
   border-radius: 0;
+
+  &:hover {
+    text-decoration: none;
+  }
+}
+
+
+.btn-icon-sm {
+  text-decoration: none;
 
   &:hover {
     text-decoration: none;

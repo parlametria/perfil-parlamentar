@@ -75,7 +75,7 @@
         type="button"
         class="btn btn-primary btn-sm"
       >
-        {{getTemaById(temaSelecionado)}}        
+        {{getTemaById(temaSelecionado)}}
       </button>
       <button
         type="button"
@@ -146,15 +146,15 @@
         <div class="temas-container">
           <div
             *ngFor="let tema of temas"
-            class="mr-3"
+            class="mr-1"
           >
             <button
-              class="btn btn-outline-dark btn-block btn-tema"
+              class="btn btn-outline-dark btn-block btn-tema-sm"
               role="button"
               [ngClass]="{'active': isTemaSelected(tema.id), 'aria-pressed': isTemaSelected(tema.id)}"
               (click)="selecionaTema(tema.id)"
             >
-              <span [ngClass]="['icon-'+tema.slug, 'icon-lg']"></span>
+              <span [ngClass]="['icon-'+tema.slug, 'icon-lg-sm']"></span>
               <p class="btn-tema-text">{{ tema.tema }}</p>
             </button>
           </div>

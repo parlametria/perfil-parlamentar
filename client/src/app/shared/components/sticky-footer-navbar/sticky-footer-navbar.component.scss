@@ -4,5 +4,16 @@
   width: 100%;
   z-index: 999;
   background-color: #ffffff;
-  border-top: solid 1px #20201E;
+  border-top: solid 1px #20201e;
+}
+
+.sticky-footer-navbar-link {
+  text-decoration: none;
+  text-transform: uppercase;
+  font-size: 0.8rem;
+
+  &.active {
+    background-color: #fff;
+    color: #43a467;
+  }
 }

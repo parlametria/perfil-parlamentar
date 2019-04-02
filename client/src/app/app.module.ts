@@ -36,6 +36,7 @@ import { ParlamentarService } from './shared/services/parlamentar.service';
 import { ParlamentarComponent } from './main/parlamentar/parlamentar.component';
 import { CardParlamentarComponent } from './main/alinhamento/card-parlamentar/card-parlamentar.component';
 import { ProgressComponent } from './shared/components/progress/progress.component';
+import { PosicaoComponent } from './main/parlamentar/posicao/posicao.component';
 
 
 @NgModule({
@@ -53,7 +54,8 @@ import { ProgressComponent } from './shared/components/progress/progress.compone
     FilterComponent,
     ParlamentarComponent,
     CardParlamentarComponent,
-    ProgressComponent
+    ProgressComponent,
+    PosicaoComponent
   ],
   imports: [
     BrowserModule,
