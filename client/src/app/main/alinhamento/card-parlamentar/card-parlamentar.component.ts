@@ -7,11 +7,15 @@ import { Parlamentar } from 'src/app/shared/models/parlamentar.model';
   templateUrl: './card-parlamentar.component.html',
   styleUrls: ['./card-parlamentar.component.scss']
 })
-export class CardParlamentarComponent implements OnChanges, OnInit{
+export class CardParlamentarComponent implements OnChanges, OnInit {
+  readonly VIEW_SM = "sm";
+  readonly VIEW_MD = "md";
+  readonly VIEW_LG = "lg";
 
   @Input() id: number
   @Input() parlamentar: Parlamentar
   @Input() tema: number
+  @Input() view: any;
   @Output() followChecked = new EventEmitter<boolean>();
 
   readonly FILTRO_PADRAO_TEMA = -1;
@@ -20,10 +24,12 @@ export class CardParlamentarComponent implements OnChanges, OnInit{
 
   following: boolean = false;
 
-  constructor() {}
+  constructor() {
+    this.view = this.VIEW_MD;
+  }
 
-  ngOnInit() {    
-    if(this.tema === null) {
+  ngOnInit() {
+    if (this.tema === null) {
       this.setAlinhamento(this.FILTRO_PADRAO_TEMA);
     }
   }
@@ -31,7 +37,7 @@ export class CardParlamentarComponent implements OnChanges, OnInit{
   ngOnChanges(changes: SimpleChanges) {     
     if (changes.tema !== undefined && changes.tema.currentValue !== null) {      
       this.setAlinhamento(changes.tema.currentValue);
-    }    
+    }
   }
 
   toggleFollow() {

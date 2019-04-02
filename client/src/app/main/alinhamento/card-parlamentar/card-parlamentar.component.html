@@ -1,5 +1,29 @@
-<div class="parlamentar-card">
-  <div class="parlamentar-card-header">
+<div
+  [ngClass]="{'parlamentar-card': true, 'parlamentar-card-sm': view === VIEW_SM}">
+  <div class="parlamentar-card-sm-body" [hidden]="view !== VIEW_SM">
+    <div class="d-flex">
+      <div class="parlamentar-card-sm-id">
+        {{id}}°
+      </div>
+      <div class="parlamentar-sm-title">
+        {{ parlamentar.nome_urna }}
+      </div>
+    </div>
+    <div class="d-flex">
+      <div class="parlamentar-sm-progress">
+        <app-progress
+          [value]="parlamentar.alinhamento.alinhamento * 100"
+          [min]="0"
+          [max]="100"
+          [showAxis]="false"
+        ></app-progress>
+      </div>
+      <div class="parlamentar-sm-score">
+        {{ parlamentar.alinhamento.alinhamento | percent }}
+      </div>
+    </div>
+  </div>
+  <div class="parlamentar-card-header" [hidden]="view !== VIEW_MD">
     <div class="parlamentar-card-id">{{id}}°</div>
     <div class="parlamentar-card-actions">
       <!-- TODO: área reservada para implementação futura (e.g. seguir o parlamentar) -->
@@ -12,7 +36,7 @@
       </button> -->
     </div>
   </div>
-  <div class="parlamentar-card-body">
+  <div class="parlamentar-card-body" [hidden]="view !== VIEW_MD">
     <div class="row gutters-sm">
       <div class="col-3">
         <a [routerLink]="['/parlamentar', parlamentar.cpf]">

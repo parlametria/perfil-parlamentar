@@ -6,19 +6,25 @@
       <strong class="strong">{{ parlamentares.length }}</strong>
       parlamentares
     </div>
-    <!-- <div class="btn-toolbar">
+    <div class="btn-toolbar">
       <div class="btn-group">
-        <button class="btn btn-light btn-light-icon active">
+        <button
+          [ngClass]="{'btn btn-light btn-light-icon': true, 'active': view == VIEW_MD}"
+          (click)="setView('md')"
+        >
           <span class="icon-th-large"></span>
         </button>
-        <button class="btn btn-light btn-light-icon">
+        <!-- <button class="btn btn-light btn-light-icon">
             <span class="icon-th"></span>
-        </button>
-        <button class="btn btn-light btn-light-icon">
-            <span class="icon-th-list"></span>
+        </button> -->
+        <button
+          [ngClass]="{'btn btn-light btn-light-icon': true, 'active': view == VIEW_SM}"
+          (click)="setView('sm')"
+        >
+          <span class="icon-th-list"></span>
         </button>
       </div>
-    </div> -->
+    </div>
   </div>
 
   <pagination-template
@@ -71,6 +77,7 @@
     [parlamentar]="parlamentar"
     [id]="getParlamentarPosition(i, 20, p)"
     [tema]="filtro?.tema"
+    [view]="view"
     (followChecked)="onFollow($event)"
   ></app-card-parlamentar>
 
@@ -79,7 +86,10 @@
     maxSize="5"
     (pageChange)="pageChange($event)"
   >
-    <nav aria-label="Paginação" class="pb-1">
+    <nav
+      aria-label="Paginação"
+      class="pb-1"
+    >
       <ul class="pagination justify-content-center">
         <li class="page-item">
           <button
