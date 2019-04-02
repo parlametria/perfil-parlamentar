@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 import { Parlamentar } from 'src/app/shared/models/parlamentar.model';
 
@@ -7,7 +7,7 @@ import { Parlamentar } from 'src/app/shared/models/parlamentar.model';
   templateUrl: './card-parlamentar.component.html',
   styleUrls: ['./card-parlamentar.component.scss']
 })
-export class CardParlamentarComponent implements OnInit {
+export class CardParlamentarComponent {
 
   readonly VIEW_SM = "sm";
   readonly VIEW_MD = "md";
@@ -20,9 +20,7 @@ export class CardParlamentarComponent implements OnInit {
 
   following: boolean = false;
 
-  constructor() { }
-
-  ngOnInit() {
+  constructor() {
     this.view = this.VIEW_MD;
   }
 
