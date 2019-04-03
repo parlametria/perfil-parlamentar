@@ -19,7 +19,7 @@ const app = express();
 var db = require("./models/index");
 
 const corsOption = {
-  origin: "http://localhost:4200",
+  origin: "*",
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
   credentials: true,
   exposedHeaders: ["authorization"]

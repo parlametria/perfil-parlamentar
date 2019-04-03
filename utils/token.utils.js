@@ -6,8 +6,7 @@ const createToken = function(auth) {
     {
       id: auth.id,
       firstName: auth.firstName,
-      photo: auth.photo,
-      respostas: auth.respostas
+      photo: auth.photo
     },
     keys.secretOrKey,
     {
@@ -18,12 +17,14 @@ const createToken = function(auth) {
 
 module.exports = {
   generateToken: function(req, res, next) {
-    req.token = createToken(req.auth);
+    req.token = createToken(req.user);
     return next();
   },
-  sendToken: function(req, res) {
-    res.setHeader("authorization", req.token);
-    return res.status(200).send(JSON.stringify(req.user));
+  sendToken: function(req, res) {        
+    return res.status(200).json({
+      token: req.token,
+      user: req.user
+    });
   },
   createToken
 };
