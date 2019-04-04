@@ -125,7 +125,7 @@ router.post("/googleCode", (req, res, next) => {
           provider: "google",
           provider_id: profile.id
         }
-      }).then((user, err) => {
+      }).then((user, err) => {        
         if (!user){
           const newUser = new Usuario({
             first_name: profile.given_name,
@@ -148,13 +148,13 @@ router.post("/googleCode", (req, res, next) => {
             req.user = user;
             next();
           });
-        } else {
-          let user = {
+        } else {          
+          let googleUser = {
             id: user.provider_id,
             firstName: user.first_name,
             photo: user.photo
           }          
-          req.user = user;
+          req.user = googleUser;
           next();          
         }
 
@@ -166,16 +166,72 @@ router.post("/googleCode", (req, res, next) => {
   sendToken
 );
 
-router.get("/teste", authenticate, (req, res) => {
-  console.log(req.auth);
-  Usuario.findOne({ where: { provider_id: req.auth.id } })
-    .then(usuario => {
-      res.status(SUCCESS).json(usuario);
-    })
-    .catch(err => {
-      console.log(err.status)
-      res.status(BAD_REQUEST).json({error: err.message})
+router.post("/facebookCode", (req, res, next) => {  
+  const params = {
+    client_id: req.body.clientId,      
+    redirect_uri: req.body.redirectUri + "/",
+    client_secret: keys.facebookAppSecret,
+    code: req.body.code
+  };
+
+  const accessTokenUrl = 'https://graph.facebook.com/v3.2/oauth/access_token';  
+
+  request.get({url: accessTokenUrl, qs: params}, (err, response, token) => {
+    if (err) console.log(err); 
+    let accessToken = JSON.parse(token).access_token;   
+        
+    const peopleApiUrl = "https://graph.facebook.com/me?fields=id,name,email,first_name,picture{url}&access_token=" + accessToken 
+    
+    request.get({url: peopleApiUrl}, (err, response, profileFacebook) => {
+      if (err) console.log(err);
+
+      let profile = JSON.parse(profileFacebook);
+      
+      Usuario.findOne({
+        where: {
+          provider: "facebook",
+          provider_id: profile.id
+        }
+      }).then((user, err) => {        
+        if (!user){
+          const newUser = new Usuario({
+            first_name: profile.first_name,
+            full_name: profile.name,
+            email: profile.email,
+            photo: profile.picture.data.url,
+            provider: "facebook",
+            provider_id: profile.id,
+            token: accessToken
+          });
+
+          newUser.save().then((savedUser, error) => {            
+            savedUser = savedUser.get({ plain: true });
+            let user = {
+              id: savedUser.provider_id,
+              firstName: savedUser.first_name,
+              photo: savedUser.photo
+            }
+
+            req.user = user;
+            next();
+          });
+        } else {          
+          let savedUser = {
+            id: user.provider_id,
+            firstName: user.first_name,
+            photo: user.photo
+          }          
+          req.user = savedUser;
+          next();          
+        }
+
+      });
     });
-});
+  });
+
+},
+generateToken,
+sendToken
+);
 
 module.exports = router;

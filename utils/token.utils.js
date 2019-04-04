@@ -20,7 +20,7 @@ module.exports = {
     req.token = createToken(req.user);
     return next();
   },
-  sendToken: function(req, res) {        
+  sendToken: function(req, res) {  
     return res.status(200).json({
       token: req.token,
       user: req.user
