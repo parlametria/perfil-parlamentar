@@ -1,77 +1,113 @@
-<div
-  [ngClass]="{'parlamentar-card': true, 'parlamentar-card-sm': view === VIEW_SM}">
-  <div class="parlamentar-card-sm-body" [hidden]="view !== VIEW_SM">
-    <div class="d-flex">
-      <div class="parlamentar-card-sm-id">
-        {{id}}°
-      </div>
-      <div class="parlamentar-sm-title">
-        {{ parlamentar.nome_urna }}
-      </div>
-    </div>
-    <div class="d-flex">
-      <div class="parlamentar-sm-progress">
-        <app-progress
-          [value]="parlamentar.alinhamento.alinhamento * 100"
-          [min]="0"
-          [max]="100"
-          [showAxis]="false"
-        ></app-progress>
-      </div>
-      <div class="parlamentar-sm-score">
-        {{ parlamentar.alinhamento.alinhamento | percent }}
-      </div>
-    </div>
+<div [ngClass]="{'parlamentar-wrapper': !isCollapsed, 'parlamentar-wrapper-no-margin': isCollapsed}">
+  <div
+    class="parlamentar-card-actions"
+    [hidden]="isCollapsed"
+  >
+    <!-- TODO: área reservada para implementação futura (e.g. seguir o parlamentar) -->
+    <!-- <button
+      type="button"
+      class="btn btn-link btn-icon"
+      (click)="toggleFollow()"
+    >
+      <span class="icon-bookmark"></span>
+    </button> -->
   </div>
-  <div class="parlamentar-card-header" [hidden]="view !== VIEW_MD">
-    <div class="parlamentar-card-id">{{id}}°</div>
-    <div class="parlamentar-card-actions">
-      <!-- TODO: área reservada para implementação futura (e.g. seguir o parlamentar) -->
-      <!-- <button
-        type="button"
-        class="btn btn-link btn-icon"
-        (click)="toggleFollow()"
-      >
-        <span class="icon-bookmark"></span>
-      </button> -->
-    </div>
-  </div>
-  <div class="parlamentar-card-body" [hidden]="view !== VIEW_MD">
-    <div class="row gutters-sm">
-      <div class="col-3">
-        <a [routerLink]="['/parlamentar', parlamentar.cpf]">
-          <img
-            [defaultImage]="'assets/imgs/nophoto.png'"
-            [lazyLoad]="parlamentar.getFoto()"
-            [offset]="0"
-            width="100%"
+
+  <div class="parlamentar-card-sm">
+    <div class="parlamentar-card-sm-body">
+      <div class="d-flex">
+        <div class="parlamentar-card-sm-id">{{id}}°</div>
+        <div
+          class="parlamentar-card-sm-title"
+          [@show]="view === VIEW_SM ? 'show' : 'hide'"
+        >
+          <a
+            class="btn-link-simple"
+            [routerLink]="['/parlamentar', parlamentar.cpf]"
           >
-        </a>
+            {{ parlamentar.nome_urna | titlecase }}
+          </a>
+        </div>
       </div>
-      <div class="col-9">
-        <div class="parlamentar-title">{{ parlamentar.nome_urna }}</div>
-        <p>{{ parlamentar.sg_partido }}/{{ parlamentar.uf }}</p>        
-        <div class="row no-gutters">
-          <div class="col">
-            <span *ngIf="alinhamento?.tema_nome" class="parlamentar-compatibilidade-text">Compatibilidade com {{alinhamento?.tema_nome}}</span>
-            <span *ngIf="!alinhamento?.tema_nome" class="parlamentar-compatibilidade-text">Compatibilidade geral</span>
-            <app-progress
-              [value]="alinhamento?.alinhamento * 100"
-              [min]="0"
-              [max]="100"
-              [showAxis]="true"
-            ></app-progress>
-          </div>
-          <div class="col-3 col-sm-2">
-            <div class="parlamentar-score">
-              {{ alinhamento?.alinhamento | percent }}
+      <div
+        class="parlamentar-card-sm-score"
+        [@show]="view === VIEW_SM ? 'show' : 'hide'"
+      >
+        <div class="parlamentar-sm-progress">
+          <app-progress
+            [value]="alinhamento?.alinhamento * 100"
+            [min]="0"
+            [max]="100"
+            [showAxis]="false"
+          ></app-progress>
+        </div>
+        <div class="parlamentar-sm-score">
+          {{ alinhamento?.alinhamento | percent }}
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    class="parlamentar-card"
+    [@openClose]="view === VIEW_MD ? 'open' : 'closed'"
+    (@openClose.start)="onAnimationStart($event)"
+    (@openClose.done)="onAnimationEnd($event)"
+  >
+    <div class="parlamentar-card-body">
+      <div class="row gutters-sm">
+        <div class="col-3">
+          <a [routerLink]="['/parlamentar', parlamentar.cpf]">
+            <img
+              [defaultImage]="'assets/imgs/nophoto.png'"
+              [lazyLoad]="parlamentar.getFoto()"
+              [offset]="0"
+              width="100%"
+            >
+          </a>
+        </div>
+        <div class="col-9">
+          <div class="parlamentar-title">{{ parlamentar.nome_urna | titlecase }}</div>
+          <p>
+            {{ parlamentar.sg_partido }}/{{ parlamentar.uf }}
+          </p>
+          <div class="row no-gutters">
+            <div class="col">
+              <span
+                *ngIf="alinhamento?.tema_nome"
+                class="parlamentar-compatibilidade-text"
+              >
+                Compatibilidade com {{alinhamento?.tema_nome}}
+              </span>
+              <span
+                *ngIf="!alinhamento?.tema_nome"
+                class="parlamentar-compatibilidade-text"
+              >
+                Compatibilidade geral
+              </span>
+              <app-progress
+                [value]="alinhamento?.alinhamento * 100"
+                [min]="0"
+                [max]="100"
+                [showAxis]="true"
+              ></app-progress>
+            </div>
+            <div class="col-3 col-sm-2 d-flex justify-content-end align-items-center">
+              <div class="parlamentar-score">
+                {{ alinhamento?.alinhamento | percent }}
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-    <div class="text-right">
-      <a class="btn btn-link" [routerLink]="['/parlamentar', parlamentar.cpf]">+ detalhes</a>
+      <div class="text-right">
+        <a
+          class="btn btn-link"
+          [routerLink]="['/parlamentar', parlamentar.cpf]"
+        >
+          + detalhes
+        </a>
+      </div>
     </div>
   </div>
+
 </div>
