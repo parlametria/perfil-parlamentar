@@ -2,6 +2,16 @@ version: '3.5'
 
 services:
 
+  db:
+    image: postgres:11.1-alpine
+    container_name: postgres_auth
+    env_file:
+      - variables.env
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    ports:
+      - 5432:5432
+
   backend:
     build: .
     env_file:
@@ -14,18 +24,8 @@ services:
       - ./server.js:/app/server.js
     ports:
       - "5000:5000"
-    networks:
-      - my-proxy-net
+    depends_on:
+      - db
 
-  frontend:
-    build: ./client
-    volumes:
-      - ./client:/app/client
-      - /app/client/node_modules/      
-    ports:
-      - "4200:4200"  
-
-networks:
-  my-proxy-net:
-    external:
-      name: voz_ativa_network
+volumes:
+  postgres_data:
