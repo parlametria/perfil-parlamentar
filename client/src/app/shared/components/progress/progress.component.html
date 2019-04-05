@@ -2,7 +2,7 @@
   <div
     class="progress-bar bg-dark"
     role="progressbar"
-    [ngStyle]="{'width': value+'%'}"
+    [ngStyle]="{'width': (value * 100)+'%'}"
     [attr.aria-valuenow]="value"
     [attr.aria-valuemin]="min"
     [attr.aria-valuemax]="max"

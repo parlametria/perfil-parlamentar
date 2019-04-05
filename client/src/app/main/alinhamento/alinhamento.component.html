@@ -9,14 +9,17 @@
     <div class="btn-toolbar">
       <div class="btn-group">
         <button
-          [ngClass]="{'btn btn-light btn-light-icon': true, 'active': view == VIEW_MD}"
-          (click)="setView('md')"
+          [ngClass]="{'btn btn-light btn-light-icon': true, 'active': view == VIEW_LG}"
+          (click)="setView('lg')"
         >
           <span class="icon-th-large"></span>
         </button>
-        <!-- <button class="btn btn-light btn-light-icon">
-            <span class="icon-th"></span>
-        </button> -->
+        <button
+          [ngClass]="{'btn btn-light btn-light-icon': true, 'active': view == VIEW_MD}"
+          (click)="setView('md')"
+        >
+          <span class="icon-th"></span>
+        </button>
         <button
           [ngClass]="{'btn btn-light btn-light-icon': true, 'active': view == VIEW_SM}"
           (click)="setView('sm')"
@@ -33,7 +36,10 @@
     (pageChange)="pageChange($event)"
     [hidden]="pag.isFirstPage()"
   >
-    <nav aria-label="Paginação" class="pb-1">
+    <nav
+      aria-label="Paginação"
+      class="pb-1"
+    >
       <ul class="pagination justify-content-center">
         <li class="page-item">
           <button
@@ -88,7 +94,7 @@
   >
     <nav
       aria-label="Paginação"
-      class="pb-1"
+      class="pb-4"
     >
       <ul class="pagination justify-content-center">
         <li class="page-item">

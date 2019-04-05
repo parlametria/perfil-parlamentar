@@ -37,6 +37,7 @@ import { ParlamentarComponent } from './main/parlamentar/parlamentar.component';
 import { CardParlamentarComponent } from './main/alinhamento/card-parlamentar/card-parlamentar.component';
 import { ProgressComponent } from './shared/components/progress/progress.component';
 import { PosicaoComponent } from './main/parlamentar/posicao/posicao.component';
+import { ProgressStackedComponent } from './shared/components/progress-stacked/progress-stacked.component';
 
 
 @NgModule({
@@ -55,7 +56,8 @@ import { PosicaoComponent } from './main/parlamentar/posicao/posicao.component';
     ParlamentarComponent,
     CardParlamentarComponent,
     ProgressComponent,
-    PosicaoComponent
+    PosicaoComponent,
+    ProgressStackedComponent
   ],
   imports: [
     BrowserModule,
