@@ -19,7 +19,7 @@
         <div class="parlamentar-card-sm-id">{{id}}°</div>
         <div
           class="parlamentar-card-sm-title"
-          [@show]="view === VIEW_SM ? 'show' : 'hide'"
+          [@show]="view !== VIEW_SM ? 'hide' : 'show'"
         >
           <a
             class="btn-link-simple"
@@ -31,7 +31,7 @@
       </div>
       <div
         class="parlamentar-card-sm-score"
-        [@show]="view === VIEW_SM ? 'show' : 'hide'"
+        [@show]="view !== VIEW_SM ? 'hide' : 'show'"
       >
         <div class="parlamentar-sm-progress">
           <app-progress
@@ -49,7 +49,7 @@
   </div>
   <div
     class="parlamentar-card"
-    [@openClose]="view === VIEW_MD ? 'open' : 'closed'"
+    [@openClose]="view !== VIEW_SM ? 'open' : 'closed'"
     (@openClose.start)="onAnimationStart($event)"
     (@openClose.done)="onAnimationEnd($event)"
   >
@@ -98,6 +98,23 @@
             </div>
           </div>
         </div>
+      </div>
+      <div
+        class="parlamentar-card-lg"
+        [@openClose]="view !== VIEW_LG ? 'closed' : 'open'"
+      >
+        <div class="pt-3"></div>
+        <div class="parlamentar-compatibilidade-text text-center mb-3">
+          Compatilidade por tema [em nº de questões]
+        </div>
+        <app-progress-stacked
+          *ngFor="let alinhamento of parlamentar.alinhamento.temas"
+          [titulo]="alinhamento.tema_nome"
+          [total]="alinhamento.totalPerguntas"
+          [concordancia]="alinhamento.respostasIguais"
+          [discordancia]="alinhamento.perguntasIguais - alinhamento.respostasIguais"
+          [passo]="getMaiorQuantidadePerguntas()"
+        ></app-progress-stacked>
       </div>
       <div class="text-right">
         <a

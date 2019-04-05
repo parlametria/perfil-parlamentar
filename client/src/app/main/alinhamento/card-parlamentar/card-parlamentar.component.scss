@@ -40,7 +40,6 @@
 }
 
 .parlamentar-compatibilidade-text {
-  display:inline-block;
   font-size: 0.8rem;
   line-height: 1;
 }
@@ -85,4 +84,9 @@
 .parlamentar-sm-score {
   margin-left: 0.5rem;
   font-size: 0.8rem;
+}
+
+/* Versão ampliada */
+.parlamentar-card-lg {
+  overflow: hidden;
 }

@@ -13,16 +13,18 @@ function calcularAlinhamentos(parlamentares, respostas, proposicoes) {
   const temas = proposicoesTemas.map(item => item.tema_id)
     .filter((value, index, self) => self.indexOf(value) === index);
       
-  let temasAlinhamento = []
+  let temasAlinhamento = [];
 
   temas.forEach((tema) => {
     nome_tema = proposicoesTemas.filter(value => value.tema_id === tema)[0].tema_prop.tema;
+    totalPerguntas = proposicoesTemas.filter(value => value.tema_id === tema).length;
 
     obj = {
       tema_id: tema,
       tema_nome: nome_tema,
       respostasIguais: 0,
       perguntasIguais: 0,
+      totalPerguntas: totalPerguntas,
       alinhamento: 0
     };
 
@@ -44,6 +46,7 @@ function calcular(parlamentar, respostas, proposicoesTemas, temasAlinhamento) {
     return {
       respostasIguais: 0,
       perguntasIguais: 0,
+      totalperguntas: proposicoesTemas.length,
       alinhamento: 0,
       temas: temasAlinhamento
     };
@@ -70,8 +73,7 @@ function calcular(parlamentar, respostas, proposicoesTemas, temasAlinhamento) {
           
         // Atualiza variáveis (perguntasIguais e respostasIguais) para o tema da votação atualmente no loop
         temas[temaIndex].perguntasIguais += 1;
-        temas[temaIndex].respostasIguais += respostas[votacao.proposicao_id] === votacao.resposta ? 1 : 0;              
-
+        temas[temaIndex].respostasIguais += respostas[votacao.proposicao_id] === votacao.resposta ? 1 : 0;
       }
     }
   });
@@ -86,6 +88,7 @@ function calcular(parlamentar, respostas, proposicoesTemas, temasAlinhamento) {
   return {
     respostasIguais: respostasIguais,
     perguntasIguais: perguntasIguais,
+    totalPerguntas: proposicoesTemas.length,
     alinhamento: alinhamento,
     temas: temas
   }
