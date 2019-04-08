@@ -1,0 +1,49 @@
+version: '3.5'
+
+services:
+
+  db:
+    image: postgres:11.1-alpine
+    container_name: postgres_auth
+    restart: always
+    environment:      
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - TZ=${TZ}      
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    ports:
+      - 5432:5432
+
+  backend:
+    image: voz-ativa_backend
+    container_name: backend_auth
+    restart: always
+    environment:
+      - NODE_ENV=${NODE_ENV}
+      - SECRET_OR_KEY=${SECRET_OR_KEY}
+      - POSTGRESURI=${POSTGRESURI}
+      - FACEBOOK_APP_ID=${FACEBOOK_APP_ID}
+      - FACEBOOK_APP_SECRET=${FACEBOOK_APP_SECRET}
+      - GOOGLE_APP_ID=${GOOGLE_APP_ID}
+      - GOOGLE_APP_SECRET=${GOOGLE_APP_SECRET}
+    networks:
+      - traefik_web
+    labels:
+      - "traefik.backend=backend_auth"
+      - "traefik.docker.network=traefik_web"
+      - "traefik.enable=true"
+      - "traefik.frontend.rule=Host:auth.leggo.org.br"
+      - "traefik.port=5000"   
+    depends_on:
+      - db
+    ports:
+      - "5000:5000"
+
+networks:
+  traefik_web:
+    external: true
+
+volumes:
+  postgres_data:

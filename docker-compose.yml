@@ -25,20 +25,6 @@ services:
       - ./server.js:/app/server.js
     ports:
       - "5000:5000"
-    networks:
-      - traefik_web
-    labels:
-      - "traefik.backend=backend_auth"
-      - "traefik.docker.network=traefik_web"
-      - "traefik.enable=true"
-      - "traefik.frontend.rule=Host:auth.leggo.org.br"
-      - "traefik.port=80"
-    depends_on:
-      - db
-
-networks:
-  traefik_web:
-    external: true
 
 volumes:
   postgres_data:
