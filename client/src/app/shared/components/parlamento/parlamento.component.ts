@@ -68,9 +68,9 @@ export class ParlamentoComponent implements AfterContentInit, OnChanges {
     this.x = d3.scaleLinear().range([0, this.getWidth()]);
     // this.color = d3.scaleSequential(d3.interpolatePRGn);
     this.color = d3
-      .scaleThreshold()
+      .scaleThreshold<string, string>()
       .range(["#f2f0f7", "#cbc9e2", "#9e9ac8", "#756bb1", "#54278f"])
-      .domain([0.2, 0.4, 0.6, 0.8]);
+      .domain(["0.2", "0.4", "0.6", "0.8"]);
 
     this.g
       .append("g")
@@ -86,7 +86,7 @@ export class ParlamentoComponent implements AfterContentInit, OnChanges {
 
     let simulation = d3
       .forceSimulation(parlamentares)
-      .force("x", d3.forceX(d => this.x(d.alinhamento.alinhamento)).strength(1))
+      .force("x", d3.forceX((d: any) => this.x(d.alinhamento.alinhamento)).strength(1))
       .force("y", d3.forceY(this.getHeight() * 0.5))
       .force("collide", d3.forceCollide(this.r + 0.5))
       .stop();
