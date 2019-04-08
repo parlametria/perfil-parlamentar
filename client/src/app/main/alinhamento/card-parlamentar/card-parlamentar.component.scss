@@ -1,6 +1,16 @@
-.parlamentar-card {
+.parlamentar-wrapper {
   border: solid 1.5px #ebe9e9;
   margin-bottom: 1rem;
+  transition: border 0.25s;
+}
+
+.parlamentar-wrapper-no-margin {
+  border: solid 1.5px #fff;
+  margin-bottom: 0;
+}
+
+.parlamentar-card {
+  overflow: hidden;
 }
 
 .parlamentar-card-header {
@@ -8,20 +18,13 @@
   justify-content: space-between;
 }
 
-.parlamentar-card-id {
-  min-width: 48px;
-  background-color: #6c757d;
-  padding: 0.25rem 0.5rem;
-  color: #fff;
-  text-align: center;
-}
-
 .parlamentar-card-actions {
+  float: right;
   margin-right: 1rem;
 }
 
 .parlamentar-card-body {
-  padding: 1rem;
+  padding: 0.5rem;
 }
 
 .parlamentar-title {
@@ -37,29 +40,41 @@
 }
 
 .parlamentar-compatibilidade-text {
-  display:inline-block;
   font-size: 0.8rem;
-  line-height: 1;  
+  line-height: 1;
 }
 
 /*Versão reduzida */
 .parlamentar-card-sm {
-  border: none;
-  margin-bottom: 1px;
 }
+
 .parlamentar-card-sm-body {
   display: flex;
   justify-content: space-between;
 }
 
+.parlamentar-card-sm-title {
+  font-size: 0.8rem;
+  text-transform: capitalize;
+  line-height: 1.6rem;
+}
+
 .parlamentar-card-sm-id {
-  min-width: 48px;
+  min-width: 42px;
   background-color: #6c757d;
-  padding: 0.1rem 0.1rem;
+  padding: 0.25rem 0.5rem;
   margin-right: 0.5rem;
   color: #fff;
   text-align: center;
   font-size: 0.8rem;
+}
+
+.parlamentar-card-sm-score {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 95px;
+  height: 27px;
 }
 
 .parlamentar-sm-progress {
@@ -69,4 +84,9 @@
 .parlamentar-sm-score {
   margin-left: 0.5rem;
   font-size: 0.8rem;
+}
+
+/* Versão ampliada */
+.parlamentar-card-lg {
+  overflow: hidden;
 }

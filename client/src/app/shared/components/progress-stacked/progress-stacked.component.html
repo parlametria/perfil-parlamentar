@@ -1,0 +1,70 @@
+
+<div class="progress-stacked-title">{{ titulo }}</div>
+<div class="progress progress-stacked">
+  <div
+    class="progress-bar progress-stacked-bar bg-dark"
+    role="progressbar"
+    [ngStyle]="{'width': getConcordancia()+'%'}"
+    [attr.aria-valuenow]="getConcordancia()"
+    [attr.aria-valuemin]="min"
+    [attr.aria-valuemax]="max"
+    [hidden]="!concordancia"
+  >
+  </div>
+  <div
+    class="progress-bar progress-stacked-bar progress-bar-striped bg-dark"
+    role="progressbar"
+    [ngStyle]="{'width': getDiscordancia()+'%'}"
+    [attr.aria-valuenow]="getDiscordancia()"
+    [attr.aria-valuemin]="min"
+    [attr.aria-valuemax]="max"
+    [hidden]="!discordancia"
+  >
+  </div>
+  <div
+    class="progress-bar progress-stacked-bar bg-light progress-light"
+    role="progressbar"
+    [ngStyle]="{'width': getComplementarRelativo()+'%'}"
+    [ngClass]="{'with-border': getComplementar() === total}"
+    [attr.aria-valuenow]="getComplementarRelativo()"
+    [attr.aria-valuemin]="min"
+    [attr.aria-valuemax]="max"
+    [hidden]="!getComplementarRelativo()"
+  >
+  </div>
+</div>
+<div class="progress progress-stacked mb-1">
+  <div
+    class="progress-bar progress-stacked-bar bg-light"
+    role="progressbar"
+    [ngStyle]="{'width': getConcordancia()+'%'}"
+    [attr.aria-valuenow]="getConcordancia()"
+    [attr.aria-valuemin]="min"
+    [attr.aria-valuemax]="max"
+    [hidden]="!concordancia"
+  >
+    {{ concordancia }}
+  </div>
+  <div
+    class="progress-bar progress-stacked-bar bg-light"
+    role="progressbar"
+    [ngStyle]="{'width': getDiscordancia()+'%'}"
+    [attr.aria-valuenow]="getDiscordancia()"
+    [attr.aria-valuemin]="min"
+    [attr.aria-valuemax]="max"
+    [hidden]="!discordancia"
+  >
+    {{ discordancia }}
+  </div>
+  <div
+    class="progress-bar progress-stacked-bar bg-light"
+    role="progressbar"
+    [ngStyle]="{'width': getComplementarRelativo()+'%'}"
+    [attr.aria-valuenow]="getComplementarRelativo()"
+    [attr.aria-valuemin]="min"
+    [attr.aria-valuemax]="max"
+    [hidden]="!getComplementarRelativo()"
+  >
+    {{ getComplementar() }}
+  </div>
+</div>
