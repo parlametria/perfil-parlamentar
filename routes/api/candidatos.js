@@ -165,7 +165,7 @@ router.get("/:cpf/votacoes", (req, res) => {
         model: Votacao,
         as: "cpf_vot",
         attributes: att_res,
-        required: true
+        required: false
       }
     ],
     where: { cpf: req.params.cpf }
