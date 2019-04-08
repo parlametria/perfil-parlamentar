@@ -13,16 +13,10 @@ services:
       - 5432:5432
 
   backend:
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile-prod
     container_name: backend_auth
-    env_file:
-      - variables.env
-    volumes:
-      - ./routes:/app/routes
-      - ./config:/app/config
-      - ./utils:/app/utils
-      - ./models:/app/models
-      - ./server.js:/app/server.js
     ports:
       - "5000:5000"
     depends_on:

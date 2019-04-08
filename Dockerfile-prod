@@ -1,0 +1,17 @@
+FROM node:10-alpine
+
+WORKDIR /app
+
+COPY package* ./
+
+COPY routes/ ./routes
+COPY config/ ./config
+COPY utils/ ./utils
+COPY models/ ./models
+COPY server.js ./server.js      
+
+RUN npm install
+
+EXPOSE 5000
+
+CMD npm run server
