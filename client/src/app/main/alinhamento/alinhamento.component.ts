@@ -31,7 +31,7 @@ export class AlinhamentoComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.view = this.VIEW_LG;
+    this.view = this.VIEW_MD;
     this.getParlamentares();
   }
 
