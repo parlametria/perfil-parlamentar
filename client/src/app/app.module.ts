@@ -38,6 +38,7 @@ import { CardParlamentarComponent } from './main/alinhamento/card-parlamentar/ca
 import { ProgressComponent } from './shared/components/progress/progress.component';
 import { PosicaoComponent } from './main/parlamentar/posicao/posicao.component';
 import { ParlamentoComponent } from './shared/components/parlamento/parlamento.component';
+import { CongressoComponent } from './shared/components/congresso/congresso.component';
 
 
 @NgModule({
@@ -57,7 +58,8 @@ import { ParlamentoComponent } from './shared/components/parlamento/parlamento.c
     CardParlamentarComponent,
     ProgressComponent,
     PosicaoComponent,
-    ParlamentoComponent
+    ParlamentoComponent,
+    CongressoComponent
   ],
   imports: [
     BrowserModule,
