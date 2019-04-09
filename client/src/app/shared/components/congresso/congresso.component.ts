@@ -12,6 +12,7 @@ export class CongressoComponent implements AfterContentInit, OnChanges {
 
   svg: any;
   g: any;
+  color: any;
   width: number;
   height: number;
   margin: any;
@@ -60,6 +61,10 @@ export class CongressoComponent implements AfterContentInit, OnChanges {
         "transform",
         "translate(" + this.margin.left + "," + this.margin.top + ")"
       );
+    this.color = d3
+      .scaleThreshold<string, string>()
+      .range(["#f2f0f7", "#cbc9e2", "#9e9ac8", "#756bb1", "#54278f"])
+      .domain(["0.2", "0.4", "0.6", "0.8"]);
   }
 
   draw(parlamentares: any[]) {
@@ -94,7 +99,7 @@ export class CongressoComponent implements AfterContentInit, OnChanges {
           .enter()
           .append("circle")
           .attr("r", this.r)
-          .attr("fill", "#7C83FF")
+          .attr("fill", (d) => this.color(d.alinhamento.alinhamento))
           .attr("stroke", "none")
           .attr("cx", function(d, i) { return arc.node().getPointAtLength(x(i)).x; })
           .attr("cy", function(d, i) { return arc.node().getPointAtLength(x(i)).y; });
