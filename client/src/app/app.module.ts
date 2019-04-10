@@ -10,11 +10,11 @@ import { LazyLoadImageModule, intersectionObserverPreset } from 'ng-lazyload-ima
 import { NgxPaginationModule } from 'ngx-pagination';
 
 import { AppRoutingModule } from './app-routing.module';
+import { MainModule } from './main/main.module';
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './user/login/login.component';
 import { NavbarComponent } from './shared/components/navbar/navbar.component';
-import { HomeComponent } from './main/home/home.component';
 import { PerguntasContainerComponent } from './main/questionario/perguntas-container/perguntas-container.component';
 import { PerguntaComponent } from './main/questionario/pergunta/pergunta.component';
 import { QuestionarioComponent } from './main/questionario/questionario.component';
@@ -38,39 +38,38 @@ import { CardParlamentarComponent } from './main/alinhamento/card-parlamentar/ca
 import { ProgressComponent } from './shared/components/progress/progress.component';
 import { PosicaoComponent } from './main/parlamentar/posicao/posicao.component';
 import { ProgressStackedComponent } from './shared/components/progress-stacked/progress-stacked.component';
+import { SharedModule } from './shared/components/shared.module';
+
 
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    NavbarComponent,
-    HomeComponent,
     PerguntasContainerComponent,
     PerguntaComponent,
     QuestionarioComponent,
     TemasComponent,
     AlinhamentoComponent,
-    StickyFooterNavbarComponent,
     FilterComponent,
     ParlamentarComponent,
     CardParlamentarComponent,
-    ProgressComponent,
     PosicaoComponent,
-    ProgressStackedComponent
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
-    AppRoutingModule,
+    FormsModule,
     SocialLoginModule,
     LazyLoadImageModule.forRoot({
       preset: intersectionObserverPreset
     }),
     NgxPaginationModule,
-    FormsModule,
-    NgbModule.forRoot()
+    NgbModule.forRoot(),
+    AppRoutingModule,
+    SharedModule,
+    MainModule
   ],
   providers: [
     PerguntaService,
