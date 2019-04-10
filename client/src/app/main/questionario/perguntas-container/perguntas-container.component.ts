@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy, Input } from "@angular/core";
 
-import { Subject } from "rxjs";
+import { Subject, forkJoin } from "rxjs";
 import { takeUntil } from "rxjs/operators";
 
 import { PerguntaService } from "../../../shared/services/pergunta.service";
@@ -42,60 +42,55 @@ export class PerguntasContainerComponent implements OnInit, OnDestroy {
     private perguntaService: PerguntaService,
     private temaService: TemaService,
     private userService: UserService
-  ) {}
+  ) { }
 
   ngOnInit() {
-    this.getTemas();
-    this.getProposicoes();
+    this.initializeQuestionario();
     this.getRespostas();
     this.salvandoResposta = false;
   }
 
-  getTemas() {
-    this.temaService
-      .getTemas()
-      .pipe(takeUntil(this.unsubscribe))
-      .subscribe(
-        temas => {
-          if (this.receivedTemas) {
-            this.listaTemas = this.sortObjectUsingArray(
-              temas,
-              this.receivedTemas,
-              "id"
-            );
+  initializeQuestionario() {
+    forkJoin(
+      this.temaService.getTemas(),
+      this.perguntaService.getProposicoes()
+    ).pipe(takeUntil(this.unsubscribe)).subscribe(data => {
+      const temas = data[0];
+      const proposicoes = data[1];
 
-            this.temaSelecionado = this.listaTemas[0].id;
-          } else {
-            this.listaTemas = temas;
-            this.temaSelecionado = 3;
-          }
-        },
-        error => console.log(error)
-      );
+      if (this.receivedTemas) {
+        this.listaTemas = this.sortObjectUsingArray(
+          temas,
+          this.receivedTemas,
+          "id"
+        );
+
+        this.temaSelecionado = this.listaTemas[0].id;
+      } else {
+        this.listaTemas = temas;
+        this.temaSelecionado = 3;
+      }
+      this.initializePerguntas(proposicoes);
+    },
+      error => console.log(error)
+    );
   }
 
-  getProposicoes() {
-    this.perguntaService
-      .getProposicoes()
-      .pipe(takeUntil(this.unsubscribe))
-      .subscribe(
-        proposicoes => {
-          this.listaProposicoes = this.sortProposicoes(proposicoes);
+  private initializePerguntas(proposicoes) {
+    this.listaProposicoes = this.sortProposicoes(proposicoes);
 
-          // Filtra as perguntas do tema selecionado
-          this.perguntasTemaSelecionado = this.listaProposicoes.filter(
-            proposicao => proposicao.tema_id === Number(this.temaSelecionado)
-          );
+    // Filtra as perguntas do tema selecionado
+    this.perguntasTemaSelecionado = this.listaProposicoes.filter(
+      proposicao => proposicao.tema_id === Number(this.temaSelecionado)
+    );
 
-          this.todasProposicoesOrdenadas = this.sortProposicoesUsingArray(
-            this.listaProposicoes,
-            this.receivedTemas
-          );
+    this.todasProposicoesOrdenadas = this.sortProposicoesUsingArray(
+      this.listaProposicoes,
+      this.receivedTemas
+    );
 
-          this.perguntaSelecionada = this.perguntasTemaSelecionado[0];
-        },
-        error => console.log(error)
-      );
+    this.perguntaSelecionada = this.perguntasTemaSelecionado[0];
+
   }
 
   getRespostas() {
