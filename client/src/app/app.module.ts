@@ -16,13 +16,10 @@ import { AppRoutingModule } from './app-routing.module';
 import { MainModule } from './main/main.module';
 import { SharedModule } from './shared/components/shared.module';
 import { ParlamentarModule } from './parlamentar/parlamentar.module';
+import { QuestionarioModule } from './questionario/questionario.module';
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './user/login/login.component';
-import { PerguntasContainerComponent } from './main/questionario/perguntas-container/perguntas-container.component';
-import { PerguntaComponent } from './main/questionario/pergunta/pergunta.component';
-import { QuestionarioComponent } from './main/questionario/questionario.component';
-import { TemasComponent } from './main/questionario/temas/temas.component';
 import { AlinhamentoComponent } from './main/alinhamento/alinhamento.component';
 import { FilterComponent } from './main/alinhamento/filter/filter.component';
 import { CardParlamentarComponent } from './main/alinhamento/card-parlamentar/card-parlamentar.component';
@@ -39,10 +36,6 @@ import { ParlamentarService } from './shared/services/parlamentar.service';
   declarations: [
     AppComponent,
     LoginComponent,
-    PerguntasContainerComponent,
-    PerguntaComponent,
-    QuestionarioComponent,
-    TemasComponent,
     AlinhamentoComponent,
     FilterComponent,
     CardParlamentarComponent    
@@ -61,7 +54,8 @@ import { ParlamentarService } from './shared/services/parlamentar.service';
     AppRoutingModule,
     SharedModule,
     MainModule,
-    ParlamentarModule
+    ParlamentarModule,
+    QuestionarioModule
   ],
   providers: [
     PerguntaService,

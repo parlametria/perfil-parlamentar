@@ -3,12 +3,12 @@ import { Component, OnInit, OnDestroy, Input } from "@angular/core";
 import { Subject, forkJoin } from "rxjs";
 import { takeUntil } from "rxjs/operators";
 
-import { PerguntaService } from "../../../shared/services/pergunta.service";
-import { TemaService } from "../../../shared/services/tema.service";
-import { Tema } from "../../../shared/models/tema.model";
-import { Proposicao } from "../../../shared/models/proposicao.model";
-import { UserService } from "../../../shared/services/user.service";
-import { Resposta } from "../../../shared/models/resposta.model";
+import { PerguntaService } from "../../shared/services/pergunta.service";
+import { TemaService } from "../../shared/services/tema.service";
+import { Tema } from "../../shared/models/tema.model";
+import { Proposicao } from "../../shared/models/proposicao.model";
+import { UserService } from "../../shared/services/user.service";
+import { Resposta } from "../../shared/models/resposta.model";
 
 @Component({
   selector: "app-perguntas-container",
