@@ -22,7 +22,7 @@ import { ProgressStackedComponent } from './progress-stacked/progress-stacked.co
     NavbarComponent,
     StickyFooterNavbarComponent,
     ProgressComponent,
-    ProgressStackedComponent
+    ProgressStackedComponent    
   ]
 })
 export class SharedModule { }
