@@ -17,9 +17,9 @@ import { MainModule } from './main/main.module';
 import { SharedModule } from './shared/components/shared.module';
 import { ParlamentarModule } from './parlamentar/parlamentar.module';
 import { QuestionarioModule } from './questionario/questionario.module';
+import { UserModule } from './user/user.module';
 
 import { AppComponent } from './app.component';
-import { LoginComponent } from './user/login/login.component';
 import { AlinhamentoComponent } from './main/alinhamento/alinhamento.component';
 import { FilterComponent } from './main/alinhamento/filter/filter.component';
 import { CardParlamentarComponent } from './main/alinhamento/card-parlamentar/card-parlamentar.component';
@@ -35,7 +35,6 @@ import { ParlamentarService } from './shared/services/parlamentar.service';
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent,
     AlinhamentoComponent,
     FilterComponent,
     CardParlamentarComponent    
@@ -55,7 +54,8 @@ import { ParlamentarService } from './shared/services/parlamentar.service';
     SharedModule,
     MainModule,
     ParlamentarModule,
-    QuestionarioModule
+    QuestionarioModule,
+    UserModule
   ],
   providers: [
     PerguntaService,
