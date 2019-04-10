@@ -4,10 +4,10 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
-import { estados } from '../../../shared/constants/estados';
-import { ParlamentarService } from '../../../shared/services/parlamentar.service';
-import { TemaService } from 'src/app/shared/services/tema.service';
-import { Tema } from '../../../shared/models/tema.model';
+import { estados } from '../../shared/constants/estados';
+import { ParlamentarService } from '../../shared/services/parlamentar.service';
+import { TemaService } from '../../shared/services/tema.service';
+import { Tema } from '../../shared/models/tema.model';
 
 @Component({
   selector: 'app-filter',

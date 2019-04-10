@@ -6,8 +6,6 @@ import { FormsModule } from '@angular/forms';
 
 import { SocialLoginModule, AuthServiceConfig } from 'angularx-social-login';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { LazyLoadImageModule, intersectionObserverPreset } from 'ng-lazyload-image';
-import { NgxPaginationModule } from 'ngx-pagination';
 
 import { getAuthServiceConfigs } from './shared/config/socialLoginConfig';
 import { TokenInterceptor } from './shared/auth/token.interceptor';
@@ -17,12 +15,10 @@ import { MainModule } from './main/main.module';
 import { SharedModule } from './shared/components/shared.module';
 import { ParlamentarModule } from './parlamentar/parlamentar.module';
 import { QuestionarioModule } from './questionario/questionario.module';
+import { AlinhamentoModule } from './alinhamento/alinhamento.module';
 import { UserModule } from './user/user.module';
 
 import { AppComponent } from './app.component';
-import { AlinhamentoComponent } from './main/alinhamento/alinhamento.component';
-import { FilterComponent } from './main/alinhamento/filter/filter.component';
-import { CardParlamentarComponent } from './main/alinhamento/card-parlamentar/card-parlamentar.component';
 
 import { PerguntaService } from './shared/services/pergunta.service';
 import { LoginService } from './shared/services/login.service';
@@ -34,10 +30,7 @@ import { ParlamentarService } from './shared/services/parlamentar.service';
 
 @NgModule({
   declarations: [
-    AppComponent,
-    AlinhamentoComponent,
-    FilterComponent,
-    CardParlamentarComponent    
+    AppComponent  
   ],
   imports: [
     BrowserModule,
@@ -45,16 +38,13 @@ import { ParlamentarService } from './shared/services/parlamentar.service';
     HttpClientModule,
     FormsModule,
     SocialLoginModule,
-    LazyLoadImageModule.forRoot({
-      preset: intersectionObserverPreset
-    }),
-    NgxPaginationModule,
     NgbModule.forRoot(),
     AppRoutingModule,
     SharedModule,
     MainModule,
     ParlamentarModule,
     QuestionarioModule,
+    AlinhamentoModule,
     UserModule
   ],
   providers: [
