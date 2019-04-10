@@ -71,3 +71,12 @@ body {
     text-decoration: none;
   }
 }
+
+.btn-tema {
+  @media (max-width: 991.98px) {
+    &:hover {
+      background-color: $white;
+      color: $black;
+    }
+  }  
+}
