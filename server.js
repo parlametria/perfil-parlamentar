@@ -14,6 +14,7 @@ const usuarios = require("./routes/api/usuarios");
 const temas = require("./routes/api/temas");
 const alinhamento = require("./routes/api/alinhamento");
 const comissoes = require("./routes/api/comissoes");
+const parlamentares = require("./routes/api/parlamentares");
 
 const app = express();
 var db = require("./models/index");
@@ -50,6 +51,7 @@ app.use("/api/auth", auth);
 app.use("/api/temas", temas);
 app.use("/api/alinhamento", alinhamento);
 app.use("/api/comissoes", comissoes);
+app.use("/api/parlamentares", parlamentares);
 
 // Set static folder
 app.use(express.static("client/build"));
