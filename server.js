@@ -5,6 +5,7 @@ const path = require("path");
 const logger = require("heroku-logger");
 const cors = require("cors");
 const passport = require("passport");
+const compression = require("compression");
 
 const perguntas = require("./routes/api/perguntas");
 const candidatos = require("./routes/api/candidatos");
@@ -16,6 +17,7 @@ const alinhamento = require("./routes/api/alinhamento");
 const comissoes = require("./routes/api/comissoes");
 
 const app = express();
+app.use(compression());
 var db = require("./models/index");
 
 const corsOption = {
