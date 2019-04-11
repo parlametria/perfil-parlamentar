@@ -12,6 +12,7 @@ const respostas = require("./routes/api/respostas");
 const auth = require("./routes/api/auth");
 const usuarios = require("./routes/api/usuarios");
 const comissoes = require("./routes/api/comissoes");
+const parlamentares = require("./routes/api/parlamentares");
 
 const app = express();
 var db = require("./models/index");
@@ -46,6 +47,7 @@ app.use("/api/respostas", respostas);
 app.use("/api/usuarios", usuarios);
 app.use("/api/auth", auth);
 app.use("/api/comissoes", comissoes);
+app.use("/api/parlamentares", parlamentares);
 
 // Set static folder
 app.use(express.static("client/build"));
