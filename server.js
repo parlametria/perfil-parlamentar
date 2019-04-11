@@ -12,17 +12,18 @@ const respostas = require("./routes/api/respostas");
 const auth = require("./routes/api/auth");
 const usuarios = require("./routes/api/usuarios");
 const comissoes = require("./routes/api/comissoes");
+const parlamentares = require("./routes/api/parlamentares");
 
 const app = express();
 var db = require("./models/index");
 
-const corsOption = {
-  origin: "http://localhost:3000",
+const corsOptions = {
+  origin: ['http://localhost:3000', '/leggo\.org\.br$'],
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
   credentials: true,
   exposedHeaders: ["authorization"]
 };
-app.use(cors(corsOption));
+app.use(cors(corsOptions));
 
 // Body parser middleware
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -46,6 +47,7 @@ app.use("/api/respostas", respostas);
 app.use("/api/usuarios", usuarios);
 app.use("/api/auth", auth);
 app.use("/api/comissoes", comissoes);
+app.use("/api/parlamentares", parlamentares);
 
 // Set static folder
 app.use(express.static("client/build"));
