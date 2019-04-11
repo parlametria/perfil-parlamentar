@@ -3,10 +3,10 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subject } from 'rxjs';
 import { takeUntil, take } from 'rxjs/operators';
 
-import { UserService } from '../../shared/services/user.service';
-import { TemaService } from '../../shared/services/tema.service';
+import { UserService } from '../shared/services/user.service';
+import { TemaService } from '../shared/services/tema.service';
 
-import { Tema } from '../../shared/models/tema.model';
+import { Tema } from '../shared/models/tema.model';
 
 @Component({
   selector: 'app-questionario',

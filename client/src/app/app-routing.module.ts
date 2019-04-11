@@ -3,9 +3,9 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { LoginComponent } from './user/login/login.component';
 import { HomeComponent } from './main/home/home.component';
-import { QuestionarioComponent } from './main/questionario/questionario.component';
-import { AlinhamentoComponent } from './main/alinhamento/alinhamento.component';
-import { ParlamentarComponent } from './main/parlamentar/parlamentar.component';
+import { QuestionarioComponent } from './questionario/questionario.component';
+import { AlinhamentoComponent } from './alinhamento/alinhamento.component';
+import { ParlamentarComponent } from './parlamentar/parlamentar.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent, data: { animation: 'HomeComponent' } },

@@ -4,7 +4,7 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 import { TemaService } from 'src/app/shared/services/tema.service';
-import { Tema } from '../../../shared/models/tema.model';
+import { Tema } from '../../shared/models/tema.model';
 
 @Component({
   selector: 'app-temas',

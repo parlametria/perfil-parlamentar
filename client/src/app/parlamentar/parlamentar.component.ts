@@ -4,10 +4,10 @@ import { ActivatedRoute } from "@angular/router";
 import { Subject } from "rxjs";
 import { takeUntil, take } from "rxjs/operators";
 
-import { ParlamentarService } from "./../../shared/services/parlamentar.service";
-import { TemaService } from "./../../shared/services/tema.service";
-import { PerguntaService } from "./../../shared/services/pergunta.service";
-import { UserService } from "./../../shared/services/user.service";
+import { ParlamentarService } from "./../shared/services/parlamentar.service";
+import { TemaService } from "./../shared/services/tema.service";
+import { PerguntaService } from "./../shared/services/pergunta.service";
+import { UserService } from "./../shared/services/user.service";
 
 import { Parlamentar } from "src/app/shared/models/parlamentar.model";
 import { Tema } from "src/app/shared/models/tema.model";
