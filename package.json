@@ -32,6 +32,7 @@
     "@webassemblyjs/wasm-opt": "^1.8.0",
     "@webassemblyjs/wast-parser": "^1.8.0",
     "body-parser": "^1.18.3",
+    "compression": "^1.7.4",
     "concurrently": "^4.0.1",
     "cors": "^2.8.4",
     "expand-range": "^2.0.2",
