@@ -19,13 +19,13 @@ const parlamentares = require("./routes/api/parlamentares");
 const app = express();
 var db = require("./models/index");
 
-const corsOption = {
-  origin: "http://localhost:4200",
+const corsOptions = {
+  origin: ['http://localhost:4200', '/leggo\.org\.br$'],
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
   credentials: true,
   exposedHeaders: ["authorization"]
 };
-app.use(cors(corsOption));
+app.use(cors(corsOptions));
 
 // Body parser middleware
 app.use(bodyParser.urlencoded({ extended: false }));
