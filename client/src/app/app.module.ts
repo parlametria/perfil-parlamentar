@@ -11,12 +11,7 @@ import { getAuthServiceConfigs } from './shared/config/socialLoginConfig';
 import { TokenInterceptor } from './shared/auth/token.interceptor';
 
 import { AppRoutingModule } from './app-routing.module';
-import { MainModule } from './main/main.module';
 import { SharedModule } from './shared/components/shared.module';
-import { ParlamentarModule } from './parlamentar/parlamentar.module';
-import { QuestionarioModule } from './questionario/questionario.module';
-import { AlinhamentoModule } from './alinhamento/alinhamento.module';
-import { UserModule } from './user/user.module';
 
 import { AppComponent } from './app.component';
 
@@ -30,7 +25,7 @@ import { ParlamentarService } from './shared/services/parlamentar.service';
 
 @NgModule({
   declarations: [
-    AppComponent  
+    AppComponent
   ],
   imports: [
     BrowserModule,
@@ -40,12 +35,7 @@ import { ParlamentarService } from './shared/services/parlamentar.service';
     SocialLoginModule,
     NgbModule.forRoot(),
     AppRoutingModule,
-    SharedModule,
-    MainModule,
-    ParlamentarModule,
-    QuestionarioModule,
-    AlinhamentoModule,
-    UserModule
+    SharedModule
   ],
   providers: [
     PerguntaService,

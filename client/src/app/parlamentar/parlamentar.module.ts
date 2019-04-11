@@ -7,6 +7,7 @@ import { LazyLoadImageModule, intersectionObserverPreset } from 'ng-lazyload-ima
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { SharedModule } from '../shared/components/shared.module';
+import { ParlamentarRoutingModule } from './parlamentar-routing.module';
 
 import { ParlamentarComponent } from './parlamentar.component';
 import { PosicaoComponent } from './posicao/posicao.component';
@@ -24,7 +25,8 @@ import { PosicaoComponent } from './posicao/posicao.component';
       preset: intersectionObserverPreset
     }),
     NgbModule.forRoot(),
-    SharedModule
+    SharedModule,
+    ParlamentarRoutingModule
   ]
 })
 export class ParlamentarModule { }

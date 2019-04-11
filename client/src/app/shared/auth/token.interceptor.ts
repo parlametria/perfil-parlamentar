@@ -36,7 +36,7 @@ export class TokenInterceptor implements HttpInterceptor {
         // Handle Unauthorized
         if (err.status === 401) {
           this.loginService.logoutUser();
-          this.router.navigate(['/login']);
+          this.router.navigate(['/usuario/login']);
         }
       }
     }));

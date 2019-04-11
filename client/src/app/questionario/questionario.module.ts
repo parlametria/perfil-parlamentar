@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { SharedModule } from '../shared/components/shared.module';
+import { QuestionarioRoutingModule } from './questionario-routing.module';
 
 import { PerguntasContainerComponent } from './perguntas-container/perguntas-container.component';
 import { PerguntaComponent } from './pergunta/pergunta.component';
@@ -11,7 +12,7 @@ import { QuestionarioComponent } from './questionario.component';
 import { TemasComponent } from './temas/temas.component';
 
 @NgModule({
-  declarations: [    
+  declarations: [
     PerguntasContainerComponent,
     PerguntaComponent,
     QuestionarioComponent,
@@ -21,7 +22,8 @@ import { TemasComponent } from './temas/temas.component';
     CommonModule,
     FormsModule,
     NgbModule.forRoot(),
-    SharedModule
+    SharedModule,
+    QuestionarioRoutingModule
   ]
 })
 export class QuestionarioModule { }

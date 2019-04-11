@@ -7,6 +7,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { LazyLoadImageModule, intersectionObserverPreset } from 'ng-lazyload-image';
 
 import { SharedModule } from '../shared/components/shared.module';
+import { AlinhamentoRoutingModule } from './alinhamento-routing.module';
 
 import { AlinhamentoComponent } from './alinhamento.component';
 import { FilterComponent } from './filter/filter.component';
@@ -26,7 +27,8 @@ import { CardParlamentarComponent } from './card-parlamentar/card-parlamentar.co
     LazyLoadImageModule.forRoot({
       preset: intersectionObserverPreset
     }),
-    SharedModule
+    SharedModule,
+    AlinhamentoRoutingModule
   ]
 })
 export class AlinhamentoModule { }

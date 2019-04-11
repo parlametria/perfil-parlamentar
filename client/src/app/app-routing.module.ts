@@ -1,19 +1,13 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { LoginComponent } from './user/login/login.component';
-import { HomeComponent } from './main/home/home.component';
-import { QuestionarioComponent } from './questionario/questionario.component';
-import { AlinhamentoComponent } from './alinhamento/alinhamento.component';
-import { ParlamentarComponent } from './parlamentar/parlamentar.component';
-
 const routes: Routes = [
-  { path: '', component: HomeComponent, data: { animation: 'HomeComponent' } },
-  { path: 'login', component: LoginComponent, data: { animation: 'LoginComponent' } },
-  { path: 'questionario', component: QuestionarioComponent, data: { animation: 'QuestionarioComponent' } },
-  { path: 'alinhamento', component: AlinhamentoComponent, data: { animation: 'AlinhamentoComponent' } },
-  { path: 'parlamentar/:cpf', component: ParlamentarComponent, data: { animation: 'ParlamentarComponent' } },
-  { path: '**', component: HomeComponent, data: { animation: 'HomeComponent' } }
+  { path: '', loadChildren: './main/main.module#MainModule' },
+  { path: 'usuario', loadChildren: './user/user.module#UserModule' },
+  { path: 'questionario', loadChildren: './questionario/questionario.module#QuestionarioModule' },
+  { path: 'alinhamento', loadChildren: './alinhamento/alinhamento.module#AlinhamentoModule' },
+  { path: 'parlamentar', loadChildren: './parlamentar/parlamentar.module#ParlamentarModule' },
+  { path: '**', redirectTo: '' }
 ];
 
 @NgModule({
