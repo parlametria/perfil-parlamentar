@@ -1,7 +1,7 @@
 {
   "name": "Voz Ativa",
   "short_name": "Voz Ativa",
-  "description": "Descubra quais deputados/as e candidatos/as são alinhados com você",
+  "description": "Descubra quais deputados/as são alinhados com você.",
   "lang": "pt-BR",
   "start_url": "index.html",
   "display": "standalone",

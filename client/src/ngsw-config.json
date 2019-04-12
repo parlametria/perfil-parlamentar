@@ -9,8 +9,20 @@
           "/favicon.ico",
           "/index.html",
           "/*.css",
-          "/*.js",
           "/*.js"
+        ]
+      }
+    },
+    {
+      "name": "icons",
+      "installMode": "lazy",
+      "updateMode": "prefetch",
+      "resources": {
+        "urls": [
+          "/*.woff*",
+          "/*.ttf*",
+          "/*.eot*",
+          "/*.svg*"
         ]
       }
     },
