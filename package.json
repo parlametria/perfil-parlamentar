@@ -39,6 +39,7 @@
     "express": "^4.16.3",
     "express-jwt": "^5.3.1",
     "fbgraph": "^1.4.4",
+    "force-ssl-heroku": "^1.0.2",
     "heroku-logger": "^0.3.1",
     "immer": "^1.8.2",
     "jsonwebtoken": "^8.3.0",
