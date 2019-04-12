@@ -22,6 +22,8 @@ import { TemaService } from './shared/services/tema.service';
 import { UserService } from './shared/services/user.service';
 import { AlinhamentoService } from './shared/services/alinhamento.service';
 import { ParlamentarService } from './shared/services/parlamentar.service';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [
@@ -35,7 +37,8 @@ import { ParlamentarService } from './shared/services/parlamentar.service';
     SocialLoginModule,
     NgbModule.forRoot(),
     AppRoutingModule,
-    SharedModule
+    SharedModule,
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [
     PerguntaService,
