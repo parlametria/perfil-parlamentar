@@ -90,7 +90,7 @@ export class AlinhamentoService {
 
       filtered =
         partido && partido !== "Partidos" && filtered
-          ? p.sg_partido.toLowerCase().includes(partido.toLowerCase())
+          ? p.sg_partido.toLowerCase() === partido.toLowerCase()
           : filtered;
 
       filtered =
