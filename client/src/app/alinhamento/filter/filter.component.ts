@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, OnDestroy } from '@angular/core';
 
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Subject } from 'rxjs';
@@ -14,7 +14,7 @@ import { Tema } from '../../shared/models/tema.model';
   templateUrl: './filter.component.html',
   styleUrls: ['./filter.component.scss']
 })
-export class FilterComponent implements OnInit {
+export class FilterComponent implements OnInit, OnDestroy {
 
   @Output() filterChange = new EventEmitter<any>();
 
@@ -141,6 +141,11 @@ export class FilterComponent implements OnInit {
     if (this.temas && id !== this.FILTRO_PADRAO_TEMA) {
       return this.temas.filter(tema => tema.id === id)[0].tema;
     }
+  }
+
+  ngOnDestroy() {
+    this.unsubscribe.next();
+    this.unsubscribe.complete();
   }
 
 }

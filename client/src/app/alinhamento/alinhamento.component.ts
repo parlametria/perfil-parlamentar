@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -12,7 +12,7 @@ import { Parlamentar } from 'src/app/shared/models/parlamentar.model';
   templateUrl: './alinhamento.component.html',
   styleUrls: ['./alinhamento.component.scss']
 })
-export class AlinhamentoComponent implements OnInit {
+export class AlinhamentoComponent implements OnInit, OnDestroy {
   readonly VIEW_SM = 'sm';
   readonly VIEW_MD = 'md';
   readonly VIEW_LG = 'lg';
@@ -78,5 +78,10 @@ export class AlinhamentoComponent implements OnInit {
 
   setView(view: string) {
     this.view = view;
+  }
+
+  ngOnDestroy() {
+    this.unsubscribe.next();
+    this.unsubscribe.complete();
   }
 }
