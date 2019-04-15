@@ -7,7 +7,9 @@ branches:
   only:
   - refatoramento-frontend
 before_script:
+  - cd client/
   - npm install -g @angular/cli
+  - npm install
 script:
   - ng lint
   - ng test --watch=false --browsers=ChromeHeadless
