@@ -6,10 +6,12 @@ sudo: required
 branches:
   only:
   - refatoramento-frontend
-before_script:
+before_install:
   - cd client/
-  - npm install -g @angular/cli
+install:
   - npm install
+before_script:  
+  - npm install -g @angular/cli
 script:
   - ng lint
   - ng test --watch=false --browsers=ChromeHeadless
