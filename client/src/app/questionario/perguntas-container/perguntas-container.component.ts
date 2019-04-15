@@ -1,19 +1,19 @@
-import { Component, OnInit, OnDestroy, Input } from "@angular/core";
+import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 
-import { Subject, forkJoin } from "rxjs";
-import { takeUntil } from "rxjs/operators";
+import { Subject, forkJoin } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
-import { PerguntaService } from "../../shared/services/pergunta.service";
-import { TemaService } from "../../shared/services/tema.service";
-import { Tema } from "../../shared/models/tema.model";
-import { Proposicao } from "../../shared/models/proposicao.model";
-import { UserService } from "../../shared/services/user.service";
-import { Resposta } from "../../shared/models/resposta.model";
+import { PerguntaService } from '../../shared/services/pergunta.service';
+import { TemaService } from '../../shared/services/tema.service';
+import { Tema } from '../../shared/models/tema.model';
+import { Proposicao } from '../../shared/models/proposicao.model';
+import { UserService } from '../../shared/services/user.service';
+import { Resposta } from '../../shared/models/resposta.model';
 
 @Component({
-  selector: "app-perguntas-container",
-  templateUrl: "./perguntas-container.component.html",
-  styleUrls: ["./perguntas-container.component.scss"]
+  selector: 'app-perguntas-container',
+  templateUrl: './perguntas-container.component.html',
+  styleUrls: ['./perguntas-container.component.scss']
 })
 export class PerguntasContainerComponent implements OnInit, OnDestroy {
   readonly FAVOR = 1;
@@ -62,7 +62,7 @@ export class PerguntasContainerComponent implements OnInit, OnDestroy {
         this.listaTemas = this.sortObjectUsingArray(
           temas,
           this.receivedTemas,
-          "id"
+          'id'
         );
 
         this.temaSelecionado = this.listaTemas[0].id;
@@ -106,9 +106,9 @@ export class PerguntasContainerComponent implements OnInit, OnDestroy {
   }
 
   setResposta(resposta) {
-    let novaResposta = {
+    const novaResposta = {
       id_votacao: this.perguntaSelecionada.id_votacao,
-      resposta: resposta
+      resposta
     };
 
     this.salvandoResposta = true;
@@ -116,11 +116,11 @@ export class PerguntasContainerComponent implements OnInit, OnDestroy {
       .setResposta(novaResposta)
       .then(() => {
         setTimeout(() => {
-          this.salvandoResposta = false
+          this.salvandoResposta = false;
           this.proximaPergunta();
         }, 1000);
       })
-      .catch(() => console.log("Ops! Não foi possível salvar a resposta."));
+      .catch(() => console.log('Ops! Não foi possível salvar a resposta.'));
   }
 
   onTemaChange() {
@@ -140,7 +140,7 @@ export class PerguntasContainerComponent implements OnInit, OnDestroy {
   }
 
   proximaPergunta() {
-    let index = this.todasProposicoesOrdenadas.indexOf(
+    const index = this.todasProposicoesOrdenadas.indexOf(
       this.perguntaSelecionada
     );
 
@@ -150,7 +150,7 @@ export class PerguntasContainerComponent implements OnInit, OnDestroy {
       this.onTemaChange();
     } else {
       // Passa para próxima pergunta
-      let proximaPergunta = this.todasProposicoesOrdenadas[index + 1];
+      const proximaPergunta = this.todasProposicoesOrdenadas[index + 1];
 
       // Checa se a próxima pergunta é do mesmo tema ou não
       if (proximaPergunta.tema_id !== this.perguntaSelecionada.tema_id) {
@@ -173,36 +173,43 @@ export class PerguntasContainerComponent implements OnInit, OnDestroy {
   }
 
   respostaPositiva() {
-    if (this.respostasUser.votacoes)
+    if (this.respostasUser.votacoes) {
       return (
         this.respostasUser.votacoes[this.perguntaSelecionada.id_votacao] ===
         this.FAVOR
       );
+    }
   }
 
   respostaNegativa() {
-    if (this.respostasUser.votacoes)
+    if (this.respostasUser.votacoes) {
       return (
         this.respostasUser.votacoes[this.perguntaSelecionada.id_votacao] ===
         this.CONTRA
       );
+    }
   }
 
   respostaNeutra() {
-    if (this.respostasUser.votacoes)
+    if (this.respostasUser.votacoes) {
       return (
         this.respostasUser.votacoes[this.perguntaSelecionada.id_votacao] ===
         this.NAOSEI
       );
+    }
   }
 
   sortObjectUsingArray(object, array, key) {
-    let objectOrdered = object.sort((a, b) => {
-      let A = Number(a[key]),
-        B = Number(b[key]);
+    const objectOrdered = object.sort((a, b) => {
+      const A = Number(a[key]);
+      const B = Number(b[key]);
 
-      if (array.indexOf(A) > array.indexOf(B)) return 1;
-      else return -1;
+      if (array.indexOf(A) > array.indexOf(B)) {
+        return 1;
+      } else {
+        return -1;
+      }
+
     });
 
     return objectOrdered;
@@ -210,22 +217,28 @@ export class PerguntasContainerComponent implements OnInit, OnDestroy {
 
   sortProposicoes(proposicoes) {
     return proposicoes.sort((a, b) => {
-      if (a.id_votacao > b.id_votacao) return 1;
-      else if (a.id_votacao < b.id_votacao) return -1;
-      else return 0;
+      if (a.id_votacao > b.id_votacao) {
+        return 1;
+      } else if (a.id_votacao < b.id_votacao) {
+          return -1;
+      } else {
+        return 0;
+      }
     });
   }
 
-  sortProposicoesUsingArray(proposicoes, arrayTemas) {
-    let proposicoesOrdered = proposicoes.sort((a, b) => {
-      let A = Number(a["tema_id"]),
-        B = Number(b["tema_id"]);
+  sortProposicoesUsingArray(proposicoes: Proposicao[], arrayTemas) {
+    const proposicoesOrdered = proposicoes.sort((a, b) => {
+      const A = Number(a.tema_id);
+      const B = Number(b.tema_id);
 
+      /* tslint:disable */
       if (arrayTemas.indexOf(A) > arrayTemas.indexOf(B)) return 1;
       else if (arrayTemas.indexOf(A) < arrayTemas.indexOf(B)) return -1;
       else if (a.id_votacao > b.id_votacao) return 1;
       else if (a.id_votacao < b.id_votacao) return -1;
       else return 0;
+      /* tslint:enable */
     });
 
     return proposicoesOrdered;

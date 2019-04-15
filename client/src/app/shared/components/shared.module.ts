@@ -19,13 +19,13 @@ import { ProgressStackedComponent } from './progress-stacked/progress-stacked.co
   imports: [
     CommonModule,
     RouterModule,
-    NgbModule.forRoot()
+    NgbModule
   ],
   exports: [
     NavbarComponent,
     StickyFooterNavbarComponent,
     ProgressComponent,
-    ProgressStackedComponent    
+    ProgressStackedComponent
   ]
 })
 export class SharedModule { }

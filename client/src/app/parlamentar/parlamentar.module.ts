@@ -24,7 +24,7 @@ import { PosicaoComponent } from './posicao/posicao.component';
     LazyLoadImageModule.forRoot({
       preset: intersectionObserverPreset
     }),
-    NgbModule.forRoot(),
+    NgbModule,
     SharedModule,
     ParlamentarRoutingModule
   ]

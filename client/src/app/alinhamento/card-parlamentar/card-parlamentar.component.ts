@@ -6,7 +6,7 @@ import {
   EventEmitter,
   SimpleChanges,
   OnChanges
-} from "@angular/core";
+} from '@angular/core';
 import {
   trigger,
   state,
@@ -14,55 +14,55 @@ import {
   animate,
   transition,
   AnimationEvent
-} from "@angular/animations";
+} from '@angular/animations';
 
-import { Parlamentar } from "src/app/shared/models/parlamentar.model";
+import { Parlamentar } from 'src/app/shared/models/parlamentar.model';
 
 @Component({
-  selector: "app-card-parlamentar",
-  templateUrl: "./card-parlamentar.component.html",
-  styleUrls: ["./card-parlamentar.component.scss"],
+  selector: 'app-card-parlamentar',
+  templateUrl: './card-parlamentar.component.html',
+  styleUrls: ['./card-parlamentar.component.scss'],
   animations: [
-    trigger("openClose", [
+    trigger('openClose', [
       state(
-        "open",
+        'open',
         style({
-          height: "*",
+          height: '*',
           opacity: 1
         })
       ),
       state(
-        "closed",
+        'closed',
         style({
-          height: "0px",
+          height: '0px',
           opacity: 0
         })
       ),
-      transition("open => closed", [animate("0.25s")]),
-      transition("closed => open", [animate("0.25s 0.3s")])
+      transition('open => closed', [animate('0.25s')]),
+      transition('closed => open', [animate('0.25s 0.3s')])
     ]),
-    trigger("show", [
+    trigger('show', [
       state(
-        "show",
+        'show',
         style({
           opacity: 1
         })
       ),
       state(
-        "hide",
+        'hide',
         style({
           opacity: 0
         })
       ),
-      transition("show => hide", [animate("0.25s")]),
-      transition("hide => show", [animate("0.25s 0.3s")])
+      transition('show => hide', [animate('0.25s')]),
+      transition('hide => show', [animate('0.25s 0.3s')])
     ])
   ]
 })
 export class CardParlamentarComponent implements OnChanges, OnInit {
-  readonly VIEW_SM = "sm";
-  readonly VIEW_MD = "md";
-  readonly VIEW_LG = "lg";
+  readonly VIEW_SM = 'sm';
+  readonly VIEW_MD = 'md';
+  readonly VIEW_LG = 'lg';
 
   @Input() id: number;
   @Input() parlamentar: Parlamentar;
@@ -74,7 +74,7 @@ export class CardParlamentarComponent implements OnChanges, OnInit {
 
   alinhamento: any;
   passo: number;
-  following: boolean = false;
+  following = false;
   isCollapsed: boolean;
 
   constructor() {
@@ -111,21 +111,21 @@ export class CardParlamentarComponent implements OnChanges, OnInit {
   }
 
   getMaiorQuantidadePerguntas(alinhamento: any): number {
-    const max = alinhamento.temas.reduce(
+    const maximo = alinhamento.temas.reduce(
       (max, p) => (p.totalPerguntas > max ? p.totalPerguntas : max),
       alinhamento.temas[0].totalPerguntas
     );
-    return max > 0 ? 100 / max : 0;
+    return maximo > 0 ? 100 / maximo : 0;
   }
 
   onAnimationStart(event: AnimationEvent) {
-    if (event.toState == "closed") {
+    if (event.toState === 'closed') {
       this.isCollapsed = true;
     }
   }
 
   onAnimationEnd(event: AnimationEvent) {
-    if (event.toState == "open") {
+    if (event.toState === 'open') {
       this.isCollapsed = false;
     } else {
       this.isCollapsed = true;

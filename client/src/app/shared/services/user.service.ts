@@ -1,24 +1,24 @@
-import { Injectable } from "@angular/core";
-import { HttpClient } from "@angular/common/http";
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 
-import { BehaviorSubject, Observable } from "rxjs";
+import { BehaviorSubject, Observable } from 'rxjs';
 
-import { LoginService } from "./login.service";
-import { PerguntaService } from "./pergunta.service";
-import { environment } from "../../../environments/environment";
-import { Resposta } from "../models/resposta.model";
-import { TemasUsuario } from "../models/temasUsuario.model";
+import { LoginService } from './login.service';
+import { PerguntaService } from './pergunta.service';
+import { environment } from '../../../environments/environment';
+import { Resposta } from '../models/resposta.model';
+import { TemasUsuario } from '../models/temasUsuario.model';
 
 @Injectable({
-  providedIn: "root"
+  providedIn: 'root'
 })
 export class UserService {
   private respostas = new BehaviorSubject<Resposta>({
     vozAtiva: {},
     votacoes: {}
-  });  
+  });
 
-  private url = environment.apiUrl + "usuarios";
+  private url = environment.apiUrl + 'usuarios';
 
   constructor(
     private http: HttpClient,
@@ -53,10 +53,10 @@ export class UserService {
         error => console.log(error)
       );
     } else {
-      if (localStorage.getItem("respostasUser") === null) {
+      if (localStorage.getItem('respostasUser') === null) {
         this.initRespostasLocal();
       } else {
-        let respostasLS = this.getRespostaLocalStorage();
+        const respostasLS = this.getRespostaLocalStorage();
         this.respostas.next(respostasLS);
       }
     }
@@ -65,7 +65,7 @@ export class UserService {
   setResposta(novaResposta): Promise<any> {
     return new Promise((resolve, reject) => {
       if (this.loginService.isUserLogged()) {
-        let respostasAtual = this.respostas.getValue();
+        const respostasAtual = this.respostas.getValue();
 
         // Atualiza Resposta
         respostasAtual.votacoes[novaResposta.id_votacao] =
@@ -85,8 +85,8 @@ export class UserService {
           }
         );
       } else {
-        let respostasLS = this.getRespostaLocalStorage();
-        let { id_votacao, resposta } = novaResposta;
+        const respostasLS = this.getRespostaLocalStorage();
+        const { id_votacao, resposta } = novaResposta;
 
         // Atualiza Resposta
         respostasLS.votacoes[id_votacao] = resposta;
@@ -101,19 +101,19 @@ export class UserService {
   }
 
   getRespostasAPI(): Observable<Resposta> {
-    return this.http.get<Resposta>(this.url + "/respostas/eu");
+    return this.http.get<Resposta>(this.url + '/respostas/eu');
   }
 
   setRespostasAPIbyID(idVotacao, novasRespostas): Observable<Resposta> {
     return this.http.post<Resposta>(
-      this.url + "/respostas/eu?idResp=" + idVotacao,
+      this.url + '/respostas/eu?idResp=' + idVotacao,
       { respostas: novasRespostas }
     );
   }
 
   setRespostasAPI(novasRespostas): Observable<Resposta> {
     return this.http.post<Resposta>(
-      this.url + "/respostas/eu/todas",
+      this.url + '/respostas/eu/todas',
       novasRespostas
     );
   }
@@ -121,13 +121,13 @@ export class UserService {
   private initRespostasLocal() {
     this.perguntaService.getProposicoes().subscribe(
       proposicoes => {
-        let votacoes = proposicoes.reduce((result, item) => {
-          let key = item.id_votacao;
+        const votacoes = proposicoes.reduce((result, item) => {
+          const key = item.id_votacao;
           result[key] = 0;
           return result;
         }, {});
 
-        let respostasUser: Resposta = {
+        const respostasUser: Resposta = {
           vozAtiva: {},
           votacoes
         };
@@ -140,22 +140,23 @@ export class UserService {
   }
 
   private getRespostaLocalStorage() {
-    return JSON.parse(localStorage.getItem("respostasUser"));
+    return JSON.parse(localStorage.getItem('respostasUser'));
   }
 
   private setRespostaLocalStorage(novasRespostas) {
-    localStorage.setItem("respostasUser", JSON.stringify(novasRespostas));
+    localStorage.setItem('respostasUser', JSON.stringify(novasRespostas));
   }
 
   getTemas(): Promise<any> {
     return new Promise((resolve, reject) => {
       if (this.loginService.isUserLogged()) {
 
-        this.getTemasAPI().subscribe(res => {          
-          if (typeof res !== "undefined" && res.length > 0) {
-            let temasUsuario = res[0].temas_preferidos;
-            if (typeof temasUsuario !== "undefined" && temasUsuario.length > 0)              
-              resolve(temasUsuario);                    
+        this.getTemasAPI().subscribe(res => {
+          if (typeof res !== 'undefined' && res.length > 0) {
+            const temasUsuario = res[0].temas_preferidos;
+            if (typeof temasUsuario !== 'undefined' && temasUsuario.length > 0) {
+              resolve(temasUsuario);
+            }
           }
           resolve([]);
         }, error => {
@@ -164,15 +165,15 @@ export class UserService {
         });
 
       } else {
-        let temasLS = this.getTemasLocalStorage();
+        const temasLS = this.getTemasLocalStorage();
 
-        if (temasLS) {          
+        if (temasLS) {
           resolve(temasLS);
-        } else {        
+        } else {
           resolve([]);
         }
       }
-      
+
     });
   }
 
@@ -198,20 +199,20 @@ export class UserService {
   }
 
   private getTemasAPI(): Observable<TemasUsuario[]> {
-    return this.http.get<TemasUsuario[]>(this.url + "/temas/eu");
+    return this.http.get<TemasUsuario[]>(this.url + '/temas/eu');
   }
 
   getTemasLocalStorage() {
-    return JSON.parse(localStorage.getItem("temasUser"));
+    return JSON.parse(localStorage.getItem('temasUser'));
   }
 
   private setTemasAPI(novosTemas: Array<string>): Observable<TemasUsuario[]> {
-    return this.http.post<TemasUsuario[]>(this.url + "/temas/eu", {
+    return this.http.post<TemasUsuario[]>(this.url + '/temas/eu', {
       temas: novosTemas
     });
   }
 
   private setTemasLocalStorage(novosTemas) {
-    localStorage.setItem("temasUser", JSON.stringify(novosTemas));
+    localStorage.setItem('temasUser', JSON.stringify(novosTemas));
   }
 }

@@ -9,8 +9,8 @@ import {
 import { Router } from '@angular/router';
 
 
-import { Observable } from "rxjs";
-import { tap } from "rxjs/operators";
+import { Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
 
 import { LoginService } from '../services/login.service';
 

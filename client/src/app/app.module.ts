@@ -35,7 +35,7 @@ import { environment } from '../environments/environment';
     HttpClientModule,
     FormsModule,
     SocialLoginModule,
-    NgbModule.forRoot(),
+    NgbModule,
     AppRoutingModule,
     SharedModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })

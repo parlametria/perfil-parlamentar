@@ -1,4 +1,4 @@
 export interface Resposta {
-  vozAtiva: object,
-  votacoes: object
+  vozAtiva: object;
+  votacoes: object;
 }

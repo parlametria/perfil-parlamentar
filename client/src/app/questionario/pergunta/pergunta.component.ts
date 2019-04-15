@@ -7,12 +7,12 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class PerguntaComponent implements OnInit {
 
-  @Input() projLei = ''
-  @Input() title = ''
-  @Input() description = ''
+  @Input() projLei = '';
+  @Input() title = '';
+  @Input() description = '';
   @Input() id = '';
-  
-  isCollapsed: boolean;  
+
+  isCollapsed: boolean;
 
   constructor() {
     this.isCollapsed = true;

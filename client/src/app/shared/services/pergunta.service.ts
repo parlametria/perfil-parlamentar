@@ -23,7 +23,7 @@ export class PerguntaService {
   }
 
   getProposicoes(): Observable<Proposicao[]> {
-    return this.http.get<Proposicao[]>(this.url + "/proposicoes");
+    return this.http.get<Proposicao[]>(this.url + '/proposicoes');
   }
-  
+
 }

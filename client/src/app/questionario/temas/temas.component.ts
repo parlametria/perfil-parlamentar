@@ -17,9 +17,9 @@ export class TemasComponent implements OnInit, OnDestroy {
 
   temas: Tema[];
   selectedTemas: number[] = [];
-  hasAnySelectedTema: boolean = false;
+  hasAnySelectedTema = false;
 
-  @Output() temasEvent = new EventEmitter<Object>();
+  @Output() temasEvent = new EventEmitter<object>();
 
   constructor(private temaService: TemaService) { }
 
@@ -50,14 +50,14 @@ export class TemasComponent implements OnInit, OnDestroy {
   }
 
   emitTemas() {
-    let notSelectedTemas = this.temas.filter((tema) => {
+    const notSelectedTemas = this.temas.filter((tema) => {
       return !this.selectedTemas.includes(tema.id);
     }).map(tema => tema.id);
 
-    let eventoObject = {
+    const eventoObject = {
       selectedTemas: this.selectedTemas,
       allTemas: this.selectedTemas.concat(notSelectedTemas),
-    }
+    };
 
     this.temasEvent.emit(eventoObject);
   }
