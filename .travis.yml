@@ -1,0 +1,14 @@
+language: node_js
+node_js:
+  - "10"
+dist: trusty
+sudo: required
+branches:
+  only:
+  - refatoramento-frontend
+before_script:
+  - npm install -g @angular/cli
+script:
+  - ng lint
+  - ng test --watch=false --browsers=ChromeHeadless
+  - ng build --prod

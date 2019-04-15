@@ -2,8 +2,6 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { TemasComponent } from './temas.component';
 
-import { TemaService } from '../../../shared/services/tema.service';
-
 describe('TemasComponent', () => {
   let component: TemasComponent;
   let fixture: ComponentFixture<TemasComponent>;
