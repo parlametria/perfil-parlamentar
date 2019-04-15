@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 
 import { Subject } from 'rxjs';
-import { takeUntil, take } from 'rxjs/operators';
+import { takeUntil } from 'rxjs/operators';
 
 import { UserService } from '../shared/services/user.service';
 import { TemaService } from '../shared/services/tema.service';
@@ -20,8 +20,8 @@ export class QuestionarioComponent implements OnInit, OnDestroy {
   receivedTemas: string[];
   temas: Tema[];
 
-  showQuestionario: boolean = false;
-  showTemasComponent: boolean = false;
+  showQuestionario = false;
+  showTemasComponent = false;
 
   constructor(
     private userService: UserService,
@@ -30,40 +30,40 @@ export class QuestionarioComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.getTemas();
-    
+
   }
 
   getTemas() {
     this.temaService.getTemas().pipe(takeUntil(this.unsubscribe)).subscribe((temas) => {
       this.temas = temas;
       this.getTemasUsuario();
-    });    
+    });
   }
 
-  getTemasUsuario() {    
+  getTemasUsuario() {
     this.userService.getTemas().then((temas) => {
       if (typeof temas !== 'undefined' && temas.length > 0) {
-        let temasPreferidos = this.mapTemasIdToNome(temas);
-        let notSelectedTemas = this.joinComTemasNaoSelecionados(temasPreferidos);
+        const temasPreferidos = this.mapTemasIdToNome(temas);
+        const notSelectedTemas = this.joinComTemasNaoSelecionados(temasPreferidos);
 
         this.receivedTemas = temasPreferidos.concat(notSelectedTemas);
-        this.showQuestionario = true;        
+        this.showQuestionario = true;
       } else {
         this.showQuestionario = false;
         this.showTemasComponent = true;
       }
     }).catch((err) => {
-      console.log(err);      
+      console.log(err);
     });
 
   }
 
   receiveTemas($event) {
 
-    let temasSelecionados = $event.selectedTemas
+    const temasSelecionados = $event.selectedTemas;
 
     // Transforma o Array de IDs de temas selecionados em um Array de nomes dos temas selecionados
-    let temasPreferidos = temasSelecionados.map((temaID) => {
+    const temasPreferidos = temasSelecionados.map((temaID) => {
       return this.temas.filter((value) => {
         return value.id === temaID;
       })[0].tema;
@@ -73,11 +73,11 @@ export class QuestionarioComponent implements OnInit, OnDestroy {
     this.userService.setTemas(temasPreferidos).then((res) => {
       this.receivedTemas = $event.allTemas;
       this.showQuestionario = true;
-    });    
+    });
   }
 
   mapTemasIdToNome(temasNome) {
-    let temasId = temasNome.map((temaValue) => {
+    const temasId = temasNome.map((temaValue) => {
       return this.temas.filter((value) => {
         return value.tema === temaValue;
       })[0].id;
@@ -87,7 +87,7 @@ export class QuestionarioComponent implements OnInit, OnDestroy {
   }
 
   joinComTemasNaoSelecionados(temasPreferidos) {
-    let notSelectedTemas = this.temas.filter((tema) => {
+    const notSelectedTemas = this.temas.filter((tema) => {
       return !temasPreferidos.includes(tema.id);
     }).map(tema => tema.id);
 

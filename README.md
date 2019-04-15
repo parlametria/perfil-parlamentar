@@ -1,5 +1,7 @@
 # [Voz Ativa](https://www.vozativa.org)
 
+[![Build Status](https://travis-ci.org/analytics-ufcg/voz-ativa.svg?branch=refatoramento-frontend)](https://travis-ci.org/analytics-ufcg/voz-ativa)
+
 # Sobre o projeto
 
 O projeto foi desenvolvido utilizando a arquitetura PEAN (Postgres Express Angular e Node). 

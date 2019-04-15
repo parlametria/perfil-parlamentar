@@ -1,4 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+
 import { LoginService } from '../../shared/services/login.service';
 
 @Component({
@@ -6,14 +10,16 @@ import { LoginService } from '../../shared/services/login.service';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, OnDestroy {
 
   isLoggedIn: boolean;
+
+  private unsubscribe = new Subject();
 
   constructor(private loginService: LoginService) { }
 
   ngOnInit() {
-    this.loginService.isLoggedIn().subscribe(res =>
+    this.loginService.isLoggedIn().pipe(takeUntil(this.unsubscribe)).subscribe(res =>
       this.isLoggedIn = res
     );
   }
@@ -28,6 +34,11 @@ export class LoginComponent implements OnInit {
 
   logoutUser() {
     this.loginService.logoutUser();
+  }
+
+  ngOnDestroy() {
+    this.unsubscribe.next();
+    this.unsubscribe.complete();
   }
 
 }

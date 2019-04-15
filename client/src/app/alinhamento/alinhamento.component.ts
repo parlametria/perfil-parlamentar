@@ -1,24 +1,24 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, OnDestroy } from '@angular/core';
 
-import { Subject } from "rxjs";
-import { takeUntil } from "rxjs/operators";
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
-import { UserService } from "src/app/shared/services/user.service";
-import { AlinhamentoService } from "src/app/shared/services/alinhamento.service";
-import { Parlamentar } from "src/app/shared/models/parlamentar.model";
+import { UserService } from 'src/app/shared/services/user.service';
+import { AlinhamentoService } from 'src/app/shared/services/alinhamento.service';
+import { Parlamentar } from 'src/app/shared/models/parlamentar.model';
 
 @Component({
-  selector: "app-alinhamento",
-  templateUrl: "./alinhamento.component.html",
-  styleUrls: ["./alinhamento.component.scss"]
+  selector: 'app-alinhamento',
+  templateUrl: './alinhamento.component.html',
+  styleUrls: ['./alinhamento.component.scss']
 })
-export class AlinhamentoComponent implements OnInit {
-  readonly VIEW_SM = "sm";
-  readonly VIEW_MD = "md";
-  readonly VIEW_LG = "lg";
+export class AlinhamentoComponent implements OnInit, OnDestroy {
+  readonly VIEW_SM = 'sm';
+  readonly VIEW_MD = 'md';
+  readonly VIEW_LG = 'lg';
 
   parlamentares: Parlamentar[];
-  p: number = 1;
+  p = 1;
   view: string;
 
   filtro: any;
@@ -78,5 +78,10 @@ export class AlinhamentoComponent implements OnInit {
 
   setView(view: string) {
     this.view = view;
+  }
+
+  ngOnDestroy() {
+    this.unsubscribe.next();
+    this.unsubscribe.complete();
   }
 }

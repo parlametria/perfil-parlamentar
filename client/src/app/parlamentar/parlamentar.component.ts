@@ -1,25 +1,25 @@
-import { Component, OnInit } from "@angular/core";
-import { ActivatedRoute } from "@angular/router";
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
-import { Subject } from "rxjs";
-import { takeUntil, take } from "rxjs/operators";
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
-import { ParlamentarService } from "./../shared/services/parlamentar.service";
-import { TemaService } from "./../shared/services/tema.service";
-import { PerguntaService } from "./../shared/services/pergunta.service";
-import { UserService } from "./../shared/services/user.service";
+import { ParlamentarService } from './../shared/services/parlamentar.service';
+import { TemaService } from './../shared/services/tema.service';
+import { PerguntaService } from './../shared/services/pergunta.service';
+import { UserService } from './../shared/services/user.service';
 
-import { Parlamentar } from "src/app/shared/models/parlamentar.model";
-import { Tema } from "src/app/shared/models/tema.model";
-import { Proposicao } from "src/app/shared/models/proposicao.model";
-import { Resposta } from "src/app/shared/models/resposta.model";
+import { Parlamentar } from 'src/app/shared/models/parlamentar.model';
+import { Tema } from 'src/app/shared/models/tema.model';
+import { Proposicao } from 'src/app/shared/models/proposicao.model';
+import { Resposta } from 'src/app/shared/models/resposta.model';
 
 @Component({
-  selector: "app-parlamentar",
-  templateUrl: "./parlamentar.component.html",
-  styleUrls: ["./parlamentar.component.scss"]
+  selector: 'app-parlamentar',
+  templateUrl: './parlamentar.component.html',
+  styleUrls: ['./parlamentar.component.scss']
 })
-export class ParlamentarComponent implements OnInit {
+export class ParlamentarComponent implements OnInit, OnDestroy {
   readonly FAVOR = 1;
   readonly CONTRA = -1;
 
@@ -41,7 +41,7 @@ export class ParlamentarComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    let cpf = this.route.snapshot.paramMap.get("cpf");
+    const cpf = this.route.snapshot.paramMap.get('cpf');
 
     this.getParlamentarByCpf(cpf);
     this.getTemas();
@@ -70,13 +70,13 @@ export class ParlamentarComponent implements OnInit {
       .subscribe(
         temas => {
           this.temas = temas;
-          let all_temas = {
+          const allTemas = {
             id: 7,
-            tema: "Todos os temas",
-            slug: "todos"
+            tema: 'Todos os temas',
+            slug: 'todos'
           };
-          this.temas.push(all_temas);
-          this.temaSelecionado = "7";
+          this.temas.push(allTemas);
+          this.temaSelecionado = '7';
         },
         error => console.log(error)
       );
@@ -110,7 +110,7 @@ export class ParlamentarComponent implements OnInit {
   }
 
   onTemaChange() {
-    if (this.temaSelecionado === "7") {
+    if (this.temaSelecionado === '7') {
       this.proposicoesFiltradas = this.proposicoes;
     } else {
       this.proposicoesFiltradas = this.proposicoes.filter(proposicao => {

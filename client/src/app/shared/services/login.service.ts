@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 
 import { BehaviorSubject } from 'rxjs';
-import { AuthService, GoogleLoginProvider, FacebookLoginProvider } from "angularx-social-login";
+import { AuthService, GoogleLoginProvider, FacebookLoginProvider } from 'angularx-social-login';
 
 import { environment } from '../../../environments/environment';
 import { PerguntaService } from './pergunta.service';
@@ -24,22 +24,22 @@ export class LoginService {
   ) { }
 
   loginUserGoogle() {
-    let socialPlatformProvider = GoogleLoginProvider.PROVIDER_ID;
+    const socialPlatformProvider = GoogleLoginProvider.PROVIDER_ID;
     this.clearUserData();
 
     this.socialAuthService.signIn(socialPlatformProvider).then(
       (userData) => {
-        this.loginUserApi("google", userData.authToken);
+        this.loginUserApi('google', userData.authToken);
       }).catch(err => console.log(err));
   }
 
   loginUserFacebook() {
-    let socialPlatformProvider = FacebookLoginProvider.PROVIDER_ID;
+    const socialPlatformProvider = FacebookLoginProvider.PROVIDER_ID;
     this.clearUserData();
 
     this.socialAuthService.signIn(socialPlatformProvider).then(
       (userData) => {
-        this.loginUserApi("facebook", userData.authToken);
+        this.loginUserApi('facebook', userData.authToken);
       }).catch(err => console.log(err));
   }
 
@@ -61,16 +61,16 @@ export class LoginService {
   }
 
   getToken() {
-    return localStorage.getItem("accessToken");
+    return localStorage.getItem('accessToken');
   }
 
   getCurrentUser() {
-    let user = {
-      id: localStorage.getItem("id_user"),
-      full_name: localStorage.getItem("full_name"),
-      photo: localStorage.getItem("photo_user")
-    }
-    return user
+    const user = {
+      id: localStorage.getItem('id_user'),
+      full_name: localStorage.getItem('full_name'),
+      photo: localStorage.getItem('photo_user')
+    };
+    return user;
   }
 
   isLoggedIn() {
@@ -86,16 +86,16 @@ export class LoginService {
     // Cria respostas para salvar no BD
     this.perguntaService.getProposicoes().subscribe(
       proposicoes => {
-        let votacoes = proposicoes.reduce((result, item) => {
-          let key = item.id_votacao;
+        const votacoes = proposicoes.reduce((result, item) => {
+          const key = item.id_votacao;
           result[key] = 0;
           return result;
         }, {});
 
-        let respostasUser = {
+        const respostasUser = {
           vozAtiva: {},
           votacoes
-        }
+        };
 
         // Cria usuário no BD
         this.criaUsuarioAPI(provider, token, respostasUser);
@@ -104,23 +104,23 @@ export class LoginService {
     );
   }
 
-  private criaUsuarioAPI(provider: string, token: string, respostas: any){
+  private criaUsuarioAPI(provider: string, token: string, respostas: any) {
     this.http.post(
-      this.url + "/" + provider,
-      { access_token: token, respostas: respostas },
+      this.url + '/' + provider,
+      { access_token: token, respostas },
       { observe: 'response' }
     ).subscribe(
       (res: any) => {
-        let token = res.headers.get("authorization");
+        const tokenUser = res.headers.get('authorization');
 
-        let { id, full_name, photo } = res.body;
-        let user = {
+        const { id, full_name, photo } = res.body;
+        const user = {
           id,
           full_name,
           photo
-        }
+        };
 
-        this.setSession(token, user);
+        this.setSession(tokenUser, user);
         this.router.navigate(['/']);
       },
       (error) => console.log(error)
@@ -128,26 +128,27 @@ export class LoginService {
   }
 
   private setSession(token, user) {
-    localStorage.setItem("accessToken", token);
-    localStorage.setItem("id_user", user.id);
-    localStorage.setItem("full_name", user.full_name);
-    localStorage.setItem("photo_user", user.photo);
+    localStorage.setItem('accessToken', token);
+    localStorage.setItem('id_user', user.id);
+    localStorage.setItem('full_name', user.full_name);
+    localStorage.setItem('photo_user', user.photo);
     this.loggedIn.next(true);
 
   }
 
   private clearUserData() {
-    localStorage.removeItem("accessToken");
-    localStorage.removeItem("id_user");
-    localStorage.removeItem("photo_user");
+    localStorage.removeItem('accessToken');
+    localStorage.removeItem('id_user');
+    localStorage.removeItem('full_name');
+    localStorage.removeItem('photo_user');
   }
 
   private clearRespostaLocalStorage() {
-    localStorage.removeItem("respostasUser");
+    localStorage.removeItem('respostasUser');
   }
 
   private clearTemasLocalStorage() {
-    localStorage.removeItem("temasUser");
+    localStorage.removeItem('temasUser');
   }
 
 }

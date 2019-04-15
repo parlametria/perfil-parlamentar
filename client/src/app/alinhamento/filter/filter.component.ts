@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, OnDestroy } from '@angular/core';
 
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Subject } from 'rxjs';
@@ -14,12 +14,12 @@ import { Tema } from '../../shared/models/tema.model';
   templateUrl: './filter.component.html',
   styleUrls: ['./filter.component.scss']
 })
-export class FilterComponent implements OnInit {
+export class FilterComponent implements OnInit, OnDestroy {
 
   @Output() filterChange = new EventEmitter<any>();
 
-  readonly FILTRO_PADRAO_ESTADO = "Estados";
-  readonly FILTRO_PADRAO_PARTIDO = "Partidos";
+  readonly FILTRO_PADRAO_ESTADO = 'Estados';
+  readonly FILTRO_PADRAO_PARTIDO = 'Partidos';
   readonly FILTRO_PADRAO_TEMA = -1;
   filtro: any;
 
@@ -47,11 +47,11 @@ export class FilterComponent implements OnInit {
     this.temaSelecionado = this.FILTRO_PADRAO_TEMA;
 
     this.filtro = {
-      nome: "",
+      nome: '',
       estado: this.estadoSelecionado,
       partido: this.partidoSelecionado,
       tema: this.temaSelecionado
-    }
+    };
   }
 
   ngOnInit() {
@@ -73,11 +73,12 @@ export class FilterComponent implements OnInit {
   onChangeEstado() {
     this.partidosFiltradosPorEstado = this.partidosPorEstado.filter(value => value.estado === this.estadoSelecionado)[0].partidos;
 
-    if (!this.partidosFiltradosPorEstado.includes("Partidos"))
-      this.partidosFiltradosPorEstado.splice(0, 0, "Partidos");
+    if (!this.partidosFiltradosPorEstado.includes('Partidos')) {
+      this.partidosFiltradosPorEstado.splice(0, 0, 'Partidos');
+    }
 
     if (!this.partidosFiltradosPorEstado.includes(this.partidoSelecionado)) {
-      this.partidoSelecionado = "Partidos";
+      this.partidoSelecionado = 'Partidos';
     }
   }
 
@@ -87,7 +88,7 @@ export class FilterComponent implements OnInit {
       estado: this.estadoSelecionado,
       partido: this.partidoSelecionado,
       tema: this.temaSelecionado
-    } 
+    };
 
     this.filterChange.emit(this.filtro);
     this.modalService.dismissAll();
@@ -96,7 +97,7 @@ export class FilterComponent implements OnInit {
   limparFiltro() {
     this.estadoSelecionado = this.FILTRO_PADRAO_ESTADO;
     this.partidoSelecionado = this.FILTRO_PADRAO_PARTIDO;
-    this.nomePesquisado = "";
+    this.nomePesquisado = '';
     this.temaSelecionado = this.FILTRO_PADRAO_TEMA;
 
     this.aplicarFiltro();
@@ -129,16 +130,22 @@ export class FilterComponent implements OnInit {
   }
 
   selecionaTema(idTema: number) {
-    if (this.temaSelecionado === idTema)
+    if (this.temaSelecionado === idTema) {
       this.temaSelecionado = this.FILTRO_PADRAO_TEMA;
-    else
+    } else {
       this.temaSelecionado = idTema;
+    }
   }
 
-  getTemaById(id: number) {    
-    if (this.temas && id !== this.FILTRO_PADRAO_TEMA){      
+  getTemaById(id: number) {
+    if (this.temas && id !== this.FILTRO_PADRAO_TEMA) {
       return this.temas.filter(tema => tema.id === id)[0].tema;
     }
+  }
+
+  ngOnDestroy() {
+    this.unsubscribe.next();
+    this.unsubscribe.complete();
   }
 
 }

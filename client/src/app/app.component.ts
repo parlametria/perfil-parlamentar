@@ -7,15 +7,15 @@ import { routeAnimation } from './app-routing-animation';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
   animations: [
-    routeAnimation    
+    routeAnimation
   ]
 })
 export class AppComponent {
-  
+
   constructor() { }
 
   prepareRoute(outlet: RouterOutlet) {
-    return outlet && outlet.activatedRouteData && outlet.activatedRouteData['animation'];
+    return outlet && outlet.activatedRouteData && outlet.activatedRouteData.animation;
   }
 
 }

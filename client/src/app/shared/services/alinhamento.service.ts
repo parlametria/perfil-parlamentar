@@ -1,7 +1,7 @@
-import { Injectable } from "@angular/core";
-import { HttpClient } from "@angular/common/http";
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 
-import { Observable, Subject, BehaviorSubject } from "rxjs";
+import { Observable, Subject, BehaviorSubject } from 'rxjs';
 import {
   switchMap,
   startWith,
@@ -9,16 +9,16 @@ import {
   tap,
   debounceTime,
   distinctUntilChanged
-} from "rxjs/operators";
+} from 'rxjs/operators';
 
-import { Parlamentar } from "../models/parlamentar.model";
-import { environment } from "../../../environments/environment";
+import { Parlamentar } from '../models/parlamentar.model';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
-  providedIn: "root"
+  providedIn: 'root'
 })
 export class AlinhamentoService {
-  private url = environment.apiUrl + "alinhamento";
+  private url = environment.apiUrl + 'alinhamento';
 
   readonly FILTRO_PADRAO_TEMA = -1;
 
@@ -39,19 +39,19 @@ export class AlinhamentoService {
             startWith(parlamentar)
           )
         ),
-        tap(parlamentares => {          
+        tap(parlamentares => {
           let temaIndex;
 
-          if (parlamentares.length !== 0)
-            temaIndex = parlamentares[0].alinhamento.temas.findIndex(res => res.tema_id === this.tema);          
-          
+          if (parlamentares.length !== 0) {
+            temaIndex = parlamentares[0].alinhamento.temas.findIndex(res => res.tema_id === this.tema);
+          }
           return parlamentares.sort((a, b) => {
             if (this.tema !== undefined && this.tema !== this.FILTRO_PADRAO_TEMA) {
               return this.sortTema(a, b, temaIndex);
             } else {
               return this.sort(a, b);
             }
-          })
+          });
         }),
       )
       .subscribe(res => {
@@ -76,26 +76,26 @@ export class AlinhamentoService {
   }
 
   private filter(parlamentar: Parlamentar[], filters: any) {
-    let estado = filters.estado;
-    let nome = filters.nome;
-    let partido = filters.partido;
+    const estado = filters.estado;
+    const nome = filters.nome;
+    const partido = filters.partido;
 
     return parlamentar.filter(p => {
       let filtered;
 
       filtered =
-        estado && estado !== "Estados"
+        estado && estado !== 'Estados'
           ? p.uf.toLowerCase() === estado.toLowerCase()
           : true;
 
       filtered =
-        partido && partido !== "Partidos" && filtered
-          ? p.sg_partido.toLowerCase() === partido.toLowerCase()
+        partido && partido !== 'Partidos' && filtered
+          ? p.sgPartido.toLowerCase() === partido.toLowerCase()
           : filtered;
 
       filtered =
         nome && filtered
-          ? p.nome_urna.toLowerCase().includes(nome.toLowerCase())
+          ? p.nomeUrna.toLowerCase().includes(nome.toLowerCase())
           : filtered;
 
       return filtered;
@@ -108,14 +108,14 @@ export class AlinhamentoService {
    * 1. alinhamento
    * 2. respostas iguais
    *
-   * @param a
-   * @param b
+   * @param a Parlamentar para comparação
+   * @param b Parlamentar para comparação
    */
   private sort(a: Parlamentar, b: Parlamentar) {
     if (a.alinhamento.alinhamento > b.alinhamento.alinhamento) {
       return -1;
     } else if (a.alinhamento.alinhamento < b.alinhamento.alinhamento) {
-      return 1
+      return 1;
     } else if (a.alinhamento.respostasIguais > b.alinhamento.respostasIguais) {
       return -1;
     } else if (a.alinhamento.respostasIguais < b.alinhamento.respostasIguais) {
@@ -125,19 +125,19 @@ export class AlinhamentoService {
   }
 
   /**
- * Ordena o resultado do alinhamento pelos seguintes critérios considerando um tema específico:
- *
- * 1. alinhamento no tema
- * 2. respostas iguais no tema
- *
- * @param a
- * @param b
- */
+   * Ordena o resultado do alinhamento pelos seguintes critérios considerando um tema específico:
+   *
+   * 1. alinhamento no tema
+   * 2. respostas iguais no tema
+   *
+   * @param a Parlamentar para comparação
+   * @param b Parlamentar para comparação
+   */
   private sortTema(a: Parlamentar, b: Parlamentar, index: number) {
     if (a.alinhamento.temas[index].alinhamento > b.alinhamento.temas[index].alinhamento) {
       return -1;
     } else if (a.alinhamento.temas[index].alinhamento < b.alinhamento.temas[index].alinhamento) {
-      return 1
+      return 1;
     } else if (a.alinhamento.temas[index].respostasIguais > b.alinhamento.temas[index].respostasIguais) {
       return -1;
     } else if (a.alinhamento.temas[index].respostasIguais < b.alinhamento.temas[index].respostasIguais) {
@@ -145,5 +145,5 @@ export class AlinhamentoService {
     }
     return 0;
   }
-  
+
 }

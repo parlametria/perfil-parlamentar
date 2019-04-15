@@ -21,7 +21,7 @@ import { TemasComponent } from './temas/temas.component';
   imports: [
     CommonModule,
     FormsModule,
-    NgbModule.forRoot(),
+    NgbModule,
     SharedModule,
     QuestionarioRoutingModule
   ]

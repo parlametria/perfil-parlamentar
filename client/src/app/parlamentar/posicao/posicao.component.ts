@@ -1,11 +1,11 @@
-import { Component, Input, OnInit } from "@angular/core";
+import { Component, Input, OnInit } from '@angular/core';
 
-import { Parlamentar } from "src/app/shared/models/parlamentar.model";
+import { Parlamentar } from 'src/app/shared/models/parlamentar.model';
 
 @Component({
-  selector: "app-posicao",
-  templateUrl: "./posicao.component.html",
-  styleUrls: ["./posicao.component.scss"]
+  selector: 'app-posicao',
+  templateUrl: './posicao.component.html',
+  styleUrls: ['./posicao.component.scss']
 })
 export class PosicaoComponent implements OnInit {
   readonly FAVOR = 1;
