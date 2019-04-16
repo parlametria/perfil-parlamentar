@@ -46,7 +46,11 @@ export class CongressoComponent implements AfterContentInit, OnChanges {
       changes.parlamentares.currentValue.length
     ) {
       const parlamentares = JSON.parse(JSON.stringify(changes.parlamentares.currentValue));
-      this.draw(parlamentares);
+      if (parlamentares.length === 513) {
+        this.draw(parlamentares);
+      } else {
+        this.paint(parlamentares);
+      }
     }
   }
 
@@ -67,12 +71,13 @@ export class CongressoComponent implements AfterContentInit, OnChanges {
       );
     this.color = d3
       .scaleThreshold<string, string>()
-      .range(['#b2182b','#ef8a62','#fddbc7','#f7f7f7','#d1e5f0','#67a9cf','#2166ac'])
+      // .range(['#b2182b','#ef8a62','#fddbc7','#f7f7f7','#d1e5f0','#67a9cf','#2166ac'])
+      .range(d3.schemePRGn[7])
       .domain(["0.1", "0.2", "0.4", "0.6", "0.7", "0.8"]);
   }
 
   draw(parlamentares: any[]) {
-    this.g.selectAll(".circle").remove();
+    this.g.selectAll(".circle-parlamentar").remove();
       const inicioArco = 20;
       const fimArco = 440;
       const alturaArco = 200;
@@ -98,19 +103,31 @@ export class CongressoComponent implements AfterContentInit, OnChanges {
 
         const x = d3.scaleLinear().domain([0, camara[i].length - 1]).range([0, length]);
 
-        const circles = this.g.selectAll(".circle")
+        const circles = this.g.selectAll()
           .data(camara[i])
           .enter()
           .append("circle")
+          .attr("id", (d) => "circle-parlamentar-" + d.id_parlamentar)
+          .attr("class", "circle-parlamentar")
           .attr("r", this.r)
           .attr("fill", (d) => this.color(d.alinhamento.alinhamento))
           .attr("stroke", "none")
           .attr("cx", function(d, i) { return arc.node().getPointAtLength(x(i)).x; })
-          .attr("cy", function(d, i) { return arc.node().getPointAtLength(x(i)).y; });
+          .attr("cy", function(d, i) { return arc.node().getPointAtLength(x(i)).y; })
+          .attr("opacity", 1)
+          .on("mouseover", (d) => console.log(d.nome_urna + " - " + d.alinhamento.alinhamento));
       }
   }
 
-  getFilas(parlamentares: any[]) {
+  paint(parlamentares: Parlamentar[]) {
+    this.g.selectAll(".circle-parlamentar")
+      .transition()
+      .duration(1000)
+      .delay(100)
+      .attr("opacity", (d) => (parlamentares.filter((p) => p.id_parlamentar === d.id_parlamentar).length > 0) ? 1 : 0.1);
+  }
+
+  getFilas(parlamentares: Parlamentar[]) {
     const filas = [60, 57, 53, 50, 46, 43, 39, 36, 33, 29, 26, 22, 19];
     const camara = new Array();
 
@@ -125,10 +142,9 @@ export class CongressoComponent implements AfterContentInit, OnChanges {
 
       let fila = [];
       for (let j = 0; j < grupos.length; j++) {
-        fila.push(...grupos[j].values.slice(0, g[j]));
+        fila.push(...grupos[j].values.splice(0, g[j]));
       }
       camara.push(fila);
-
     }
 
     return camara;
