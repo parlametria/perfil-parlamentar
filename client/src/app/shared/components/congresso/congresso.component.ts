@@ -1,6 +1,9 @@
 import { Component, OnChanges, AfterContentInit, Input, SimpleChanges } from '@angular/core';
 
+import { Parlamentar } from '../../models/parlamentar.model';
+
 import * as d3 from "d3";
+import * as sl from "sainte-lague";
 
 @Component({
   selector: 'app-congresso',
@@ -64,7 +67,7 @@ export class CongressoComponent implements AfterContentInit, OnChanges {
       );
     this.color = d3
       .scaleThreshold<string, string>()
-      .range(['#8c510a','#d8b365','#f6e8c3','#f5f5f5','#c7eae5','#5ab4ac','#01665e'])
+      .range(['#b2182b','#ef8a62','#fddbc7','#f7f7f7','#d1e5f0','#67a9cf','#2166ac'])
       .domain(["0.1", "0.2", "0.4", "0.6", "0.7", "0.8"]);
   }
 
@@ -77,7 +80,7 @@ export class CongressoComponent implements AfterContentInit, OnChanges {
       const angulo = 20;
 
       const camara = this.getFilas(parlamentares);
-      for (let i = 0; i < camara.length; i++) {
+      for (let i = 0; i < 13; i++) {
         const [p1, p2, p3] = [
           [inicioArco + (distanciaFilas * i), alturaArco],
           [fimArco - (distanciaFilas * i), alturaArco],
@@ -86,13 +89,13 @@ export class CongressoComponent implements AfterContentInit, OnChanges {
 
         const
           arc = this.g.append("path")
-            .datum(camara[i])
             .attr("fill", "none")
             // .attr("stroke-width", "1.5px")
             // .attr("stroke", "black")
             .attr("d", rad && `M${p1[0]},${p1[1]} A${rad},${rad},0,${flag1},${flag2},${p2[0]},${p2[1]}`);
 
         const length = arc.node().getTotalLength();
+
         const x = d3.scaleLinear().domain([0, camara[i].length - 1]).range([0, length]);
 
         const circles = this.g.selectAll(".circle")
@@ -108,40 +111,26 @@ export class CongressoComponent implements AfterContentInit, OnChanges {
   }
 
   getFilas(parlamentares: any[]) {
-    // let cadeiras = 58;
-    // let distanciaCadeiras = 3;
-    // let total = 0;
-    // const camara = new Array();
-    // for (let i = 0; i < 12; i++) {
-    //   camara.push(Array.from(Array(cadeiras), x => -1))
-    //   total = total + cadeiras;
-    //   cadeiras = cadeiras - distanciaCadeiras;
-    // }
-    // camara.push(Array.from(Array(parlamentares.length - total), x => -1));
+    const filas = [60, 57, 53, 50, 46, 43, 39, 36, 33, 29, 26, 22, 19];
     const camara = new Array();
-    camara.push(Array.from(Array(60), x => -1));
-    camara.push(Array.from(Array(57), x => -1));
-    camara.push(Array.from(Array(53), x => -1));
-    camara.push(Array.from(Array(50), x => -1));
-    camara.push(Array.from(Array(46), x => -1));
-    camara.push(Array.from(Array(43), x => -1));
-    camara.push(Array.from(Array(39), x => -1));
-    camara.push(Array.from(Array(36), x => -1));
-    camara.push(Array.from(Array(33), x => -1));
-    camara.push(Array.from(Array(29), x => -1));
-    camara.push(Array.from(Array(26), x => -1));
-    camara.push(Array.from(Array(22), x => -1));
-    camara.push(Array.from(Array(19), x => -1));
 
-    for (let i = 0; i < 60; i++) {
-      for (let j = 0; j < 60; j++) {
-        if (typeof camara[j] !== 'undefined') {
-          if (typeof camara[j][i] !== 'undefined') {
-            camara[j][i] = parlamentares.shift();
-          }
-        }
+    const grupos = d3.nest()
+      .key((d: Parlamentar) => this.color(d.alinhamento.alinhamento))
+      .entries(parlamentares);
+
+    const distribuicao = grupos.map(g => g.values.length);
+
+    for (let i = 0; i < filas.length; i++) {
+      let g = sl(distribuicao, filas[i]);
+
+      let fila = [];
+      for (let j = 0; j < grupos.length; j++) {
+        fila.push(...grupos[j].values.slice(0, g[j]));
       }
+      camara.push(fila);
+
     }
+
     return camara;
   }
 
