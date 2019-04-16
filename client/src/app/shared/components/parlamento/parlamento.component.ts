@@ -67,10 +67,10 @@ export class ParlamentoComponent implements AfterContentInit, OnChanges {
       );
     this.x = d3.scaleLinear().range([0, this.getWidth()]);
     // this.color = d3.scaleSequential(d3.interpolatePRGn);
-    this.color = d3
-      .scaleThreshold<string, string>()
-      .range(["#f2f0f7", "#cbc9e2", "#9e9ac8", "#756bb1", "#54278f"])
-      .domain(["0.2", "0.4", "0.6", "0.8"]);
+    // this.color = d3
+    //   .scaleThreshold<string, string>()
+    //   .range(['#7b3294','#c2a5cf','#f7f7f7','#a6dba0','#008837'])
+    //   .domain(["0.2", "0.4", "0.6", "0.8"]);
 
     this.g
       .append("g")

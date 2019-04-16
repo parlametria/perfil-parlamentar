@@ -42,7 +42,8 @@ export class CongressoComponent implements AfterContentInit, OnChanges {
       typeof changes.parlamentares.currentValue !== "undefined" &&
       changes.parlamentares.currentValue.length
     ) {
-      this.draw(changes.parlamentares.currentValue);
+      const parlamentares = JSON.parse(JSON.stringify(changes.parlamentares.currentValue));
+      this.draw(parlamentares);
     }
   }
 
@@ -63,12 +64,12 @@ export class CongressoComponent implements AfterContentInit, OnChanges {
       );
     this.color = d3
       .scaleThreshold<string, string>()
-      .range(["#f2f0f7", "#cbc9e2", "#9e9ac8", "#756bb1", "#54278f"])
-      .domain(["0.2", "0.4", "0.6", "0.8"]);
+      .range(['#8c510a','#d8b365','#f6e8c3','#f5f5f5','#c7eae5','#5ab4ac','#01665e'])
+      .domain(["0.1", "0.2", "0.4", "0.6", "0.7", "0.8"]);
   }
 
   draw(parlamentares: any[]) {
-    if (!this.isReady) {
+    this.g.selectAll(".circle").remove();
       const inicioArco = 20;
       const fimArco = 440;
       const alturaArco = 200;
@@ -104,23 +105,61 @@ export class CongressoComponent implements AfterContentInit, OnChanges {
           .attr("cx", function(d, i) { return arc.node().getPointAtLength(x(i)).x; })
           .attr("cy", function(d, i) { return arc.node().getPointAtLength(x(i)).y; });
       }
-    }
   }
 
   getFilas(parlamentares: any[]) {
-    let camara = [];
-    let cadeiras = 58;
-    const distanciaCadeiras = 3;
-    let total = parlamentares.length;
-    while (total > 0) {
-      let inicio = parlamentares.length - total;
-      const fila = parlamentares.slice(inicio, cadeiras + inicio);
-      camara.push(fila);
-      total = total - cadeiras;
-      cadeiras = cadeiras - distanciaCadeiras;
+    // let cadeiras = 58;
+    // let distanciaCadeiras = 3;
+    // let total = 0;
+    // const camara = new Array();
+    // for (let i = 0; i < 12; i++) {
+    //   camara.push(Array.from(Array(cadeiras), x => -1))
+    //   total = total + cadeiras;
+    //   cadeiras = cadeiras - distanciaCadeiras;
+    // }
+    // camara.push(Array.from(Array(parlamentares.length - total), x => -1));
+    const camara = new Array();
+    camara.push(Array.from(Array(60), x => -1));
+    camara.push(Array.from(Array(57), x => -1));
+    camara.push(Array.from(Array(53), x => -1));
+    camara.push(Array.from(Array(50), x => -1));
+    camara.push(Array.from(Array(46), x => -1));
+    camara.push(Array.from(Array(43), x => -1));
+    camara.push(Array.from(Array(39), x => -1));
+    camara.push(Array.from(Array(36), x => -1));
+    camara.push(Array.from(Array(33), x => -1));
+    camara.push(Array.from(Array(29), x => -1));
+    camara.push(Array.from(Array(26), x => -1));
+    camara.push(Array.from(Array(22), x => -1));
+    camara.push(Array.from(Array(19), x => -1));
+
+    for (let i = 0; i < 60; i++) {
+      for (let j = 0; j < 60; j++) {
+        if (typeof camara[j] !== 'undefined') {
+          if (typeof camara[j][i] !== 'undefined') {
+            camara[j][i] = parlamentares.shift();
+          }
+        }
+      }
     }
     return camara;
   }
+
+  // getFilas(parlamentares: any[]) {
+  //   let camara = [];
+  //   let cadeiras = 58;
+  //   const distanciaCadeiras = 3;
+  //   let total = parlamentares.length;
+  //   while (total > 0) {
+  //     let inicio = parlamentares.length - total;
+  //     const fila = parlamentares.slice(inicio, cadeiras + inicio);
+  //     camara.push(fila);
+  //     total = total - cadeiras;
+  //     cadeiras = cadeiras - distanciaCadeiras;
+  //   }
+  //   console.log(camara);
+  //   return camara;
+  // }
 
   // [pA1, pA2], [pB1, pB2], [pP1, pP2]
   arcviaslope([pA1, pA2], [pB1, pB2], [pP1, pP2]) {
