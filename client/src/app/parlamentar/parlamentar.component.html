@@ -26,7 +26,7 @@
         class="form-control form-control-plus"
         id="tema"
         [(ngModel)]="temaSelecionado"
-        (ngModelChange)="onTemaChange($event)"
+        (ngModelChange)="filtraProposicoesPorTema($event)"
         name="tema"
       >
         <option
