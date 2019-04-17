@@ -15,28 +15,55 @@
   <link rel="icon" type="image/x-icon" href="favicon.ico">
 
   <style media="screen">
-    .spinner-wrapper {
-      height: 100vh;
+    .loading-wrapper {
       display: flex;
-      align-items: center;
+      height: 80vh;
       justify-content: center;
-    }
-    .spinner {
-      display: inline-block;
-      width: 50px;
-      height: 50px;
-      border: 3px solid rgba(127,60,139, 0.3);
-      border-radius: 50%;
-      border-top-color: #ab64af;
-      animation: spin 1s ease-in-out infinite;
-      -webkit-animation: spin 1s ease-in-out infinite;
+      align-items: center;
     }
 
-    @keyframes spin {
-      to { -webkit-transform: rotate(360deg); }
+    .logo-wrapper {
+      width: 125px;
     }
-    @-webkit-keyframes spin {
-      to { -webkit-transform: rotate(360deg); }
+    .animated {
+      animation-duration: 1s;
+      animation-fill-mode: both;
+    }
+    .infinite {
+      animation-iteration-count: infinite;
+    }
+    @keyframes flash {
+      from,
+      50%,
+      to {
+        opacity: 1;
+      }
+
+      25%,
+      75% {
+        opacity: 0;
+      }
+    }
+
+    .flash {
+      animation-name: flash;
+    }
+
+    @keyframes flashinverse {
+      from,
+      50%,
+      to {
+        opacity: 0;
+      }
+
+      25%,
+      75% {
+        opacity: 1;
+      }
+    }
+
+    .flashinverse {
+      animation-name: flashinverse;
     }
   </style>
 </head>
@@ -45,9 +72,44 @@
     <noscript>
       <h3>Esta aplicação não funciona sem Javascript</h3>
     </noscript>
-    <div class="spinner-wrapper">
-      <div class="spinner"></div>
-    </div>
+
+    <div class="loading-wrapper">
+        <div class="logo-wrapper">
+          <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+            viewBox="0 0 447.98 453.27" style="enable-background:new 0 0 447.98 453.27;" xml:space="preserve">
+          <style type="text/css">
+            .st0{fill:#994F9B;}
+            .st1{fill:#41B27B;}
+          </style>
+          <g>
+            <g id="voz" class="animated infinite slow flash">
+              <path class="st0" d="M233.57,373.48v-14.4c24.38,0,44.22-19.84,44.22-44.22c0-24.38-19.84-44.22-44.22-44.22v-14.41
+                c32.32,0,58.63,26.3,58.63,58.63C292.2,347.18,265.9,373.48,233.57,373.48"/>
+            </g>
+            <g id="ativa" class="animated infinite slow flashinverse">
+              <path class="st1" d="M251.76,314.86c0,10.72-5.25,20.8-14.06,26.98c-1.32,0.92-2.7,1.75-4.13,2.45v-58.88
+                c1.26,0.64,2.49,1.35,3.69,2.15C246.34,293.69,251.76,303.91,251.76,314.86"/>
+            </g>
+            <g id="boca">
+              <polygon class="st1" points="218.84,285.71 153.89,314.94 218.84,344.17 218.84,373.95 96.77,314.94 218.84,255.94 	"/>
+            </g>
+            <g id="olhoF">
+              <path class="st1" d="M351.21,123.91v0.31h-14.47v-0.21c0-16.91-12.24-29.96-29.55-29.96c-17.18,0-29.69,13.05-29.69,29.96v0.21
+                h-14.47v-0.31c0-25.15,18.62-44.58,44.19-44.58C332.98,79.33,351.21,98.76,351.21,123.91"/>
+            </g>
+            <g id="nariz">
+              <path class="st0" d="M263.67,182.53c0,25.86-19.48,44.09-44.73,44.09h-0.3v-14.64h0.21c16.87,0,29.88-12.24,29.88-29.49
+                c0-17.08-13.01-29.58-29.88-29.58h-14.73V79.32h14.51v58.95h0.3C244.19,138.27,263.67,156.93,263.67,182.53z"/>
+            </g>
+            <g id="olhoA">
+              <path class="st0" d="M159.92,101.42c0,12.62-9.47,22.09-22.1,22.09c-12.62,0-22.09-9.47-22.09-22.09c0-12.62,9.47-22.1,22.09-22.1
+                C150.45,79.33,159.92,88.8,159.92,101.42"/>
+            </g>
+          </g>
+          </svg>
+        </div>
+      </div>
+
   </app-root>
 </body>
 </html>
