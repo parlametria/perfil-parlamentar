@@ -78,7 +78,7 @@ router.get("/proposicoes", (req, res) => {
  * @memberof module:routes/perguntas/:id
  */
 router.get("/proposicoes/:id", (req, res) => {
-  Proposicao.findAll({
+  Proposicao.findOne({
     attributes: ["projeto_lei", "id_votacao", "titulo", "descricao", "tema_id"],
     where: { 
       status_proposicao: "Ativa",

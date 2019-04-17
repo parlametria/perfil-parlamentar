@@ -8,6 +8,11 @@ const routes: Routes = [
     path: '',
     component: QuestionarioComponent,
     data: { animation: 'QuestionarioComponent' }
+  },
+  {
+    path: ':id',
+    component: QuestionarioComponent,
+    data: { animation: 'QuestionarioComponent' }
   }
 ];
 
