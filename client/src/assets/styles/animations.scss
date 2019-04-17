@@ -71,3 +71,20 @@
 .flash {
   animation-name: flash;
 }
+
+@keyframes flashinverse {
+  from,
+  50%,
+  to {
+    opacity: 0;
+  }
+
+  25%,
+  75% {
+    opacity: 1;
+  }
+}
+
+.flashinverse {
+  animation-name: flashinverse;
+}

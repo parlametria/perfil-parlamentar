@@ -20,6 +20,7 @@ export class AlinhamentoComponent implements OnInit, OnDestroy {
   parlamentares: Parlamentar[];
   p = 1;
   view: string;
+  isLoading: boolean;
 
   filtro: any;
 
@@ -32,6 +33,7 @@ export class AlinhamentoComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.view = this.VIEW_MD;
+    this.isLoading = true;
     this.getParlamentares();
   }
 
@@ -47,6 +49,9 @@ export class AlinhamentoComponent implements OnInit, OnDestroy {
             .subscribe(
               parlamentares => {
                 this.parlamentares = parlamentares;
+                if (this.parlamentares.length > 0) {
+                  this.isLoading = false;
+                }
               },
               error => console.log(error)
             );
