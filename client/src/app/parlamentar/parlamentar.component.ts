@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
-import { Subject } from 'rxjs';
+import { Subject, forkJoin } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 import { ParlamentarService } from './../shared/services/parlamentar.service';
@@ -38,14 +38,15 @@ export class ParlamentarComponent implements OnInit, OnDestroy {
     private temaService: TemaService,
     private perguntaService: PerguntaService,
     private userService: UserService
-  ) {}
+  ) { }
 
-  ngOnInit() {
+  async ngOnInit() {
     const cpf = this.route.snapshot.paramMap.get('cpf');
 
     this.getParlamentarByCpf(cpf);
     this.getTemas();
     this.getProposicoes();
+    //this.initializeProposicoes();
     this.getRespostas();
   }
 
@@ -76,7 +77,9 @@ export class ParlamentarComponent implements OnInit, OnDestroy {
             slug: 'todos'
           };
           this.temas.push(allTemas);
-          this.temaSelecionado = '7';
+          // this.temaSelecionado = this.getUrlParams();
+          this.getUrlParams();
+          //this.temaSelecionado = '7';
         },
         error => console.log(error)
       );
@@ -89,7 +92,7 @@ export class ParlamentarComponent implements OnInit, OnDestroy {
       .subscribe(
         proposicoes => {
           this.proposicoes = proposicoes;
-          this.proposicoesFiltradas = proposicoes;
+          this.onTemaChange(this.temaSelecionado);
         },
         error => console.log(error)
       );
@@ -109,13 +112,47 @@ export class ParlamentarComponent implements OnInit, OnDestroy {
       );
   }
 
-  onTemaChange() {
-    if (this.temaSelecionado === '7') {
+  onTemaChange(temaId) {
+    console.log(temaId);
+    if (temaId === undefined || temaId === '7') {
       this.proposicoesFiltradas = this.proposicoes;
     } else {
       this.proposicoesFiltradas = this.proposicoes.filter(proposicao => {
         return proposicao.tema_id === Number(this.temaSelecionado);
       });
+
+    }
+  }
+
+  getUrlParams() {
+    // const temaSlug = this.route.snapshot.queryParamMap.get('tema');
+
+    // const temaId = this.getTemaIdBySlug(temaSlug);
+
+    // console.log(temaId);
+    // return temaId;
+    this.route.queryParams.subscribe(params => {
+      if (params.tema) {
+        console.log(params.tema);
+        if (params.tema === undefined) {
+          this.temaSelecionado = '7';
+        } else {
+          const temaId = this.getTemaIdBySlug(params.tema);
+          console.log(temaId);
+          this.temaSelecionado = temaId;
+        }
+
+      }
+    });
+  }
+
+  private getTemaIdBySlug(slug: string): string {
+    const tema = this.temas.filter(t => t.slug === slug);
+
+    if (tema.length > 0) {
+      return String(tema[0].id);
+    } else {
+      return '7';
     }
   }
 
