@@ -86,6 +86,12 @@ export class ParlamentarComponent implements OnInit, OnDestroy {
       // Inicia Proposições com base no tema
       this.proposicoes = proposicoes;
       this.filtraProposicoesPorTema(this.temaSelecionado);
+
+      this.activatedroute.queryParams.subscribe(p => {
+        this.temaSelecionado = this.getTemaIdBySlug(p.tema);
+        this.filtraProposicoesPorTema(this.temaSelecionado);
+      });
+
     },
       error => console.log(error)
     );
