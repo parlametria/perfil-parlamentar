@@ -51,20 +51,20 @@ export class PerguntasContainerComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.idProposicaoFromUrl = this.route.snapshot.paramMap.get('id');
-    this.initializeQuestionario();
+    this.initializeQuestionario(this.idProposicaoFromUrl);
     this.getRespostas();
     this.salvandoResposta = false;
   }
 
-  initializeQuestionario() {
-    if (this.idProposicaoFromUrl !== null) {
-      this.initializeQuestionarioWithPergunta(this.idProposicaoFromUrl);
+  initializeQuestionario(proposicaoId: string) {
+    if (proposicaoId !== null) {
+      this.initializeQuestionarioSpecificPergunta(proposicaoId);
     } else {
-      this.initializeQuestionarioWithoutPergunta();
+      this.initializeQuestionarioDefault();
     }
   }
 
-  private initializeQuestionarioWithoutPergunta() {
+  private initializeQuestionarioDefault() {
     this.perguntaService.getProposicoes()
     .pipe(takeUntil(this.unsubscribe)).subscribe(data => {
       this.redirectToURLWithID(data[0].id_votacao);
@@ -73,7 +73,7 @@ export class PerguntasContainerComponent implements OnInit, OnDestroy {
     );
   }
 
-  private initializeQuestionarioWithPergunta(id: string) {
+  private initializeQuestionarioSpecificPergunta(id: string) {
     forkJoin(
       this.temaService.getTemas(),
       this.perguntaService.getProposicoes(),
@@ -160,6 +160,7 @@ export class PerguntasContainerComponent implements OnInit, OnDestroy {
     });
 
     this.perguntaSelecionada = this.perguntasTemaSelecionado[0];
+    this.redirectToURLWithID(this.perguntaSelecionada.id_votacao);
   }
 
   escolhePergunta(idVotacao) {
@@ -168,6 +169,7 @@ export class PerguntasContainerComponent implements OnInit, OnDestroy {
         return pergunta.id_votacao === idVotacao;
       }
     )[0];
+    this.redirectToURLWithID(idVotacao);
   }
 
   proximaPergunta() {
