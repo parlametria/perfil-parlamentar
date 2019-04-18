@@ -21,6 +21,8 @@ export class FilterComponent implements OnInit, OnDestroy {
   readonly FILTRO_PADRAO_ESTADO = 'Estados';
   readonly FILTRO_PADRAO_PARTIDO = 'Partidos';
   readonly FILTRO_PADRAO_TEMA = -1;
+  readonly FILTRO_PADRAO_TEMA_SLUG = 'todos';
+
   filtro: any;
 
   private unsubscribe = new Subject();
@@ -50,7 +52,8 @@ export class FilterComponent implements OnInit, OnDestroy {
       nome: '',
       estado: this.estadoSelecionado,
       partido: this.partidoSelecionado,
-      tema: this.temaSelecionado
+      tema: this.temaSelecionado,
+      temaSlug: this.FILTRO_PADRAO_TEMA_SLUG
     };
   }
 
@@ -73,12 +76,12 @@ export class FilterComponent implements OnInit, OnDestroy {
   onChangeEstado() {
     this.partidosFiltradosPorEstado = this.partidosPorEstado.filter(value => value.estado === this.estadoSelecionado)[0].partidos;
 
-    if (!this.partidosFiltradosPorEstado.includes('Partidos')) {
-      this.partidosFiltradosPorEstado.splice(0, 0, 'Partidos');
+    if (!this.partidosFiltradosPorEstado.includes(this.FILTRO_PADRAO_PARTIDO)) {
+      this.partidosFiltradosPorEstado.splice(0, 0, this.FILTRO_PADRAO_PARTIDO);
     }
 
     if (!this.partidosFiltradosPorEstado.includes(this.partidoSelecionado)) {
-      this.partidoSelecionado = 'Partidos';
+      this.partidoSelecionado = this.FILTRO_PADRAO_PARTIDO;
     }
   }
 
@@ -87,7 +90,8 @@ export class FilterComponent implements OnInit, OnDestroy {
       nome: this.nomePesquisado,
       estado: this.estadoSelecionado,
       partido: this.partidoSelecionado,
-      tema: this.temaSelecionado
+      tema: this.temaSelecionado,
+      temaSlug: this.temaService.getTemaSlugById(this.temas, this.temaSelecionado)
     };
 
     this.filterChange.emit(this.filtro);

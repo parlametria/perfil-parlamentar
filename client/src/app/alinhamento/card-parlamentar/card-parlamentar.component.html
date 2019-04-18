@@ -121,6 +121,7 @@
         <a
           class="btn btn-link"
           [routerLink]="['/parlamentar', parlamentar.cpf]"
+          [queryParams]="{tema: temaSlug}"
         >
           + detalhes
         </a>

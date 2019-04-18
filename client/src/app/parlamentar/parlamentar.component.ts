@@ -81,14 +81,14 @@ export class ParlamentarComponent implements OnInit, OnDestroy {
         slug: 'todos'
       };
       this.temas.push(allTemas);
-      this.temaSelecionado = this.getTemaIdBySlug(temaSlug);
+      this.temaSelecionado = this.temaService.getTemaIdBySlug(this.temas, temaSlug);
 
       // Inicia Proposições com base no tema
       this.proposicoes = proposicoes;
       this.filtraProposicoesPorTema(this.temaSelecionado);
 
       this.activatedroute.queryParams.subscribe(p => {
-        this.temaSelecionado = this.getTemaIdBySlug(p.tema);
+        this.temaSelecionado = this.temaService.getTemaIdBySlug(this.temas, p.tema);
         this.filtraProposicoesPorTema(this.temaSelecionado);
       });
 
@@ -112,7 +112,7 @@ export class ParlamentarComponent implements OnInit, OnDestroy {
   }
 
   filtraProposicoesPorTema(temaId: string) {
-    const temaSlug = this.getTemaSlugById(temaId);
+    const temaSlug = this.temaService.getTemaSlugById(this.temas, Number(temaId));
 
     this.router.navigate([], { queryParams: { tema: temaSlug } });
 
@@ -123,26 +123,6 @@ export class ParlamentarComponent implements OnInit, OnDestroy {
         return proposicao.tema_id === Number(this.temaSelecionado);
       });
 
-    }
-  }
-
-  private getTemaIdBySlug(slug: string): string {
-    const tema = this.temas.filter(t => t.slug === slug);
-
-    if (tema && tema.length > 0) {
-      return String(tema[0].id);
-    } else {
-      return this.ID_PADRAO_TEMA_TODOS;
-    }
-  }
-
-  private getTemaSlugById(id: string): string {
-    const temaSlug = this.temas.filter(t => t.id === Number(id));
-
-    if (temaSlug.length > 0) {
-      return temaSlug[0].slug;
-    } else {
-      return 'todos';
     }
   }
 
