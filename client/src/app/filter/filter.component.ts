@@ -4,10 +4,10 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
-import { estados } from '../../shared/constants/estados';
-import { ParlamentarService } from '../../shared/services/parlamentar.service';
-import { TemaService } from '../../shared/services/tema.service';
-import { Tema } from '../../shared/models/tema.model';
+import { estados } from '../shared/constants/estados';
+import { ParlamentarService } from '../shared/services/parlamentar.service';
+import { TemaService } from '../shared/services/tema.service';
+import { Tema } from '../shared/models/tema.model';
 
 @Component({
   selector: 'app-filter',
@@ -50,7 +50,8 @@ export class FilterComponent implements OnInit, OnDestroy {
       nome: '',
       estado: this.estadoSelecionado,
       partido: this.partidoSelecionado,
-      tema: this.temaSelecionado
+      tema: this.temaSelecionado,
+      default: true
     };
   }
 
@@ -87,7 +88,8 @@ export class FilterComponent implements OnInit, OnDestroy {
       nome: this.nomePesquisado,
       estado: this.estadoSelecionado,
       partido: this.partidoSelecionado,
-      tema: this.temaSelecionado
+      tema: this.temaSelecionado,
+      default: this.isFiltroDefault()
     };
 
     this.filterChange.emit(this.filtro);
@@ -141,6 +143,13 @@ export class FilterComponent implements OnInit, OnDestroy {
     if (this.temas && id !== this.FILTRO_PADRAO_TEMA) {
       return this.temas.filter(tema => tema.id === id)[0].tema;
     }
+  }
+
+  isFiltroDefault() {
+    return ((this.filtro.nome === '' || typeof this.filtro.nome === 'undefined') &&
+      this.filtro.estado === this.FILTRO_PADRAO_ESTADO &&
+      this.filtro.partido === this.FILTRO_PADRAO_PARTIDO &&
+      this.filtro.tema === this.FILTRO_PADRAO_TEMA);
   }
 
   ngOnDestroy() {

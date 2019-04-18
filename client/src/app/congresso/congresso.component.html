@@ -1,5 +1,29 @@
 <div class="container container-sticky-footer-navbar">
-  <app-filter (filterChange)="search($event)"></app-filter>
-  <app-congresso-chart [parlamentares]="parlamentares" [filtro]="filtro"></app-congresso-chart>
+  <div class="btn-toolbar">
+    <div class="btn-group">
+      <button
+        [ngClass]="{'btn btn-light btn-light-icon': true, 'active': view == VIEW_LG}"
+        (click)="setView('lg')"
+      >
+        <span class="icon-th-large"></span>
+      </button>
+      <button
+        [ngClass]="{'btn btn-light btn-light-icon': true, 'active': view == VIEW_MD}"
+        (click)="setView('md')"
+      >
+        <span class="icon-th"></span>
+      </button>
+      <button
+        [ngClass]="{'btn btn-light btn-light-icon': true, 'active': view == VIEW_SM}"
+        (click)="setView('sm')"
+      >
+        <span class="icon-th-list"></span>
+      </button>
+    </div>
+  </div>
+  <app-congresso-chart
+    [parlamentares]="parlamentares"
+    [view]="view"
+  ></app-congresso-chart>
 </div>
 <app-sticky-footer-navbar></app-sticky-footer-navbar>

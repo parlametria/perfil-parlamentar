@@ -13,8 +13,12 @@ import { Parlamentar } from 'src/app/shared/models/parlamentar.model';
   styleUrls: ['./congresso.component.scss']
 })
 export class CongressoComponent implements OnInit {
+  readonly VIEW_SM = 'sm';
+  readonly VIEW_MD = 'md';
+  readonly VIEW_LG = 'lg';
+
   parlamentares: Parlamentar[];
-  filtro: any;
+  view: any;
 
   private unsubscribe = new Subject();
 
@@ -24,6 +28,7 @@ export class CongressoComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.view = this.VIEW_LG;
     this.getParlamentares();
   }
 
@@ -47,9 +52,8 @@ export class CongressoComponent implements OnInit {
       );
   }
 
-  search(filtro: any) {
-    this.filtro = filtro;
-    this.alinhamentoService.search(filtro);
+  setView(view: string) {
+    this.view = view;
   }
 
 }
