@@ -1,17 +1,18 @@
 import { Component, OnChanges, AfterContentInit, Input, SimpleChanges } from '@angular/core';
 
-import { Parlamentar } from '../../models/parlamentar.model';
-
 import * as d3 from 'd3';
 import * as sl from 'sainte-lague';
 
+import { Parlamentar } from '../../shared/models/parlamentar.model';
+
 @Component({
-  selector: 'app-congresso',
+  selector: 'app-congresso-chart',
   template: '<div id="chart-parlamento" class="mb-4"></div>',
-  styleUrls: ['./congresso.component.scss']
+  styleUrls: ['./congresso-chart.component.scss']
 })
-export class CongressoComponent implements AfterContentInit, OnChanges {
+export class CongressoChartComponent implements AfterContentInit, OnChanges {
   @Input() parlamentares: any[];
+  @Input() filtro: any;
 
   svg: any;
   g: any;
@@ -46,11 +47,20 @@ export class CongressoComponent implements AfterContentInit, OnChanges {
       changes.parlamentares.currentValue.length
     ) {
       const parlamentares = JSON.parse(JSON.stringify(changes.parlamentares.currentValue));
+
+
       if (parlamentares.length === 513) {
         this.draw(parlamentares);
       } else {
         this.paint(parlamentares);
       }
+
+    }
+    if (
+      typeof changes.filtro !== 'undefined' &&
+      typeof changes.filtro.currentValue !== 'undefined'
+    ) {
+      console.log(changes.filtro.currentValue);
     }
   }
 

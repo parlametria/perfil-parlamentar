@@ -1,0 +1,5 @@
+<div class="container container-sticky-footer-navbar">
+  <app-filter (filterChange)="search($event)"></app-filter>
+  <app-congresso-chart [parlamentares]="parlamentares" [filtro]="filtro"></app-congresso-chart>
+</div>
+<app-sticky-footer-navbar></app-sticky-footer-navbar>

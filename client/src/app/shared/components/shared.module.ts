@@ -8,15 +8,13 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { StickyFooterNavbarComponent } from './sticky-footer-navbar/sticky-footer-navbar.component';
 import { ProgressComponent } from './progress/progress.component';
 import { ProgressStackedComponent } from './progress-stacked/progress-stacked.component';
-import { CongressoComponent } from './congresso/congresso.component';
 
 @NgModule({
   declarations: [
     NavbarComponent,
     StickyFooterNavbarComponent,
     ProgressComponent,
-    ProgressStackedComponent,
-    CongressoComponent
+    ProgressStackedComponent
   ],
   imports: [
     CommonModule,
@@ -27,8 +25,7 @@ import { CongressoComponent } from './congresso/congresso.component';
     NavbarComponent,
     StickyFooterNavbarComponent,
     ProgressComponent,
-    ProgressStackedComponent,
-    CongressoComponent
+    ProgressStackedComponent
   ]
 })
 export class SharedModule { }
