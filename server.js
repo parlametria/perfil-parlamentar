@@ -18,7 +18,7 @@ const app = express();
 var db = require("./models/index");
 
 const corsOptions = {
-  origin: ['http://localhost:3000', '/leggo\.org\.br$'],
+  origin: ['http://localhost:3000', 'https://front.dev.leggo.org.br', 'https://leggo.org.br'],
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
   credentials: true,
   exposedHeaders: ["authorization"]
