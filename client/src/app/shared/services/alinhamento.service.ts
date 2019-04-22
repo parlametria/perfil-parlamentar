@@ -22,11 +22,11 @@ export class AlinhamentoService {
 
   readonly FILTRO_PADRAO_TEMA = -1;
 
-  private searchfilters = new Subject<any>();
+  private searchfilters = new BehaviorSubject<any>({});
   private tema: number;
 
-  parlamentaresFiltered = new BehaviorSubject<Array<Parlamentar>>([]);
-  parlamentares = new BehaviorSubject<Array<Parlamentar>>([]);
+  private parlamentaresFiltered = new BehaviorSubject<Array<Parlamentar>>([]);
+  private parlamentares = new BehaviorSubject<Array<Parlamentar>>([]);
 
   constructor(private http: HttpClient) {
     this.parlamentares
@@ -34,9 +34,14 @@ export class AlinhamentoService {
         switchMap(parlamentar =>
           this.searchfilters.pipe(
             debounceTime(400),
-            distinctUntilChanged(),
-            map(filters => this.filter(parlamentar, filters)),
-            startWith(parlamentar)
+            distinctUntilChanged(
+              (p: any, q: any) =>
+                p.estado === q.estado &&
+                p.nome === q.nome &&
+                p.tema === q.tema &&
+                p.partido === q.partido
+            ),
+            map(filters => this.filter(parlamentar, filters))
           )
         ),
         tap(parlamentares => {

@@ -65,8 +65,9 @@ export class FilterComponent implements OnInit, OnDestroy {
       }
     );
 
+    this.updateFiltroViaUrl();
+
     this.getTemas();
-    this.filterChange.emit(this.filtro);
   }
 
   open(content) {
@@ -168,6 +169,29 @@ export class FilterComponent implements OnInit, OnDestroy {
     }
 
     this.router.navigate([], { queryParams });
+  }
+
+  private updateFiltroViaUrl() {
+    this.activatedRoute.queryParams.subscribe(
+      params => {
+        Object.keys(params).forEach(value => {
+          if (value === 'nome') {
+            this.nomePesquisado = params[value];
+          }
+          if (value === 'estado') {
+            this.estadoSelecionado = params[value];
+          }
+          if (value === 'partido') {
+            this.partidoSelecionado = params[value];
+          }
+          if (value === 'tema') {
+            this.temaSelecionado = Number(params[value]);
+          }
+        });
+
+        this.aplicarFiltro();
+      }
+    );
   }
 
   ngOnDestroy() {
