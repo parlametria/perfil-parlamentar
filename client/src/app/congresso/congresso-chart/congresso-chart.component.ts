@@ -17,6 +17,9 @@ export class CongressoChartComponent implements AfterContentInit, OnChanges {
   svg: any;
   g: any;
   circles: any;
+  axis: any;
+  clusters: any;
+
   color: any;
   width: number;
   height: number;
@@ -32,7 +35,7 @@ export class CongressoChartComponent implements AfterContentInit, OnChanges {
     this.width = 500;
     this.height = 600;
     this.margin = {
-      left: 20,
+      left: 0,
       right: 20,
       top: 20,
       bottom: 20
@@ -48,8 +51,8 @@ export class CongressoChartComponent implements AfterContentInit, OnChanges {
       changes.parlamentares.currentValue.length
     ) {
       this.parlamentares = JSON.parse(JSON.stringify(changes.parlamentares.currentValue));
-      this.draw(this.parlamentares).then(resolve => {
-        this.paint(this.parlamentares);
+      this.draw().then(resolve => {
+        this.paint();
       });
     }
     if (
@@ -59,6 +62,8 @@ export class CongressoChartComponent implements AfterContentInit, OnChanges {
     ) {
       if (changes.view.currentValue === 'lg') {
         this.showArc();
+      } else if (changes.view.currentValue === 'md') {
+        this.showClusters();
       } else {
         this.showBeeswarm();
       }
@@ -85,29 +90,88 @@ export class CongressoChartComponent implements AfterContentInit, OnChanges {
       // .range(['#b2182b','#ef8a62','#fddbc7','#f7f7f7','#d1e5f0','#67a9cf','#2166ac'])
       .range(d3.schemePRGn[7])
       .domain(['0.3', '0.4', '0.5', '0.6', '0.7', '0.8']);
+
+    this.axis = this.svg
+      .append('g')
+      .attr('class', 'axis axis--x')
+      .attr('transform', 'translate(0, ' + (this.height - this.margin.bottom) + ')');
   }
 
-  draw(parlamentares: any[]): Promise<boolean> {
+  draw(): Promise<boolean> {
     return new Promise((resolve, reject) => {
       this.g.selectAll('.circle-parlamentar').remove();
+      this.g.selectAll('.clusters').remove();
       const inicioArco = 20;
       const fimArco = 440;
       const alturaArco = 200;
       const distanciaFilas = 12;
       const angulo = 20;
 
-      const xBeeSwarm = d3.scaleLinear().range([this.width * 0.7, 0]);
+      const xBeeSwarm = d3.scaleLinear().range([this.width * 0.8, this.width * 0.2]);
+      // this.axis.call(d3.axisBottom(xBeeSwarm).ticks(7, '.0%'));
       const simulation = d3
         .forceSimulation(this.parlamentares)
         .force('x', d3.forceX((d: any) => xBeeSwarm(d.alinhamento.alinhamento)).strength(1))
         .force('y', d3.forceY(this.height * 0.5))
-        .force('collide', d3.forceCollide(this.r))
+        .force('collide', d3.forceCollide(this.r + 1))
         .stop();
       for (let i = 0; i < 120; ++i) {
         simulation.tick();
       }
 
-      const camara = this.getFilas(parlamentares);
+      const group = d3.nest()
+        .key((d: Parlamentar) => d.sgPartido)
+        .entries(this.parlamentares);
+      const children = {
+        children: group.map(g => {
+          return {
+            children: g.values
+          };
+        })
+      };
+
+      const clusters = d3.pack()
+        .size([this.width, this.height])
+        .padding(0)(d3.hierarchy(children).sum(d => 1));
+
+      const leaves = clusters.leaves();
+      leaves.map(l => {
+        const s = 'idParlamentar';
+        const i = this.parlamentares.findIndex(p => p.idParlamentar === l.data[s]);
+        this.parlamentares[i].clusterX = l.x;
+        this.parlamentares[i].clusterY = l.y;
+      });
+
+
+      this.clusters = this.svg.append('g')
+        .attr('transform', 'translate(' + this.margin.left + ',' + this.margin.top + ')')
+        .attr('fill', 'none')
+        .attr('stroke-width', 'none')
+        .attr('stroke', '#ccc')
+        .attr('class', 'clusters')
+      .selectAll('circle')
+      .data(clusters.descendants().filter(d => d.height === 1))
+      .join('circle')
+        .attr('cx', d => d.x)
+        .attr('cy', d => d.y)
+        .attr('r', d => d.r)
+        .attr('opacity', 0);
+
+      // this.svg.append('g')
+      //   .selectAll('circle')
+      //   .data(clusters.leaves())
+      //   .join('circle')
+      //     .attr('cx', d => {
+      //       console.log(d.data.arcY);
+      //       return d.x;
+      //     })
+      //     .attr('cy', d => d.y)
+      //     .attr('r', d => d.r)
+      //     .attr('fill', d => this.color(d.data.alinhamento.alinhamento))
+      //   .on('mouseover', d => console.log(d));
+
+
+      const camara = this.getFilas(this.parlamentares);
       for (let i = 0; i < 13; i++) {
         const [p1, p2, p3] = [
           [inicioArco + (distanciaFilas * i), alturaArco],
@@ -137,11 +201,11 @@ export class CongressoChartComponent implements AfterContentInit, OnChanges {
           .attr('stroke', 'none')
           .attr('cx', (d, z) => {
             d.arcX = arc.node().getPointAtLength(xArc(z)).x;
-            return arc.node().getPointAtLength(xArc(z)).x;
+            return d.arcX;
           })
           .attr('cy', (d, w) => {
             d.arcY = arc.node().getPointAtLength(xArc(w)).y;
-            return arc.node().getPointAtLength(xArc(w)).y;
+            return d.arcY;
           })
           .attr('opacity', 1)
           .on('mouseover', (d) => console.log(d));
@@ -152,10 +216,9 @@ export class CongressoChartComponent implements AfterContentInit, OnChanges {
     });
   }
 
-  paint(parlamentares: Parlamentar[]) {
+  paint() {
     this.g.selectAll('.circle-parlamentar')
       .transition()
-      .ease(d3.easeCubicOut)
       .duration((d, i) => i * 5)
       .delay(500)
       .attr('fill', (d) => this.color(d.alinhamento.alinhamento));
@@ -168,10 +231,23 @@ export class CongressoChartComponent implements AfterContentInit, OnChanges {
       .delay(250)
       .attr('cx', d => d.arcX)
       .attr('cy', d => d.arcY);
+    this.clusters
+      .attr('opacity', 0);
   }
 
-  showClusters(view: string) {
-
+  showClusters() {
+    this.g.selectAll('.circle-parlamentar')
+      .transition()
+      .ease(d3.easeCubicIn)
+      .duration(250)
+      .delay(250)
+      .attr('cx', d => d.clusterX)
+      .attr('cy', d => d.clusterY);
+    this.clusters
+      .transition()
+      .duration(250)
+      .delay(500)
+      .attr('opacity', 1);
   }
 
   showBeeswarm() {
@@ -181,6 +257,8 @@ export class CongressoChartComponent implements AfterContentInit, OnChanges {
       .delay(250)
       .attr('cx', d => d.x)
       .attr('cy', d => d.y);
+    this.clusters
+      .attr('opacity', 0);
   }
 
   getFilas(parlamentares: Parlamentar[]) {
