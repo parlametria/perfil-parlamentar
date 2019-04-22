@@ -1,4 +1,5 @@
 import { Component, EventEmitter, OnInit, Output, OnDestroy } from '@angular/core';
+import { Router, ActivatedRoute, Params } from '@angular/router';
 
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Subject } from 'rxjs';
@@ -37,6 +38,8 @@ export class FilterComponent implements OnInit, OnDestroy {
   partidoSelecionado: string;
 
   constructor(
+    private activatedRoute: ActivatedRoute,
+    private router: Router,
     private modalService: NgbModal,
     private parlamentarService: ParlamentarService,
     private temaService: TemaService
@@ -73,12 +76,12 @@ export class FilterComponent implements OnInit, OnDestroy {
   onChangeEstado() {
     this.partidosFiltradosPorEstado = this.partidosPorEstado.filter(value => value.estado === this.estadoSelecionado)[0].partidos;
 
-    if (!this.partidosFiltradosPorEstado.includes('Partidos')) {
-      this.partidosFiltradosPorEstado.splice(0, 0, 'Partidos');
+    if (!this.partidosFiltradosPorEstado.includes(this.FILTRO_PADRAO_PARTIDO)) {
+      this.partidosFiltradosPorEstado.splice(0, 0, this.FILTRO_PADRAO_PARTIDO);
     }
 
     if (!this.partidosFiltradosPorEstado.includes(this.partidoSelecionado)) {
-      this.partidoSelecionado = 'Partidos';
+      this.partidoSelecionado = this.FILTRO_PADRAO_PARTIDO;
     }
   }
 
@@ -89,6 +92,8 @@ export class FilterComponent implements OnInit, OnDestroy {
       partido: this.partidoSelecionado,
       tema: this.temaSelecionado
     };
+
+    this.updateUrlFiltro(this.filtro);
 
     this.filterChange.emit(this.filtro);
     this.modalService.dismissAll();
@@ -141,6 +146,28 @@ export class FilterComponent implements OnInit, OnDestroy {
     if (this.temas && id !== this.FILTRO_PADRAO_TEMA) {
       return this.temas.filter(tema => tema.id === id)[0].tema;
     }
+  }
+
+  private updateUrlFiltro(filtro: any) {
+    const queryParams: Params = {};
+
+    if (filtro.nome !== '' && filtro.nome !== undefined) {
+      queryParams.nome = filtro.nome;
+    }
+
+    if (filtro.estado !== this.FILTRO_PADRAO_ESTADO) {
+      queryParams.estado = filtro.estado;
+    }
+
+    if (filtro.partido !== this.FILTRO_PADRAO_PARTIDO) {
+      queryParams.partido = filtro.partido;
+    }
+
+    if (filtro.tema !== this.FILTRO_PADRAO_TEMA) {
+      queryParams.tema = filtro.tema;
+    }
+
+    this.router.navigate([], { queryParams });
   }
 
   ngOnDestroy() {
