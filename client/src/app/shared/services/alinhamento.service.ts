@@ -35,11 +35,9 @@ export class AlinhamentoService {
           this.searchfilters.pipe(
             debounceTime(400),
             distinctUntilChanged(
-              (p: any, q: any) =>
-                p.estado === q.estado &&
-                p.nome === q.nome &&
-                p.tema === q.tema &&
-                p.partido === q.partido
+              (p: any, q: any) => {
+                return this.compareFilter(p, q);
+              }
             ),
             map(filters => this.filter(parlamentar, filters))
           )
@@ -149,6 +147,19 @@ export class AlinhamentoService {
       return 1;
     }
     return 0;
+  }
+
+  /**
+   * Compara se dois filtros são iguais ou não
+   *
+   * @param p Filtro para comparação
+   * @param q Filtro para comparação
+   */
+  private compareFilter(p: any, q: any) {
+    return p.estado === q.estado &&
+      p.nome === q.nome &&
+      p.tema === q.tema &&
+      p.partido === q.partido;
   }
 
 }
