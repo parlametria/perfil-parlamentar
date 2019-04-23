@@ -101,10 +101,9 @@ export class PerguntasContainerComponent implements OnInit, OnDestroy {
 
     // Checa se a pergunta é específica da URL ou a primeira do tema selecionado
     if (this.proposicaoFromUrl) {
-      this.perguntaSelecionada = this.proposicaoFromUrl;
+      this.setPerguntaSelecionadaAndRedirect(this.proposicaoFromUrl);
     } else {
-      this.perguntaSelecionada = this.perguntasTemaSelecionado[0];
-      this.redirectToURLWithID(this.perguntaSelecionada.id_votacao);
+      this.setPerguntaSelecionadaAndRedirect(this.perguntasTemaSelecionado[0]);
     }
   }
 
@@ -139,26 +138,21 @@ export class PerguntasContainerComponent implements OnInit, OnDestroy {
   }
 
   onTemaChange() {
-    this.perguntasTemaSelecionado = this.listaProposicoes.filter(proposicao => {
-      return proposicao.tema_id === Number(this.temaSelecionado);
-    });
-
-    this.perguntaSelecionada = this.perguntasTemaSelecionado[0];
-    this.redirectToURLWithID(this.perguntaSelecionada.id_votacao);
+    this.filterPerguntasPorTemaSelecionado();
+    this.setPerguntaSelecionadaAndRedirect(this.perguntasTemaSelecionado[0]);
   }
 
   escolhePergunta(idVotacao) {
-    this.perguntaSelecionada = this.perguntasTemaSelecionado.filter(
+    this.setPerguntaSelecionadaAndRedirect(this.perguntasTemaSelecionado.filter(
       pergunta => {
         return pergunta.id_votacao === idVotacao;
       }
-    )[0];
-    this.redirectToURLWithID(idVotacao);
+    )[0]);
   }
 
   proximaPergunta() {
-    const index = this.todasProposicoesOrdenadas.indexOf(
-      this.perguntaSelecionada
+    const index = this.todasProposicoesOrdenadas.findIndex(prop =>
+      prop.id_votacao === this.perguntaSelecionada.id_votacao
     );
 
     if (index === this.todasProposicoesOrdenadas.length - 1) {
@@ -167,7 +161,6 @@ export class PerguntasContainerComponent implements OnInit, OnDestroy {
     } else {
       // Passa para próxima pergunta
       const proximaPergunta = this.todasProposicoesOrdenadas[index + 1];
-
       // Checa se a próxima pergunta é do mesmo tema ou não
       if (proximaPergunta.tema_id !== this.perguntaSelecionada.tema_id) {
         this.temaSelecionado = proximaPergunta.tema_id;
@@ -236,7 +229,7 @@ export class PerguntasContainerComponent implements OnInit, OnDestroy {
       if (a.id_votacao > b.id_votacao) {
         return 1;
       } else if (a.id_votacao < b.id_votacao) {
-          return -1;
+        return -1;
       } else {
         return 0;
       }
@@ -285,13 +278,29 @@ export class PerguntasContainerComponent implements OnInit, OnDestroy {
 
   setProposicao(id: string) {
     this.perguntaService.getProposicao(id)
-    .pipe(takeUntil(this.unsubscribe)).subscribe(data => {
-      this.proposicaoFromUrl = data;
-    },
-    () => {
-      this.proposicaoFromUrl = null;
-    }
-    );
+      .pipe(takeUntil(this.unsubscribe)).subscribe(data => {
+        this.proposicaoFromUrl = data;
+        this.perguntaSelecionada = this.proposicaoFromUrl;
+        this.temaSelecionado = this.perguntaSelecionada.tema_id;
+        if (this.listaProposicoes) {
+          this.filterPerguntasPorTemaSelecionado(); 
+        }
+      },
+        () => {
+          this.proposicaoFromUrl = null;
+        }
+      );
+  }
+
+  private filterPerguntasPorTemaSelecionado() {
+    this.perguntasTemaSelecionado = this.listaProposicoes.filter(proposicao => {
+      return proposicao.tema_id === Number(this.temaSelecionado);
+    });
+  }
+
+  private setPerguntaSelecionadaAndRedirect(pergunta) {
+    this.perguntaSelecionada = pergunta;
+    this.redirectToURLWithID(this.perguntaSelecionada.id_votacao);
   }
 
   ngOnDestroy() {
