@@ -283,7 +283,7 @@ export class PerguntasContainerComponent implements OnInit, OnDestroy {
         this.perguntaSelecionada = this.proposicaoFromUrl;
         this.temaSelecionado = this.perguntaSelecionada.tema_id;
         if (this.listaProposicoes) {
-          this.filterPerguntasPorTemaSelecionado(); 
+          this.filterPerguntasPorTemaSelecionado();
         }
       },
         () => {
