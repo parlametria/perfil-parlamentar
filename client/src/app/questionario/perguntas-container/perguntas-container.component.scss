@@ -13,30 +13,22 @@
   margin-right: 2px;
   background-color: #ebe9e9;
   cursor: pointer;
-  transition: background-color .5s;
+  transition: background-color 0.5s;
 
   &.active {
-    background-color: #20201E;
-
-    &.done {
-      background-color: #20201E;
-    }
+    background-color: #20201e;
 
     &.positive {
-      background-color: #20c997;
+      background-color: #43a467;
     }
 
     &.negative {
-      background-color: #7F3C8B;
+      background-color: #7f3c8b;
     }
 
     &.neutral {
       background-color: #adb5bd;
     }
-  }
-
-  &.done {
-    background-color: #6c757d;
   }
 
   &:last-child {
@@ -54,6 +46,6 @@
 
 .btn-pergunta {
   @media (max-width: 400px) {
-    font-size: .65rem;
+    font-size: 0.65rem;
   }
 }
