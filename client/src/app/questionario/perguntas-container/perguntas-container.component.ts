@@ -1,4 +1,5 @@
 import { Component, OnInit, OnDestroy, Input } from '@angular/core';
+import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 
 import { Subject, forkJoin } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -24,6 +25,8 @@ export class PerguntasContainerComponent implements OnInit, OnDestroy {
   private unsubscribe = new Subject();
 
   temaSelecionado: number;
+  idProposicaoFromUrl: string;
+  proposicaoFromUrl: Proposicao;
 
   listaTemas: Tema[];
   listaProposicoes: Proposicao[];
@@ -39,18 +42,21 @@ export class PerguntasContainerComponent implements OnInit, OnDestroy {
   @Input() receivedTemas: number[];
 
   constructor(
+    private activatedRoute: ActivatedRoute,
+    private router: Router,
     private perguntaService: PerguntaService,
     private temaService: TemaService,
     private userService: UserService
   ) { }
 
   ngOnInit() {
+    this.initializeParamMapId();
     this.initializeQuestionario();
     this.getRespostas();
     this.salvandoResposta = false;
   }
 
-  initializeQuestionario() {
+  private initializeQuestionario() {
     forkJoin(
       this.temaService.getTemas(),
       this.perguntaService.getProposicoes()
@@ -69,6 +75,10 @@ export class PerguntasContainerComponent implements OnInit, OnDestroy {
       } else {
         this.listaTemas = temas;
         this.temaSelecionado = 3;
+      }
+
+      if (this.proposicaoFromUrl) {
+        this.temaSelecionado = this.proposicaoFromUrl.tema_id;
       }
       this.initializePerguntas(proposicoes);
     },
@@ -89,8 +99,12 @@ export class PerguntasContainerComponent implements OnInit, OnDestroy {
       this.receivedTemas
     );
 
-    this.perguntaSelecionada = this.perguntasTemaSelecionado[0];
-
+    // Checa se a pergunta é específica da URL ou a primeira do tema selecionado
+    if (this.proposicaoFromUrl) {
+      this.setPerguntaSelecionadaAndRedirect(this.proposicaoFromUrl);
+    } else {
+      this.setPerguntaSelecionadaAndRedirect(this.perguntasTemaSelecionado[0]);
+    }
   }
 
   getRespostas() {
@@ -124,34 +138,29 @@ export class PerguntasContainerComponent implements OnInit, OnDestroy {
   }
 
   onTemaChange() {
-    this.perguntasTemaSelecionado = this.listaProposicoes.filter(proposicao => {
-      return proposicao.tema_id === Number(this.temaSelecionado);
-    });
-
-    this.perguntaSelecionada = this.perguntasTemaSelecionado[0];
+    this.filterPerguntasPorTemaSelecionado();
+    this.setPerguntaSelecionadaAndRedirect(this.perguntasTemaSelecionado[0]);
   }
 
   escolhePergunta(idVotacao) {
-    this.perguntaSelecionada = this.perguntasTemaSelecionado.filter(
+    this.setPerguntaSelecionadaAndRedirect(this.perguntasTemaSelecionado.filter(
       pergunta => {
         return pergunta.id_votacao === idVotacao;
       }
-    )[0];
+    )[0]);
   }
 
   proximaPergunta() {
-    const index = this.todasProposicoesOrdenadas.indexOf(
-      this.perguntaSelecionada
+    const index = this.todasProposicoesOrdenadas.findIndex(prop =>
+      prop.id_votacao === this.perguntaSelecionada.id_votacao
     );
 
     if (index === this.todasProposicoesOrdenadas.length - 1) {
       // Usuário finalizou questionário
-      this.temaSelecionado = this.receivedTemas[0];
-      this.onTemaChange();
+      this.router.navigate(['alinhamento']);
     } else {
       // Passa para próxima pergunta
       const proximaPergunta = this.todasProposicoesOrdenadas[index + 1];
-
       // Checa se a próxima pergunta é do mesmo tema ou não
       if (proximaPergunta.tema_id !== this.perguntaSelecionada.tema_id) {
         this.temaSelecionado = proximaPergunta.tema_id;
@@ -220,7 +229,7 @@ export class PerguntasContainerComponent implements OnInit, OnDestroy {
       if (a.id_votacao > b.id_votacao) {
         return 1;
       } else if (a.id_votacao < b.id_votacao) {
-          return -1;
+        return -1;
       } else {
         return 0;
       }
@@ -249,6 +258,49 @@ export class PerguntasContainerComponent implements OnInit, OnDestroy {
       resposta => this.respostasUser.votacoes[resposta]
     );
     return respostas.filter(r => r !== 0).length >= this.MIN_RESPOSTAS;
+  }
+
+  redirectToURLWithID(idVotacao) {
+    const firstPerguntaURL = 'questionario/' + idVotacao;
+    this.router.navigate([firstPerguntaURL]);
+  }
+
+  initializeParamMapId() {
+    this.activatedRoute.paramMap.subscribe(
+      (params: ParamMap) => {
+        this.idProposicaoFromUrl = params.get('id');
+        if (this.idProposicaoFromUrl) {
+          this.setProposicao(this.idProposicaoFromUrl);
+        }
+      }
+    );
+  }
+
+  setProposicao(id: string) {
+    this.perguntaService.getProposicao(id)
+      .pipe(takeUntil(this.unsubscribe)).subscribe(data => {
+        this.proposicaoFromUrl = data;
+        this.perguntaSelecionada = this.proposicaoFromUrl;
+        this.temaSelecionado = this.perguntaSelecionada.tema_id;
+        if (this.listaProposicoes) {
+          this.filterPerguntasPorTemaSelecionado();
+        }
+      },
+        () => {
+          this.proposicaoFromUrl = null;
+        }
+      );
+  }
+
+  private filterPerguntasPorTemaSelecionado() {
+    this.perguntasTemaSelecionado = this.listaProposicoes.filter(proposicao => {
+      return proposicao.tema_id === Number(this.temaSelecionado);
+    });
+  }
+
+  private setPerguntaSelecionadaAndRedirect(pergunta) {
+    this.perguntaSelecionada = pergunta;
+    this.redirectToURLWithID(this.perguntaSelecionada.id_votacao);
   }
 
   ngOnDestroy() {

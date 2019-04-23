@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 import { environment } from '../../../environments/environment';
-import { Tema } from '../models/tema.model';
+
 import { Proposicao } from '../models/proposicao.model';
 import { Pergunta } from '../models/pergunta.model';
 
@@ -24,6 +24,10 @@ export class PerguntaService {
 
   getProposicoes(): Observable<Proposicao[]> {
     return this.http.get<Proposicao[]>(this.url + '/proposicoes');
+  }
+
+  getProposicao(id: string): Observable<Proposicao> {
+    return this.http.get<Proposicao> (this.url + '/proposicoes/' + id);
   }
 
 }
