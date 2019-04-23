@@ -22,6 +22,8 @@ export class FilterComponent implements OnInit, OnDestroy {
   readonly FILTRO_PADRAO_ESTADO = 'Estados';
   readonly FILTRO_PADRAO_PARTIDO = 'Partidos';
   readonly FILTRO_PADRAO_TEMA = -1;
+  readonly FILTRO_PADRAO_TEMA_SLUG = 'todos';
+
   filtro: any;
 
   private unsubscribe = new Subject();
@@ -53,7 +55,8 @@ export class FilterComponent implements OnInit, OnDestroy {
       nome: '',
       estado: this.estadoSelecionado,
       partido: this.partidoSelecionado,
-      tema: this.temaSelecionado
+      tema: this.temaSelecionado,
+      temaSlug: this.FILTRO_PADRAO_TEMA_SLUG
     };
   }
 
@@ -91,7 +94,8 @@ export class FilterComponent implements OnInit, OnDestroy {
       nome: this.nomePesquisado,
       estado: this.estadoSelecionado,
       partido: this.partidoSelecionado,
-      tema: this.temaSelecionado
+      tema: this.temaSelecionado,
+      temaSlug: this.temaService.getTemaSlugById(this.temas, this.temaSelecionado)
     };
 
     this.updateUrlFiltro(this.filtro);

@@ -67,6 +67,7 @@ export class CardParlamentarComponent implements OnChanges, OnInit {
   @Input() id: number;
   @Input() parlamentar: Parlamentar;
   @Input() tema: number;
+  @Input() temaSlug: string;
   @Input() view: any;
   @Output() followChecked = new EventEmitter<boolean>();
 

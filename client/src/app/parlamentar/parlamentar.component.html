@@ -13,7 +13,7 @@
         >
       </div>
       <div class="col">
-        <div class="parlamentar-title">{{ parlamentar.nome_urna }}</div>
+        <div class="parlamentar-title">{{ parlamentar.nomeUrna }}</div>
         <p>
           {{ parlamentar.sgPartido }}/{{ parlamentar.uf }}
         </p>
@@ -26,7 +26,7 @@
         class="form-control form-control-plus"
         id="tema"
         [(ngModel)]="temaSelecionado"
-        (ngModelChange)="onTemaChange()"
+        (ngModelChange)="filtraProposicoesPorTema($event)"
         name="tema"
       >
         <option
