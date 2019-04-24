@@ -58,6 +58,7 @@
         >
           <span class="icon-check icon-hidden"></span>
           a favor
+          <span class="badge badge-light" [hidden]="!showShortcuts">A</span>
           <span [ngClass]="{
             'icon-check': true,
             'icon-hidden': true,
@@ -71,6 +72,7 @@
         >
           <span class="icon-check icon-hidden"></span>
           não sei
+          <span class="badge badge-light" [hidden]="!showShortcuts">S</span>
           <span [ngClass]="{
             'icon-check': true,
             'icon-hidden': true,
@@ -84,6 +86,7 @@
         >
           <span class="icon-check icon-hidden"></span>
           contra
+          <span class="badge badge-light" [hidden]="!showShortcuts">D</span>
           <span [ngClass]="{
             'icon-check': true,
             'icon-hidden': true,

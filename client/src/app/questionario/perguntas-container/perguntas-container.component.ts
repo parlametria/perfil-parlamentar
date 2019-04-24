@@ -27,6 +27,7 @@ export class PerguntasContainerComponent implements OnInit, OnDestroy {
   readonly KEY_1 = 'KeyA';
   readonly KEY_2 = 'KeyS';
   readonly KEY_3 = 'KeyD';
+  readonly KEY_TAB = 'ControlLeft';
 
   private unsubscribe = new Subject();
 
@@ -44,12 +45,13 @@ export class PerguntasContainerComponent implements OnInit, OnDestroy {
   respostasUser: Resposta;
 
   salvandoResposta: boolean;
-  keyboardTooltips: any;
+  showShortcuts: boolean;
 
   @Input() receivedTemas: number[];
 
   @HostListener('window:keyup', ['$event'])
   keyEvent(event: KeyboardEvent) {
+    this.showShortcuts = false;
     if (event.code === this.KEY_RIGHT) {
       this.proximaPergunta();
     }
@@ -64,6 +66,13 @@ export class PerguntasContainerComponent implements OnInit, OnDestroy {
     }
     if (event.code === this.KEY_3) {
       this.setResposta(this.CONTRA);
+    }
+  }
+
+  @HostListener('window:keydown', ['$event'])
+  keydownEvent(event: KeyboardEvent) {
+    if (event.code === this.KEY_TAB) {
+      this.showShortcuts = true;
     }
   }
 
