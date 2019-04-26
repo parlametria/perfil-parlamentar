@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, Input } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input, HostListener } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 
 import { Subject, forkJoin } from 'rxjs';
@@ -22,6 +22,13 @@ export class PerguntasContainerComponent implements OnInit, OnDestroy {
   readonly CONTRA = -1;
   readonly MIN_RESPOSTAS = 3;
 
+  readonly KEY_RIGHT = 'ArrowRight';
+  readonly KEY_LEFT = 'ArrowLeft';
+  readonly KEY_1 = 'KeyA';
+  readonly KEY_2 = 'KeyS';
+  readonly KEY_3 = 'KeyD';
+  readonly KEY_TAB = 'ControlLeft';
+
   private unsubscribe = new Subject();
 
   temaSelecionado: number;
@@ -38,8 +45,36 @@ export class PerguntasContainerComponent implements OnInit, OnDestroy {
   respostasUser: Resposta;
 
   salvandoResposta: boolean;
+  showShortcuts: boolean;
 
   @Input() receivedTemas: number[];
+
+  @HostListener('window:keyup', ['$event'])
+  keyEvent(event: KeyboardEvent) {
+    this.showShortcuts = false;
+    if (event.code === this.KEY_RIGHT) {
+      this.proximaPergunta();
+    }
+    if (event.code === this.KEY_LEFT) {
+      this.perguntaAnterior();
+    }
+    if (event.code === this.KEY_1) {
+      this.setResposta(this.FAVOR);
+    }
+    if (event.code === this.KEY_2) {
+      this.setResposta(this.NAOSEI);
+    }
+    if (event.code === this.KEY_3) {
+      this.setResposta(this.CONTRA);
+    }
+  }
+
+  @HostListener('window:keydown', ['$event'])
+  keydownEvent(event: KeyboardEvent) {
+    if (event.code === this.KEY_TAB) {
+      this.showShortcuts = true;
+    }
+  }
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -168,6 +203,23 @@ export class PerguntasContainerComponent implements OnInit, OnDestroy {
       } else {
         this.escolhePergunta(proximaPergunta.id_votacao);
       }
+    }
+  }
+
+  perguntaAnterior() {
+    const index = this.todasProposicoesOrdenadas.findIndex(prop =>
+      prop.id_votacao === this.perguntaSelecionada.id_votacao
+    );
+
+    if (index !== 0) {
+      // Passa para pergunta anterior
+      const perguntaAnterior = this.todasProposicoesOrdenadas[index - 1];
+      // Checa se a próxima pergunta é do mesmo tema ou não
+      if (perguntaAnterior.tema_id !== this.perguntaSelecionada.tema_id) {
+        this.temaSelecionado = perguntaAnterior.tema_id;
+        this.onTemaChange();
+      }
+      this.escolhePergunta(perguntaAnterior.id_votacao);
     }
   }
 
