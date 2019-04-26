@@ -8,6 +8,10 @@ $viewport-negative-height: 340px;
     flex-direction: column;
     justify-content: center;
   }
+
+  @media (min-width: 992px) {
+    height: 40vh;
+  }
 }
 
 .pergunta-texto {

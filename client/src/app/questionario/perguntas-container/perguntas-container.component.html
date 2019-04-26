@@ -1,27 +1,29 @@
 <div class="container">
   <div class="container-pergunta">
     <!-- Selecionar temas -->
-    <form>
-      <div class="form-group form-group-plus">
-        <select
-          class="form-control form-control-plus"
-          id="tema"
-          [(ngModel)]="temaSelecionado"
-          (ngModelChange)="onTemaChange()"
-          name="tema"
-        >
-          <option
-            *ngFor="let tema of listaTemas"
-            [value]="tema.id"
+    <div class="container-pergunta-controls">
+      <form>
+        <div class="form-group form-group-plus">
+          <select
+            class="form-control form-control-plus"
+            id="tema"
+            [(ngModel)]="temaSelecionado"
+            (ngModelChange)="onTemaChange()"
+            name="tema"
           >
-            {{ tema.tema }}
-          </option>
-        </select>
-      </div>
-    </form>
+            <option
+              *ngFor="let tema of listaTemas"
+              [value]="tema.id"
+            >
+              {{ tema.tema }}
+            </option>
+          </select>
+        </div>
+      </form>
+    </div>
 
     <!-- Indicadores de navegação -->
-    <div class="pergunta-progress-bar mb-4">
+    <div class="pergunta-progress-bar container-pergunta-controls mb-4">
       <div
         *ngFor="let prop of perguntasTemaSelecionado; let i = index"
         [ngClass]="{
@@ -45,7 +47,7 @@
       ></app-pergunta>
     </div>
 
-    <div *ngIf="perguntaSelecionada">
+    <div class="respostas-btn-group container-pergunta-controls" *ngIf="perguntaSelecionada">
       <div
         class="btn-group blocks d-flex justify-content-center my-3"
         role="group"

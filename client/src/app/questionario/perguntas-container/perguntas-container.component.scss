@@ -1,5 +1,17 @@
 .container-pergunta {
+  max-width: 896px;
+  margin: auto;
   padding-top: 15px;
+}
+
+.container-pergunta-controls {
+  @media (min-width: 992px) {
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 4rem;
+    margin-bottom: 4rem;
+  }
 }
 
 .pergunta-progress-bar {
