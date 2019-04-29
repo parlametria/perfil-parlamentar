@@ -50,7 +50,6 @@ db.sequelize
 // Usar as rotas
 app.use("/api/perguntas", perguntas);
 app.use("/api/candidatos", candidatos);
-app.use("/api/respostas", respostas);
 app.use("/api/usuarios", usuarios);
 app.use("/api/auth", auth);
 app.use("/api/temas", temas);
