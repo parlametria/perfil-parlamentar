@@ -1,75 +1,61 @@
-/** Express router
- * @module routes/candidatos
- * @requires express
- */
 const express = require("express");
-
-/**
- * Rotas para funções relacionadas aos candidatos.
- * @namespace module:routes/candidatos
- */
 const router = express.Router();
-const models = require("../../models/index");
-const { formataRespostas, formataVotacoes } = require("../../utils/functions");
 
-const Candidato = models.candidato;
+const models = require("../../models/index");
+const { formataVotacoes } = require("../../utils/functions");
+
+const Parlamentar = models.parlamentar;
 const Votacao = models.votacao;
 const Proposicao = models.proposicao;
 
-const att_res = ["resposta", "proposicao_id"];
+const att_votacao = ["voto", "id_votacao"];
 const att = [
-  "cpf",
-  "estado",
-  "uf",
-  "nome_urna",
-  "recebeu",
-  "respondeu",
-  "eleito",
-  "reeleicao",
-  "email",
-  "sg_partido",
-  "partido",
-  "n_candidatura",
+  "id_parlamentar_voz",
   "id_parlamentar",
-  "genero"
+  "casa",
+  "nome_eleitoral",
+  "uf",
+  "partido",
+  "genero",
+  "em_exercicio"  
 ];
 
 /**
- * Testa a rota de candidatos.
- * @name get/api/candidatos/test
+ * Testa a rota de parlamentares.
+ * @name get/api/parlamentares/test
  * @function
- * @memberof module:routes/candidatos
+ * @memberof module:routes/parlamentares
  */
 router.get("/test", (req, res) =>
-  res.json({ msg: "Testando a rota de candidatos." })
+  res.json({ msg: "Testando a rota de parlamentares." })
 );
 
 /**
- * Pega as votações de um deputado dado seu cpf.
- * @name get/api/candidatos/votacoes
+ * Recupera infomações dos parlamentares incluindo suas votações (quando existem)
+ * @name get/api/parlamentares/votacoes
  * @function
- * @memberof module:routes/candidatos
+ * @memberof module:routes/parlamentares
  */
 router.get("/votacoes", (req, res) => {
-  Candidato.findAll({
+  Parlamentar.findAll({
     attributes: att,
     include: [
       {
         model: Votacao,
-        as: "cpf_vot",
-        attributes: att_res,
+        as: "parlamentar_vot",
+        attributes: att_votacao,
         required: false,
         include: {
           model: Proposicao,
           attributes: [],
           as: "vot_prop",
-          required: true,
+          required: false,
           where: { status_proposicao: "Ativa" }
         }
       }
     ],
     where: {
-      eleito: true
+      em_exercicio: true
     },
     limit: 513
   })
@@ -77,51 +63,51 @@ router.get("/votacoes", (req, res) => {
       novaVotacao = formataVotacoes(votacoes);
       return res.json(novaVotacao);
     })
-    .catch(err => res.status(400).json({ err }));
+    .catch(err => res.status(400).json({ err: err.message }));
 });
 
 /**
- * Pega todos os candidatos de uma vez.
- * @name get/api/candidatos
+ * Recupera informações sobre os parlamentares
+ * @name get/api/parlamentares
  * @function
- * @memberof module:routes/candidatos
+ * @memberof module:routes/parlamentares
  */
 router.get("/", (req, res) => {
-  Candidato.findAll()
-    .then(candidatos => res.json(candidatos))
+  Parlamentar.findAll()
+    .then(parlamentares => res.json(parlamentares))
     .catch(err => res.status(400).json({ err }));
 });
 
 /**
  * Pega os partidos distintos de um estado
- * @name get/api/candidatos/partidos
- * @memberof module:routes/candidatos 
+ * @name get/api/parlamentares/partidos
+ * @memberof module:routes/parlamentares 
  */
 router.get("/partidos", (req, res) => {
-  Candidato.findAll({
+  Parlamentar.findAll({
     attributes: att,
     where: {
-      eleito: true
+      em_exercicio: true
     }
   })
-    .then(candidatos => {
+    .then(parlamentares => {
       let partidosPorEstado = []
 
-      const estados = [...new Set(candidatos.map(item => item.uf))];
+      const estados = [...new Set(parlamentares.map(item => item.uf))];
 
       estados.push("Estados");
 
       estados.forEach(estado => {
-        let candidatosFiltered;
+        let parlamentaresFiltered;
         if (estado !== "Estados")
-          candidatosFiltered = candidatos.filter(value => value.uf === estado);
+          parlamentaresFiltered = parlamentares.filter(value => value.uf === estado);
         else
-          candidatosFiltered = candidatos;        
+          parlamentaresFiltered = parlamentares;        
         
         const partidosSet = new Set();
 
-        candidatosFiltered.forEach(cand => {
-          partidosSet.add(cand.sg_partido);
+        parlamentaresFiltered.forEach(cand => {
+          partidosSet.add(cand.partido);
         });
         
         partidosPorEstado.push({ estado: estado, partidos: [...partidosSet].sort((a, b) => a.localeCompare(b)) });
@@ -134,41 +120,41 @@ router.get("/partidos", (req, res) => {
 
 
 /**
- * Pega um candidato de acordo com o cpf.
- * @name get/api/candidatos/:cpf
+ * Recupera informações do parlamentar de acordo com o id (no Voz Ativa).
+ * @name get/api/parlamentares/:id
  * @function
- * @memberof module:routes/candidatos
- * @param {string} cpf - CPF do candidato
+ * @memberof module:routes/parlamentares
+ * @param {string} id - id do parlamentar na plataforma Voz Ativa
  */
-router.get("/:cpf", (req, res) => {
-  Candidato.findAll({
+router.get("/:id", (req, res) => {
+  Parlamentar.findAll({
     where: {
-      cpf: req.params.cpf
+      id_parlamentar_voz: req.params.id
     }
   })
-    .then(candidatos => res.json(candidatos))
+    .then(parlamentar => res.json(parlamentar))
     .catch(err => res.status(400).json({ err }));
 });
 
 /**
- * Pega as votações de um deputado dado seu cpf.
- * @name get/api/:cpf/votacoes
+ * Recupera informações de um parlamentar a partir de seu id (no Voz Ativa)
+ * @name get/api/:id/votacoes
  * @function
  * @memberof module:routes/candidatos
- * @param {string} cpf - CPF do candidato
+ * @param {string} id - id do parlamentar na plataforma Voz Ativa
  */
-router.get("/:cpf/votacoes", (req, res) => {
-  Candidato.findAll({
+router.get("/:id/votacoes", (req, res) => {
+  Parlamentar.findAll({
     attributes: att,
     include: [
       {
         model: Votacao,
-        as: "cpf_vot",
-        attributes: att_res,
+        as: "parlamentar_vot",
+        attributes: att_votacao,
         required: false
       }
     ],
-    where: { cpf: req.params.cpf }
+    where: { id_parlamentar_voz: req.params.id }
   })
     .then(votacoes => {
       novaVotacao = formataVotacoes(votacoes);
