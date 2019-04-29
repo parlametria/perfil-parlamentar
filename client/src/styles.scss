@@ -78,5 +78,19 @@ body {
       background-color: $white;
       color: $black;
     }
-  }  
+  }
+}
+
+.btn-no-gutters {
+  padding: 0;
+}
+
+.title-main {
+  text-align: center;
+
+  @media (min-width: 992px) {
+    margin-top: 3rem;
+    margin-bottom: 3rem;
+  }
+
 }
