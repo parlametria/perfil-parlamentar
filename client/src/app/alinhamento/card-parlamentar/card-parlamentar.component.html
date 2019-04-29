@@ -25,7 +25,7 @@
             class="btn-link-simple"
             [routerLink]="['/parlamentar', parlamentar.cpf]"
           >
-            {{ parlamentar.nomeUrna | titlecase }}
+            {{ parlamentar.nomeEleitoral | titlecase }}
           </a>
         </div>
       </div>
@@ -66,9 +66,9 @@
           </a>
         </div>
         <div class="col-9">
-          <div class="parlamentar-title">{{ parlamentar.nomeUrna | titlecase }}</div>
+          <div class="parlamentar-title">{{ parlamentar.nomeEleitoral | titlecase }}</div>
           <p>
-            {{ parlamentar.sgPartido }}/{{ parlamentar.uf }}
+            {{ parlamentar.partido }}/{{ parlamentar.uf }}
           </p>
           <div class="row no-gutters">
             <div class="col">
@@ -120,7 +120,7 @@
       <div class="text-right">
         <a
           class="btn btn-link"
-          [routerLink]="['/parlamentar', parlamentar.cpf]"
+          [routerLink]="['/parlamentar', parlamentar.idParlamentarVoz]"
           [queryParams]="{tema: temaSlug}"
         >
           + detalhes

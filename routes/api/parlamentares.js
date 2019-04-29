@@ -20,7 +20,7 @@ const att = [
   "uf",
   "partido",
   "genero",
-  "em_exercicio"  
+  "em_exercicio"
 ];
 
 /**

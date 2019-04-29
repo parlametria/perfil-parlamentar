@@ -5,7 +5,7 @@ import { ParlamentarComponent } from './parlamentar.component';
 
 const routes: Routes = [
   {
-    path: ':cpf',
+    path: ':id',
     component: ParlamentarComponent,
     data: { animation: 'ParlamentarComponent' }
   }

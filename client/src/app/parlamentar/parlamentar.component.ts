@@ -43,21 +43,22 @@ export class ParlamentarComponent implements OnInit, OnDestroy {
   ) { }
 
   async ngOnInit() {
-    const cpf = this.activatedroute.snapshot.paramMap.get('cpf');
+    const id = this.activatedroute.snapshot.paramMap.get('id');
     const temaSlug = this.activatedroute.snapshot.queryParamMap.get('tema');
 
-    this.getParlamentarByCpf(cpf);
+    this.getParlamentarById(id);
     this.initializeProposicoes(temaSlug);
     this.getRespostas();
   }
 
-  getParlamentarByCpf(cpf: string) {
+  getParlamentarById(id: string) {
     this.parlamentarService
-      .getVotacoesParlamentarPorCpf(cpf)
+      .getVotacoesParlamentarPorId(id)
       .pipe(takeUntil(this.unsubscribe))
       .subscribe(
         parlamentar => {
           this.parlamentar = parlamentar;
+          console.log(this.parlamentar);
         },
         error => {
           console.log(error);

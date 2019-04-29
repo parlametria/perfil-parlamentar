@@ -93,12 +93,12 @@ export class AlinhamentoService {
 
       filtered =
         partido && partido !== 'Partidos' && filtered
-          ? p.sgPartido.toLowerCase() === partido.toLowerCase()
+          ? p.partido.toLowerCase() === partido.toLowerCase()
           : filtered;
 
       filtered =
         nome && filtered
-          ? p.nomeUrna.toLowerCase().includes(nome.toLowerCase())
+          ? p.nomeEleitoral.toLowerCase().includes(nome.toLowerCase())
           : filtered;
 
       return filtered;
