@@ -1,7 +1,3 @@
-/** Express router
- * @module routes/comissoes
- * @requires express
- */
 const express = require("express");
 
 const router = express.Router();
@@ -50,7 +46,7 @@ router.get("/membros", (req, res) => {
         required: true
       }
     ]
-  })
+  })  
     .then(comissoes => res.status(200).json(comissoes))
     .catch(err => {
       res.status(400).json(err.message);

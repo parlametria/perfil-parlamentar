@@ -2,11 +2,11 @@ module.exports = (sequelize, type) => {
   composicaoComissoes = sequelize.define(
     "composicao_comissoe",
     {
-      comissao_id: {
+      id_comissao_voz: {
         type: type.STRING,
         primaryKey: true
       },
-      parlamentar_cpf: {
+      id_parlamentar_voz: {
         type: type.STRING,
         primaryKey: true
       },
@@ -19,14 +19,14 @@ module.exports = (sequelize, type) => {
   );
   composicaoComissoes.associate = function (models) {
     composicaoComissoes.belongsTo(models.comissoes, {
-      foreignKey: "comissao_id",
-      sourceKey: "id",
+      foreignKey: "id_comissao_voz",
+      sourceKey: "id_comissao_voz",
       as: "info_comissao"
     }),
-    composicaoComissoes.belongsTo(models.candidato, {
-      foreignKey: "parlamentar_cpf",
-      sourceKey: "cpf",
-      as: "comissao_cpf"
+    composicaoComissoes.belongsTo(models.parlamentar, {
+      foreignKey: "id_parlamentar_voz",
+      sourceKey: "id_parlamentar_voz",
+      as: "comissao_parlamentar"
     })  
   };
   return composicaoComissoes;

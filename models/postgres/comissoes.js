@@ -2,10 +2,12 @@ module.exports = (sequelize, type) => {
   comissao = sequelize.define(
     "comissoe",
     {      
-      id: {
+      id_comissao_voz: {
         type: type.STRING,
         primaryKey: true
-      },      
+      }, 
+      id: type.INTEGER,
+      casa: type.STRING,
       sigla: type.STRING,
       nome: type.STRING      
     },
@@ -15,8 +17,8 @@ module.exports = (sequelize, type) => {
   );
   comissao.associate = function(models) {
     comissao.hasMany(models.composicaoComissoes, {
-      foreignKey: "comissao_id",
-      targetKey: "id",      
+      foreignKey: "id_comissao_voz",
+      targetKey: "id_comissao_voz",      
       as: "comissao_comp"
     })
   };
