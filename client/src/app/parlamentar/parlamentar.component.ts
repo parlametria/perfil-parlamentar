@@ -58,7 +58,6 @@ export class ParlamentarComponent implements OnInit, OnDestroy {
       .subscribe(
         parlamentar => {
           this.parlamentar = parlamentar;
-          console.log(this.parlamentar);
         },
         error => {
           console.log(error);
