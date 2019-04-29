@@ -7,15 +7,15 @@
 @import "assets/styles/icons";
 @import "assets/styles/animations";
 
-$top-navbar-height: 64px;
-$sticky-footer-navbar-height: 45px;
+$top-navbar-height: 50px;
+$sticky-footer-navbar-height: 50px;
 
 body {
   padding-top: $top-navbar-height;
 }
 
 .container-sticky-footer-navbar {
-  margin-bottom: $sticky-footer-navbar-height;
+  margin-top: $sticky-footer-navbar-height;
 }
 
 .icon-md {
@@ -78,5 +78,5 @@ body {
       background-color: $white;
       color: $black;
     }
-  }  
+  }
 }
