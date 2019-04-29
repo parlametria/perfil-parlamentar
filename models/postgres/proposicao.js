@@ -22,7 +22,8 @@ module.exports = (sequelize, type) => {
       as: "tema_prop"
     }),
       proposicao.hasMany(models.votacao, {
-        foreignKey: "proposicao_id",
+        foreignKey: "id_votacao",
+        targetKey: "id_votacao",
         as: "vot_prop"
       }),
       proposicao.hasMany(models.votacaou, {
