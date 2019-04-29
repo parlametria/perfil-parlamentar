@@ -11,23 +11,19 @@ const models = require("../../models/index");
 const { calcularAlinhamentos } = require("../../utils/alinhamento");
 
 const Candidato = models.candidato;
+const Parlamentar = models.parlamentar;
 const Votacao = models.votacao;
 const Proposicao = models.proposicao;
 const Tema = models.tema;
 
 const att = [
-  "cpf",
-  "estado",
+  "id_parlamentar_voz",
+  "id_parlamentar",
+  "casa",
+  "nome_eleitoral",
   "uf",
-  "nome_urna",
-  "recebeu",
-  "respondeu",
-  "eleito",
-  "reeleicao",
-  "email",
-  "sg_partido",
   "partido",
-  "id_parlamentar"
+  "em_exercicio"  
 ];
 
 /**
@@ -36,20 +32,20 @@ const att = [
  * @memberof module:routes/alinhamento
  */
 router.post("/", (req, res) => {
-  Candidato.findAll({
+  Parlamentar.findAll({
     attributes: att,
     include: [
       {
-        attributes: ["resposta", "cpf", "proposicao_id"],
+        attributes: ["id_parlamentar_voz", "id_votacao", "voto"],
         model: Votacao,
-        as: "cpf_vot",
+        as: "parlamentar_vot",
         required: false
       }
     ],
     where: {
-      eleito: true
+      em_exercicio: true
     }
-  }).then(parlamentares => {
+  }).then(parlamentares => {    
     Proposicao.findAll({
       attributes: ["id_votacao", "tema_id"],
       include: [{
@@ -61,7 +57,7 @@ router.post("/", (req, res) => {
       where: {
         status_proposicao: "Ativa"
       }
-    }).then(proposicoes => {
+    }).then(proposicoes => {      
       const alinhamentos = calcularAlinhamentos(parlamentares, req.body.respostas, proposicoes);
       
       return res.status(200).json(alinhamentos);
