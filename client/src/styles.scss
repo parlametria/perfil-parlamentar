@@ -8,14 +8,23 @@
 @import "assets/styles/animations";
 
 $top-navbar-height: 50px;
+$top-navbar-lg-height: 71px;
 $sticky-footer-navbar-height: 50px;
 
 body {
   padding-top: $top-navbar-height;
+
+  @media (min-width: 992px) {
+    padding-top: $top-navbar-lg-height;
+  }
 }
 
 .container-sticky-footer-navbar {
   margin-top: $sticky-footer-navbar-height;
+
+  @media (min-width: 992px) {
+    margin-top: 0;
+  }
 }
 
 .icon-md {

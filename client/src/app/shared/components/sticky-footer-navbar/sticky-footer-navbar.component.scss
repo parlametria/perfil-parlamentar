@@ -7,6 +7,10 @@
   padding-bottom: 0.5rem;
   background-color: #20201e;
   color: #fff;
+
+  @media (min-width: 992px) {
+    display: none;
+  }
 }
 
 .sticky-footer-navbar-link {

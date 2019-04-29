@@ -1,17 +1,55 @@
 <nav class="navbar fixed-top bg-white">
   <div class="container">
-    <a
-      class="navbar-brand"
-      [routerLink]="['/']"
-    >
-      <img
-        src="assets/imgs/logo.png"
-        width="80"
-        alt="Voz ativa"
+    <div class="navbrand-wrapper">
+      <a
+        class="navbar-brand"
+        [routerLink]="['/']"
       >
-    </a>
+        <img
+          src="assets/imgs/logo.png"
+          width="100%"
+          alt="Voz ativa"
+        >
+      </a>
+    </div>
+    <div class="navbar-nav-va">
 
-    <ul class="navbar-nav ml-auto">
+      <ul class="nav nav-pills nav-fill">
+        <li class="nav-item">
+          <a
+            [routerLink]="['/']"
+            [routerLinkActive]="'active'"
+            [routerLinkActiveOptions]="{exact: true}"
+            class="nav-link navbar-nav-va-link"
+            href="#"
+          >
+            Início
+          </a>
+        </li>
+        <li class="nav-item">
+          <a
+            [routerLink]="['/questionario']"
+            [routerLinkActive]="'active'"
+            class="nav-link navbar-nav-va-link"
+            href="#"
+          >
+            Você
+          </a>
+        </li>
+        <li class="nav-item">
+          <a
+            [routerLink]="['/alinhamento']"
+            [routerLinkActive]="'active'"
+            class="nav-link navbar-nav-va-link"
+            href="#"
+          >
+            Resultado
+          </a>
+        </li>
+      </ul>
+
+    </div>
+    <ul class="navbar-nav">
       <li
         *ngIf="!userAuthenticated"
         class="nav-item"
