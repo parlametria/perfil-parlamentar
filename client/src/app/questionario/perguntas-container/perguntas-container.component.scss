@@ -73,7 +73,6 @@
 }
 
 .btn-outline-no-border {
-  border: none;
   box-shadow: none;
 
   &:hover,
@@ -82,6 +81,11 @@
     background-color: #ffffff;
     color: #343a40;
   }
+}
+
+.btn-outline-no-border-dark {
+  border: solid 2px;
+  color: #343a40;
 }
 
 .btn-outline-no-border-light {
