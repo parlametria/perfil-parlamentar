@@ -19,7 +19,7 @@ export class LegendComponent implements OnInit {
     const classes = ['legend-info', this.class];
     if (this.striped) {
       classes.push('progress-bar-striped');
-    };
+    }
 
     return classes;
   }
