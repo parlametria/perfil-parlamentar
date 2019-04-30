@@ -1,3 +1,10 @@
 .parlamentar-count {
   line-height: 2;
 }
+
+.parlamentar-lista {
+  @media (min-width: 992px) {
+    width: 760px;
+    margin: auto;
+  }
+}

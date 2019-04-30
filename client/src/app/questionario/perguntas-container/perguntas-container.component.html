@@ -78,7 +78,7 @@
       >
         <button
           type="button"
-          [ngClass]="{'btn btn-pergunta': true, 'btn-dark': !respostaPositiva(), 'btn-success': respostaPositiva()}"
+          [ngClass]="{'btn btn-pergunta': true, 'btn-dark': !respostaPositiva(), 'btn-primary': respostaPositiva()}"
           (click)="setResposta(1)"
         >
           <span class="icon-check icon-hidden"></span>

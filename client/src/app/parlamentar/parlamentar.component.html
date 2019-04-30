@@ -39,11 +39,13 @@
       </select>
     </div>
   </div>
-  <app-posicao
-    *ngFor="let proposicao of proposicoesFiltradas"
-    [parlamentar]="parlamentar"
-    [proposicao]="proposicao"
-    [resposta]="respostas.votacoes[proposicao.id_votacao]"
-    [votacao]="parlamentar.votacoes[proposicao.id_votacao]"
-  ></app-posicao>
+  <div class="parlamentar-lista">
+    <app-posicao
+      *ngFor="let proposicao of proposicoesFiltradas"
+      [parlamentar]="parlamentar"
+      [proposicao]="proposicao"
+      [resposta]="respostas.votacoes[proposicao.id_votacao]"
+      [votacao]="parlamentar.votacoes[proposicao.id_votacao]"
+    ></app-posicao>
+  </div>
 </div>
