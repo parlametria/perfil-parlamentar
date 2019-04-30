@@ -27,7 +27,9 @@
           >
             {{ parlamentar.nomeUrna | titlecase }}
           </a>
-          <span class="parlamentar-card-sm-subtitle d-none d-lg-inline-block">{{ parlamentar.sgPartido }}/{{ parlamentar.uf }}</span>
+          <span class="parlamentar-card-sm-subtitle d-none d-lg-inline-block">
+            {{ parlamentar.sgPartido }}/{{ parlamentar.uf }}
+          </span>
         </div>
       </div>
       <div
@@ -76,7 +78,9 @@
             <a
               [routerLink]="['/parlamentar', parlamentar.cpf]"
               class="btn btn-sm btn-link"
-            >+ detalhes</a>
+            >
+              + detalhes
+            </a>
           </div>
           <div class="row no-gutters d-lg-none">
             <div class="col">
@@ -142,6 +146,22 @@
         <div class="pt-3"></div>
         <div class="mb-3">
           Compatilidade por tema [em nº de questões]
+          <div class="d-flex">
+            <div>
+              <app-legend
+                [title]="'concordam'"
+                [class]="'bg-success'"
+                [striped]="false"
+              ></app-legend>
+            </div>
+            <div>
+                <app-legend
+                  [title]="'não concordam'"
+                  [class]="'bg-danger'"
+                  [striped]="true"
+                ></app-legend>
+            </div>
+          </div>
         </div>
         <app-progress-stacked
           *ngFor="let alinhamento of parlamentar.alinhamento.temas"
