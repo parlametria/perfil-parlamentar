@@ -31,8 +31,12 @@ function calcularAlinhamentos(parlamentares, respostas, proposicoes) {
     temasAlinhamento.push(obj);
   });
   
-  alinhamentos.forEach(parlamentar => {
+  alinhamentos.forEach(parlamentar => {  
     parlamentar.alinhamento = calcular(parlamentar, respostas, proposicoesTemas, temasAlinhamento);
+
+    // Renomeia key parlamentar_vot para votacoes
+    Object.defineProperty(parlamentar, "votacoes", Object.getOwnPropertyDescriptor(parlamentar, "parlamentar_vot"));
+    delete parlamentar["parlamentar_vot"];
   });
 
   return alinhamentos;
@@ -58,26 +62,26 @@ function calcular(parlamentar, respostas, proposicoesTemas, temasAlinhamento) {
   let respostasIguais = 0;
   let perguntasIguais = 0;
 
-  parlamentar.cpf_vot.forEach(votacao => {
+  parlamentar.parlamentar_vot.forEach(votacao => {    
     if (
-      (respostas[votacao.proposicao_id] === 1 || respostas[votacao.proposicao_id] === -1) &&
-      (votacao.resposta === 1 || votacao.resposta === -1)
+      (respostas[votacao.id_votacao] === 1 || respostas[votacao.id_votacao] === -1) &&
+      (votacao.voto === 1 || votacao.voto === -1)
     ) {
       perguntasIguais++;
-      respostasIguais += respostas[votacao.proposicao_id] === votacao.resposta ? 1 : 0;
+      respostasIguais += respostas[votacao.id_votacao] === votacao.voto ? 1 : 0;
 
-      let temaVotacao = proposicoesTemas.filter(prop => { return prop.id_votacao === votacao.proposicao_id });      
+      let temaVotacao = proposicoesTemas.filter(prop => { return prop.id_votacao === votacao.id_votacao });      
       
       if (temaVotacao && temaVotacao.length === 1) {
         let temaIndex = temas.findIndex(tema => tema.tema_id === temaVotacao[0].tema_id);
           
         // Atualiza variáveis (perguntasIguais e respostasIguais) para o tema da votação atualmente no loop
         temas[temaIndex].perguntasIguais += 1;
-        temas[temaIndex].respostasIguais += respostas[votacao.proposicao_id] === votacao.resposta ? 1 : 0;
+        temas[temaIndex].respostasIguais += respostas[votacao.id_votacao] === votacao.voto ? 1 : 0;
       }
     }
   });
-
+  
   // Calcula alinhamento
   temas.forEach((tema) => {
     tema.alinhamento = tema.perguntasIguais >= 3 ? tema.respostasIguais / tema.perguntasIguais : 0;

@@ -22,9 +22,13 @@ export class TemaService {
   }
 
   getTemaSlugById(temas: Tema[], id: number): string {
-    const temaSlug = temas.filter(t => t.id === id);
+    let temaSlug;
 
-    if (temaSlug.length > 0) {
+    if (temas !== undefined && temas.length > 0) {
+      temaSlug = temas.filter(t => t.id === id);
+    }
+
+    if (temaSlug !== undefined && temaSlug.length > 0) {
       return temaSlug[0].slug;
     } else {
       return this.SLUG_PADRAO_TEMA_TODOS;

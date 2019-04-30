@@ -23,12 +23,12 @@
         >
           <a
             class="btn-link-simple"
-            [routerLink]="['/parlamentar', parlamentar.cpf]"
+            [routerLink]="['/parlamentar', parlamentar.idParlamentarVoz]"
           >
-            {{ parlamentar.nomeUrna | titlecase }}
+            {{ parlamentar.nomeEleitoral | titlecase }}
           </a>
           <span class="parlamentar-card-sm-subtitle d-none d-lg-inline-block">
-            {{ parlamentar.sgPartido }}/{{ parlamentar.uf }}
+            {{ parlamentar.partido }}/{{ parlamentar.uf }}
           </span>
         </div>
       </div>
@@ -59,7 +59,7 @@
     <div class="parlamentar-card-body">
       <div class="row gutters-sm">
         <div class="col-3 col-lg parlamentar-img-wrapper">
-          <a [routerLink]="['/parlamentar', parlamentar.cpf]">
+          <a [routerLink]="['/parlamentar', parlamentar.idParlamentarVoz]">
             <img
               [defaultImage]="'assets/imgs/nophoto.png'"
               [lazyLoad]="parlamentar.getFoto()"
@@ -70,13 +70,13 @@
           </a>
         </div>
         <div class="col-9 col-lg">
-          <div class="parlamentar-title">{{ parlamentar.nomeUrna | titlecase }}</div>
+          <div class="parlamentar-title">{{ parlamentar.nomeEleitoral | titlecase }}</div>
           <p>
-            {{ parlamentar.sgPartido }}/{{ parlamentar.uf }}
+            {{ parlamentar.partido }}/{{ parlamentar.uf }}
           </p>
           <div class="d-none d-lg-block">
             <a
-              [routerLink]="['/parlamentar', parlamentar.cpf]"
+              [routerLink]="['/parlamentar', parlamentar.idParlamentarVoz]"
               class="btn btn-sm btn-link"
             >
               + detalhes
