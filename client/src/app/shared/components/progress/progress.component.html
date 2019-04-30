@@ -1,6 +1,6 @@
 <div class="progress progress-bordered">
   <div
-    class="progress-bar bg-dark"
+    class="progress-bar bg-success"
     role="progressbar"
     [ngStyle]="{'width': (value * 100)+'%'}"
     [attr.aria-valuenow]="value"
@@ -8,9 +8,9 @@
     [attr.aria-valuemax]="max"
   ></div>
 </div>
-<div *ngIf="showAxis">
+<div>
   <div class="progress-axis"></div>
-  <div class="progress-axis-values">
+  <div class="progress-axis-values" *ngIf="showAxis">
     <div>{{min}}</div>
     <div>{{max}}</div>
   </div>

@@ -9,6 +9,7 @@ import { StickyFooterNavbarComponent } from './sticky-footer-navbar/sticky-foote
 import { ProgressComponent } from './progress/progress.component';
 import { ProgressStackedComponent } from './progress-stacked/progress-stacked.component';
 import { LoadingComponent } from './loading/loading.component';
+import { LegendComponent } from './legend/legend.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { LoadingComponent } from './loading/loading.component';
     StickyFooterNavbarComponent,
     ProgressComponent,
     ProgressStackedComponent,
-    LoadingComponent
+    LoadingComponent,
+    LegendComponent
   ],
   imports: [
     CommonModule,
@@ -28,7 +30,8 @@ import { LoadingComponent } from './loading/loading.component';
     StickyFooterNavbarComponent,
     ProgressComponent,
     ProgressStackedComponent,
-    LoadingComponent
+    LoadingComponent,
+    LegendComponent
   ]
 })
 export class SharedModule { }

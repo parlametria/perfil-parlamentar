@@ -172,6 +172,11 @@ export class PerguntasContainerComponent implements OnInit, OnDestroy {
       .catch(() => console.log('Ops! Não foi possível salvar a resposta.'));
   }
 
+  setTema(tema: Tema) {
+    this.temaSelecionado = tema.id;
+    this.onTemaChange();
+  }
+
   onTemaChange() {
     this.filterPerguntasPorTemaSelecionado();
     this.setPerguntaSelecionadaAndRedirect(this.perguntasTemaSelecionado[0]);

@@ -27,6 +27,9 @@
           >
             {{ parlamentar.nomeEleitoral | titlecase }}
           </a>
+          <span class="parlamentar-card-sm-subtitle d-none d-lg-inline-block">
+            {{ parlamentar.sgPartido }}/{{ parlamentar.uf }}
+          </span>
         </div>
       </div>
       <div
@@ -55,48 +58,84 @@
   >
     <div class="parlamentar-card-body">
       <div class="row gutters-sm">
-        <div class="col-3">
+        <div class="col-3 col-lg parlamentar-img-wrapper">
           <a [routerLink]="['/parlamentar', parlamentar.idParlamentarVoz]">
             <img
               [defaultImage]="'assets/imgs/nophoto.png'"
               [lazyLoad]="parlamentar.getFoto()"
               [offset]="100"
               width="100%"
+              class="parlamentar-img"
             >
           </a>
         </div>
-        <div class="col-9">
+        <div class="col-9 col-lg">
           <div class="parlamentar-title">{{ parlamentar.nomeEleitoral | titlecase }}</div>
           <p>
             {{ parlamentar.partido }}/{{ parlamentar.uf }}
           </p>
-          <div class="row no-gutters">
+          <div class="d-none d-lg-block">
+            <a
+              [routerLink]="['/parlamentar', parlamentar.idParlamentarVoz]"
+              class="btn btn-sm btn-link"
+            >
+              + detalhes
+            </a>
+          </div>
+          <div class="row no-gutters d-lg-none">
             <div class="col">
               <span
                 *ngIf="alinhamento?.tema_nome"
                 class="parlamentar-compatibilidade-text"
-                style="display: inline-block"
               >
                 Compatibilidade com {{alinhamento?.tema_nome}}
               </span>
-              <span
+              <div
                 *ngIf="!alinhamento?.tema_nome"
                 class="parlamentar-compatibilidade-text"
               >
                 Compatibilidade geral
-              </span>
+              </div>
               <app-progress
                 [value]="alinhamento?.alinhamento"
                 [min]="0"
                 [max]="100"
-                [showAxis]="true"
+                [showAxis]="false"
               ></app-progress>
             </div>
-            <div class="col-3 col-sm-2 d-flex justify-content-end align-items-center">
+            <div class="col-3 col-sm-2 d-flex justify-content-end align-items-end">
               <div class="parlamentar-score">
                 {{ alinhamento?.alinhamento | percent }}
               </div>
             </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row no-gutters mt-3 d-none d-lg-flex">
+        <div class="col">
+          <span
+            *ngIf="alinhamento?.tema_nome"
+            class="parlamentar-compatibilidade-text"
+          >
+            Compatibilidade com {{alinhamento?.tema_nome}}
+          </span>
+          <div
+            *ngIf="!alinhamento?.tema_nome"
+            class="parlamentar-compatibilidade-text"
+          >
+            Compatibilidade geral
+          </div>
+          <app-progress
+            [value]="alinhamento?.alinhamento"
+            [min]="0"
+            [max]="100"
+            [showAxis]="false"
+          ></app-progress>
+        </div>
+        <div class="col-3 col-sm-2 col-lg-1 d-flex justify-content-end align-items-end">
+          <div class="parlamentar-score">
+            {{ alinhamento?.alinhamento | percent }}
           </div>
         </div>
       </div>
@@ -105,8 +144,24 @@
         [@openClose]="view !== VIEW_LG ? 'closed' : 'open'"
       >
         <div class="pt-3"></div>
-        <div class="parlamentar-compatibilidade-text text-center mb-3">
+        <div class="mb-3">
           Compatilidade por tema [em nº de questões]
+          <div class="d-flex">
+            <div>
+              <app-legend
+                [title]="'concordam'"
+                [class]="'bg-success'"
+                [striped]="false"
+              ></app-legend>
+            </div>
+            <div>
+                <app-legend
+                  [title]="'não concordam'"
+                  [class]="'bg-danger'"
+                  [striped]="true"
+                ></app-legend>
+            </div>
+          </div>
         </div>
         <app-progress-stacked
           *ngFor="let alinhamento of parlamentar.alinhamento.temas"
@@ -116,15 +171,6 @@
           [discordancia]="alinhamento.perguntasIguais - alinhamento.respostasIguais"
           [passo]="passo"
         ></app-progress-stacked>
-      </div>
-      <div class="text-right">
-        <a
-          class="btn btn-link"
-          [routerLink]="['/parlamentar', parlamentar.idParlamentarVoz]"
-          [queryParams]="{tema: temaSlug}"
-        >
-          + detalhes
-        </a>
       </div>
     </div>
   </div>

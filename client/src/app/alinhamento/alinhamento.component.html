@@ -1,4 +1,5 @@
-<div class="container container-sticky-footer-navbar">
+<app-sticky-footer-navbar></app-sticky-footer-navbar>
+<div class="container pt-2 container-sticky-footer-navbar">
   <app-loading [hidden]="!isLoading"></app-loading>
   <div [hidden]="isLoading">
     <app-filter (filterChange)="search($event)"></app-filter>
@@ -80,15 +81,17 @@
       </nav>
     </pagination-template>
 
-    <app-card-parlamentar
-      *ngFor="let parlamentar of parlamentares | paginate: { itemsPerPage: 20, currentPage: p }; index as i;"
-      [parlamentar]="parlamentar"
-      [id]="getParlamentarPosition(i, 20, p)"
-      [tema]="filtro?.tema"
-      [temaSlug]="filtro?.temaSlug"
-      [view]="view"
-      (followChecked)="onFollow($event)"
-    ></app-card-parlamentar>
+    <div class="parlamentar-lista">
+      <app-card-parlamentar
+        *ngFor="let parlamentar of parlamentares | paginate: { itemsPerPage: 20, currentPage: p }; index as i;"
+        [parlamentar]="parlamentar"
+        [id]="getParlamentarPosition(i, 20, p)"
+        [tema]="filtro?.tema"
+        [temaSlug]="filtro?.temaSlug"
+        [view]="view"
+        (followChecked)="onFollow($event)"
+      ></app-card-parlamentar>
+    </div>
 
     <pagination-template
       #pag="paginationApi"
@@ -138,4 +141,3 @@
     </pagination-template>
   </div>
 </div>
-<app-sticky-footer-navbar></app-sticky-footer-navbar>

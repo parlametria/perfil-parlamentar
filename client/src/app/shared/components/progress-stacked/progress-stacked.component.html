@@ -2,7 +2,7 @@
 <div class="progress-stacked-title">{{ titulo }}</div>
 <div class="progress progress-stacked">
   <div
-    class="progress-bar progress-stacked-bar bg-dark"
+    class="progress-bar progress-stacked-bar progress-success-bordered bg-success"
     role="progressbar"
     [ngStyle]="{'width': getConcordancia()+'%'}"
     [attr.aria-valuenow]="getConcordancia()"
@@ -12,7 +12,7 @@
   >
   </div>
   <div
-    class="progress-bar progress-stacked-bar progress-bar-striped bg-dark"
+    class="progress-bar progress-stacked-bar progress-bar-striped bg-danger"
     role="progressbar"
     [ngStyle]="{'width': getDiscordancia()+'%'}"
     [attr.aria-valuenow]="getDiscordancia()"

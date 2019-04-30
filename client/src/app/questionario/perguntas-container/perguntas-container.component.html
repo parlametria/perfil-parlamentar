@@ -1,24 +1,46 @@
 <div class="container">
   <div class="container-pergunta">
+    <h4 class="title-main">Quais os seus posicionamentos?</h4>
     <!-- Selecionar temas -->
-    <form>
-      <div class="form-group form-group-plus">
-        <select
-          class="form-control form-control-plus"
-          id="tema"
-          [(ngModel)]="temaSelecionado"
-          (ngModelChange)="onTemaChange()"
-          name="tema"
-        >
-          <option
-            *ngFor="let tema of listaTemas"
-            [value]="tema.id"
+    <div class="container-pergunta-controls d-block d-md-none">
+      <form>
+        <div class="form-group form-group-plus">
+          <select
+            class="form-control form-control-plus"
+            id="tema"
+            [(ngModel)]="temaSelecionado"
+            (ngModelChange)="onTemaChange()"
+            name="tema"
           >
-            {{ tema.tema }}
-          </option>
-        </select>
+            <option
+              *ngFor="let tema of listaTemas"
+              [value]="tema.id"
+            >
+              {{ tema.tema }}
+            </option>
+          </select>
+        </div>
+      </form>
+    </div>
+
+    <div class="d-none d-md-block">
+      <div class="row no-gutters my-4">
+        <div
+          *ngFor="let tema of listaTemas"
+          class="col"
+        >
+          <button
+            class="btn btn-block btn-outline-no-border"
+            role="button"
+            [ngClass]="{'btn-outline-no-border-dark': temaSelecionado === tema.id, 'btn-outline-no-border-light': temaSelecionado !== tema.id}"
+            (click)="setTema(tema)"
+          >
+            <span [ngClass]="['icon-'+tema.slug, 'icon-lg-sm']"></span>
+            <p class="btn-tema-text">{{ tema.tema }}</p>
+          </button>
+        </div>
       </div>
-    </form>
+    </div>
 
     <!-- Indicadores de navegação -->
     <div class="pergunta-progress-bar mb-4">
@@ -45,7 +67,10 @@
       ></app-pergunta>
     </div>
 
-    <div *ngIf="perguntaSelecionada">
+    <div
+      class="respostas-btn-group"
+      *ngIf="perguntaSelecionada"
+    >
       <div
         class="btn-group blocks d-flex justify-content-center my-3"
         role="group"
@@ -53,12 +78,17 @@
       >
         <button
           type="button"
-          [ngClass]="{'btn btn-pergunta': true, 'btn-dark': !respostaPositiva(), 'btn-success': respostaPositiva()}"
+          [ngClass]="{'btn btn-pergunta': true, 'btn-dark': !respostaPositiva(), 'btn-primary': respostaPositiva()}"
           (click)="setResposta(1)"
         >
           <span class="icon-check icon-hidden"></span>
           a favor
-          <span class="badge badge-light" [hidden]="!showShortcuts">A</span>
+          <span
+            class="badge badge-light"
+            [hidden]="!showShortcuts"
+          >
+            A
+          </span>
           <span [ngClass]="{
             'icon-check': true,
             'icon-hidden': true,
@@ -72,7 +102,12 @@
         >
           <span class="icon-check icon-hidden"></span>
           não sei
-          <span class="badge badge-light" [hidden]="!showShortcuts">S</span>
+          <span
+            class="badge badge-light"
+            [hidden]="!showShortcuts"
+          >
+            S
+          </span>
           <span [ngClass]="{
             'icon-check': true,
             'icon-hidden': true,
@@ -86,7 +121,12 @@
         >
           <span class="icon-check icon-hidden"></span>
           contra
-          <span class="badge badge-light" [hidden]="!showShortcuts">D</span>
+          <span
+            class="badge badge-light"
+            [hidden]="!showShortcuts"
+          >
+            D
+          </span>
           <span [ngClass]="{
             'icon-check': true,
             'icon-hidden': true,
