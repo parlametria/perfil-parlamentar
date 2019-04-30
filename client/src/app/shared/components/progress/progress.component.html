@@ -8,10 +8,6 @@
     [attr.aria-valuemax]="max"
   ></div>
 </div>
-<div>
+<div *ngIf="showAxis">
   <div class="progress-axis"></div>
-  <div class="progress-axis-values" *ngIf="showAxis">
-    <div>{{min}}</div>
-    <div>{{max}}</div>
-  </div>
 </div>
