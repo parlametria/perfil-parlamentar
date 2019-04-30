@@ -1,5 +1,6 @@
+<app-sticky-footer-navbar></app-sticky-footer-navbar>
 <div
-  class="container container-sticky-footer-navbar"
+  class="container pt-3 container-sticky-footer-navbar"
   *ngIf="parlamentar"
 >
   <div class="parlamentar">
@@ -46,4 +47,3 @@
     [votacao]="parlamentar.votacoes[proposicao.id_votacao]"
   ></app-posicao>
 </div>
-<app-sticky-footer-navbar></app-sticky-footer-navbar>

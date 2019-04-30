@@ -1,19 +1,27 @@
 .sticky-footer-navbar {
   position: fixed;
-  bottom: 0;
+  top: 50px;
   width: 100%;
   z-index: 999;
-  background-color: #ffffff;
-  border-top: solid 1px #20201e;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  background-color: #20201e;
+  color: #fff;
+
+  @media (min-width: 992px) {
+    display: none;
+  }
 }
 
 .sticky-footer-navbar-link {
   text-decoration: none;
   text-transform: uppercase;
   font-size: 0.8rem;
+  color: #fff;
 
   &.active {
-    background-color: #fff;
-    color: #43a467;
+    font-weight: 700;
+    background-color: #20201e;
+    color: #fff;
   }
 }

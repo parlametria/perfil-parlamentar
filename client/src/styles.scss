@@ -7,15 +7,24 @@
 @import "assets/styles/icons";
 @import "assets/styles/animations";
 
-$top-navbar-height: 64px;
-$sticky-footer-navbar-height: 45px;
+$top-navbar-height: 50px;
+$top-navbar-lg-height: 71px;
+$sticky-footer-navbar-height: 50px;
 
 body {
   padding-top: $top-navbar-height;
+
+  @media (min-width: 992px) {
+    padding-top: $top-navbar-lg-height;
+  }
 }
 
 .container-sticky-footer-navbar {
-  margin-bottom: $sticky-footer-navbar-height;
+  margin-top: $sticky-footer-navbar-height;
+
+  @media (min-width: 992px) {
+    margin-top: 0;
+  }
 }
 
 .icon-md {
@@ -32,6 +41,13 @@ body {
 
 .icon-left {
   float: left;
+}
+
+.btn-tema-text {
+  text-transform: uppercase;
+  font-size: 0.65rem;
+  margin: 0;
+  padding: 0;
 }
 
 .text-strong {

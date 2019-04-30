@@ -35,7 +35,7 @@
             [ngClass]="{'btn-outline-no-border-dark': temaSelecionado === tema.id, 'btn-outline-no-border-light': temaSelecionado !== tema.id}"
             (click)="setTema(tema)"
           >
-            <span [ngClass]="['icon-'+tema.slug, 'icon-lg']"></span>
+            <span [ngClass]="['icon-'+tema.slug, 'icon-lg-sm']"></span>
             <p class="btn-tema-text">{{ tema.tema }}</p>
           </button>
         </div>
