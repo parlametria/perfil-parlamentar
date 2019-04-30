@@ -103,3 +103,16 @@
   background-size: 0.55rem 0.55rem;
   border: solid 1px #20201e;
 }
+
+/* NAVBAR */
+.navbar {
+  padding: 0;
+}
+.navbar-nav {
+  flex-direction: row;
+}
+
+.nav-item {
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+}
