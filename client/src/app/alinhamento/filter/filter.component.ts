@@ -8,7 +8,9 @@ import { takeUntil } from 'rxjs/operators';
 import { estados } from '../../shared/constants/estados';
 import { ParlamentarService } from '../../shared/services/parlamentar.service';
 import { TemaService } from '../../shared/services/tema.service';
+import { ComissaoService } from 'src/app/shared/services/comissao.service';
 import { Tema } from '../../shared/models/tema.model';
+import { Comissao } from '../../shared/models/comissao.model';
 
 @Component({
   selector: 'app-filter',
@@ -21,6 +23,8 @@ export class FilterComponent implements OnInit, OnDestroy {
 
   readonly FILTRO_PADRAO_ESTADO = 'Estados';
   readonly FILTRO_PADRAO_PARTIDO = 'Partidos';
+  readonly FILTRO_PADRAO_COMISSAO = 'Comissões';
+  readonly FILTRO_PADRAO_COMISSAO_VALUE = '-1';
   readonly FILTRO_PADRAO_TEMA = -1;
   readonly FILTRO_PADRAO_TEMA_SLUG = 'todos';
 
@@ -33,23 +37,27 @@ export class FilterComponent implements OnInit, OnDestroy {
   estados: string[];
   partidosFiltradosPorEstado: string[];
   temas: Tema[];
+  comissoes: Comissao[];
 
   temaSelecionado: number;
   estadoSelecionado: string;
   nomePesquisado: string;
   partidoSelecionado: string;
+  comissaoSelecionada: string;
 
   constructor(
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private modalService: NgbModal,
     private parlamentarService: ParlamentarService,
-    private temaService: TemaService
+    private temaService: TemaService,
+    private comissaoService: ComissaoService
   ) {
     this.estados = estados;
     this.estadoSelecionado = this.FILTRO_PADRAO_ESTADO;
     this.partidoSelecionado = this.FILTRO_PADRAO_PARTIDO;
     this.temaSelecionado = this.FILTRO_PADRAO_TEMA;
+    this.comissaoSelecionada = this.FILTRO_PADRAO_COMISSAO_VALUE;
 
     this.filtro = {
       nome: '',
@@ -71,6 +79,7 @@ export class FilterComponent implements OnInit, OnDestroy {
     this.updateFiltroViaUrl();
 
     this.getTemas();
+    this.getComissoes();
   }
 
   open(content) {
@@ -132,6 +141,18 @@ export class FilterComponent implements OnInit, OnDestroy {
   getTemas() {
     this.temaService.getTemas().pipe(takeUntil(this.unsubscribe)).subscribe((temas) => {
       this.temas = temas;
+    });
+  }
+
+  getComissoes() {
+    this.comissaoService.getComissoes().pipe(takeUntil(this.unsubscribe)).subscribe((comissoes) => {
+      comissoes.unshift({
+        id_comissao_voz: this.FILTRO_PADRAO_COMISSAO_VALUE,
+        sigla: this.FILTRO_PADRAO_COMISSAO,
+        nome: this.FILTRO_PADRAO_COMISSAO
+      });
+
+      this.comissoes = comissoes;
     });
   }
 

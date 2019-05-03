@@ -23,6 +23,7 @@
         Filtros
       </button>
     </div>
+
     <div
       class="btn-group mr-1 mb-1"
       role="group"
@@ -47,7 +48,7 @@
     <div
       class="btn-group mr-1 mb-1"
       role="group"
-      aria-label="Filtro de Estado"
+      aria-label="Filtro de Partido"
       [hidden]="filtro.partido == FILTRO_PADRAO_PARTIDO"
     >
       <button
@@ -137,6 +138,22 @@
             [value]="partido"
           >
             {{partido}}
+          </option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <select
+          class="form-control"
+          id="partido"
+          [(ngModel)]="comissaoSelecionada"
+          name="comissao"
+        >
+          <option
+            *ngFor="let comissao of comissoes"
+            [value]="comissao.id_comissao_voz"
+          >
+            {{comissao.sigla}}
           </option>
         </select>
       </div>

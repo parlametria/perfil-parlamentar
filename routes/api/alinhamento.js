@@ -44,7 +44,7 @@ router.post("/", (req, res) => {
         include: [
           {
             model: Comissoes,
-            attributes: ["sigla", "nome"],
+            attributes: ["sigla"],
             as: "info_comissao",
             required: false
           }
