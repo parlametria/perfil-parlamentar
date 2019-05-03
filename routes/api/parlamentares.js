@@ -24,7 +24,7 @@ const att = [
   "genero",
   "em_exercicio"
 ];
-const att_comissoes = ["sigla"];
+const att_comissoes = ["sigla", "nome"];
 const att_composicao_comissoes = ["id_comissao_voz", "cargo"];
 
 /**
