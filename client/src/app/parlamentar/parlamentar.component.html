@@ -18,10 +18,12 @@
         <p>
           {{ parlamentar.partido }}/{{ parlamentar.uf }}
         </p>
-        <div *ngFor="let comissao of parlamentar.comissoes">
-          <span class="badge badge-primary">{{ comissao.cargo }}</span> na {{ comissao.info_comissao.sigla }}
+        <div class="parlamentar-comissoes" *ngFor="let comissao of parlamentar.comissoes">
+          <span class="badge badge-dark badge-comissoes">
+            {{ comissao.cargo }}
+          </span>
+           na {{ comissao.info_comissao.nome }}
         </div>
-        
       </div>
     </div>
   </div>
