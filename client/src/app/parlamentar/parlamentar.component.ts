@@ -13,6 +13,7 @@ import { Parlamentar } from 'src/app/shared/models/parlamentar.model';
 import { Tema } from 'src/app/shared/models/tema.model';
 import { Proposicao } from 'src/app/shared/models/proposicao.model';
 import { Resposta } from 'src/app/shared/models/resposta.model';
+import { ComposicaoComissao } from '../shared/models/composicao_comissao.model';
 
 @Component({
   selector: 'app-parlamentar',
@@ -32,6 +33,7 @@ export class ParlamentarComponent implements OnInit, OnDestroy {
   respostas: Resposta;
   temaSelecionado: string;
   proposicoesFiltradas: Proposicao[];
+  comissoes: ComposicaoComissao[];
 
   constructor(
     private activatedroute: ActivatedRoute,
@@ -58,7 +60,8 @@ export class ParlamentarComponent implements OnInit, OnDestroy {
       .subscribe(
         parlamentar => {
           this.parlamentar = parlamentar;
-          console.log(this.parlamentar);
+          this.comissoes = parlamentar.comissoes;
+          this.ordenaCargoComissoes();
         },
         error => {
           console.log(error);
@@ -125,6 +128,10 @@ export class ParlamentarComponent implements OnInit, OnDestroy {
       });
 
     }
+  }
+
+  ordenaCargoComissoes() {
+    this.comissoes.sort((a, b) => (a.cargo > b.cargo) ? 1 : ((b.cargo > a.cargo) ? -1 : 0));
   }
 
   ngOnDestroy() {

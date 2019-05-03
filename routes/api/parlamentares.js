@@ -1,6 +1,8 @@
 const express = require("express");
 const router = express.Router();
 
+const Op = require("sequelize").Op;
+
 const models = require("../../models/index");
 const { formataVotacoes } = require("../../utils/functions");
 
@@ -187,7 +189,12 @@ router.get("/:id/votacoes", (req, res) => {
             as: "info_comissao",
             required: false
           }
-        ]
+        ],
+        where: { 
+          cargo: {
+            [Op.ne]: 'Suplente'
+          }
+        }
       }
     ],
     where: { id_parlamentar_voz: req.params.id }
