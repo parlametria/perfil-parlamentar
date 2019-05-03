@@ -10,6 +10,7 @@ export class Parlamentar {
   public emExercicio: boolean;
   public votacoes: any;
   public alinhamento?: any;
+  public comissoes?: any;
 
   constructor(parlamentar: any) {
     this.idParlamentarVoz = parlamentar.id_parlamentar_voz;
@@ -22,6 +23,7 @@ export class Parlamentar {
     this.emExercicio = parlamentar.em_exercicio;
     this.votacoes = parlamentar.votacoes;
     this.alinhamento = parlamentar.alinhamento;
+    this.comissoes = parlamentar.parlamentar_comissoes;
   }
 
   getFoto(): string {
