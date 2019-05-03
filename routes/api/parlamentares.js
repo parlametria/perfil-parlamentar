@@ -7,6 +7,8 @@ const { formataVotacoes } = require("../../utils/functions");
 const Parlamentar = models.parlamentar;
 const Votacao = models.votacao;
 const Proposicao = models.proposicao;
+const Comissoes = models.comissoes;
+const ComposicaoComissoes = models.composicaoComissoes;
 
 const BAD_REQUEST = 400;
 const SUCCESS = 200;
@@ -22,6 +24,8 @@ const att = [
   "genero",
   "em_exercicio"
 ];
+const att_comissoes = ["sigla"];
+const att_composicao_comissoes = ["id_comissao_voz", "cargo"];
 
 /**
  * Testa a rota de parlamentares.
@@ -170,6 +174,20 @@ router.get("/:id/votacoes", (req, res) => {
         as: "parlamentar_vot",
         attributes: att_votacao,
         required: false
+      },
+      {
+        model: ComposicaoComissoes,
+        attributes: att_composicao_comissoes,
+        as: "parlamentar_comissoes",
+        required: false,
+        include: [
+          {
+            model: Comissoes,
+            attributes: att_comissoes,
+            as: "info_comissao",
+            required: false
+          }
+        ]
       }
     ],
     where: { id_parlamentar_voz: req.params.id }
@@ -203,7 +221,7 @@ router.get("/parlamentar", (req, res) => {
     .findAll({      
       include: [
         {
-        model: Votacao,        
+          model: Votacao,
         attributes: ["id_votacao", "id_parlamentar_voz", "voto"],
         as: "vot_prop",
         required: false,
