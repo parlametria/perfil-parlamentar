@@ -154,6 +154,9 @@ export class FilterComponent implements OnInit, OnDestroy {
 
   getComissoes() {
     this.comissaoService.getComissoes().pipe(takeUntil(this.unsubscribe)).subscribe((comissoes) => {
+
+      comissoes.map(com => com.nome = com.nome.substr(12));
+
       comissoes.unshift({
         id_comissao_voz: this.FILTRO_PADRAO_COMISSAO_VALUE,
         sigla: this.FILTRO_PADRAO_COMISSAO,

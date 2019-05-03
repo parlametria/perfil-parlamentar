@@ -109,11 +109,11 @@
     </div>
 
   </div>
-  <div class="mt-1">
+  <!-- <div class="mt-1">
     <strong>
       {{getNomeComissaoById(filtro.comissao)}}
     </strong>
-  </div>
+  </div> -->
 
 </div>
 
@@ -179,7 +179,7 @@
             *ngFor="let comissao of comissoes"
             [value]="comissao.id_comissao_voz"
           >
-            {{comissao.sigla}}
+          {{comissao.nome}} <span *ngIf="comissao.id_comissao_voz !== FILTRO_PADRAO_COMISSAO_VALUE">- {{comissao.sigla}}</span>
           </option>
         </select>
       </div>
