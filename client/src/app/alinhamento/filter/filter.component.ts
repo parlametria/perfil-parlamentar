@@ -191,6 +191,15 @@ export class FilterComponent implements OnInit, OnDestroy {
     }
   }
 
+  getNomeComissaoById(id: string) {
+    if (this.comissoes && id !== this.FILTRO_PADRAO_COMISSAO_VALUE) {
+      const comissao = this.comissoes.filter(com => com.id_comissao_voz === id);
+      if (comissao !== undefined && comissao.length > 0) {
+        return comissao[0].nome;
+      }
+    }
+  }
+
   private updateUrlFiltro(filtro: any) {
     const queryParams: Params = {};
 
@@ -204,6 +213,10 @@ export class FilterComponent implements OnInit, OnDestroy {
 
     if (filtro.partido !== this.FILTRO_PADRAO_PARTIDO) {
       queryParams.partido = filtro.partido;
+    }
+
+    if (filtro.comissao !== this.FILTRO_PADRAO_COMISSAO_VALUE) {
+      queryParams.comissao = filtro.comissao;
     }
 
     if (filtro.tema !== this.FILTRO_PADRAO_TEMA) {
@@ -225,6 +238,9 @@ export class FilterComponent implements OnInit, OnDestroy {
           }
           if (value === 'partido') {
             this.partidoSelecionado = params[value];
+          }
+          if (value === 'comissao') {
+            this.comissaoSelecionada = params[value];
           }
           if (value === 'tema') {
             this.temaSelecionado = Number(params[value]);

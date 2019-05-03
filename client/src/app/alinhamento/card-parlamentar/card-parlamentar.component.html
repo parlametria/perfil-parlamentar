@@ -70,7 +70,11 @@
           </a>
         </div>
         <div class="col-9 col-lg">
-          <div class="parlamentar-title">{{ parlamentar.nomeEleitoral | titlecase }}</div>
+          <div class="parlamentar-title">
+            <a [routerLink]="['/parlamentar', parlamentar.idParlamentarVoz]" class="parlamentar-nome">
+              {{ parlamentar.nomeEleitoral | titlecase }}
+            </a>
+          </div>
           <p>
             {{ parlamentar.partido }}/{{ parlamentar.uf }}
           </p>
@@ -155,11 +159,11 @@
               ></app-legend>
             </div>
             <div>
-                <app-legend
-                  [title]="'não concordam'"
-                  [class]="'bg-danger'"
-                  [striped]="true"
-                ></app-legend>
+              <app-legend
+                [title]="'não concordam'"
+                [class]="'bg-danger'"
+                [striped]="true"
+              ></app-legend>
             </div>
           </div>
         </div>

@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import { Observable, Subject, BehaviorSubject } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
 import {
   switchMap,
-  startWith,
   map,
   tap,
   debounceTime,
@@ -82,6 +81,7 @@ export class AlinhamentoService {
     const estado = filters.estado;
     const nome = filters.nome;
     const partido = filters.partido;
+    const comissao = filters.comissao;
 
     return parlamentar.filter(p => {
       let filtered;
@@ -94,6 +94,11 @@ export class AlinhamentoService {
       filtered =
         partido && partido !== 'Partidos' && filtered
           ? p.partido.toLowerCase() === partido.toLowerCase()
+          : filtered;
+
+      filtered =
+        comissao && comissao !== '-1' && filtered
+          ? p.comissoes.filter(com => com.id_comissao_voz === comissao).length > 0
           : filtered;
 
       filtered =
@@ -159,7 +164,8 @@ export class AlinhamentoService {
     return p.estado === q.estado &&
       p.nome === q.nome &&
       p.tema === q.tema &&
-      p.partido === q.partido;
+      p.partido === q.partido &&
+      p.comissao === q.comissao;
   }
 
 }
