@@ -221,7 +221,7 @@ router.get("/parlamentar", (req, res) => {
     .findAll({      
       include: [
         {
-          model: Votacao,
+        model: Votacao,
         attributes: ["id_votacao", "id_parlamentar_voz", "voto"],
         as: "vot_prop",
         required: false,
