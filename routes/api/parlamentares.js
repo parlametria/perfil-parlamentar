@@ -24,7 +24,7 @@ const att = [
   "genero",
   "em_exercicio"
 ];
-const att_comissoes = ["sigla"];
+const att_comissoes = ["sigla", "nome"];
 const att_composicao_comissoes = ["id_comissao_voz", "cargo"];
 
 /**
@@ -221,7 +221,7 @@ router.get("/parlamentar", (req, res) => {
     .findAll({      
       include: [
         {
-          model: Votacao,
+        model: Votacao,
         attributes: ["id_votacao", "id_parlamentar_voz", "voto"],
         as: "vot_prop",
         required: false,
