@@ -67,6 +67,27 @@
     </div>
 
     <div
+      class="btn-group mr-1 mb-1"
+      role="group"
+      aria-label="Filtro de Comissão"
+      [hidden]="filtro.comissao == FILTRO_PADRAO_COMISSAO_VALUE"
+    >
+      <button
+        type="button"
+        class="btn btn-primary btn-sm"
+      >
+        {{getComissaoById(filtro.comissao)}}
+      </button>
+      <button
+        type="button"
+        class="btn btn-primary btn-sm"
+        (click)="limparFiltroComissao()"
+      >
+        <span class="icon-x"></span>
+      </button>
+    </div>
+
+    <div
       class="btn-group mb-1"
       role="group"
       aria-label="Filtro de Tema"

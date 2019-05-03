@@ -63,6 +63,7 @@ export class FilterComponent implements OnInit, OnDestroy {
       nome: '',
       estado: this.estadoSelecionado,
       partido: this.partidoSelecionado,
+      comissao: this.comissaoSelecionada,
       tema: this.temaSelecionado,
       temaSlug: this.FILTRO_PADRAO_TEMA_SLUG
     };
@@ -103,6 +104,7 @@ export class FilterComponent implements OnInit, OnDestroy {
       nome: this.nomePesquisado,
       estado: this.estadoSelecionado,
       partido: this.partidoSelecionado,
+      comissao: this.comissaoSelecionada,
       tema: this.temaSelecionado,
       temaSlug: this.temaService.getTemaSlugById(this.temas, this.temaSelecionado)
     };
@@ -116,6 +118,7 @@ export class FilterComponent implements OnInit, OnDestroy {
   limparFiltro() {
     this.estadoSelecionado = this.FILTRO_PADRAO_ESTADO;
     this.partidoSelecionado = this.FILTRO_PADRAO_PARTIDO;
+    this.comissaoSelecionada = this.FILTRO_PADRAO_COMISSAO_VALUE;
     this.nomePesquisado = '';
     this.temaSelecionado = this.FILTRO_PADRAO_TEMA;
 
@@ -130,6 +133,11 @@ export class FilterComponent implements OnInit, OnDestroy {
 
   limparFiltroPartido() {
     this.partidoSelecionado = this.FILTRO_PADRAO_PARTIDO;
+    this.aplicarFiltro();
+  }
+
+  limparFiltroComissao() {
+    this.comissaoSelecionada = this.FILTRO_PADRAO_COMISSAO_VALUE;
     this.aplicarFiltro();
   }
 
@@ -171,6 +179,15 @@ export class FilterComponent implements OnInit, OnDestroy {
   getTemaById(id: number) {
     if (this.temas && id !== this.FILTRO_PADRAO_TEMA) {
       return this.temas.filter(tema => tema.id === id)[0].tema;
+    }
+  }
+
+  getComissaoById(id: string) {
+    if (this.comissoes && id !== this.FILTRO_PADRAO_COMISSAO_VALUE) {
+      const comissao = this.comissoes.filter(com => com.id_comissao_voz === id);
+      if (comissao !== undefined && comissao.length > 0) {
+        return comissao[0].sigla;
+      }
     }
   }
 
