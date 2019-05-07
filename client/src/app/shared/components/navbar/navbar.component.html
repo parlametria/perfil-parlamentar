@@ -55,41 +55,50 @@
         class="nav-item"
       >
         <a
-          class="nav-link nav-link-login"
+          class="nav-link nav-link-login nav-link-active"
           [routerLink]="['/usuario/login']"
         >
           Entrar
         </a>
       </li>
-    </ul>
-    <div
-      ngbDropdown
-      *ngIf="userAuthenticated"
-      class="d-inline-block"
-    >
-      <a
-        ngbDropdownToggle
-        id="dropdownUser"
-      >
-        <img
-          [src]="user.photo"
-          [alt]="user.full_name"
-          class="img-user"
-        >
-      </a>
-      <div
-        ngbDropdownMenu
-        aria-labelledby="dropdownUser"
-      >
+      <li class="nav-item">
         <a
-          ngbDropdownItem
-          class="nav-link nav-link-login"
-          [routerLink]="['/']"
-          (click)="logoutUser()"
+          class="nav-link nav-link-active"
+          [routerLink]="['/sobre']"
         >
-          sair
+          Sobre
         </a>
-      </div>
-    </div>
+      </li>
+      <li class="nav-item" *ngIf="userAuthenticated">
+        <div
+          ngbDropdown          
+          class="d-inline-block nav-line"
+        >
+          <a
+            ngbDropdownToggle
+            id="dropdownUser"
+          >
+            <img
+              [src]="user.photo"
+              [alt]="user.full_name"
+              class="img-user"
+            >
+          </a>
+          <div
+            ngbDropdownMenu
+            aria-labelledby="dropdownUser"
+          >
+            <a
+              ngbDropdownItem
+              class="nav-link nav-link-login"
+              [routerLink]="['/']"
+              (click)="logoutUser()"
+            >
+              sair
+            </a>
+          </div>
+        </div>
+      </li>
+    </ul>
   </div>
 </nav>

@@ -1,14 +1,15 @@
 a:link.nav-link-login,
 a:visited.nav-link-login {
-  width: 140px;
+  width: 100px;
   text-align: right;
   color: #20201e;
   text-decoration: underline;
 }
 
-a:hover.nav-link-login,
-a:active.nav-link-login {
+a:hover.nav-link-active,
+a:active.nav-link-active {
   color: #43a467;
+  text-decoration: underline;
 }
 
 .img-user {
@@ -53,4 +54,8 @@ a:active.nav-link-login {
     background-color: #20201e;
     color: #fff;
   }
+}
+
+.nav-line {
+  line-height: 40px;
 }
