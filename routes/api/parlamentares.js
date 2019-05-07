@@ -189,12 +189,7 @@ router.get("/:id/votacoes", (req, res) => {
             as: "info_comissao",
             required: false
           }
-        ],
-        where: { 
-          cargo: {
-            [Op.ne]: 'Suplente'
-          }
-        }
+        ]
       }
     ],
     where: { id_parlamentar_voz: req.params.id }
