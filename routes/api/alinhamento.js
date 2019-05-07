@@ -9,6 +9,8 @@ const Parlamentar = models.parlamentar;
 const Votacao = models.votacao;
 const Proposicao = models.proposicao;
 const Tema = models.tema;
+const ComposicaoComissoes = models.composicaoComissoes;
+const Comissoes = models.comissoes;
 
 const att = [
   "id_parlamentar_voz",
@@ -35,7 +37,21 @@ router.post("/", (req, res) => {
         model: Votacao,
         as: "parlamentar_vot",
         required: false
-      }
+      },
+      {
+        model: ComposicaoComissoes,
+        attributes: ["id_comissao_voz", "cargo"],
+        include: [
+          {
+            model: Comissoes,
+            attributes: ["sigla"],
+            as: "info_comissao",
+            required: false
+          }
+        ],
+        as: "parlamentar_comissoes",
+        required: false
+      },      
     ],
     where: {
       em_exercicio: true

@@ -33,10 +33,6 @@ function calcularAlinhamentos(parlamentares, respostas, proposicoes) {
   
   alinhamentos.forEach(parlamentar => {  
     parlamentar.alinhamento = calcular(parlamentar, respostas, proposicoesTemas, temasAlinhamento);
-
-    // Renomeia key parlamentar_vot para votacoes
-    Object.defineProperty(parlamentar, "votacoes", Object.getOwnPropertyDescriptor(parlamentar, "parlamentar_vot"));
-    delete parlamentar["parlamentar_vot"];
   });
 
   return alinhamentos;
