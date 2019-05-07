@@ -64,6 +64,7 @@ export class CardParlamentarComponent implements OnChanges, OnInit {
   readonly VIEW_MD = 'md';
   readonly VIEW_LG = 'lg';
   readonly PADRAO_COMISSAO = '-1';
+  readonly MENSAGEM_SEM_ALINHAMENTO = 'Não existem respostas suficientes para o cálculo do alinhamento';
 
   @Input() id: number;
   @Input() parlamentar: Parlamentar;
