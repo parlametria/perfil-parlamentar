@@ -20,8 +20,7 @@ function formataVotacoes(resultado) {
     cand.parlamentar_vot.forEach(vot => {
       votacoes[vot.id_votacao] = vot.voto;
     });
-    cand.votacoes = votacoes;
-    delete cand.parlamentar_vot;
+    cand.parlamentar_vot = votacoes;    
   });
   return resultadoNovo;
 }
