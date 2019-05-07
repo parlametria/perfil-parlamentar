@@ -50,10 +50,7 @@ router.post("/", (req, res) => {
           }
         ],
         as: "parlamentar_comissoes",
-        required: false,
-        where: {
-          situacao: "Titular"
-        }
+        required: false
       },      
     ],
     where: {
