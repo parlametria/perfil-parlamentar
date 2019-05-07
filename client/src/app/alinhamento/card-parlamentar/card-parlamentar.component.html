@@ -45,7 +45,19 @@
           ></app-progress>
         </div>
         <div class="parlamentar-sm-score">
-          {{ alinhamento?.alinhamento | percent }}
+          <span *ngIf="alinhamento?.perguntasIguais >= 3">
+            {{ alinhamento?.alinhamento | percent }}
+          </span>
+          <span
+            *ngIf="alinhamento?.perguntasIguais < 3"
+            class="sem-alinhamento"
+            placement="left"
+            ngbPopover="{{MENSAGEM_SEM_ALINHAMENTO}}"
+            triggers="click:blur"            
+            container="body"
+          >
+            --
+          </span>
         </div>
       </div>
     </div>
@@ -118,7 +130,19 @@
             </div>
             <div class="col-3 col-sm-2 d-flex justify-content-end align-items-end">
               <div class="parlamentar-score">
-                {{ alinhamento?.alinhamento | percent }}
+                <span *ngIf="alinhamento?.perguntasIguais >= 3">
+                  {{ alinhamento?.alinhamento | percent }}
+                </span>
+                <span
+                  *ngIf="alinhamento?.perguntasIguais < 3"
+                  class="sem-alinhamento"
+                  placement="left"
+                  ngbPopover="{{MENSAGEM_SEM_ALINHAMENTO}}"
+                  triggers="click:blur"                  
+                  container="body"
+                >
+                  --
+                </span>
               </div>
             </div>
           </div>
@@ -148,7 +172,19 @@
         </div>
         <div class="col-3 col-sm-2 col-lg-1 d-flex justify-content-end align-items-end">
           <div class="parlamentar-score">
-            {{ alinhamento?.alinhamento | percent }}
+            <span *ngIf="alinhamento?.perguntasIguais >= 3">
+              {{ alinhamento?.alinhamento | percent }}
+            </span>
+            <span
+              *ngIf="alinhamento?.perguntasIguais < 3"
+              class="sem-alinhamento"
+              placement="left"
+              ngbPopover="{{MENSAGEM_SEM_ALINHAMENTO}}"
+              triggers="mouseenter:mouseleave"              
+              container="body"
+            >
+              --
+            </span>
           </div>
         </div>
       </div>
