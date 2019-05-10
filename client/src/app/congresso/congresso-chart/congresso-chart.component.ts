@@ -15,6 +15,8 @@ export class CongressoChartComponent implements AfterContentInit, OnChanges {
   @Input() view: any;
   @Input() filter: any;
 
+  drawn = false;
+
   svg: any;
   g: any;
   circles: any;
@@ -53,37 +55,37 @@ export class CongressoChartComponent implements AfterContentInit, OnChanges {
     ) {
       this.parlamentares = JSON.parse(JSON.stringify(changes.parlamentares.currentValue));
 
-      if (this.parlamentares.length >= 513) {
-        await this.draw();
-        await this.paint();
 
-        setTimeout(() => {
-          if (this.view === 'lg') {
-            this.showArc();
-          } else if (this.view === 'md') {
-            this.showClusters();
+      if (this.parlamentares.length > 0) {
+        if (this.parlamentares.length === 513) {
+          if (!this.drawn) {
+            this.draw();
+            this.paint();
+            this.drawn = true;
           } else {
-            this.showBeeswarm();
+            this.showArc();
           }
-        }, 3000);
-
+        } else {
+          this.paint();
+          this.showBeeswarm();
+        }
       } else {
-        this.paint();
+        // TODO: desenhar visualização quando o filtro já está aplicado na URL
       }
     }
-    if (
-      typeof changes.view !== 'undefined' &&
-      typeof changes.view.currentValue !== 'undefined' &&
-      !changes.view.firstChange
-    ) {
-      if (changes.view.currentValue === 'lg') {
-        this.showArc();
-      } else if (changes.view.currentValue === 'md') {
-        this.showClusters();
-      } else {
-        this.showBeeswarm();
-      }
-    }
+    // if (
+    //   typeof changes.view !== 'undefined' &&
+    //   typeof changes.view.currentValue !== 'undefined' &&
+    //   !changes.view.firstChange
+    // ) {
+    //   if (changes.view.currentValue === 'lg') {
+    //     this.showArc();
+    //   } else if (changes.view.currentValue === 'md') {
+    //     this.showClusters();
+    //   } else {
+    //     this.showBeeswarm();
+    //   }
+    // }
   }
 
   initChart() {
@@ -154,45 +156,45 @@ export class CongressoChartComponent implements AfterContentInit, OnChanges {
       simulation.tick();
     }
 
-    const group = d3.nest()
-      .key((d: Parlamentar) => d.partido)
-      .entries(this.parlamentares);
-    const children = {
-      children: group.map(g => {
-        return {
-          children: g.values
-        };
-      })
-    };
+    // const group = d3.nest()
+    //   .key((d: Parlamentar) => d.partido)
+    //   .entries(this.parlamentares);
+    // const children = {
+    //   children: group.map(g => {
+    //     return {
+    //       children: g.values
+    //     };
+    //   })
+    // };
 
-    const clusters = d3.pack()
-      .size([this.width, this.height * 0.8])
-      .padding(0)(d3.hierarchy(children).sum(d => 1));
+    // const clusters = d3.pack()
+    //   .size([this.width, this.height * 0.8])
+    //   .padding(0)(d3.hierarchy(children).sum(d => 1));
 
-    const leaves = clusters.leaves();
-    leaves.map(l => {
-      const s = 'idParlamentarVoz';
-      const i = this.parlamentares.findIndex(p => p.idParlamentarVoz === l.data[s]);
-      this.parlamentares[i].clusterX = l.x;
-      this.parlamentares[i].clusterY = l.y;
-    });
+    // const leaves = clusters.leaves();
+    // leaves.map(l => {
+    //   const s = 'idParlamentarVoz';
+    //   const i = this.parlamentares.findIndex(p => p.idParlamentarVoz === l.data[s]);
+    //   this.parlamentares[i].clusterX = l.x;
+    //   this.parlamentares[i].clusterY = l.y;
+    // });
 
-    this.svg.selectAll('.clusters')
-      .attr('opacity', 0);
+    // this.svg.selectAll('.clusters')
+    //   .attr('opacity', 0);
 
-    this.clusters = this.svg.append('g')
-      .attr('transform', 'translate(' + this.margin.left + ',' + this.margin.top + ')')
-      .attr('fill', 'none')
-      .attr('stroke-width', 'none')
-      .attr('stroke', '#ccc')
-      .attr('class', 'clusters')
-      .selectAll('circle')
-      .data(clusters.descendants().filter(d => d.height === 1))
-      .join('circle')
-      .attr('cx', d => d.x)
-      .attr('cy', d => d.y)
-      .attr('r', d => d.r)
-      .attr('opacity', 0);
+    // this.clusters = this.svg.append('g')
+    //   .attr('transform', 'translate(' + this.margin.left + ',' + this.margin.top + ')')
+    //   .attr('fill', 'none')
+    //   .attr('stroke-width', 'none')
+    //   .attr('stroke', '#ccc')
+    //   .attr('class', 'clusters')
+    //   .selectAll('circle')
+    //   .data(clusters.descendants().filter(d => d.height === 1))
+    //   .join('circle')
+    //   .attr('cx', d => d.x)
+    //   .attr('cy', d => d.y)
+    //   .attr('r', d => d.r)
+    //   .attr('opacity', 0);
 
     const camara = this.getFilas(this.parlamentares);
     for (let i = 0; i < 13; i++) {
@@ -219,7 +221,7 @@ export class CongressoChartComponent implements AfterContentInit, OnChanges {
         .attr('class', 'circle-parlamentar')
         .attr('r', this.r)
         .attr('fill', 'white')
-        .attr('stroke', 'none')
+        .attr('stroke', '#515151')
         .attr('cx', (d, z) => {
           d.arcX = arc.node().getPointAtLength(xArc(z)).x;
           return d.arcX;
@@ -242,9 +244,6 @@ export class CongressoChartComponent implements AfterContentInit, OnChanges {
       .attr('fill', (d) => this.color(this.getPath(d)))
       .attr('opacity', d => this.parlamentares.filter(parlamentar =>
         d.idParlamentarVoz === parlamentar.idParlamentarVoz).length > 0 ? 1 : 0.2);
-
-    this.clusters
-      .attr('opacity', 0);
   }
 
   showArc() {
@@ -256,8 +255,6 @@ export class CongressoChartComponent implements AfterContentInit, OnChanges {
       .attr('cy', d => d.arcY)
       .attr('opacity', d => this.parlamentares.filter(parlamentar =>
         d.idParlamentarVoz === parlamentar.idParlamentarVoz).length > 0 ? 1 : 0.2);
-    this.clusters
-      .attr('opacity', 0);
   }
 
   showClusters() {
@@ -286,12 +283,7 @@ export class CongressoChartComponent implements AfterContentInit, OnChanges {
       .attr('cy', d => d.y)
       .attr('opacity', d => this.parlamentares.filter(parlamentar =>
         d.idParlamentarVoz === parlamentar.idParlamentarVoz).length > 0 ? 1 : 0.2);
-
-    this.clusters
-      .attr('opacity', 0);
   }
-
-
 
   getFilas(parlamentares: Parlamentar[]) {
     const filas = [60, 57, 53, 50, 46, 43, 39, 36, 32, 29, 25, 21, 22];

@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 
 import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { takeUntil, debounceTime } from 'rxjs/operators';
 
 import { UserService } from '../shared/services/user.service';
 import { AlinhamentoService } from '../shared/services/alinhamento.service';
@@ -12,7 +12,7 @@ import { Parlamentar } from 'src/app/shared/models/parlamentar.model';
   templateUrl: './congresso.component.html',
   styleUrls: ['./congresso.component.scss']
 })
-export class CongressoComponent implements OnInit {
+export class CongressoComponent implements OnInit, OnDestroy {
   readonly VIEW_SM = 'sm';
   readonly VIEW_MD = 'md';
   readonly VIEW_LG = 'lg';
@@ -39,15 +39,17 @@ export class CongressoComponent implements OnInit {
       .pipe(takeUntil(this.unsubscribe))
       .subscribe(
         respostas => {
-          this.alinhamentoService
-            .get(respostas)
-            .pipe(takeUntil(this.unsubscribe))
-            .subscribe(
-              parlamentares => {
-                this.parlamentares = parlamentares;
-              },
-              error => console.log(error)
-            );
+          if (!(Object.keys(respostas.votacoes).length === 0 && respostas.votacoes.constructor === Object)) {
+            this.alinhamentoService
+              .get(respostas)
+              .pipe(takeUntil(this.unsubscribe))
+              .subscribe(
+                parlamentares => {
+                  this.parlamentares = parlamentares;
+                },
+                error => console.log(error)
+              );
+          }
         },
         error => console.log(error)
       );
@@ -60,6 +62,11 @@ export class CongressoComponent implements OnInit {
   search(filter: any) {
     this.filter = filter;
     this.alinhamentoService.search(filter);
+  }
+
+  ngOnDestroy() {
+    this.unsubscribe.next();
+    this.unsubscribe.complete();
   }
 
 }

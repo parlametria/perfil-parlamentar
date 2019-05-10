@@ -62,6 +62,7 @@ export class AlinhamentoService {
   }
 
   get(respostas): Observable<any> {
+    console.log('get respostas', respostas);
     this.http
       .post<Parlamentar[]>(this.url, { respostas: respostas.votacoes })
       .pipe(map(data => data.map(parlamentar => new Parlamentar(parlamentar))))
