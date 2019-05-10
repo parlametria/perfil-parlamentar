@@ -71,4 +71,32 @@ router.get("/proposicoes", (req, res) => {
     .catch(err => res.status(400).json({ err }));
 });
 
+/**
+ * Pega uma proposição específica a partir do id da votação.
+ * @name get/api/perguntas/proposicoes/:id
+ * @function
+ * @memberof module:routes/perguntas/:id
+ */
+router.get("/proposicoes/:id", (req, res) => {
+  Proposicao.findOne({
+    attributes: ["projeto_lei", "id_votacao", "titulo", "descricao", "tema_id"],
+    where: { 
+      status_proposicao: "Ativa",
+      id_votacao: req.params.id 
+    },
+    order: [
+      ['tema_id', 'ASC'],
+      ['id_votacao', 'ASC']
+    ],
+    include: [
+      {
+        model: Temas,
+        as: "tema_prop"
+      }
+    ]
+  })
+    .then(proposicoes => res.json(proposicoes))
+    .catch(err => res.status(400).json({ err }));
+});
+
 module.exports = router;

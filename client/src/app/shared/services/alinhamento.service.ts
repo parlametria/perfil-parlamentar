@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import { Observable, Subject, BehaviorSubject } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
 import {
   switchMap,
-  startWith,
   map,
   tap,
   debounceTime,
@@ -22,11 +21,11 @@ export class AlinhamentoService {
 
   readonly FILTRO_PADRAO_TEMA = -1;
 
-  private searchfilters = new Subject<any>();
+  private searchfilters = new BehaviorSubject<any>({});
   private tema: number;
 
-  parlamentaresFiltered = new BehaviorSubject<Array<Parlamentar>>([]);
-  parlamentares = new BehaviorSubject<Array<Parlamentar>>([]);
+  private parlamentaresFiltered = new BehaviorSubject<Array<Parlamentar>>([]);
+  private parlamentares = new BehaviorSubject<Array<Parlamentar>>([]);
 
   constructor(private http: HttpClient) {
     this.parlamentares
@@ -34,9 +33,12 @@ export class AlinhamentoService {
         switchMap(parlamentar =>
           this.searchfilters.pipe(
             debounceTime(400),
-            distinctUntilChanged(),
-            map(filters => this.filter(parlamentar, filters)),
-            startWith(parlamentar)
+            distinctUntilChanged(
+              (p: any, q: any) => {
+                return this.compareFilter(p, q);
+              }
+            ),
+            map(filters => this.filter(parlamentar, filters))
           )
         ),
         tap(parlamentares => {
@@ -79,6 +81,7 @@ export class AlinhamentoService {
     const estado = filters.estado;
     const nome = filters.nome;
     const partido = filters.partido;
+    const comissao = filters.comissao;
 
     return parlamentar.filter(p => {
       let filtered;
@@ -90,12 +93,17 @@ export class AlinhamentoService {
 
       filtered =
         partido && partido !== 'Partidos' && filtered
-          ? p.sgPartido.toLowerCase() === partido.toLowerCase()
+          ? p.partido.toLowerCase() === partido.toLowerCase()
+          : filtered;
+
+      filtered =
+        comissao && comissao !== '-1' && filtered
+          ? p.comissoes.filter(com => com.id_comissao_voz === comissao).length > 0
           : filtered;
 
       filtered =
         nome && filtered
-          ? p.nomeUrna.toLowerCase().includes(nome.toLowerCase())
+          ? p.nomeEleitoral.toLowerCase().includes(nome.toLowerCase())
           : filtered;
 
       return filtered;
@@ -144,6 +152,20 @@ export class AlinhamentoService {
       return 1;
     }
     return 0;
+  }
+
+  /**
+   * Compara se dois filtros são iguais ou não
+   *
+   * @param p Filtro para comparação
+   * @param q Filtro para comparação
+   */
+  private compareFilter(p: any, q: any) {
+    return p.estado === q.estado &&
+      p.nome === q.nome &&
+      p.tema === q.tema &&
+      p.partido === q.partido &&
+      p.comissao === q.comissao;
   }
 
 }

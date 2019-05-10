@@ -13,6 +13,7 @@ import { Parlamentar } from '../../shared/models/parlamentar.model';
 export class CongressoChartComponent implements AfterContentInit, OnChanges {
   @Input() parlamentares: any[];
   @Input() view: any;
+  @Input() filter: any;
 
   svg: any;
   g: any;
@@ -37,23 +38,39 @@ export class CongressoChartComponent implements AfterContentInit, OnChanges {
     this.margin = {
       left: 0,
       right: 20,
-      top: 20,
+      top: 60,
       bottom: 20
     };
-    this.r = 5;
+    this.r = 5.5;
     this.initChart();
   }
 
-  ngOnChanges(changes: SimpleChanges) {
+  async ngOnChanges(changes: SimpleChanges) {
     if (
       typeof changes.parlamentares !== 'undefined' &&
       typeof changes.parlamentares.currentValue !== 'undefined' &&
       changes.parlamentares.currentValue.length
     ) {
       this.parlamentares = JSON.parse(JSON.stringify(changes.parlamentares.currentValue));
-      this.draw().then(resolve => {
+      console.log(this.filter);
+
+      if (this.parlamentares.length >= 513) {
+        await this.draw();
+        await this.paint();
+
+        setTimeout(() => {
+          if (this.view === 'lg') {
+            this.showArc();
+          } else if (this.view === 'md') {
+            this.showClusters();
+          } else {
+            this.showBeeswarm();
+          }
+        }, 3000);
+
+      } else {
         this.paint();
-      });
+      }
     }
     if (
       typeof changes.view !== 'undefined' &&
@@ -97,123 +114,138 @@ export class CongressoChartComponent implements AfterContentInit, OnChanges {
       .attr('transform', 'translate(0, ' + (this.height - this.margin.bottom) + ')');
   }
 
-  draw(): Promise<boolean> {
-    return new Promise((resolve, reject) => {
-      this.g.selectAll('.circle-parlamentar').remove();
-      this.g.selectAll('.clusters').remove();
-      const inicioArco = 20;
-      const fimArco = 440;
-      const alturaArco = 200;
-      const distanciaFilas = 12;
-      const angulo = 20;
+  getPath(d: any) {
+    let temaIndex;
+    temaIndex = this.parlamentares[0].alinhamento.temas.findIndex(res => res.tema_id === this.filter.tema);
 
-      const xBeeSwarm = d3.scaleLinear().range([this.width * 0.8, this.width * 0.2]);
-      // this.axis.call(d3.axisBottom(xBeeSwarm).ticks(7, '.0%'));
-      const simulation = d3
-        .forceSimulation(this.parlamentares)
-        .force('x', d3.forceX((d: any) => xBeeSwarm(d.alinhamento.alinhamento)).strength(1))
-        .force('y', d3.forceY(this.height * 0.5))
-        .force('collide', d3.forceCollide(this.r + 1))
-        .stop();
-      for (let i = 0; i < 120; ++i) {
-        simulation.tick();
-      }
+    if (temaIndex !== undefined && temaIndex !== -1) {
+      return d.alinhamento.temas[temaIndex].alinhamento;
+    } else {
+      return d.alinhamento.alinhamento;
+    }
 
-      const group = d3.nest()
-        .key((d: Parlamentar) => d.sgPartido)
-        .entries(this.parlamentares);
-      const children = {
-        children: group.map(g => {
-          return {
-            children: g.values
-          };
-        })
-      };
+  }
 
-      const clusters = d3.pack()
-        .size([this.width, this.height])
-        .padding(0)(d3.hierarchy(children).sum(d => 1));
+  draw() {
+    this.g.selectAll('.circle-parlamentar').remove();
+    this.g.selectAll('.clusters').remove();
+    const inicioArco = 20;
+    const fimArco = 440;
+    const alturaArco = 200;
+    const distanciaFilas = 12;
+    const angulo = 20;
+    // const inicioArco = 20;
+    // const fimArco = 480;
+    // const alturaArco = 190;
+    // const distanciaFilas = 12;
+    // const angulo = 18;
 
-      const leaves = clusters.leaves();
-      leaves.map(l => {
-        const s = 'idParlamentar';
-        const i = this.parlamentares.findIndex(p => p.idParlamentar === l.data[s]);
-        this.parlamentares[i].clusterX = l.x;
-        this.parlamentares[i].clusterY = l.y;
-      });
+    const xBeeSwarm = d3.scaleLinear().range([this.width * 0.8, this.width * 0.2]);
+    // this.axis.call(d3.axisBottom(xBeeSwarm).ticks(7, '.0%'));
 
+    const simulation = d3
+      .forceSimulation(this.parlamentares)
+      .force('x', d3.forceX((d: any) => xBeeSwarm(this.getPath(d))).strength(1))
+      .force('y', d3.forceY(this.height * 0.2))
+      .force('collide', d3.forceCollide(this.r + 1))
+      .stop();
+    for (let i = 0; i < 120; ++i) {
+      simulation.tick();
+    }
 
-      this.clusters = this.svg.append('g')
-        .attr('transform', 'translate(' + this.margin.left + ',' + this.margin.top + ')')
-        .attr('fill', 'none')
-        .attr('stroke-width', 'none')
-        .attr('stroke', '#ccc')
-        .attr('class', 'clusters')
+    const group = d3.nest()
+      .key((d: Parlamentar) => d.partido)
+      .entries(this.parlamentares);
+    const children = {
+      children: group.map(g => {
+        return {
+          children: g.values
+        };
+      })
+    };
+
+    const clusters = d3.pack()
+      .size([this.width, this.height * 0.8])
+      .padding(0)(d3.hierarchy(children).sum(d => 1));
+
+    const leaves = clusters.leaves();
+    leaves.map(l => {
+      const s = 'idParlamentar';
+      const i = this.parlamentares.findIndex(p => p.idParlamentar === l.data[s]);
+      this.parlamentares[i].clusterX = l.x;
+      this.parlamentares[i].clusterY = l.y;
+    });
+
+    this.svg.selectAll('.clusters')
+    .attr('opacity', 0);
+
+    this.clusters = this.svg.append('g')
+      .attr('transform', 'translate(' + this.margin.left + ',' + this.margin.top + ')')
+      .attr('fill', 'none')
+      .attr('stroke-width', 'none')
+      .attr('stroke', '#ccc')
+      .attr('class', 'clusters')
       .selectAll('circle')
       .data(clusters.descendants().filter(d => d.height === 1))
       .join('circle')
-        .attr('cx', d => d.x)
-        .attr('cy', d => d.y)
-        .attr('r', d => d.r)
-        .attr('opacity', 0);
+      .attr('cx', d => d.x)
+      .attr('cy', d => d.y)
+      .attr('r', d => d.r)
+      .attr('opacity', 0);
 
-      // this.svg.append('g')
-      //   .selectAll('circle')
-      //   .data(clusters.leaves())
-      //   .join('circle')
-      //     .attr('cx', d => {
-      //       console.log(d.data.arcY);
-      //       return d.x;
-      //     })
-      //     .attr('cy', d => d.y)
-      //     .attr('r', d => d.r)
-      //     .attr('fill', d => this.color(d.data.alinhamento.alinhamento))
-      //   .on('mouseover', d => console.log(d));
+    // this.svg.append('g')
+    //   .selectAll('circle')
+    //   .data(clusters.leaves())
+    //   .join('circle')
+    //     .attr('cx', d => {
+    //       console.log(d.data.arcY);
+    //       return d.x;
+    //     })
+    //     .attr('cy', d => d.y)
+    //     .attr('r', d => d.r)
+    //     .attr('fill', d => this.color(d.data.alinhamento.alinhamento))
+    //   .on('mouseover', d => console.log(d));
 
+    const camara = this.getFilas(this.parlamentares);
+    for (let i = 0; i < 13; i++) {
+      const [p1, p2, p3] = [
+        [inicioArco + (distanciaFilas * i), alturaArco],
+        [fimArco - (distanciaFilas * i), alturaArco],
+        [angulo + (distanciaFilas * i), alturaArco - 100]];
+      const [rad, flag1, flag2] = this.arcviaslope([p1[0], p1[1]], [p2[0], p2[1]], [p3[0], p3[1]]);
 
-      const camara = this.getFilas(this.parlamentares);
-      for (let i = 0; i < 13; i++) {
-        const [p1, p2, p3] = [
-          [inicioArco + (distanciaFilas * i), alturaArco],
-          [fimArco - (distanciaFilas * i), alturaArco],
-          [angulo + (distanciaFilas * i), alturaArco - 100]];
-        const [rad, flag1, flag2] = this.arcviaslope([p1[0], p1[1]], [p2[0], p2[1]], [p3[0], p3[1]]);
+      const
+        arc = this.g.append('path')
+          .attr('fill', 'none')
+          // .attr('stroke-width', '1.5px')
+          // .attr('stroke', 'black')
+          .attr('d', rad && `M${p1[0]},${p1[1]} A${rad},${rad},0,${flag1},${flag2},${p2[0]},${p2[1]}`);
 
-        const
-          arc = this.g.append('path')
-            .attr('fill', 'none')
-            // .attr('stroke-width', '1.5px')
-            // .attr('stroke', 'black')
-            .attr('d', rad && `M${p1[0]},${p1[1]} A${rad},${rad},0,${flag1},${flag2},${p2[0]},${p2[1]}`);
+      const length = arc.node().getTotalLength();
 
-        const length = arc.node().getTotalLength();
+      const xArc = d3.scaleLinear().domain([0, camara[i].length - 1]).range([0, length]);
 
-        const xArc = d3.scaleLinear().domain([0, camara[i].length - 1]).range([0, length]);
+      this.circles = this.g.selectAll()
+        .data(camara[i])
+        .enter()
+        .append('circle')
+        .attr('id', (d) => 'circle-parlamentar-' + d.idParlamentar)
+        .attr('class', 'circle-parlamentar')
+        .attr('r', this.r)
+        .attr('fill', 'white')
+        .attr('stroke', 'none')
+        .attr('cx', (d, z) => {
+          d.arcX = arc.node().getPointAtLength(xArc(z)).x;
+          return d.arcX;
+        })
+        .attr('cy', (d, w) => {
+          d.arcY = arc.node().getPointAtLength(xArc(w)).y;
+          return d.arcY;
+        })
+        .attr('opacity', 1)
+        .on('mouseover', (d) => console.log(d));
 
-        this.circles = this.g.selectAll()
-          .data(camara[i])
-          .enter()
-          .append('circle')
-          .attr('id', (d) => 'circle-parlamentar-' + d.idParlamentar)
-          .attr('class', 'circle-parlamentar')
-          .attr('r', this.r)
-          .attr('fill', 'white')
-          .attr('stroke', 'none')
-          .attr('cx', (d, z) => {
-            d.arcX = arc.node().getPointAtLength(xArc(z)).x;
-            return d.arcX;
-          })
-          .attr('cy', (d, w) => {
-            d.arcY = arc.node().getPointAtLength(xArc(w)).y;
-            return d.arcY;
-          })
-          .attr('opacity', 1)
-          .on('mouseover', (d) => console.log(d));
-
-      }
-      resolve(true);
-      return;
-    });
+    }
   }
 
   paint() {
@@ -221,7 +253,11 @@ export class CongressoChartComponent implements AfterContentInit, OnChanges {
       .transition()
       .duration((d, i) => i * 5)
       .delay(500)
-      .attr('fill', (d) => this.color(d.alinhamento.alinhamento));
+      .attr('fill', (d) => this.color(this.getPath(d)))
+      .attr('opacity', d => this.parlamentares.filter(parlamentar => d.cpf === parlamentar.cpf).length > 0 ? 1 : 0.2);
+
+    this.clusters
+      .attr('opacity', 0);
   }
 
   showArc() {
@@ -230,7 +266,8 @@ export class CongressoChartComponent implements AfterContentInit, OnChanges {
       .duration((d) => d.alinhamento.alinhamento * 1000 + 300)
       .delay(250)
       .attr('cx', d => d.arcX)
-      .attr('cy', d => d.arcY);
+      .attr('cy', d => d.arcY)
+      .attr('opacity', d => this.parlamentares.filter(parlamentar => d.cpf === parlamentar.cpf).length > 0 ? 1 : 0.2);
     this.clusters
       .attr('opacity', 0);
   }
@@ -242,11 +279,13 @@ export class CongressoChartComponent implements AfterContentInit, OnChanges {
       .duration(250)
       .delay(250)
       .attr('cx', d => d.clusterX)
-      .attr('cy', d => d.clusterY);
+      .attr('cy', d => d.clusterY)
+      .attr('opacity', d => this.parlamentares.filter(parlamentar => d.cpf === parlamentar.cpf).length > 0 ? 1 : 0.2);
+
+
     this.clusters
       .transition()
-      .duration(250)
-      .delay(500)
+      .delay(250)
       .attr('opacity', 1);
   }
 
@@ -256,13 +295,19 @@ export class CongressoChartComponent implements AfterContentInit, OnChanges {
       .duration((d) => d.alinhamento.alinhamento * 1000 + 300)
       .delay(250)
       .attr('cx', d => d.x)
-      .attr('cy', d => d.y);
+      .attr('cy', d => d.y)
+      .attr('opacity', d => this.parlamentares.filter(parlamentar => d.cpf === parlamentar.cpf).length > 0 ? 1 : 0.2);
+
     this.clusters
       .attr('opacity', 0);
+    // this.svg.selectAll('.clusters')
+    //   .attr('opacity', 0);
   }
 
+
+
   getFilas(parlamentares: Parlamentar[]) {
-    const filas = [60, 57, 53, 50, 46, 43, 39, 36, 33, 29, 26, 22, 19];
+    const filas = [60, 57, 53, 50, 46, 43, 39, 36, 32, 29, 25, 21, 22];
     const camara = new Array();
 
     const grupos = d3.nest()

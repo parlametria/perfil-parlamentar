@@ -38,12 +38,12 @@ $blue:    #007bff !default;
 $indigo:  #6610f2 !default;
 $purple:  #6f42c1 !default;
 $pink:    #7F3C8B !default;
-$red:     #dc3545 !default;
+$red:     #B54142 !default;
 $orange:  #fd7e14 !default;
 $yellow:  #ffc107 !default;
 $green:   #43A467 !default;
-$teal:    #20c997 !default;
-$cyan:    #17a2b8 !default;
+$teal:    #91DABF !default;
+$cyan:    #91BFDA !default;
 
 $colors: () !default;
 // stylelint-disable-next-line scss/dollar-variable-default
@@ -68,7 +68,7 @@ $colors: map-merge(
 
 $primary:       $green !default;
 $secondary:     $pink !default;
-$success:       $teal !default;
+$success:       $cyan !default;
 $info:          $gray-500 !default;
 $warning:       $yellow !default;
 $danger:        $red !default;
@@ -719,7 +719,7 @@ $nav-divider-margin-y:              $spacer / 2 !default;
 
 // Navbar
 
-$navbar-padding-y:                  $spacer / 2 !default;
+$navbar-padding-y:                  $spacer / 4 !default;
 $navbar-padding-x:                  0 !default;
 
 $navbar-nav-link-padding-x:         .5rem !default;

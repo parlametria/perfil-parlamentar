@@ -63,10 +63,14 @@ export class CardParlamentarComponent implements OnChanges, OnInit {
   readonly VIEW_SM = 'sm';
   readonly VIEW_MD = 'md';
   readonly VIEW_LG = 'lg';
+  readonly PADRAO_COMISSAO = '-1';
+  readonly MENSAGEM_SEM_ALINHAMENTO = 'Não existem respostas suficientes para o cálculo do alinhamento';
 
   @Input() id: number;
   @Input() parlamentar: Parlamentar;
   @Input() tema: number;
+  @Input() temaSlug: string;
+  @Input() comissao: string;
   @Input() view: any;
   @Output() followChecked = new EventEmitter<boolean>();
 
@@ -116,6 +120,17 @@ export class CardParlamentarComponent implements OnChanges, OnInit {
       alinhamento.temas[0].totalPerguntas
     );
     return maximo > 0 ? 100 / maximo : 0;
+  }
+
+  getCargoByComissaoId(id: string) {
+    const comissaoFiltrada = this.parlamentar.comissoes.filter(com => com.id_comissao_voz === id);
+
+    if (comissaoFiltrada !== undefined && comissaoFiltrada.length > 0) {
+      return comissaoFiltrada[0].cargo;
+    } else {
+      return '';
+    }
+
   }
 
   onAnimationStart(event: AnimationEvent) {

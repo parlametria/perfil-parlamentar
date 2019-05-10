@@ -11,7 +11,7 @@ import { Parlamentar } from '../models/parlamentar.model';
   providedIn: 'root'
 })
 export class ParlamentarService {
-  private url = environment.apiUrl + 'candidatos';
+  private url = environment.apiUrl + 'parlamentares';
 
   constructor(private http: HttpClient) {}
 
@@ -23,9 +23,11 @@ export class ParlamentarService {
     return this.http.get<any[]>(this.url + '/partidos');
   }
 
-  getVotacoesParlamentarPorCpf(cpf: string): Observable<Parlamentar> {
+  getVotacoesParlamentarPorId(id: string): Observable<Parlamentar> {
     return this.http
-      .get<Parlamentar>(this.url + '/' + cpf + '/votacoes')
-      .pipe(map(parlamentar => new Parlamentar(parlamentar)));
+      .get<Parlamentar>(this.url + '/' + id + '/votacoes')
+      .pipe(map(parlamentar => {
+        return new Parlamentar(parlamentar);
+      }));
   }
 }

@@ -5,6 +5,7 @@ const logger = require("heroku-logger");
 const ProposicaoModel = "./postgres/proposicao.js";
 const PerguntaModel = "./postgres/pergunta.js";
 const CandidatoModel = "./postgres/candidato.js";
+const ParlamentarModel = "./postgres/parlamentar.js";
 const TemaModel = "./postgres/tema.js";
 const VotacaoModel = "./postgres/votacao.js";
 const VotacaoUModel = "./postgres/votacaou.js";
@@ -40,6 +41,7 @@ if (!global.hasOwnProperty("models")) {
     tema: sequelize.import(TemaModel),
     usuario: sequelize.import(UsuarioModel),
     candidato: sequelize.import(CandidatoModel),
+    parlamentar: sequelize.import(ParlamentarModel),
     pergunta: sequelize.import(PerguntaModel),
     proposicao: sequelize.import(ProposicaoModel),
     resposta: sequelize.import(RespostaModel),

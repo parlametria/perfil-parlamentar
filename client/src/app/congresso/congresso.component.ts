@@ -19,6 +19,7 @@ export class CongressoComponent implements OnInit {
 
   parlamentares: Parlamentar[];
   view: any;
+  filter: any;
 
   private unsubscribe = new Subject();
 
@@ -54,6 +55,11 @@ export class CongressoComponent implements OnInit {
 
   setView(view: string) {
     this.view = view;
+  }
+
+  search(filter: any) {
+    this.filter = filter;
+    this.alinhamentoService.search(filter);
   }
 
 }

@@ -1,7 +1,3 @@
-/** Express router
- * @module routes/comissoes
- * @requires express
- */
 const express = require("express");
 
 const router = express.Router();
@@ -17,7 +13,9 @@ const ComposicaoComissoes = models.composicaoComissoes;
  * @memberof module:routes/comissoes
  */
 router.get("/", (req, res) => {
-  Comissoes.findAll({})
+  Comissoes.findAll({
+    attributes: ["id_comissao_voz", "sigla", "nome"]
+  })
     .then(comissoes => res.status(200).json(comissoes))
     .catch(err => res.status(400).json(err.message));
 });

@@ -1,19 +1,17 @@
 const express = require("express");
+const expressJwt = require("express-jwt");
+
 const router = express.Router();
-const mongoose = require("mongoose");
-mongoose.set("useFindAndModify", false);
 
 const models = require("../../models/index");
+const keys = require("../../config/keys");
+
 const Usuario = models.usuario;
 const Resposta = models.respostau;
 const Votacao = models.votacaou;
 const Tema = models.temasu;
-const expressJwt = require("express-jwt");
-const keys = require("../../config/keys");
 
-const {
-  formataRespostas,
-  formataVotacoes,
+const {  
   formataRespostasUser
 } = require("../../utils/functions");
 

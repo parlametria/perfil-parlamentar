@@ -1,4 +1,4 @@
-$viewport-negative-height: 340px;
+$viewport-negative-height: 365px;
 
 .pergunta-wrapper {
   @media (min-width: 340px) {
@@ -7,6 +7,10 @@ $viewport-negative-height: 340px;
     display: flex;
     flex-direction: column;
     justify-content: center;
+  }
+
+  @media (min-width: 992px) {
+    height: 40vh;
   }
 }
 

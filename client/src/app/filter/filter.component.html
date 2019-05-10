@@ -23,6 +23,7 @@
         Filtros
       </button>
     </div>
+
     <div
       class="btn-group mr-1 mb-1"
       role="group"
@@ -47,7 +48,7 @@
     <div
       class="btn-group mr-1 mb-1"
       role="group"
-      aria-label="Filtro de Estado"
+      aria-label="Filtro de Partido"
       [hidden]="filtro.partido == FILTRO_PADRAO_PARTIDO"
     >
       <button
@@ -60,6 +61,27 @@
         type="button"
         class="btn btn-primary btn-sm"
         (click)="limparFiltroPartido()"
+      >
+        <span class="icon-x"></span>
+      </button>
+    </div>
+
+    <div
+      class="btn-group mr-1 mb-1"
+      role="group"
+      aria-label="Filtro de Comissão"
+      [hidden]="filtro.comissao == FILTRO_PADRAO_COMISSAO_VALUE"
+    >
+      <button
+        type="button"
+        class="btn btn-primary btn-sm"
+      >
+        {{getComissaoById(filtro.comissao)}}
+      </button>
+      <button
+        type="button"
+        class="btn btn-primary btn-sm"
+        (click)="limparFiltroComissao()"
       >
         <span class="icon-x"></span>
       </button>
@@ -87,6 +109,11 @@
     </div>
 
   </div>
+  <!-- <div class="mt-1">
+    <strong>
+      {{getNomeComissaoById(filtro.comissao)}}
+    </strong>
+  </div> -->
 
 </div>
 
@@ -137,6 +164,22 @@
             [value]="partido"
           >
             {{partido}}
+          </option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <select
+          class="form-control"
+          id="partido"
+          [(ngModel)]="comissaoSelecionada"
+          name="comissao"
+        >
+          <option
+            *ngFor="let comissao of comissoes"
+            [value]="comissao.id_comissao_voz"
+          >
+          {{comissao.nome}} <span *ngIf="comissao.id_comissao_voz !== FILTRO_PADRAO_COMISSAO_VALUE">- {{comissao.sigla}}</span>
           </option>
         </select>
       </div>
