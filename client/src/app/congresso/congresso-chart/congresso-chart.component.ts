@@ -1,11 +1,13 @@
-import { Component, OnChanges, AfterContentInit, Input, SimpleChanges } from '@angular/core';
+import { Component, OnChanges, AfterContentInit, Input, SimpleChanges, ViewEncapsulation } from '@angular/core';
 
 import * as d3 from 'd3';
+import d3Tip from 'd3-tip';
 import * as sl from 'sainte-lague';
 
 import { Parlamentar } from '../../shared/models/parlamentar.model';
 
 @Component({
+  encapsulation: ViewEncapsulation.None,
   selector: 'app-congresso-chart',
   template: '<div id="chart-parlamento" class="mb-4"></div>',
   styleUrls: ['./congresso-chart.component.scss']
@@ -30,6 +32,8 @@ export class CongressoChartComponent implements AfterContentInit, OnChanges {
   r: number;
   length: number;
 
+  tip: any;
+
   constructor() {
     this.length = 0;
   }
@@ -45,6 +49,8 @@ export class CongressoChartComponent implements AfterContentInit, OnChanges {
     };
     this.r = 5.5;
     this.initChart();
+    this.initColor();
+    this.initTooltip();
   }
 
   async ngOnChanges(changes: SimpleChanges) {
@@ -54,22 +60,24 @@ export class CongressoChartComponent implements AfterContentInit, OnChanges {
       changes.parlamentares.currentValue.length
     ) {
       this.parlamentares = JSON.parse(JSON.stringify(changes.parlamentares.currentValue));
-      if (this.parlamentares.length > 0) {
-        if (this.parlamentares.length === 513) {
-          if (!this.drawn) { // Vis parlamento. Primeiro desenho.
-            this.draw();
-            this.paint();
-            this.drawn = true;
+      if (this.svg) {
+        if (this.parlamentares.length > 0) { // Array de parlamentares maior que 0
+          if (this.parlamentares.length === 513) {
+            if (!this.drawn) { // Vis parlamento. Primeiro desenho.
+              this.draw();
+              this.paint();
+              this.drawn = true;
+            } else {
+              this.showArc(); // Vis parlamento. Já desenhado uma vez.
+            }
           } else {
-            this.showArc(); // Vis parlamento. Já desenhado uma vez.
-          }
-        } else {
-          if (!this.drawn) { // Vis Beeswarm. Primeiro desenho.
-            this.drawBeeSwarm();
-            this.showBeeswarm();
-          } else { // Vis Beeswarm. Já desenhado uma vez.
-            this.paint();
-            this.showBeeswarm();
+            if (!this.drawn) { // Vis Beeswarm. Primeiro desenho.
+              this.drawBeeSwarm();
+              this.showBeeswarm();
+            } else { // Vis Beeswarm. Já desenhado uma vez.
+              this.paint();
+              this.showBeeswarm();
+            }
           }
         }
       }
@@ -88,6 +96,13 @@ export class CongressoChartComponent implements AfterContentInit, OnChanges {
     //     this.showBeeswarm();
     //   }
     // }
+  }
+
+  initColor() {
+    this.color = d3
+      .scaleThreshold<string, string>()
+      .domain(['0.0001', '0.3', '0.4', '0.5', '0.6', '0.7', '0.8'])
+      .range(['#848484', '#b54142', '#cf7d79', '#e1b5b5', '#eceff4', '#a8c8dd', '#6ca0bf', '#3e7799']);
   }
 
   initChart() {
@@ -136,9 +151,24 @@ export class CongressoChartComponent implements AfterContentInit, OnChanges {
     }
   }
 
+  private initTooltip() {
+    this.tip = d3Tip()
+      .attr('class', 'd3-tip')
+      .attr('id', 'tooltip')
+      .offset([-10, 0])
+      .html((d: Parlamentar) => {
+        return '<strong>' + this.titleCase(d.nomeEleitoral) + '</strong>' +
+          ' <span class="subtitle">' + d.uf + '/' + d.partido + '</span>' + '<br>' +
+          '<span>' + this.formatAlinhamento(this.getPath(d)) + '</span>';
+      });
+  }
+
   draw() {
     this.g.selectAll('.circle-parlamentar').remove();
     this.g.selectAll('.clusters').remove();
+
+    this.svg.call(this.tip);
+
     const inicioArco = 20;
     const fimArco = 480;
     const alturaArco = 190;
@@ -195,7 +225,8 @@ export class CongressoChartComponent implements AfterContentInit, OnChanges {
           return d.arcY;
         })
         .attr('opacity', 1)
-        .on('mouseover', (d) => console.log(d));
+        .on('mouseover.tip', this.tip.show)
+        .on('mouseout.tip', this.tip.hide);
 
     }
   }
@@ -291,6 +322,20 @@ export class CongressoChartComponent implements AfterContentInit, OnChanges {
     return [radius, largeArcFlag, sweepFlag];
   }
 
+  private titleCase(title: string): string {
+    return title.toLowerCase().split(' ').map((word) => {
+      return word.replace(word[0], word[0].toUpperCase());
+    }).join(' ');
+  }
+
+  private formatAlinhamento(alinhamento: number): string {
+    if (alinhamento === -1) {
+      return '--';
+    } else {
+      return Math.round(alinhamento * 100) + '%';
+    }
+  }
+
   drawClusters() {
     const group = d3.nest()
       .key((d: Parlamentar) => d.partido)
@@ -337,6 +382,8 @@ export class CongressoChartComponent implements AfterContentInit, OnChanges {
     this.g.selectAll('.circle-parlamentar').remove();
     this.g.selectAll('.clusters').remove();
 
+    this.svg.call(this.tip);
+
     const xBeeSwarm = d3.scaleLinear().range([this.width * 0.8, this.width * 0.2]);
 
     const simulation = d3
@@ -360,7 +407,8 @@ export class CongressoChartComponent implements AfterContentInit, OnChanges {
       .attr('fill', 'white')
       .attr('stroke', '#515151')
       .attr('opacity', 1)
-      .on('mouseover', (d) => console.log(d));
+      .on('mouseover.tip', this.tip.show)
+      .on('mouseout.tip', this.tip.hide);
 
   }
 

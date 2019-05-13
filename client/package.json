@@ -31,6 +31,7 @@
     "bootstrap": "^4.2.1",
     "core-js": "^2.5.4",
     "d3": "^5.9.2",
+    "d3-tip": "^0.9.1",
     "ng-lazyload-image": "^5.0.0",
     "ngx-pagination": "^3.2.1",
     "rxjs": "~6.3.3",
