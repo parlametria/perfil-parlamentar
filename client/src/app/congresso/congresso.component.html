@@ -1,7 +1,7 @@
 <app-sticky-footer-navbar></app-sticky-footer-navbar>
 <div class="container pt-2 container-sticky-footer-navbar">
   <app-filter (filterChange)="search($event)"></app-filter>
-  <div class="btn-toolbar">
+  <!-- <div class="btn-toolbar">
     <div class="btn-group">
       <button
         [ngClass]="{'btn btn-light btn-light-icon': true, 'active': view == VIEW_LG}"
@@ -22,7 +22,23 @@
         <span class="icon-th-list"></span>
       </button>
     </div>
+  </div> -->
+
+  <div
+    *ngIf="parlamentares"
+    class="parlamentar-count"
+  >
+    <strong class="strong">{{ parlamentares.length }}</strong>
+    parlamentares
   </div>
+  <div
+    *ngIf="parlamentares"
+    class="parlamentar-count"
+  >
+    <strong class="strong">{{getParlamentaresComAlinhamento()}}</strong>
+    deles com alinhamento definido
+  </div>
+
   <app-congresso-chart
     [parlamentares]="parlamentares"
     [view]="view"

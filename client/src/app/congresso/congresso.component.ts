@@ -55,6 +55,17 @@ export class CongressoComponent implements OnInit, OnDestroy {
       );
   }
 
+  getParlamentaresComAlinhamento() {
+    const filteredParlamentares = this.parlamentares.filter(parlamentar => parlamentar.alinhamento.perguntasIguais >= 3);
+
+    if (filteredParlamentares !== undefined) {
+      return filteredParlamentares.length;
+    } else {
+      return 0;
+    }
+
+  }
+
   setView(view: string) {
     this.view = view;
   }

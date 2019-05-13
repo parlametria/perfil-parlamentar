@@ -54,25 +54,27 @@ export class CongressoChartComponent implements AfterContentInit, OnChanges {
       changes.parlamentares.currentValue.length
     ) {
       this.parlamentares = JSON.parse(JSON.stringify(changes.parlamentares.currentValue));
-
-
       if (this.parlamentares.length > 0) {
         if (this.parlamentares.length === 513) {
-          if (!this.drawn) {
+          if (!this.drawn) { // Vis parlamento. Primeiro desenho.
             this.draw();
             this.paint();
             this.drawn = true;
           } else {
-            this.showArc();
+            this.showArc(); // Vis parlamento. Já desenhado uma vez.
           }
         } else {
-          this.paint();
-          this.showBeeswarm();
+          if (!this.drawn) { // Vis Beeswarm. Primeiro desenho.
+            this.drawBeeSwarm();
+            this.showBeeswarm();
+          } else { // Vis Beeswarm. Já desenhado uma vez.
+            this.paint();
+            this.showBeeswarm();
+          }
         }
-      } else {
-        // TODO: desenhar visualização quando o filtro já está aplicado na URL
       }
     }
+    // Controle de mudança de visualização
     // if (
     //   typeof changes.view !== 'undefined' &&
     //   typeof changes.view.currentValue !== 'undefined' &&
@@ -144,7 +146,6 @@ export class CongressoChartComponent implements AfterContentInit, OnChanges {
     const angulo = 18;
 
     const xBeeSwarm = d3.scaleLinear().range([this.width * 0.8, this.width * 0.2]);
-    this.axis.call(d3.axisBottom(xBeeSwarm).ticks(7, '.0%'));
 
     const simulation = d3
       .forceSimulation(this.parlamentares)
@@ -152,49 +153,12 @@ export class CongressoChartComponent implements AfterContentInit, OnChanges {
       .force('y', d3.forceY(this.height * 0.2))
       .force('collide', d3.forceCollide(this.r + 1))
       .stop();
+
     for (let i = 0; i < 120; ++i) {
       simulation.tick();
     }
 
-    // const group = d3.nest()
-    //   .key((d: Parlamentar) => d.partido)
-    //   .entries(this.parlamentares);
-    // const children = {
-    //   children: group.map(g => {
-    //     return {
-    //       children: g.values
-    //     };
-    //   })
-    // };
-
-    // const clusters = d3.pack()
-    //   .size([this.width, this.height * 0.8])
-    //   .padding(0)(d3.hierarchy(children).sum(d => 1));
-
-    // const leaves = clusters.leaves();
-    // leaves.map(l => {
-    //   const s = 'idParlamentarVoz';
-    //   const i = this.parlamentares.findIndex(p => p.idParlamentarVoz === l.data[s]);
-    //   this.parlamentares[i].clusterX = l.x;
-    //   this.parlamentares[i].clusterY = l.y;
-    // });
-
-    // this.svg.selectAll('.clusters')
-    //   .attr('opacity', 0);
-
-    // this.clusters = this.svg.append('g')
-    //   .attr('transform', 'translate(' + this.margin.left + ',' + this.margin.top + ')')
-    //   .attr('fill', 'none')
-    //   .attr('stroke-width', 'none')
-    //   .attr('stroke', '#ccc')
-    //   .attr('class', 'clusters')
-    //   .selectAll('circle')
-    //   .data(clusters.descendants().filter(d => d.height === 1))
-    //   .join('circle')
-    //   .attr('cx', d => d.x)
-    //   .attr('cy', d => d.y)
-    //   .attr('r', d => d.r)
-    //   .attr('opacity', 0);
+    // this.drawClusters();
 
     const camara = this.getFilas(this.parlamentares);
     for (let i = 0; i < 13; i++) {
@@ -281,6 +245,7 @@ export class CongressoChartComponent implements AfterContentInit, OnChanges {
       .delay(250)
       .attr('cx', d => d.x)
       .attr('cy', d => d.y)
+      .attr('fill', (d) => this.color(this.getPath(d)))
       .attr('opacity', d => this.parlamentares.filter(parlamentar =>
         d.idParlamentarVoz === parlamentar.idParlamentarVoz).length > 0 ? 1 : 0.2);
   }
@@ -324,6 +289,79 @@ export class CongressoChartComponent implements AfterContentInit, OnChanges {
     const sweepFlag = +(!(twedgev > 0)); // ab_cotangent > 1;
 
     return [radius, largeArcFlag, sweepFlag];
+  }
+
+  drawClusters() {
+    const group = d3.nest()
+      .key((d: Parlamentar) => d.partido)
+      .entries(this.parlamentares);
+    const children = {
+      children: group.map(g => {
+        return {
+          children: g.values
+        };
+      })
+    };
+
+    const clusters = d3.pack()
+      .size([this.width, this.height * 0.8])
+      .padding(0)(d3.hierarchy(children).sum(d => 1));
+
+    const leaves = clusters.leaves();
+    leaves.map(l => {
+      const s = 'idParlamentarVoz';
+      const i = this.parlamentares.findIndex(p => p.idParlamentarVoz === l.data[s]);
+      this.parlamentares[i].clusterX = l.x;
+      this.parlamentares[i].clusterY = l.y;
+    });
+
+    this.svg.selectAll('.clusters')
+      .attr('opacity', 0);
+
+    this.clusters = this.svg.append('g')
+      .attr('transform', 'translate(' + this.margin.left + ',' + this.margin.top + ')')
+      .attr('fill', 'none')
+      .attr('stroke-width', 'none')
+      .attr('stroke', '#ccc')
+      .attr('class', 'clusters')
+      .selectAll('circle')
+      .data(clusters.descendants().filter(d => d.height === 1))
+      .join('circle')
+      .attr('cx', d => d.x)
+      .attr('cy', d => d.y)
+      .attr('r', d => d.r)
+      .attr('opacity', 0);
+  }
+
+  drawBeeSwarm() {
+    this.g.selectAll('.circle-parlamentar').remove();
+    this.g.selectAll('.clusters').remove();
+
+    const xBeeSwarm = d3.scaleLinear().range([this.width * 0.8, this.width * 0.2]);
+
+    const simulation = d3
+      .forceSimulation(this.parlamentares)
+      .force('x', d3.forceX((d: any) => xBeeSwarm(this.getPath(d))).strength(1))
+      .force('y', d3.forceY(this.height * 0.2))
+      .force('collide', d3.forceCollide(this.r + 1))
+      .stop();
+
+    for (let i = 0; i < 120; ++i) {
+      simulation.tick();
+    }
+
+    this.circles = this.g.selectAll()
+      .data(this.parlamentares)
+      .enter()
+      .append('circle')
+      .attr('id', (d) => 'circle-parlamentar-' + d.idParlamentarVoz)
+      .attr('class', 'circle-parlamentar')
+      .attr('r', this.r)
+      .attr('fill', 'white')
+      .attr('stroke', '#515151')
+      .attr('opacity', 1)
+      .on('mouseover', (d) => console.log(d));
+
   }
 
 }
