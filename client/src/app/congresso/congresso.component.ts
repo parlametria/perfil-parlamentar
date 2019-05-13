@@ -56,14 +56,30 @@ export class CongressoComponent implements OnInit, OnDestroy {
   }
 
   getParlamentaresComAlinhamento() {
-    const filteredParlamentares = this.parlamentares.filter(parlamentar => parlamentar.alinhamento.perguntasIguais >= 3);
+    if (this.parlamentares !== undefined && this.parlamentares.length > 0) {
+      const temaIndex = this.parlamentares[0].alinhamento.temas.findIndex(res => res.tema_id === this.filter.tema);
 
-    if (filteredParlamentares !== undefined) {
-      return filteredParlamentares.length;
+      let filteredParlamentares;
+      if (temaIndex !== undefined && temaIndex !== -1) {
+        filteredParlamentares = this.parlamentares.filter(parlamentar =>
+          parlamentar.alinhamento.temas[temaIndex].perguntasIguais >= 3
+        );
+
+      } else {
+        filteredParlamentares = this.parlamentares.filter(parlamentar =>
+          parlamentar.alinhamento.perguntasIguais >= 3
+        );
+      }
+
+      if (filteredParlamentares !== undefined) {
+        return filteredParlamentares.length;
+      } else {
+        return 0;
+      }
+
     } else {
       return 0;
     }
-
   }
 
   setView(view: string) {

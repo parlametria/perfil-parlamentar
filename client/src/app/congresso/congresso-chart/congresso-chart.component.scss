@@ -33,3 +33,17 @@
     top: 100%;
     left: 0;
 }
+
+@media (min-width: 992px) { 
+    .parlamento {
+        padding-left: 150px;
+        padding-right: 150px;
+    }
+}
+
+@media (min-width: 1200px) { 
+    .parlamento {
+        padding-left: 200px;
+        padding-right: 200px;
+    }
+}

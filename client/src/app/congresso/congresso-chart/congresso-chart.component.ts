@@ -9,7 +9,7 @@ import { Parlamentar } from '../../shared/models/parlamentar.model';
 @Component({
   encapsulation: ViewEncapsulation.None,
   selector: 'app-congresso-chart',
-  template: '<div id="chart-parlamento" class="mb-4"></div>',
+  template: '<div id="chart-parlamento" class="parlamento my-2"></div>',
   styleUrls: ['./congresso-chart.component.scss']
 })
 export class CongressoChartComponent implements AfterContentInit, OnChanges {
@@ -18,6 +18,7 @@ export class CongressoChartComponent implements AfterContentInit, OnChanges {
   @Input() filter: any;
 
   drawn = false;
+  temaAtual: number;
 
   svg: any;
   g: any;
@@ -49,11 +50,11 @@ export class CongressoChartComponent implements AfterContentInit, OnChanges {
     };
     this.r = 5.5;
     this.initChart();
-    this.initColor();
     this.initTooltip();
+    this.temaAtual = this.filter.tema;
   }
 
-  async ngOnChanges(changes: SimpleChanges) {
+  ngOnChanges(changes: SimpleChanges) {
     if (
       typeof changes.parlamentares !== 'undefined' &&
       typeof changes.parlamentares.currentValue !== 'undefined' &&
@@ -61,6 +62,12 @@ export class CongressoChartComponent implements AfterContentInit, OnChanges {
     ) {
       this.parlamentares = JSON.parse(JSON.stringify(changes.parlamentares.currentValue));
       if (this.svg) {
+
+        if (this.filter.tema !== this.temaAtual) { // redesenhe a visualização se o tema do alinhamento for alterado
+          this.temaAtual = this.filter.tema;
+          this.drawn = false;
+        }
+
         if (this.parlamentares.length > 0) { // Array de parlamentares maior que 0
           if (this.parlamentares.length === 513) {
             if (!this.drawn) { // Vis parlamento. Primeiro desenho.
@@ -98,13 +105,6 @@ export class CongressoChartComponent implements AfterContentInit, OnChanges {
     // }
   }
 
-  initColor() {
-    this.color = d3
-      .scaleThreshold<string, string>()
-      .domain(['0.0001', '0.3', '0.4', '0.5', '0.6', '0.7', '0.8'])
-      .range(['#848484', '#b54142', '#cf7d79', '#e1b5b5', '#eceff4', '#a8c8dd', '#6ca0bf', '#3e7799']);
-  }
-
   initChart() {
     this.svg = d3
       .select('#chart-parlamento')
@@ -112,7 +112,7 @@ export class CongressoChartComponent implements AfterContentInit, OnChanges {
       .attr('version', '1.1')
       .attr('xmlns:svg', 'http://www.w3.org/2000/svg')
       .attr('xmlns', 'http://www.w3.org/2000/svg')
-      .attr('viewBox', '0 0 ' + this.width + ' ' + this.height);
+      .attr('viewBox', '0 0 ' + this.width + ' ' + this.height / 2);
 
     this.g = this.svg
       .append('g')
@@ -180,7 +180,7 @@ export class CongressoChartComponent implements AfterContentInit, OnChanges {
     const simulation = d3
       .forceSimulation(this.parlamentares)
       .force('x', d3.forceX((d: any) => xBeeSwarm(this.getPath(d))).strength(1))
-      .force('y', d3.forceY(this.height * 0.2))
+      .force('y', d3.forceY(this.height * 0.1))
       .force('collide', d3.forceCollide(this.r + 1))
       .stop();
 
@@ -286,7 +286,7 @@ export class CongressoChartComponent implements AfterContentInit, OnChanges {
     const camara = new Array();
 
     const grupos = d3.nest()
-      .key((d: Parlamentar) => this.color(d.alinhamento.alinhamento))
+      .key((d: Parlamentar) => this.color(this.getPath(d)))
       .entries(parlamentares);
 
     const distribuicao = grupos.map(g => g.values.length);
@@ -389,7 +389,7 @@ export class CongressoChartComponent implements AfterContentInit, OnChanges {
     const simulation = d3
       .forceSimulation(this.parlamentares)
       .force('x', d3.forceX((d: any) => xBeeSwarm(this.getPath(d))).strength(1))
-      .force('y', d3.forceY(this.height * 0.2))
+      .force('y', d3.forceY(this.height * 0.1))
       .force('collide', d3.forceCollide(this.r + 1))
       .stop();
 
