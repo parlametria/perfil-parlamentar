@@ -2,7 +2,7 @@ import { Component, OnChanges, AfterContentInit, Input, SimpleChanges, ViewEncap
 
 import * as d3 from 'd3';
 import d3Tip from 'd3-tip';
-import * as sl from 'sainte-lague';
+import * as hn from 'hare-niemeyer';
 
 import { Parlamentar } from '../../shared/models/parlamentar.model';
 
@@ -132,6 +132,18 @@ export class CongressoChartComponent implements AfterContentInit, OnChanges {
       .attr('transform', 'translate(0, ' + (this.height - this.margin.bottom) + ')');
   }
 
+  private initTooltip() {
+    this.tip = d3Tip()
+      .attr('class', 'd3-tip')
+      .attr('id', 'tooltip')
+      .offset([-10, 0])
+      .html((d: Parlamentar) => {
+        return '<strong>' + this.titleCase(d.nomeEleitoral) + '</strong>' +
+          ' <span class="subtitle">' + d.uf + '/' + d.partido + '</span>' + '<br>' +
+          '<span>' + this.formatAlinhamento(this.getPath(d)) + '</span>';
+      });
+  }
+
   getPath(d: any) {
     let temaIndex;
     temaIndex = this.parlamentares[0].alinhamento.temas.findIndex(res => res.tema_id === this.filter.tema);
@@ -151,17 +163,6 @@ export class CongressoChartComponent implements AfterContentInit, OnChanges {
     }
   }
 
-  private initTooltip() {
-    this.tip = d3Tip()
-      .attr('class', 'd3-tip')
-      .attr('id', 'tooltip')
-      .offset([-10, 0])
-      .html((d: Parlamentar) => {
-        return '<strong>' + this.titleCase(d.nomeEleitoral) + '</strong>' +
-          ' <span class="subtitle">' + d.uf + '/' + d.partido + '</span>' + '<br>' +
-          '<span>' + this.formatAlinhamento(this.getPath(d)) + '</span>';
-      });
-  }
 
   draw() {
     this.g.selectAll('.circle-parlamentar').remove();
@@ -281,61 +282,6 @@ export class CongressoChartComponent implements AfterContentInit, OnChanges {
         d.idParlamentarVoz === parlamentar.idParlamentarVoz).length > 0 ? 1 : 0.2);
   }
 
-  getFilas(parlamentares: Parlamentar[]) {
-    const filas = [60, 57, 53, 50, 46, 43, 39, 36, 32, 29, 25, 21, 22];
-    const camara = new Array();
-
-    const grupos = d3.nest()
-      .key((d: Parlamentar) => this.color(this.getPath(d)))
-      .entries(parlamentares);
-
-    const distribuicao = grupos.map(g => g.values.length);
-
-    for (const f of filas) {
-      const g = sl(distribuicao, f);
-
-      const fila = [];
-      for (let j = 0; j < grupos.length; j++) {
-        fila.push(...grupos[j].values.splice(0, g[j]));
-      }
-      camara.push(fila);
-    }
-
-    return camara;
-  }
-
-  // [pA1, pA2], [pB1, pB2], [pP1, pP2]
-  arcviaslope([pA1, pA2], [pB1, pB2], [pP1, pP2]) {
-    // vectors t from P -> A, v from A -> B
-    const [t1, t2] = [pA1 - pP1, pA2 - pP2];
-    const [v1, v2] = [pB1 - pA1, pB2 - pA2];
-
-    const tdotv = t1 * v1 + t2 * v2;
-    const twedgev = t1 * v2 - t2 * v1;
-    const tvCtg = tdotv / twedgev;
-    const vv = v1 * v1 + v2 * v2;
-
-    const radius = (1 / 2) * Math.sqrt(vv * (1 + tvCtg * tvCtg));
-    const largeArcFlag = +(tdotv > 0);
-    const sweepFlag = +(!(twedgev > 0)); // ab_cotangent > 1;
-
-    return [radius, largeArcFlag, sweepFlag];
-  }
-
-  private titleCase(title: string): string {
-    return title.toLowerCase().split(' ').map((word) => {
-      return word.replace(word[0], word[0].toUpperCase());
-    }).join(' ');
-  }
-
-  private formatAlinhamento(alinhamento: number): string {
-    if (alinhamento === -1) {
-      return '--';
-    } else {
-      return Math.round(alinhamento * 100) + '%';
-    }
-  }
-
   drawClusters() {
     const group = d3.nest()
       .key((d: Parlamentar) => d.partido)
@@ -410,6 +356,61 @@ export class CongressoChartComponent implements AfterContentInit, OnChanges {
       .on('mouseover.tip', this.tip.show)
       .on('mouseout.tip', this.tip.hide);
 
+  }
+
+  private getFilas(parlamentares: Parlamentar[]) {
+    const filas = [60, 57, 53, 50, 46, 43, 39, 36, 32, 29, 25, 21, 22];
+    const camara = new Array();
+
+    const grupos = d3.nest()
+      .key((d: Parlamentar) => this.color(this.getPath(d)))
+      .entries(parlamentares);
+
+    const distribuicao = grupos.map(g => g.values.length);
+
+    for (const f of filas) {
+      const g = hn(distribuicao, f);
+
+      const fila = [];
+      for (let j = 0; j < grupos.length; j++) {
+        fila.push(...grupos[j].values.splice(0, g[j]));
+      }
+      camara.push(fila);
+    }
+
+    return camara;
+  }
+
+  // [pA1, pA2], [pB1, pB2], [pP1, pP2]
+  private arcviaslope([pA1, pA2], [pB1, pB2], [pP1, pP2]) {
+    // vectors t from P -> A, v from A -> B
+    const [t1, t2] = [pA1 - pP1, pA2 - pP2];
+    const [v1, v2] = [pB1 - pA1, pB2 - pA2];
+
+    const tdotv = t1 * v1 + t2 * v2;
+    const twedgev = t1 * v2 - t2 * v1;
+    const tvCtg = tdotv / twedgev;
+    const vv = v1 * v1 + v2 * v2;
+
+    const radius = (1 / 2) * Math.sqrt(vv * (1 + tvCtg * tvCtg));
+    const largeArcFlag = +(tdotv > 0);
+    const sweepFlag = +(!(twedgev > 0)); // ab_cotangent > 1;
+
+    return [radius, largeArcFlag, sweepFlag];
+  }
+
+  private titleCase(title: string): string {
+    return title.toLowerCase().split(' ').map((word) => {
+      return word.replace(word[0], word[0].toUpperCase());
+    }).join(' ');
+  }
+
+  private formatAlinhamento(alinhamento: number): string {
+    if (alinhamento === -1) {
+      return '--';
+    } else {
+      return Math.round(alinhamento * 100) + '%';
+    }
   }
 
 }
