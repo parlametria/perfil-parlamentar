@@ -27,6 +27,7 @@ export class CongressoChartComponent implements AfterContentInit, OnChanges {
   axis: any;
   clusters: any;
 
+  colorScheme: Array<string>;
   color: any;
   width: number;
   height: number;
@@ -38,6 +39,7 @@ export class CongressoChartComponent implements AfterContentInit, OnChanges {
 
   constructor(private router: Router) {
     this.length = 0;
+    this.colorScheme = ['#2D2D2D', '#b54142', '#c17a66', '#c6ac8d', '#6B92A5', '#448BB5'];
   }
 
   ngAfterContentInit() {
@@ -127,7 +129,7 @@ export class CongressoChartComponent implements AfterContentInit, OnChanges {
       // .domain(['0', '0.3', '0.4', '0.5', '0.6', '0.7', '0.8'])
       // .range(['#848484', '#b54142', '#cf7d79', '#e1b5b5', '#eceff4', '#a8c8dd', '#6ca0bf', '#3e7799']);
       .domain(['0', '0.3', '0.5', '0.6', '0.8'])
-      .range(['#2D2D2D', '#b54142', '#c17a66', '#c6ac8d', '#6B92A5', '#448BB5']);
+      .range(this.colorScheme);
 
     this.axis = this.svg
       .append('g')
@@ -370,17 +372,23 @@ export class CongressoChartComponent implements AfterContentInit, OnChanges {
   }
 
   private getFilas(parlamentares: Parlamentar[]) {
-    const filas = [60, 57, 53, 50, 46, 43, 39, 36, 32, 29, 25, 21, 22];
+    const filas = [60, 57, 53, 50, 46, 43, 39, 36, 33, 29, 25, 23, 19];
     const camara = new Array();
 
     const grupos = d3.nest()
       .key((d: Parlamentar) => this.color(this.getPath(d)))
       .entries(parlamentares);
 
+    const colors = this.colorScheme.slice().reverse();
+
+    grupos.sort((a, b) => {
+      return colors.indexOf(a.key) - colors.indexOf(b.key);
+    });
+
     const distribuicao = grupos.map(g => g.values.length);
 
-    for (const f of filas) {
-      const g = hn(distribuicao, f);
+    for (let f = 0; f < filas.length - 1; f++) {
+      const g = hn(distribuicao, filas[f]);
 
       const fila = [];
       for (let j = 0; j < grupos.length; j++) {
@@ -388,6 +396,15 @@ export class CongressoChartComponent implements AfterContentInit, OnChanges {
       }
       camara.push(fila);
     }
+
+    // Preenche a última fila com os elementos restantes
+    const ultimaFila = [];
+
+    for (const grupo of grupos) {
+      const a = JSON.parse(JSON.stringify(grupos));
+      ultimaFila.push(...grupo.values.splice(0, grupo.values.length));
+    }
+    camara.push(ultimaFila);
 
     return camara;
   }
