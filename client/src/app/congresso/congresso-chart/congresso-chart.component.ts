@@ -1,4 +1,5 @@
 import { Component, OnChanges, AfterContentInit, Input, SimpleChanges, ViewEncapsulation } from '@angular/core';
+import { Router } from '@angular/router';
 
 import * as d3 from 'd3';
 import d3Tip from 'd3-tip';
@@ -35,7 +36,7 @@ export class CongressoChartComponent implements AfterContentInit, OnChanges {
 
   tip: any;
 
-  constructor() {
+  constructor(private router: Router) {
     this.length = 0;
   }
 
@@ -230,7 +231,11 @@ export class CongressoChartComponent implements AfterContentInit, OnChanges {
         })
         .attr('opacity', 1)
         .on('mouseover.tip', this.tip.show)
-        .on('mouseout.tip', this.tip.hide);
+        .on('mouseout.tip', this.tip.hide)
+        .on('dblclick', (d) => {
+          this.g.selectAll('circle-parlamentar').call(this.tip.hide); // apaga tooltips ativos
+          this.router.navigate(['/parlamentar/' + d.idParlamentarVoz]);
+        });
 
     }
   }
@@ -356,7 +361,11 @@ export class CongressoChartComponent implements AfterContentInit, OnChanges {
       .attr('fill', 'white')
       .attr('opacity', 1)
       .on('mouseover.tip', this.tip.show)
-      .on('mouseout.tip', this.tip.hide);
+      .on('mouseout.tip', this.tip.hide)
+      .on('dblclick', (d) => {
+        this.g.selectAll('circle-parlamentar').call(this.tip.hide); // apaga tooltips ativos
+        this.router.navigate(['/parlamentar/' + d.idParlamentarVoz]);
+      });
 
   }
 
