@@ -4,14 +4,15 @@
   <div [hidden]="isLoading">
     <app-filter (filterChange)="search($event)"></app-filter>
 
-      <button
-        class="btn btn-primary btn-congresso"
+    <div class="text-right">
+      <a
+        class="text-link"
         [routerLink]="['/congresso']"
       >
         <span class="icon-sliders"></span>
         Explorar
-      </button>    
-
+    </a>
+    </div>
     <div class="d-flex justify-content-between my-3">
       <div class="parlamentar-count">
         <strong class="strong">{{ parlamentares.length }}</strong>
