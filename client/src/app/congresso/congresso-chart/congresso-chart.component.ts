@@ -123,8 +123,10 @@ export class CongressoChartComponent implements AfterContentInit, OnChanges {
 
     this.color = d3
       .scaleThreshold<string, string>()
-      .domain(['0.0001', '0.3', '0.4', '0.5', '0.6', '0.7', '0.8'])
-      .range(['#848484', '#b54142', '#cf7d79', '#e1b5b5', '#eceff4', '#a8c8dd', '#6ca0bf', '#3e7799']);
+      // .domain(['0', '0.3', '0.4', '0.5', '0.6', '0.7', '0.8'])
+      // .range(['#848484', '#b54142', '#cf7d79', '#e1b5b5', '#eceff4', '#a8c8dd', '#6ca0bf', '#3e7799']);
+      .domain(['0', '0.3', '0.5', '0.6', '0.8'])
+      .range(['#2D2D2D', '#b54142', '#c17a66', '#c6ac8d', '#6B92A5', '#448BB5']);
 
     this.axis = this.svg
       .append('g')
@@ -216,7 +218,8 @@ export class CongressoChartComponent implements AfterContentInit, OnChanges {
         .attr('class', 'circle-parlamentar')
         .attr('r', this.r)
         .attr('fill', 'white')
-        .attr('stroke', '#515151')
+        // .attr('stroke', '#515151')
+        // .attr('stroke', (d) => (this.color(this.getPath(d)) === '#eceff4') ? '#9B9B9B' : this.color(this.getPath(d)))
         .attr('cx', (d, z) => {
           d.arcX = arc.node().getPointAtLength(xArc(z)).x;
           return d.arcX;
@@ -351,7 +354,6 @@ export class CongressoChartComponent implements AfterContentInit, OnChanges {
       .attr('class', 'circle-parlamentar')
       .attr('r', this.r)
       .attr('fill', 'white')
-      .attr('stroke', '#515151')
       .attr('opacity', 1)
       .on('mouseover.tip', this.tip.show)
       .on('mouseout.tip', this.tip.hide);
