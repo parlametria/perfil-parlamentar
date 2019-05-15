@@ -39,7 +39,7 @@ export class CongressoChartComponent implements AfterContentInit, OnChanges {
 
   constructor(private router: Router) {
     this.length = 0;
-    this.colorScheme = ['#2D2D2D', '#b54142', '#c17a66', '#c6ac8d', '#6B92A5', '#448BB5'];
+    this.colorScheme = ['#eceff4', '#b54142', '#c17a66', '#c6ac8d', '#6B92A5', '#247FB5'];
   }
 
   ngAfterContentInit() {
@@ -51,7 +51,7 @@ export class CongressoChartComponent implements AfterContentInit, OnChanges {
       top: 60,
       bottom: 20
     };
-    this.r = 5.5;
+    this.r = 5;
     this.initChart();
     this.initTooltip();
     this.temaAtual = this.filter.tema;
@@ -168,7 +168,6 @@ export class CongressoChartComponent implements AfterContentInit, OnChanges {
     }
   }
 
-
   draw() {
     this.g.selectAll('.circle-parlamentar').remove();
     this.g.selectAll('.clusters').remove();
@@ -222,7 +221,7 @@ export class CongressoChartComponent implements AfterContentInit, OnChanges {
         .attr('r', this.r)
         .attr('fill', 'white')
         // .attr('stroke', '#515151')
-        // .attr('stroke', (d) => (this.color(this.getPath(d)) === '#eceff4') ? '#9B9B9B' : this.color(this.getPath(d)))
+        .attr('stroke', (d) => (this.color(this.getPath(d)) === '#eceff4') ? '#9B9B9B' : this.color(this.getPath(d)))
         .attr('cx', (d, z) => {
           d.arcX = arc.node().getPointAtLength(xArc(z)).x;
           return d.arcX;
@@ -361,6 +360,7 @@ export class CongressoChartComponent implements AfterContentInit, OnChanges {
       .attr('class', 'circle-parlamentar')
       .attr('r', this.r)
       .attr('fill', 'white')
+      .attr('stroke', (d) => (this.color(this.getPath(d)) === '#eceff4') ? '#9B9B9B' : this.color(this.getPath(d)))
       .attr('opacity', 1)
       .on('mouseover.tip', this.tip.show)
       .on('mouseout.tip', this.tip.hide)
