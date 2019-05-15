@@ -10,8 +10,16 @@ export class ProgressComponent implements OnInit {
   @Input() min: number;
   @Input() max: number;
   @Input() showAxis: boolean;
+  @Input() class: string;
 
   constructor() {}
 
   ngOnInit() {}
+
+  getClass(): string[] {
+    const classes = ['progress-bar', this.class];
+
+    return classes;
+  }
+
 }

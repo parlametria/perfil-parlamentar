@@ -1,9 +1,9 @@
 <div class="progress progress-bordered">
   <div
-    class="progress-bar bg-success"
     role="progressbar"
     [ngStyle]="{'width': (value * 100)+'%'}"
     [attr.aria-valuenow]="value"
+    [ngClass]="getClass()"
     [attr.aria-valuemin]="min"
     [attr.aria-valuemax]="max"
   ></div>
