@@ -245,7 +245,6 @@ export class CongressoChartComponent implements AfterContentInit, OnChanges {
     this.g.selectAll('.circle-parlamentar')
       .transition()
       .duration((d, i) => i * 5)
-      .delay(500)
       .attr('fill', (d) => this.color(this.getPath(d)))
       .attr('opacity', d => this.parlamentares.filter(parlamentar =>
         d.idParlamentarVoz === parlamentar.idParlamentarVoz).length > 0 ? 1 : 0.2);
