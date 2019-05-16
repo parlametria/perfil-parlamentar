@@ -119,7 +119,7 @@ export class ParlamentarComponent implements OnInit, OnDestroy {
   filtraProposicoesPorTema(temaId: string) {
     const temaSlug = this.temaService.getTemaSlugById(this.temas, Number(temaId));
 
-    this.router.navigate([], { queryParams: { tema: temaSlug } });
+    this.router.navigate([], { queryParams: { tema: temaSlug }, replaceUrl: true });
 
     if (temaId === undefined || temaId === this.ID_PADRAO_TEMA_TODOS) {
       this.proposicoesFiltradas = this.proposicoes;
