@@ -147,7 +147,7 @@ export class CardParlamentarComponent implements OnChanges, OnInit {
     }
   }
 
-  getClass() {
+  getClassAlinhamento() {
     if (this.alinhamento.perguntasIguais < 3) {
       return 'alinhamento-indefinido';
     } else {

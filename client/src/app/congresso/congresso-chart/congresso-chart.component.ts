@@ -233,6 +233,12 @@ export class CongressoChartComponent implements AfterContentInit, OnChanges {
         .attr('opacity', 1)
         .on('mouseover.tip', this.tip.show)
         .on('mouseout.tip', this.tip.hide)
+        .on('mouseover.circle', (d, index, n) => {
+          this.highlightCircle(n[index]);
+        })
+        .on('mouseout.circle', (d, index, n) => {
+          this.standardizeCircle(n[index]);
+        })
         .on('dblclick', (d) => {
           this.g.selectAll('circle-parlamentar').call(this.tip.hide); // apaga tooltips ativos
           this.router.navigate(['/parlamentar/' + d.idParlamentarVoz]);
@@ -363,11 +369,28 @@ export class CongressoChartComponent implements AfterContentInit, OnChanges {
       .attr('opacity', 1)
       .on('mouseover.tip', this.tip.show)
       .on('mouseout.tip', this.tip.hide)
+      .on('mouseover.circle', (d, index, n) => {
+        this.highlightCircle(n[index]);
+      })
+      .on('mouseout.circle', (d, index, n) => {
+        this.standardizeCircle(n[index]);
+      })
       .on('dblclick', (d) => {
         this.g.selectAll('circle-parlamentar').call(this.tip.hide); // apaga tooltips ativos
         this.router.navigate(['/parlamentar/' + d.idParlamentarVoz]);
       });
 
+  }
+
+  private highlightCircle(circle) {
+    d3.select(circle)
+      .attr('r', this.r * 1.4)
+      .style('cursor', 'pointer');
+  }
+
+  private standardizeCircle(circle) {
+    d3.select(circle)
+      .attr('r', this.r);
   }
 
   private getFilas(parlamentares: Parlamentar[]) {
