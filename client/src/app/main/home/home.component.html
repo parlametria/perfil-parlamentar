@@ -24,7 +24,7 @@
             Vamos lá
           </a>
         </div>
-        <div class="mt-3 text-center">
+        <div *ngIf="!isLoggedIn" class="mt-3 text-center">
           <a
             class="btn btn-link"
             [routerLink]="['/usuario/login']"
