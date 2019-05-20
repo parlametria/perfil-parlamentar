@@ -49,6 +49,7 @@ export class AlinhamentoComponent implements OnInit, OnDestroy {
             .subscribe(
               parlamentares => {
                 this.parlamentares = parlamentares;
+                this.eventScroll();
                 if (this.parlamentares.length > 0) {
                   this.isLoading = false;
                 }
@@ -88,5 +89,11 @@ export class AlinhamentoComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.unsubscribe.next();
     this.unsubscribe.complete();
+  }
+
+  // Evento para carregar a foto dos primeiros parlamentares da lista
+  private eventScroll() {
+    window.scrollTo(window.scrollX, window.scrollY - 1);
+    window.scrollTo(window.scrollX, window.scrollY + 1);
   }
 }
