@@ -114,13 +114,15 @@ body {
 .badge-white {
   background-color: $white;
   color: $black;
-  border: 1px solid $black;
+  border: 1px solid #363638;
 }
 
-.badge-green {
-  background-color: $green;
+.badge-gray {
+  background-color: #B3B4B6;
+  border: 1px solid #363638;
 }
 
-.badge-purple {
-  background-color: $purple;
+.badge-dark-gray {
+  background-color: #545356;
+  border: 1px solid #363638;
 }
