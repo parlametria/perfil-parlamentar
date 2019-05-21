@@ -95,6 +95,7 @@
             <span
               *ngIf="comissao !== PADRAO_COMISSAO"
               class="badge badge-dark align-middle"
+              [ngClass]="getClassComissao()"
             >
               {{getCargoByComissaoId(comissao)}}
             </span>

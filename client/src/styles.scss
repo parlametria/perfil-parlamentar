@@ -110,3 +110,17 @@ body {
   }
 
 }
+
+.badge-white {
+  background-color: $white;
+  color: $black;
+  border: 1px solid $black;
+}
+
+.badge-green {
+  background-color: $green;
+}
+
+.badge-purple {
+  background-color: $purple;
+}

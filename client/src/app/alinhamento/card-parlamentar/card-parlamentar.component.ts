@@ -17,6 +17,7 @@ import {
 } from '@angular/animations';
 
 import { Parlamentar } from 'src/app/shared/models/parlamentar.model';
+import { getClassCargo } from 'src/app/shared/functions/comissao';
 
 @Component({
   selector: 'app-card-parlamentar',
@@ -131,6 +132,12 @@ export class CardParlamentarComponent implements OnChanges, OnInit {
       return '';
     }
 
+  }
+
+  // Define a classe que será aplicada ao badge que indica o cargo do parlamentar na comissao
+  getClassComissao() {
+    const cargo = this.getCargoByComissaoId(this.comissao);
+    return getClassCargo(cargo);
   }
 
   onAnimationStart(event: AnimationEvent) {
