@@ -1,0 +1,35 @@
+<div class="sticky-footer-navbar">
+  <ul class="nav nav-pills nav-fill">
+    <li class="nav-item">
+      <a
+        [routerLink]="['/']"
+        [routerLinkActive]="'active'"
+        [routerLinkActiveOptions]="{exact: true}"
+        class="nav-link sticky-footer-navbar-link"
+        href="#"
+      >
+        Início
+      </a>
+    </li>
+    <li class="nav-item">
+      <a
+        [routerLink]="['/questionario']"
+        [routerLinkActive]="'active'"
+        class="nav-link sticky-footer-navbar-link"
+        href="#"
+      >
+        Você
+      </a>
+    </li>
+    <li class="nav-item">
+      <a
+        [routerLink]="['/alinhamento']"
+        [routerLinkActive]="'active'"
+        class="nav-link sticky-footer-navbar-link"
+        href="#"
+      >
+        Resultado
+      </a>
+    </li>
+  </ul>
+</div>

@@ -5,20 +5,25 @@ const path = require("path");
 const logger = require("heroku-logger");
 const cors = require("cors");
 const passport = require("passport");
+const compression = require("compression");
+const forceSsl = require('force-ssl-heroku');
 
 const perguntas = require("./routes/api/perguntas");
-const candidatos = require("./routes/api/candidatos");
-const respostas = require("./routes/api/respostas");
 const auth = require("./routes/api/auth");
 const usuarios = require("./routes/api/usuarios");
+const temas = require("./routes/api/temas");
+const alinhamento = require("./routes/api/alinhamento");
 const comissoes = require("./routes/api/comissoes");
 const parlamentares = require("./routes/api/parlamentares");
 
 const app = express();
+app.use(forceSsl);
+
+app.use(compression());
 var db = require("./models/index");
 
 const corsOptions = {
-  origin: ['http://localhost:3000', 'http://localhost:8080', 'https://front.dev.leggo.org.br', 'https://leggo.org.br'],
+  origin: ['http://localhost:4200', 'http://localhost:8080', 'https://front.dev.leggo.org.br', 'https://leggo.org.br'],
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
   credentials: true,
   exposedHeaders: ["authorization"]
@@ -42,10 +47,10 @@ db.sequelize
 
 // Usar as rotas
 app.use("/api/perguntas", perguntas);
-app.use("/api/candidatos", candidatos);
-app.use("/api/respostas", respostas);
 app.use("/api/usuarios", usuarios);
 app.use("/api/auth", auth);
+app.use("/api/temas", temas);
+app.use("/api/alinhamento", alinhamento);
 app.use("/api/comissoes", comissoes);
 app.use("/api/parlamentares", parlamentares);
 

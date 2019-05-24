@@ -9,19 +9,21 @@ module.exports = (sequelize, type) => {
       },
       titulo: type.STRING,
       descricao: type.STRING(800),
-      status_proposicao: type.STRING      
+      status_proposicao: type.STRING
     },
     {
       timestamps: false
-    }
+    },    
   );
   proposicao.associate = function(models) {
     proposicao.belongsTo(models.tema, {
       foreignKey: "tema_id",
+      sourceKey: "id",
       as: "tema_prop"
     }),
       proposicao.hasMany(models.votacao, {
-        foreignKey: "proposicao_id",
+        foreignKey: "id_votacao",
+        targetKey: "id_votacao",
         as: "vot_prop"
       }),
       proposicao.hasMany(models.votacaou, {

@@ -29,26 +29,14 @@ module.exports = (sequelize, type) => {
       grau_instrucao: type.STRING,
       genero: type.STRING,
       eleito: type.BOOLEAN,
-      respondeu: type.BOOLEAN
+      respondeu: type.BOOLEAN,
+      id_parlamentar: type.STRING
     },
     {
       timestamps: false
     }
   );
   candidato.associate = function (models) {
-    candidato.hasMany(models.resposta, {
-      foreignKey: "cpf",
-      as: "cpf_resp"
-    }),
-      candidato.hasMany(models.votacao, {
-        foreignKey: "cpf",
-        as: "cpf_vot"
-      }),
-      candidato.hasMany(models.composicaoComissoes, {
-        foreignKey: "parlamentar_cpf",
-        targetKey: "cpf",      
-        as: "cpf_comissoes"
-      })
   };
   return candidato;
 };

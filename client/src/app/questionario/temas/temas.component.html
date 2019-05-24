@@ -1,0 +1,31 @@
+<div class="container">
+  <div class="container-tema">
+    <h4 class="title-main">Quais temas você tem mais interesse?</h4>
+    <div class="row gutters-sm mt-4">
+      <div
+        *ngFor="let tema of temas"
+        class="col-6 col-md-4 col-lg-6"
+      >
+        <button
+          class="btn btn-outline-dark btn-block btn-tema py-3 mb-3"
+          role="button"
+          [ngClass]="{'active': isTemaSelected(tema.id), 'aria-pressed': isTemaSelected(tema.id)}"
+          (click)="clickButton(tema.id)"
+        >
+          <span [ngClass]="['icon-'+tema.slug, 'icon-lg']"></span>
+          <p class="btn-tema-text">{{ tema.tema }}</p>
+        </button>
+      </div>
+    </div>
+    <div class="text-center">
+      <button
+        type="button"
+        class="btn btn-primary"
+        [disabled]="!hasAnySelectedTema"
+        (click)="emitTemas()"
+      >
+        Dar minha opinião
+      </button>
+    </div>
+  </div>
+</div>

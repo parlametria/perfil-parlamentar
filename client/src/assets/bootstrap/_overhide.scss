@@ -1,0 +1,118 @@
+/* BUTTONS */
+.nav-link {
+  text-transform: lowercase;
+}
+
+.navbar {
+  border-bottom: solid 1px $black;
+}
+
+.btn {
+  text-decoration: none;
+}
+
+.btn-link {
+  text-decoration: underline;
+}
+
+.btn-light-icon {
+  color: $gray-300;
+}
+
+.btn-light-icon:not(:disabled):not(.disabled):active,
+.btn-light-icon:not(:disabled):not(.disabled).active,
+.show > .btn-light-icon.dropdown-toggle {
+  color: $primary;
+  background-color: white;
+  border-color: white;
+}
+
+/* FORMS */
+.form-group-plus {
+  display: flex;
+
+  &:after {
+    /* use !important to prevent issues with browser extensions that change fonts */
+    font-family: "icomoon" !important;
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+
+    content: "\f067";
+    display: block;
+    border-bottom: solid 2px $black;
+    padding-top: 15px;
+    margin-left: -15px;
+  }
+}
+
+.form-control-plus {
+  border-color: transparent;
+  border-bottom-color: $black;
+  background-color: transparent;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+/* MODAL */
+.modal-content {
+  @media (max-width: 575.98px) {
+    height: calc(100vh - 20px - #{$modal-dialog-margin + "px"});
+    overflow-y: auto;
+  }
+}
+
+.modal-header {
+  background-color: $black;
+  color: $white;
+}
+
+/* PAGINATION */
+.page-link {
+  border-radius: 50%;
+  width: 35px;
+  height: 35px;
+  text-align: center;
+  font-size: 0.9rem;
+}
+
+.page-item:last-child .page-link,
+.page-item:first-child .page-link {
+  border-radius: 50%;
+}
+
+.progress-bar-striped {
+  background-image: linear-gradient(
+    45deg,
+    rgba(255, 255, 255, 1) 25%,
+    transparent 25%,
+    transparent 50%,
+    rgba(255, 255, 255, 1) 50%,
+    rgba(255, 255, 255, 1) 75%,
+    transparent 75%,
+    transparent
+  );
+  background-size: 0.55rem 0.55rem;
+  border: solid 1px #20201e;
+}
+
+/* NAVBAR */
+.navbar {
+  padding: 0;
+}
+.navbar-nav {
+  flex-direction: row;
+}
+
+.nav-item {
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+}

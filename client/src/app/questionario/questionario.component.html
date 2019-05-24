@@ -1,0 +1,5 @@
+<app-sticky-footer-navbar></app-sticky-footer-navbar>
+<div class="questionario container-sticky-footer-navbar">
+  <app-temas (temasEvent)=receiveTemas($event) *ngIf="showTemasComponent && !showQuestionario"></app-temas>
+  <app-perguntas-container [receivedTemas]=receivedTemas *ngIf="showQuestionario"></app-perguntas-container>
+</div>

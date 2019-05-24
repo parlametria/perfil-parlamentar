@@ -5,12 +5,14 @@ const logger = require("heroku-logger");
 const ProposicaoModel = "./postgres/proposicao.js";
 const PerguntaModel = "./postgres/pergunta.js";
 const CandidatoModel = "./postgres/candidato.js";
+const ParlamentarModel = "./postgres/parlamentar.js";
 const TemaModel = "./postgres/tema.js";
 const VotacaoModel = "./postgres/votacao.js";
 const VotacaoUModel = "./postgres/votacaou.js";
 const RespostaModel = "./postgres/resposta.js";
 const RespostaUModel = "./postgres/respostasU.js";
 const UsuarioModel = "./postgres/usuario.js";
+const TemasUModel = "./postgres/temasu.js";
 const ComissoesModel = "./postgres/comissoes.js";
 const ComposicaoComissoesModel = "./postgres/composicao-comissoes.js";
 
@@ -23,7 +25,7 @@ if (!global.hasOwnProperty("models")) {
     dialect: "postgres",
     operatorsAliases: false,
     dialectOptions: {
-      ssl: true
+      ssl: process.env.NODE_ENV === 'production'
     },
     pool: {
       max: 5,
@@ -39,12 +41,14 @@ if (!global.hasOwnProperty("models")) {
     tema: sequelize.import(TemaModel),
     usuario: sequelize.import(UsuarioModel),
     candidato: sequelize.import(CandidatoModel),
+    parlamentar: sequelize.import(ParlamentarModel),
     pergunta: sequelize.import(PerguntaModel),
     proposicao: sequelize.import(ProposicaoModel),
     resposta: sequelize.import(RespostaModel),
     votacao: sequelize.import(VotacaoModel),
     respostau: sequelize.import(RespostaUModel),
     votacaou: sequelize.import(VotacaoUModel),
+    temasu: sequelize.import(TemasUModel),
     comissoes: sequelize.import(ComissoesModel),
     composicaoComissoes: sequelize.import(ComposicaoComissoesModel),
     // add your other models here

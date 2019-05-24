@@ -1,0 +1,15 @@
+.filter-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.temas-container {
+  display: flex;
+  overflow-x: auto;
+}
+
+.btn-tema-sm {
+  min-height: 86px;
+  width: 118px;
+}

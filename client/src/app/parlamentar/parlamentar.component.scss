@@ -1,0 +1,17 @@
+.parlamentar {
+  margin-top: 15px;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 15px;
+}
+
+.parlamentar-title {
+  font-weight: 700;
+}
+
+.parlamentar-lista {
+  @media (min-width: 992px) {
+    width: 760px;
+    margin: auto;
+  }
+}

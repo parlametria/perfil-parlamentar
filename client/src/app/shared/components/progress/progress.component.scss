@@ -1,0 +1,23 @@
+.progress-bordered {
+  border-left: solid 1px;
+  border-right: solid 1px;
+  border-bottom: solid 1px;
+  border-top: none;
+}
+
+.progress-axis {
+  border-left: solid 1px;
+  border-right: solid 1px;
+  height: 0.5rem;
+}
+
+.progress-axis-values {
+  display: flex;
+  font-size: 0.6rem;
+  justify-content: space-between;
+}
+
+.progress-bar {
+  text-align: right;
+  padding-right: 0.5rem;
+}

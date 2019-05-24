@@ -17,11 +17,10 @@ function formataVotacoes(resultado) {
 
   resultadoNovo.forEach(cand => {
     const votacoes = {};
-    cand.cpf_vot.forEach(vot => {
-      votacoes[vot.proposicao_id] = vot.resposta;
+    cand.parlamentar_vot.forEach(vot => {
+      votacoes[vot.id_votacao] = vot.voto;
     });
-    cand.votacoes = votacoes;
-    delete cand.cpf_vot;
+    cand.parlamentar_vot = votacoes;    
   });
   return resultadoNovo;
 }

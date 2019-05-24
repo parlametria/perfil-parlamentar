@@ -1,0 +1,9 @@
+.home {
+    height: 50vh;
+    display: flex;
+    align-items: center;
+
+    @media (max-width: 575.98px) {
+        height: 80vh;
+    }
+}

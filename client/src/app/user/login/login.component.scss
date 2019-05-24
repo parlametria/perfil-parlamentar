@@ -1,0 +1,28 @@
+$facebook-color: #4267b2;
+$google-color: #fff;
+$google-font-color: #757575;
+
+.facebook-login-btn,
+.facebook-login-btn:not(:disabled):not(.disabled):active,
+.facebook-login-btn:not(:disabled):not(.disabled).active {
+  background-color: $facebook-color;
+  border-color: $facebook-color;
+}
+
+.facebook-login-btn:focus,
+.facebook-login-btn.focus {
+  box-shadow: 0 0 0 0.2rem rgba($facebook-color, .5);
+}
+
+.google-login-btn,
+.google-login-btn:not(:disabled):not(.disabled):active,
+.google-login-btn:not(:disabled):not(.disabled).active {
+  background-color: $google-color;
+  border-color: $google-color;
+  color: $google-font-color;
+}
+
+.google-login-btn:focus,
+.google-login-btn.focus {
+  box-shadow: 0 0 0 0.2rem rgba($google-color, .5);
+}

@@ -112,7 +112,7 @@ router.get("/eleitos", (req, res) => {
         attributes: ["comissao_id", "cargo"],
         include: [
           {
-            attributes: ["sigla", "nome"],
+            attributes: ["sigla"],
             model: Comissoes,
             as: "info_comissao",
             required: false
@@ -198,20 +198,6 @@ router.get("/candidatos/:cpf", (req, res) => {
         model: Resposta,
         as: "cpf_resp",
         attributes: att_res
-      },
-      {
-        model: ComposicaoComissoes,
-        attributes: ["comissao_id", "cargo"],
-        include: [
-          {
-            attributes: ["sigla", "nome"],
-            model: Comissoes,
-            as: "info_comissao",
-            required: false
-          }
-        ],
-        as: "cpf_comissoes",
-        required: false
       }
     ],
     where: { cpf: req.params.cpf }
@@ -234,7 +220,7 @@ router.get("/estados/:uf/partidos", (req, res) => {
   const eleito =
     String(req.query.eleito) !== "" && String(req.query.eleito) !== "undefined";
   const query = {};
-  if (req.params.uf !== "Estados") {
+  if (req.params.uf !== "TODOS") {
     query.uf = req.params.uf;
   }
   if (eleito) {
@@ -248,20 +234,6 @@ router.get("/estados/:uf/partidos", (req, res) => {
         model: Resposta,
         as: "cpf_resp",
         attributes: att_res
-      },
-      {
-        model: ComposicaoComissoes,
-        attributes: ["comissao_id", "cargo"],
-        include: [
-          {
-            attributes: ["sigla", "nome"],
-            model: Comissoes,
-            as: "info_comissao",
-            required: false
-          }
-        ],
-        as: "cpf_comissoes",
-        required: false
       }
     ],
     where: query
@@ -300,8 +272,6 @@ router.get("/estados/:uf", (req, res) => {
 
   const reeleicao = String(req.query.reeleicao);
 
-  const comissao = String(req.query.comissao);
-
   const isFiltrandoPorNome = nome !== "" && nome !== "undefined";
   const isFiltrandoPorPartido =
     partido !== "Partidos" && partido !== "undefined";
@@ -310,11 +280,8 @@ router.get("/estados/:uf", (req, res) => {
   const isFiltrandoPorRespondeu =
     respondeu !== "-1" && respondeu !== "undefined";
 
-  const isFiltrandoPorComissao = 
-    comissao !== "Comissões" && comissao !== "" && comissao !== "undefined";
-
   query = {};
-  if (req.params.uf !== "Estados") {
+  if (req.params.uf !== "TODOS") {
     query.uf = req.params.uf;
   }
   if (eleito) {
@@ -343,35 +310,19 @@ router.get("/estados/:uf", (req, res) => {
       attributes: att,
       include: [
         {
-          model: ComposicaoComissoes,
-          attributes: ["comissao_id", "cargo"],
-          include: [
-            {
-              attributes: ["sigla", "nome"],
-              model: Comissoes,
-              as: "info_comissao",
-              required: false
-            }
-          ],
-          as: "cpf_comissoes",
-          required: false
+          model: Resposta,
+          as: "cpf_resp",
+          attributes: att_res
         }
       ],
       where: query
-    }).then((candidatos, err) => {      
+    }).then((candidatos, err) => {
+      respostasNovo = formataRespostas(candidatos);
 
-      if (isFiltrandoPorComissao) {
-        candidatos = candidatos.filter(value => {        
-          let siglasComissoes = value.cpf_comissoes.filter(comissao => comissao.cargo !== "Suplente").map(comissao => comissao.info_comissao.sigla);
-          
-          return siglasComissoes.includes(comissao);
-        });        
-      }
-      
       response = err
         ? { status: BAD_REQUEST, message: "Error fetching data" }
         : {
-          candidatos: candidatos,
+          candidatos: respostasNovo,
           total: totalCount,
           status: SUCCESS
         };
@@ -439,20 +390,6 @@ router.get("/estados/:uf/partidos/:sigla", (req, res) => {
           model: Resposta,
           as: "cpf_resp",
           attributes: att_res
-        },
-        {
-          model: ComposicaoComissoes,
-          attributes: ["comissao_id", "cargo"],
-          include: [
-            {
-              attributes: ["sigla", "nome"],
-              model: Comissoes,
-              as: "info_comissao",
-              required: false
-            }
-          ],
-          as: "cpf_comissoes",
-          required: false
         }
       ],
       where: { uf: req.params.uf, sg_partido: req.params.sigla }
@@ -660,20 +597,6 @@ router.get("/estados/:uf/eleitos", (req, res) => {
           model: Resposta,
           as: "cpf_resp",
           attributes: att_res
-        },
-        {
-          model: ComposicaoComissoes,
-          attributes: ["comissao_id", "cargo"],
-          include: [
-            {
-              attributes: ["sigla", "nome"],
-              model: Comissoes,
-              as: "info_comissao",
-              required: false
-            }
-          ],
-          as: "cpf_comissoes",
-          required: false
         }
       ],
       where: {

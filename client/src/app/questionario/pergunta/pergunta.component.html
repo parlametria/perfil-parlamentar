@@ -1,0 +1,27 @@
+<div class="pergunta-wrapper">
+  <h4 class="pergunta-texto">
+    <small>{{ projLei }}</small>
+    <br>
+    {{ title }}
+  </h4>
+  <div>
+    <div class="text-center">
+      <button
+        type="button"
+        class="btn btn-sm btn-link"
+        (click)="isCollapsed = !isCollapsed"
+        [attr.aria-expanded]="!isCollapsed"
+        aria-controls="help-eixoA"
+      >
+        O que é?
+      </button>
+    </div>
+    <div
+      id="help-eixoA"
+      class="mt-1 collapse question-help-content"
+      [ngbCollapse]="isCollapsed"
+    >
+      {{ description }}
+    </div>
+  </div>
+</div>

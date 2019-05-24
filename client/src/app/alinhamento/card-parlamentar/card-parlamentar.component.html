@@ -1,0 +1,227 @@
+<div [ngClass]="{'parlamentar-wrapper': !isCollapsed, 'parlamentar-wrapper-no-margin': isCollapsed}">
+  <div
+    class="parlamentar-card-actions"
+    [hidden]="isCollapsed"
+  >
+    <!-- TODO: área reservada para implementação futura (e.g. seguir o parlamentar) -->
+    <!-- <button
+      type="button"
+      class="btn btn-link btn-icon"
+      (click)="toggleFollow()"
+    >
+      <span class="icon-bookmark"></span>
+    </button> -->
+  </div>
+
+  <div class="parlamentar-card-sm">
+    <div class="parlamentar-card-sm-body">
+      <div class="d-flex">
+        <div class="parlamentar-card-sm-id">{{id}}°</div>
+        <div
+          class="parlamentar-card-sm-title"
+          [@show]="view !== VIEW_SM ? 'hide' : 'show'"
+        >
+          <a
+            class="btn-link-simple"
+            [routerLink]="['/parlamentar', parlamentar.idParlamentarVoz]"
+          >
+            {{ parlamentar.nomeEleitoral | titlecase }}
+          </a>
+          <span class="parlamentar-card-sm-subtitle d-none d-lg-inline-block">
+            {{ parlamentar.partido }}/{{ parlamentar.uf }}
+          </span>
+        </div>
+      </div>
+      <div
+        class="parlamentar-card-sm-score"
+        [@show]="view !== VIEW_SM ? 'hide' : 'show'"
+      >
+        <div class="parlamentar-sm-progress">
+          <app-progress
+            [value]="alinhamento?.alinhamento"
+            [min]="0"
+            [max]="100"
+            [showAxis]="false"
+          ></app-progress>
+        </div>
+        <div class="parlamentar-sm-score">
+          <span *ngIf="alinhamento?.perguntasIguais >= 3">
+            {{ alinhamento?.alinhamento | percent }}
+          </span>
+          <span
+            *ngIf="alinhamento?.perguntasIguais < 3"
+            class="sem-alinhamento"
+            placement="left"
+            ngbPopover="{{MENSAGEM_SEM_ALINHAMENTO}}"
+            triggers="click:blur"            
+            container="body"
+          >
+            --
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    class="parlamentar-card"
+    [@openClose]="view !== VIEW_SM ? 'open' : 'closed'"
+    (@openClose.start)="onAnimationStart($event)"
+    (@openClose.done)="onAnimationEnd($event)"
+  >
+    <div class="parlamentar-card-body">
+      <div class="row gutters-sm">
+        <div class="col-3 col-lg parlamentar-img-wrapper">
+          <a [routerLink]="['/parlamentar', parlamentar.idParlamentarVoz]">
+            <img
+              [defaultImage]="'assets/imgs/nophoto.png'"
+              [lazyLoad]="parlamentar.getFoto()"
+              [offset]="100"
+              width="100%"
+              class="parlamentar-img"
+            >
+          </a>
+        </div>
+        <div class="col-9 col-lg">
+          <div class="parlamentar-title">
+            <a
+              [routerLink]="['/parlamentar', parlamentar.idParlamentarVoz]"
+              class="parlamentar-nome"
+            >
+              {{ parlamentar.nomeEleitoral | titlecase }}
+            </a>
+          </div>
+          <p>
+            {{ parlamentar.partido }}/{{ parlamentar.uf }}
+            <span
+              *ngIf="comissao !== PADRAO_COMISSAO"
+              class="badge badge-dark align-middle"
+            >
+              {{getCargoByComissaoId(comissao)}}
+            </span>
+          </p>
+          <div class="d-none d-lg-block">
+            <a
+              [routerLink]="['/parlamentar', parlamentar.idParlamentarVoz]"
+              class="btn btn-sm btn-link"
+            >
+              + detalhes
+            </a>
+          </div>
+          <div class="row no-gutters d-lg-none">
+            <div class="col">
+              <span
+                *ngIf="alinhamento?.tema_nome"
+                class="parlamentar-compatibilidade-text"
+              >
+                Compatibilidade com {{alinhamento?.tema_nome}}
+              </span>
+              <div
+                *ngIf="!alinhamento?.tema_nome"
+                class="parlamentar-compatibilidade-text"
+              >
+                Compatibilidade geral
+              </div>
+              <app-progress
+                [value]="alinhamento?.alinhamento"
+                [min]="0"
+                [max]="100"
+                [showAxis]="false"
+              ></app-progress>
+            </div>
+            <div class="col-3 col-sm-2 d-flex justify-content-end align-items-end">
+              <div class="parlamentar-score">
+                <span *ngIf="alinhamento?.perguntasIguais >= 3">
+                  {{ alinhamento?.alinhamento | percent }}
+                </span>
+                <span
+                  *ngIf="alinhamento?.perguntasIguais < 3"
+                  class="sem-alinhamento"
+                  placement="left"
+                  ngbPopover="{{MENSAGEM_SEM_ALINHAMENTO}}"
+                  triggers="click:blur"                  
+                  container="body"
+                >
+                  --
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row no-gutters mt-3 d-none d-lg-flex">
+        <div class="col">
+          <span
+            *ngIf="alinhamento?.tema_nome"
+            class="parlamentar-compatibilidade-text"
+          >
+            Compatibilidade com {{alinhamento?.tema_nome}}
+          </span>
+          <div
+            *ngIf="!alinhamento?.tema_nome"
+            class="parlamentar-compatibilidade-text"
+          >
+            Compatibilidade geral
+          </div>
+          <app-progress
+            [value]="alinhamento?.alinhamento"
+            [min]="0"
+            [max]="100"
+            [showAxis]="false"
+          ></app-progress>
+        </div>
+        <div class="col-3 col-sm-2 col-lg-1 d-flex justify-content-end align-items-end">
+          <div class="parlamentar-score">
+            <span *ngIf="alinhamento?.perguntasIguais >= 3">
+              {{ alinhamento?.alinhamento | percent }}
+            </span>
+            <span
+              *ngIf="alinhamento?.perguntasIguais < 3"
+              class="sem-alinhamento"
+              placement="left"
+              ngbPopover="{{MENSAGEM_SEM_ALINHAMENTO}}"
+              triggers="mouseenter:mouseleave"              
+              container="body"
+            >
+              --
+            </span>
+          </div>
+        </div>
+      </div>
+      <div
+        class="parlamentar-card-lg"
+        [@openClose]="view !== VIEW_LG ? 'closed' : 'open'"
+      >
+        <div class="pt-3"></div>
+        <div class="mb-3">
+          Compatilidade por tema [em nº de questões]
+          <div class="d-flex">
+            <div>
+              <app-legend
+                [title]="'concordam'"
+                [class]="'bg-success'"
+                [striped]="false"
+              ></app-legend>
+            </div>
+            <div>
+              <app-legend
+                [title]="'não concordam'"
+                [class]="'bg-danger'"
+                [striped]="true"
+              ></app-legend>
+            </div>
+          </div>
+        </div>
+        <app-progress-stacked
+          *ngFor="let alinhamento of parlamentar.alinhamento.temas"
+          [titulo]="alinhamento.tema_nome"
+          [total]="alinhamento.totalPerguntas"
+          [concordancia]="alinhamento.respostasIguais"
+          [discordancia]="alinhamento.perguntasIguais - alinhamento.respostasIguais"
+          [passo]="passo"
+        ></app-progress-stacked>
+      </div>
+    </div>
+  </div>
+
+</div>

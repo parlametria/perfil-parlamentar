@@ -1,0 +1,17 @@
+language: node_js
+node_js:
+  - "10"
+dist: trusty
+sudo: required
+branches:
+  only:
+  - refatoramento-frontend
+before_install:
+  - cd client/
+install:
+  - npm install
+before_script:  
+  - npm install -g @angular/cli
+script:
+  - ng lint  
+  - ng build --prod

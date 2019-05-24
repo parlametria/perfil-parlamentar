@@ -1,0 +1,57 @@
+<div class="posicao">
+  <div
+    class="posicao-body"
+    (click)="isCollapsed = !isCollapsed"
+    [attr.aria-expanded]="!isCollapsed"
+    [attr.aria-controls]="'help-' + proposicao.id_votacao"
+  >
+    <div class="posicao-title">{{ proposicao.projeto_lei }}</div>
+    <div>
+      <strong>{{ proposicao.titulo }}</strong>
+      <button
+        type="button"
+        class="btn btn-sm btn-link btn-icon-sm"
+      >
+        <span
+          class="icon-chevron-down"
+          [hidden]="!isCollapsed"
+        ></span>
+        <span
+          class="icon-chevron-up"
+          [hidden]="isCollapsed"
+        ></span>
+      </button>
+    </div>
+    <div
+      [attr.id]="'help-' + proposicao.id_votacao"
+      class="mt-1 collapse question-help-content"
+      [ngbCollapse]="isCollapsed"
+    >
+      {{ proposicao.descricao }}
+    </div>
+  </div>
+  <div class="row respostas gutters-sm">
+    <div class="col-6">
+      <div
+        class="opiniao"
+        [ngClass]="{
+          'opiniao-positiva': resposta === FAVOR,
+          'opiniao-negativa': resposta === CONTRA,
+          'opiniao-neutra': resposta !== FAVOR && resposta !== CONTRA}"
+      >
+        EU
+      </div>
+    </div>
+    <div class="col-6">
+      <div
+        class="opiniao"
+        [ngClass]="{
+          'opiniao-positiva': (votacao === FAVOR),
+          'opiniao-negativa': (votacao === CONTRA),
+          'opiniao-neutra': (votacao !== FAVOR && votacao !== CONTRA)}"
+      >
+        {{ parlamentar.genero === 'F' ? 'ELA' : 'ELE' }}
+      </div>
+    </div>
+  </div>
+</div>

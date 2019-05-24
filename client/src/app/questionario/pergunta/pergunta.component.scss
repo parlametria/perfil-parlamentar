@@ -1,0 +1,29 @@
+$viewport-negative-height: 365px;
+
+.pergunta-wrapper {
+  @media (min-width: 340px) {
+    height: calc(100vh - #{$viewport-negative-height});
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  @media (min-width: 992px) {
+    height: 40vh;
+  }
+}
+
+.pergunta-texto {
+  font-size: 1.2rem;
+
+  @media (min-width: 340px) {
+    font-size: 1.5rem;
+  }
+  @media (min-width: 768px) {
+    font-size: 1.8rem;
+  }
+  @media (min-width: 992px) {
+    font-size: 2rem;
+  }
+}

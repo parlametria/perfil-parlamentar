@@ -1,0 +1,112 @@
+@import url("https://fonts.googleapis.com/css?family=Montserrat:500,700");
+
+@import "../node_modules/bootstrap/scss/functions";
+@import "assets/bootstrap/variables";
+@import "../node_modules/bootstrap/scss/bootstrap";
+@import "assets/bootstrap/overhide";
+@import "assets/styles/icons";
+@import "assets/styles/animations";
+
+$top-navbar-height: 50px;
+$top-navbar-lg-height: 71px;
+$sticky-footer-navbar-height: 50px;
+
+body {
+  padding-top: $top-navbar-height;
+
+  @media (min-width: 992px) {
+    padding-top: $top-navbar-lg-height;
+  }
+}
+
+.container-sticky-footer-navbar {
+  margin-top: $sticky-footer-navbar-height;
+
+  @media (min-width: 992px) {
+    margin-top: 0;
+  }
+}
+
+.icon-md {
+  font-size: 1.5rem;
+}
+
+.icon-lg {
+  font-size: 4rem;
+}
+
+.icon-lg-sm {
+  font-size: 2rem;
+}
+
+.icon-left {
+  float: left;
+}
+
+.btn-tema-text {
+  text-transform: uppercase;
+  font-size: 0.65rem;
+  margin: 0;
+  padding: 0;
+}
+
+.text-strong {
+  color: $green;
+}
+
+.gutters-sm {
+  margin-right: -5px;
+  margin-left: -5px;
+
+  > .col,
+  > [class*="col-"] {
+    padding-right: 5px;
+    padding-left: 5px;
+  }
+}
+
+.btn-icon {
+  text-decoration: none;
+  padding: 0;
+  margin-top: -8px;
+  font-size: 1.5rem;
+  line-height: 1;
+  border-radius: 0;
+
+  &:hover {
+    text-decoration: none;
+  }
+}
+
+
+.btn-icon-sm,
+.btn-link-simple {
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: none;
+  }
+}
+
+.btn-tema {
+  @media (max-width: 991.98px) {
+    &:hover {
+      background-color: $white;
+      color: $black;
+    }
+  }
+}
+
+.btn-no-gutters {
+  padding: 0;
+}
+
+.title-main {
+  text-align: center;
+
+  @media (min-width: 992px) {
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+  }
+
+}

@@ -1,0 +1,90 @@
+/**
+ * Animações base
+ *
+ * Baseado no projeto de https://github.com/daneden/animate.css
+ */
+.animated {
+  animation-duration: 1s;
+  animation-fill-mode: both;
+
+  &.infinite {
+    animation-iteration-count: infinite;
+  }
+  &.delay-1s {
+    animation-delay: 1s;
+  }
+
+  &.delay-2s {
+    animation-delay: 2s;
+  }
+
+  &.delay-3s {
+    animation-delay: 3s;
+  }
+
+  &.delay-4s {
+    animation-delay: 4s;
+  }
+
+  &.delay-5s {
+    animation-delay: 5s;
+  }
+
+  &.fast {
+    animation-duration: 800ms;
+  }
+
+  &.faster {
+    animation-duration: 500ms;
+  }
+
+  &.slow {
+    animation-duration: 2s;
+  }
+
+  &.slower {
+    animation-duration: 3s;
+  }
+
+  @media (print), (prefers-reduced-motion) {
+    animation: unset !important;
+    transition: none !important;
+  }
+}
+
+/**
+ * flash
+ */
+@keyframes flash {
+  from,
+  50%,
+  to {
+    opacity: 1;
+  }
+
+  25%,
+  75% {
+    opacity: 0;
+  }
+}
+
+.flash {
+  animation-name: flash;
+}
+
+@keyframes flashinverse {
+  from,
+  50%,
+  to {
+    opacity: 0;
+  }
+
+  25%,
+  75% {
+    opacity: 1;
+  }
+}
+
+.flashinverse {
+  animation-name: flashinverse;
+}
