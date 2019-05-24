@@ -1,11 +1,11 @@
 export function getClassCargo(cargo: string) {
   if (cargo !== undefined && cargo !== '') {
     if (cargo === 'Titular') {
-      return 'badge-dark-gray';
-    } else if (cargo === 'Suplente') {
       return 'badge-gray';
-    } else {
+    } else if (cargo === 'Suplente') {
       return 'badge-white';
+    } else {
+      return 'badge-dark-gray';
     }
   } else {
     return '';
