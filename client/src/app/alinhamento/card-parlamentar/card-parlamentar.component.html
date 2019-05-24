@@ -16,7 +16,8 @@
   <div class="parlamentar-card-sm">
     <div class="parlamentar-card-sm-body">
       <div class="d-flex">
-        <div class="parlamentar-card-sm-id">{{id}}°</div>
+        <div *ngIf="alinhamento?.perguntasIguais >= 3" class="parlamentar-card-sm-id">{{id}}°</div>
+        <div *ngIf="alinhamento?.perguntasIguais < 3" class="parlamentar-card-sm-id">-</div>
         <div
           class="parlamentar-card-sm-title"
           [@show]="view !== VIEW_SM ? 'hide' : 'show'"
@@ -95,6 +96,7 @@
             <span
               *ngIf="comissao !== PADRAO_COMISSAO"
               class="badge badge-dark align-middle"
+              [ngClass]="classeCargoComissao"
             >
               {{getCargoByComissaoId(comissao)}}
             </span>

@@ -124,10 +124,19 @@ export class AlinhamentoService {
       return -1;
     } else if (a.alinhamento.alinhamento < b.alinhamento.alinhamento) {
       return 1;
-    } else if (a.alinhamento.respostasIguais > b.alinhamento.respostasIguais) {
-      return -1;
-    } else if (a.alinhamento.respostasIguais < b.alinhamento.respostasIguais) {
-      return 1;
+    }
+    if (a.alinhamento.perguntasIguais < 3 || b.alinhamento.perguntasIguais < 3) {
+      if (a.alinhamento.perguntasIguais > b.alinhamento.perguntasIguais) {
+        return -1;
+      } else if (a.alinhamento.perguntasIguais < b.alinhamento.perguntasIguais) {
+        return 1;
+      }
+    } else {
+      if (a.alinhamento.respostasIguais > b.alinhamento.respostasIguais) {
+        return -1;
+      } else if (a.alinhamento.respostasIguais < b.alinhamento.respostasIguais) {
+        return 1;
+      }
     }
     return 0;
   }
@@ -146,10 +155,19 @@ export class AlinhamentoService {
       return -1;
     } else if (a.alinhamento.temas[index].alinhamento < b.alinhamento.temas[index].alinhamento) {
       return 1;
-    } else if (a.alinhamento.temas[index].respostasIguais > b.alinhamento.temas[index].respostasIguais) {
-      return -1;
-    } else if (a.alinhamento.temas[index].respostasIguais < b.alinhamento.temas[index].respostasIguais) {
-      return 1;
+    }
+    if (a.alinhamento.temas[index].perguntasIguais < 3 || b.alinhamento.temas[index].perguntasIguais < 3) {
+      if (a.alinhamento.temas[index].perguntasIguais > b.alinhamento.temas[index].perguntasIguais) {
+        return -1;
+      } else if (a.alinhamento.temas[index].perguntasIguais < b.alinhamento.temas[index].perguntasIguais) {
+        return 1;
+      }
+    } else {
+      if (a.alinhamento.temas[index].respostasIguais > b.alinhamento.temas[index].respostasIguais) {
+        return -1;
+      } else if (a.alinhamento.temas[index].respostasIguais < b.alinhamento.temas[index].respostasIguais) {
+        return 1;
+      }
     }
     return 0;
   }

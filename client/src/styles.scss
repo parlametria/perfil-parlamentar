@@ -110,3 +110,19 @@ body {
   }
 
 }
+
+.badge-white {
+  background-color: $white;
+  color: $black;
+  border: 1px solid #363638;
+}
+
+.badge-gray {
+  background-color: #B3B4B6;
+  border: 1px solid #363638;
+}
+
+.badge-dark-gray {
+  background-color: #545356;
+  border: 1px solid #363638;
+}
