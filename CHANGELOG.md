@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.5.4 (2019-04-23)
+
+### Features
+* [x] Adiciona permissão de cors para o ambiente de desenvolvimento do leggo
+* [x] Adiciona endpoint para retornar mapeamento entre id dos parlamentares
+
 ## [1.5.3](https://github.com/analytics-ufcg/voz-ativa/pull/224) (2019-03-29)
 
 ### Features

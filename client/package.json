@@ -1,6 +1,6 @@
 {
   "name": "voz-ativa",
-  "version": "1.5.3",
+  "version": "1.5.4",
   "private": true,
   "dependencies": {
     "ajv": "^6.5.2",
