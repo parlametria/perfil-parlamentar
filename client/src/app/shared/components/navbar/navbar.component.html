@@ -17,17 +17,6 @@
       <ul class="nav nav-pills nav-fill">
         <li class="nav-item">
           <a
-            [routerLink]="['/']"
-            [routerLinkActive]="'active'"
-            [routerLinkActiveOptions]="{exact: true}"
-            class="nav-link navbar-nav-va-link"
-            href="#"
-          >
-            Início
-          </a>
-        </li>
-        <li class="nav-item">
-          <a
             [routerLink]="['/questionario']"
             [routerLinkActive]="'active'"
             class="nav-link navbar-nav-va-link"
@@ -44,6 +33,17 @@
             href="#"
           >
             Resultado
+          </a>
+        </li>
+        <li class="nav-item">
+          <a
+            [routerLink]="['/congresso']"
+            [routerLinkActive]="'active'"
+            [routerLinkActiveOptions]="{exact: true}"
+            class="nav-link navbar-nav-va-link"
+            href="#"
+          >
+            Congresso
           </a>
         </li>
       </ul>
@@ -71,7 +71,7 @@
       </li>
       <li class="nav-item" *ngIf="userAuthenticated">
         <div
-          ngbDropdown          
+          ngbDropdown
           class="d-inline-block nav-line"
         >
           <a
