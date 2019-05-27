@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'icomoon';
-  src:  url('assets/fonts/icomoon.eot?vfdbfv');
-  src:  url('assets/fonts/icomoon.eot?vfdbfv#iefix') format('embedded-opentype'),
-    url('assets/fonts/icomoon.ttf?vfdbfv') format('truetype'),
-    url('assets/fonts/icomoon.woff?vfdbfv') format('woff'),
-    url('assets/fonts/icomoon.svg?vfdbfv#icomoon') format('svg');
+  src:  url('assets/fonts/icomoon.eot?7t061i');
+  src:  url('assets/fonts/icomoon.eot?7t061i#iefix') format('embedded-opentype'),
+    url('assets/fonts/icomoon.ttf?7t061i') format('truetype'),
+    url('assets/fonts/icomoon.woff?7t061i') format('woff'),
+    url('assets/fonts/icomoon.svg?7t061i#icomoon') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -24,84 +24,90 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-.icon-th-large:before {
-  content: "\f009";
-}
-.icon-th:before {
-  content: "\f00a";
-}
-.icon-th-list:before {
-  content: "\f00b";
-}
-.icon-bookmark-o:before {
-  content: "\f097";
-}
-.icon-plus:before {
-  content: "\f067";
-}
-.icon-bookmark:before {
-  content: "\f02e";
-}
-.icon-facebook-official:before {
-  content: "\f230";
-}
-.icon-google:before {
-  content: "\f1a0";
-}
-.icon-search:before {
-  content: "\e90f";
-}
-.icon-sliders:before {
-  content: "\e910";
-}
-.icon-chevrons-left:before {
-  content: "\e911";
-}
-.icon-chevrons-right:before {
-  content: "\e912";
-}
-.icon-chevron-down:before {
-  content: "\e90b";
-}
-.icon-chevron-left:before {
-  content: "\e90c";
-}
-.icon-chevron-right:before {
-  content: "\e90d";
-}
-.icon-chevron-up:before {
-  content: "\e90e";
-}
-.icon-check:before {
-  content: "\e909";
-}
-.icon-x:before {
-  content: "\e90a";
-}
-.icon-meio-ambiente:before {
+.icon-seguranca:before {
   content: "\e900";
 }
-.icon-agenda-nacional:before {
-  content: "\e901";
-}
-.icon-seguranca:before {
-  content: "\e902";
-}
-.icon-login:before {
-  content: "\e903";
-}
-.icon-educacao:before {
-  content: "\e904";
-}
-.icon-quadrado:before {
-  content: "\e905";
-}
-.icon-transversal:before {
+.icon-transparencia:before {
   content: "\e906";
 }
-.icon-direitos-humanos:before {
+.icon-meio-ambiente:before {
   content: "\e907";
 }
-.icon-transparencia:before {
+.icon-login:before {
   content: "\e908";
+}
+.icon-educacao:before {
+  content: "\e909";
+}
+.icon-agenda-nacional:before {
+  content: "\e90a";
+}
+.icon-direitos-humanos:before {
+  content: "\e90b";
+}
+.icon-th-large:before {
+  content: "\e90c";
+}
+.icon-th:before {
+  content: "\e90d";
+}
+.icon-th-list:before {
+  content: "\e90e";
+}
+.icon-seguir:before {
+  content: "\e90f";
+}
+.icon-seguindo:before {
+  content: "\e910";
+}
+.icon-sino:before {
+  content: "\e911";
+}
+.icon-x:before {
+  content: "\e912";
+}
+.icon-chevrons-up:before {
+  content: "\e913";
+}
+.icon-chevrons-right:before {
+  content: "\e914";
+}
+.icon-chevrons-left:before {
+  content: "\e915";
+}
+.icon-chevrons-down:before {
+  content: "\e916";
+}
+.icon-chevron-right:before {
+  content: "\e917";
+}
+.icon-chevron-left:before {
+  content: "\e918";
+}
+.icon-chevron-down:before {
+  content: "\e919";
+}
+.icon-chevron-up:before {
+  content: "\e91a";
+}
+.icon-sliders:before {
+  content: "\e91b";
+}
+.icon-close:before {
+  content: "\e901";
+}
+.icon-check:before {
+  content: "\e902";
+}
+.icon-plus:before {
+  content: "\e903";
+}
+.icon-keyboard-o:before {
+  content: "\e91c";
+}
+.icon-google:before {
+  content: "\e904";
+}
+.icon-facebook-official:before {
+  content: "\e905";
 }
