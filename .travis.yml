@@ -3,9 +3,6 @@ node_js:
   - "10"
 dist: trusty
 sudo: required
-branches:
-  only:
-  - refatoramento-frontend
 before_install:
   - cd client/
 install:
