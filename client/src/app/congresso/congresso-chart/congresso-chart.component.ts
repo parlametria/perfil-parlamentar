@@ -84,8 +84,7 @@ export class CongressoChartComponent implements AfterContentInit, OnChanges, OnD
 
         if (this.filter.tema !== this.temaAtual) { // redesenhe a visualização se o tema do alinhamento for alterado
           this.temaAtual = this.filter.tema;
-          this.drawn = false;
-          this.drawVis();
+          this.draw();
         }
         this.hideTooltip();
         this.paint();
@@ -108,11 +107,8 @@ export class CongressoChartComponent implements AfterContentInit, OnChanges, OnD
 
   drawVis() {
     if (this.svg) {
-      if (!this.drawn) {
-        this.draw();
-        this.drawn = true;
-        this.viewEvent.emit('arc');
-      }
+      this.draw();
+      this.viewEvent.emit('arc');
     }
   }
 
@@ -180,6 +176,7 @@ export class CongressoChartComponent implements AfterContentInit, OnChanges, OnD
   draw() {
     this.g.selectAll('.circle-parlamentar').remove();
     this.g.selectAll('.clusters').remove();
+    this.g.selectAll('.axis').remove();
     this.hideTooltip();
 
     this.svg.call(this.tip);
@@ -191,12 +188,20 @@ export class CongressoChartComponent implements AfterContentInit, OnChanges, OnD
     const angulo = 18;
 
     const xBeeSwarm = d3.scaleLinear().range([this.width * 0.8, this.width * 0.2]);
+    this.g.append('g')
+      .attr('class', 'axis axis--x')
+      .attr('transform', 'translate(0, -80)')
+      .attr('opacity', 0)
+      .call(d3.axisBottom(xBeeSwarm)
+        .ticks(6, '.0%')
+        .tickSize(this.height / 2));
+    this.g.select('.domain').remove();
 
     const simulation = d3
       .forceSimulation(this.parlamentaresCompleto)
       .force('x', d3.forceX((d: any) => xBeeSwarm(this.getPath(d))).strength(1))
       .force('y', d3.forceY(this.height * 0.1))
-      .force('collide', d3.forceCollide(this.r + 1))
+      .force('collide', d3.forceCollide(this.r + 0.5))
       .stop();
 
     for (let i = 0; i < 513; ++i) {
@@ -228,7 +233,7 @@ export class CongressoChartComponent implements AfterContentInit, OnChanges, OnD
         .append('circle')
         .attr('id', (d) => 'circle-parlamentar-' + d.idParlamentarVoz)
         .attr('class', 'circle-parlamentar')
-        .attr('r', this.r)
+        .attr('r', 0.1)
         .attr('fill', 'white')
         .attr('stroke', (d) => (this.color(this.getPath(d)) === '#eceff4') ? '#9B9B9B' : this.color(this.getPath(d)))
         .attr('cx', (d, z) => {
@@ -260,18 +265,38 @@ export class CongressoChartComponent implements AfterContentInit, OnChanges, OnD
   }
 
   paint() {
-    this.g.selectAll('.circle-parlamentar')
-      .transition()
-      .duration(500)
-      .attr('opacity', 0.2)
-      .transition()
-      .duration(500)
-      .attr('fill', (d) => this.color(this.getPath(d)))
-      .attr('opacity', d => this.parlamentares.filter(parlamentar =>
-        d.idParlamentarVoz === parlamentar.idParlamentarVoz).length > 0 ? 1 : 0.2);
+    if (!this.drawn) {
+      this.g.selectAll('.circle-parlamentar')
+        .attr('fill', (d) => this.color(this.getPath(d)))
+        .attr('opacity', d => this.parlamentares.filter(parlamentar =>
+          d.idParlamentarVoz === parlamentar.idParlamentarVoz).length > 0 ? 1 : 0.2)
+        .transition()
+        .delay((d) => Math.random() * 1000)
+        .duration(500)
+        .attr('r', this.r * 1.4)
+        .transition()
+        .duration(100)
+        .attr('r', this.r);
+      this.drawn = true;
+    } else {
+      this.g.selectAll('.circle-parlamentar')
+        .attr('r', this.r)
+        .transition()
+        .duration(500)
+        .attr('opacity', 0.2)
+        .transition()
+        .duration(500)
+        .attr('fill', (d) => this.color(this.getPath(d)))
+        .attr('opacity', d => this.parlamentares.filter(parlamentar =>
+          d.idParlamentarVoz === parlamentar.idParlamentarVoz).length > 0 ? 1 : 0.2);
+    }
   }
 
   showArc() {
+    this.g.select('.axis')
+      .transition()
+      .duration(500)
+      .attr('opacity', 0);
     this.g.selectAll('.circle-parlamentar')
       .transition()
       .duration((d) => d.alinhamento.alinhamento * 1000 + 300)
@@ -298,6 +323,10 @@ export class CongressoChartComponent implements AfterContentInit, OnChanges, OnD
   }
 
   showBeeswarm() {
+    this.g.select('.axis')
+      .transition()
+      .duration(500)
+      .attr('opacity', 1);
     this.g.selectAll('.circle-parlamentar')
       .transition()
       .duration((d) => d.alinhamento.alinhamento * 1000 + 300)

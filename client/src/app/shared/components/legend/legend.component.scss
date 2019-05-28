@@ -2,7 +2,7 @@
   width: 15px;
   height: 15px;
   margin-top: 5px;
-  margin-right: 0.5rem;  
+  margin-right: 0.5rem;
   border: solid 1px #20201e;
 }
 
@@ -10,4 +10,9 @@
   font-size: 0.8rem;
   line-height: 23px;
   margin-right: 1rem;
+}
+
+.legend-rounded {
+  border-radius: 50%;
+  border: solid 1px #adb5bd;
 }

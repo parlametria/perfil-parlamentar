@@ -1,14 +1,14 @@
 .d3-tip {
     line-height: 1.25;
     padding: 10px;
-    background: white;    
+    background: white;
     border-radius: 5px;
     border: 2px solid #20201E;
 }
-  
-.d3-tip strong {    
+
+.d3-tip strong {
     font-weight: bold;
-    text-transform: capitalize;    
+    text-transform: capitalize;
 }
 
 .d3-tip .subtitle {
@@ -34,14 +34,14 @@
     left: 0;
 }
 
-@media (min-width: 992px) { 
+@media (min-width: 992px) {
     .parlamento {
         padding-left: 150px;
         padding-right: 150px;
     }
 }
 
-@media (min-width: 1200px) { 
+@media (min-width: 1200px) {
     .parlamento {
         padding-left: 200px;
         padding-right: 200px;
@@ -50,4 +50,15 @@
 
 circle:hover {
     stroke: #515151;
+}
+
+.tick {
+  > line {
+    stroke-width: 0.5;
+    stroke-dasharray: 10,2;
+    stroke: #adb5bd;
+  }
+  > text {
+    color: #adb5bd;
+  }
 }
