@@ -84,7 +84,7 @@ export class CongressoChartComponent implements AfterContentInit, OnChanges, OnD
 
         if (this.filter.tema !== this.temaAtual) { // redesenhe a visualização se o tema do alinhamento for alterado
           this.temaAtual = this.filter.tema;
-          this.draw();
+          this.drawVis();
         }
         this.hideTooltip();
         this.paint();
