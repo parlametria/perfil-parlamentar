@@ -45,6 +45,7 @@
     [view]="view"
     [filter]="filter"
     class="plot"
+    (viewEvent)="setView($event)"
   ></app-congresso-chart>
 
   <div [hidden]="view === VIEW_BEE">
