@@ -1,29 +1,6 @@
 <app-sticky-footer-navbar></app-sticky-footer-navbar>
 <div class="container pt-2 container-sticky-footer-navbar">
   <app-filter (filterChange)="search($event)"></app-filter>
-  <!-- <div class="btn-toolbar">
-    <div class="btn-group">
-      <button
-        [ngClass]="{'btn btn-light btn-light-icon': true, 'active': view == VIEW_LG}"
-        (click)="setView('lg')"
-      >
-        <span class="icon-th-large"></span>
-      </button>
-      <button
-        [ngClass]="{'btn btn-light btn-light-icon': true, 'active': view == VIEW_MD}"
-        (click)="setView('md')"
-      >
-        <span class="icon-th"></span>
-      </button>
-      <button
-        [ngClass]="{'btn btn-light btn-light-icon': true, 'active': view == VIEW_SM}"
-        (click)="setView('sm')"
-      >
-        <span class="icon-th-list"></span>
-      </button>
-    </div>
-  </div> -->
-
   <div
     *ngIf="parlamentares"
     class="parlamentar-count"
@@ -37,6 +14,23 @@
   >
     <strong class="strong">{{getParlamentaresComAlinhamento()}}</strong>
     com alinhamento definido
+  </div>
+
+  <div class="btn-toolbar">
+    <div class="btn-group">
+      <button
+        [ngClass]="{'btn btn-light btn-light-icon': true, 'active': view == VIEW_ARC}"
+        (click)="setView('arc')"
+      >
+        <span class="icon-th-large"></span>
+      </button>      
+      <button
+        [ngClass]="{'btn btn-light btn-light-icon': true, 'active': view == VIEW_BEE}"
+        (click)="setView('bee')"
+      >
+        <span class="icon-th-list"></span>
+      </button>
+    </div>
   </div>
 
   <div class="d-flex subtitle mt-3">
@@ -72,6 +66,7 @@
 
   <app-congresso-chart
     [parlamentares]="parlamentares"
+    [parlamentaresCompleto]="parlamentaresCompleto"
     [view]="view"
     [filter]="filter"
     class="plot"

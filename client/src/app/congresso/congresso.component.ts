@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 
 import { Subject } from 'rxjs';
-import { takeUntil, debounceTime } from 'rxjs/operators';
+import { takeUntil, mergeMap, debounceTime } from 'rxjs/operators';
 
 import { UserService } from '../shared/services/user.service';
 import { AlinhamentoService } from '../shared/services/alinhamento.service';
@@ -13,11 +13,11 @@ import { Parlamentar } from 'src/app/shared/models/parlamentar.model';
   styleUrls: ['./congresso.component.scss']
 })
 export class CongressoComponent implements OnInit, OnDestroy {
-  readonly VIEW_SM = 'sm';
-  readonly VIEW_MD = 'md';
-  readonly VIEW_LG = 'lg';
+  readonly VIEW_ARC = 'arc';
+  readonly VIEW_BEE = 'bee';
 
   parlamentares: Parlamentar[];
+  parlamentaresCompleto: Parlamentar[];
   view: any;
   filter: any;
 
@@ -29,8 +29,9 @@ export class CongressoComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    this.view = this.VIEW_LG;
+    this.view = this.VIEW_ARC;
     this.getParlamentares();
+    this.getAlinhamento();
   }
 
   getParlamentares() {
@@ -53,6 +54,20 @@ export class CongressoComponent implements OnInit, OnDestroy {
         },
         error => console.log(error)
       );
+  }
+
+  getAlinhamento() {
+    this.userService.getRespostas()
+      .pipe(
+        takeUntil(this.unsubscribe),
+        debounceTime(400),
+        mergeMap(respostas => {
+          return this.alinhamentoService.getAlinhamento(respostas);
+        }))
+      .subscribe(parlamentares => {
+        this.parlamentaresCompleto = parlamentares;
+      });
+
   }
 
   getParlamentaresComAlinhamento() {

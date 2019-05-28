@@ -72,6 +72,12 @@ export class AlinhamentoService {
     return this.parlamentaresFiltered.asObservable();
   }
 
+  getAlinhamento(respostas): Observable<any> {
+    return this.http
+      .post<Parlamentar[]>(this.url, { respostas: respostas.votacoes })
+      .pipe(map(data => data.map(parlamentar => new Parlamentar(parlamentar))));
+  }
+
   search(filters: any) {
     this.searchfilters.next(filters);
     this.tema = filters.tema;
