@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 
 import { Subject } from 'rxjs';
 import { takeUntil, mergeMap, debounceTime } from 'rxjs/operators';
@@ -25,7 +25,8 @@ export class CongressoComponent implements OnInit, OnDestroy {
 
   constructor(
     private userService: UserService,
-    public alinhamentoService: AlinhamentoService
+    public alinhamentoService: AlinhamentoService,
+    private cdr: ChangeDetectorRef
   ) { }
 
   ngOnInit() {
@@ -99,6 +100,7 @@ export class CongressoComponent implements OnInit, OnDestroy {
 
   setView(view: string) {
     this.view = view;
+    this.cdr.detectChanges();
   }
 
   search(filter: any) {

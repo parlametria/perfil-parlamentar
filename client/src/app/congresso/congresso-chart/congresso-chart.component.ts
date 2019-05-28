@@ -1,4 +1,7 @@
-import { Component, OnChanges, AfterContentInit, Input, SimpleChanges, ViewEncapsulation } from '@angular/core';
+import {
+  Component, OnChanges, AfterContentInit, Input, SimpleChanges, ViewEncapsulation,
+  Output, EventEmitter, OnDestroy
+} from '@angular/core';
 import { Router } from '@angular/router';
 
 import * as d3 from 'd3';
@@ -13,11 +16,13 @@ import { Parlamentar } from '../../shared/models/parlamentar.model';
   template: '<div id="chart-parlamento" class="parlamento my-2"></div>',
   styleUrls: ['./congresso-chart.component.scss']
 })
-export class CongressoChartComponent implements AfterContentInit, OnChanges {
+export class CongressoChartComponent implements AfterContentInit, OnChanges, OnDestroy {
   @Input() parlamentares: any[];
   @Input() parlamentaresCompleto: any[];
   @Input() view: any;
   @Input() filter: any;
+
+  @Output() viewEvent = new EventEmitter<string>();
 
   drawn = false;
   temaAtual: number;
@@ -37,6 +42,7 @@ export class CongressoChartComponent implements AfterContentInit, OnChanges {
   length: number;
 
   tip: any;
+  tipFlagClick = true;
 
   constructor(private router: Router) {
     this.length = 0;
@@ -81,6 +87,7 @@ export class CongressoChartComponent implements AfterContentInit, OnChanges {
           this.drawn = false;
           this.drawVis();
         }
+        this.hideTooltip();
         this.paint();
       }
     }
@@ -90,6 +97,7 @@ export class CongressoChartComponent implements AfterContentInit, OnChanges {
       typeof changes.view.currentValue !== 'undefined' &&
       !changes.view.firstChange
     ) {
+      this.hideTooltip();
       if (changes.view.currentValue === 'arc') {
         this.showArc();
       } else {
@@ -100,9 +108,10 @@ export class CongressoChartComponent implements AfterContentInit, OnChanges {
 
   drawVis() {
     if (this.svg) {
-      if (!this.drawn) { // Vis parlamento. Primeiro desenho.
+      if (!this.drawn) {
         this.draw();
         this.drawn = true;
+        this.viewEvent.emit('arc');
       }
     }
   }
@@ -144,7 +153,8 @@ export class CongressoChartComponent implements AfterContentInit, OnChanges {
       .html((d: Parlamentar) => {
         return '<strong>' + this.titleCase(d.nomeEleitoral) + '</strong>' +
           ' <span class="subtitle">' + d.uf + '/' + d.partido + '</span>' + '<br>' +
-          '<span>' + this.formatAlinhamento(this.getPath(d)) + '</span>';
+          '<span>' + this.formatAlinhamento(this.getPath(d)) + '</span>' +
+          '<a href="/parlamentar/' + d.idParlamentarVoz + '" class="btn btn-sm btn-link"> + detalhes</a>';
       });
   }
 
@@ -170,6 +180,7 @@ export class CongressoChartComponent implements AfterContentInit, OnChanges {
   draw() {
     this.g.selectAll('.circle-parlamentar').remove();
     this.g.selectAll('.clusters').remove();
+    this.hideTooltip();
 
     this.svg.call(this.tip);
 
@@ -219,7 +230,6 @@ export class CongressoChartComponent implements AfterContentInit, OnChanges {
         .attr('class', 'circle-parlamentar')
         .attr('r', this.r)
         .attr('fill', 'white')
-        // .attr('stroke', '#515151')
         .attr('stroke', (d) => (this.color(this.getPath(d)) === '#eceff4') ? '#9B9B9B' : this.color(this.getPath(d)))
         .attr('cx', (d, z) => {
           d.arcX = arc.node().getPointAtLength(xArc(z)).x;
@@ -230,17 +240,20 @@ export class CongressoChartComponent implements AfterContentInit, OnChanges {
           return d.arcY;
         })
         .attr('opacity', 0)
-        .on('mouseover.tip', this.tip.show)
-        .on('mouseout.tip', this.tip.hide)
+        .on('mouseover.tip', (d, index, n) => { this.tip.show(d, n[index]); this.tipFlagClick = false; })
         .on('mouseover.circle', (d, index, n) => {
           this.highlightCircle(n[index]);
         })
         .on('mouseout.circle', (d, index, n) => {
           this.standardizeCircle(n[index]);
         })
-        .on('dblclick', (d) => {
-          this.g.selectAll('circle-parlamentar').call(this.tip.hide); // apaga tooltips ativos
-          this.router.navigate(['/parlamentar/' + d.idParlamentarVoz]);
+        .on('click', (d, index, n) => {
+          if (!this.tipFlagClick) {
+            this.tip.hide(d, n[index]);
+          } else {
+            this.tip.show(d, n[index]);
+          }
+          this.tipFlagClick = !this.tipFlagClick;
         });
 
     }
@@ -252,7 +265,6 @@ export class CongressoChartComponent implements AfterContentInit, OnChanges {
       .duration(500)
       .attr('opacity', 0.2)
       .transition()
-      // .duration((d, i) => i * 4)
       .duration(500)
       .attr('fill', (d) => this.color(this.getPath(d)))
       .attr('opacity', d => this.parlamentares.filter(parlamentar =>
@@ -373,6 +385,14 @@ export class CongressoChartComponent implements AfterContentInit, OnChanges {
     } else {
       return Math.round(alinhamento * 100) + '%';
     }
+  }
+
+  hideTooltip() {
+    this.g.selectAll('circle-parlamentar').call(this.tip.hide);
+  }
+
+  ngOnDestroy() {
+    d3.select('.d3-tip').remove();
   }
 
 }
