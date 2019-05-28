@@ -1,4 +1,4 @@
-import { Component, OnChanges, AfterContentInit, Input, SimpleChanges, ViewEncapsulation } from '@angular/core';
+import { Component, OnChanges, AfterContentInit, Input, SimpleChanges, ViewEncapsulation, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
 
 import * as d3 from 'd3';
@@ -18,6 +18,8 @@ export class CongressoChartComponent implements AfterContentInit, OnChanges {
   @Input() parlamentaresCompleto: any[];
   @Input() view: any;
   @Input() filter: any;
+
+  @Output() viewEvent = new EventEmitter<string>();
 
   drawn = false;
   temaAtual: number;
@@ -103,6 +105,7 @@ export class CongressoChartComponent implements AfterContentInit, OnChanges {
       if (!this.drawn) { // Vis parlamento. Primeiro desenho.
         this.draw();
         this.drawn = true;
+        this.viewEvent.emit('arc');
       }
     }
   }
