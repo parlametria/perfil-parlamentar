@@ -238,7 +238,7 @@ export class CongressoChartComponent implements AfterContentInit, OnChanges {
         .on('mouseout.circle', (d, index, n) => {
           this.standardizeCircle(n[index]);
         })
-        .on('dblclick', (d) => {
+        .on('click', (d) => {
           this.g.selectAll('circle-parlamentar').call(this.tip.hide); // apaga tooltips ativos
           this.router.navigate(['/parlamentar/' + d.idParlamentarVoz]);
         });
