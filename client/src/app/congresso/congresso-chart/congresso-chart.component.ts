@@ -42,7 +42,6 @@ export class CongressoChartComponent implements AfterContentInit, OnChanges, OnD
   length: number;
 
   tip: any;
-  tipFlagClick = true;
 
   constructor(private router: Router) {
     this.length = 0;
@@ -149,8 +148,7 @@ export class CongressoChartComponent implements AfterContentInit, OnChanges, OnD
       .html((d: Parlamentar) => {
         return '<strong>' + this.titleCase(d.nomeEleitoral) + '</strong>' +
           ' <span class="subtitle">' + d.uf + '/' + d.partido + '</span>' + '<br>' +
-          '<span>' + this.formatAlinhamento(this.getPath(d)) + '</span>' +
-          '<a href="/parlamentar/' + d.idParlamentarVoz + '" class="btn btn-sm btn-link"> + detalhes</a>';
+          '<span>' + this.formatAlinhamento(this.getPath(d)) + '</span>';
       });
   }
 
@@ -245,20 +243,16 @@ export class CongressoChartComponent implements AfterContentInit, OnChanges, OnD
           return d.arcY;
         })
         .attr('opacity', 0)
-        .on('mouseover.tip', (d, index, n) => { this.tip.show(d, n[index]); this.tipFlagClick = false; })
+        .on('mouseover.tip', this.tip.show)
+        .on('mouseout.tip', this.tip.hide)
         .on('mouseover.circle', (d, index, n) => {
           this.highlightCircle(n[index]);
         })
         .on('mouseout.circle', (d, index, n) => {
           this.standardizeCircle(n[index]);
         })
-        .on('click', (d, index, n) => {
-          if (!this.tipFlagClick) {
-            this.tip.hide(d, n[index]);
-          } else {
-            this.tip.show(d, n[index]);
-          }
-          this.tipFlagClick = !this.tipFlagClick;
+        .on('click', d => {
+          this.router.navigate(['/parlamentar/' + d.idParlamentarVoz]);
         });
 
     }
