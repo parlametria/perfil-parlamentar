@@ -1,5 +1,5 @@
 <app-sticky-footer-navbar></app-sticky-footer-navbar>
-<div class="container pt-4 container-sticky-footer-navbar">
+<div class="container py-4 container-sticky-footer-navbar">
   <h4 class="title-main">Seu alinhamento com o congresso</h4>
   <app-filter (filterChange)="search($event)"></app-filter>
 
@@ -53,55 +53,57 @@
       (viewEvent)="setView($event)"
     ></app-congresso-chart>
 
-    <div [hidden]="view === VIEW_BEE">
-      <div class="d-flex justify-content-center subtitle mt-3">
-        <div>
-          <app-legend
-            [title]="'100-80%'"
-            [class]="'alinhamento-5'"
-            [striped]="false"
-            [rounded]="true"
-          ></app-legend>
-        </div>
-        <div>
-          <app-legend
-            [title]="'80-60%'"
-            [class]="'alinhamento-4'"
-            [striped]="false"
-            [rounded]="true"
-          ></app-legend>
-        </div>
-        <div>
-          <app-legend
-            [title]="'60-50%'"
-            [class]="'alinhamento-3'"
-            [striped]="false"
-            [rounded]="true"
-          ></app-legend>
-        </div>
-        <div>
-          <app-legend
-            [title]="'50-30%'"
-            [class]="'alinhamento-2'"
-            [striped]="false"
-            [rounded]="true"
-          ></app-legend>
-        </div>
-        <div>
-          <app-legend
-            [title]="'30-0%'"
-            [class]="'alinhamento-1'"
-            [striped]="false"
-            [rounded]="true"
-          ></app-legend>
-        </div>
-        <div>
-          <app-legend
-            [title]="'sem alinhamento'"
-            [class]="'alinhamento-indefinido'"
-            [striped]="false"
-            [rounded]="true"
-          ></app-legend>
+    <div class="subtitle-wrapper">
+      <div [hidden]="view === VIEW_BEE">
+        <div class="d-flex justify-content-center subtitle">
+          <div>
+            <app-legend
+              [title]="'100-80%'"
+              [class]="'alinhamento-5'"
+              [striped]="false"
+              [rounded]="true"
+            ></app-legend>
+          </div>
+          <div>
+            <app-legend
+              [title]="'80-60%'"
+              [class]="'alinhamento-4'"
+              [striped]="false"
+              [rounded]="true"
+            ></app-legend>
+          </div>
+          <div>
+            <app-legend
+              [title]="'60-50%'"
+              [class]="'alinhamento-3'"
+              [striped]="false"
+              [rounded]="true"
+            ></app-legend>
+          </div>
+          <div>
+            <app-legend
+              [title]="'50-30%'"
+              [class]="'alinhamento-2'"
+              [striped]="false"
+              [rounded]="true"
+            ></app-legend>
+          </div>
+          <div>
+            <app-legend
+              [title]="'30-0%'"
+              [class]="'alinhamento-1'"
+              [striped]="false"
+              [rounded]="true"
+            ></app-legend>
+          </div>
+          <div>
+            <app-legend
+              [title]="'sem alinhamento'"
+              [class]="'alinhamento-indefinido'"
+              [striped]="false"
+              [rounded]="true"
+            ></app-legend>
+          </div>
         </div>
       </div>
     </div>
