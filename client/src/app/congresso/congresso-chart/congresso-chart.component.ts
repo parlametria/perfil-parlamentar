@@ -293,7 +293,8 @@ export class CongressoChartComponent implements AfterContentInit, OnChanges, OnD
       .attr('opacity', 0);
     this.g.selectAll('.circle-parlamentar')
       .transition()
-      .duration((d) => d.alinhamento.alinhamento * 1000 + 300)
+      .duration((d, i) => (this.getPath(d) >= 0) ? d.alinhamento.alinhamento * 1000 + 300 : 100 + (i * 2))
+      // .duration((d, i) => 100 + (i * 2))
       .delay(250)
       .attr('cx', d => d.arcX)
       .attr('cy', d => d.arcY);
