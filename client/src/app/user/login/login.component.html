@@ -5,7 +5,7 @@
       <div *ngIf="!isLoggedIn">
         <button
           type="button"
-          class="btn btn-primary btn-block"
+          class="btn btn-primary btn-block facebook-login-btn"
           (click)="loginUserFacebook()"
         >
           <span class="icon-facebook-official icon-md icon-left"></span>
@@ -14,10 +14,10 @@
         <br>
         <button
           type="button"
-          class="btn btn-primary btn-block"
+          class="btn btn-primary btn-block google-login-btn"
           (click)="loginUserGoogle()"
         >
-          <span class="icon-google icon-md icon-left"></span>
+          <img src="assets/imgs/g-logo.png" alt="Google" width="18px" height="18px" class="icon-left">
           Login com Google
         </button>
       </div>

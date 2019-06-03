@@ -17,6 +17,7 @@ import {
 } from '@angular/animations';
 
 import { Parlamentar } from 'src/app/shared/models/parlamentar.model';
+import { getClassCargo } from 'src/app/shared/functions/comissao';
 
 @Component({
   selector: 'app-card-parlamentar',
@@ -81,6 +82,8 @@ export class CardParlamentarComponent implements OnChanges, OnInit {
   following = false;
   isCollapsed: boolean;
 
+  classeCargoComissao: string;
+
   constructor() {
     this.view = this.VIEW_MD;
     this.isCollapsed = false;
@@ -96,6 +99,9 @@ export class CardParlamentarComponent implements OnChanges, OnInit {
   ngOnChanges(changes: SimpleChanges) {
     if (changes.tema !== undefined && changes.tema.currentValue !== null) {
       this.setAlinhamento(changes.tema.currentValue);
+    }
+    if (changes.comissao !== undefined && changes.comissao.currentValue !== null) {
+      this.setClasseCargoComissao();
     }
   }
 
@@ -131,6 +137,12 @@ export class CardParlamentarComponent implements OnChanges, OnInit {
       return '';
     }
 
+  }
+
+  // Define a classe que será aplicada ao badge que indica o cargo do parlamentar na comissao
+  setClasseCargoComissao() {
+    const cargo = this.getCargoByComissaoId(this.comissao);
+    this.classeCargoComissao = getClassCargo(cargo);
   }
 
   onAnimationStart(event: AnimationEvent) {
