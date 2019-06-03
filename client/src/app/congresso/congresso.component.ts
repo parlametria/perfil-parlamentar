@@ -20,6 +20,7 @@ export class CongressoComponent implements OnInit, OnDestroy {
   parlamentaresCompleto: Parlamentar[];
   view: any;
   filter: any;
+  isLoading: boolean;
 
   private unsubscribe = new Subject();
 
@@ -30,6 +31,7 @@ export class CongressoComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
+    this.isLoading = true;
     this.view = this.VIEW_ARC;
     this.getParlamentares();
     this.getAlinhamento();
@@ -48,6 +50,9 @@ export class CongressoComponent implements OnInit, OnDestroy {
               .subscribe(
                 parlamentares => {
                   this.parlamentares = parlamentares;
+                  if (this.parlamentares.length > 0) {
+                    this.isLoading = false;
+                  }
                 },
                 error => console.log(error)
               );
