@@ -1,5 +1,6 @@
 <app-sticky-footer-navbar></app-sticky-footer-navbar>
-<div class="container pt-2 container-sticky-footer-navbar">
+<div class="container pt-4 container-sticky-footer-navbar">
+  <h4 class="title-main">Seu alinhamento com os parlamentares</h4>
   <app-loading [hidden]="!isLoading"></app-loading>
   <div [hidden]="isLoading">
     <app-filter (filterChange)="search($event)"></app-filter>

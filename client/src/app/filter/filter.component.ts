@@ -5,12 +5,12 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
-import { estados } from '../../shared/constants/estados';
-import { ParlamentarService } from '../../shared/services/parlamentar.service';
-import { TemaService } from '../../shared/services/tema.service';
-import { ComissaoService } from 'src/app/shared/services/comissao.service';
-import { Tema } from '../../shared/models/tema.model';
-import { Comissao } from '../../shared/models/comissao.model';
+import { estados } from '../shared/constants/estados';
+import { ParlamentarService } from '../shared/services/parlamentar.service';
+import { TemaService } from '../shared/services/tema.service';
+import { ComissaoService } from '../shared/services/comissao.service';
+import { Tema } from '../shared/models/tema.model';
+import { Comissao } from '../shared/models/comissao.model';
 
 @Component({
   selector: 'app-filter',
@@ -65,7 +65,8 @@ export class FilterComponent implements OnInit, OnDestroy {
       partido: this.partidoSelecionado,
       comissao: this.comissaoSelecionada,
       tema: this.temaSelecionado,
-      temaSlug: this.FILTRO_PADRAO_TEMA_SLUG
+      temaSlug: this.FILTRO_PADRAO_TEMA_SLUG,
+      default: true
     };
   }
 
@@ -106,7 +107,8 @@ export class FilterComponent implements OnInit, OnDestroy {
       partido: this.partidoSelecionado,
       comissao: this.comissaoSelecionada,
       tema: this.temaSelecionado,
-      temaSlug: this.temaService.getTemaSlugById(this.temas, this.temaSelecionado)
+      temaSlug: this.temaService.getTemaSlugById(this.temas, this.temaSelecionado),
+      default: this.isFiltroDefault()
     };
 
     this.updateUrlFiltro(this.filtro);
@@ -183,6 +185,13 @@ export class FilterComponent implements OnInit, OnDestroy {
     if (this.temas && id !== this.FILTRO_PADRAO_TEMA) {
       return this.temas.filter(tema => tema.id === id)[0].tema;
     }
+  }
+
+  isFiltroDefault() {
+    return ((this.filtro.nome === '' || typeof this.filtro.nome === 'undefined') &&
+      this.filtro.estado === this.FILTRO_PADRAO_ESTADO &&
+      this.filtro.partido === this.FILTRO_PADRAO_PARTIDO &&
+      this.filtro.tema === this.FILTRO_PADRAO_TEMA);
   }
 
   getComissaoById(id: string) {

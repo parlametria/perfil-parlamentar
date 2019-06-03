@@ -3,6 +3,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
+import { ServiceWorkerModule } from '@angular/service-worker';
 
 import { SocialLoginModule, AuthServiceConfig } from 'angularx-social-login';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -22,7 +23,6 @@ import { TemaService } from './shared/services/tema.service';
 import { UserService } from './shared/services/user.service';
 import { AlinhamentoService } from './shared/services/alinhamento.service';
 import { ParlamentarService } from './shared/services/parlamentar.service';
-import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 
 @NgModule({

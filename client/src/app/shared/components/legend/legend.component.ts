@@ -9,6 +9,7 @@ export class LegendComponent implements OnInit {
   @Input() title: string;
   @Input() class: string;
   @Input() striped: boolean;
+  @Input() rounded: boolean;
 
   constructor() { }
 
@@ -19,6 +20,9 @@ export class LegendComponent implements OnInit {
     const classes = ['legend-info', this.class];
     if (this.striped) {
       classes.push('progress-bar-striped');
+    }
+    if (this.rounded) {
+      classes.push('legend-rounded');
     }
 
     return classes;

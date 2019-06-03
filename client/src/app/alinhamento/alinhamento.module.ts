@@ -9,15 +9,14 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { SharedModule } from '../shared/components/shared.module';
 import { AlinhamentoRoutingModule } from './alinhamento-routing.module';
+import { FilterModule } from '../filter/filter.module';
 
 import { AlinhamentoComponent } from './alinhamento.component';
-import { FilterComponent } from './filter/filter.component';
 import { CardParlamentarComponent } from './card-parlamentar/card-parlamentar.component';
 
 @NgModule({
   declarations: [
     AlinhamentoComponent,
-    FilterComponent,
     CardParlamentarComponent
   ],
   imports: [
@@ -30,7 +29,8 @@ import { CardParlamentarComponent } from './card-parlamentar/card-parlamentar.co
       preset: intersectionObserverPreset
     }),
     SharedModule,
-    AlinhamentoRoutingModule
+    AlinhamentoRoutingModule,
+    FilterModule
   ]
 })
 export class AlinhamentoModule { }
