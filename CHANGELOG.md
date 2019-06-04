@@ -1,5 +1,10 @@
 # Changelog
 
+## 2.1.0 (2019-06-04)
+
+* [x] Adiciona visualização do alinhamento com o congresso
+* [x] Novo pacote de ícones :sparkles:
+
 ## 2.0.0 (2019-05-24)
 
 * [x] Adiciona Google Analytics 

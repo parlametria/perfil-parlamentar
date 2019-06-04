@@ -19,6 +19,10 @@
   color: $gray-300;
 }
 
+.btn-light-icon:hover {
+  background: none;
+}
+
 .btn-light-icon:not(:disabled):not(.disabled):active,
 .btn-light-icon:not(:disabled):not(.disabled).active,
 .show > .btn-light-icon.dropdown-toggle {
@@ -45,7 +49,7 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 
-    content: "\f067";
+    content: "\e903";
     display: block;
     border-bottom: solid 2px $black;
     padding-top: 15px;

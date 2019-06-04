@@ -1,0 +1,117 @@
+<app-sticky-footer-navbar></app-sticky-footer-navbar>
+<div class="container py-4 container-sticky-footer-navbar">
+  <h4 class="title-main">Seu alinhamento com o congresso</h4>
+  <app-filter (filterChange)="search($event)"></app-filter>
+
+  <div [hidden]="isLoading">
+    <div class="chart-controls my-3">
+      <div>
+        <div
+          *ngIf="parlamentares"
+          class="parlamentar-count"
+        >
+          <strong class="strong">{{ parlamentares.length }}</strong>
+          parlamentares
+        </div>
+      </div>
+
+      <div>
+        <div
+          *ngIf="parlamentares"
+          class="parlamentar-count"
+        >
+          <strong class="strong">{{getParlamentaresComAlinhamento()}}</strong>
+          com alinhamento definido
+        </div>
+      </div>
+    </div>
+
+      <div class="btn-toolbar">
+        Exibir:
+        <div class="btn-group">
+          <button
+            [ngClass]="{'btn btn-light btn-light-icon': true, 'active': view === VIEW_ARC}"
+            (click)="setView('arc')"
+          >
+            <span class="icon-arc"></span>
+          </button>
+          <button
+            [ngClass]="{'btn btn-light btn-light-icon': true, 'active': view === VIEW_BEE}"
+            (click)="setView('bee')"
+          >
+            <span class="icon-beeswarm"></span>
+          </button>
+        </div>
+      </div>
+  </div>
+
+  <app-loading [hidden]="!isLoading"></app-loading>
+
+  <div [hidden]="isLoading">
+    <app-congresso-chart
+      [parlamentares]="parlamentares"
+      [parlamentaresCompleto]="parlamentaresCompleto"
+      [view]="view"
+      [filter]="filter"
+      class="plot"
+      (viewEvent)="setView($event)"
+    ></app-congresso-chart>
+
+    <div class="subtitle-wrapper">
+      <div [hidden]="view === VIEW_BEE">
+        <div class="d-flex justify-content-center subtitle">
+          <div>
+            <app-legend
+              [title]="'100-80%'"
+              [class]="'alinhamento-5'"
+              [striped]="false"
+              [rounded]="true"
+            ></app-legend>
+          </div>
+          <div>
+            <app-legend
+              [title]="'80-60%'"
+              [class]="'alinhamento-4'"
+              [striped]="false"
+              [rounded]="true"
+            ></app-legend>
+          </div>
+          <div>
+            <app-legend
+              [title]="'60-50%'"
+              [class]="'alinhamento-3'"
+              [striped]="false"
+              [rounded]="true"
+            ></app-legend>
+          </div>
+          <div>
+            <app-legend
+              [title]="'50-30%'"
+              [class]="'alinhamento-2'"
+              [striped]="false"
+              [rounded]="true"
+            ></app-legend>
+          </div>
+          <div>
+            <app-legend
+              [title]="'30-0%'"
+              [class]="'alinhamento-1'"
+              [striped]="false"
+              [rounded]="true"
+            ></app-legend>
+          </div>
+          <div>
+            <app-legend
+              [title]="'sem alinhamento'"
+              [class]="'alinhamento-indefinido'"
+              [striped]="false"
+              [rounded]="true"
+            ></app-legend>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>

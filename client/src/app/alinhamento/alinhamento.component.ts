@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 
 import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { takeUntil, mergeMap, debounceTime } from 'rxjs/operators';
 
 import { UserService } from 'src/app/shared/services/user.service';
 import { AlinhamentoService } from 'src/app/shared/services/alinhamento.service';
@@ -32,7 +32,7 @@ export class AlinhamentoComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this.view = this.VIEW_MD;
+    this.view = this.VIEW_LG;
     this.isLoading = true;
     this.getParlamentares();
   }

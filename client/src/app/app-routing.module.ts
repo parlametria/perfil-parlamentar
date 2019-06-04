@@ -7,6 +7,7 @@ const routes: Routes = [
   { path: 'questionario', loadChildren: './questionario/questionario.module#QuestionarioModule' },
   { path: 'alinhamento', loadChildren: './alinhamento/alinhamento.module#AlinhamentoModule' },
   { path: 'parlamentar', loadChildren: './parlamentar/parlamentar.module#ParlamentarModule' },
+  { path: 'congresso', loadChildren: './congresso/congresso.module#CongressoModule' },
   { path: '**', redirectTo: '' }
 ];
 

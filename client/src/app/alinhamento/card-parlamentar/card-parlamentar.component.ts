@@ -158,4 +158,23 @@ export class CardParlamentarComponent implements OnChanges, OnInit {
       this.isCollapsed = true;
     }
   }
+
+  getClassAlinhamento() {
+    if (this.alinhamento.perguntasIguais < 3) {
+      return 'alinhamento-indefinido';
+    } else {
+      if (this.alinhamento.alinhamento >= 0.8) {
+        return 'alinhamento-5';
+      } else if (this.alinhamento.alinhamento >= 0.6) {
+        return 'alinhamento-4';
+      } else if (this.alinhamento.alinhamento >= 0.5) {
+        return 'alinhamento-3';
+      } else if (this.alinhamento.alinhamento >= 0.3) {
+        return 'alinhamento-2';
+      } else {
+        return 'alinhamento-1';
+      }
+    }
+  }
+
 }

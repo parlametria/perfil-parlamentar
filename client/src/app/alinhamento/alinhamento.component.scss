@@ -8,3 +8,12 @@
     margin: auto;
   }
 }
+
+.btn-toolbar {
+  line-height: 2.2rem;
+  justify-content: flex-end;
+
+  @media (min-width: 992px) {
+    justify-content: center;
+  }
+}

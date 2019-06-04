@@ -1,0 +1,40 @@
+.subtitle-wrapper {
+  height: 50px;
+}
+
+.subtitle {
+  flex-wrap: wrap;
+}
+
+.btn-toolbar {
+  line-height: 3.2rem;
+  justify-content: flex-end;
+
+  @media (min-width: 992px) {
+    justify-content: center;
+  }
+
+}
+
+.btn-light-icon {
+  font-size: 1.7rem;
+}
+
+.chart-controls-info {
+  order: 0;
+  line-height: 3.2rem;
+}
+
+.chart-controls-info2 {
+  order: 2;
+  @media (min-width: 992px) {
+    order: 1;
+  }
+}
+
+.chart-controls-btns {
+  order: 1;
+  @media (min-width: 992px) {
+    order: 2;
+  }
+}
