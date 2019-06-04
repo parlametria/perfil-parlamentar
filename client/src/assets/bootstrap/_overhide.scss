@@ -19,10 +19,14 @@
   color: $gray-300;
 }
 
+.btn-light-icon:hover {
+  background: none;
+}
+
 .btn-light-icon:not(:disabled):not(.disabled):active,
 .btn-light-icon:not(:disabled):not(.disabled).active,
 .show > .btn-light-icon.dropdown-toggle {
-  color: $black;
+  color: $primary;
   background-color: white;
   border-color: white;
 }

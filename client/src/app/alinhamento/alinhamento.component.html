@@ -5,31 +5,34 @@
   <div [hidden]="isLoading">
     <app-filter (filterChange)="search($event)"></app-filter>
 
-    <div class="d-flex justify-content-between my-3">
-      <div class="parlamentar-count">
+    <div class="row no-gutters my-3">
+      <div class="col-7 col-md-12 parlamentar-count">
         <strong class="strong">{{ parlamentares.length }}</strong>
         parlamentares
       </div>
-      <div class="btn-toolbar">
-        <div class="btn-group">
-          <button
-            [ngClass]="{'btn btn-light btn-light-icon': true, 'active': view == VIEW_LG}"
-            (click)="setView('lg')"
-          >
-            <span class="icon-th-large"></span>
-          </button>
-          <button
-            [ngClass]="{'btn btn-light btn-light-icon': true, 'active': view == VIEW_MD}"
-            (click)="setView('md')"
-          >
-            <span class="icon-th"></span>
-          </button>
-          <button
-            [ngClass]="{'btn btn-light btn-light-icon': true, 'active': view == VIEW_SM}"
-            (click)="setView('sm')"
-          >
-            <span class="icon-th-list"></span>
-          </button>
+      <div class="col-5 col-md-12">
+        <div class="btn-toolbar">
+          <span class="d-none d-md-block">Exibir:</span>
+          <div class="btn-group">
+            <button
+              [ngClass]="{'btn btn-light btn-light-icon': true, 'active': view == VIEW_LG}"
+              (click)="setView('lg')"
+            >
+              <span class="icon-th-large"></span>
+            </button>
+            <button
+              [ngClass]="{'btn btn-light btn-light-icon': true, 'active': view == VIEW_MD}"
+              (click)="setView('md')"
+            >
+              <span class="icon-th"></span>
+            </button>
+            <button
+              [ngClass]="{'btn btn-light btn-light-icon': true, 'active': view == VIEW_SM}"
+              (click)="setView('sm')"
+            >
+              <span class="icon-th-list"></span>
+            </button>
+          </div>
         </div>
       </div>
     </div>
