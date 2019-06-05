@@ -213,26 +213,36 @@ export class FilterComponent implements OnInit, OnDestroy {
   }
 
   private updateUrlFiltro(filtro: any) {
-    const queryParams: Params = {};
+    const queryParams: Params = Object.assign({}, this.activatedRoute.snapshot.queryParams);
 
     if (filtro.nome !== '' && filtro.nome !== undefined) {
       queryParams.nome = filtro.nome;
+    } else {
+      delete queryParams.nome;
     }
 
     if (filtro.estado !== this.FILTRO_PADRAO_ESTADO) {
       queryParams.estado = filtro.estado;
+    } else {
+      delete queryParams.estado;
     }
 
     if (filtro.partido !== this.FILTRO_PADRAO_PARTIDO) {
       queryParams.partido = filtro.partido;
+    } else {
+      delete queryParams.partido;
     }
 
     if (filtro.comissao !== this.FILTRO_PADRAO_COMISSAO_VALUE) {
       queryParams.comissao = filtro.comissao;
+    } else {
+      delete queryParams.comissao;
     }
 
     if (filtro.tema !== this.FILTRO_PADRAO_TEMA) {
       queryParams.tema = filtro.tema;
+    } else {
+      delete queryParams.tema;
     }
 
     this.router.navigate([], { queryParams });

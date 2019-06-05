@@ -1,4 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Router, Params, ActivatedRoute } from '@angular/router';
 
 import { Subject } from 'rxjs';
 import { takeUntil, mergeMap, debounceTime } from 'rxjs/operators';
@@ -27,14 +28,17 @@ export class AlinhamentoComponent implements OnInit, OnDestroy {
   private unsubscribe = new Subject();
 
   constructor(
+    private activatedRoute: ActivatedRoute,
+    private router: Router,
     private userService: UserService,
     public alinhamentoService: AlinhamentoService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.view = this.VIEW_LG;
     this.isLoading = true;
     this.getParlamentares();
+    this.updateRankingViaUrl();
   }
 
   getParlamentares() {
@@ -72,6 +76,10 @@ export class AlinhamentoComponent implements OnInit, OnDestroy {
 
   pageChange(p: number) {
     this.p = p;
+
+    const queryParams: Params = Object.assign({}, this.activatedRoute.snapshot.queryParams);
+    queryParams.page = p;
+    this.router.navigate([], { queryParams });
   }
 
   getParlamentarPosition(
@@ -84,11 +92,34 @@ export class AlinhamentoComponent implements OnInit, OnDestroy {
 
   setView(view: string) {
     this.view = view;
+
+    const queryParams: Params = Object.assign({}, this.activatedRoute.snapshot.queryParams);
+    queryParams.view = view;
+    this.router.navigate([], { queryParams });
   }
 
   ngOnDestroy() {
     this.unsubscribe.next();
     this.unsubscribe.complete();
+  }
+
+  private updateRankingViaUrl() {
+    this.activatedRoute.queryParams.subscribe(
+      params => {
+        Object.keys(params).forEach(value => {
+          if (value === 'page') {
+            this.p = params[value];
+          }
+          if (value === 'view') {
+            if (params[value] === this.VIEW_SM ||
+              params[value] === this.VIEW_MD ||
+              params[value] === this.VIEW_LG) {
+              this.view = params[value];
+            }
+          }
+        });
+      }
+    );
   }
 
   // Evento para carregar a foto dos primeiros parlamentares da lista
