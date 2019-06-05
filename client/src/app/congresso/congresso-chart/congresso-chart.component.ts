@@ -23,6 +23,7 @@ export class CongressoChartComponent implements AfterContentInit, OnChanges, OnD
   @Input() filter: any;
 
   @Output() viewEvent = new EventEmitter<string>();
+  @Output() finishEvent: EventEmitter<boolean> = new EventEmitter();
 
   drawn = false;
   temaAtual: number;
@@ -80,9 +81,9 @@ export class CongressoChartComponent implements AfterContentInit, OnChanges, OnD
     ) {
       this.parlamentares = JSON.parse(JSON.stringify(changes.parlamentares.currentValue));
       if (this.svg) {
-
         if (this.filter.tema !== this.temaAtual) { // redesenhe a visualização se o tema do alinhamento for alterado
           this.temaAtual = this.filter.tema;
+          this.finishEvent.emit(false);
           this.drawVis();
         }
         this.hideTooltip();
@@ -254,8 +255,8 @@ export class CongressoChartComponent implements AfterContentInit, OnChanges, OnD
         .on('click', d => {
           this.router.navigate(['/parlamentar/' + d.idParlamentarVoz]);
         });
-
-    }
+      }
+    this.finishEvent.emit(true);
   }
 
   paint() {
