@@ -55,6 +55,7 @@
       [filter]="filter"
       class="plot"
       (viewEvent)="setView($event)"
+      (finishEvent)="setChartVisibility($event)"
     ></app-congresso-chart>
 
     <div class="subtitle-wrapper">

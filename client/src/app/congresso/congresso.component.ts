@@ -50,9 +50,6 @@ export class CongressoComponent implements OnInit, OnDestroy {
               .subscribe(
                 parlamentares => {
                   this.parlamentares = parlamentares;
-                  if (this.parlamentares.length > 0) {
-                    this.isLoading = false;
-                  }
                 },
                 error => console.log(error)
               );
@@ -111,6 +108,10 @@ export class CongressoComponent implements OnInit, OnDestroy {
   search(filter: any) {
     this.filter = filter;
     this.alinhamentoService.search(filter);
+  }
+
+  setChartVisibility(isFinished: boolean) {
+    this.isLoading = !isFinished;
   }
 
   ngOnDestroy() {
