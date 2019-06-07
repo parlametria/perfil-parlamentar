@@ -57,7 +57,7 @@ router.get("/parlamentar", (req, res) => {
  * @memberof module:routes/parlamentar/:id
  */
 router.get("/parlamentar/:id", (req, res) => {
-  Parlamentar.findAll({
+  Parlamentar.findOne({
     attributes: attParlamentar,
     include: [
       {
