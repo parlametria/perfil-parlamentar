@@ -38,7 +38,7 @@ router.get("/parlamentar", (req, res) => {
       {
         model: Aderencia,
         attributes: attAderencia,
-        as: "parlamentar_aderencia",        
+        as: "parlamentarAderencia",        
         required: false
       }
     ],
