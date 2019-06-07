@@ -21,37 +21,28 @@
       </div>
     </div>
   </div>
-  <div class="parlamentar-lista">
-    <app-cargo
-      [comissoesByCargo]="comissoesByCargoTitular"></app-cargo>
-    <app-cargo
-      [comissoesByCargo]="comissoesByCargoSuplente"></app-cargo>
-  </div>
-  <div class="d-flex justify-content-center">
-    <div class="form-group form-group-plus">
-      <select
-        class="form-control form-control-plus"
-        id="tema"
-        [(ngModel)]="temaSelecionado"
-        (ngModelChange)="filtraProposicoesPorTema($event)"
-        name="tema"
+
+  <ul class="nav nav-tabs">
+    <li class="nav-item">
+      <a
+        class="nav-link"
+        [routerLink]="['./posicoes']"
+        [routerLinkActive]="'active'"
       >
-        <option
-          *ngFor="let tema of temas"
-          [value]="tema.id"
-        >
-          {{ tema.tema }}
-        </option>
-      </select>
-    </div>
-  </div>
-  <div class="parlamentar-lista">
-    <app-posicao
-      *ngFor="let proposicao of proposicoesFiltradas"
-      [parlamentar]="parlamentar"
-      [proposicao]="proposicao"
-      [resposta]="respostas.votacoes[proposicao.id_votacao]"
-      [votacao]="parlamentar.votacoes[proposicao.id_votacao]"
-    ></app-posicao>
-  </div>
+        Posições
+      </a>
+    </li>
+    <li class="nav-item">
+      <a
+        class="nav-link"
+        [routerLink]="['./cargos']"
+        [routerLinkActive]="'active'"
+      >
+        Cargos
+      </a>
+    </li>
+  </ul>
+
+  <router-outlet></router-outlet>
+
 </div>
