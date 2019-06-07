@@ -12,5 +12,5 @@ export interface Aderencia {
     casa: string;
     nomeEleitoral: string;
     partido: string;
-    parlamentarAderencia: AderenciaDados;
+    parlamentarAderencia: Array<AderenciaDados>;
 }
