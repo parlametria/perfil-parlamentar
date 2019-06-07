@@ -199,39 +199,5 @@ router.get("/:id/votacoes", (req, res) => {
     .catch(err => res.status(BAD_REQUEST).json({ err: err.message }));
 });
 
-router.get("/parlamentar", (req, res) => {
-  // Parlamentar
-  //   .findAll({
-  //     include: [
-  //       {
-  //         model: Votacao,
-  //         attributes: ["id_parlamentar_voz", "id_votacao", "voto"],
-  //         as: "parlamentar_vot",          
-  //         required: false,
-  //         include: {
-  //           model: Proposicao,
-  //           attributes: ["id_votacao", "titulo", "projeto_lei"],
-  //           as: "vot_prop",
-  //           required: false
-  //         }
-  //       }
-  //     ]
-  //   })
-  Proposicao
-    .findAll({      
-      include: [
-        {
-        model: Votacao,
-        attributes: ["id_votacao", "id_parlamentar_voz", "voto"],
-        as: "vot_prop",
-        required: false,
-        }
-      ]
-    })
-    .then(parlamentares => {
-      res.status(SUCCESS).json(parlamentares);
-    })
-    .catch(err => res.status(BAD_REQUEST).json({ err: err.message }));
-});
 
 module.exports = router;
