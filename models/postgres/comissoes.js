@@ -19,7 +19,7 @@ module.exports = (sequelize, type) => {
     comissao.hasMany(models.composicaoComissoes, {
       foreignKey: "id_comissao_voz",
       targetKey: "id_comissao_voz",      
-      as: "comissao_comp"
+      as: "comissaoComp"
     })
   };
   return comissao;

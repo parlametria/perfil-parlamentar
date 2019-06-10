@@ -104,7 +104,7 @@ export class AlinhamentoService {
 
       filtered =
         comissao && comissao !== '-1' && filtered
-          ? p.comissoes.filter(com => com.id_comissao_voz === comissao).length > 0
+          ? p.comissoes.filter(com => com.idComissaoVoz === comissao).length > 0
           : filtered;
 
       filtered =

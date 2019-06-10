@@ -8,7 +8,7 @@ import { environment } from '../../../environments/environment';
 import { Parlamentar } from '../models/parlamentar.model';
 import { ParlamentarInfo } from '../models/parlamentarInfo.model';
 import { ParlamentarPosicao } from '../models/parlamentarPosicao.model';
-
+import { ParlamentarComissoes } from '../models/parlamentarComissoes.model';
 
 @Injectable({
   providedIn: 'root'
@@ -45,5 +45,10 @@ export class ParlamentarService {
   getPosicoesById(id: string): Observable<ParlamentarPosicao> {
     return this.http
       .get<ParlamentarPosicao>(this.url + '/' + id + '/posicoes');
+  }
+
+  getComissoesByid(id: string): Observable<ParlamentarComissoes> {
+    return this.http
+      .get<ParlamentarComissoes>(this.url + '/' + id + '/comissoes');
   }
 }

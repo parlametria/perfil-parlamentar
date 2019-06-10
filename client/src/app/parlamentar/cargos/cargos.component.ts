@@ -6,8 +6,8 @@ import { takeUntil } from 'rxjs/operators';
 
 import { ParlamentarService } from 'src/app/shared/services/parlamentar.service';
 
-import { Parlamentar } from 'src/app/shared/models/parlamentar.model';
-import { ComposicaoComissao } from 'src/app/shared/models/composicao_comissao.model';
+import { ParlamentarComissoes } from 'src/app/shared/models/parlamentarComissoes.model';
+import { ComposicaoComissao } from 'src/app/shared/models/composicaoComissao.model';
 
 @Component({
   selector: 'app-cargos',
@@ -19,7 +19,7 @@ export class CargosComponent implements OnInit, OnDestroy {
 
   private unsubscribe = new Subject();
 
-  parlamentar: Parlamentar;
+  parlamentar: ParlamentarComissoes;
   comissoesByCargoTitular: {};
   comissoesByCargoSuplente: {};
 
@@ -36,12 +36,12 @@ export class CargosComponent implements OnInit, OnDestroy {
 
   getParlamentarById(id: string) {
     this.parlamentarService
-      .getVotacoesParlamentarPorId(id)
+      .getComissoesByid(id)
       .pipe(takeUntil(this.unsubscribe))
       .subscribe(
         parlamentar => {
           this.parlamentar = parlamentar;
-          this.agrupaComissoesPorCargo(parlamentar.comissoes);
+          this.agrupaComissoesPorCargo(parlamentar.parlamentarComissoes);
         },
         error => {
           console.log(error);

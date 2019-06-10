@@ -24,8 +24,8 @@ const att = [
   "genero",
   "em_exercicio"
 ];
-const att_comissoes = ["sigla", "nome"];
-const att_composicao_comissoes = ["id_comissao_voz", "cargo"];
+const attComissoes = ["sigla", "nome"];
+const attComposicaoComissoes = [["id_comissao_voz", "idComissaoVoz"], "cargo"];
 
 /**
  * Testa a rota de parlamentares.
@@ -205,6 +205,40 @@ router.get("/:id/posicoes", (req, res) => {
 });
 
 /**
+ * Recupera informações de comissões do parlamentar a partir de seu id (no Voz Ativa)
+ * @name get/api/:id/posicoes
+ * @function
+ * @memberof module:routes/parlamentares
+ * @param {string} id - id do parlamentar na plataforma Voz Ativa
+ */
+router.get("/:id/comissoes", (req, res) => {
+  Parlamentar.findOne({
+    attributes: [["id_parlamentar_voz", "idParlamentarVoz"]],
+    include: [
+      {
+        model: ComposicaoComissoes,
+        attributes: attComposicaoComissoes,
+        as: "parlamentarComissoes",
+        required: false,
+        include: [
+          {
+            model: Comissoes,
+            attributes: attComissoes,
+            as: "infoComissao",
+            required: false
+          }
+        ]
+      }
+    ],
+    where: { id_parlamentar_voz: req.params.id }
+  })
+    .then(parlamentar => {      
+      return res.json(parlamentar);
+    })
+    .catch(err => res.status(BAD_REQUEST).json({ err: err.message }));
+});
+
+/**
  * Recupera informações de um parlamentar a partir de seu id (no Voz Ativa)
  * @name get/api/:id/votacoes
  * @function
@@ -223,14 +257,14 @@ router.get("/:id/votacoes", (req, res) => {
       },
       {
         model: ComposicaoComissoes,
-        attributes: att_composicao_comissoes,
-        as: "parlamentar_comissoes",
+        attributes: attComposicaoComissoes,
+        as: "parlamentarComissoes",
         required: false,
         include: [
           {
             model: Comissoes,
-            attributes: att_comissoes,
-            as: "info_comissao",
+            attributes: attComissoes,
+            as: "infoComissao",
             required: false
           }
         ]
