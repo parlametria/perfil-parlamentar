@@ -13,7 +13,6 @@ import { Parlamentar } from 'src/app/shared/models/parlamentar.model';
 import { Tema } from 'src/app/shared/models/tema.model';
 import { Proposicao } from 'src/app/shared/models/proposicao.model';
 import { Resposta } from 'src/app/shared/models/resposta.model';
-import { ComposicaoComissao } from 'src/app/shared/models/composicao_comissao.model';
 
 @Component({
   selector: 'app-posicoes',
@@ -24,7 +23,6 @@ export class PosicoesComponent implements OnInit, OnDestroy {
   readonly FAVOR = 1;
   readonly CONTRA = -1;
   readonly ID_PADRAO_TEMA_TODOS = '7';
-  readonly SUPLENTE = 'Suplente';
 
   private unsubscribe = new Subject();
 
@@ -34,8 +32,6 @@ export class PosicoesComponent implements OnInit, OnDestroy {
   respostas: Resposta;
   temaSelecionado: string;
   proposicoesFiltradas: Proposicao[];
-  comissoesByCargoTitular: {};
-  comissoesByCargoSuplente: {};
 
   constructor(
     private activatedroute: ActivatedRoute,
@@ -61,7 +57,6 @@ export class PosicoesComponent implements OnInit, OnDestroy {
       .subscribe(
         parlamentar => {
           this.parlamentar = parlamentar;
-          this.agrupaComissoesPorCargo(parlamentar.comissoes);
         },
         error => {
           console.log(error);
@@ -128,30 +123,6 @@ export class PosicoesComponent implements OnInit, OnDestroy {
       });
 
     }
-  }
-
-  agrupaComissoesPorCargo(comissoes: ComposicaoComissao[]) {
-    const suplentes = comissoes.filter((comissao) => comissao.cargo === this.SUPLENTE);
-    this.comissoesByCargoTitular = this.comissoesToDict(
-      comissoes.filter((comissao) => comissao.cargo !== this.SUPLENTE)
-    );
-    this.comissoesByCargoSuplente = this.comissoesToDict(suplentes);
-  }
-
-  comissoesToDict(comissoes: ComposicaoComissao[]) {
-    const comissoesByCargo = {};
-
-    comissoes.forEach((comissao) => {
-      const cargo = comissao.cargo;
-      if (comissoesByCargo[cargo] !== undefined) {
-        comissoesByCargo[cargo] = comissoesByCargo[cargo].concat(comissao);
-      } else {
-        comissoesByCargo[cargo] = [].concat(comissao);
-      }
-      return comissoesByCargo;
-    });
-
-    return(comissoesByCargo);
   }
 
   ngOnDestroy() {
