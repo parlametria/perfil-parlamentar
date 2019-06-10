@@ -17,10 +17,10 @@ function formataVotacoes(resultado) {
 
   resultadoNovo.forEach(cand => {
     const votacoes = {};
-    cand.parlamentar_vot.forEach(vot => {
+    cand.votacoes.forEach(vot => {
       votacoes[vot.id_votacao] = vot.voto;
     });
-    cand.parlamentar_vot = votacoes;    
+    cand.votacoes = votacoes;    
   });
   return resultadoNovo;
 }

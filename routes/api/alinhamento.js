@@ -35,7 +35,7 @@ router.post("/", (req, res) => {
       {
         attributes: ["id_votacao", "voto"],
         model: Votacao,
-        as: "parlamentar_vot",
+        as: "votacoes",
         required: false
       },
       {

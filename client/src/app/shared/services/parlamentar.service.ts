@@ -7,6 +7,7 @@ import { map } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
 import { Parlamentar } from '../models/parlamentar.model';
 import { ParlamentarInfo } from '../models/parlamentarInfo.model';
+import { ParlamentarPosicao } from '../models/parlamentarPosicao.model';
 
 
 @Injectable({
@@ -39,5 +40,10 @@ export class ParlamentarService {
       .pipe(map(parlamentar => {
         return new ParlamentarInfo(parlamentar);
       }));
+  }
+
+  getPosicoesById(id: string): Observable<ParlamentarPosicao> {
+    return this.http
+      .get<ParlamentarPosicao>(this.url + '/' + id + '/posicoes');
   }
 }

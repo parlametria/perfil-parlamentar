@@ -9,7 +9,7 @@ import { TemaService } from 'src/app/shared/services/tema.service';
 import { PerguntaService } from 'src/app/shared/services/pergunta.service';
 import { UserService } from 'src/app/shared/services/user.service';
 
-import { Parlamentar } from 'src/app/shared/models/parlamentar.model';
+import { ParlamentarPosicao } from 'src/app/shared/models/parlamentarPosicao.model';
 import { Tema } from 'src/app/shared/models/tema.model';
 import { Proposicao } from 'src/app/shared/models/proposicao.model';
 import { Resposta } from 'src/app/shared/models/resposta.model';
@@ -26,7 +26,7 @@ export class PosicoesComponent implements OnInit, OnDestroy {
 
   private unsubscribe = new Subject();
 
-  parlamentar: Parlamentar;
+  parlamentar: ParlamentarPosicao;
   temas: Tema[];
   proposicoes: Proposicao[];
   respostas: Resposta;
@@ -52,7 +52,7 @@ export class PosicoesComponent implements OnInit, OnDestroy {
 
   getParlamentarById(id: string) {
     this.parlamentarService
-      .getVotacoesParlamentarPorId(id)
+      .getPosicoesById(id)
       .pipe(takeUntil(this.unsubscribe))
       .subscribe(
         parlamentar => {
