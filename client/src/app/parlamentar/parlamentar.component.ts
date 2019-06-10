@@ -6,7 +6,7 @@ import { takeUntil } from 'rxjs/operators';
 
 import { ParlamentarService } from 'src/app/shared/services/parlamentar.service';
 
-import { Parlamentar } from 'src/app/shared/models/parlamentar.model';
+import { ParlamentarInfo } from 'src/app/shared/models/parlamentarInfo.model';
 
 @Component({
   selector: 'app-parlamentar',
@@ -17,7 +17,7 @@ export class ParlamentarComponent implements OnInit, OnDestroy {
 
   private unsubscribe = new Subject();
 
-  parlamentar: Parlamentar;
+  parlamentar: ParlamentarInfo;
 
   constructor(
     private activatedroute: ActivatedRoute,
@@ -32,7 +32,7 @@ export class ParlamentarComponent implements OnInit, OnDestroy {
 
   getParlamentarById(id: string) {
     this.parlamentarService
-      .getVotacoesParlamentarPorId(id)
+      .getInfoById(id)
       .pipe(takeUntil(this.unsubscribe))
       .subscribe(
         parlamentar => {

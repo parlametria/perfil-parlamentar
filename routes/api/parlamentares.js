@@ -158,6 +158,25 @@ router.get("/:id", (req, res) => {
     .catch(err => res.status(BAD_REQUEST).json({ err }));
 });
 
+
+/**
+* Recupera informações básicas do parlamentar de acordo com o id (no Voz Ativa).
+* @name get/api/parlamentares/:id/info
+* @function
+* @memberof module:routes/parlamentares
+* @param {string} id - id do parlamentar na plataforma Voz Ativa
+*/
+router.get("/:id/info", (req, res) => {
+ Parlamentar.findOne({
+   attributes: ["id_parlamentar_voz", "id_parlamentar", "casa", "nome_eleitoral","uf", "partido", "em_exercicio"],
+   where: {
+     id_parlamentar_voz: req.params.id
+   }
+ })
+   .then(parlamentar => res.json(parlamentar))
+   .catch(err => res.status(BAD_REQUEST).json({ err }));
+});
+
 /**
  * Recupera informações de um parlamentar a partir de seu id (no Voz Ativa)
  * @name get/api/:id/votacoes
