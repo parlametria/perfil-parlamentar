@@ -1,19 +1,82 @@
 <div class="my-3">
-  <strong>Aderência ao partido {{aderenciaDados?.partido}}</strong>
-  <div class="row no-gutters mt-1">
-    <div class="col col-sm-6">
-      <app-progress
-        [value]="aderenciaDados?.aderencia * 0.01"
-        [min]="0"
-        [max]="100"
-        [showAxis]="true"
-        [class]="'alinhamento-5'"
-      ></app-progress>
+  <div>
+    <strong>
+      Aderência ao {{aderenciaDados?.partido}}
+    </strong>
+    <div class="row no-gutters mt-1">
+      <div class="col col-sm-6">
+        <app-progress
+          [value]="aderenciaDados?.aderencia * 0.01"
+          [min]="0"
+          [max]="100"
+          [showAxis]="true"
+          [class]="'alinhamento-5'"
+        ></app-progress>
+      </div>
+      <div class="col-1 ml-2">
+        <span>
+          {{ aderenciaDados?.aderencia * 0.01 | percent }}
+        </span>
+      </div>
     </div>
-    <div class="col-1 ml-2">
-      <span>
-        {{ aderenciaDados?.aderencia * 0.01 | percent }}
-      </span>
+  </div>
+  <div class="mt-2">
+    <strong>Comportamento por votação</strong>
+    <div class="d-flex subtitle">
+      <div>
+        <app-legend
+          [title]="'seguiu'"
+          [class]="'positivo'"
+          [striped]="false"
+        ></app-legend>
+      </div>
+      <div>
+        <app-legend
+          [title]="'não seguiu'"
+          [class]="'negativo progress-bar-striped'"
+          [striped]="false"
+        ></app-legend>
+      </div>
+      <div>
+        <app-legend
+          [title]="'partido liberou'"
+          [class]="'neutro progress-bar-striped-inverse'"
+          [striped]="false"
+        ></app-legend>
+      </div>
+      <div>
+        <app-legend
+          [title]="'faltou'"
+          [class]="'ausente'"
+          [striped]="false"
+        ></app-legend>
+      </div>
     </div>
-  </div>  
+    <div class="row no-gutters mt-2">
+      <div class="col col-sm-6">
+        <app-progress-stacked
+          [titulo]="'Votações em 2019'"
+          [categorias]="[
+          {
+            'valor': aderenciaDados?.seguiu,
+            'classe': 'positivo'
+          },
+          {
+            'valor': aderenciaDados?.naoSeguiu,
+            'classe': 'negativo progress-bar-striped'
+          },
+          {
+            'valor': aderenciaDados?.partidoLiberou,
+            'classe': 'neutro progress-bar-striped-inverse'
+          },
+          {
+            'valor': aderenciaDados?.faltou,
+            'classe': 'ausente'
+          }
+        ]"
+          [passo]="passo"
+        ></app-progress-stacked>
+      </div>
+    </div>
+  </div>
 </div>
