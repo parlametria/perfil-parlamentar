@@ -177,9 +177,9 @@
         >
           <option
             *ngFor="let comissao of comissoes"
-            [value]="comissao.id_comissao_voz"
+            [value]="comissao.idComissaoVoz"
           >
-          {{comissao.nome}} <span *ngIf="comissao.id_comissao_voz !== FILTRO_PADRAO_COMISSAO_VALUE">- {{comissao.sigla}}</span>
+          {{comissao.nome}} <span *ngIf="comissao.idComissaoVoz !== FILTRO_PADRAO_COMISSAO_VALUE">- {{comissao.sigla}}</span>
           </option>
         </select>
       </div>

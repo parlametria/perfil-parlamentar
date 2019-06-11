@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input, SimpleChanges, OnChanges } from '@angular/core';
 
 import { getClassCargo } from '../../shared/functions/comissao';
 
@@ -7,14 +7,19 @@ import { getClassCargo } from '../../shared/functions/comissao';
   templateUrl: './cargo.component.html',
   styleUrls: ['./cargo.component.scss']
 })
-export class CargoComponent implements OnInit {
+export class CargoComponent implements OnChanges {
 
   @Input() comissoesByCargo: {};
 
   constructor() { }
 
-  ngOnInit() {
-    Object.keys(this.comissoesByCargo).map(cargo => { this.comissoesByCargo[cargo].classe = getClassCargo(cargo); });
+  ngOnChanges(changes: SimpleChanges) {
+    if (
+      typeof changes.comissoesByCargo !== 'undefined' &&
+      typeof changes.comissoesByCargo.currentValue !== 'undefined'
+    ) {
+      Object.keys(this.comissoesByCargo).map(cargo => { this.comissoesByCargo[cargo].classe = getClassCargo(cargo); });
+    }
   }
 
   // Define a classe que será aplicada ao badge que indica o cargo do parlamentar na comissao

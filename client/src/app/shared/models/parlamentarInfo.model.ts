@@ -1,4 +1,4 @@
-export class Parlamentar {
+export class ParlamentarInfo {
 
   public idParlamentarVoz: string;
   public idParlamentar: string;
@@ -6,11 +6,7 @@ export class Parlamentar {
   public nomeEleitoral: string;
   public uf: string;
   public partido: string;
-  public genero: string;
   public emExercicio: boolean;
-  public votacoes: any;
-  public alinhamento?: any;
-  public comissoes?: any;
 
   constructor(parlamentar: any) {
     this.idParlamentarVoz = parlamentar.id_parlamentar_voz;
@@ -19,11 +15,7 @@ export class Parlamentar {
     this.nomeEleitoral = parlamentar.nome_eleitoral;
     this.uf = parlamentar.uf;
     this.partido = parlamentar.partido;
-    this.genero = parlamentar.genero;
     this.emExercicio = parlamentar.em_exercicio;
-    this.votacoes = parlamentar.votacoes;
-    this.alinhamento = parlamentar.alinhamento;
-    this.comissoes = parlamentar.parlamentarComissoes;
   }
 
   getFoto(): string {

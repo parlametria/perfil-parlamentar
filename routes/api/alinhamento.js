@@ -35,21 +35,21 @@ router.post("/", (req, res) => {
       {
         attributes: ["id_votacao", "voto"],
         model: Votacao,
-        as: "parlamentar_vot",
+        as: "votacoes",
         required: false
       },
       {
         model: ComposicaoComissoes,
-        attributes: ["id_comissao_voz", "cargo"],
+        attributes: [["id_comissao_voz", "idComissaoVoz"], "cargo"],
         include: [
           {
             model: Comissoes,
             attributes: ["sigla"],
-            as: "info_comissao",
+            as: "infoComissao",
             required: false
           }
         ],
-        as: "parlamentar_comissoes",
+        as: "parlamentarComissoes",
         required: false
       },      
     ],

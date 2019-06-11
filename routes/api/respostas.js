@@ -114,7 +114,7 @@ router.get("/eleitos", (req, res) => {
           {
             attributes: ["sigla"],
             model: Comissoes,
-            as: "info_comissao",
+            as: "infoComissao",
             required: false
           }
         ],

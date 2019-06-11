@@ -1,19 +1,13 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 
-import { Subject, forkJoin } from 'rxjs';
+import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 import { ParlamentarService } from 'src/app/shared/services/parlamentar.service';
-import { TemaService } from 'src/app/shared/services/tema.service';
-import { PerguntaService } from 'src/app/shared/services/pergunta.service';
-import { UserService } from 'src/app/shared/services/user.service';
 
-import { Parlamentar } from 'src/app/shared/models/parlamentar.model';
-import { Tema } from 'src/app/shared/models/tema.model';
-import { Proposicao } from 'src/app/shared/models/proposicao.model';
-import { Resposta } from 'src/app/shared/models/resposta.model';
-import { ComposicaoComissao } from 'src/app/shared/models/composicao_comissao.model';
+import { ParlamentarComissoes } from 'src/app/shared/models/parlamentarComissoes.model';
+import { ComposicaoComissao } from 'src/app/shared/models/composicaoComissao.model';
 
 @Component({
   selector: 'app-cargos',
@@ -25,22 +19,13 @@ export class CargosComponent implements OnInit, OnDestroy {
 
   private unsubscribe = new Subject();
 
-  parlamentar: Parlamentar;
-  temas: Tema[];
-  proposicoes: Proposicao[];
-  respostas: Resposta;
-  temaSelecionado: string;
-  proposicoesFiltradas: Proposicao[];
+  parlamentar: ParlamentarComissoes;
   comissoesByCargoTitular: {};
   comissoesByCargoSuplente: {};
 
   constructor(
     private activatedroute: ActivatedRoute,
-    private router: Router,
     private parlamentarService: ParlamentarService,
-    private temaService: TemaService,
-    private perguntaService: PerguntaService,
-    private userService: UserService
   ) { }
 
   ngOnInit() {
@@ -51,12 +36,12 @@ export class CargosComponent implements OnInit, OnDestroy {
 
   getParlamentarById(id: string) {
     this.parlamentarService
-      .getVotacoesParlamentarPorId(id)
+      .getComissoesByid(id)
       .pipe(takeUntil(this.unsubscribe))
       .subscribe(
         parlamentar => {
           this.parlamentar = parlamentar;
-          this.agrupaComissoesPorCargo(parlamentar.comissoes);
+          this.agrupaComissoesPorCargo(parlamentar.parlamentarComissoes);
         },
         error => {
           console.log(error);
