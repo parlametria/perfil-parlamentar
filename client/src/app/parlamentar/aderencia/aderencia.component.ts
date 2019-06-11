@@ -18,6 +18,7 @@ export class AderenciaComponent implements OnInit, OnDestroy {
   private unsubscribe = new Subject();
 
   aderencia: Aderencia;
+  aderenciaDados: any;
 
   constructor(
     private aderenciaService: AderenciaService,
@@ -37,7 +38,7 @@ export class AderenciaComponent implements OnInit, OnDestroy {
       .subscribe(
         aderencia => {
           this.aderencia = aderencia;
-          console.log(aderencia);
+          this.aderenciaDados = aderencia.parlamentarAderencia.filter(ad => ad.partido === aderencia.partido)[0];
         },
         error => {
           console.log(error);

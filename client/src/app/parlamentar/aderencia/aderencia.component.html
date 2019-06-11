@@ -1,3 +1,19 @@
 <div class="my-3">
-  <strong>Aderência Geral</strong>
+  <strong>Aderência ao partido {{aderenciaDados?.partido}}</strong>
+  <div class="row no-gutters mt-1">
+    <div class="col col-sm-6">
+      <app-progress
+        [value]="aderenciaDados?.aderencia * 0.01"
+        [min]="0"
+        [max]="100"
+        [showAxis]="true"
+        [class]="'alinhamento-5'"
+      ></app-progress>
+    </div>
+    <div class="col-1 ml-2">
+      <span>
+        {{ aderenciaDados?.aderencia * 0.01 | percent }}
+      </span>
+    </div>
+  </div>  
 </div>
