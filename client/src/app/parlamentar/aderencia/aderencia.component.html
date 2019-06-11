@@ -20,8 +20,34 @@
       </div>
     </div>
   </div>
-  <div class="mt-2">
+  <div class="mt-4">
     <strong>Comportamento por votação</strong>
+    <div class="row no-gutters mt-2">
+      <div class="col col-sm-6">
+        <app-progress-stacked
+          [titulo]="'Votações em 2019'"
+          [categorias]="[
+          {
+            'valor': aderenciaDados?.seguiu,
+            'classe': 'positivo'
+          },
+          {
+            'valor': aderenciaDados?.naoSeguiu,
+            'classe': 'negativo progress-bar-striped'
+          },
+          {
+            'valor': aderenciaDados?.partidoLiberou,
+            'classe': 'neutro progress-bar-striped-inverse'
+          },
+          {
+            'valor': aderenciaDados?.faltou,
+            'classe': 'ausente'
+          }
+        ]"
+          [passo]="passo"
+        ></app-progress-stacked>
+      </div>
+    </div>
     <div class="d-flex subtitle">
       <div>
         <app-legend
@@ -50,32 +76,6 @@
           [class]="'ausente'"
           [striped]="false"
         ></app-legend>
-      </div>
-    </div>
-    <div class="row no-gutters mt-2">
-      <div class="col col-sm-6">
-        <app-progress-stacked
-          [titulo]="'Votações em 2019'"
-          [categorias]="[
-          {
-            'valor': aderenciaDados?.seguiu,
-            'classe': 'positivo'
-          },
-          {
-            'valor': aderenciaDados?.naoSeguiu,
-            'classe': 'negativo progress-bar-striped'
-          },
-          {
-            'valor': aderenciaDados?.partidoLiberou,
-            'classe': 'neutro progress-bar-striped-inverse'
-          },
-          {
-            'valor': aderenciaDados?.faltou,
-            'classe': 'ausente'
-          }
-        ]"
-          [passo]="passo"
-        ></app-progress-stacked>
       </div>
     </div>
   </div>
