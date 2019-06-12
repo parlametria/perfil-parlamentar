@@ -1,29 +1,27 @@
-<div class="my-3">
-  <div>
-    <strong>
-      Aderência ao {{aderenciaDados?.partido}}
-    </strong>
-    <div class="row no-gutters mt-1">
-      <div class="col col-sm-6">
-        <app-progress
-          [value]="aderenciaDados?.aderencia * 0.01"
-          [min]="0"
-          [max]="100"
-          [showAxis]="true"
-          [class]="'alinhamento-5'"
-        ></app-progress>
-      </div>
-      <div class="col-1 ml-2">
-        <span>
-          {{ aderenciaDados?.aderencia * 0.01 | percent }}
-        </span>
-      </div>
+<div class="my-3 aderencia">
+  <strong>
+    Aderência ao {{aderenciaDados?.partido}}
+  </strong>
+  <div class="d-flex">
+    <app-progress
+      class="progress-bar-aderencia"
+      [value]="aderenciaDados?.aderencia * 0.01"
+      [min]="0"
+      [max]="100"
+      [showAxis]="true"
+      [class]="'alinhamento-5'"
+    ></app-progress>
+    <div class="ml-2">
+      <span>
+        {{ aderenciaDados?.aderencia * 0.01 | percent }}
+      </span>
     </div>
   </div>
+  
   <div class="mt-4">
     <strong>Comportamento por votação</strong>
     <div class="row no-gutters mt-2">
-      <div class="col col-sm-6">
+      <div class="col">
         <app-progress-stacked
           [titulo]="'Votações em 2019'"
           [categorias]="[
