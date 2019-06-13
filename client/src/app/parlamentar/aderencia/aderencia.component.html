@@ -1,4 +1,7 @@
-<div class="my-3 aderencia">
+<div
+  *ngIf="passo !== 0"
+  class="my-3 aderencia"
+>
   <strong>
     Aderência ao {{aderenciaDados?.partido}}
   </strong>
@@ -17,7 +20,7 @@
       </span>
     </div>
   </div>
-  
+
   <div class="mt-4">
     <strong>Comportamento por votação</strong>
     <div class="row no-gutters mt-2">
@@ -35,7 +38,7 @@
           },
           {
             'valor': aderenciaDados?.partidoLiberou,
-            'classe': 'neutro progress-bar-striped-inverse'
+            'classe': 'neutro progress-bar-striped'
           },
           {
             'valor': aderenciaDados?.faltou,
@@ -64,7 +67,7 @@
       <div>
         <app-legend
           [title]="'partido liberou'"
-          [class]="'neutro progress-bar-striped-inverse'"
+          [class]="'neutro progress-bar-striped'"
           [striped]="false"
         ></app-legend>
       </div>
@@ -77,4 +80,10 @@
       </div>
     </div>
   </div>
+</div>
+<div
+  *ngIf="passo === 0"
+  class="my-3"
+>
+  <strong>Sem dados de aderência</strong>
 </div>

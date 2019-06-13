@@ -41,9 +41,14 @@ export class AderenciaComponent implements OnInit, OnDestroy {
           this.aderencia = aderencia;
           this.aderenciaDados = aderencia.parlamentarAderencia.filter(ad => ad.partido === aderencia.partido)[0];
 
-          const total = this.aderenciaDados.seguiu + this.aderenciaDados.naoSeguiu +
-            this.aderenciaDados.partidoLiberou + this.aderenciaDados.faltou;
-          this.passo = 100 / total;
+          if (this.aderenciaDados !== undefined) {
+            const total = this.aderenciaDados.seguiu + this.aderenciaDados.naoSeguiu +
+              this.aderenciaDados.partidoLiberou + this.aderenciaDados.faltou;
+            this.passo = 100 / total;
+          } else {
+            this.passo = 0;
+          }
+
         },
         error => {
           console.log(error);
