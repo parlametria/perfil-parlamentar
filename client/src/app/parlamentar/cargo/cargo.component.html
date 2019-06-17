@@ -1,14 +1,12 @@
 <ul
-  class="list-unstyled parlamentar-comissoes"
-  *ngFor="let cargo of comissoesByCargo | keyvalue"
+  class="list-unstyled parlamentar-cargos"
+  *ngFor="let cargo of cargos | keyvalue"
 >
   <span
-    class="badge badge-dark badge-comissoes"
+    class="badge badge-dark badge-cargos"
     [ngClass]="cargo.value.classe"
   >
     {{ cargo.key }}
   </span>
-  <li *ngFor="let comissao of cargo.value">
-    {{ comissao.infoComissao.sigla }} - {{ comissao.infoComissao.nome }}
-  </li>
+  <li *ngFor="let c of cargo.value">{{ c.nome }}</li>
 </ul>

@@ -9,6 +9,7 @@ import { Parlamentar } from '../models/parlamentar.model';
 import { ParlamentarInfo } from '../models/parlamentarInfo.model';
 import { ParlamentarPosicao } from '../models/parlamentarPosicao.model';
 import { ParlamentarComissoes } from '../models/parlamentarComissoes.model';
+import { ParlamentarLiderancas } from '../models/parlamentarLiderancas.model';
 
 @Injectable({
   providedIn: 'root'
@@ -50,5 +51,10 @@ export class ParlamentarService {
   getComissoesByid(id: string): Observable<ParlamentarComissoes> {
     return this.http
       .get<ParlamentarComissoes>(this.url + '/' + id + '/comissoes');
+  }
+
+  getLiderancasByid(id: string): Observable<ParlamentarLiderancas> {
+    return this.http
+      .get<ParlamentarLiderancas>(this.url + '/' + id + '/liderancas');
   }
 }
