@@ -116,6 +116,12 @@ body {
   color: $green;
 }
 
+.img-filter {
+  -webkit-filter: grayscale(100%);
+  filter: grayscale(100%);
+  filter: gray;
+}
+
 .alinhamento-5 {
   background-color: #247FB5;
 }
