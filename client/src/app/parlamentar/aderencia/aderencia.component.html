@@ -3,12 +3,12 @@
   class="my-3 aderencia"
 >
   <strong>
-    Aderência ao {{aderenciaDados?.partido}}
+    Aderência ao {{aderenciaPartido?.partido}}
   </strong>
   <div class="d-flex">
     <app-progress
       class="progress-bar-aderencia"
-      [value]="aderenciaDados?.aderencia * 0.01"
+      [value]="aderenciaPartido?.aderencia * 0.01"
       [min]="0"
       [max]="100"
       [showAxis]="true"
@@ -16,7 +16,7 @@
     ></app-progress>
     <div class="ml-2">
       <span>
-        {{ aderenciaDados?.aderencia * 0.01 | percent }}
+        {{ aderenciaPartido?.aderencia * 0.01 | percent }}
       </span>
     </div>
   </div>
@@ -29,19 +29,19 @@
           [titulo]="'Votações em 2019'"
           [categorias]="[
           {
-            'valor': aderenciaDados?.seguiu,
+            'valor': aderenciaPartido?.seguiu,
             'classe': 'positivo'
           },
           {
-            'valor': aderenciaDados?.naoSeguiu,
+            'valor': aderenciaPartido?.naoSeguiu,
             'classe': 'negativo progress-bar-striped'
           },
           {
-            'valor': aderenciaDados?.partidoLiberou,
+            'valor': aderenciaPartido?.partidoLiberou,
             'classe': 'neutro progress-bar-striped'
           },
           {
-            'valor': aderenciaDados?.faltou,
+            'valor': aderenciaPartido?.faltou,
             'classe': 'ausente'
           }
         ]"
@@ -66,7 +66,7 @@
       </div>
       <div>
         <app-legend
-          [title]="'partido liberou'"
+          [title]="'liberou'"
           [class]="'neutro progress-bar-striped'"
           [striped]="false"
         ></app-legend>
@@ -86,4 +86,56 @@
   class="my-3"
 >
   <strong>Sem dados de aderência</strong>
+</div>
+
+<div class="my-5 aderencia">
+  <strong>
+    Aderência ao Governo
+  </strong>
+
+  <div class="d-flex">
+    <app-progress
+      class="progress-bar-aderencia"
+      [value]="aderenciaGoverno?.aderencia * 0.01"
+      [min]="0"
+      [max]="100"
+      [showAxis]="true"
+      [class]="'alinhamento-5'"
+    ></app-progress>
+    <div class="ml-2">
+      <span>
+        {{ aderenciaGoverno?.aderencia * 0.01 | percent }}
+      </span>
+    </div>
+  </div>
+
+  <div class="mt-4">
+    <strong>Comportamento por votação</strong>
+    <div class="row no-gutters mt-2">
+      <div class="col">
+        <app-progress-stacked
+          [titulo]="'Votações em 2019'"
+          [categorias]="[
+          {
+            'valor': aderenciaGoverno?.seguiu,
+            'classe': 'positivo'
+          },
+          {
+            'valor': aderenciaGoverno?.naoSeguiu,
+            'classe': 'negativo progress-bar-striped'
+          },
+          {
+            'valor': aderenciaGoverno?.partidoLiberou,
+            'classe': 'neutro progress-bar-striped'
+          },
+          {
+            'valor': aderenciaGoverno?.faltou,
+            'classe': 'ausente'
+          }
+        ]"
+          [passo]="passoGoverno"
+        ></app-progress-stacked>
+      </div>
+    </div>
+  </div>
 </div>

@@ -18,8 +18,10 @@ export class AderenciaComponent implements OnInit, OnDestroy {
   private unsubscribe = new Subject();
 
   aderencia: Aderencia;
-  aderenciaDados: any;
+  aderenciaPartido: any;
+  aderenciaGoverno: any;
   passo: number;
+  passoGoverno: number;
 
   constructor(
     private aderenciaService: AderenciaService,
@@ -39,14 +41,27 @@ export class AderenciaComponent implements OnInit, OnDestroy {
       .subscribe(
         aderencia => {
           this.aderencia = aderencia;
-          this.aderenciaDados = aderencia.parlamentarAderencia.filter(ad => ad.partido === aderencia.partido)[0];
 
-          if (this.aderenciaDados !== undefined) {
-            const total = this.aderenciaDados.seguiu + this.aderenciaDados.naoSeguiu +
-              this.aderenciaDados.partidoLiberou + this.aderenciaDados.faltou;
+          // Aderência ao partido
+          this.aderenciaPartido = aderencia.parlamentarAderencia.filter(ad => ad.partido === aderencia.partido)[0];
+
+          if (this.aderenciaPartido !== undefined) {
+            const total = this.aderenciaPartido.seguiu + this.aderenciaPartido.naoSeguiu +
+              this.aderenciaPartido.partidoLiberou + this.aderenciaPartido.faltou;
             this.passo = 100 / total;
           } else {
             this.passo = 0;
+          }
+
+          // Aderência ao governo
+          this.aderenciaGoverno = aderencia.parlamentarAderencia.filter(ad => ad.partido === 'GOVERNO')[0];
+
+          if (this.aderenciaGoverno !== undefined) {
+            const total = this.aderenciaGoverno.seguiu + this.aderenciaGoverno.naoSeguiu +
+              this.aderenciaGoverno.partidoLiberou + this.aderenciaGoverno.faltou;
+            this.passoGoverno = 100 / total;
+          } else {
+            this.passoGoverno = 0;
           }
 
         },
