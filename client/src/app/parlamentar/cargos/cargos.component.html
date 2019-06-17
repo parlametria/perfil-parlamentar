@@ -1,4 +1,10 @@
 <div class="cargos my-3">
-  <app-cargo [comissoesByCargo]="comissoesByCargoTitular"></app-cargo>
-  <app-cargo [comissoesByCargo]="comissoesByCargoSuplente"></app-cargo>
+  <div *ngIf="liderancaLista?.parlamentarLiderancas.length > 0" class="mb-2">
+    <strong>Lideranças</strong>
+  </div>
+  <app-cargo [cargos]="liderancas"></app-cargo>
+  <div *ngIf="comissoesLista?.parlamentarComissoes.length > 0" class="mb-2">
+      <strong>Comissões</strong>
+    </div>  
+  <app-cargo [cargos]="comissoes"></app-cargo>
 </div>

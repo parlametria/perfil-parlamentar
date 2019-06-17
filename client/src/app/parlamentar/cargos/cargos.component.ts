@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
-import { Subject } from 'rxjs';
+import { Subject, forkJoin } from 'rxjs';
 import { takeUntil, take } from 'rxjs/operators';
 
 import { ParlamentarService } from 'src/app/shared/services/parlamentar.service';
@@ -19,9 +19,11 @@ export class CargosComponent implements OnInit, OnDestroy {
 
   private unsubscribe = new Subject();
 
-  parlamentar: ParlamentarComissoes;
-  comissoesByCargoTitular: {};
-  comissoesByCargoSuplente: {};
+  comissoesLista: any;
+  liderancaLista: any;
+
+  comissoes: {};
+  liderancas: {};
 
   constructor(
     private activatedroute: ActivatedRoute,
@@ -35,42 +37,66 @@ export class CargosComponent implements OnInit, OnDestroy {
   }
 
   getParlamentarById(id: string) {
-    this.parlamentarService
-      .getComissoesByid(id)
-      .pipe(takeUntil(this.unsubscribe))
-      .subscribe(
-        parlamentar => {
-          this.parlamentar = parlamentar;
-          this.agrupaComissoesPorCargo(parlamentar.parlamentarComissoes);
-        },
-        error => {
-          console.log(error);
-        }
-      );
-  }
+    forkJoin(
+      this.parlamentarService.getComissoesByid(id),
+      this.parlamentarService.getLiderancasByid(id)
+    ).pipe(takeUntil(this.unsubscribe)).subscribe(data => {
+      const comissoes = data[0];
+      const liderancas = data[1];
 
-  agrupaComissoesPorCargo(comissoes: ComposicaoComissao[]) {
-    const suplentes = comissoes.filter((comissao) => comissao.cargo === this.SUPLENTE);
-    this.comissoesByCargoTitular = this.comissoesToDict(
-      comissoes.filter((comissao) => comissao.cargo !== this.SUPLENTE)
-    );
-    this.comissoesByCargoSuplente = this.comissoesToDict(suplentes);
-  }
+      this.comissoesLista = comissoes;
+      this.liderancaLista = liderancas;
 
-  comissoesToDict(comissoes: ComposicaoComissao[]) {
-    const comissoesByCargo = {};
+      this.agrupaComissoes(comissoes.parlamentarComissoes);
 
-    comissoes.forEach((comissao) => {
-      const cargo = comissao.cargo;
-      if (comissoesByCargo[cargo] !== undefined) {
-        comissoesByCargo[cargo] = comissoesByCargo[cargo].concat(comissao);
-      } else {
-        comissoesByCargo[cargo] = [].concat(comissao);
+      this.agrupaLiderancas(liderancas.parlamentarLiderancas);
+
+    },
+      error => {
+        console.log(error);
       }
-      return comissoesByCargo;
+    );
+  }
+
+  agrupaComissoes(comissoes: any[]) {
+    this.comissoes = this.cargosToDict(comissoes, 'comissao');
+  }
+
+  agrupaLiderancas(liderancas: any[]) {
+    this.liderancas = this.cargosToDict(liderancas, 'lideranca');
+  }
+
+  cargosToDict(cargos: any[], tipo: string) {
+    const cargosObject = {};
+
+    cargos.forEach((cargo) => {
+      const cargoNome = cargo.cargo;
+
+      const cargoInfo = this.getCargoInfo(cargo, tipo);
+
+      if (cargosObject[cargoNome] !== undefined) {
+        cargosObject[cargoNome] = cargosObject[cargoNome].concat(cargoInfo);
+      } else {
+        cargosObject[cargoNome] = [].concat(cargoInfo);
+      }
+      return cargosObject;
     });
 
-    return(comissoesByCargo);
+    return (cargosObject);
+  }
+
+  getCargoInfo(cargo: any, tipo: string) {
+    if (tipo === 'comissao') {
+      return {
+        cargo: cargo.cargo,
+        nome: cargo.infoComissao.sigla + ` - ` + cargo.infoComissao.nome
+      };
+    } else if (tipo === 'lideranca') {
+      return {
+        cargo: cargo.cargo,
+        nome: cargo.blocoPartido
+      };
+    }
   }
 
   ngOnDestroy() {

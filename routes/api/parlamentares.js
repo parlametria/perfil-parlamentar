@@ -9,6 +9,7 @@ const Votacao = models.votacao;
 const Proposicao = models.proposicao;
 const Comissoes = models.comissoes;
 const ComposicaoComissoes = models.composicaoComissoes;
+const Liderancas = models.liderancas;
 
 const BAD_REQUEST = 400;
 const SUCCESS = 200;
@@ -179,7 +180,7 @@ router.get("/:id/info", (req, res) => {
 
 /**
  * Recupera informações de posições do parlamentar a partir de seu id (no Voz Ativa)
- * @name get/api/:id/posicoes
+ * @name get/api/parlamentares/:id/posicoes
  * @function
  * @memberof module:routes/parlamentares
  * @param {string} id - id do parlamentar na plataforma Voz Ativa
@@ -206,7 +207,7 @@ router.get("/:id/posicoes", (req, res) => {
 
 /**
  * Recupera informações de comissões do parlamentar a partir de seu id (no Voz Ativa)
- * @name get/api/:id/posicoes
+ * @name get/api/parlamentares/:id/comissoes
  * @function
  * @memberof module:routes/parlamentares
  * @param {string} id - id do parlamentar na plataforma Voz Ativa
@@ -228,6 +229,32 @@ router.get("/:id/comissoes", (req, res) => {
             required: false
           }
         ]
+      }
+    ],
+    where: { id_parlamentar_voz: req.params.id }
+  })
+    .then(parlamentar => {      
+      return res.json(parlamentar);
+    })
+    .catch(err => res.status(BAD_REQUEST).json({ err: err.message }));
+});
+
+/**
+ * Recupera informações de lideranças para um parlamentar a partir de seu id (no Voz Ativa)
+ * @name get/api/parlamentares/:id/liderancas
+ * @function
+ * @memberof module:routes/parlamentares
+ * @param {string} id - id do parlamentar na plataforma Voz Ativa
+ */
+router.get("/:id/liderancas", (req, res) => {
+  Parlamentar.findOne({
+    attributes: [["id_parlamentar_voz", "idParlamentarVoz"]],
+    include: [
+      {
+        model: Liderancas,  
+        attributes: ["cargo", ["bloco_partido", "blocoPartido"]],
+        as: "parlamentarLiderancas",
+        required: false        
       }
     ],
     where: { id_parlamentar_voz: req.params.id }
