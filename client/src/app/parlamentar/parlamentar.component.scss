@@ -8,3 +8,11 @@
 .parlamentar-title {
   font-weight: 700;
 }
+
+.nav-link-parlamentar {
+  padding: 0.5rem 0.5rem;
+
+  &:link {
+    text-decoration: none;
+  }
+}

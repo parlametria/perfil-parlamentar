@@ -22,36 +22,38 @@
     </div>
   </div>
 
-  <ul class="nav nav-tabs">
-    <li class="nav-item">
-      <a
-        class="nav-link"
-        [routerLink]="['./posicoes']"
-        [routerLinkActive]="'active'"
-      >
-        Posições
-      </a>
-    </li>
-    <li class="nav-item">
-      <a
-        class="nav-link"
-        [routerLink]="['./cargos']"
-        [routerLinkActive]="'active'"
-      >
-        Cargos
-      </a>
-    </li>
-    <li class="nav-item">
-      <a
-        class="nav-link"
-        [routerLink]="['./aderencia']"
-        [routerLinkActive]="'active'"
-      >
-        Aderência
-      </a>
-    </li>
-  </ul>
+</div>
 
+<ul class="nav nav-tabs justify-content-center">
+  <li class="nav-item">
+    <a
+      class="nav-link nav-link-parlamentar"
+      [routerLink]="['./posicoes']"
+      [routerLinkActive]="'active'"
+    >
+      Posições
+    </a>
+  </li>
+  <li class="nav-item">
+    <a
+      class="nav-link nav-link-parlamentar"
+      [routerLink]="['./cargos']"
+      [routerLinkActive]="'active'"
+    >
+      Cargos
+    </a>
+  </li>
+  <li class="nav-item">
+    <a
+      class="nav-link nav-link-parlamentar"
+      [routerLink]="['./aderencia']"
+      [routerLinkActive]="'active'"
+    >
+      Aderência
+    </a>
+  </li>
+</ul>
+
+<div class="parlamentar-pages container">
   <router-outlet></router-outlet>
-
 </div>
