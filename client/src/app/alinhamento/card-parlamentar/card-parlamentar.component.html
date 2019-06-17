@@ -16,8 +16,18 @@
   <div class="parlamentar-card-sm">
     <div class="parlamentar-card-sm-body">
       <div class="d-flex">
-        <div *ngIf="alinhamento?.perguntasIguais >= 3" class="parlamentar-card-sm-id">{{id}}°</div>
-        <div *ngIf="alinhamento?.perguntasIguais < 3" class="parlamentar-card-sm-id">-</div>
+        <div
+          *ngIf="alinhamento?.perguntasIguais >= 3"
+          class="parlamentar-card-sm-id"
+        >
+          {{id}}°
+        </div>
+        <div
+          *ngIf="alinhamento?.perguntasIguais < 3"
+          class="parlamentar-card-sm-id"
+        >
+          -
+        </div>
         <div
           class="parlamentar-card-sm-title"
           [@show]="view !== VIEW_SM ? 'hide' : 'show'"
@@ -55,7 +65,7 @@
             class="sem-alinhamento"
             placement="left"
             ngbPopover="{{MENSAGEM_SEM_ALINHAMENTO}}"
-            triggers="click:blur"            
+            triggers="click:blur"
             container="body"
           >
             --
@@ -142,7 +152,7 @@
                   class="sem-alinhamento"
                   placement="left"
                   ngbPopover="{{MENSAGEM_SEM_ALINHAMENTO}}"
-                  triggers="click:blur"                  
+                  triggers="click:blur"
                   container="body"
                 >
                   --
@@ -185,7 +195,7 @@
               class="sem-alinhamento"
               placement="left"
               ngbPopover="{{MENSAGEM_SEM_ALINHAMENTO}}"
-              triggers="mouseenter:mouseleave"              
+              triggers="mouseenter:mouseleave"
               container="body"
             >
               --
@@ -220,9 +230,20 @@
         <app-progress-stacked
           *ngFor="let alinhamento of parlamentar.alinhamento.temas"
           [titulo]="alinhamento.tema_nome"
-          [total]="alinhamento.totalPerguntas"
-          [concordancia]="alinhamento.respostasIguais"
-          [discordancia]="alinhamento.perguntasIguais - alinhamento.respostasIguais"
+          [categorias]="[
+            {
+              'valor': alinhamento.respostasIguais,
+              'classe': 'positivo'
+            },
+            {
+              'valor': alinhamento.perguntasIguais - alinhamento.respostasIguais,
+              'classe': 'negativo progress-bar-striped'
+            },
+            {
+              'valor': alinhamento.totalPerguntas - alinhamento.perguntasIguais,
+              'classe': 'ausente'
+            }
+          ]"
           [passo]="passo"
         ></app-progress-stacked>
       </div>

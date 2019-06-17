@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { Subject, forkJoin } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { takeUntil, take } from 'rxjs/operators';
 
 import { ParlamentarService } from 'src/app/shared/services/parlamentar.service';
 
@@ -31,7 +31,7 @@ export class CargosComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    this.activatedroute.parent.params.subscribe(params => {
+    this.activatedroute.parent.params.pipe(take(1)).subscribe(params => {
       this.getParlamentarById(params.id);
     });
   }

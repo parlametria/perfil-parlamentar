@@ -4,6 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { ParlamentarComponent } from './parlamentar.component';
 import { PosicoesComponent } from './posicoes/posicoes.component';
 import { CargosComponent } from './cargos/cargos.component';
+import { AderenciaComponent } from './aderencia/aderencia.component';
 
 const routes: Routes = [
   {
@@ -23,6 +24,10 @@ const routes: Routes = [
       {
         path: 'cargos',
         component: CargosComponent
+      },
+      {
+        path: 'aderencia',
+        component: AderenciaComponent
       }
     ]
   }

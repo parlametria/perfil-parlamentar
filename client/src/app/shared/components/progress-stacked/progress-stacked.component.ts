@@ -1,15 +1,13 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-progress-stacked',
   templateUrl: './progress-stacked.component.html',
   styleUrls: ['./progress-stacked.component.scss']
 })
-export class ProgressStackedComponent implements OnInit {
+export class ProgressStackedComponent {
   @Input() titulo: string;
-  @Input() total: number;
-  @Input() concordancia: number;
-  @Input() discordancia: number;
+  @Input() categorias: any[];
   @Input() passo: number;
 
   min: number;
@@ -20,27 +18,13 @@ export class ProgressStackedComponent implements OnInit {
     this.max = 100;
   }
 
-  ngOnInit() {
+  getClass(classe): string[] {
+    const classes = ['progress-bar progress-stacked-bar progress-bordered', classe];
+    return classes;
   }
 
-  getPasso() {
-
-  }
-
-  getConcordancia() {
-    return this.concordancia * this.passo;
-  }
-
-  getDiscordancia() {
-    return this.discordancia * this.passo;
-  }
-
-  getComplementar() {
-    return this.total - (this.concordancia + this.discordancia);
-  }
-
-  getComplementarRelativo() {
-    return this.getComplementar() * this.passo;
+  getValor(valor) {
+    return valor * this.passo;
   }
 
 }

@@ -140,6 +140,22 @@ body {
   background-color: #eceff4;
 }
 
+.positivo {
+  background-color: #91bfda;
+}
+
+.negativo {
+  background-color: #b54142;
+}
+
+.neutro {
+  background-color: #cccccc;
+}
+
+.ausente {
+  background-color: #ffffff;
+}
+
 .badge-white {
   background-color: $white;
   color: $black;

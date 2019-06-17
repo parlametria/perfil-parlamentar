@@ -23,6 +23,7 @@ import { TemaService } from './shared/services/tema.service';
 import { UserService } from './shared/services/user.service';
 import { AlinhamentoService } from './shared/services/alinhamento.service';
 import { ParlamentarService } from './shared/services/parlamentar.service';
+import { AderenciaService } from './shared/services/aderencia.service';
 import { environment } from '../environments/environment';
 
 @NgModule({
@@ -48,6 +49,7 @@ import { environment } from '../environments/environment';
     UserService,
     AlinhamentoService,
     ParlamentarService,
+    AderenciaService,
     {
       provide: AuthServiceConfig,
       useFactory: getAuthServiceConfigs
