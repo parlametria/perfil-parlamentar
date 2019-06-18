@@ -1,10 +1,24 @@
-<div class="cargos my-3">
-  <div *ngIf="liderancaLista?.parlamentarLiderancas.length > 0" class="mb-2">
-    <strong>Lideranças</strong>
+<div class="cargos container-sm my-3">
+  <div
+    *ngIf="liderancaLista?.parlamentarLiderancas.length > 0"
+    class="mb-4"
+  >
+    <div class="mb-3">
+      <h5 class="font-italic font-weight-normal">Lideranças</h5>
+    </div>
+    <div class="pl-4">
+      <app-cargo [cargos]="liderancas"></app-cargo>
+    </div>
   </div>
-  <app-cargo [cargos]="liderancas"></app-cargo>
-  <div *ngIf="comissoesLista?.parlamentarComissoes.length > 0" class="mb-2">
-      <strong>Comissões</strong>
-    </div>  
-  <app-cargo [cargos]="comissoes"></app-cargo>
+  <div
+    *ngIf="comissoesLista?.parlamentarComissoes.length > 0"
+    class="mb-4"
+  >
+    <div class="mb-3">
+      <h5 class="font-italic font-weight-normal">Comissões</h5>
+    </div>
+    <div class="pl-4">
+      <app-cargo [cargos]="comissoes"></app-cargo>
+    </div>
+  </div>
 </div>

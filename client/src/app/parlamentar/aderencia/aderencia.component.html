@@ -1,33 +1,64 @@
-<div
-  *ngIf="passo !== 0"
-  class="my-3 aderencia"
->
-  <strong>
-    Aderência ao {{aderenciaPartido?.partido}}
-  </strong>
-  <div class="d-flex">
-    <app-progress
-      class="progress-bar-aderencia"
-      [value]="aderenciaPartido?.aderencia * 0.01"
-      [min]="0"
-      [max]="100"
-      [showAxis]="true"
-      [class]="'alinhamento-5'"
-    ></app-progress>
-    <div class="ml-2">
-      <span>
-        {{ aderenciaPartido?.aderencia * 0.01 | percent }}
-      </span>
+<div class="container-sm my-3">
+  <div class="d-flex subtitle">
+    <div>
+      <app-legend
+        [title]="'seguiu'"
+        [class]="'positivo'"
+        [striped]="false"
+      ></app-legend>
+    </div>
+    <div>
+      <app-legend
+        [title]="'não seguiu'"
+        [class]="'negativo progress-bar-striped'"
+        [striped]="false"
+      ></app-legend>
+    </div>
+    <div>
+      <app-legend
+        [title]="'liberou'"
+        [class]="'neutro progress-bar-striped'"
+        [striped]="false"
+      ></app-legend>
+    </div>
+    <div>
+      <app-legend
+        [title]="'faltou'"
+        [class]="'ausente'"
+        [striped]="false"
+      ></app-legend>
     </div>
   </div>
+  <div
+    *ngIf="passo !== 0"
+    class="aderencia my-3"
+  >
+    <strong>
+      Aderência ao {{aderenciaPartido?.partido}}
+    </strong>
+    <div class="d-flex">
+      <app-progress
+        class="progress-bar-aderencia"
+        [value]="aderenciaPartido?.aderencia * 0.01"
+        [min]="0"
+        [max]="100"
+        [showAxis]="true"
+        [class]="'alinhamento-5'"
+      ></app-progress>
+      <div class="ml-2">
+        <span>
+          {{ aderenciaPartido?.aderencia * 0.01 | percent }}
+        </span>
+      </div>
+    </div>
 
-  <div class="mt-4">
-    <strong>Comportamento por votação</strong>
-    <div class="row no-gutters mt-2">
-      <div class="col">
-        <app-progress-stacked
-          [titulo]="'Votações em 2019'"
-          [categorias]="[
+    <div class="mt-4">
+      <strong>Comportamento por votação</strong>
+      <div class="row no-gutters mt-2">
+        <div class="col">
+          <app-progress-stacked
+            [titulo]="'Votações em 2019'"
+            [categorias]="[
           {
             'valor': aderenciaPartido?.seguiu,
             'classe': 'positivo'
@@ -45,77 +76,45 @@
             'classe': 'ausente'
           }
         ]"
-          [passo]="passo"
-        ></app-progress-stacked>
-      </div>
-    </div>
-    <div class="d-flex subtitle">
-      <div>
-        <app-legend
-          [title]="'seguiu'"
-          [class]="'positivo'"
-          [striped]="false"
-        ></app-legend>
-      </div>
-      <div>
-        <app-legend
-          [title]="'não seguiu'"
-          [class]="'negativo progress-bar-striped'"
-          [striped]="false"
-        ></app-legend>
-      </div>
-      <div>
-        <app-legend
-          [title]="'liberou'"
-          [class]="'neutro progress-bar-striped'"
-          [striped]="false"
-        ></app-legend>
-      </div>
-      <div>
-        <app-legend
-          [title]="'faltou'"
-          [class]="'ausente'"
-          [striped]="false"
-        ></app-legend>
+            [passo]="passo"
+          ></app-progress-stacked>
+        </div>
       </div>
     </div>
   </div>
-</div>
-<div
-  *ngIf="passo === 0"
-  class="my-3"
->
-  <strong>Sem dados de aderência</strong>
-</div>
-
-<div class="my-5 aderencia">
-  <strong>
-    Aderência ao Governo
-  </strong>
-
-  <div class="d-flex">
-    <app-progress
-      class="progress-bar-aderencia"
-      [value]="aderenciaGoverno?.aderencia * 0.01"
-      [min]="0"
-      [max]="100"
-      [showAxis]="true"
-      [class]="'alinhamento-5'"
-    ></app-progress>
-    <div class="ml-2">
-      <span>
-        {{ aderenciaGoverno?.aderencia * 0.01 | percent }}
-      </span>
-    </div>
+  <div
+    *ngIf="passo === 0"
+    class="my-3"
+  >
+    <strong>Sem dados de aderência</strong>
   </div>
 
-  <div class="mt-4">
-    <strong>Comportamento por votação</strong>
-    <div class="row no-gutters mt-2">
-      <div class="col">
-        <app-progress-stacked
-          [titulo]="'Votações em 2019'"
-          [categorias]="[
+  <div class="my-5 aderencia">
+    <strong>Aderência ao Governo</strong>
+
+    <div class="d-flex">
+      <app-progress
+        class="progress-bar-aderencia"
+        [value]="aderenciaGoverno?.aderencia * 0.01"
+        [min]="0"
+        [max]="100"
+        [showAxis]="true"
+        [class]="'alinhamento-5'"
+      ></app-progress>
+      <div class="ml-2">
+        <span>
+          {{ aderenciaGoverno?.aderencia * 0.01 | percent }}
+        </span>
+      </div>
+    </div>
+
+    <div class="mt-4">
+      <strong>Comportamento por votação</strong>
+      <div class="row no-gutters mt-2">
+        <div class="col">
+          <app-progress-stacked
+            [titulo]="'Votações em 2019'"
+            [categorias]="[
           {
             'valor': aderenciaGoverno?.seguiu,
             'classe': 'positivo'
@@ -133,8 +132,9 @@
             'classe': 'ausente'
           }
         ]"
-          [passo]="passoGoverno"
-        ></app-progress-stacked>
+            [passo]="passoGoverno"
+          ></app-progress-stacked>
+        </div>
       </div>
     </div>
   </div>
