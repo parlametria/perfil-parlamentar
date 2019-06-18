@@ -48,9 +48,7 @@ export class CargosComponent implements OnInit, OnDestroy {
       this.liderancaLista = liderancas;
 
       this.agrupaComissoes(comissoes.parlamentarComissoes);
-
       this.agrupaLiderancas(liderancas.parlamentarLiderancas);
-
     },
       error => {
         console.log(error);
@@ -89,12 +87,14 @@ export class CargosComponent implements OnInit, OnDestroy {
     if (tipo === 'comissao') {
       return {
         cargo: cargo.cargo,
-        nome: cargo.infoComissao.sigla + ` - ` + cargo.infoComissao.nome
+        nome: cargo.infoComissao.nome,
+        sigla: cargo.infoComissao.sigla
       };
     } else if (tipo === 'lideranca') {
       return {
         cargo: cargo.cargo,
-        nome: cargo.blocoPartido
+        nome: '',
+        sigla: cargo.blocoPartido
       };
     }
   }
