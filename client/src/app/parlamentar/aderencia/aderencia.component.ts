@@ -4,9 +4,10 @@ import { ActivatedRoute } from '@angular/router';
 import { Subject } from 'rxjs';
 import { takeUntil, take } from 'rxjs/operators';
 
-import { AderenciaService } from 'src/app/shared/services/aderencia.service';
-
+import { ParlamentarInfo } from 'src/app/shared/models/parlamentarInfo.model';
 import { Aderencia } from 'src/app/shared/models/aderencia.model';
+import { AderenciaService } from 'src/app/shared/services/aderencia.service';
+import { ParlamentarService } from 'src/app/shared/services/parlamentar.service';
 
 @Component({
   selector: 'app-aderencia',
@@ -17,6 +18,7 @@ export class AderenciaComponent implements OnInit, OnDestroy {
 
   private unsubscribe = new Subject();
 
+  parlamentar: ParlamentarInfo;
   aderencia: Aderencia;
   aderenciaPartido: any;
   aderenciaGoverno: any;
@@ -24,14 +26,31 @@ export class AderenciaComponent implements OnInit, OnDestroy {
   passoGoverno: number;
 
   constructor(
+    private parlamentarService: ParlamentarService,
     private aderenciaService: AderenciaService,
     private activatedroute: ActivatedRoute,
   ) { }
 
   ngOnInit() {
     this.activatedroute.parent.params.pipe(take(1)).subscribe(params => {
+      this.getParlamentarById(params.id);
       this.getAderencia(params.id);
     });
+  }
+
+  getParlamentarById(id: string) {
+    this.parlamentarService
+      .getInfoById(id)
+      .pipe(takeUntil(this.unsubscribe))
+      .subscribe(
+        parlamentar => {
+          console.log(parlamentar);
+          this.parlamentar = parlamentar;
+        },
+        error => {
+          console.log(error);
+        }
+      );
   }
 
   getAderencia(id: string) {
