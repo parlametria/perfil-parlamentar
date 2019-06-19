@@ -5,14 +5,16 @@
 >
   <div class="parlamentar">
     <div class="row gutters-sm">
-      <div class="col-4 col-sm-5">
-        <img
-          [defaultImage]="'https://via.placeholder.com/100x130'"
-          [lazyLoad]="parlamentar.getFoto()"
-          [offset]="100"
-          width="100%"
-          class="img-filter"
-        >
+      <div class="col-auto">
+        <div class="profile-img">
+          <img
+            [defaultImage]="'https://via.placeholder.com/100x130'"
+            [lazyLoad]="parlamentar.getFoto()"
+            [offset]="100"
+            width="100%"
+            class="img-filter"
+          >
+        </div>
       </div>
       <div class="col">
         <div class="parlamentar-title">{{ parlamentar.nomeEleitoral }}</div>
