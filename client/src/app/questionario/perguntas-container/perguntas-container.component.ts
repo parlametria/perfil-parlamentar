@@ -3,6 +3,7 @@ import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 
 import { Subject, forkJoin } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { PerguntaService } from '../../shared/services/pergunta.service';
 import { TemaService } from '../../shared/services/tema.service';
@@ -27,7 +28,6 @@ export class PerguntasContainerComponent implements OnInit, OnDestroy {
   readonly KEY_1 = 'KeyA';
   readonly KEY_2 = 'KeyS';
   readonly KEY_3 = 'KeyD';
-  readonly KEY_TAB = 'ControlLeft';
 
   private unsubscribe = new Subject();
 
@@ -45,13 +45,11 @@ export class PerguntasContainerComponent implements OnInit, OnDestroy {
   respostasUser: Resposta;
 
   salvandoResposta: boolean;
-  showShortcuts: boolean;
 
   @Input() receivedTemas: number[];
 
   @HostListener('window:keyup', ['$event'])
   keyEvent(event: KeyboardEvent) {
-    this.showShortcuts = false;
     if (event.code === this.KEY_RIGHT) {
       this.proximaPergunta();
     }
@@ -69,16 +67,10 @@ export class PerguntasContainerComponent implements OnInit, OnDestroy {
     }
   }
 
-  @HostListener('window:keydown', ['$event'])
-  keydownEvent(event: KeyboardEvent) {
-    if (event.code === this.KEY_TAB) {
-      this.showShortcuts = true;
-    }
-  }
-
   constructor(
     private activatedRoute: ActivatedRoute,
     private router: Router,
+    private modalService: NgbModal,
     private perguntaService: PerguntaService,
     private temaService: TemaService,
     private userService: UserService
@@ -358,6 +350,10 @@ export class PerguntasContainerComponent implements OnInit, OnDestroy {
   private setPerguntaSelecionadaAndRedirect(pergunta) {
     this.perguntaSelecionada = pergunta;
     this.redirectToURLWithID(this.perguntaSelecionada.id_votacao);
+  }
+
+  open(content) {
+    this.modalService.open(content, { ariaLabelledBy: 'Exibir atalhos de teclado' });
   }
 
   ngOnDestroy() {
