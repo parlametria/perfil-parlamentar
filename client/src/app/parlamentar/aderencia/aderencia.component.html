@@ -1,0 +1,106 @@
+<div class="container-sm my-3">
+  <h5 class="font-italic font-weight-normal">{{ parlamentar?.nomeEleitoral }} está:</h5>
+  <div class="d-flex justify-content-center mt-3">
+    <div class="d-flex subtitle">
+      <div>
+        <app-legend
+          [title]="'seguindo'"
+          [class]="'positivo'"
+          [striped]="false"
+        ></app-legend>
+      </div>
+      <div>
+        <app-legend
+          [title]="'não seguindo'"
+          [class]="'negativo progress-bar-striped'"
+          [striped]="false"
+        ></app-legend>
+      </div>
+      <div>
+        <app-legend
+          [title]="'liberado'"
+          [class]="'neutro progress-bar-striped'"
+          [striped]="false"
+        ></app-legend>
+      </div>
+      <div>
+        <app-legend
+          [title]="'faltou'"
+          [class]="'ausente'"
+          [striped]="false"
+        ></app-legend>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-7 mt-3">
+      <app-progress-stacked
+        [titulo]="''"
+        [categorias]="[
+                {
+                  'valor': aderenciaPartido?.seguiu,
+                  'classe': 'positivo'
+                },
+                {
+                  'valor': aderenciaPartido?.naoSeguiu,
+                  'classe': 'negativo progress-bar-striped'
+                },
+                {
+                  'valor': aderenciaPartido?.partidoLiberou,
+                  'classe': 'neutro progress-bar-striped'
+                },
+                {
+                  'valor': aderenciaPartido?.faltou,
+                  'classe': 'ausente'
+                }
+              ]"
+        [passo]="passo"
+      ></app-progress-stacked>
+    </div>
+    <div class="col">
+      <div class="d-flex">
+        <div class="aderencia-value alinhamento-4-font pr-2">
+          {{ aderenciaPartido?.aderencia * 0.01 | percent }}
+        </div>
+        <div class="aderencia-value-text">
+          de acordo com o {{aderenciaPartido?.partido}}
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-7 mt-3">
+      <app-progress-stacked
+        [titulo]="''"
+        [categorias]="[
+              {
+                'valor': aderenciaGoverno?.seguiu,
+                'classe': 'positivo'
+              },
+              {
+                'valor': aderenciaGoverno?.naoSeguiu,
+                'classe': 'negativo progress-bar-striped'
+              },
+              {
+                'valor': aderenciaGoverno?.partidoLiberou,
+                'classe': 'neutro progress-bar-striped'
+              },
+              {
+                'valor': aderenciaGoverno?.faltou,
+                'classe': 'ausente'
+              }
+            ]"
+        [passo]="passoGoverno"
+      ></app-progress-stacked>
+    </div>
+    <div class="col">
+      <div class="d-flex">
+        <div class="aderencia-value alinhamento-4-font pr-2">
+          {{ aderenciaGoverno?.aderencia * 0.01 | percent }}
+        </div>
+        <div class="aderencia-value-text">de acordo com o Governo</div>
+      </div>
+    </div>
+  </div>
+
+</div>

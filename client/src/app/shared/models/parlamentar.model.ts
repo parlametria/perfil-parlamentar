@@ -21,9 +21,9 @@ export class Parlamentar {
     this.partido = parlamentar.partido;
     this.genero = parlamentar.genero;
     this.emExercicio = parlamentar.em_exercicio;
-    this.votacoes = parlamentar.parlamentar_vot;
+    this.votacoes = parlamentar.votacoes;
     this.alinhamento = parlamentar.alinhamento;
-    this.comissoes = parlamentar.parlamentar_comissoes;
+    this.comissoes = parlamentar.parlamentarComissoes;
   }
 
   getFoto(): string {

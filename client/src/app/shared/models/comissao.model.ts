@@ -1,5 +1,5 @@
 export interface Comissao {
-  id_comissao_voz: string;
+  idComissaoVoz: string;
   sigla: string;
   nome: string;
 }

@@ -9,9 +9,10 @@
   font-weight: 700;
 }
 
-.parlamentar-lista {
-  @media (min-width: 992px) {
-    width: 760px;
-    margin: auto;
+.nav-link-parlamentar {
+  padding: 0.5rem 0.5rem;
+
+  &:link {
+    text-decoration: none;
   }
 }
