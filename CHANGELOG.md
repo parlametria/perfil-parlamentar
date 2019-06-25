@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.2.0 (2019-06-25)
+
+* [x] Divide o perfil do parlamentar em subsessões
+* [x] Adiciona taxa de aderência do parlamentar ao partido e ao Governo
+* [x] Adiciona informações sobre lideranças partidárias
+
 ## 2.1.0 (2019-06-04)
 
 * [x] Adiciona visualização do alinhamento com o congresso
