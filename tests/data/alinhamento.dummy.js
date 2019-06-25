@@ -24,7 +24,7 @@ const parlamentar_eduardo_bolsonaro = {
   genero: "MASCULINO",
   eleito: true,
   respondeu: false,
-  parlamentar_vot:
+  votacoes:
     [{ id: 5632, voto: 1, cpf: '04789113515', id_votacao: 5632 },
     { id: 6043, voto: 1, cpf: '04789113515', id_votacao: 6043 },
     { id: 6082, voto: -1, cpf: '04789113515', id_votacao: 6082 },
@@ -74,7 +74,7 @@ const parlamentar_luiza_erundina = {
   "genero": "FEMININO",
   "eleito": true,
   "respondeu": false,
-  parlamentar_vot:
+  votacoes:
     [{ id: 5632, voto: -1, cpf: '04789113515', id_votacao: 5632 },
     { id: 6043, voto: -1, cpf: '04789113515', id_votacao: 6043 },
     { id: 6082, voto: 0, cpf: '04789113515', id_votacao: 6082 },
@@ -124,7 +124,7 @@ const parlamentar_lincoln_portela = {
   "genero": "MASCULINO",
   "eleito": true,
   "respondeu": false,
-  parlamentar_vot:
+  votacoes:
     [{ id: 5632, voto: 1, cpf: '04789113515', id_votacao: 5632 },
     { id: 6043, voto: -1, cpf: '04789113515', id_votacao: 6043 },
     { id: 6082, voto: 0, cpf: '04789113515', id_votacao: 6082 },

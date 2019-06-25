@@ -129,7 +129,7 @@ export class CardParlamentarComponent implements OnChanges, OnInit {
   }
 
   getCargoByComissaoId(id: string) {
-    const comissaoFiltrada = this.parlamentar.comissoes.filter(com => com.id_comissao_voz === id);
+    const comissaoFiltrada = this.parlamentar.comissoes.filter(com => com.idComissaoVoz === id);
 
     if (comissaoFiltrada !== undefined && comissaoFiltrada.length > 0) {
       return comissaoFiltrada[0].cargo;

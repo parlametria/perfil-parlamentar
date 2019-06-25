@@ -160,7 +160,7 @@ export class FilterComponent implements OnInit, OnDestroy {
       comissoes.map(com => com.nome = com.nome.substr(12));
 
       comissoes.unshift({
-        id_comissao_voz: this.FILTRO_PADRAO_COMISSAO_VALUE,
+        idComissaoVoz: this.FILTRO_PADRAO_COMISSAO_VALUE,
         sigla: this.FILTRO_PADRAO_COMISSAO,
         nome: this.FILTRO_PADRAO_COMISSAO
       });
@@ -196,7 +196,7 @@ export class FilterComponent implements OnInit, OnDestroy {
 
   getComissaoById(id: string) {
     if (this.comissoes && id !== this.FILTRO_PADRAO_COMISSAO_VALUE) {
-      const comissao = this.comissoes.filter(com => com.id_comissao_voz === id);
+      const comissao = this.comissoes.filter(com => com.idComissaoVoz === id);
       if (comissao !== undefined && comissao.length > 0) {
         return comissao[0].sigla;
       }
@@ -205,7 +205,7 @@ export class FilterComponent implements OnInit, OnDestroy {
 
   getNomeComissaoById(id: string) {
     if (this.comissoes && id !== this.FILTRO_PADRAO_COMISSAO_VALUE) {
-      const comissao = this.comissoes.filter(com => com.id_comissao_voz === id);
+      const comissao = this.comissoes.filter(com => com.idComissaoVoz === id);
       if (comissao !== undefined && comissao.length > 0) {
         return comissao[0].nome;
       }

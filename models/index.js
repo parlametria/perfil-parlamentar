@@ -15,6 +15,8 @@ const UsuarioModel = "./postgres/usuario.js";
 const TemasUModel = "./postgres/temasu.js";
 const ComissoesModel = "./postgres/comissoes.js";
 const ComposicaoComissoesModel = "./postgres/composicao-comissoes.js";
+const AderenciaModel = "./postgres/aderencia.js"
+const LiderancasModel = "./postgres/liderancas.js";
 
 if (!global.hasOwnProperty("models")) {
   const db = require("../config/keys").postgresURI;
@@ -51,6 +53,8 @@ if (!global.hasOwnProperty("models")) {
     temasu: sequelize.import(TemasUModel),
     comissoes: sequelize.import(ComissoesModel),
     composicaoComissoes: sequelize.import(ComposicaoComissoesModel),
+    aderencia: sequelize.import(AderenciaModel),
+    liderancas: sequelize.import(LiderancasModel)
     // add your other models here
   };
 
