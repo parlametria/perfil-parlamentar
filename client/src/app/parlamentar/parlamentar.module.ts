@@ -12,12 +12,18 @@ import { ParlamentarRoutingModule } from './parlamentar-routing.module';
 import { ParlamentarComponent } from './parlamentar.component';
 import { PosicaoComponent } from './posicao/posicao.component';
 import { CargoComponent } from './cargo/cargo.component';
+import { PosicoesComponent } from './posicoes/posicoes.component';
+import { CargosComponent } from './cargos/cargos.component';
+import { AderenciaComponent } from './aderencia/aderencia.component';
 
 @NgModule({
   declarations: [
     ParlamentarComponent,
     PosicaoComponent,
-    CargoComponent
+    CargoComponent,
+    PosicoesComponent,
+    CargosComponent,
+    AderenciaComponent
   ],
   imports: [
     CommonModule,

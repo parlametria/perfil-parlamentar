@@ -14,7 +14,7 @@ const ComposicaoComissoes = models.composicaoComissoes;
  */
 router.get("/", (req, res) => {
   Comissoes.findAll({
-    attributes: ["id_comissao_voz", "sigla", "nome"]
+    attributes: [["id_comissao_voz", "idComissaoVoz"], "sigla", "nome"]
   })
     .then(comissoes => res.status(200).json(comissoes))
     .catch(err => res.status(400).json(err.message));
@@ -44,7 +44,7 @@ router.get("/membros", (req, res) => {
     include: [
       {
         model: ComposicaoComissoes,
-        as: "comissao_comp",
+        as: "comissaoComp",
         required: true
       }
     ]

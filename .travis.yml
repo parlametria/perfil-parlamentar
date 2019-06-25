@@ -5,7 +5,8 @@ dist: trusty
 sudo: required
 branches:
   only:
-  - refatoramento-frontend
+  - master
+  - /^sprint-.*$/
 before_install:
   - cd client/
 install:

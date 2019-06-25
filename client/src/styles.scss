@@ -20,6 +20,13 @@ body {
   }
 }
 
+.container-sm {
+  @media (min-width: 992px) {
+    width: 760px;
+    margin: auto;
+  }
+}
+
 .container-sticky-footer-navbar {
   margin-top: $sticky-footer-navbar-height;
 
@@ -116,12 +123,22 @@ body {
   color: $green;
 }
 
+.img-filter {
+  -webkit-filter: grayscale(100%);
+  filter: grayscale(100%);
+  filter: gray;
+}
+
 .alinhamento-5 {
   background-color: #247FB5;
 }
 
 .alinhamento-4 {
   background-color: #6B92A5;
+}
+
+.alinhamento-4-font {
+  color: #6B92A5;
 }
 
 .alinhamento-3 {
@@ -140,6 +157,22 @@ body {
   background-color: #eceff4;
 }
 
+.positivo {
+  background-color: #91bfda;
+}
+
+.negativo {
+  background-color: #b54142;
+}
+
+.neutro {
+  background-color: #cccccc;
+}
+
+.ausente {
+  background-color: #ffffff;
+}
+
 .badge-white {
   background-color: $white;
   color: $black;
@@ -156,3 +189,8 @@ body {
   border: 1px solid #363638;
 }
 
+.profile-img {
+  width: 75px;
+  @media (min-width: 576px) { width: 100px; }
+  @media (min-width: 768px) { width: 125px; }
+}

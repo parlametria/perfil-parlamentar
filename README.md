@@ -1,6 +1,6 @@
 # [Voz Ativa](https://www.vozativa.org)
 
-[![Build Status](https://travis-ci.org/analytics-ufcg/voz-ativa.svg?branch=refatoramento-frontend)](https://travis-ci.org/analytics-ufcg/voz-ativa)
+[![Build Status](https://travis-ci.org/analytics-ufcg/voz-ativa.svg?branch=master)](https://travis-ci.org/analytics-ufcg/voz-ativa)
 
 # Sobre o projeto
 

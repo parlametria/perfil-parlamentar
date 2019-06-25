@@ -58,7 +58,7 @@ function calcular(parlamentar, respostas, proposicoesTemas, temasAlinhamento) {
   let respostasIguais = 0;
   let perguntasIguais = 0;
 
-  parlamentar.parlamentar_vot.forEach(votacao => {    
+  parlamentar.votacoes.forEach(votacao => {    
     if (
       (respostas[votacao.id_votacao] === 1 || respostas[votacao.id_votacao] === -1) &&
       (votacao.voto === 1 || votacao.voto === -1)
