@@ -30,7 +30,6 @@ export class QuestionarioComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.getTemas();
-
   }
 
   getTemas() {
@@ -59,7 +58,6 @@ export class QuestionarioComponent implements OnInit, OnDestroy {
   }
 
   receiveTemas($event) {
-
     const temasSelecionados = $event.selectedTemas;
 
     // Transforma o Array de IDs de temas selecionados em um Array de nomes dos temas selecionados

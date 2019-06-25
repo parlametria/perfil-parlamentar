@@ -83,12 +83,6 @@
         >
           <span class="icon-check icon-hidden"></span>
           a favor
-          <span
-            class="badge badge-light"
-            [hidden]="!showShortcuts"
-          >
-            A
-          </span>
           <span [ngClass]="{
             'icon-check': true,
             'icon-hidden': true,
@@ -102,12 +96,6 @@
         >
           <span class="icon-check icon-hidden"></span>
           não sei
-          <span
-            class="badge badge-light"
-            [hidden]="!showShortcuts"
-          >
-            S
-          </span>
           <span [ngClass]="{
             'icon-check': true,
             'icon-hidden': true,
@@ -121,12 +109,6 @@
         >
           <span class="icon-check icon-hidden"></span>
           contra
-          <span
-            class="badge badge-light"
-            [hidden]="!showShortcuts"
-          >
-            D
-          </span>
           <span [ngClass]="{
             'icon-check': true,
             'icon-hidden': true,
@@ -134,7 +116,64 @@
             'flash animated infinite': respostaNegativa() && salvandoResposta}"></span>
         </button>
       </div>
+      <div class="d-none d-lg-block">
+        <button
+          class="btn btn-link btn-sm"
+          (click)="open(content)"
+        >
+          <span class="icon-keyboard-o"></span>
+          Exibir atalhos de teclado
+        </button>
+      </div>
     </div>
 
   </div>
 </div>
+
+<ng-template
+  #content
+  let-modal
+>
+  <div class="modal-header">
+    <h5 class="modal-title">Atalhos de teclado</h5>
+    <button
+      type="button"
+      class="close"
+      data-dismiss="modal"
+      aria-label="Fechar"
+      (click)="modal.dismiss()"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body filter-body">
+    <table class="table table-borderless table-sm">
+      <tbody>
+        <tr>
+          <td class="text-monospace">
+            Seta para esquerda
+          </td>
+          <td>Avançar uma posição</td>
+        </tr>
+        <tr>
+          <td class="text-monospace">
+            Seta para direita
+          </td>
+          <td>Retornar uma posição</td>
+        </tr>
+        <tr>
+          <td class="text-monospace">A</td>
+          <td>Responder "a favor"</td>
+        </tr>
+        <tr>
+          <td class="text-monospace">S</td>
+          <td>Responder "não sei"</td>
+        </tr>
+        <tr>
+          <td class="text-monospace">D</td>
+          <td>Responder "contra"</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</ng-template>
