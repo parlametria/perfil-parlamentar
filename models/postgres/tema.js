@@ -19,11 +19,10 @@ module.exports = (sequelize, type) => {
       foreignKey: "tema_id",
       as: "tema_perg"
     }),
-      tema.hasMany(models.proposicao, {
-        foreignKey: "tema_id",
-        targetKey: "id",
-        as: "prop_tema",        
-      });
+    tema.hasMany(models.proposicaoTemas, {
+      foreignKey: "id_tema",
+      as: "temas_tema"
+    });
   };
   return tema;
 };

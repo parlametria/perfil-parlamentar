@@ -1,7 +1,6 @@
 export interface Proposicao {
   projeto_lei: string;
-  id_votacao: number;
+  id_proposicao: number;
   titulo: string;
   descricao: string;
-  tema_id: number;
 }

@@ -18,8 +18,8 @@ module.exports = (sequelize, type) => {
   );
   votacao.associate = function(models) {
     votacao.belongsTo(models.proposicao, {
-      foreignKey: "id_votacao",
-      sourceKey: "id_votacao",
+      foreignKey: "id_proposicao",
+      sourceKey: "id_proposicao",
       as: "vot_prop"
     }),
       votacao.belongsTo(models.parlamentar, {

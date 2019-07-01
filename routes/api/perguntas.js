@@ -15,6 +15,7 @@ const models = require("../../models/index");
 const Pergunta = models.pergunta;
 const Temas = models.tema;
 const Proposicao = models.proposicao;
+const ProposicaoTemas = models.proposicaoTemas;
 
 /**
  * Testa a rota de perguntas.
@@ -54,15 +55,14 @@ router.get("/vozativa", (req, res) => {
  */
 router.get("/proposicoes", (req, res) => {
   Proposicao.findAll({
-    attributes: ["projeto_lei", "id_votacao", "titulo", "descricao", "tema_id"],
+    attributes: ["projeto_lei", "id_proposicao", "titulo", "descricao"],
     where: { status_proposicao: "Ativa" },
     order: [
-      ['tema_id', 'ASC'],
-      ['id_votacao', 'ASC']
+      ['id_proposicao', 'ASC']
     ],
     include: [
       {
-        model: Temas,
+        model: ProposicaoTemas,
         as: "tema_prop"
       }
     ]
@@ -79,19 +79,23 @@ router.get("/proposicoes", (req, res) => {
  */
 router.get("/proposicoes/:id", (req, res) => {
   Proposicao.findOne({
-    attributes: ["projeto_lei", "id_votacao", "titulo", "descricao", "tema_id"],
+    attributes: ["projeto_lei", "id_proposicao", "titulo", "descricao"],
     where: { 
       status_proposicao: "Ativa",
-      id_votacao: req.params.id 
+      id_proposicao: req.params.id 
     },
     order: [
-      ['tema_id', 'ASC'],
-      ['id_votacao', 'ASC']
+      ['id_proposicao', 'ASC']
     ],
     include: [
       {
-        model: Temas,
-        as: "tema_prop"
+        model: ProposicaoTemas,
+        as: "tema_prop",
+        include:
+        {
+          model: Temas,
+          as: "temas_tema"
+        }
       }
     ]
   })
