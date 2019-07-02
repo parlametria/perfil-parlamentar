@@ -6,11 +6,11 @@ module.exports = (sequelize, type) => {
         type: type.STRING,
         primaryKey: true
       },
-      cargo: type.STRING,
-      bloco_partido: {
+      id_partido: {
         type: type.STRING,
         primaryKey: true
-      }
+      },
+      cargo: type.STRING
     },
     {
       timestamps: false
@@ -21,6 +21,11 @@ module.exports = (sequelize, type) => {
       foreignKey: "id_parlamentar_voz",
       sourceKey: "id_parlamentar_voz",
       as: "liderancaParlamentar"
+    }),
+    lideranca.belongsTo(models.partido, {
+      foreignKey: "id_partido",
+      sourceKey: "id_partido",
+      as: "lideranca_partido"
     })  
   };
   return lideranca;

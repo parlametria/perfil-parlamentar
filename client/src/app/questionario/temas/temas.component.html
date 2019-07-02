@@ -9,8 +9,8 @@
         <button
           class="btn btn-outline-dark btn-block btn-tema py-3 mb-3"
           role="button"
-          [ngClass]="{'active': isTemaSelected(tema.id), 'aria-pressed': isTemaSelected(tema.id)}"
-          (click)="clickButton(tema.id)"
+          [ngClass]="{'active': isTemaSelected(tema.id_tema), 'aria-pressed': isTemaSelected(tema.id_tema)}"
+          (click)="clickButton(tema.id_tema)"
         >
           <span [ngClass]="['icon-'+tema.slug, 'icon-lg']"></span>
           <p class="btn-tema-text">{{ tema.tema }}</p>

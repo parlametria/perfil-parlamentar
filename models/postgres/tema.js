@@ -26,6 +26,11 @@ module.exports = (sequelize, type) => {
         unique: false
       },
       foreignKey: 'id_tema'
+    }),
+    tema.belongsTo(models.aderencia, {
+      foreignKey: "id_tema",
+      sourceKey: "id_tema",
+      as: "aderenciaTema"
     });
   };
   return tema;

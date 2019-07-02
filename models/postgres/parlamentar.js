@@ -13,7 +13,7 @@ module.exports = (sequelize, type) => {
         nome_eleitoral: type.STRING,
         genero: type.STRING,
         uf: type.STRING,
-        partido: type.STRING,
+        id_partido: type.STRING,
         situacao: type.STRING,
         condicao_eleitoral: type.STRING,
         ultima_legislatura: type.STRING,
@@ -29,26 +29,31 @@ module.exports = (sequelize, type) => {
         targetKey: "id_parlamentar_voz",
         as: "cpf_resp"
       }),
-        parlamentar.hasMany(models.votacao, {
-          foreignKey: "id_parlamentar_voz",
-          targetKey: "id_parlamentar_voz",
-          as: "votacoes"
-        }),
-        parlamentar.hasMany(models.composicaoComissoes, {
-          foreignKey: "id_parlamentar_voz",
-          targetKey: "id_parlamentar_voz",      
-          as: "parlamentarComissoes"
-        }),
-        parlamentar.hasMany(models.aderencia, {
-          foreignKey: "id_parlamentar_voz",
-          targetKey: "id_parlamentar_voz",      
-          as: "parlamentarAderencia"
-        }),
-        parlamentar.hasMany(models.liderancas, {
-          foreignKey: "id_parlamentar_voz",
-          targetKey: "id_parlamentar_voz",      
-          as: "parlamentarLiderancas"
-        })
+      parlamentar.hasMany(models.votacao, {
+        foreignKey: "id_parlamentar_voz",
+        targetKey: "id_parlamentar_voz",
+        as: "votacoes"
+      }),
+      parlamentar.hasMany(models.composicaoComissoes, {
+        foreignKey: "id_parlamentar_voz",
+        targetKey: "id_parlamentar_voz",      
+        as: "parlamentarComissoes"
+      }),
+      parlamentar.hasMany(models.aderencia, {
+        foreignKey: "id_parlamentar_voz",
+        targetKey: "id_parlamentar_voz",      
+        as: "aderenciaParlamentar"
+      }),
+      parlamentar.hasMany(models.liderancas, {
+        foreignKey: "id_parlamentar_voz",
+        targetKey: "id_parlamentar_voz",      
+        as: "parlamentarLiderancas"
+      }),
+      parlamentar.belongsTo(models.partido, {
+        foreignKey: "id_partido",
+        targetKey: "id_partido",      
+        as: "parlamentarPartido"
+      })
     };
     return parlamentar;
   };

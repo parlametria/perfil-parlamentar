@@ -2,53 +2,34 @@ module.exports = (sequelize, type) => {
   partido = sequelize.define(
     "partido",
     {
-      id_parlamentar_voz: {
-          type: type.STRING,
-          primaryKey: true
+      id_partido: {
+        type: type.INTEGER,
+        primaryKey: true
       },
-      id_parlamentar: type.STRING,
-      casa: type.STRING,
-      cpf: type.STRING,
-      nome_civil: type.STRING,
-      nome_eleitoral: type.STRING,
-      genero: type.STRING,
-      uf: type.STRING,
-      partido: type.STRING,
-      situacao: type.STRING,
-      condicao_eleitoral: type.STRING,
-      ultima_legislatura: type.STRING,
-      em_exercicio: type.BOOLEAN,
+      sigla: type.STRING,
+      tipo: type.STRING,
+      situacao: type.STRING
     },
     {
       timestamps: false
     }
   );
-  parlamentar.associate = function (models) {
-    parlamentar.hasMany(models.resposta, {
-      foreignKey: "id_parlamentar_voz",
-      targetKey: "id_parlamentar_voz",
-      as: "cpf_resp"
+  partido.associate = function (models) {
+    partido.hasMany(models.parlamentar, {
+      foreignKey: "id_partido",
+      targetKey: "id_partido",
+      as: "parlamentarPartido"
     }),
-      parlamentar.hasMany(models.votacao, {
-        foreignKey: "id_parlamentar_voz",
-        targetKey: "id_parlamentar_voz",
-        as: "votacoes"
-      }),
-      parlamentar.hasMany(models.composicaoComissoes, {
-        foreignKey: "id_parlamentar_voz",
-        targetKey: "id_parlamentar_voz",      
-        as: "parlamentarComissoes"
-      }),
-      parlamentar.hasMany(models.aderencia, {
-        foreignKey: "id_parlamentar_voz",
-        targetKey: "id_parlamentar_voz",      
-        as: "parlamentarAderencia"
-      }),
-      parlamentar.hasMany(models.liderancas, {
-        foreignKey: "id_parlamentar_voz",
-        targetKey: "id_parlamentar_voz",      
-        as: "parlamentarLiderancas"
-      })
+    partido.hasMany(models.liderancas, {
+      foreignKey: "id_partido",
+      targetKey: "id_partido",
+      as: "lideranca_partido"
+    }),
+    partido.hasMany(models.aderencia, {
+      foreignKey: "id_partido",
+      sourceKey: "id_partido",
+      as: "partido"
+    })
   };
-  return parlamentar;
+  return partido;
 };

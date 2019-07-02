@@ -10,7 +10,7 @@ module.exports = (sequelize, type) => {
   );
   votacaou.associate = function(models) {
     votacaou.belongsTo(models.proposicao, {
-      foreignKey: "proposicao_id",
+      foreignKey: "proposicao_id", // Vai ser id_votacao da tabela votacoes
       as: "uvot_prop"
     }),
       votacaou.belongsTo(models.candidato, {

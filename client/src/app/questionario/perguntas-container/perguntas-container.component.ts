@@ -95,7 +95,7 @@ export class PerguntasContainerComponent implements OnInit, OnDestroy {
         this.listaTemas = this.sortObjectUsingArray(
           temas,
           this.receivedTemas,
-          'id'
+          'id_tema'
         );
 
         this.temaSelecionado = this.listaTemas[0].id_tema;

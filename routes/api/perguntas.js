@@ -57,14 +57,16 @@ router.get("/proposicoes", (req, res) => {
   Proposicao.findAll({
     attributes: ["projeto_lei", "id_proposicao", "titulo", "descricao"],
     where: { status_proposicao: "Ativa" },
-    order: [
-      ['id_proposicao', 'ASC']
-    ],
     include: [
       {
         model: Temas,
+        as: "temas",
         attributes: ["id_tema", "tema", "slug"]
       }
+    ],
+    order: [
+      ['temas', 'id_tema', 'ASC'],
+      ['id_proposicao', 'ASC']
     ]
   })
     .then(proposicoes => res.json(proposicoes))
