@@ -23,9 +23,12 @@ module.exports = (sequelize, type) => {
       targetKey: "id_proposicao",
       as: "vot_prop"
     }),
-    proposicao.hasMany(models.proposicaoTemas, {
-      foreignKey: "id_proposicao",
-      as: "tema_prop"
+    proposicao.belongsToMany(models.tema,  {
+      through: {
+        model: models.proposicaoTemas,
+        unique: false
+      },
+      foreignKey: 'id_proposicao'
     });
   };
 

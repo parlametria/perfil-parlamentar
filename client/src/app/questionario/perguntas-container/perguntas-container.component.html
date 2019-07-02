@@ -48,12 +48,12 @@
         *ngFor="let prop of perguntasTemaSelecionado; let i = index"
         [ngClass]="{
           'pergunta-progress-item': true,
-          'active': prop.id_votacao === perguntaSelecionada.id_votacao,
-          'done': respondeuPergunta(prop.id_votacao),
+          'active': prop.id_proposicao === perguntaSelecionada.id_proposicao,
+          'done': respondeuPergunta(prop.id_proposicao),
           'positive': respostaPositiva(),
           'negative': respostaNegativa(),
           'neutral': respostaNeutra()}"
-        (click)="escolhePergunta(prop.id_votacao)"
+        (click)="escolhePergunta(prop.id_proposicao)"
       >
       </div>
     </div>
@@ -63,7 +63,7 @@
         [projLei]="perguntaSelecionada.projeto_lei"
         [title]="perguntaSelecionada.titulo"
         [description]="perguntaSelecionada.descricao"
-        [id]="perguntaSelecionada.id_votacao"
+        [id]="perguntaSelecionada.id_proposicao"
       ></app-pergunta>
     </div>
 

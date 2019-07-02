@@ -62,8 +62,8 @@ router.get("/proposicoes", (req, res) => {
     ],
     include: [
       {
-        model: ProposicaoTemas,
-        as: "tema_prop"
+        model: Temas,
+        attributes: ["id", "tema", "slug"]
       }
     ]
   })
@@ -89,13 +89,8 @@ router.get("/proposicoes/:id", (req, res) => {
     ],
     include: [
       {
-        model: ProposicaoTemas,
-        as: "tema_prop",
-        include:
-        {
-          model: Temas,
-          as: "temas_tema"
-        }
+        model: Temas,
+        attributes: ["id", "tema", "slug"]
       }
     ]
   })
