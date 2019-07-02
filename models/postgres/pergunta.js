@@ -17,7 +17,7 @@ module.exports = (sequelize, type) => {
     pergunta.belongsTo(models.tema, {
       foreignKey: "tema_id",
       as: "tema_perg",
-      targetKey: "id"
+      targetKey: "id_tema"
     }),
       pergunta.hasMany(models.resposta, {
         foreignKey: "pergunta_id",

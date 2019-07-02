@@ -122,7 +122,7 @@ export class UserService {
     this.perguntaService.getProposicoes().subscribe(
       proposicoes => {
         const votacoes = proposicoes.reduce((result, item) => {
-          const key = item.id_votacao;
+          const key = item.id_proposicao;
           result[key] = 0;
           return result;
         }, {});

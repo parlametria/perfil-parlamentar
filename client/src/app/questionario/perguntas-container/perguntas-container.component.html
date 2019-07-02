@@ -14,7 +14,7 @@
           >
             <option
               *ngFor="let tema of listaTemas"
-              [value]="tema.id"
+              [value]="tema.id_tema"
             >
               {{ tema.tema }}
             </option>
@@ -32,7 +32,7 @@
           <button
             class="btn btn-block btn-outline-no-border"
             role="button"
-            [ngClass]="{'btn-outline-no-border-dark': temaSelecionado === tema.id, 'btn-outline-no-border-light': temaSelecionado !== tema.id}"
+            [ngClass]="{'btn-outline-no-border-dark': temaSelecionado === tema.id_tema, 'btn-outline-no-border-light': temaSelecionado !== tema.id_tema}"
             (click)="setTema(tema)"
           >
             <span [ngClass]="['icon-'+tema.slug, 'icon-lg-sm']"></span>

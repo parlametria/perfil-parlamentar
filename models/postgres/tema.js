@@ -3,15 +3,16 @@ module.exports = (sequelize, type) => {
     "tema",
     {
       tema: type.STRING,
-      id: {
+      id_tema: {
         type: type.INTEGER,
         primaryKey: true
       },
-      slug: type.STRING
+      slug: type.STRING,
+      ativo: type.BOOLEAN
     },    
     {
       timestamps: false
-    }
+    },
   );
 
   tema.associate = function(models) {

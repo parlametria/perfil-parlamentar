@@ -15,11 +15,12 @@ const SUCCESS = 200;
  * @memberof module:routes/temas
  */
 router.get("/", (req, res) => {
-    Tema.findAll({
-        attributes: ["id", "tema", "slug"]
-    })
-    .then(temas => res.status(SUCCESS).json(temas))
-    .catch(err => res.status(BAD_REQUEST).json({ err }));
+  Tema.findAll({
+    attributes: ["id_tema", "tema", "slug"],
+    where: { ativo: true }
+  })
+  .then(temas => res.status(SUCCESS).json(temas))
+  .catch(err => res.status(BAD_REQUEST).json({ err }));
 });
 
 module.exports = router;

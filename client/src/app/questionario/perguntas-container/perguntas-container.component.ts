@@ -98,14 +98,14 @@ export class PerguntasContainerComponent implements OnInit, OnDestroy {
           'id'
         );
 
-        this.temaSelecionado = this.listaTemas[0].id;
+        this.temaSelecionado = this.listaTemas[0].id_tema;
       } else {
         this.listaTemas = temas;
         this.temaSelecionado = 3;
       }
 
       if (this.proposicaoFromUrl) {
-        this.temaSelecionado = this.proposicaoFromUrl.temas[0].id;
+        this.temaSelecionado = this.proposicaoFromUrl.temas[0].id_tema;
       }
       this.initializePerguntas(proposicoes);
     },
@@ -118,7 +118,7 @@ export class PerguntasContainerComponent implements OnInit, OnDestroy {
 
     // Filtra as perguntas do tema selecionado
     this.perguntasTemaSelecionado = this.listaProposicoes.filter(
-      proposicao => proposicao.temas[0].id === Number(this.temaSelecionado)
+      proposicao => proposicao.temas[0].id_tema === Number(this.temaSelecionado)
     );
 
     this.todasProposicoesOrdenadas = this.sortProposicoesUsingArray(
@@ -165,7 +165,7 @@ export class PerguntasContainerComponent implements OnInit, OnDestroy {
   }
 
   setTema(tema: Tema) {
-    this.temaSelecionado = tema.id;
+    this.temaSelecionado = tema.id_tema;
     this.onTemaChange();
   }
 
@@ -194,8 +194,8 @@ export class PerguntasContainerComponent implements OnInit, OnDestroy {
       // Passa para próxima pergunta
       const proximaPergunta = this.todasProposicoesOrdenadas[index + 1];
       // Checa se a próxima pergunta é do mesmo tema ou não
-      if (proximaPergunta.temas[0].id !== this.perguntaSelecionada.temas[0].id) {
-        this.temaSelecionado = proximaPergunta.temas[0].id;
+      if (proximaPergunta.temas[0].id_tema !== this.perguntaSelecionada.temas[0].id_tema) {
+        this.temaSelecionado = proximaPergunta.temas[0].id_tema;
         this.onTemaChange();
       } else {
         this.escolhePergunta(proximaPergunta.id_proposicao);
@@ -212,8 +212,8 @@ export class PerguntasContainerComponent implements OnInit, OnDestroy {
       // Passa para pergunta anterior
       const perguntaAnterior = this.todasProposicoesOrdenadas[index - 1];
       // Checa se a próxima pergunta é do mesmo tema ou não
-      if (perguntaAnterior.temas[0].id !== this.perguntaSelecionada.temas[0].id) {
-        this.temaSelecionado = perguntaAnterior.temas[0].id;
+      if (perguntaAnterior.temas[0].id_tema !== this.perguntaSelecionada.temas[0].id_tema) {
+        this.temaSelecionado = perguntaAnterior.temas[0].id_tema;
         this.onTemaChange();
       }
       this.escolhePergunta(perguntaAnterior.id_proposicao);
@@ -287,8 +287,8 @@ export class PerguntasContainerComponent implements OnInit, OnDestroy {
 
   sortProposicoesUsingArray(proposicoes: Proposicao[], arrayTemas) {
     const proposicoesOrdered = proposicoes.sort((a, b) => {
-      const A = Number(a.temas[0].id);
-      const B = Number(b.temas[0].id);
+      const A = Number(a.temas[0].id_tema);
+      const B = Number(b.temas[0].id_tema);
 
       /* tslint:disable */
       if (arrayTemas.indexOf(A) > arrayTemas.indexOf(B)) return 1;
@@ -330,7 +330,7 @@ export class PerguntasContainerComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.unsubscribe)).subscribe(data => {
         this.proposicaoFromUrl = data;
         this.perguntaSelecionada = this.proposicaoFromUrl;
-        this.temaSelecionado = this.perguntaSelecionada.temas[0].id;
+        this.temaSelecionado = this.perguntaSelecionada.temas[0].id_tema;
         if (this.listaProposicoes) {
           this.filterPerguntasPorTemaSelecionado();
         }
@@ -343,7 +343,7 @@ export class PerguntasContainerComponent implements OnInit, OnDestroy {
 
   private filterPerguntasPorTemaSelecionado() {
     this.perguntasTemaSelecionado = this.listaProposicoes.filter(proposicao => {
-      return proposicao.temas[0].id === Number(this.temaSelecionado);
+      return proposicao.temas[0].id_tema === Number(this.temaSelecionado);
     });
   }
 
