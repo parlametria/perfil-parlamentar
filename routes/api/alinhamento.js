@@ -11,15 +11,14 @@ const Proposicao = models.proposicao;
 const Tema = models.tema;
 const ComposicaoComissoes = models.composicaoComissoes;
 const Comissoes = models.comissoes;
+const Voto = models.voto;
+const Partido = models.partido;
 
 const att = [
   "id_parlamentar_voz",
   "id_parlamentar",
-  "casa",
   "nome_eleitoral",
   "uf",
-  "partido",
-  "genero",
   "em_exercicio"
 ];
 
@@ -34,8 +33,14 @@ router.post("/", (req, res) => {
     include: [
       {
         attributes: ["id_votacao", "voto"],
-        model: Votacao,
-        as: "votacoes",
+        model: Voto,
+        as: "votos",
+        required: false
+      },
+      {
+        attributes: [["id_partido", "idPartido"], "sigla"],
+        model: Partido,
+        as: "parlamentarPartido",
         required: false
       },
       {
@@ -51,27 +56,45 @@ router.post("/", (req, res) => {
         ],
         as: "parlamentarComissoes",
         required: false
-      },      
+      },
     ],
     where: {
       em_exercicio: true
     }
   }).then(parlamentares => {
-    Proposicao.findAll({
-      attributes: ["id_votacao", "tema_id"],
-      include: [{
-        attributes: ["tema"],
-        model: Tema,
-        as: "tema_prop",
-        required: false
-      }],
-      where: {
-        status_proposicao: "Ativa"
-      }
+    Votacao.findAll({
+      attributes: [["id_votacao", "idVotacao"]],
+      include: [
+        {
+          model: Proposicao,
+          as: "proposicaoVotacoes",          
+          require: true,
+          attributes: [['id_proposicao', 'idProposicao']],
+          include: [
+            {
+              attributes: [["id_tema", "idTema"], "tema"],
+              model: Tema,
+              as: "temas",
+              through: { attributes: [] },
+              required: true
+            }
+          ],
+          where: {
+            status_proposicao: "Ativa"
+          }
+        }
+      ]
     }).then(proposicoes => {
-      const alinhamentos = calcularAlinhamentos(parlamentares, req.body.respostas, proposicoes);    
-      
-      return res.status(200).json(alinhamentos);
+      Tema.findAll({
+        attributes: [["id_tema", "idTema"], "tema"],
+        where: { ativo: true }
+
+      }).then(temas => {
+        const alinhamentos = calcularAlinhamentos(parlamentares, req.body.respostas, proposicoes, temas);
+
+        return res.status(200).json(alinhamentos);
+        // return res.status(200).json(proposicoes);
+      }).catch(err => res.status(400).json({ err: err.message }));
 
     }).catch(err => res.status(400).json({ err: err.message }));
 

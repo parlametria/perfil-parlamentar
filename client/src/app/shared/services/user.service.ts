@@ -68,11 +68,11 @@ export class UserService {
         const respostasAtual = this.respostas.getValue();
 
         // Atualiza Resposta
-        respostasAtual.votacoes[novaResposta.id_proposicao] =
+        respostasAtual.votacoes[novaResposta.idVotacao] =
           novaResposta.resposta;
 
         this.setRespostasAPIbyID(
-          novaResposta.id_proposicao,
+          novaResposta.idVotacao,
           respostasAtual
         ).subscribe(
           res => {
@@ -86,10 +86,10 @@ export class UserService {
         );
       } else {
         const respostasLS = this.getRespostaLocalStorage();
-        const { id_proposicao, resposta } = novaResposta;
+        const { idVotacao, resposta } = novaResposta;
 
         // Atualiza Resposta
-        respostasLS.votacoes[id_proposicao] = resposta;
+        respostasLS.votacoes[idVotacao] = resposta;
 
         this.setRespostaLocalStorage(respostasLS);
 
@@ -104,9 +104,9 @@ export class UserService {
     return this.http.get<Resposta>(this.url + '/respostas/eu');
   }
 
-  setRespostasAPIbyID(idProposicao, novasRespostas): Observable<Resposta> {
+  setRespostasAPIbyID(idVotacao, novasRespostas): Observable<Resposta> {
     return this.http.post<Resposta>(
-      this.url + '/respostas/eu?idResp=' + idProposicao,
+      this.url + '/respostas/eu?idResp=' + idVotacao,
       { respostas: novasRespostas }
     );
   }

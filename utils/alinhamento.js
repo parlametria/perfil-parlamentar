@@ -1,7 +1,9 @@
 /**
  * Retorna o alinhamento para uma lista de parlamentares
  */
-function calcularAlinhamentos(parlamentares, respostas, proposicoes) {
+function calcularAlinhamentos(parlamentares, respostas, proposicoes, temasAtivos) {
+  console.log(respostas);
+  
   const alinhamentos = parlamentares.map(parlamentar =>
     parlamentar.get({ plain: true })
   );
@@ -10,18 +12,29 @@ function calcularAlinhamentos(parlamentares, respostas, proposicoes) {
     props.get({ plain: true })
   );
 
-  const temas = proposicoesTemas.map(item => item.tema_id)
-    .filter((value, index, self) => self.indexOf(value) === index);
-      
+  const temas = temasAtivos.map(props =>
+    props.get({ plain: true })
+  );
+  // const temas = proposicoesTemas.map(item => item.proposicaoVotacoes.temas[0].idTema)
+  //   .filter((value, index, self) => self.indexOf(value) === index);
+
+  // const temas = proposicoesTemas.map(item => {
+  //   return (
+  //     {
+  //       idTema: item.proposicaoVotacoes.temas[0].idTema,
+  //       tema: item.proposicaoVotacoes.temas[0].tema
+  //     }
+  //   )
+  // });
+
   let temasAlinhamento = [];
 
   temas.forEach((tema) => {
-    nome_tema = proposicoesTemas.filter(value => value.tema_id === tema)[0].tema_prop.tema;
-    totalPerguntas = proposicoesTemas.filter(value => value.tema_id === tema).length;
-
+    totalPerguntas = proposicoesTemas.filter(value => value.proposicaoVotacoes.temas[0].idTema === tema.idTema).length;
+    
     obj = {
-      tema_id: tema,
-      tema_nome: nome_tema,
+      idTema: tema.idTema,
+      tema: tema.tema,
       respostasIguais: 0,
       perguntasIguais: 0,
       totalPerguntas: totalPerguntas,
@@ -30,8 +43,8 @@ function calcularAlinhamentos(parlamentares, respostas, proposicoes) {
 
     temasAlinhamento.push(obj);
   });
-  
-  alinhamentos.forEach(parlamentar => {  
+
+  alinhamentos.forEach(parlamentar => {
     parlamentar.alinhamento = calcular(parlamentar, respostas, proposicoesTemas, temasAlinhamento);
   });
 
@@ -58,26 +71,26 @@ function calcular(parlamentar, respostas, proposicoesTemas, temasAlinhamento) {
   let respostasIguais = 0;
   let perguntasIguais = 0;
 
-  parlamentar.votacoes.forEach(votacao => {    
+  parlamentar.votos.forEach(voto => {
     if (
-      (respostas[votacao.id_votacao] === 1 || respostas[votacao.id_votacao] === -1) &&
-      (votacao.voto === 1 || votacao.voto === -1)
+      (respostas[voto.idVotacao] === 1 || respostas[voto.idVotacao] === -1) &&
+      (voto.voto === 1 || voto.voto === -1)
     ) {
       perguntasIguais++;
-      respostasIguais += respostas[votacao.id_votacao] === votacao.voto ? 1 : 0;
+      respostasIguais += respostas[voto.idVotacao] === voto.voto ? 1 : 0;
 
-      let temaVotacao = proposicoesTemas.filter(prop => { return prop.id_votacao === votacao.id_votacao });      
-      
+      let temaVotacao = proposicoesTemas.filter(prop => { return prop.idVotacao === voto.idVotacao });
+
       if (temaVotacao && temaVotacao.length === 1) {
-        let temaIndex = temas.findIndex(tema => tema.tema_id === temaVotacao[0].tema_id);
-          
+        let temaIndex = temas.findIndex(tema => tema.idTema === temaVotacao[0].idTema);
+
         // Atualiza variáveis (perguntasIguais e respostasIguais) para o tema da votação atualmente no loop
         temas[temaIndex].perguntasIguais += 1;
-        temas[temaIndex].respostasIguais += respostas[votacao.id_votacao] === votacao.voto ? 1 : 0;
+        temas[temaIndex].respostasIguais += respostas[voto.idVotacao] === voto.voto ? 1 : 0;
       }
     }
   });
-  
+
   // Calcula alinhamento
   temas.forEach((tema) => {
     tema.alinhamento = tema.perguntasIguais >= 3 ? tema.respostasIguais / tema.perguntasIguais : 0;

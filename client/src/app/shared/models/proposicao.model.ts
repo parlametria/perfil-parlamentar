@@ -6,4 +6,5 @@ export interface Proposicao {
   titulo: string;
   descricao: string;
   temas: Tema[];
+  proposicaoVotacoes: any[];
 }

@@ -6,7 +6,7 @@ module.exports = (sequelize, type) => {
         type: type.STRING,
         primaryKey: true
       },
-      id_id_proposicao: type.STRING
+      id_proposicao: type.STRING
     },
     {
       timestamps: false
@@ -16,7 +16,12 @@ module.exports = (sequelize, type) => {
     votacao.belongsTo(models.proposicao, {
       foreignKey: "id_proposicao",
       sourceKey: "id_proposicao",
-      as: "votProp"
+      as: "proposicaoVotacoes"
+    }),
+    votacao.hasMany(models.voto, {
+      foreignKey: "id_votacao",
+      sourceKey: "id_votacao",
+      as: "votacoesVoto"
     })
   };
   return votacao;

@@ -21,7 +21,7 @@ module.exports = (sequelize, type) => {
     proposicao.hasMany(models.votacao, {
       foreignKey: "id_proposicao",
       targetKey: "id_proposicao",
-      as: "vot_prop"
+      as: "proposicaoVotacoes"
     }),
     proposicao.belongsToMany(models.tema,  {
       through: {

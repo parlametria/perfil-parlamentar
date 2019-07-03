@@ -17,10 +17,10 @@ module.exports = (sequelize, type) => {
     }
   );
   voto.associate = function(models) {
-    voto.belongsTo(models.proposicao, {
-      foreignKey: "id_proposicao",
-      sourceKey: "id_proposicao",
-      as: "vot_prop"
+    voto.belongsTo(models.votacao, {
+      foreignKey: "id_votacao",
+      sourceKey: "id_votacao",
+      as: "votacoesVoto"
     }),
     voto.belongsTo(models.parlamentar, {
         foreignKey: "id_parlamentar_voz",

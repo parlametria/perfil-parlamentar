@@ -148,7 +148,7 @@ export class PerguntasContainerComponent implements OnInit, OnDestroy {
 
   setResposta(resposta) {
     const novaResposta = {
-      id_proposicao: this.perguntaSelecionada.id_proposicao,
+      idVotacao: this.perguntaSelecionada.proposicaoVotacoes[0].idVotacao,
       resposta
     };
 
@@ -174,10 +174,10 @@ export class PerguntasContainerComponent implements OnInit, OnDestroy {
     this.setPerguntaSelecionadaAndRedirect(this.perguntasTemaSelecionado[0]);
   }
 
-  escolhePergunta(idVotacao) {
+  escolhePergunta(idProposicao) {
     this.setPerguntaSelecionadaAndRedirect(this.perguntasTemaSelecionado.filter(
       pergunta => {
-        return pergunta.id_proposicao === idVotacao;
+        return pergunta.id_proposicao === idProposicao;
       }
     )[0]);
   }
@@ -231,27 +231,27 @@ export class PerguntasContainerComponent implements OnInit, OnDestroy {
   }
 
   respostaPositiva() {
-    if (this.respostasUser.votacoes) {
+    if (this.respostasUser.votacoes && this.perguntaSelecionada.proposicaoVotacoes.length > 0) {
       return (
-        this.respostasUser.votacoes[this.perguntaSelecionada.id_proposicao] ===
+        this.respostasUser.votacoes[this.perguntaSelecionada.proposicaoVotacoes[0].idVotacao] ===
         this.FAVOR
       );
     }
   }
 
   respostaNegativa() {
-    if (this.respostasUser.votacoes) {
+    if (this.respostasUser.votacoes && this.perguntaSelecionada.proposicaoVotacoes.length > 0) {
       return (
-        this.respostasUser.votacoes[this.perguntaSelecionada.id_proposicao] ===
+        this.respostasUser.votacoes[this.perguntaSelecionada.proposicaoVotacoes[0].idVotacao] ===
         this.CONTRA
       );
     }
   }
 
   respostaNeutra() {
-    if (this.respostasUser.votacoes) {
+    if (this.respostasUser.votacoes && this.perguntaSelecionada.proposicaoVotacoes.length > 0) {
       return (
-        this.respostasUser.votacoes[this.perguntaSelecionada.id_proposicao] ===
+        this.respostasUser.votacoes[this.perguntaSelecionada.proposicaoVotacoes[0].idVotacao] ===
         this.NAOSEI
       );
     }

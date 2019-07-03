@@ -15,6 +15,7 @@ const models = require("../../models/index");
 const Pergunta = models.pergunta;
 const Temas = models.tema;
 const Proposicao = models.proposicao;
+const Votacao = models.votacao;
 const ProposicaoTemas = models.proposicaoTemas;
 
 /**
@@ -62,6 +63,12 @@ router.get("/proposicoes", (req, res) => {
         model: Temas,
         as: "temas",
         attributes: [["id_tema", "idTema"], "tema", "slug"]
+      },
+      {
+        model: Votacao,
+        attributes: [["id_votacao", "idVotacao"]],
+        as: "proposicaoVotacoes",
+        require: true
       }
     ],
     order: [
@@ -93,6 +100,12 @@ router.get("/proposicoes/:id", (req, res) => {
       {
         model: Temas,
         attributes: [["id_tema", "idTema"], "tema", "slug"]
+      },
+      {
+        model: Votacao,
+        attributes: [["id_votacao", "idVotacao"]],
+        as: "proposicaoVotacoes",
+        require: true
       }
     ]
   })
