@@ -62,7 +62,8 @@ export class AderenciaComponent implements OnInit, OnDestroy {
           this.aderencia = aderencia;
 
           // Aderência ao partido
-          this.aderenciaPartido = aderencia.parlamentarAderencia.filter(ad => ad.partido === aderencia.partido)[0];
+          this.aderenciaPartido = aderencia.parlamentarAderencia.filter(ad =>
+            ad.partido.sigla === aderencia.parlamentarPartido.sigla && ad.aderenciaTema.idTema === 99)[0];
 
           if (this.aderenciaPartido !== undefined) {
             const total = this.aderenciaPartido.seguiu + this.aderenciaPartido.naoSeguiu +
@@ -73,7 +74,7 @@ export class AderenciaComponent implements OnInit, OnDestroy {
           }
 
           // Aderência ao governo
-          this.aderenciaGoverno = aderencia.parlamentarAderencia.filter(ad => ad.partido === 'GOVERNO')[0];
+          this.aderenciaGoverno = aderencia.parlamentarAderencia.filter(ad => ad.partido.sigla === 'GOVERNO')[0];
 
           if (this.aderenciaGoverno !== undefined) {
             const total = this.aderenciaGoverno.seguiu + this.aderenciaGoverno.naoSeguiu +

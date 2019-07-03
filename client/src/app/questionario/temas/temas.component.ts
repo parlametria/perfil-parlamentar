@@ -51,8 +51,8 @@ export class TemasComponent implements OnInit, OnDestroy {
 
   emitTemas() {
     const notSelectedTemas = this.temas.filter((tema) => {
-      return !this.selectedTemas.includes(tema.id_tema);
-    }).map(tema => tema.id_tema);
+      return !this.selectedTemas.includes(tema.idTema);
+    }).map(tema => tema.idTema);
 
     const eventoObject = {
       selectedTemas: this.selectedTemas,

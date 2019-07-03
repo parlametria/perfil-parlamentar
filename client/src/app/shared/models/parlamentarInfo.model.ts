@@ -1,3 +1,5 @@
+import { Partido } from './partido.model';
+
 export class ParlamentarInfo {
 
   public idParlamentarVoz: string;
@@ -5,7 +7,7 @@ export class ParlamentarInfo {
   public casa: string;
   public nomeEleitoral: string;
   public uf: string;
-  public partido: string;
+  public parlamentarPartido: Partido;
   public emExercicio: boolean;
 
   constructor(parlamentar: any) {
@@ -14,7 +16,7 @@ export class ParlamentarInfo {
     this.casa = parlamentar.casa;
     this.nomeEleitoral = parlamentar.nome_eleitoral;
     this.uf = parlamentar.uf;
-    this.partido = parlamentar.partido;
+    this.parlamentarPartido = parlamentar.parlamentarPartido;
     this.emExercicio = parlamentar.em_exercicio;
   }
 

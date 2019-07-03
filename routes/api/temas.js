@@ -16,7 +16,7 @@ const SUCCESS = 200;
  */
 router.get("/", (req, res) => {
   Tema.findAll({
-    attributes: ["id_tema", "tema", "slug"],
+    attributes: [["id_tema", "idTema"], "tema", "slug"],
     where: { ativo: true }
   })
   .then(temas => res.status(SUCCESS).json(temas))

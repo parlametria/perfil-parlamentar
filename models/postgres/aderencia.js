@@ -28,7 +28,7 @@ module.exports = (sequelize, type) => {
       aderencia.belongsTo(models.parlamentar, {
         foreignKey: "id_parlamentar_voz",
         sourceKey: "id_parlamentar_voz",
-        as: "aderenciaParlamentar"
+        as: "parlamentarAderencia"
       }),
       aderencia.belongsTo(models.partido, {
         foreignKey: "id_partido",

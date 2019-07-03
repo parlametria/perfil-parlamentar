@@ -83,8 +83,28 @@ router.get("/parlamentar/:id", (req, res) => {
       {
         model: Aderencia,
         attributes: attAderencia,
-        as: "aderenciaParlamentar",
-        required: false
+        as: "parlamentarAderencia",
+        required: false,
+        include: [
+          {
+            model: Partido,
+            as: "partido",
+            required: false,
+            attributes: attPartido
+          },
+          {
+            model: Tema,
+            as: "aderenciaTema",
+            required: false,
+            attributes: attTema
+          }
+        ]
+      },
+      {
+        model: Partido,
+        as: "parlamentarPartido",
+        required: false,
+        attributes: attPartido
       }
     ],
     where: {
