@@ -56,7 +56,7 @@ router.get("/vozativa", (req, res) => {
  */
 router.get("/proposicoes", (req, res) => {
   Proposicao.findAll({
-    attributes: ["projeto_lei", "id_proposicao", "titulo", "descricao"],
+    attributes: [["projeto_lei", "projetoLei"], ["id_proposicao", "idProposicao"], "titulo", "descricao"],
     where: { status_proposicao: "Ativa" },
     include: [
       {
@@ -88,7 +88,7 @@ router.get("/proposicoes", (req, res) => {
  */
 router.get("/proposicoes/:id", (req, res) => {
   Proposicao.findOne({
-    attributes: ["projeto_lei", "id_proposicao", "titulo", "descricao"],
+    attributes: [["projeto_lei", "projetoLei"], ["id_proposicao", "idProposicao"], "titulo", "descricao"],
     where: { 
       status_proposicao: "Ativa",
       id_proposicao: req.params.id 

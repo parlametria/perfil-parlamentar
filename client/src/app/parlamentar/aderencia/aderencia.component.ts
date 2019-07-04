@@ -44,7 +44,6 @@ export class AderenciaComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.unsubscribe))
       .subscribe(
         parlamentar => {
-          console.log(parlamentar);
           this.parlamentar = parlamentar;
         },
         error => {
@@ -60,7 +59,7 @@ export class AderenciaComponent implements OnInit, OnDestroy {
       .subscribe(
         aderencia => {
           this.aderencia = aderencia;
-
+          console.log(aderencia);
           // Aderência ao partido
           this.aderenciaPartido = aderencia.parlamentarAderencia.filter(ad =>
             ad.partido.sigla === aderencia.parlamentarPartido.sigla && ad.aderenciaTema.idTema === 99)[0];

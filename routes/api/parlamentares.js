@@ -6,6 +6,7 @@ const { formataVotacoes } = require("../../utils/functions");
 
 const Parlamentar = models.parlamentar;
 const Votacao = models.votacao;
+const Voto = models.voto;
 const Proposicao = models.proposicao;
 const Comissoes = models.comissoes;
 const ComposicaoComissoes = models.composicaoComissoes;
@@ -15,7 +16,7 @@ const Partido = models.partido;
 const BAD_REQUEST = 400;
 const SUCCESS = 200;
 
-const attVotacao = ["voto", "id_votacao"];
+const attVotacao = ["voto", ["id_votacao", "idVotacao"]];
 const att = [
   ["id_parlamentar_voz", "idParlamentarVoz"],
   ["id_parlamentar", "idParlamentar"],
@@ -211,17 +212,30 @@ router.get("/:id/posicoes", (req, res) => {
     attributes: [["id_parlamentar_voz", "idParlamentarVoz"], "genero"],
     include: [
       {
-        model: Votacao,
-        as: "votacoes",
+        model: Voto,        
+        as: "votos",
         attributes: attVotacao,
-        required: false
-      }       
+        required: false,
+        include: [{
+          model: Votacao,
+          as: "votacoesVoto",
+          attributes: [],
+          required: true,
+          include: [{
+            model: Proposicao,
+            as: "proposicaoVotacoes",
+            attributes: [],
+            required: true,
+            where: { status_proposicao: "Ativa" }
+          }]
+        }]
+      }
     ],
     where: { id_parlamentar_voz: req.params.id }
   })
-    .then(votacoes => {
+    .then(votacoes => {      
       novaVotacao = formataVotacoes(votacoes);
-      return res.json(novaVotacao[0]);
+      return res.json(novaVotacao[0]);         
     })
     .catch(err => res.status(BAD_REQUEST).json({ err: err.message }));
 });
@@ -279,7 +293,7 @@ router.get("/:id/liderancas", (req, res) => {
         include: [{
           model: Partido,
           attributes: attPartido,
-          as: "lideranca_partido",
+          as: "liderancaPartido",
           where: {
             situacao: "Ativo"
           }

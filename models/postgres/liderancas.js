@@ -25,7 +25,7 @@ module.exports = (sequelize, type) => {
     lideranca.belongsTo(models.partido, {
       foreignKey: "id_partido",
       sourceKey: "id_partido",
-      as: "lideranca_partido"
+      as: "liderancaPartido"
     })  
   };
   return lideranca;
