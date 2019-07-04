@@ -113,7 +113,7 @@ export class CardParlamentarComponent implements OnChanges, OnInit {
   setAlinhamento(tema: number) {
     if (tema !== undefined && tema !== this.FILTRO_PADRAO_TEMA) {
       this.alinhamento = this.parlamentar.alinhamento.temas.filter(
-        res => res.tema_id === tema
+        res => res.idTema === tema
       )[0];
     } else {
       this.alinhamento = this.parlamentar.alinhamento;

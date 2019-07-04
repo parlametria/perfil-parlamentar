@@ -3,15 +3,16 @@ module.exports = (sequelize, type) => {
     "tema",
     {
       tema: type.STRING,
-      id: {
+      id_tema: {
         type: type.INTEGER,
         primaryKey: true
       },
-      slug: type.STRING
+      slug: type.STRING,
+      ativo: type.BOOLEAN
     },    
     {
       timestamps: false
-    }
+    },
   );
 
   tema.associate = function(models) {
@@ -19,11 +20,18 @@ module.exports = (sequelize, type) => {
       foreignKey: "tema_id",
       as: "tema_perg"
     }),
-      tema.hasMany(models.proposicao, {
-        foreignKey: "tema_id",
-        targetKey: "id",
-        as: "prop_tema",        
-      });
+    tema.belongsToMany(models.proposicao, {
+      through: {
+        model: models.proposicaoTemas,
+        unique: false
+      },
+      foreignKey: 'id_tema'
+    }),
+    tema.belongsTo(models.aderencia, {
+      foreignKey: "id_tema",
+      sourceKey: "id_tema",
+      as: "aderenciaTema"
+    });
   };
   return tema;
 };

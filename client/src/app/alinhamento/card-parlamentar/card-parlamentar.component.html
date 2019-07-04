@@ -39,7 +39,7 @@
             {{ parlamentar.nomeEleitoral | titlecase }}
           </a>
           <span class="parlamentar-card-sm-subtitle d-none d-lg-inline-block">
-            {{ parlamentar.partido }}/{{ parlamentar.uf }}
+            {{ parlamentar.parlamentarPartido?.sigla }}/{{ parlamentar.uf }}
           </span>
         </div>
       </div>
@@ -103,7 +103,7 @@
             </a>
           </div>
           <p>
-            {{ parlamentar.partido }}/{{ parlamentar.uf }}
+            {{ parlamentar.parlamentarPartido?.sigla }}/{{ parlamentar.uf }}
             <span
               *ngIf="comissao !== PADRAO_COMISSAO"
               class="badge badge-dark align-middle"
@@ -123,13 +123,13 @@
           <div class="row no-gutters d-lg-none">
             <div class="col">
               <span
-                *ngIf="alinhamento?.tema_nome"
+                *ngIf="alinhamento?.tema"
                 class="parlamentar-compatibilidade-text"
               >
-                Compatibilidade com {{alinhamento?.tema_nome}}
+                Compatibilidade com {{alinhamento?.tema}}
               </span>
               <div
-                *ngIf="!alinhamento?.tema_nome"
+                *ngIf="!alinhamento?.tema"
                 class="parlamentar-compatibilidade-text"
               >
                 Compatibilidade geral
@@ -166,13 +166,13 @@
       <div class="row no-gutters mt-3 d-none d-lg-flex">
         <div class="col">
           <span
-            *ngIf="alinhamento?.tema_nome"
+            *ngIf="alinhamento?.tema"
             class="parlamentar-compatibilidade-text"
           >
-            Compatibilidade com {{alinhamento?.tema_nome}}
+            Compatibilidade com {{alinhamento?.tema}}
           </span>
           <div
-            *ngIf="!alinhamento?.tema_nome"
+            *ngIf="!alinhamento?.tema"
             class="parlamentar-compatibilidade-text"
           >
             Compatibilidade geral
@@ -209,7 +209,7 @@
       >
         <div class="pt-3"></div>
         <div class="mb-3">
-          Compatilidade por tema [em nº de questões]
+          Compatilidade por tema [em nº de questões]          
           <div class="d-flex">
             <div>
               <app-legend
@@ -229,7 +229,7 @@
         </div>
         <app-progress-stacked
           *ngFor="let alinhamento of parlamentar.alinhamento.temas"
-          [titulo]="alinhamento.tema_nome"
+          [titulo]="alinhamento.tema"
           [categorias]="[
             {
               'valor': alinhamento.respostasIguais,

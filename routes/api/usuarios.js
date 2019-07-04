@@ -16,7 +16,7 @@ const {
 } = require("../../utils/functions");
 
 const attRes = ["resposta", "pergunta_id"];
-const attVot = ["resposta", "proposicao_id"];
+const attVot = ["resposta", "id_votacao"];
 const attSecret = ["id"];
 const attNone = [];
 

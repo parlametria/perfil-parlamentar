@@ -25,7 +25,7 @@ export class TemaService {
     let temaSlug;
 
     if (temas !== undefined && temas.length > 0) {
-      temaSlug = temas.filter(t => t.id === id);
+      temaSlug = temas.filter(t => t.idTema === id);
     }
 
     if (temaSlug !== undefined && temaSlug.length > 0) {
@@ -39,7 +39,7 @@ export class TemaService {
     const tema = temas.filter(t => t.slug === slug);
 
     if (tema && tema.length > 0) {
-      return String(tema[0].id);
+      return String(tema[0].idTema);
     } else {
       return this.ID_PADRAO_TEMA_TODOS;
     }

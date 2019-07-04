@@ -13,20 +13,24 @@ module.exports = (sequelize, type) => {
     }
   );
 
-  pergunta.associate = function(models) {
+  pergunta.associate = function (models) {
     pergunta.belongsTo(models.tema, {
       foreignKey: "tema_id",
       as: "tema_perg",
-      targetKey: "id"
+      targetKey: "id_tema"
     }),
-      pergunta.hasMany(models.resposta, {
-        foreignKey: "pergunta_id",
-        as: "perg_resp"
-      }),
-      pergunta.hasMany(models.respostau, {
-        foreignKey: "pergunta_id",
-        as: "uperg_resp"
-      });
+    pergunta.hasMany(models.resposta, {
+      foreignKey: "pergunta_id",
+      as: "perg_resp"
+    }),
+    pergunta.hasMany(models.respostau, {
+      foreignKey: "pergunta_id",
+      as: "uperg_resp"
+    }),
+    pergunta.hasMany(models.votacao, {
+      foreignKey: "id_proposicao",
+      as: "votProp"
+    })
   };
   return pergunta;
 };

@@ -1,0 +1,35 @@
+module.exports = (sequelize, type) => {
+  partido = sequelize.define(
+    "partido",
+    {
+      id_partido: {
+        type: type.INTEGER,
+        primaryKey: true
+      },
+      sigla: type.STRING,
+      tipo: type.STRING,
+      situacao: type.STRING
+    },
+    {
+      timestamps: false
+    }
+  );
+  partido.associate = function (models) {
+    partido.hasMany(models.parlamentar, {
+      foreignKey: "id_partido",
+      targetKey: "id_partido",
+      as: "parlamentarPartido"
+    }),
+    partido.hasMany(models.liderancas, {
+      foreignKey: "id_partido",
+      targetKey: "id_partido",
+      as: "lideranca_partido"
+    }),
+    partido.hasMany(models.aderencia, {
+      foreignKey: "id_partido",
+      sourceKey: "id_partido",
+      as: "partido"
+    })
+  };
+  return partido;
+};

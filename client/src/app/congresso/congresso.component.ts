@@ -75,7 +75,7 @@ export class CongressoComponent implements OnInit, OnDestroy {
 
   getParlamentaresComAlinhamento() {
     if (this.parlamentares !== undefined && this.parlamentares.length > 0) {
-      const temaIndex = this.parlamentares[0].alinhamento.temas.findIndex(res => res.tema_id === this.filter.tema);
+      const temaIndex = this.parlamentares[0].alinhamento.temas.findIndex(res => res.idTema === this.filter.tema);
 
       let filteredParlamentares;
       if (temaIndex !== undefined && temaIndex !== -1) {

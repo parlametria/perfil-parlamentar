@@ -45,7 +45,7 @@ export class AlinhamentoService {
           let temaIndex;
 
           if (parlamentares.length !== 0) {
-            temaIndex = parlamentares[0].alinhamento.temas.findIndex(res => res.tema_id === this.tema);
+            temaIndex = parlamentares[0].alinhamento.temas.findIndex(res => res.idTema === this.tema);
           }
           return parlamentares.sort((a, b) => {
             if (this.tema !== undefined && this.tema !== this.FILTRO_PADRAO_TEMA) {
@@ -99,7 +99,7 @@ export class AlinhamentoService {
 
       filtered =
         partido && partido !== 'Partidos' && filtered
-          ? p.partido.toLowerCase() === partido.toLowerCase()
+          ? p.parlamentarPartido.sigla.toLowerCase() === partido.toLowerCase()
           : filtered;
 
       filtered =

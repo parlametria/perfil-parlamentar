@@ -183,7 +183,7 @@ export class FilterComponent implements OnInit, OnDestroy {
 
   getTemaById(id: number) {
     if (this.temas && id !== this.FILTRO_PADRAO_TEMA) {
-      return this.temas.filter(tema => tema.id === id)[0].tema;
+      return this.temas.filter(tema => tema.idTema === id)[0].tema;
     }
   }
 

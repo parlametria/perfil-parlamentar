@@ -1,5 +1,5 @@
 export interface Tema {
-  id: number;
+  idTema: number;
   tema: string;
   slug: string;
 }

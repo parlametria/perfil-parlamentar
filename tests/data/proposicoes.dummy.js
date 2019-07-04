@@ -1,118 +1,244 @@
 const proposicoes =
   [
     {
-      "id_votacao": 5632,
-      "tema_id": 1
+      "idVotacao": 5632,
+      "proposicaoVotacoes": {
+        "temas": [
+          {
+            "idTema": 1
+          }
+        ]
+      }
     },
     {
-      "id_votacao": 6043,
-      "tema_id": 3
+      "idVotacao": 6043,
+      "proposicaoVotacoes": {
+        "temas": [
+          {
+            "idTema": 3
+          }
+        ]
+      }
     },
     {
-      "id_votacao": 6082,
-      "tema_id": 1
+      "idVotacao": 6082,
+      "proposicaoVotacoes": {
+        "temas": [
+          {
+            "idTema": 1
+          }
+        ]
+      }
     },
     {
-      "id_votacao": 5673,
-      "tema_id": 2
+      "idVotacao": 5673,
+      "proposicaoVotacoes": {
+        "temas": [
+          {
+            "idTema": 2
+          }
+        ]
+      }
     },
     {
-      "id_votacao": 6074,
-      "tema_id": 2
+      "idVotacao": 6074,
+      "proposicaoVotacoes": {
+        "temas": [
+          {
+            "idTema": 2
+          }
+        ]
+      }
     },
     {
-      "id_votacao": 16370,
-      "tema_id": 2
+      "idVotacao": 16370,
+      "proposicaoVotacoes": {
+        "temas": [
+          {
+            "idTema": 2
+          }
+        ]
+      }
     },
     {
-      "id_votacao": 16208,
-      "tema_id": 0
+      "idVotacao": 16208,
+      "proposicaoVotacoes": {
+        "temas": [
+          {
+            "idTema": 0
+          }
+        ]
+      }
     },
     {
-      "id_votacao": 16209,
-      "tema_id": 0
+      "idVotacao": 16209,
+      "proposicaoVotacoes": {
+        "temas": [
+          {
+            "idTema": 0
+          }
+        ]
+      }
     },
     {
-      "id_votacao": 5513,
-      "tema_id": 0
+      "idVotacao": 5513,
+      "proposicaoVotacoes": {
+        "temas": [
+          {
+            "idTema": 0
+          }
+        ]
+      }
     },
     {
-      "id_votacao": 16519,
-      "tema_id": 0
+      "idVotacao": 16519,
+      "proposicaoVotacoes": {
+        "temas": [
+          {
+            "idTema": 0
+          }
+        ]
+      }
     },
     {
-      "id_votacao": 16532,
-      "tema_id": 3
+      "idVotacao": 16532,
+      "proposicaoVotacoes": {
+        "temas": [
+          {
+            "idTema": 3
+          }
+        ]
+      }
     },
     {
-      "id_votacao": 5450,
-      "tema_id": 2
+      "idVotacao": 5450,
+      "proposicaoVotacoes": {
+        "temas": [
+          {
+            "idTema": 2
+          }
+        ]
+      }
     },
     {
-      "id_votacao": 16155,
-      "tema_id": 5
+      "idVotacao": 16155,
+      "proposicaoVotacoes": {
+        "temas": [
+          {
+            "idTema": 5
+          }
+        ]
+      }
     },
     {
-      "id_votacao": 5494,
-      "tema_id": 3
+      "idVotacao": 5494,
+      "proposicaoVotacoes": {
+        "temas": [
+          {
+            "idTema": 3
+          }
+        ]
+      }
     },
     {
-      "id_votacao": 6148,
-      "tema_id": 3
+      "idVotacao": 6148,
+      "proposicaoVotacoes": {
+        "temas": [
+          {
+            "idTema": 3
+          }
+        ]
+      }
     },
     {
-      "id_votacao": 16186,
-      "tema_id": 3
+      "idVotacao": 16186,
+      "proposicaoVotacoes": {
+        "temas": [
+          {
+            "idTema": 3
+          }
+        ]
+      }
     },
     {
-      "id_votacao": 5520,
-      "tema_id": 3
+      "idVotacao": 5520,
+      "proposicaoVotacoes": {
+        "temas": [
+          {
+            "idTema": 3
+          }
+        ]
+      }
     },
     {
-      "id_votacao": 55961,
-      "tema_id": 2
+      "idVotacao": 55961,
+      "proposicaoVotacoes": {
+        "temas": [
+          {
+            "idTema": 2
+          }
+        ]
+      }
     },
     {
-      "id_votacao": 55962,
-      "tema_id": 2
+      "idVotacao": 55962,
+      "proposicaoVotacoes": {
+        "temas": [
+          {
+            "idTema": 2
+          }
+        ]
+      }
     },
     {
-      "id_votacao": 55963,
-      "tema_id": 1
+      "idVotacao": 55963,
+      "proposicaoVotacoes": {
+        "temas": [
+          {
+            "idTema": 1
+          }
+        ]
+      }
     },
     {
-      "id_votacao": 5624,
-      "tema_id": 1
+      "idVotacao": 5624,
+      "proposicaoVotacoes": {
+        "temas": [
+          {
+            "idTema": 1
+          }
+        ]
+      }
     }
   ]
 
 const temasAlinhamento = [
   {
-      "tema_id": 1,
+      "idTema": 1,
       "respostasIguais": 0,
       "perguntasIguais": 0,
       "alinhamento": 0
   },
   {
-      "tema_id": 3,
+      "idTema": 3,
       "respostasIguais": 0,
       "perguntasIguais": 0,
       "alinhamento": 0
   },
   {
-      "tema_id": 2,
+      "idTema": 2,
       "respostasIguais": 0,
       "perguntasIguais": 0,
       "alinhamento": 0
   },
   {
-      "tema_id": 0,
+      "idTema": 0,
       "respostasIguais": 0,
       "perguntasIguais": 0,
       "alinhamento": 0
   },
   {
-      "tema_id": 5,
+      "idTema": 5,
       "respostasIguais": 0,
       "perguntasIguais": 0,
       "alinhamento": 0

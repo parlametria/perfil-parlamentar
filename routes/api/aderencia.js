@@ -6,12 +6,16 @@ const models = require("../../models/index");
 
 const Parlamentar = models.parlamentar;
 const Aderencia = models.aderencia;
+const Partido = models.partido;
+const Tema = models.tema;
 
 const BAD_REQUEST = 400;
 const SUCCESS = 200;
 
-const attParlamentar = [["id_parlamentar_voz", "idParlamentarVoz"], "casa", ["nome_eleitoral", "nomeEleitoral"], "partido"];
-const attAderencia = ["partido", "faltou", ["partido_liberou", "partidoLiberou"], ["nao_seguiu", "naoSeguiu"], "seguiu", "aderencia"];
+const attParlamentar = [["id_parlamentar_voz", "idParlamentarVoz"], "casa", ["nome_eleitoral", "nomeEleitoral"]];
+const attAderencia = ["faltou", ["partido_liberou", "partidoLiberou"], ["nao_seguiu", "naoSeguiu"], "seguiu", "aderencia"];
+const attPartido = [["id_partido", "idPartido"], "sigla"]
+const attTema = [["id_tema", "idTema"], "tema", "slug"]
 
 /**
  * Recupera informações de aderência dos parlamentares
@@ -20,7 +24,9 @@ const attAderencia = ["partido", "faltou", ["partido_liberou", "partidoLiberou"]
  * @memberof module:routes/aderencia
  */
 router.get("/", (req, res) => {
-  Aderencia.findAll()
+  Aderencia.findAll({
+    attributes: attAderencia
+  })
     .then(aderencia => res.status(SUCCESS).json(aderencia))
     .catch(err => res.status(BAD_REQUEST).json({ err: err.message }));
 });
@@ -38,8 +44,22 @@ router.get("/parlamentar", (req, res) => {
       {
         model: Aderencia,
         attributes: attAderencia,
-        as: "parlamentarAderencia",        
-        required: false
+        as: "aderenciaParlamentar",
+        required: false,
+        include: [
+          {
+            model: Partido,
+            attributes: attPartido,
+            as: "partido",
+            required: false
+          },
+          {
+            model: Tema,
+            attributes: attTema,
+            as: "aderenciaTema",
+            required: false
+          }
+        ]
       }
     ],
     where: {
@@ -63,8 +83,28 @@ router.get("/parlamentar/:id", (req, res) => {
       {
         model: Aderencia,
         attributes: attAderencia,
-        as: "parlamentarAderencia",        
-        required: false
+        as: "parlamentarAderencia",
+        required: false,
+        include: [
+          {
+            model: Partido,
+            as: "partido",
+            required: false,
+            attributes: attPartido
+          },
+          {
+            model: Tema,
+            as: "aderenciaTema",
+            required: false,
+            attributes: attTema
+          }
+        ]
+      },
+      {
+        model: Partido,
+        as: "parlamentarPartido",
+        required: false,
+        attributes: attPartido
       }
     ],
     where: {

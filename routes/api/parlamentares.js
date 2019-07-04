@@ -10,23 +10,24 @@ const Proposicao = models.proposicao;
 const Comissoes = models.comissoes;
 const ComposicaoComissoes = models.composicaoComissoes;
 const Liderancas = models.liderancas;
+const Partido = models.partido;
 
 const BAD_REQUEST = 400;
 const SUCCESS = 200;
 
-const att_votacao = ["voto", "id_votacao"];
+const attVotacao = ["voto", "id_votacao"];
 const att = [
-  "id_parlamentar_voz",
-  "id_parlamentar",
+  ["id_parlamentar_voz", "idParlamentarVoz"],
+  ["id_parlamentar", "idParlamentar"],
   "casa",
-  "nome_eleitoral",
+  ["nome_eleitoral", "nomeEleitoral"],
   "uf",
-  "partido",
   "genero",
-  "em_exercicio"
+  ["em_exercicio", "emExercicio"]
 ];
 const attComissoes = ["sigla", "nome"];
 const attComposicaoComissoes = [["id_comissao_voz", "idComissaoVoz"], "cargo"];
+const attPartido = [["id_partido", "idPartido"], "sigla", "tipo"]
 
 /**
  * Testa a rota de parlamentares.
@@ -51,7 +52,7 @@ router.get("/votacoes", (req, res) => {
       {
         model: Votacao,
         as: "votacoes",
-        attributes: att_votacao,
+        attributes: attVotacao,
         required: false,
         include: {
           model: Proposicao,
@@ -60,6 +61,11 @@ router.get("/votacoes", (req, res) => {
           required: false,
           where: { status_proposicao: "Ativa" }
         }
+      },
+      {
+        model: Partido,
+        as: "parlamentarPartido",
+        attributes: attPartido
       }
     ],
     where: {
@@ -81,7 +87,13 @@ router.get("/votacoes", (req, res) => {
  * @memberof module:routes/parlamentares
  */
 router.get("/", (req, res) => {
-  Parlamentar.findAll()
+  Parlamentar.findAll({
+    include: [{
+      model: Partido,
+      as: "parlamentarPartido",
+      attributes: attPartido
+    }]
+  })
     .then(parlamentares => res.json(parlamentares))
     .catch(err => res.status(BAD_REQUEST).json({ err }));
 });
@@ -96,7 +108,11 @@ router.get("/partidos", (req, res) => {
     attributes: att,
     where: {
       em_exercicio: true
-    }
+    },
+    include: [{
+      model: Partido,
+      as: "parlamentarPartido"
+    }]
   })
     .then(parlamentares => {
       let partidosPorEstado = []
@@ -115,7 +131,7 @@ router.get("/partidos", (req, res) => {
         const partidosSet = new Set();
 
         parlamentaresFiltered.forEach(cand => {
-          partidosSet.add(cand.partido);
+          partidosSet.add(cand.parlamentarPartido.sigla);
         });
         
         partidosPorEstado.push({ estado: estado, partidos: [...partidosSet].sort((a, b) => a.localeCompare(b)) });
@@ -169,10 +185,15 @@ router.get("/:id", (req, res) => {
 */
 router.get("/:id/info", (req, res) => {
  Parlamentar.findOne({
-   attributes: ["id_parlamentar_voz", "id_parlamentar", "casa", "nome_eleitoral","uf", "partido", "em_exercicio"],
+   attributes: ["id_parlamentar_voz", "id_parlamentar", "casa", "nome_eleitoral","uf", "em_exercicio"],
    where: {
      id_parlamentar_voz: req.params.id
-   }
+   },
+   include: [{
+    model: Partido,
+    as: "parlamentarPartido",
+    attributes: attPartido
+  }]
  })
    .then(parlamentar => res.json(parlamentar))
    .catch(err => res.status(BAD_REQUEST).json({ err }));
@@ -192,7 +213,7 @@ router.get("/:id/posicoes", (req, res) => {
       {
         model: Votacao,
         as: "votacoes",
-        attributes: att_votacao,
+        attributes: attVotacao,
         required: false
       }       
     ],
@@ -252,9 +273,17 @@ router.get("/:id/liderancas", (req, res) => {
     include: [
       {
         model: Liderancas,  
-        attributes: ["cargo", ["bloco_partido", "blocoPartido"]],
+        attributes: ["cargo"],
         as: "parlamentarLiderancas",
-        required: false        
+        required: false,
+        include: [{
+          model: Partido,
+          attributes: attPartido,
+          as: "lideranca_partido",
+          where: {
+            situacao: "Ativo"
+          }
+        }]
       }
     ],
     where: { id_parlamentar_voz: req.params.id }
@@ -279,7 +308,7 @@ router.get("/:id/votacoes", (req, res) => {
       {
         model: Votacao,
         as: "votacoes",
-        attributes: att_votacao,
+        attributes: attVotacao,
         required: false
       },
       {
