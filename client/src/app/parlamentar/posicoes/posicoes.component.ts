@@ -22,7 +22,7 @@ import { Resposta } from 'src/app/shared/models/resposta.model';
 export class PosicoesComponent implements OnInit, OnDestroy {
   readonly FAVOR = 1;
   readonly CONTRA = -1;
-  readonly ID_PADRAO_TEMA_TODOS = '7';
+  readonly ID_PADRAO_TEMA_TODOS = '99';
 
   private unsubscribe = new Subject();
 
@@ -75,7 +75,7 @@ export class PosicoesComponent implements OnInit, OnDestroy {
       // Inicia Temas
       this.temas = temas;
       const allTemas = {
-        idTema: 7,
+        idTema: 99,
         tema: 'Todos os temas',
         slug: 'todos'
       };
