@@ -39,7 +39,7 @@
             {{ parlamentar.nomeEleitoral | titlecase }}
           </a>
           <span class="parlamentar-card-sm-subtitle d-none d-lg-inline-block">
-            {{ parlamentar.partido }}/{{ parlamentar.uf }}
+            {{ parlamentar.parlamentarPartido?.sigla }}/{{ parlamentar.uf }}
           </span>
         </div>
       </div>
@@ -103,7 +103,7 @@
             </a>
           </div>
           <p>
-            {{ parlamentar.partido }}/{{ parlamentar.uf }}
+            {{ parlamentar.parlamentarPartido?.sigla }}/{{ parlamentar.uf }}
             <span
               *ngIf="comissao !== PADRAO_COMISSAO"
               class="badge badge-dark align-middle"
