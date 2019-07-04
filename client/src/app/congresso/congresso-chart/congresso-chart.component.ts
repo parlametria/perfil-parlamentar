@@ -148,7 +148,7 @@ export class CongressoChartComponent implements AfterContentInit, OnChanges, OnD
       .offset([-10, 0])
       .html((d: Parlamentar) => {
         return '<strong>' + this.titleCase(d.nomeEleitoral) + '</strong>' +
-          ' <span class="subtitle">' + d.parlamentarPartido + '/' + d.uf + '</span>' + '<br>' +
+          ' <span class="subtitle">' + d.parlamentarPartido.sigla + '/' + d.uf + '</span>' + '<br>' +
           '<span>' + this.formatAlinhamento(this.getPath(d)) + '</span>';
       });
   }
