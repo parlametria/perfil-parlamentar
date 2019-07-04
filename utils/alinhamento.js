@@ -2,7 +2,6 @@
  * Retorna o alinhamento para uma lista de parlamentares
  */
 function calcularAlinhamentos(parlamentares, respostas, proposicoes, temasAtivos) {
-  console.log(respostas);
   
   const alinhamentos = parlamentares.map(parlamentar =>
     parlamentar.get({ plain: true })
@@ -46,6 +45,7 @@ function calcularAlinhamentos(parlamentares, respostas, proposicoes, temasAtivos
 
   alinhamentos.forEach(parlamentar => {
     parlamentar.alinhamento = calcular(parlamentar, respostas, proposicoesTemas, temasAlinhamento);
+    delete parlamentar.votos;
   });
 
   return alinhamentos;
@@ -55,6 +55,7 @@ function calcularAlinhamentos(parlamentares, respostas, proposicoes, temasAtivos
  * Calcula alinhamento entre um parlamentar e as respostas de uma pessoa
  */
 function calcular(parlamentar, respostas, proposicoesTemas, temasAlinhamento) {
+
   if (typeof respostas === "undefined" || respostas === null) {
     return {
       respostasIguais: 0,
@@ -70,19 +71,20 @@ function calcular(parlamentar, respostas, proposicoesTemas, temasAlinhamento) {
 
   let respostasIguais = 0;
   let perguntasIguais = 0;
-
+  
   parlamentar.votos.forEach(voto => {
+    
     if (
       (respostas[voto.idVotacao] === 1 || respostas[voto.idVotacao] === -1) &&
       (voto.voto === 1 || voto.voto === -1)
     ) {
       perguntasIguais++;
       respostasIguais += respostas[voto.idVotacao] === voto.voto ? 1 : 0;
+           
+      let temaVotacao = proposicoesTemas.filter(prop => { return prop.idVotacao === voto.idVotacao })[0].proposicaoVotacoes.temas[0];
 
-      let temaVotacao = proposicoesTemas.filter(prop => { return prop.idVotacao === voto.idVotacao });
-
-      if (temaVotacao && temaVotacao.length === 1) {
-        let temaIndex = temas.findIndex(tema => tema.idTema === temaVotacao[0].idTema);
+      if (temaVotacao) {
+        let temaIndex = temas.findIndex(tema => tema.idTema === temaVotacao.idTema);
 
         // Atualiza variáveis (perguntasIguais e respostasIguais) para o tema da votação atualmente no loop
         temas[temaIndex].perguntasIguais += 1;

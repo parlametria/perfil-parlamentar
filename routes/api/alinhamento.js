@@ -32,7 +32,7 @@ router.post("/", (req, res) => {
     attributes: att,
     include: [
       {
-        attributes: ["id_votacao", "voto"],
+        attributes: [["id_votacao", "idVotacao"], "voto"],
         model: Voto,
         as: "votos",
         required: false
@@ -91,7 +91,6 @@ router.post("/", (req, res) => {
 
       }).then(temas => {
         const alinhamentos = calcularAlinhamentos(parlamentares, req.body.respostas, proposicoes, temas);
-
         return res.status(200).json(alinhamentos);
         // return res.status(200).json(proposicoes);
       }).catch(err => res.status(400).json({ err: err.message }));
