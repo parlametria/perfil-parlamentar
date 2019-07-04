@@ -148,14 +148,14 @@ export class CongressoChartComponent implements AfterContentInit, OnChanges, OnD
       .offset([-10, 0])
       .html((d: Parlamentar) => {
         return '<strong>' + this.titleCase(d.nomeEleitoral) + '</strong>' +
-          ' <span class="subtitle">' + d.partido + '/' + d.uf + '</span>' + '<br>' +
+          ' <span class="subtitle">' + d.parlamentarPartido + '/' + d.uf + '</span>' + '<br>' +
           '<span>' + this.formatAlinhamento(this.getPath(d)) + '</span>';
       });
   }
 
   getPath(d: any) {
     let temaIndex;
-    temaIndex = this.parlamentaresCompleto[0].alinhamento.temas.findIndex(res => res.tema_id === this.filter.tema);
+    temaIndex = this.parlamentaresCompleto[0].alinhamento.temas.findIndex(res => res.idTema === this.filter.tema);
 
     if (temaIndex !== undefined && temaIndex !== -1) {
       return this.getAlinhamento(d.alinhamento.temas[temaIndex]);

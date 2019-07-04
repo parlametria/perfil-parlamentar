@@ -194,8 +194,8 @@
             <button
               class="btn btn-outline-dark btn-block btn-tema btn-tema-sm"
               role="button"
-              [ngClass]="{'active': isTemaSelected(tema.id), 'aria-pressed': isTemaSelected(tema.id)}"
-              (click)="selecionaTema(tema.id)"
+              [ngClass]="{'active': isTemaSelected(tema.idTema), 'aria-pressed': isTemaSelected(tema.idTema)}"
+              (click)="selecionaTema(tema.idTema)"
             >
               <span [ngClass]="['icon-'+tema.slug, 'icon-lg-sm']"></span>
               <p class="btn-tema-text">{{ tema.tema }}</p>
