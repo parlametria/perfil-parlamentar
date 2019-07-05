@@ -108,6 +108,7 @@ export class FilterComponent implements OnInit, OnDestroy {
       comissao: this.comissaoSelecionada,
       tema: this.temaSelecionado,
       temaSlug: this.temaService.getTemaSlugById(this.temas, this.temaSelecionado),
+      orientador: undefined,
       default: this.isFiltroDefault()
     };
 
