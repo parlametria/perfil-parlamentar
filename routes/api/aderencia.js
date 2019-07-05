@@ -8,14 +8,25 @@ const Parlamentar = models.parlamentar;
 const Aderencia = models.aderencia;
 const Partido = models.partido;
 const Tema = models.tema;
+const ComposicaoComissoes = models.composicaoComissoes;
+const Comissoes = models.comissoes;
 
 const BAD_REQUEST = 400;
 const SUCCESS = 200;
 
-const attParlamentar = [["id_parlamentar_voz", "idParlamentarVoz"], "casa", ["nome_eleitoral", "nomeEleitoral"]];
+const attParlamentar = [
+  ["id_parlamentar_voz", "idParlamentarVoz"], 
+  ["id_parlamentar", "idParlamentar"], 
+  ["nome_eleitoral", "nomeEleitoral"], 
+  "uf",
+  ["em_exercicio", "emExercicio"]
+];
+
 const attAderencia = ["faltou", ["partido_liberou", "partidoLiberou"], ["nao_seguiu", "naoSeguiu"], "seguiu", "aderencia"];
 const attPartido = [["id_partido", "idPartido"], "sigla"]
 const attTema = [["id_tema", "idTema"], "tema", "slug"]
+const attComposicaoComissoes = [["id_comissao_voz", "idComissaoVoz"], "cargo"];
+const attComissoes = ["sigla"];
 
 /**
  * Recupera informações de aderência dos parlamentares
@@ -44,7 +55,7 @@ router.get("/parlamentar", (req, res) => {
       {
         model: Aderencia,
         attributes: attAderencia,
-        as: "aderenciaParlamentar",
+        as: "parlamentarAderencia",
         required: false,
         include: [
           {
@@ -60,6 +71,26 @@ router.get("/parlamentar", (req, res) => {
             required: false
           }
         ]
+      },
+      {
+        model: ComposicaoComissoes,
+        attributes: attComposicaoComissoes,
+        include: [
+          {
+            model: Comissoes,
+            attributes: attComissoes,
+            as: "infoComissao",
+            required: false
+          }
+        ],
+        as: "parlamentarComissoes",
+        required: false
+      },
+      {
+        model: Partido,
+        attributes: attPartido,
+        as: "parlamentarPartido",
+        required: false
       }
     ],
     where: {
