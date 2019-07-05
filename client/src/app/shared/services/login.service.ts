@@ -87,7 +87,7 @@ export class LoginService {
     this.perguntaService.getProposicoes().subscribe(
       proposicoes => {
         const votacoes = proposicoes.reduce((result, item) => {
-          const key = item.id_proposicao;
+          const key = item.idProposicao;
           result[key] = 0;
           return result;
         }, {});

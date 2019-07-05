@@ -23,7 +23,7 @@ module.exports = (sequelize, type) => {
     partido.hasMany(models.liderancas, {
       foreignKey: "id_partido",
       targetKey: "id_partido",
-      as: "lideranca_partido"
+      as: "liderancaPartido"
     }),
     partido.hasMany(models.aderencia, {
       foreignKey: "id_partido",

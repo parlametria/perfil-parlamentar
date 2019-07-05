@@ -53,17 +53,17 @@
           'positive': respostaPositiva(),
           'negative': respostaNegativa(),
           'neutral': respostaNeutra()}"
-        (click)="escolhePergunta(prop.id_proposicao)"
+        (click)="escolhePergunta(prop.idProposicao)"
       >
       </div>
     </div>
 
     <div *ngIf="perguntaSelecionada">
       <app-pergunta
-        [projLei]="perguntaSelecionada.projeto_lei"
+        [projLei]="perguntaSelecionada.projetoLei"
         [title]="perguntaSelecionada.titulo"
         [description]="perguntaSelecionada.descricao"
-        [id]="perguntaSelecionada.id_proposicao"
+        [id]="perguntaSelecionada.idProposicao"
       ></app-pergunta>
     </div>
 

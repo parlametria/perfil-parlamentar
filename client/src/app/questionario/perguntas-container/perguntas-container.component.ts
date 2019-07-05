@@ -177,14 +177,14 @@ export class PerguntasContainerComponent implements OnInit, OnDestroy {
   escolhePergunta(idProposicao) {
     this.setPerguntaSelecionadaAndRedirect(this.perguntasTemaSelecionado.filter(
       pergunta => {
-        return pergunta.id_proposicao === idProposicao;
+        return pergunta.idProposicao === idProposicao;
       }
     )[0]);
   }
 
   proximaPergunta() {
     const index = this.todasProposicoesOrdenadas.findIndex(prop =>
-      prop.id_proposicao === this.perguntaSelecionada.id_proposicao
+      prop.idProposicao === this.perguntaSelecionada.idProposicao
     );
 
     if (index === this.todasProposicoesOrdenadas.length - 1) {
@@ -198,14 +198,14 @@ export class PerguntasContainerComponent implements OnInit, OnDestroy {
         this.temaSelecionado = proximaPergunta.temas[0].idTema;
         this.onTemaChange();
       } else {
-        this.escolhePergunta(proximaPergunta.id_proposicao);
+        this.escolhePergunta(proximaPergunta.idProposicao);
       }
     }
   }
 
   perguntaAnterior() {
     const index = this.todasProposicoesOrdenadas.findIndex(prop =>
-      prop.id_proposicao === this.perguntaSelecionada.id_proposicao
+      prop.idProposicao === this.perguntaSelecionada.idProposicao
     );
 
     if (index !== 0) {
@@ -216,7 +216,7 @@ export class PerguntasContainerComponent implements OnInit, OnDestroy {
         this.temaSelecionado = perguntaAnterior.temas[0].idTema;
         this.onTemaChange();
       }
-      this.escolhePergunta(perguntaAnterior.id_proposicao);
+      this.escolhePergunta(perguntaAnterior.idProposicao);
     }
   }
 
@@ -275,9 +275,9 @@ export class PerguntasContainerComponent implements OnInit, OnDestroy {
 
   sortProposicoes(proposicoes) {
     return proposicoes.sort((a, b) => {
-      if (a.id_proposicao > b.id_proposicao) {
+      if (a.idProposicao > b.idProposicao) {
         return 1;
-      } else if (a.id_proposicao < b.id_proposicao) {
+      } else if (a.idProposicao < b.idProposicao) {
         return -1;
       } else {
         return 0;
@@ -293,8 +293,8 @@ export class PerguntasContainerComponent implements OnInit, OnDestroy {
       /* tslint:disable */
       if (arrayTemas.indexOf(A) > arrayTemas.indexOf(B)) return 1;
       else if (arrayTemas.indexOf(A) < arrayTemas.indexOf(B)) return -1;
-      else if (a.id_proposicao > b.id_proposicao) return 1;
-      else if (a.id_proposicao < b.id_proposicao) return -1;
+      else if (a.idProposicao > b.idProposicao) return 1;
+      else if (a.idProposicao < b.idProposicao) return -1;
       else return 0;
       /* tslint:enable */
     });
@@ -349,7 +349,7 @@ export class PerguntasContainerComponent implements OnInit, OnDestroy {
 
   private setPerguntaSelecionadaAndRedirect(pergunta) {
     this.perguntaSelecionada = pergunta;
-    this.redirectToURLWithID(this.perguntaSelecionada.id_proposicao);
+    this.redirectToURLWithID(this.perguntaSelecionada.idProposicao);
   }
 
   open(content) {

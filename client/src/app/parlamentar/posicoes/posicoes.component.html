@@ -21,7 +21,7 @@
     *ngFor="let proposicao of proposicoesFiltradas"
     [parlamentar]="parlamentar"
     [proposicao]="proposicao"
-    [resposta]="respostas.votacoes[proposicao.id_votacao]"
-    [votacao]="parlamentar?.votacoes[proposicao.id_votacao]"
+    [resposta]="respostas.votacoes[proposicao.proposicaoVotacoes[0]?.idVotacao]"
+    [votacao]="parlamentar?.votos[proposicao.proposicaoVotacoes[0]?.idVotacao]"
   ></app-posicao>
 </div>

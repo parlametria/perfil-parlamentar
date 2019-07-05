@@ -14,13 +14,13 @@ function formataRespostas(resultado) {
 
 function formataVotacoes(resultado) {
   const resultadoNovo = resultado.map(cand => cand.get({ plain: true }));
-
+  
   resultadoNovo.forEach(cand => {
-    const votacoes = {};
-    cand.votacoes.forEach(vot => {
-      votacoes[vot.id_votacao] = vot.voto;
+    const votos = {};
+    cand.votos.forEach(vot => {
+      votos[vot.idVotacao] = vot.voto;
     });
-    cand.votacoes = votacoes;    
+    cand.votos = votos;    
   });
   return resultadoNovo;
 }

@@ -12,7 +12,7 @@ export class TemaService {
 
   private url = environment.apiUrl + 'temas';
 
-  readonly ID_PADRAO_TEMA_TODOS = '7';
+  readonly ID_PADRAO_TEMA_TODOS = '99';
   readonly SLUG_PADRAO_TEMA_TODOS = 'todos';
 
   constructor(private http: HttpClient) { }
