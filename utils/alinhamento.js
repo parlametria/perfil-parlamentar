@@ -14,17 +14,6 @@ function calcularAlinhamentos(parlamentares, respostas, proposicoes, temasAtivos
   const temas = temasAtivos.map(props =>
     props.get({ plain: true })
   );
-  // const temas = proposicoesTemas.map(item => item.proposicaoVotacoes.temas[0].idTema)
-  //   .filter((value, index, self) => self.indexOf(value) === index);
-
-  // const temas = proposicoesTemas.map(item => {
-  //   return (
-  //     {
-  //       idTema: item.proposicaoVotacoes.temas[0].idTema,
-  //       tema: item.proposicaoVotacoes.temas[0].tema
-  //     }
-  //   )
-  // });
 
   let temasAlinhamento = [];
 
