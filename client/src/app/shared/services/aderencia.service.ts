@@ -27,7 +27,7 @@ export class AderenciaService {
 
   private searchfilters = new BehaviorSubject<any>({});
   private tema: number;
-  private orientador: string;
+  private orientador = 'Governo';
 
   private parlamentaresFiltered = new BehaviorSubject<Array<ParlamentarAderencia>>([]);
   private parlamentares = new BehaviorSubject<Array<ParlamentarAderencia>>([]);
@@ -77,6 +77,12 @@ export class AderenciaService {
       });
 
     return this.parlamentaresFiltered.asObservable();
+  }
+
+  getAderenciaAsObservable(): Observable<any> {
+    return this.http
+      .get<ParlamentarAderencia[]>(this.url + '/parlamentar/')
+      .pipe(map(data => data.map(parlamentar => new ParlamentarAderencia(parlamentar))));
   }
 
   search(filters: any) {
@@ -142,7 +148,7 @@ export class AderenciaService {
    * @param a Parlamentar para comparação
    * @param b Parlamentar para comparação
    */
-  private sort(a: ParlamentarAderencia, b: ParlamentarAderencia, idTema) {
+  public sort(a: ParlamentarAderencia, b: ParlamentarAderencia, idTema) {
     let aderenciaA: AderenciaDados;
     let aderenciaB: AderenciaDados;
 
