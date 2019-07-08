@@ -82,7 +82,7 @@
     <div class="col">
       <div class="d-flex">
         <div class="aderencia-value alinhamento-4-font pr-2">
-          {{ aderenciaPartido?.aderencia * 0.01 | percent }}
+          {{ aderenciaPartido?.aderencia | percent }}
         </div>
         <div class="aderencia-value-text">
           de acordo com o {{aderenciaPartido?.partido.sigla}}
@@ -127,7 +127,7 @@
     <div class="col">
       <div class="d-flex">
         <div class="aderencia-value alinhamento-4-font pr-2">
-          {{ aderenciaGoverno?.aderencia * 0.01 | percent }}
+          {{ aderenciaGoverno?.aderencia | percent }}
         </div>
         <div class="aderencia-value-text">de acordo com o Governo</div>
       </div>
