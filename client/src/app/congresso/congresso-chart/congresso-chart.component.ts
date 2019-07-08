@@ -21,9 +21,15 @@ export class CongressoChartComponent implements AfterContentInit, OnChanges, OnD
   @Input() parlamentaresCompleto: any[];
   @Input() view: any;
   @Input() filter: any;
+  @Input() modo: any;
 
   @Output() viewEvent = new EventEmitter<string>();
   @Output() finishEvent: EventEmitter<boolean> = new EventEmitter();
+
+  readonly FILTER_PADRAO_TEMA = -1;
+  readonly ID_TEMA_GERAL = 99;
+  readonly MODO_ALINHAMENTO = 'alinhamento';
+  readonly MODO_ADERENCIA = 'aderencia';
 
   drawn = false;
   temaAtual: number;
@@ -72,6 +78,7 @@ export class CongressoChartComponent implements AfterContentInit, OnChanges, OnD
     ) {
       this.parlamentaresCompleto = JSON.parse(JSON.stringify(changes.parlamentaresCompleto.currentValue));
       this.drawVis();
+      if (this.modo === this.MODO_ADERENCIA) { this.paint(); }
     }
 
     if (
@@ -87,7 +94,7 @@ export class CongressoChartComponent implements AfterContentInit, OnChanges, OnD
           this.drawVis();
         }
         this.hideTooltip();
-        this.paint();
+        if (this.modo === this.MODO_ALINHAMENTO) { this.paint(); }
       }
     }
 
@@ -130,8 +137,6 @@ export class CongressoChartComponent implements AfterContentInit, OnChanges, OnD
 
     this.color = d3
       .scaleThreshold<string, string>()
-      // .domain(['0', '0.3', '0.4', '0.5', '0.6', '0.7', '0.8'])
-      // .range(['#848484', '#b54142', '#cf7d79', '#e1b5b5', '#eceff4', '#a8c8dd', '#6ca0bf', '#3e7799']);
       .domain(['0', '0.3', '0.5', '0.6', '0.8'])
       .range(this.colorScheme);
 
@@ -154,6 +159,14 @@ export class CongressoChartComponent implements AfterContentInit, OnChanges, OnD
   }
 
   getPath(d: any) {
+    if (this.modo === this.MODO_ALINHAMENTO) {
+      return this.getPathAlinhamento(d);
+    } else {
+      return this.getPathAderencia(d);
+    }
+  }
+
+  getPathAlinhamento(d: any) {
     let temaIndex;
     temaIndex = this.parlamentaresCompleto[0].alinhamento.temas.findIndex(res => res.idTema === this.filter.tema);
 
@@ -169,6 +182,32 @@ export class CongressoChartComponent implements AfterContentInit, OnChanges, OnD
       return -1;
     } else {
       return alinhamento.alinhamento;
+    }
+  }
+
+  getPathAderencia(d: any) {
+    let temaId;
+
+    if (this.filter.tema === this.FILTER_PADRAO_TEMA) {
+      temaId = this.ID_TEMA_GERAL;
+    } else {
+      temaId = this.filter.tema;
+    }
+
+    if (this.filter.orientador === 'Governo') {
+      return this.getAderencia(d.aderencia.filter(aderencia =>
+        aderencia.aderenciaTema.idTema === temaId && aderencia.partido.sigla === 'Governo'));
+    } else {
+      return this.getAderencia(d.aderencia.filter(aderencia =>
+        aderencia.aderenciaTema.idTema === temaId && aderencia.partido.idPartido === d.parlamentarPartido.idPartido));
+    }
+  }
+
+  getAderencia(aderencia: any) {
+    if (aderencia !== undefined && aderencia.length > 0) {
+      return aderencia[0].aderencia;
+    } else {
+      return -1;
     }
   }
 
@@ -294,8 +333,7 @@ export class CongressoChartComponent implements AfterContentInit, OnChanges, OnD
       .attr('opacity', 0);
     this.g.selectAll('.circle-parlamentar')
       .transition()
-      .duration((d, i) => (this.getPath(d) >= 0) ? d.alinhamento.alinhamento * 1000 + 300 : 100 + (i * 2))
-      // .duration((d, i) => 100 + (i * 2))
+      .duration((d, i) => (this.getPath(d) >= 0) ? this.getPath(d) * 1000 + 300 : 100 + (i * 2))
       .delay(250)
       .attr('cx', d => d.arcX)
       .attr('cy', d => d.arcY);
@@ -325,7 +363,7 @@ export class CongressoChartComponent implements AfterContentInit, OnChanges, OnD
       .attr('opacity', 1);
     this.g.selectAll('.circle-parlamentar')
       .transition()
-      .duration((d) => d.alinhamento.alinhamento * 1000 + 300)
+      .duration((d) => this.getPath(d) * 1000 + 300)
       .delay(250)
       .attr('cx', d => d.x)
       .attr('cy', d => d.y);

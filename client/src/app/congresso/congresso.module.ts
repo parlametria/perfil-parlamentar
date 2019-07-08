@@ -8,11 +8,13 @@ import { SharedModule } from '../shared/components/shared.module';
 
 import { CongressoComponent } from './congresso.component';
 import { CongressoChartComponent } from './congresso-chart/congresso-chart.component';
+import { CongressoAderenciaComponent } from './congresso-aderencia/congresso-aderencia.component';
 
 @NgModule({
   declarations: [
     CongressoComponent,
-    CongressoChartComponent
+    CongressoChartComponent,
+    CongressoAderenciaComponent
   ],
   imports: [
     CommonModule,
