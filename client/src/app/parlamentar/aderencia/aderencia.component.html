@@ -50,7 +50,7 @@
         ></app-legend>
       </div>
     </div>
-  </div>  
+  </div>
   <div
     *ngIf="passo"
     class="row"
@@ -80,7 +80,10 @@
       ></app-progress-stacked>
     </div>
     <div class="col">
-      <div class="d-flex">
+      <div
+        class="d-flex"
+        *ngIf="aderenciaPartido?.aderencia !== -1"
+      >
         <div class="aderencia-value alinhamento-4-font pr-2">
           {{ aderenciaPartido?.aderencia | percent }}
         </div>
@@ -88,8 +91,15 @@
           de acordo com o {{aderenciaPartido?.partido.sigla}}
         </div>
       </div>
+      <div
+        class="d-flex"
+        *ngIf="aderenciaPartido?.aderencia === -1"
+      >
+        <div class="aderencia-value alinhamento-4-font pr-2">--</div>
+        <div class="aderencia-value-text">não calculada com o {{aderenciaPartido?.partido.sigla}}</div>
+      </div>
     </div>
-  </div>  
+  </div>
   <div
     *ngIf="!passo"
     class="row no-gutters mt-3"
@@ -125,11 +135,21 @@
       ></app-progress-stacked>
     </div>
     <div class="col">
-      <div class="d-flex">
+      <div
+        class="d-flex"
+        *ngIf="aderenciaGoverno?.aderencia !== -1"
+      >
         <div class="aderencia-value alinhamento-4-font pr-2">
           {{ aderenciaGoverno?.aderencia | percent }}
         </div>
         <div class="aderencia-value-text">de acordo com o Governo</div>
+      </div>
+      <div
+        class="d-flex"
+        *ngIf="aderenciaGoverno?.aderencia === -1"
+      >
+        <div class="aderencia-value alinhamento-4-font pr-2">--</div>
+        <div class="aderencia-value-text">não calculada com o Governo</div>
       </div>
     </div>
   </div>
