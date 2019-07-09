@@ -8,6 +8,7 @@ const routes: Routes = [
   { path: 'alinhamento', loadChildren: './alinhamento/alinhamento.module#AlinhamentoModule' },
   { path: 'parlamentar', loadChildren: './parlamentar/parlamentar.module#ParlamentarModule' },
   { path: 'congresso', loadChildren: './congresso/congresso.module#CongressoModule' },
+  { path: 'aderencia', loadChildren: './aderencia/aderencia.module#AderenciaModule' },
   { path: '**', redirectTo: '' }
 ];
 

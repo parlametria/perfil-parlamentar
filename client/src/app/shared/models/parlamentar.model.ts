@@ -1,4 +1,5 @@
 import { Partido } from './partido.model';
+import { ComposicaoComissao } from './composicaoComissao.model';
 
 export class Parlamentar {
 
@@ -12,7 +13,7 @@ export class Parlamentar {
   public emExercicio: boolean;
   public votacoes: any;
   public alinhamento?: any;
-  public comissoes?: any;
+  public comissoes?: ComposicaoComissao[];
 
   constructor(parlamentar: any) {
     this.idParlamentarVoz = parlamentar.id_parlamentar_voz;

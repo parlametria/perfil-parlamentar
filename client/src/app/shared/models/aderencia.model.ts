@@ -1,7 +1,7 @@
 import { Partido } from './partido.model';
 import { Tema } from './tema.model';
 
-interface AderenciaDados {
+export interface AderenciaDados {
     faltou: number;
     partidoLiberou: number;
     naoSeguiu: number;

@@ -1,0 +1,17 @@
+<div class="container">
+  <p>
+    aderencia works!
+  </p>
+  <app-filter (filterChange)="search($event)"></app-filter>
+  {{orientador}}
+  <div class="btn-group" role="group" aria-label="Basic example">
+      <button type="button" class="btn btn-secondary" (click)="setOrientador('Governo')">Governo</button>
+      <button type="button" class="btn btn-secondary" (click)="setOrientador('PARTIDO')">Partido</button>
+    </div>
+  <div
+  *ngFor="let parlamentar of parlamentares">
+    <h3>{{parlamentar.nomeEleitoral}}</h3> - 
+    {{parlamentar.uf}}/{{parlamentar.parlamentarPartido?.sigla}}
+    <pre *ngFor="let aderencia of parlamentar.aderencia">{{ aderencia.aderenciaTema.tema + ": " + aderencia.aderencia }}</pre>    
+  </div>
+</div>
