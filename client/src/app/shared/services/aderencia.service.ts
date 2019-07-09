@@ -47,7 +47,6 @@ export class AderenciaService {
           )
         ),
         tap(parlamentares => {
-
           let idTema = this.tema;
 
           if (this.tema === this.FILTRO_PADRAO_TEMA) {
@@ -162,6 +161,14 @@ export class AderenciaService {
         aderencia.aderenciaTema.idTema === idTema && aderencia.partido.idPartido === a.parlamentarPartido.idPartido)[0];
       aderenciaB = b.aderencia.filter(aderencia =>
         aderencia.aderenciaTema.idTema === idTema && aderencia.partido.idPartido === b.parlamentarPartido.idPartido)[0];
+    }
+
+    if (aderenciaA === undefined) {
+      return 1;
+    }
+
+    if (aderenciaB === undefined) {
+      return -1;
     }
 
     if (aderenciaA !== undefined && aderenciaB !== undefined) {
