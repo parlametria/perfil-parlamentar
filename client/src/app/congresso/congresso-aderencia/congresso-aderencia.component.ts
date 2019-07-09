@@ -70,8 +70,6 @@ export class CongressoAderenciaComponent implements OnInit, OnDestroy {
         this.parlamentaresCompleto = parlamentares.sort((a, b) => {
           return this.aderenciaService.sort(a, b, idTema);
         });
-
-        console.log('parlamentares', this.parlamentaresCompleto);
       }
     );
   }

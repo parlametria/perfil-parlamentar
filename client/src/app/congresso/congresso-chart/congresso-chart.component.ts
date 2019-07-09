@@ -46,6 +46,7 @@ export class CongressoChartComponent implements AfterContentInit, OnChanges, OnD
   height: number;
   margin: any;
   r: number;
+  radiusBee: number;
   length: number;
 
   tip: any;
@@ -65,6 +66,7 @@ export class CongressoChartComponent implements AfterContentInit, OnChanges, OnD
       bottom: 20
     };
     this.r = 5;
+    this.radiusBee = 3.4;
     this.initChart();
     this.initTooltip();
     this.temaAtual = this.filter.tema;
@@ -94,7 +96,7 @@ export class CongressoChartComponent implements AfterContentInit, OnChanges, OnD
           this.drawVis();
         }
         this.hideTooltip();
-        if (this.modo === this.MODO_ALINHAMENTO) { this.paint(); }
+        this.paint();
       }
     }
 
@@ -225,7 +227,7 @@ export class CongressoChartComponent implements AfterContentInit, OnChanges, OnD
     const distanciaFilas = 12;
     const angulo = 18;
 
-    const xBeeSwarm = d3.scaleLinear().range([this.width * 0.8, this.width * 0.2]);
+    const xBeeSwarm = d3.scaleLinear().range([this.width * 0.9, this.width * 0.2]);
     this.g.append('g')
       .attr('class', 'axis axis--x')
       .attr('transform', 'translate(0, -80)')
@@ -238,8 +240,8 @@ export class CongressoChartComponent implements AfterContentInit, OnChanges, OnD
     const simulation = d3
       .forceSimulation(this.parlamentaresCompleto)
       .force('x', d3.forceX((d: any) => xBeeSwarm(this.getPath(d))).strength(1))
-      .force('y', d3.forceY(this.height * 0.1))
-      .force('collide', d3.forceCollide(this.r + 0.5))
+      .force('y', d3.forceY(this.height * 0.15))
+      .force('collide', d3.forceCollide(this.radiusBee + 0.8))
       .stop();
 
     for (let i = 0; i < 513; ++i) {
@@ -314,7 +316,7 @@ export class CongressoChartComponent implements AfterContentInit, OnChanges, OnD
       this.drawn = true;
     } else {
       this.g.selectAll('.circle-parlamentar')
-        .attr('r', this.r)
+        .attr('r', this.view === 'arc' ? this.r : this.radiusBee)
         .transition()
         .duration(500)
         .attr('opacity', 0.2)
@@ -335,6 +337,7 @@ export class CongressoChartComponent implements AfterContentInit, OnChanges, OnD
       .transition()
       .duration((d, i) => (this.getPath(d) >= 0) ? this.getPath(d) * 1000 + 300 : 100 + (i * 2))
       .delay(250)
+      .attr('r', this.r)
       .attr('cx', d => d.arcX)
       .attr('cy', d => d.arcY);
   }
@@ -365,6 +368,7 @@ export class CongressoChartComponent implements AfterContentInit, OnChanges, OnD
       .transition()
       .duration((d) => this.getPath(d) * 1000 + 300)
       .delay(250)
+      .attr('r', this.radiusBee)
       .attr('cx', d => d.x)
       .attr('cy', d => d.y);
   }
@@ -377,7 +381,7 @@ export class CongressoChartComponent implements AfterContentInit, OnChanges, OnD
 
   private standardizeCircle(circle) {
     d3.select(circle)
-      .attr('r', this.r);
+      .attr('r', (this.view === 'arc') ? this.r : this.radiusBee);
   }
 
   private getFilas(parlamentares: Parlamentar[]) {
