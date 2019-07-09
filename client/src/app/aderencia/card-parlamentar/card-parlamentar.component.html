@@ -57,11 +57,12 @@
           ></app-progress>
         </div>
         <div class="parlamentar-sm-score">
-          <span *ngIf="aderencia">
+          <span *ngIf="aderencia && aderencia.aderencia >= 0">
             {{ aderencia?.aderencia | percent }}
           </span>
+
           <span
-            *ngIf="!aderencia"
+            *ngIf="!aderencia || aderencia.aderencia < 0"
             class="sem-alinhamento"
             placement="left"
             ngbPopover="{{ MENSAGEM_SEM_ADERENCIA }}"
@@ -144,11 +145,11 @@
             </div>
             <div class="col-3 col-sm-2 d-flex justify-content-end align-items-end">
               <div class="parlamentar-score">
-                <span *ngIf="aderencia">
+                <span *ngIf="aderencia && aderencia.aderencia >= 0">
                   {{ aderencia?.aderencia | percent }}
                 </span>
                 <span
-                  *ngIf="!aderencia"
+                  *ngIf="!aderencia || aderencia.aderencia < 0"
                   class="sem-alinhamento"
                   placement="left"
                   ngbPopover="{{ MENSAGEM_SEM_ADERENCIA }}"
@@ -188,15 +189,15 @@
         <div class="col-3 col-sm-2 col-lg-1 d-flex justify-content-end align-items-end">
           <div class="parlamentar-score">
               <span
-              *ngIf="aderencia">
+              *ngIf="aderencia && aderencia.aderencia >= 0">
               {{ aderencia?.aderencia | percent }}
             </span>
             <span
-              *ngIf="!aderencia"
+              *ngIf="!aderencia || aderencia.aderencia < 0"
               class="sem-alinhamento"
               placement="left"
               ngbPopover="{{ MENSAGEM_SEM_ADERENCIA }}"
-              triggers="click:blur"
+              triggers="mouseenter:mouseleave"
               container="body"
             >
               --
