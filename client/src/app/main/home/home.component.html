@@ -3,7 +3,7 @@
   <div class="container">
     <div class="row d-flex justify-content-center">
       <div class="col-md-6">
-        <div class="text-center">
+        <div class="text-center py-4">
           <img
             src="assets/icons/96x96.png"
             width="96"
@@ -12,26 +12,24 @@
           >
         </div>
         <h2 class="text-center">
-          Descubra quais deputados/as são
-          <strong class="text-strong">alinhados</strong>
-          com você.
+            Quem são os alinhados ao Governo na <strong class="text-strong">Câmara</strong>?
         </h2>
         <div class="text-center pt-5">
           <a
             class="btn btn-primary"
-            [routerLink]="['/questionario']"
+            [routerLink]="['/aderencia']"
           >
-            Vamos lá
+            Saiba mais
           </a>
         </div>
-        <div *ngIf="!isLoggedIn" class="mt-3 text-center">
+        <!-- <div *ngIf="!isLoggedIn" class="mt-3 text-center">
           <a
             class="btn btn-link"
             [routerLink]="['/usuario/login']"
           >
             Já tenho cadastro
           </a>
-        </div>
+        </div> -->
       </div>
     </div>
   </div>
