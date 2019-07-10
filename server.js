@@ -16,6 +16,7 @@ const alinhamento = require("./routes/api/alinhamento");
 const comissoes = require("./routes/api/comissoes");
 const parlamentares = require("./routes/api/parlamentares");
 const aderencia = require("./routes/api/aderencia");
+const orientacoes = require("./routes/api/orientacoes");
 
 const app = express();
 app.use(forceSsl);
@@ -55,6 +56,7 @@ app.use("/api/alinhamento", alinhamento);
 app.use("/api/comissoes", comissoes);
 app.use("/api/parlamentares", parlamentares);
 app.use("/api/aderencia", aderencia);
+app.use("/api/orientacoes", orientacoes);
 
 // Set static folder
 app.use(express.static("client/build"));

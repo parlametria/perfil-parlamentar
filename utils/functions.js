@@ -25,6 +25,19 @@ function formataVotacoes(resultado) {
   return resultadoNovo;
 }
 
+function formataOrientacoes(resultado) {
+  const resultadoNovo = resultado.map(cand => cand.get({ plain: true }));
+  
+  resultadoNovo.forEach(cand => {
+    const orientacoes = {};
+    cand.orientacoes.forEach(vot => {
+      orientacoes[vot.idVotacao] = vot.voto;
+    });
+    cand.orientacoes = orientacoes;    
+  });
+  return resultadoNovo;
+}
+
 function formataRespostasUser(resultado) {
   const resultadoNovo = resultado.map(cand => cand.get({ plain: true }));
   resultadoNovo.forEach(cand => {
@@ -48,5 +61,6 @@ function formataRespostasUser(resultado) {
 module.exports = {
   formataRespostas,
   formataVotacoes,
+  formataOrientacoes,
   formataRespostasUser
 };

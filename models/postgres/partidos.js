@@ -29,6 +29,11 @@ module.exports = (sequelize, type) => {
       foreignKey: "id_partido",
       sourceKey: "id_partido",
       as: "partido"
+    }),
+    partido.hasMany(models.orientacao, {
+      foreignKey: "id_partido",
+      targetKey: "id_partido",
+      as: "orientacoes"
     })
   };
   return partido;
