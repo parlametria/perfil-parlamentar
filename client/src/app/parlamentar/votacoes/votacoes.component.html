@@ -1,0 +1,26 @@
+<div class="d-flex justify-content-center my-3 pl-4">
+  <div class="form-group form-group-plus">
+    <select
+      class="form-control form-control-plus"
+      id="tema"
+      [(ngModel)]="temaSelecionado"
+      (ngModelChange)="filtraProposicoesPorTema($event)"
+      name="tema"
+    >
+      <option
+        *ngFor="let tema of temas"
+        [value]="tema.idTema"
+      >
+        {{ tema.tema }}
+      </option>
+    </select>
+  </div>
+</div>
+<div class="posicoes container-sm">
+  <app-votacao
+    *ngFor="let proposicao of proposicoesFiltradas"
+    [proposicao]="proposicao"
+    [parlamentar]="parlamentar"
+    [orientacao]="orientacao"
+  ></app-votacao>
+</div>

@@ -1,0 +1,67 @@
+.votacao {
+  border: solid 2px #20201e;
+  margin-bottom: 1rem;
+}
+
+.votacao-body {
+  padding: 0.5rem;
+
+  @media (min-width: 576px) {
+    padding: 2rem;
+  }
+}
+
+.votacao-title {
+  font-size: 0.9rem;
+}
+
+.votos {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.votos-header {
+  width: 105px;
+  text-align: right;
+  font-size: 0.75rem;
+}
+
+.votos-box {
+  display: flex;
+  flex-direction: column;
+  padding-right: 2px;
+  margin-bottom: 5px;
+}
+
+.voto {
+  width: 20px;
+  height: 20px;
+  margin-bottom: 2px;
+  border: solid 2px;
+  border-color: #ffffff;
+}
+
+.voto-sim {
+  background-color: #43a467;
+  border-color: #43a467;
+}
+
+.voto-nao {
+  background-color: #7f3c8b;
+  border-color: #7f3c8b;
+}
+
+.voto-faltou {
+  background-color: #cccccc;
+  border-color: #adb5bd;
+}
+
+.voto-liberou {
+  background-color: #ffffff;
+  border-color: #adb5bd;
+}
+
+.voto-obstrucao {
+  background-color: #20201E;
+  border-color: #20201E;
+}

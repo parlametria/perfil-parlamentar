@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { ParlamentarComponent } from './parlamentar.component';
+import { VotacoesComponent } from './votacoes/votacoes.component';
 import { PosicoesComponent } from './posicoes/posicoes.component';
 import { CargosComponent } from './cargos/cargos.component';
 import { AderenciaComponent } from './aderencia/aderencia.component';
@@ -14,8 +15,12 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        redirectTo: 'posicoes',
+        redirectTo: 'votacoes',
         pathMatch: 'full'
+      },
+      {
+        path: 'votacoes',
+        component: VotacoesComponent
       },
       {
         path: 'posicoes',
