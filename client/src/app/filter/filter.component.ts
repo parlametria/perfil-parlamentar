@@ -180,6 +180,7 @@ export class FilterComponent implements OnInit, OnDestroy {
     } else {
       this.temaSelecionado = idTema;
     }
+    this.aplicarFiltro();
   }
 
   getTemaById(id: number) {
