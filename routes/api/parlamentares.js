@@ -241,6 +241,46 @@ router.get("/:id/posicoes", (req, res) => {
 });
 
 /**
+ * Recupera informações de votos (usados para o cálculo da aderência) do parlamentar a partir de seu id (no Voz Ativa)
+ * @name get/api/parlamentares/:id/votos
+ * @function
+ * @memberof module:routes/parlamentares
+ * @param {string} id - id do parlamentar na plataforma Voz Ativa
+ */
+router.get("/:id/votos", (req, res) => {
+  Parlamentar.findAll({
+    attributes: [["id_parlamentar_voz", "idParlamentarVoz"], "genero"],
+    include: [
+      {
+        model: Voto,        
+        as: "votos",
+        attributes: attVotacao,
+        required: false,
+        include: [{
+          model: Votacao,
+          as: "votacoesVoto",
+          attributes: [],
+          required: true,
+          include: [{
+            model: Proposicao,
+            as: "proposicaoVotacoes",
+            attributes: [],
+            required: true,
+            where: { status_importante: "Ativa" }
+          }]
+        }]
+      }
+    ],
+    where: { id_parlamentar_voz: req.params.id }
+  })
+    .then(votacoes => {      
+      novaVotacao = formataVotacoes(votacoes);
+      return res.json(novaVotacao[0]);         
+    })
+    .catch(err => res.status(BAD_REQUEST).json({ err: err.message }));
+});
+
+/**
  * Recupera informações de comissões do parlamentar a partir de seu id (no Voz Ativa)
  * @name get/api/parlamentares/:id/comissoes
  * @function
@@ -304,47 +344,6 @@ router.get("/:id/liderancas", (req, res) => {
   })
     .then(parlamentar => {      
       return res.json(parlamentar);
-    })
-    .catch(err => res.status(BAD_REQUEST).json({ err: err.message }));
-});
-
-/**
- * Recupera informações de um parlamentar a partir de seu id (no Voz Ativa)
- * @name get/api/:id/votacoes
- * @function
- * @memberof module:routes/parlamentares
- * @param {string} id - id do parlamentar na plataforma Voz Ativa
- */
-router.get("/:id/votacoes", (req, res) => {
-  Parlamentar.findAll({
-    attributes: att,
-    include: [
-      {
-        model: Votacao,
-        as: "votacoes",
-        attributes: attVotacao,
-        required: false
-      },
-      {
-        model: ComposicaoComissoes,
-        attributes: attComposicaoComissoes,
-        as: "parlamentarComissoes",
-        required: false,
-        include: [
-          {
-            model: Comissoes,
-            attributes: attComissoes,
-            as: "infoComissao",
-            required: false
-          }
-        ]
-      }
-    ],
-    where: { id_parlamentar_voz: req.params.id }
-  })
-    .then(votacoes => {
-      novaVotacao = formataVotacoes(votacoes);
-      return res.json(novaVotacao[0]);
     })
     .catch(err => res.status(BAD_REQUEST).json({ err: err.message }));
 });
