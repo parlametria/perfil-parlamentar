@@ -57,9 +57,7 @@
           ></app-progress>
         </div>
         <div class="parlamentar-sm-score">
-          <span *ngIf="aderencia && aderencia.aderencia >= 0">
-            {{ aderencia?.aderencia | percent }}
-          </span>
+          <span *ngIf="aderencia && aderencia.aderencia >= 0">{{ aderencia?.aderencia | percent }}</span>
 
           <span
             *ngIf="!aderencia || aderencia.aderencia < 0"
@@ -145,9 +143,7 @@
             </div>
             <div class="col-3 col-sm-2 d-flex justify-content-end align-items-end">
               <div class="parlamentar-score">
-                <span *ngIf="aderencia && aderencia.aderencia >= 0">
-                  {{ aderencia?.aderencia | percent }}
-                </span>
+                <span *ngIf="aderencia && aderencia.aderencia >= 0">{{ aderencia?.aderencia | percent }}</span>
                 <span
                   *ngIf="!aderencia || aderencia.aderencia < 0"
                   class="sem-alinhamento"
@@ -188,10 +184,7 @@
         </div>
         <div class="col-3 col-sm-2 col-lg-1 d-flex justify-content-end align-items-end">
           <div class="parlamentar-score">
-              <span
-              *ngIf="aderencia && aderencia.aderencia >= 0">
-              {{ aderencia?.aderencia | percent }}
-            </span>
+            <span *ngIf="aderencia && aderencia.aderencia >= 0">{{ aderencia?.aderencia | percent }}</span>
             <span
               *ngIf="!aderencia || aderencia.aderencia < 0"
               class="sem-alinhamento"
@@ -212,36 +205,34 @@
         <div class="pt-3"></div>
         <div class="mb-3">
           Compatibilidade por tema [em nº de votações]
-          <div class="d-flex justify-content-center mt-3">
-            <div class="d-flex subtitle">
-              <div>
-                <app-legend
-                  [title]="'seguindo'"
-                  [class]="'positivo'"
-                  [striped]="false"
-                ></app-legend>
-              </div>
-              <div>
-                <app-legend
-                  [title]="'não seguindo'"
-                  [class]="'negativo progress-bar-striped'"
-                  [striped]="false"
-                ></app-legend>
-              </div>
-              <div>
-                <app-legend
-                  [title]="'liberado'"
-                  [class]="'neutro progress-bar-striped'"
-                  [striped]="false"
-                ></app-legend>
-              </div>
-              <div>
-                <app-legend
-                  [title]="'faltou'"
-                  [class]="'ausente'"
-                  [striped]="false"
-                ></app-legend>
-              </div>
+          <div class="parlamentar-legend">
+            <div>
+              <app-legend
+                [title]="'seguindo'"
+                [class]="'positivo'"
+                [striped]="false"
+              ></app-legend>
+            </div>
+            <div>
+              <app-legend
+                [title]="'não seguindo'"
+                [class]="'negativo progress-bar-striped'"
+                [striped]="false"
+              ></app-legend>
+            </div>
+            <div>
+              <app-legend
+                [title]="'liberado'"
+                [class]="'neutro progress-bar-striped'"
+                [striped]="false"
+              ></app-legend>
+            </div>
+            <div>
+              <app-legend
+                [title]="'faltou'"
+                [class]="'ausente'"
+                [striped]="false"
+              ></app-legend>
             </div>
           </div>
         </div>
