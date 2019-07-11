@@ -17,22 +17,22 @@
       <ul class="nav nav-pills nav-fill">
         <li class="nav-item">
           <a
-            [routerLink]="['/aderencia']"
-            [routerLinkActive]="'active'"
-            class="nav-link navbar-nav-va-link"
-            href="#"
-          >
-            Governismo
-          </a>
-        </li>
-        <li class="nav-item">
-          <a
             [routerLink]="['/congresso/aderencia']"
             [routerLinkActive]="'active'"
             class="nav-link navbar-nav-va-link"
             href="#"
           >
-            Congresso
+            Câmara
+          </a>
+        </li>
+        <li class="nav-item">
+          <a
+            [routerLink]="['/aderencia']"
+            [routerLinkActive]="'active'"
+            class="nav-link navbar-nav-va-link"
+            href="#"
+          >
+            Deputados
           </a>
         </li>
       </ul>
@@ -58,7 +58,10 @@
           Sobre
         </a>
       </li>
-      <li class="nav-item" *ngIf="userAuthenticated">
+      <li
+        class="nav-item"
+        *ngIf="userAuthenticated"
+      >
         <div
           ngbDropdown
           class="d-inline-block nav-line"
