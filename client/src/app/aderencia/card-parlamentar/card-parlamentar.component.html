@@ -17,13 +17,13 @@
     <div class="parlamentar-card-sm-body">
       <div class="d-flex">
         <div
-          *ngIf="aderencia"
+          *ngIf="aderencia.aderencia >= 0"
           class="parlamentar-card-sm-id"
         >
           {{id}}°
         </div>
         <div
-          *ngIf="!aderencia"
+          *ngIf="aderencia.aderencia < 0"
           class="parlamentar-card-sm-id"
         >
           -
@@ -125,13 +125,13 @@
                 *ngIf="aderencia?.aderenciaTema.idTema !== FILTRO_PADRAO_TEMA"
                 class="parlamentar-compatibilidade-text"
               >
-                Compatibilidade com {{aderencia?.aderenciaTema.tema}}
+                Alinhamento com {{aderencia?.aderenciaTema.tema}}
               </span>
               <div
                 *ngIf="aderencia?.aderenciaTema.idTema === FILTRO_PADRAO_TEMA"
                 class="parlamentar-compatibilidade-text"
               >
-                Compatibilidade geral
+                Alinhamento geral
               </div>
               <app-progress
                 [value]="aderencia?.aderencia"
@@ -166,13 +166,13 @@
             *ngIf="tema !== -1"
             class="parlamentar-compatibilidade-text"
           >
-            Compatibilidade com {{aderencia?.aderenciaTema.tema}}
+            Alinhamento com {{aderencia?.aderenciaTema.tema}}
           </span>
           <div
             *ngIf="tema === -1"
             class="parlamentar-compatibilidade-text"
           >
-            Compatibilidade com o Governo
+            Alinhamento com o Governo
           </div>
           <app-progress
             [value]="aderencia?.aderencia"
@@ -204,18 +204,18 @@
       >
         <div class="pt-3"></div>
         <div class="mb-3">
-          Compatibilidade por tema [em nº de votações]
+          Alinhamento por tema [em nº de votações]
           <div class="parlamentar-legend">
             <div>
               <app-legend
-                [title]="'seguindo'"
+                [title]="'seguiu'"
                 [class]="'positivo'"
                 [striped]="false"
               ></app-legend>
             </div>
             <div>
               <app-legend
-                [title]="'não seguindo'"
+                [title]="'não seguiu'"
                 [class]="'negativo progress-bar-striped'"
                 [striped]="false"
               ></app-legend>
