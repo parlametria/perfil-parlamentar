@@ -18,7 +18,7 @@
     </div>
 
   </div>
-  <div class="row d-flex justify-content">
+  <div class="row gutters-sm">
     <div class="col-lg-10">
       <div class="form-group">
         <input
@@ -32,15 +32,13 @@
       </div>
     </div>
     <div class="col-5 col-lg-2 mb-lg-3 mb-1">
-      <div class="btn-group">
-        <button
-          class="btn btn-primary"
-          (click)="open(content)"
-        >
-          <span class="icon-sliders"></span>
-          Filtros
-        </button>
-      </div>
+      <button
+        class="btn btn-primary btn-block"
+        (click)="open(content)"
+      >
+        +
+        Filtros
+      </button>
     </div>
   </div>
 
@@ -49,6 +47,28 @@
     role="toolbar"
     aria-label="Filtros e visualizações"
   >
+
+    <div
+      class="btn-group mr-1 mb-1"
+      role="group"
+      aria-label="Filtro de Tema"
+      [hidden]="filtro.tema == FILTRO_PADRAO_TEMA"
+    >
+      <button
+        type="button"
+        class="btn btn-primary btn-sm"
+      >
+        {{getTemaById(temaSelecionado)}}
+      </button>
+      <button
+        type="button"
+        class="btn btn-primary btn-sm"
+        (click)="limparFiltroTema()"
+      >
+        <span class="icon-x"></span>
+      </button>
+    </div>
+
     <div
       class="btn-group mr-1 mb-1 "
       role="group"
@@ -107,27 +127,6 @@
         type="button"
         class="btn btn-primary btn-sm"
         (click)="limparFiltroComissao()"
-      >
-        <span class="icon-x"></span>
-      </button>
-    </div>
-
-    <div
-      class="btn-group mb-1"
-      role="group"
-      aria-label="Filtro de Tema"
-      [hidden]="filtro.tema == FILTRO_PADRAO_TEMA"
-    >
-      <button
-        type="button"
-        class="btn btn-primary btn-sm"
-      >
-        {{getTemaById(temaSelecionado)}}
-      </button>
-      <button
-        type="button"
-        class="btn btn-primary btn-sm"
-        (click)="limparFiltroTema()"
       >
         <span class="icon-x"></span>
       </button>
