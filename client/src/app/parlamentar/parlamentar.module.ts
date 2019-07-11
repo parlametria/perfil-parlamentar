@@ -15,6 +15,8 @@ import { CargoComponent } from './cargo/cargo.component';
 import { PosicoesComponent } from './posicoes/posicoes.component';
 import { CargosComponent } from './cargos/cargos.component';
 import { AderenciaComponent } from './aderencia/aderencia.component';
+import { VotacoesComponent } from './votacoes/votacoes.component';
+import { VotacaoComponent } from './votacao/votacao.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +25,9 @@ import { AderenciaComponent } from './aderencia/aderencia.component';
     CargoComponent,
     PosicoesComponent,
     CargosComponent,
-    AderenciaComponent
+    AderenciaComponent,
+    VotacoesComponent,
+    VotacaoComponent
   ],
   imports: [
     CommonModule,
