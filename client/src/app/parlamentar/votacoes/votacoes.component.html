@@ -93,7 +93,7 @@
         *ngIf="aderenciaFiltrada?.aderencia === -1"
       >
         <div class="aderencia-value alinhamento-4-font pr-2">--</div>
-        <div class="aderencia-value-text">não calculada com o Governo</div>
+        <div class="aderencia-value-text">sem votações suficientes</div>
       </div>
     </div>
   </div>
@@ -101,7 +101,7 @@
     *ngIf="!passoGoverno"
     class="row no-gutters mt-3"
   >
-    Sem dados suficientes de aderência ao Governo
+    Sem votações suficientes para calcular alinhamento
   </div>
 
   <div class="votacoes-legend mb-3">
