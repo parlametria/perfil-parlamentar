@@ -28,36 +28,3 @@
   padding-right: 2px;
   margin-bottom: 20px;
 }
-
-.voto {
-  width: 20px;
-  height: 20px;
-  margin-bottom: 2px;
-  border: solid 2px;
-  border-color: #ffffff;
-}
-
-.voto-sim {
-  background-color: #43a467;
-  border-color: #43a467;
-}
-
-.voto-nao {
-  background-color: #7f3c8b;
-  border-color: #7f3c8b;
-}
-
-.voto-faltou {
-  background-color: #cccccc;
-  border-color: #adb5bd;
-}
-
-.voto-liberou {
-  background-color: #ffffff;
-  border-color: #adb5bd;
-}
-
-.voto-obstrucao {
-  background-color: #20201E;
-  border-color: #20201E;
-}
