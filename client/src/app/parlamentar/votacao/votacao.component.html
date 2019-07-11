@@ -1,6 +1,6 @@
 <div class="votacao">
   <div class="votacao-body">
-    <div class="votacao-title">{{ proposicao.projetoLei }}</div>
+    <div class="votacao-title">{{ proposicao?.projetoLei }}</div>
 
     <!-- Votos -->
     <div class="votos-wrapper">
@@ -16,16 +16,16 @@
         <div class="votos">
           <div
             class="votos-box"
-            *ngFor="let votacao of proposicao.proposicaoVotacoes"
+            *ngFor="let votacao of proposicao?.proposicaoVotacoes"
           >
-            <div [ngClass]="getClass(parlamentar.votos[votacao.idVotacao])">
+            <div [ngClass]="getClass(parlamentar?.votos[votacao.idVotacao])">
               <span class="d-none">
-                {{ parlamentar.votos[votacao.idVotacao] }}
+                {{ parlamentar?.votos[votacao.idVotacao] }}
               </span>
             </div>
-            <div [ngClass]="getClass(orientacao.orientacoes[votacao.idVotacao])">
+            <div [ngClass]="getClass(orientacao?.orientacoes[votacao.idVotacao])">
               <span class="d-none">
-                {{ orientacao.orientacoes[votacao.idVotacao] }}
+                {{ orientacao?.orientacoes[votacao.idVotacao] }}
               </span>
             </div>
           </div>

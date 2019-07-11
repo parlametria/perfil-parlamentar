@@ -11,6 +11,8 @@ import { ParlamentarService } from 'src/app/shared/services/parlamentar.service'
 import { TemaService } from 'src/app/shared/services/tema.service';
 import { OrientacaoService } from 'src/app/shared/services/orientacao.service';
 import { Orientacao } from 'src/app/shared/models/orientacao.model';
+import { AderenciaService } from 'src/app/shared/services/aderencia.service';
+import { Aderencia } from 'src/app/shared/models/aderencia.model';
 
 @Component({
   selector: 'app-votacoes',
@@ -21,6 +23,7 @@ export class VotacoesComponent implements OnInit, OnDestroy {
   readonly FAVOR = 1;
   readonly CONTRA = -1;
   readonly ID_PADRAO_TEMA_TODOS = '99';
+  readonly ID_PARTIDO_GOVERNO = 0;
 
   private unsubscribe = new Subject();
 
@@ -28,20 +31,24 @@ export class VotacoesComponent implements OnInit, OnDestroy {
   temas: Tema[];
   proposicoes: Proposicao[];
   orientacao: Orientacao;
+  aderencia: Aderencia;
   temaSelecionado: string;
   proposicoesFiltradas: Proposicao[];
+  aderenciaFiltrada: any;
+  passoGoverno: number;
 
   constructor(
     private activatedroute: ActivatedRoute,
     private router: Router,
     private parlamentarService: ParlamentarService,
     private temaService: TemaService,
-    private orientacaoService: OrientacaoService) { }
+    private orientacaoService: OrientacaoService,
+    private aderenciaService: AderenciaService) { }
 
   ngOnInit() {
     this.activatedroute.parent.params.pipe(take(1)).subscribe(params => {
       this.getParlamentarById(params.id);
-      this.initializeProposicoes(params.tema);
+      this.initializeProposicoes(params.tema, params.id);
       this.getOrientacoes();
     });
   }
@@ -60,13 +67,15 @@ export class VotacoesComponent implements OnInit, OnDestroy {
       );
   }
 
-  initializeProposicoes(temaSlug: string) {
+  initializeProposicoes(temaSlug: string, id: string) {
     forkJoin(
       this.temaService.getTemas(),
-      this.orientacaoService.getProposicoesOrientacao()
+      this.orientacaoService.getProposicoesOrientacao(),
+      this.aderenciaService.getAderenciaById(id)
     ).pipe(takeUntil(this.unsubscribe)).subscribe(data => {
       const temas = data[0];
       const proposicoes = data[1];
+      this.aderencia = data[2];
 
       // Inicia Temas
       this.temas = temas;
@@ -78,15 +87,15 @@ export class VotacoesComponent implements OnInit, OnDestroy {
       this.temas.push(allTemas);
       this.temaSelecionado = this.temaService.getTemaIdBySlug(this.temas, temaSlug);
 
-      // Inicia Proposições com base no tema
+      // Inicia Proposições e aderência com base no tema
       this.proposicoes = proposicoes;
       this.filtraProposicoesPorTema(this.temaSelecionado);
 
       this.activatedroute.queryParams.subscribe(p => {
         this.temaSelecionado = this.temaService.getTemaIdBySlug(this.temas, p.tema);
         this.filtraProposicoesPorTema(this.temaSelecionado);
+        this.filtraAderenciaPorTema(this.temaSelecionado);
       });
-
     },
       error => console.log(error)
     );
@@ -112,6 +121,22 @@ export class VotacoesComponent implements OnInit, OnDestroy {
         });
         return temas.length > 0;
       });
+    }
+  }
+
+  filtraAderenciaPorTema(tema) {
+    const idTema = Number(tema);
+
+    // Aderência ao governo
+    this.aderenciaFiltrada = this.aderencia.parlamentarAderencia.filter(ad =>
+      ad.partido.idPartido === this.ID_PARTIDO_GOVERNO && ad.aderenciaTema.idTema === idTema)[0];
+
+    if (this.aderenciaFiltrada !== undefined) {
+      const total = this.aderenciaFiltrada.seguiu + this.aderenciaFiltrada.naoSeguiu +
+        this.aderenciaFiltrada.partidoLiberou + this.aderenciaFiltrada.faltou;
+      this.passoGoverno = 100 / total;
+    } else {
+      this.passoGoverno = 0;
     }
   }
 
