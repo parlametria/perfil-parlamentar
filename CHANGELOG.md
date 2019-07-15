@@ -1,5 +1,12 @@
 # Changelog
 
+## 2.3.0 (2019-07-12)
+
+* [x] Reformula aplicação: exibe informações sobre a aderência dos deputados ao governo
+* [x] Redefine leiaute do filtro tema;
+* [x] Exibe informações dos votos dos deputados e do governo no perfil de cada parlamentar
+* [x] Adiciona filtro de tema na seção de aderência do perfil do parlamentar
+
 ## 2.2.0 (2019-06-25)
 
 * [x] Divide o perfil do parlamentar em subsessões
