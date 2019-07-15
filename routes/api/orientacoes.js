@@ -63,7 +63,7 @@ router.get("/proposicoes", (req, res) => {
       },
       {
         model: Votacao,
-        attributes: [["id_votacao", "idVotacao"]],
+        attributes: [["id_votacao", "idVotacao"], ["objeto_votacao", "objetoVotacao"], "horario"],
         as: "proposicaoVotacoes",
         require: true
       }
