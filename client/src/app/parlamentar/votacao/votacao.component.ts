@@ -49,6 +49,9 @@ export class VotacaoComponent implements OnInit {
       case undefined:
         classes.push('voto-liberou');
         break;
+      case null:
+        classes.push('voto-liberou');
+        break;
       default:
         break;
     }
