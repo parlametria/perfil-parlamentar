@@ -17,32 +17,22 @@
       <ul class="nav nav-pills nav-fill">
         <li class="nav-item">
           <a
-            [routerLink]="['/questionario']"
+            [routerLink]="['/congresso/aderencia']"
             [routerLinkActive]="'active'"
             class="nav-link navbar-nav-va-link"
             href="#"
           >
-            Você
+            Câmara
           </a>
         </li>
         <li class="nav-item">
           <a
-            [routerLink]="['/alinhamento']"
+            [routerLink]="['/aderencia']"
             [routerLinkActive]="'active'"
             class="nav-link navbar-nav-va-link"
             href="#"
           >
-            Resultado
-          </a>
-        </li>
-        <li class="nav-item">
-          <a
-            [routerLink]="['/congresso']"
-            [routerLinkActive]="'active'"
-            class="nav-link navbar-nav-va-link"
-            href="#"
-          >
-            Congresso
+            Deputados
           </a>
         </li>
       </ul>
@@ -53,12 +43,12 @@
         *ngIf="!userAuthenticated"
         class="nav-item"
       >
-        <a
+        <!-- <a
           class="nav-link nav-link-login nav-link-active"
           [routerLink]="['/usuario/login']"
         >
           Entrar
-        </a>
+        </a> -->
       </li>
       <li class="nav-item">
         <a
@@ -68,7 +58,10 @@
           Sobre
         </a>
       </li>
-      <li class="nav-item" *ngIf="userAuthenticated">
+      <li
+        class="nav-item"
+        *ngIf="userAuthenticated"
+      >
         <div
           ngbDropdown
           class="d-inline-block nav-line"

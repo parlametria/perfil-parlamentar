@@ -1,0 +1,31 @@
+.votacao {
+  border: solid 2px #20201e;
+  margin-bottom: 1rem;
+  padding: 0.5rem;
+}
+
+.votacao-body {
+}
+
+.votacao-title {
+  font-size: 1.2rem;
+  padding-bottom: 0.5rem;
+}
+
+.votos {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.votos-header {
+  width: 105px;
+  text-align: right;
+  font-size: 0.75rem;
+}
+
+.votos-box {
+  display: flex;
+  flex-direction: column;
+  padding-right: 2px;
+  margin-bottom: 20px;
+}

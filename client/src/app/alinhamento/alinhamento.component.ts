@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, Params, ActivatedRoute } from '@angular/router';
 
 import { Subject } from 'rxjs';
-import { takeUntil, mergeMap, debounceTime } from 'rxjs/operators';
+import { takeUntil } from 'rxjs/operators';
 
 import { UserService } from 'src/app/shared/services/user.service';
 import { AlinhamentoService } from 'src/app/shared/services/alinhamento.service';

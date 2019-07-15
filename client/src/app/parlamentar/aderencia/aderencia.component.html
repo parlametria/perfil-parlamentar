@@ -1,4 +1,23 @@
 <div class="container-sm my-3">
+  <div class="d-flex justify-content-center my-3 pl-4">
+    <div class="form-group form-group-plus">
+      <select
+        class="form-control form-control-plus"
+        id="tema"
+        [(ngModel)]="temaSelecionado"
+        (ngModelChange)="filtraAderenciaPorTema($event)"
+        name="tema"
+      >
+        <option
+          *ngFor="let tema of temas"
+          [value]="tema.idTema"
+        >
+          {{ tema.tema }}
+        </option>
+      </select>
+    </div>
+  </div>
+
   <h5 class="font-italic font-weight-normal">{{ parlamentar?.nomeEleitoral }} está:</h5>
   <div class="d-flex justify-content-center mt-3">
     <div class="d-flex subtitle">
@@ -32,7 +51,10 @@
       </div>
     </div>
   </div>
-  <div class="row">
+  <div
+    *ngIf="passo"
+    class="row"
+  >
     <div class="col-md-7 mt-3">
       <app-progress-stacked
         [titulo]="''"
@@ -58,17 +80,36 @@
       ></app-progress-stacked>
     </div>
     <div class="col">
-      <div class="d-flex">
+      <div
+        class="d-flex"
+        *ngIf="aderenciaPartido?.aderencia !== -1"
+      >
         <div class="aderencia-value alinhamento-4-font pr-2">
-          {{ aderenciaPartido?.aderencia * 0.01 | percent }}
+          {{ aderenciaPartido?.aderencia | percent }}
         </div>
         <div class="aderencia-value-text">
-          de acordo com o {{aderenciaPartido?.partido}}
+          de acordo com o {{aderenciaPartido?.partido.sigla}}
         </div>
+      </div>
+      <div
+        class="d-flex"
+        *ngIf="aderenciaPartido?.aderencia === -1"
+      >
+        <div class="aderencia-value alinhamento-4-font pr-2">--</div>
+        <div class="aderencia-value-text">não calculada com o {{aderenciaPartido?.partido.sigla}}</div>
       </div>
     </div>
   </div>
-  <div class="row">
+  <div
+    *ngIf="!passo"
+    class="row no-gutters mt-3"
+  >
+    Sem dados suficientes de aderência ao Partido
+  </div>
+  <div
+    *ngIf="passoGoverno"
+    class="row"
+  >
     <div class="col-md-7 mt-3">
       <app-progress-stacked
         [titulo]="''"
@@ -94,13 +135,29 @@
       ></app-progress-stacked>
     </div>
     <div class="col">
-      <div class="d-flex">
+      <div
+        class="d-flex"
+        *ngIf="aderenciaGoverno?.aderencia !== -1"
+      >
         <div class="aderencia-value alinhamento-4-font pr-2">
-          {{ aderenciaGoverno?.aderencia * 0.01 | percent }}
+          {{ aderenciaGoverno?.aderencia | percent }}
         </div>
         <div class="aderencia-value-text">de acordo com o Governo</div>
       </div>
+      <div
+        class="d-flex"
+        *ngIf="aderenciaGoverno?.aderencia === -1"
+      >
+        <div class="aderencia-value alinhamento-4-font pr-2">--</div>
+        <div class="aderencia-value-text">não calculada com o Governo</div>
+      </div>
     </div>
+  </div>
+  <div
+    *ngIf="!passoGoverno"
+    class="row no-gutters mt-3"
+  >
+    Sem dados suficientes de aderência ao Governo
   </div>
 
 </div>

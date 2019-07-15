@@ -19,7 +19,7 @@
       <div class="col">
         <div class="parlamentar-title">{{ parlamentar.nomeEleitoral }}</div>
         <p>
-          {{ parlamentar.partido }}/{{ parlamentar.uf }}
+          {{ parlamentar.parlamentarPartido.sigla }}/{{ parlamentar.uf }}
         </p>
       </div>
     </div>
@@ -28,13 +28,22 @@
 </div>
 
 <ul class="nav nav-tabs justify-content-center">
-  <li class="nav-item">
+  <!-- <li class="nav-item">
     <a
       class="nav-link nav-link-parlamentar"
       [routerLink]="['./posicoes']"
       [routerLinkActive]="'active'"
     >
       Posições
+    </a>
+  </li> -->
+  <li class="nav-item">
+    <a
+      class="nav-link nav-link-parlamentar"
+      [routerLink]="['./votacoes']"
+      [routerLinkActive]="'active'"
+    >
+      Votações
     </a>
   </li>
   <li class="nav-item">
@@ -46,7 +55,7 @@
       Cargos
     </a>
   </li>
-  <li class="nav-item">
+  <!-- <li class="nav-item">
     <a
       class="nav-link nav-link-parlamentar"
       [routerLink]="['./aderencia']"
@@ -54,7 +63,7 @@
     >
       Aderência
     </a>
-  </li>
+  </li> -->
 </ul>
 
 <div class="parlamentar-pages container">

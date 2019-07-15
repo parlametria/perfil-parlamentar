@@ -6,12 +6,27 @@ const models = require("../../models/index");
 
 const Parlamentar = models.parlamentar;
 const Aderencia = models.aderencia;
+const Partido = models.partido;
+const Tema = models.tema;
+const ComposicaoComissoes = models.composicaoComissoes;
+const Comissoes = models.comissoes;
 
 const BAD_REQUEST = 400;
 const SUCCESS = 200;
 
-const attParlamentar = [["id_parlamentar_voz", "idParlamentarVoz"], "casa", ["nome_eleitoral", "nomeEleitoral"], "partido"];
-const attAderencia = ["partido", "faltou", ["partido_liberou", "partidoLiberou"], ["nao_seguiu", "naoSeguiu"], "seguiu", "aderencia"];
+const attParlamentar = [
+  ["id_parlamentar_voz", "idParlamentarVoz"], 
+  ["id_parlamentar", "idParlamentar"], 
+  ["nome_eleitoral", "nomeEleitoral"], 
+  "uf",
+  ["em_exercicio", "emExercicio"]
+];
+
+const attAderencia = ["faltou", ["partido_liberou", "partidoLiberou"], ["nao_seguiu", "naoSeguiu"], "seguiu", "aderencia"];
+const attPartido = [["id_partido", "idPartido"], "sigla"]
+const attTema = [["id_tema", "idTema"], "tema", "slug"]
+const attComposicaoComissoes = [["id_comissao_voz", "idComissaoVoz"], "cargo"];
+const attComissoes = ["sigla"];
 
 /**
  * Recupera informações de aderência dos parlamentares
@@ -20,7 +35,9 @@ const attAderencia = ["partido", "faltou", ["partido_liberou", "partidoLiberou"]
  * @memberof module:routes/aderencia
  */
 router.get("/", (req, res) => {
-  Aderencia.findAll()
+  Aderencia.findAll({
+    attributes: attAderencia
+  })
     .then(aderencia => res.status(SUCCESS).json(aderencia))
     .catch(err => res.status(BAD_REQUEST).json({ err: err.message }));
 });
@@ -38,7 +55,41 @@ router.get("/parlamentar", (req, res) => {
       {
         model: Aderencia,
         attributes: attAderencia,
-        as: "parlamentarAderencia",        
+        as: "parlamentarAderencia",
+        required: false,
+        include: [
+          {
+            model: Partido,
+            attributes: attPartido,
+            as: "partido",
+            required: false
+          },
+          {
+            model: Tema,
+            attributes: attTema,
+            as: "aderenciaTema",
+            required: false
+          }
+        ]
+      },
+      {
+        model: ComposicaoComissoes,
+        attributes: attComposicaoComissoes,
+        include: [
+          {
+            model: Comissoes,
+            attributes: attComissoes,
+            as: "infoComissao",
+            required: false
+          }
+        ],
+        as: "parlamentarComissoes",
+        required: false
+      },
+      {
+        model: Partido,
+        attributes: attPartido,
+        as: "parlamentarPartido",
         required: false
       }
     ],
@@ -63,8 +114,28 @@ router.get("/parlamentar/:id", (req, res) => {
       {
         model: Aderencia,
         attributes: attAderencia,
-        as: "parlamentarAderencia",        
-        required: false
+        as: "parlamentarAderencia",
+        required: false,
+        include: [
+          {
+            model: Partido,
+            as: "partido",
+            required: false,
+            attributes: attPartido
+          },
+          {
+            model: Tema,
+            as: "aderenciaTema",
+            required: false,
+            attributes: attTema
+          }
+        ]
+      },
+      {
+        model: Partido,
+        as: "parlamentarPartido",
+        required: false,
+        attributes: attPartido
       }
     ],
     where: {

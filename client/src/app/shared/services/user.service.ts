@@ -68,11 +68,11 @@ export class UserService {
         const respostasAtual = this.respostas.getValue();
 
         // Atualiza Resposta
-        respostasAtual.votacoes[novaResposta.id_votacao] =
+        respostasAtual.votacoes[novaResposta.idVotacao] =
           novaResposta.resposta;
 
         this.setRespostasAPIbyID(
-          novaResposta.id_votacao,
+          novaResposta.idVotacao,
           respostasAtual
         ).subscribe(
           res => {
@@ -86,10 +86,10 @@ export class UserService {
         );
       } else {
         const respostasLS = this.getRespostaLocalStorage();
-        const { id_votacao, resposta } = novaResposta;
+        const { idVotacao, resposta } = novaResposta;
 
         // Atualiza Resposta
-        respostasLS.votacoes[id_votacao] = resposta;
+        respostasLS.votacoes[idVotacao] = resposta;
 
         this.setRespostaLocalStorage(respostasLS);
 
@@ -122,7 +122,7 @@ export class UserService {
     this.perguntaService.getProposicoes().subscribe(
       proposicoes => {
         const votacoes = proposicoes.reduce((result, item) => {
-          const key = item.id_votacao;
+          const key = item.proposicaoVotacoes[0].idVotacao;
           result[key] = 0;
           return result;
         }, {});

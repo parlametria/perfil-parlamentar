@@ -63,7 +63,7 @@ export class QuestionarioComponent implements OnInit, OnDestroy {
     // Transforma o Array de IDs de temas selecionados em um Array de nomes dos temas selecionados
     const temasPreferidos = temasSelecionados.map((temaID) => {
       return this.temas.filter((value) => {
-        return value.id === temaID;
+        return value.idTema === temaID;
       })[0].tema;
     });
 
@@ -78,7 +78,7 @@ export class QuestionarioComponent implements OnInit, OnDestroy {
     const temasId = temasNome.map((temaValue) => {
       return this.temas.filter((value) => {
         return value.tema === temaValue;
-      })[0].id;
+      })[0].idTema;
     });
 
     return temasId;
@@ -86,8 +86,8 @@ export class QuestionarioComponent implements OnInit, OnDestroy {
 
   joinComTemasNaoSelecionados(temasPreferidos) {
     const notSelectedTemas = this.temas.filter((tema) => {
-      return !temasPreferidos.includes(tema.id);
-    }).map(tema => tema.id);
+      return !temasPreferidos.includes(tema.idTema);
+    }).map(tema => tema.idTema);
 
     return notSelectedTemas;
   }

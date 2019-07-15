@@ -1,0 +1,266 @@
+<div [ngClass]="{'parlamentar-wrapper': !isCollapsed, 'parlamentar-wrapper-no-margin': isCollapsed}">
+  <div
+    class="parlamentar-card-actions"
+    [hidden]="isCollapsed"
+  >
+    <!-- TODO: área reservada para implementação futura (e.g. seguir o parlamentar) -->
+    <!-- <button
+      type="button"
+      class="btn btn-link btn-icon"
+      (click)="toggleFollow()"
+    >
+      <span class="icon-bookmark"></span>
+    </button> -->
+  </div>
+
+  <div class="parlamentar-card-sm">
+    <div class="parlamentar-card-sm-body">
+      <div class="d-flex">
+        <div
+          *ngIf="aderencia?.aderencia >= 0"
+          class="parlamentar-card-sm-id"
+        >
+          {{id}}°
+        </div>
+        <div
+          *ngIf="aderencia?.aderencia < 0"
+          class="parlamentar-card-sm-id"
+        >
+          -
+        </div>
+        <div
+          class="parlamentar-card-sm-title"
+          [@show]="view !== VIEW_SM ? 'hide' : 'show'"
+        >
+          <a
+            class="btn-link-simple"
+            [routerLink]="['/parlamentar', parlamentar.idParlamentarVoz]"
+          >
+            {{ parlamentar.nomeEleitoral | titlecase }}
+          </a>
+          <span class="parlamentar-card-sm-subtitle d-none d-lg-inline-block">
+            {{ parlamentar.parlamentarPartido?.sigla }}/{{ parlamentar.uf }}
+          </span>
+        </div>
+      </div>
+      <div
+        class="parlamentar-card-sm-score"
+        [@show]="view !== VIEW_SM ? 'hide' : 'show'"
+      >
+        <div class="parlamentar-sm-progress">
+          <app-progress
+            [value]="aderencia?.aderencia"
+            [min]="0"
+            [max]="100"
+            [showAxis]="false"
+            [class]="getClassAderencia(aderencia)"
+          ></app-progress>
+        </div>
+        <div class="parlamentar-sm-score">
+          <span *ngIf="aderencia && aderencia?.aderencia >= 0">{{ aderencia?.aderencia | percent }}</span>
+
+          <span
+            *ngIf="!aderencia || aderencia?.aderencia < 0"
+            class="sem-alinhamento"
+            placement="left"
+            ngbPopover="{{ MENSAGEM_SEM_ADERENCIA }}"
+            triggers="click:blur"
+            container="body"
+          >
+            --
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    class="parlamentar-card"
+    [@openClose]="view !== VIEW_SM ? 'open' : 'closed'"
+    (@openClose.start)="onAnimationStart($event)"
+    (@openClose.done)="onAnimationEnd($event)"
+  >
+    <div class="parlamentar-card-body">
+      <div class="row gutters-sm">
+        <div class="col-3 col-lg parlamentar-img-wrapper">
+          <a [routerLink]="['/parlamentar', parlamentar.idParlamentarVoz]">
+            <img
+              [defaultImage]="'assets/imgs/nophoto.png'"
+              [lazyLoad]="parlamentar.getFoto()"
+              [offset]="100"
+              width="100%"
+              class="img-filter"
+            >
+          </a>
+        </div>
+        <div class="col-9 col-lg">
+          <div class="parlamentar-title">
+            <a
+              [routerLink]="['/parlamentar', parlamentar.idParlamentarVoz]"
+              class="parlamentar-nome"
+            >
+              {{ parlamentar.nomeEleitoral | titlecase }}
+            </a>
+          </div>
+          <p>
+            {{ parlamentar.parlamentarPartido?.sigla }}/{{ parlamentar.uf }}
+            <span
+              *ngIf="comissao !== PADRAO_COMISSAO"
+              class="badge badge-dark align-middle"
+              [ngClass]="classeCargoComissao"
+            >
+              {{getCargoByComissaoId(comissao)}}
+            </span>
+          </p>
+          <div class="d-none d-lg-block">
+            <a
+              [routerLink]="['/parlamentar', parlamentar.idParlamentarVoz]"
+              class="btn btn-sm btn-link"
+            >
+              + detalhes
+            </a>
+          </div>
+          <div class="row no-gutters d-lg-none">
+            <div class="col">
+              <span
+                *ngIf="aderencia?.aderenciaTema.idTema !== FILTRO_PADRAO_TEMA"
+                class="parlamentar-compatibilidade-text"
+              >
+                Alinhamento com {{aderencia?.aderenciaTema.tema}}
+              </span>
+              <div
+                *ngIf="aderencia?.aderenciaTema.idTema === FILTRO_PADRAO_TEMA"
+                class="parlamentar-compatibilidade-text"
+              >
+                Alinhamento geral
+              </div>
+              <app-progress
+                [value]="aderencia?.aderencia"
+                [min]="0"
+                [max]="100"
+                [showAxis]="false"
+                [class]="getClassAderencia(aderencia)"
+              ></app-progress>
+            </div>
+            <div class="col-3 col-sm-2 d-flex justify-content-end align-items-end">
+              <div class="parlamentar-score">
+                <span *ngIf="aderencia && aderencia?.aderencia >= 0">{{ aderencia?.aderencia | percent }}</span>
+                <span
+                  *ngIf="!aderencia || aderencia?.aderencia < 0"
+                  class="sem-alinhamento"
+                  placement="left"
+                  ngbPopover="{{ MENSAGEM_SEM_ADERENCIA }}"
+                  triggers="click:blur"
+                  container="body"
+                >
+                  --
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row no-gutters mt-3 d-none d-lg-flex">
+        <div class="col">
+          <span
+            *ngIf="tema !== -1"
+            class="parlamentar-compatibilidade-text"
+          >
+            Alinhamento com {{aderencia?.aderenciaTema.tema}}
+          </span>
+          <div
+            *ngIf="tema === -1"
+            class="parlamentar-compatibilidade-text"
+          >
+            Alinhamento com o Governo
+          </div>
+          <app-progress
+            [value]="aderencia?.aderencia"
+            [min]="0"
+            [max]="100"
+            [showAxis]="false"
+            [class]="getClassAderencia(aderencia)"
+          ></app-progress>
+        </div>
+        <div class="col-3 col-sm-2 col-lg-1 d-flex justify-content-end align-items-end">
+          <div class="parlamentar-score">
+            <span *ngIf="aderencia && aderencia?.aderencia >= 0">{{ aderencia?.aderencia | percent }}</span>
+            <span
+              *ngIf="!aderencia || aderencia?.aderencia < 0"
+              class="sem-alinhamento"
+              placement="left"
+              ngbPopover="{{ MENSAGEM_SEM_ADERENCIA }}"
+              triggers="mouseenter:mouseleave"
+              container="body"
+            >
+              --
+            </span>
+          </div>
+        </div>
+      </div>
+      <div
+        class="parlamentar-card-lg"
+        [@openClose]="view !== VIEW_LG ? 'closed' : 'open'"
+      >
+        <div class="pt-3"></div>
+        <div class="mb-3">
+          Alinhamento por tema [em nº de votações]
+          <div class="parlamentar-legend">
+            <div>
+              <app-legend
+                [title]="'seguiu'"
+                [class]="'positivo'"
+                [striped]="false"
+              ></app-legend>
+            </div>
+            <div>
+              <app-legend
+                [title]="'não seguiu'"
+                [class]="'negativo progress-bar-striped'"
+                [striped]="false"
+              ></app-legend>
+            </div>
+            <div>
+              <app-legend
+                [title]="'liberado'"
+                [class]="'neutro progress-bar-striped'"
+                [striped]="false"
+              ></app-legend>
+            </div>
+            <div>
+              <app-legend
+                [title]="'faltou'"
+                [class]="'ausente'"
+                [striped]="false"
+              ></app-legend>
+            </div>
+          </div>
+        </div>
+        <app-progress-stacked
+          *ngFor="let aderencia of aderenciasTemas"
+          [titulo]="aderencia.aderenciaTema.tema"
+          [categorias]="[
+            {
+              'valor': aderencia.seguiu,
+              'classe': 'positivo'
+            },
+            {
+              'valor': aderencia.naoSeguiu,
+              'classe': 'negativo progress-bar-striped'
+            },
+            {
+              'valor': aderencia.partidoLiberou,
+              'classe': 'neutro progress-bar-striped'
+            },
+            {
+              'valor': aderencia.faltou,
+              'classe': 'ausente'
+            }
+          ]"
+          [passo]="passo"
+        ></app-progress-stacked>
+      </div>
+    </div>
+  </div>
+
+</div>

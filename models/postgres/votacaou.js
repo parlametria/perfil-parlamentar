@@ -9,27 +9,23 @@ module.exports = (sequelize, type) => {
     }
   );
   votacaou.associate = function(models) {
-    votacaou.belongsTo(models.proposicao, {
-      foreignKey: "proposicao_id",
-      as: "uvot_prop"
-    }),
-      votacaou.belongsTo(models.candidato, {
-        foreignKey: "user_id",
-        as: "user_vot"
-      });
+    votacaou.belongsTo(models.votacao, {
+      foreignKey: "id_votacao",
+      as: "usuarioVotacoes"
+    })
   };
 
-  votacaou.upsertResp = function(proposicao_id, user_id, resposta, cb) {
+  votacaou.upsertResp = function(id_votacao, user_id, resposta, cb) {
     const that = this;
     return this.findOne({
       where: {
-        proposicao_id: proposicao_id,
+        id_votacao: id_votacao,
         user_id: user_id
       }
     }).then((resp, err) => {
       if (!resp) {
         const newResp = new that({
-          proposicao_id: proposicao_id,
+          id_votacao: id_votacao,
           user_id: user_id,
           resposta: resposta
         });

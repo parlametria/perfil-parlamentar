@@ -1,0 +1,26 @@
+.votacoes-legend {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 3rem;
+}
+
+.progress-bar-aderencia {
+  width: 100%;
+}
+
+.aderencia-value {
+  font-size: 1.5rem;
+  font-weight: 700;
+
+  @media (min-width: 768px) {
+    font-size: 2rem;
+  }
+}
+
+.aderencia-value-text {
+  line-height: 2.4rem;
+
+  @media (min-width: 768px) {
+    line-height: 2.7rem;
+  }
+}

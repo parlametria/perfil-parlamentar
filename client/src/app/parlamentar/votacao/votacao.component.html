@@ -1,0 +1,57 @@
+<div class="votacao">
+  <div class="votacao-body">
+    <div class="votacao-title">{{ proposicao?.projetoLei }}</div>
+
+    <!-- Votos -->
+    <div class="votos-wrapper">
+      <div class="d-flex">
+        <div class="votos-header">
+          <div class="votos-box-A">
+            Deputado <span class="icon-chevron-right"></span>
+          </div>
+          <div class="votos-box-B">
+            Governo <span class="icon-chevron-right"></span>
+          </div>
+        </div>
+        <div class="votos">
+          <div
+            class="votos-box"
+            *ngFor="let votacao of proposicao?.proposicaoVotacoes"
+          >
+            <div [ngClass]="getClass(parlamentar?.votos[votacao.idVotacao])">
+              <span class="d-none">
+                {{ parlamentar?.votos[votacao.idVotacao] }}
+              </span>
+            </div>
+            <div [ngClass]="getClass(orientacao?.orientacoes[votacao.idVotacao])">
+              <span class="d-none">
+                {{ orientacao?.orientacoes[votacao.idVotacao] }}
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Votos -->
+    <!-- <div class="votos-wrapper">
+      <div class="d-flex">
+        <div class="votos-header">
+          <div class="votos-box-A">
+            Aderência
+            <span class="icon-chevron-right"></span>
+          </div>
+        </div>
+        <div class="votos">
+          <div
+            class="votos-box"
+            *ngFor="let votacao of proposicao.proposicaoVotacoes"
+          >
+            <div [ngClass]="getClassComparado(parlamentar.votos[votacao.idVotacao], orientacao.orientacoes[votacao.idVotacao])"></div>
+          </div>
+        </div>
+      </div>
+    </div> -->
+
+  </div>
+</div>
