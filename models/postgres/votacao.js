@@ -6,7 +6,10 @@ module.exports = (sequelize, type) => {
         type: type.STRING,
         primaryKey: true
       },
-      id_proposicao: type.STRING
+      id_proposicao: type.STRING,
+      objeto_votacao: type.STRING,
+      horario: type.DATE,
+      codigo_sessao: type.INTEGER
     },
     {
       timestamps: false
