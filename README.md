@@ -2,27 +2,27 @@
 
 [![Build Status](https://travis-ci.org/analytics-ufcg/voz-ativa.svg?branch=master)](https://travis-ci.org/analytics-ufcg/voz-ativa)
 
-# Sobre o projeto
+## Sobre o projeto
 
 O projeto foi desenvolvido utilizando a arquitetura PEAN (Postgres Express Angular e Node). 
 
-# Desenvolvimento
+## Desenvolvimento
 
 Instale o [docker](https://docs.docker.com/install/linux/docker-ce/ubuntu/#install-docker-ce) e o [docker-compose](https://docs.docker.com/compose/install/).
 
-## Inicialização do banco de dados
+### Inicialização do banco de dados
 
 No [repositório](https://github.com/analytics-ufcg/vozativa-dados) de dados do projeto siga as instruções do README para inicializar o banco de dados usando docker.
 
-## Configuração das variáveis de ambiente
+### Configuração das variáveis de ambiente
 
-Faça uma cópia arquivo `variables.env.sample` para o arquivo `variables.env` e preencha com as chaves para as variáveis de ambiente. 
+Faça uma cópia arquivo `variables.env.sample` para o arquivo `variables.env` e preencha com as chaves para as variáveis de ambiente.
 
-## Iniciando docker
+### Iniciando docker
 
 Após a definição das variáveis e com o banco de dados executando via docker. Rode com o docker executando:
 
-```
+```bash
 docker-compose up
 ```
 
@@ -33,7 +33,7 @@ O frontend estará disponível em: localhost:4200
 
 Caso for preciso reconstruir as imagens (backend e frontend) basta fazer:
 
-```
+```bash
 docker-compose up --build
 ```
 
@@ -43,31 +43,31 @@ docker-compose up --build
 
 Caso você queira parar os containers e remover os volumes execute:
 
-```
+```bash
 docker-compose down --volumes
 ```
 
 Para visualizar os containers rodando:
 
-```
+```bash
 docker ps
 ```
 
 Para executar comandos num shell dentro do container:
 
-```
+```bash
 docker exec -it <container_id> sh
 ```
 
 Para matar um container
 
-```
+```bash
 docker kill <container_id>
 ```
 
-# Desenvolvimento sem Docker
+## Desenvolvimento sem Docker
 
-## Configuração das variáveis de ambiente
+### Configuração das variáveis de ambiente (sem Docker)
 
 É necessário exportar as variáveis de ambiente para que o projeto possa ser executado. Essa é a lista de variáveis necessárias:
 
@@ -80,7 +80,7 @@ docker kill <container_id>
 
 Para exportar use, como exemplo, o comando abaixo (no terminal):
 
-```
+```bash
 export SECRET_OR_KEY="umsupersegredo"
 ```
 
@@ -90,13 +90,13 @@ Obs: a variável POSTGRESURI deve ter o seguinte formato "postgres://<username>:
 
 ### Para o backend
 
-```
+```bash
 npm install
 ```
 
 ### Para o frontend
 
-```
+```bash
 npm run client-install
 ```
 
@@ -104,22 +104,42 @@ npm run client-install
 
 ### Para execução do backend
 
-```
+```bash
 npm run server
 ```
 
 ### Para execução do frontend
 
-```
+```bash
 npm run client
 ```
 
-# Testes
+## Testes
 
 Os testes são escritos usando [chai](https://www.chaijs.com) e rodam via [docker-compose](https://github.com/mochajs/mocha).
 
 ### Executar testes
 
-```
+```bash
 npm test
 ```
+
+## Extras
+
+### Atualizar ícones do app utilizando [icomoon](https://icomoon.io/app/)
+
+Para adicionar, remover ou modificar os ícones do app, é necessário gerar um novo arquivo de font que contém esses ícones.
+
+Abra o [icomoon](https://icomoon.io/app/) e acesse Menu > Manage Projects > Import projects e escolha o arquivo que está em `docs/icons.json`. Isso carregará os ícones que são utilizados no momento.
+
+Após a edição dos ícones, clique em Generate Font e faça o download dos arquivos novos. Ainda é necessário alterar esses arquivos no projeto, são eles:
+
+```bash
+client/src/assets/fonts/icomoon.eot
+client/src/assets/fonts/icomoon.svg
+client/src/assets/fonts/icomoon.ttf
+client/src/assets/fonts/icomoon.woff
+client/src/assets/icons.scss          <-- deve refletir o que está em style.css gerado pelo iconmoon
+```
+
+Obs.: certifique-se que o caminho para o arquivo de font do arquivo icons.scss estão corretos (linhas de 2 à 9).
