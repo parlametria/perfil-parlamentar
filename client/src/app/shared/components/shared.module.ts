@@ -10,6 +10,7 @@ import { ProgressComponent } from './progress/progress.component';
 import { ProgressStackedComponent } from './progress-stacked/progress-stacked.component';
 import { LoadingComponent } from './loading/loading.component';
 import { LegendComponent } from './legend/legend.component';
+import { AboutComponent } from './about/about.component';
 
 @NgModule({
   declarations: [
@@ -18,12 +19,13 @@ import { LegendComponent } from './legend/legend.component';
     ProgressComponent,
     ProgressStackedComponent,
     LoadingComponent,
-    LegendComponent
+    LegendComponent,
+    AboutComponent
   ],
   imports: [
     CommonModule,
     RouterModule,
-    NgbModule
+    NgbModule,
   ],
   exports: [
     NavbarComponent,
@@ -31,7 +33,8 @@ import { LegendComponent } from './legend/legend.component';
     ProgressComponent,
     ProgressStackedComponent,
     LoadingComponent,
-    LegendComponent
+    LegendComponent,
+    AboutComponent
   ]
 })
 export class SharedModule { }

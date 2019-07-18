@@ -1,0 +1,64 @@
+.about {
+  position: absolute;
+  overflow: hidden;
+  width: 98vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+
+  @media (max-width: 991.98px) {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 1060;
+    background-color: #7f3c8b;
+    color: #ffffff;
+    justify-content: flex-end;
+  }
+}
+
+.step {
+  position: absolute;
+  width: 100%;
+  height: 90vh;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 2rem;
+
+  @media (max-width: 991.98px) {
+    justify-content: flex-end;
+  }
+}
+
+.about-body {
+  @media (min-width: 992px) {
+    height: 50vh;
+  }
+}
+
+.about-indicators {
+  padding-bottom: 1rem;
+}
+
+.indicator {
+  cursor: pointer;
+  opacity: 0.4;
+}
+
+.indicator-active {
+  opacity: 1;
+}
+
+.btn-inverse-about,
+.btn-inverse-about:hover {
+  color: #ffffff;
+  text-decoration: none;
+
+  @media (min-width: 992px) {
+    color: #000000;
+  }
+}

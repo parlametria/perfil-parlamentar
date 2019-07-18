@@ -1,0 +1,66 @@
+<div class="about">
+  <div class="about-body">
+
+    <div
+      class="step step-a"
+      [@slide]="getSlide(0)"
+    >
+      <h5 class="text-center">Coletamos os dados</h5>
+      <div class=" text-center pb-3">
+        Recuperamos as principais votações nominais dos atuais Deputados Federais
+      </div>
+    </div>
+
+    <div
+      class="step step-b"
+      [@slide]="getSlide(1)"
+    >
+      <h5 class="text-center">Calculamos o alinhamento</h5>
+      <div class=" text-center pb-3">
+        Comparamos essas votações com a orientação do Governo, contando quantas vezes o deputado seguiu ou não seguiu o Governo
+      </div>
+    </div>
+
+    <div
+      class="step step-c"
+      [@slide]="getSlide(2)"
+    >
+      <h5 class="text-center">Exibimos o apoio ao Governo na Câmara</h5>
+      <div class=" text-center pb-3">
+        Criamos um perfil detalhado do deputado para analisar sua atuação na Câmara em votações importantes
+      </div>
+    </div>
+
+  </div>
+
+  <div class="about-indicators">
+    <div class="text-center">
+      <span
+        class="icon-dot-single indicator"
+        [class.indicator-active]="getStep() === 0"
+        (click)="setStep(0)"
+      ></span>
+      <span
+        class="icon-dot-single indicator"
+        [class.indicator-active]="getStep() === 1"
+        (click)="setStep(1)"
+      ></span>
+      <span
+        class="icon-dot-single indicator"
+        [class.indicator-active]="getStep() === 2"
+        (click)="setStep(2)"
+      ></span>
+    </div>
+    <div class="row">
+      <div class="col-6 offset-6">
+        <button
+          class="btn btn-link btn-inverse-about btn-sm btn-block"
+          (click)="next()"
+        >
+          <span *ngIf="getStep() < STEPS_LENGTH - 1">Próximo</span>
+          <span *ngIf="getStep() >= STEPS_LENGTH - 1">Começar</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

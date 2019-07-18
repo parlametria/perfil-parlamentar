@@ -31,6 +31,12 @@
   border-color: white;
 }
 
+.btn-inverse,
+.btn-inverse:hover {
+  color: #ffffff;
+  text-decoration: none;
+}
+
 /* FORMS */
 .form-group-plus {
   display: flex;
@@ -135,3 +141,5 @@
   padding-left: 0.5rem;
   padding-right: 0.5rem;
 }
+
+/* CAROUSEL */
