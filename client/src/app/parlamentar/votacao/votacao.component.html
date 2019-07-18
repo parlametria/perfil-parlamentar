@@ -7,16 +7,21 @@
       <div class="d-flex">
         <div class="votos-header">
           <div class="votos-box-A">
-            Deputado <span class="icon-chevron-right"></span>
+            Deputado
+            <span class="icon-chevron-right"></span>
           </div>
           <div class="votos-box-B">
-            Governo <span class="icon-chevron-right"></span>
+            Governo
+            <span class="icon-chevron-right"></span>
           </div>
         </div>
         <div class="votos">
           <div
             class="votos-box"
             *ngFor="let votacao of proposicao?.proposicaoVotacoes"
+            [ngbPopover]="tooltipVotacoes"
+            container='body'
+            triggers="mouseenter:mouseleave"
           >
             <div [ngClass]="getClass(parlamentar?.votos[votacao.idVotacao])">
               <span class="d-none">
@@ -28,6 +33,36 @@
                 {{ orientacao?.orientacoes[votacao.idVotacao] }}
               </span>
             </div>
+            <ng-template #tooltipVotacoes>
+              <div class="tooltip-votacao">
+                <div class="text-votante">{{ votacao.objetoVotacao }}</div>
+                <div>{{ proposicao?.projetoLei }}</div>
+                <div class="row text-votante gutters-sm">
+                  <div class="col">
+                    {{ parlamentar?.genero === "F" ? "ELA" : "ELE" }} {{ parlamentar?.votos[votacao.idVotacao] === 0 ? "" : "VOTOU" }}
+                  </div>
+                  <div class="col">
+                    GOVERNO {{ orientacao?.orientacoes[votacao.idVotacao] ? "INDICOU" : "" }}
+                  </div>
+                </div>
+                <div class="row gutters-sm">
+                  <div class="col text-center">
+                    <div [ngClass]="getVotacaoClass(parlamentar?.votos[votacao.idVotacao])">
+                      <span>
+                        {{ getTextoVoto(parlamentar.votos[votacao.idVotacao]) }}
+                      </span>
+                    </div>
+                  </div>
+                  <div class="col text-center">
+                    <div [ngClass]="getVotacaoClass(orientacao?.orientacoes[votacao.idVotacao])">
+                      <span>
+                        {{ getTextoVoto(orientacao.orientacoes[votacao.idVotacao]) }}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </ng-template>
           </div>
         </div>
       </div>

@@ -30,6 +30,27 @@ export class VotacaoComponent implements OnInit {
 
   getClass(voto: number): string[] {
     const classes = ['voto'];
+    return classes.concat(this.getVotacaoClass(voto));
+  }
+
+  getClassComparado(votoA: number, votoB: number): string[] {
+    const classes = ['voto'];
+    if (votoA === this.FALTOU) {
+      classes.push('voto-faltou');
+    } else if (votoB === this.LIBEROU || votoB === undefined) {
+      classes.push('voto-liberou');
+    } else if (votoA !== undefined && votoA === votoB) {
+      classes.push('voto-sim');
+    } else if (votoA !== undefined && votoB !== undefined && votoA !== votoB) {
+      classes.push('voto-nao');
+    } else {
+      classes.push('voto-faltou');
+    }
+    return classes;
+  }
+
+  getVotacaoClass(voto: number): string[] {
+    const classes = [];
     switch (voto) {
       case this.SIM:
         classes.push('voto-sim');
@@ -58,20 +79,34 @@ export class VotacaoComponent implements OnInit {
     return classes;
   }
 
-  getClassComparado(votoA: number, votoB: number): string[] {
-    const classes = ['voto'];
-    if (votoA === this.FALTOU) {
-      classes.push('voto-faltou');
-    } else if (votoB === this.LIBEROU || votoB === undefined) {
-      classes.push('voto-liberou');
-    } else if (votoA !== undefined && votoA === votoB) {
-      classes.push('voto-sim');
-    } else if (votoA !== undefined && votoB !== undefined && votoA !== votoB) {
-      classes.push('voto-nao');
-    } else {
-      classes.push('voto-faltou');
+  getTextoVoto(voto: number): string {
+    let textoVoto: string;
+    switch (voto) {
+      case this.SIM:
+        textoVoto = 'SIM';
+        break;
+      case this.NAO:
+        textoVoto = 'NÃO';
+        break;
+      case this.FALTOU:
+        textoVoto = 'FALTOU';
+        break;
+      case this.OBSTRUCAO:
+        textoVoto = 'OBSTRUÇÃO';
+        break;
+      case this.LIBEROU:
+        textoVoto = 'LIBEROU';
+        break;
+      case undefined:
+        textoVoto = 'LIBEROU';
+        break;
+      case null:
+        textoVoto = 'LIBEROU';
+        break;
+      default:
+        break;
     }
-    return classes;
+    return textoVoto;
   }
 
 }

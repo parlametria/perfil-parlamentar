@@ -184,26 +184,31 @@ body {
 .voto-sim {
   background-color: #43a467;
   border-color: #43a467;
+  color: white;
 }
 
 .voto-nao {
   background-color: #7f3c8b;
   border-color: #7f3c8b;
-}
-
-.voto-faltou {
-  background-color: #cccccc;
-  border-color: #adb5bd;
+  color: white;
 }
 
 .voto-liberou {
+  background-color: #cccccc;
+  border-color: #adb5bd;
+  color: black;
+}
+
+.voto-faltou {
   background-color: #ffffff;
   border-color: #adb5bd;
+  color: black;
 }
 
 .voto-obstrucao {
   background-color: #20201E;
   border-color: #20201E;
+  color: white;
 }
 
 .badge-white {
