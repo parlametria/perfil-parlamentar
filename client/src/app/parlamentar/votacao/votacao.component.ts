@@ -50,7 +50,7 @@ export class VotacaoComponent implements OnInit {
   }
 
   getVotacaoClass(voto: number): string[] {
-    const classes = [];
+    const classes = ['voto-lg'];
     switch (voto) {
       case this.SIM:
         classes.push('voto-sim');

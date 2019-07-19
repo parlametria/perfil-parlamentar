@@ -86,7 +86,6 @@ body {
   }
 }
 
-
 .btn-icon-sm,
 .btn-link-simple {
   text-decoration: none;
@@ -116,7 +115,6 @@ body {
     margin-top: 2rem;
     margin-bottom: 2rem;
   }
-
 }
 
 .text-link:hover {
@@ -130,15 +128,15 @@ body {
 }
 
 .alinhamento-5 {
-  background-color: #247FB5;
+  background-color: #247fb5;
 }
 
 .alinhamento-4 {
-  background-color: #6B92A5;
+  background-color: #6b92a5;
 }
 
 .alinhamento-4-font {
-  color: #6B92A5;
+  color: #6b92a5;
 }
 
 .alinhamento-3 {
@@ -181,6 +179,11 @@ body {
   border-color: #ffffff;
 }
 
+.voto-lg {
+  border: solid 2px;
+  border-color: #ffffff;
+}
+
 .voto-sim {
   background-color: #43a467;
   border-color: #43a467;
@@ -206,8 +209,8 @@ body {
 }
 
 .voto-obstrucao {
-  background-color: #20201E;
-  border-color: #20201E;
+  background-color: #20201e;
+  border-color: #20201e;
   color: white;
 }
 
@@ -218,7 +221,7 @@ body {
 }
 
 .badge-gray {
-  background-color: #B3B4B6;
+  background-color: #b3b4b6;
   border: 1px solid #363638;
 }
 
@@ -229,6 +232,18 @@ body {
 
 .profile-img {
   width: 75px;
-  @media (min-width: 576px) { width: 100px; }
-  @media (min-width: 768px) { width: 125px; }
+  @media (min-width: 576px) {
+    width: 100px;
+  }
+  @media (min-width: 768px) {
+    width: 125px;
+  }
+}
+
+.popover-lg {
+  max-width: 100%;
+
+  @media (min-width: 576px) {
+    max-width: 325px;
+  }
 }
