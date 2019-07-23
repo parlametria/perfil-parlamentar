@@ -6,6 +6,8 @@
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
+  background-color: #ffffff;
+  color: #000000;
 
   @media (max-width: 991.98px) {
     position: fixed;
@@ -14,8 +16,6 @@
     width: 100vw;
     height: 100vh;
     z-index: 1060;
-    background-color: #7f3c8b;
-    color: #ffffff;
     justify-content: flex-end;
   }
 }
@@ -53,12 +53,19 @@
   opacity: 1;
 }
 
-.btn-inverse-about,
-.btn-inverse-about:hover {
-  color: #ffffff;
-  text-decoration: none;
+// .btn-inverse-about,
+// .btn-inverse-about:hover {
+//   color: #ffffff;
+//   text-decoration: none;
 
+//   @media (min-width: 992px) {
+//     color: #000000;
+//   }
+// }
+
+.figure-wrapper {
+  margin: 0 auto;
   @media (min-width: 992px) {
-    color: #000000;
+    max-width: 200px;
   }
 }

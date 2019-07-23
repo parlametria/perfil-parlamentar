@@ -11,6 +11,9 @@ import { ProgressStackedComponent } from './progress-stacked/progress-stacked.co
 import { LoadingComponent } from './loading/loading.component';
 import { LegendComponent } from './legend/legend.component';
 import { AboutComponent } from './about/about.component';
+import { Step01Component } from './about/step01/step01.component';
+import { Step02Component } from './about/step02/step02.component';
+import { Step03Component } from './about/step03/step03.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +23,10 @@ import { AboutComponent } from './about/about.component';
     ProgressStackedComponent,
     LoadingComponent,
     LegendComponent,
-    AboutComponent
+    AboutComponent,
+    Step01Component,
+    Step02Component,
+    Step03Component
   ],
   imports: [
     CommonModule,

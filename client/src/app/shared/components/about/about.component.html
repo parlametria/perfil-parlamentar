@@ -5,8 +5,11 @@
       class="step step-a"
       [@slide]="getSlide(0)"
     >
+      <div class="figure-wrapper">
+        <app-step01></app-step01>
+      </div>
       <h5 class="text-center">Coletamos os dados</h5>
-      <div class=" text-center pb-3">
+      <div class="pb-3">
         Recuperamos as principais votações nominais dos atuais Deputados Federais
       </div>
     </div>
@@ -15,8 +18,11 @@
       class="step step-b"
       [@slide]="getSlide(1)"
     >
+      <div class="figure-wrapper">
+        <app-step02></app-step02>
+      </div>
       <h5 class="text-center">Calculamos o alinhamento</h5>
-      <div class=" text-center pb-3">
+      <div class="pb-3">
         Comparamos essas votações com a orientação do Governo, contando quantas vezes o deputado seguiu ou não seguiu o Governo
       </div>
     </div>
@@ -25,8 +31,11 @@
       class="step step-c"
       [@slide]="getSlide(2)"
     >
+      <div class="figure-wrapper">
+        <app-step03></app-step03>
+      </div>
       <h5 class="text-center">Exibimos o apoio ao Governo na Câmara</h5>
-      <div class=" text-center pb-3">
+      <div class="pb-3">
         Criamos um perfil detalhado do deputado para analisar sua atuação na Câmara em votações importantes
       </div>
     </div>

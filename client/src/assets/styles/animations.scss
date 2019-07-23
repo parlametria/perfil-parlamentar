@@ -10,6 +10,7 @@
   &.infinite {
     animation-iteration-count: infinite;
   }
+
   &.delay-1s {
     animation-delay: 1s;
   }
@@ -87,4 +88,24 @@
 
 .flashinverse {
   animation-name: flashinverse;
+}
+
+@keyframes fadeAndBounceIn {
+  from {
+    opacity: 0;
+    transform: translateX(-5%) translateY(10%);
+  }
+
+  50% {
+    opacity: 1;
+    transform: translateX(0) translateY(0);
+  }
+
+  to {
+    transform: translateX(0) translateY(-15%);
+  }
+}
+
+.fadeAndBounceIn {
+  animation-name: fadeAndBounceIn;
 }
