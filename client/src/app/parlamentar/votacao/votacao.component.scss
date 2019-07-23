@@ -18,9 +18,14 @@
 }
 
 .votos-header {
-  width: 105px;
+  width: 50px;
   text-align: right;
   font-size: 0.75rem;
+  line-height: 21px;
+
+  @media (min-width: 576px) {
+    width: 105px;
+  }
 }
 
 .votos-box {
@@ -36,4 +41,10 @@
   .text-votante {
     font-size: 0.75rem;
   }
+}
+
+.img-circle {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
 }
