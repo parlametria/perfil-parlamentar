@@ -1,6 +1,15 @@
 <div class="votacao">
   <div class="votacao-body">
-    <div class="votacao-title">{{ proposicao?.projetoLei }}</div>
+    <div class="votacao-title">
+      {{ proposicao?.projetoLei }}
+      <a
+        [href]="'https://www.camara.leg.br/proposicoesWeb/fichadetramitacao?idProposicao=' + proposicao?.idProposicao"
+        target="_blank"
+        class="btn btn-link btn-sm"
+      >
+        Ver <span class="icon-chevrons-right"></span>
+      </a>
+    </div>
 
     <!-- Votos -->
     <div class="votos-wrapper">
@@ -12,8 +21,8 @@
             <span class="icon-chevron-right"></span>
           </div>
           <div class="votos-header votos-box-B">
-              <span class="d-none d-sm-inline-block">Governo</span>
-              <span class="d-inline-block d-sm-none">Gov</span>
+            <span class="d-none d-sm-inline-block">Governo</span>
+            <span class="d-inline-block d-sm-none">Gov</span>
             <span class="icon-chevron-right"></span>
           </div>
         </div>
@@ -39,13 +48,16 @@
             <ng-template #tooltipVotacoes>
               <div class="tooltip-votacao py-2">
                 <div>{{ proposicao?.projetoLei }}</div>
-                <div class="text-votante pb-3">{{ votacao.objetoVotacao }}</div>
+                <div class="text-date">
+                  {{ votacao.horario | date:'dd-MM-yyyy'}}
+                </div>
+                <div class="text-votante py-3">{{ votacao.objetoVotacao }}</div>
                 <div class="row gutters-sm">
                   <div class="col">
                     {{ parlamentar?.genero === "F" ? "Ela" : "Ele" }} {{ parlamentar?.votos[votacao.idVotacao] === 0 ? "" : "votou" }}
                   </div>
                   <div class="col">
-                    GOVERNO {{ orientacao?.orientacoes[votacao.idVotacao] ? "indicou" : "" }}
+                    GOVERNO {{ orientacao?.orientacoes[votacao.idVotacao] ? "orientou" : "" }}
                   </div>
                 </div>
                 <div class="row gutters-sm">
