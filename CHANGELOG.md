@@ -1,5 +1,12 @@
 # Changelog
 
+## 3.0.1 (2019-07-24)
+
+* [x] Considera orientação null como voto liberado
+* [x] Adiciona informações detalhadas sobre votações
+* [x] Cria serviço de atualização da aplicação usando service worker
+* [x] Exibe data da votação e link para proposição na Câmara
+
 ## 3.0.0 (2019-07-12)
 
 * [x] Reformula aplicação: exibe informações sobre a aderência dos deputados ao governo
