@@ -281,6 +281,12 @@ export class FilterComponent implements OnInit, OnDestroy {
       delete queryParams.tema;
     }
 
+    if (filtro.lideranca !== this.FILTRO_PADRAO_LIDERANCA) {
+      queryParams.lideranca = filtro.lideranca;
+    } else {
+      delete queryParams.lideranca;
+    }
+
     this.router.navigate([], { queryParams });
   }
 
