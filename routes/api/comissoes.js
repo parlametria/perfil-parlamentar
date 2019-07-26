@@ -14,7 +14,8 @@ const ComposicaoComissoes = models.composicaoComissoes;
  */
 router.get("/", (req, res) => {
   Comissoes.findAll({
-    attributes: [["id_comissao_voz", "idComissaoVoz"], "sigla", "nome"]
+    attributes: [["id_comissao_voz", "idComissaoVoz"], "sigla", "nome"],
+    order: ['nome']
   })
     .then(comissoes => res.status(200).json(comissoes))
     .catch(err => res.status(400).json(err.message));
