@@ -7,10 +7,12 @@ import { takeUntil } from 'rxjs/operators';
 
 import { estados } from '../shared/constants/estados';
 import { ParlamentarService } from '../shared/services/parlamentar.service';
-import { TemaService } from '../shared/services/tema.service';
-import { ComissaoService } from '../shared/services/comissao.service';
 import { Tema } from '../shared/models/tema.model';
+import { TemaService } from '../shared/services/tema.service';
 import { Comissao } from '../shared/models/comissao.model';
+import { ComissaoService } from '../shared/services/comissao.service';
+import { Lideranca } from '../shared/models/lideranca.model';
+import { LiderancaService } from '../shared/services/lideranca.service';
 
 @Component({
   selector: 'app-filter',
@@ -27,6 +29,7 @@ export class FilterComponent implements OnInit, OnDestroy {
   readonly FILTRO_PADRAO_COMISSAO_VALUE = '-1';
   readonly FILTRO_PADRAO_TEMA = -1;
   readonly FILTRO_PADRAO_TEMA_SLUG = 'todos';
+  readonly FILTRO_PADRAO_LIDERANCA = 'Lideranças partidárias';
 
   filtro: any;
 
@@ -38,12 +41,14 @@ export class FilterComponent implements OnInit, OnDestroy {
   partidosFiltradosPorEstado: string[];
   temas: Tema[];
   comissoes: Comissao[];
+  liderancas: Lideranca[];
 
   temaSelecionado: number;
   estadoSelecionado: string;
   nomePesquisado: string;
   partidoSelecionado: string;
   comissaoSelecionada: string;
+  liderancaSelecionada: string;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -51,13 +56,15 @@ export class FilterComponent implements OnInit, OnDestroy {
     private modalService: NgbModal,
     private parlamentarService: ParlamentarService,
     private temaService: TemaService,
-    private comissaoService: ComissaoService
+    private comissaoService: ComissaoService,
+    private liderancaService: LiderancaService
   ) {
     this.estados = estados;
     this.estadoSelecionado = this.FILTRO_PADRAO_ESTADO;
     this.partidoSelecionado = this.FILTRO_PADRAO_PARTIDO;
     this.temaSelecionado = this.FILTRO_PADRAO_TEMA;
     this.comissaoSelecionada = this.FILTRO_PADRAO_COMISSAO_VALUE;
+    this.liderancaSelecionada = this.FILTRO_PADRAO_LIDERANCA;
 
     this.filtro = {
       nome: '',
@@ -66,6 +73,7 @@ export class FilterComponent implements OnInit, OnDestroy {
       comissao: this.comissaoSelecionada,
       tema: this.temaSelecionado,
       temaSlug: this.FILTRO_PADRAO_TEMA_SLUG,
+      lideranca: this.liderancaSelecionada,
       default: true
     };
   }
@@ -82,6 +90,7 @@ export class FilterComponent implements OnInit, OnDestroy {
 
     this.getTemas();
     this.getComissoes();
+    this.getLiderancas();
   }
 
   open(content) {
@@ -109,6 +118,7 @@ export class FilterComponent implements OnInit, OnDestroy {
       tema: this.temaSelecionado,
       temaSlug: this.temaService.getTemaSlugById(this.temas, this.temaSelecionado),
       orientador: undefined,
+      lideranca: this.liderancaSelecionada,
       default: this.isFiltroDefault()
     };
 
@@ -124,6 +134,7 @@ export class FilterComponent implements OnInit, OnDestroy {
     this.comissaoSelecionada = this.FILTRO_PADRAO_COMISSAO_VALUE;
     this.nomePesquisado = '';
     this.temaSelecionado = this.FILTRO_PADRAO_TEMA;
+    this.liderancaSelecionada = this.FILTRO_PADRAO_LIDERANCA;
 
     this.aplicarFiltro();
   }
@@ -149,6 +160,11 @@ export class FilterComponent implements OnInit, OnDestroy {
     this.aplicarFiltro();
   }
 
+  limparFiltroLideranca() {
+    this.liderancaSelecionada = this.FILTRO_PADRAO_LIDERANCA;
+    this.aplicarFiltro();
+  }
+
   getTemas() {
     this.temaService.getTemas().pipe(takeUntil(this.unsubscribe)).subscribe((temas) => {
       this.temas = temas;
@@ -167,6 +183,13 @@ export class FilterComponent implements OnInit, OnDestroy {
       });
 
       this.comissoes = comissoes;
+    });
+  }
+
+  getLiderancas() {
+    this.liderancaService.getLiderancas().pipe(takeUntil(this.unsubscribe)).subscribe((liderancas) => {
+      this.liderancas = liderancas;
+      this.liderancas.unshift({ cargo: this.FILTRO_PADRAO_LIDERANCA })
     });
   }
 
@@ -193,7 +216,9 @@ export class FilterComponent implements OnInit, OnDestroy {
     return ((this.filtro.nome === '' || typeof this.filtro.nome === 'undefined') &&
       this.filtro.estado === this.FILTRO_PADRAO_ESTADO &&
       this.filtro.partido === this.FILTRO_PADRAO_PARTIDO &&
-      this.filtro.tema === this.FILTRO_PADRAO_TEMA);
+      this.filtro.tema === this.FILTRO_PADRAO_TEMA &&
+      this.filtro.comissao === this.FILTRO_PADRAO_COMISSAO &&
+      this.filtro.lideranca === this.FILTRO_PADRAO_LIDERANCA);
   }
 
   getComissaoById(id: string) {
@@ -210,6 +235,15 @@ export class FilterComponent implements OnInit, OnDestroy {
       const comissao = this.comissoes.filter(com => com.idComissaoVoz === id);
       if (comissao !== undefined && comissao.length > 0) {
         return comissao[0].nome;
+      }
+    }
+  }
+
+  getLideranca(cargo: string) {
+    if (this.liderancas && cargo !== this.FILTRO_PADRAO_LIDERANCA) {
+      const lideranca = this.liderancas.filter(l => l.cargo === cargo);
+      if (lideranca !== undefined && lideranca.length > 0) {
+        return lideranca[0].cargo;
       }
     }
   }
