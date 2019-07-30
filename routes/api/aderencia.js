@@ -98,7 +98,15 @@ router.get("/parlamentar", (req, res) => {
         model: Liderancas,
         attributes: attLideranca,
         as: "parlamentarLiderancas",
-        required: false
+        required: false,
+        include: [
+          {
+            model: Partido,
+            attributes: attPartido,
+            as: "liderancaPartido",
+            required: false
+          }
+        ]
       },
     ],
     where: {
