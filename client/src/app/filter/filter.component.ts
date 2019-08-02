@@ -30,6 +30,7 @@ export class FilterComponent implements OnInit, OnDestroy {
   readonly FILTRO_PADRAO_TEMA = -1;
   readonly FILTRO_PADRAO_TEMA_SLUG = 'todos';
   readonly FILTRO_PADRAO_LIDERANCA = 'Lideranças partidárias';
+  readonly FILTRO_PADRAO_CARGO_COMISSAO = 'Cargo em comissões';
 
   filtro: any;
 
@@ -42,6 +43,7 @@ export class FilterComponent implements OnInit, OnDestroy {
   temas: Tema[];
   comissoes: Comissao[];
   liderancas: Lideranca[];
+  cargosComissao: Lideranca[];
 
   temaSelecionado: number;
   estadoSelecionado: string;
@@ -49,6 +51,7 @@ export class FilterComponent implements OnInit, OnDestroy {
   partidoSelecionado: string;
   comissaoSelecionada: string;
   liderancaSelecionada: string;
+  cargoComissaoSelecionado: string;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -65,6 +68,7 @@ export class FilterComponent implements OnInit, OnDestroy {
     this.temaSelecionado = this.FILTRO_PADRAO_TEMA;
     this.comissaoSelecionada = this.FILTRO_PADRAO_COMISSAO_VALUE;
     this.liderancaSelecionada = this.FILTRO_PADRAO_LIDERANCA;
+    this.cargoComissaoSelecionado = this.FILTRO_PADRAO_CARGO_COMISSAO;
 
     this.filtro = {
       nome: '',
@@ -74,6 +78,7 @@ export class FilterComponent implements OnInit, OnDestroy {
       tema: this.temaSelecionado,
       temaSlug: this.FILTRO_PADRAO_TEMA_SLUG,
       lideranca: this.liderancaSelecionada,
+      cargoComissao: this.cargoComissaoSelecionado,
       default: true
     };
   }
@@ -91,6 +96,7 @@ export class FilterComponent implements OnInit, OnDestroy {
     this.getTemas();
     this.getComissoes();
     this.getLiderancas();
+    this.getCargosComissao();
   }
 
   open(content) {
@@ -119,6 +125,7 @@ export class FilterComponent implements OnInit, OnDestroy {
       temaSlug: this.temaService.getTemaSlugById(this.temas, this.temaSelecionado),
       orientador: undefined,
       lideranca: this.liderancaSelecionada,
+      cargoComissao: this.cargoComissaoSelecionado,
       default: this.isFiltroDefault()
     };
 
@@ -135,6 +142,7 @@ export class FilterComponent implements OnInit, OnDestroy {
     this.nomePesquisado = '';
     this.temaSelecionado = this.FILTRO_PADRAO_TEMA;
     this.liderancaSelecionada = this.FILTRO_PADRAO_LIDERANCA;
+    this.cargoComissaoSelecionado = this.FILTRO_PADRAO_CARGO_COMISSAO;
 
     this.aplicarFiltro();
   }
@@ -165,6 +173,11 @@ export class FilterComponent implements OnInit, OnDestroy {
     this.aplicarFiltro();
   }
 
+  limparFiltroCargoComissao() {
+    this.cargoComissaoSelecionado = this.FILTRO_PADRAO_CARGO_COMISSAO;
+    this.aplicarFiltro();
+  }
+
   getTemas() {
     this.temaService.getTemas().pipe(takeUntil(this.unsubscribe)).subscribe((temas) => {
       this.temas = temas;
@@ -189,7 +202,14 @@ export class FilterComponent implements OnInit, OnDestroy {
   getLiderancas() {
     this.liderancaService.getLiderancas().pipe(takeUntil(this.unsubscribe)).subscribe((liderancas) => {
       this.liderancas = liderancas;
-      this.liderancas.unshift({ cargo: this.FILTRO_PADRAO_LIDERANCA })
+      this.liderancas.unshift({ cargo: this.FILTRO_PADRAO_LIDERANCA });
+    });
+  }
+
+  getCargosComissao() {
+    this.comissaoService.getCargos().pipe(takeUntil(this.unsubscribe)).subscribe((cargos) => {
+      this.cargosComissao = cargos;
+      this.cargosComissao.unshift({ cargo: this.FILTRO_PADRAO_CARGO_COMISSAO });
     });
   }
 
@@ -218,7 +238,8 @@ export class FilterComponent implements OnInit, OnDestroy {
       this.filtro.partido === this.FILTRO_PADRAO_PARTIDO &&
       this.filtro.tema === this.FILTRO_PADRAO_TEMA &&
       this.filtro.comissao === this.FILTRO_PADRAO_COMISSAO &&
-      this.filtro.lideranca === this.FILTRO_PADRAO_LIDERANCA);
+      this.filtro.lideranca === this.FILTRO_PADRAO_LIDERANCA &&
+      this.filtro.cargoComissao === this.FILTRO_PADRAO_CARGO_COMISSAO);
   }
 
   getComissaoById(id: string) {
@@ -239,17 +260,14 @@ export class FilterComponent implements OnInit, OnDestroy {
     }
   }
 
-  getLideranca(cargo: string) {
-    if (this.liderancas && cargo !== this.FILTRO_PADRAO_LIDERANCA) {
-      const lideranca = this.liderancas.filter(l => l.cargo === cargo);
-      if (lideranca !== undefined && lideranca.length > 0) {
-        return lideranca[0].cargo;
-      }
-    }
-  }
-
   private updateUrlFiltro(filtro: any) {
     const queryParams: Params = Object.assign({}, this.activatedRoute.snapshot.queryParams);
+
+    if (filtro.tema !== this.FILTRO_PADRAO_TEMA) {
+      queryParams.tema = filtro.tema;
+    } else {
+      delete queryParams.tema;
+    }
 
     if (filtro.nome !== '' && filtro.nome !== undefined) {
       queryParams.nome = filtro.nome;
@@ -275,16 +293,16 @@ export class FilterComponent implements OnInit, OnDestroy {
       delete queryParams.comissao;
     }
 
-    if (filtro.tema !== this.FILTRO_PADRAO_TEMA) {
-      queryParams.tema = filtro.tema;
-    } else {
-      delete queryParams.tema;
-    }
-
     if (filtro.lideranca !== this.FILTRO_PADRAO_LIDERANCA) {
       queryParams.lideranca = filtro.lideranca;
     } else {
       delete queryParams.lideranca;
+    }
+
+    if (filtro.cargo !== this.FILTRO_PADRAO_CARGO_COMISSAO) {
+      queryParams.cargo = filtro.cargo;
+    } else {
+      delete queryParams.cargo;
     }
 
     this.router.navigate([], { queryParams });
@@ -294,6 +312,9 @@ export class FilterComponent implements OnInit, OnDestroy {
     this.activatedRoute.queryParams.subscribe(
       params => {
         Object.keys(params).forEach(value => {
+          if (value === 'tema') {
+            this.temaSelecionado = Number(params[value]);
+          }
           if (value === 'nome') {
             this.nomePesquisado = params[value];
           }
@@ -306,8 +327,11 @@ export class FilterComponent implements OnInit, OnDestroy {
           if (value === 'comissao') {
             this.comissaoSelecionada = params[value];
           }
-          if (value === 'tema') {
-            this.temaSelecionado = Number(params[value]);
+          if (value === 'lideranca') {
+            this.liderancaSelecionada = params[value];
+          }
+          if (value === 'cargo') {
+            this.cargoComissaoSelecionado = params[value];
           }
         });
 

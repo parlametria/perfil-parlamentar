@@ -96,6 +96,7 @@ export class AderenciaService {
     const partido = filters.partido;
     const comissao = filters.comissao;
     const lideranca = filters.lideranca;
+    const cargoComissao = filters.cargoComissao;
 
     return parlamentar.filter(p => {
       let filtered;
@@ -118,6 +119,11 @@ export class AderenciaService {
       filtered =
         lideranca && lideranca !== 'Lideranças partidárias' && filtered
           ? p.parlamentarLiderancas.filter(l => l.cargo === lideranca).length > 0
+          : filtered;
+
+      filtered =
+        cargoComissao && cargoComissao !== 'Cargo em comissões' && filtered
+          ? p.comissoes.filter(c => c.cargo === cargoComissao).length > 0
           : filtered;
 
       filtered =

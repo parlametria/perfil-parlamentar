@@ -75,12 +75,14 @@ export class CardParlamentarComponent implements OnChanges, OnInit {
   @Input() temaSlug: string;
   @Input() comissao: string;
   @Input() lideranca: string;
+  @Input() cargoComissao: string;
   @Input() view: any;
   @Output() followChecked = new EventEmitter<boolean>();
 
   readonly FILTRO_PADRAO_TEMA = 99;
   readonly FILTRO_PADRAO_ORIENTADOR = 'Governo';
   readonly FILTRO_PADRAO_LIDERANCA = 'Lideranças partidárias';
+  readonly FILTRO_PADRAO_CARGO_COMISSAO = 'Cargo em comissões';
 
   aderencia: any;
   aderenciasTemas: any;
