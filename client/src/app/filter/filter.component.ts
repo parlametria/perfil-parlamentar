@@ -299,10 +299,10 @@ export class FilterComponent implements OnInit, OnDestroy {
       delete queryParams.lideranca;
     }
 
-    if (filtro.cargo !== this.FILTRO_PADRAO_CARGO_COMISSAO) {
-      queryParams.cargo = filtro.cargo;
+    if (filtro.cargoComissao !== this.FILTRO_PADRAO_CARGO_COMISSAO) {
+      queryParams.cargoComissao = filtro.cargoComissao;
     } else {
-      delete queryParams.cargo;
+      delete queryParams.cargoComissao;
     }
 
     this.router.navigate([], { queryParams });
@@ -330,7 +330,7 @@ export class FilterComponent implements OnInit, OnDestroy {
           if (value === 'lideranca') {
             this.liderancaSelecionada = params[value];
           }
-          if (value === 'cargo') {
+          if (value === 'cargoComissao') {
             this.cargoComissaoSelecionado = params[value];
           }
         });
