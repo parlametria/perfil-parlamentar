@@ -108,6 +108,7 @@ export class FilterComponent implements OnInit, OnDestroy {
       comissao: this.comissaoSelecionada,
       tema: this.temaSelecionado,
       temaSlug: this.temaService.getTemaSlugById(this.temas, this.temaSelecionado),
+      orientador: undefined,
       default: this.isFiltroDefault()
     };
 
@@ -179,11 +180,12 @@ export class FilterComponent implements OnInit, OnDestroy {
     } else {
       this.temaSelecionado = idTema;
     }
+    this.aplicarFiltro();
   }
 
   getTemaById(id: number) {
     if (this.temas && id !== this.FILTRO_PADRAO_TEMA) {
-      return this.temas.filter(tema => tema.id === id)[0].tema;
+      return this.temas.filter(tema => tema.idTema === id)[0].tema;
     }
   }
 

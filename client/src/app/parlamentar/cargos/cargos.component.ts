@@ -94,7 +94,7 @@ export class CargosComponent implements OnInit, OnDestroy {
       return {
         cargo: cargo.cargo,
         nome: '',
-        sigla: cargo.blocoPartido
+        sigla: cargo.liderancaPartido.sigla
       };
     }
   }

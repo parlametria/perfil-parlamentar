@@ -1,3 +1,6 @@
+import { Partido } from './partido.model';
+import { ComposicaoComissao } from './composicaoComissao.model';
+
 export class Parlamentar {
 
   public idParlamentarVoz: string;
@@ -5,12 +8,12 @@ export class Parlamentar {
   public casa: string;
   public nomeEleitoral: string;
   public uf: string;
-  public partido: string;
+  public parlamentarPartido: Partido;
   public genero: string;
   public emExercicio: boolean;
   public votacoes: any;
   public alinhamento?: any;
-  public comissoes?: any;
+  public comissoes?: ComposicaoComissao[];
 
   constructor(parlamentar: any) {
     this.idParlamentarVoz = parlamentar.id_parlamentar_voz;
@@ -18,7 +21,7 @@ export class Parlamentar {
     this.casa = parlamentar.casa;
     this.nomeEleitoral = parlamentar.nome_eleitoral;
     this.uf = parlamentar.uf;
-    this.partido = parlamentar.partido;
+    this.parlamentarPartido = parlamentar.parlamentarPartido;
     this.genero = parlamentar.genero;
     this.emExercicio = parlamentar.em_exercicio;
     this.votacoes = parlamentar.votacoes;

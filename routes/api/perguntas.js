@@ -15,6 +15,8 @@ const models = require("../../models/index");
 const Pergunta = models.pergunta;
 const Temas = models.tema;
 const Proposicao = models.proposicao;
+const Votacao = models.votacao;
+const ProposicaoTemas = models.proposicaoTemas;
 
 /**
  * Testa a rota de perguntas.
@@ -54,17 +56,24 @@ router.get("/vozativa", (req, res) => {
  */
 router.get("/proposicoes", (req, res) => {
   Proposicao.findAll({
-    attributes: ["projeto_lei", "id_votacao", "titulo", "descricao", "tema_id"],
+    attributes: [["projeto_lei", "projetoLei"], ["id_proposicao", "idProposicao"], "titulo", "descricao"],
     where: { status_proposicao: "Ativa" },
-    order: [
-      ['tema_id', 'ASC'],
-      ['id_votacao', 'ASC']
-    ],
     include: [
       {
         model: Temas,
-        as: "tema_prop"
+        as: "temas",
+        attributes: [["id_tema", "idTema"], "tema", "slug"]
+      },
+      {
+        model: Votacao,
+        attributes: [["id_votacao", "idVotacao"]],
+        as: "proposicaoVotacoes",
+        require: true
       }
+    ],
+    order: [
+      ['temas', 'id_tema', 'ASC'],
+      ['id_proposicao', 'ASC']
     ]
   })
     .then(proposicoes => res.json(proposicoes))
@@ -79,19 +88,24 @@ router.get("/proposicoes", (req, res) => {
  */
 router.get("/proposicoes/:id", (req, res) => {
   Proposicao.findOne({
-    attributes: ["projeto_lei", "id_votacao", "titulo", "descricao", "tema_id"],
+    attributes: [["projeto_lei", "projetoLei"], ["id_proposicao", "idProposicao"], "titulo", "descricao"],
     where: { 
       status_proposicao: "Ativa",
-      id_votacao: req.params.id 
+      id_proposicao: req.params.id 
     },
     order: [
-      ['tema_id', 'ASC'],
-      ['id_votacao', 'ASC']
+      ['id_proposicao', 'ASC']
     ],
     include: [
       {
         model: Temas,
-        as: "tema_prop"
+        attributes: [["id_tema", "idTema"], "tema", "slug"]
+      },
+      {
+        model: Votacao,
+        attributes: [["id_votacao", "idVotacao"]],
+        as: "proposicaoVotacoes",
+        require: true
       }
     ]
   })

@@ -4,6 +4,7 @@ import { NgModule } from '@angular/core';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { ServiceWorkerModule } from '@angular/service-worker';
+import { MatSnackBarModule } from '@angular/material';
 
 import { SocialLoginModule, AuthServiceConfig } from 'angularx-social-login';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -24,6 +25,7 @@ import { UserService } from './shared/services/user.service';
 import { AlinhamentoService } from './shared/services/alinhamento.service';
 import { ParlamentarService } from './shared/services/parlamentar.service';
 import { AderenciaService } from './shared/services/aderencia.service';
+import { UpdateService } from './shared/services/update.service';
 import { environment } from '../environments/environment';
 
 @NgModule({
@@ -39,6 +41,7 @@ import { environment } from '../environments/environment';
     NgbModule,
     AppRoutingModule,
     SharedModule,
+    MatSnackBarModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [
@@ -50,6 +53,7 @@ import { environment } from '../environments/environment';
     AlinhamentoService,
     ParlamentarService,
     AderenciaService,
+    UpdateService,
     {
       provide: AuthServiceConfig,
       useFactory: getAuthServiceConfigs

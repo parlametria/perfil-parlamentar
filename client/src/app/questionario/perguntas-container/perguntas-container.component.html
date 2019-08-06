@@ -14,7 +14,7 @@
           >
             <option
               *ngFor="let tema of listaTemas"
-              [value]="tema.id"
+              [value]="tema.idTema"
             >
               {{ tema.tema }}
             </option>
@@ -32,7 +32,7 @@
           <button
             class="btn btn-block btn-outline-no-border"
             role="button"
-            [ngClass]="{'btn-outline-no-border-dark': temaSelecionado === tema.id, 'btn-outline-no-border-light': temaSelecionado !== tema.id}"
+            [ngClass]="{'btn-outline-no-border-dark': temaSelecionado === tema.idTema, 'btn-outline-no-border-light': temaSelecionado !== tema.idTema}"
             (click)="setTema(tema)"
           >
             <span [ngClass]="['icon-'+tema.slug, 'icon-lg-sm']"></span>
@@ -48,22 +48,22 @@
         *ngFor="let prop of perguntasTemaSelecionado; let i = index"
         [ngClass]="{
           'pergunta-progress-item': true,
-          'active': prop.id_votacao === perguntaSelecionada.id_votacao,
-          'done': respondeuPergunta(prop.id_votacao),
+          'active': prop.proposicaoVotacoes[0]?.idVotacao === perguntaSelecionada.proposicaoVotacoes[0]?.idVotacao,
+          'done': respondeuPergunta(prop.proposicaoVotacoes[0]?.idVotacao),
           'positive': respostaPositiva(),
           'negative': respostaNegativa(),
           'neutral': respostaNeutra()}"
-        (click)="escolhePergunta(prop.id_votacao)"
+        (click)="escolhePergunta(prop.idProposicao)"
       >
       </div>
     </div>
 
     <div *ngIf="perguntaSelecionada">
       <app-pergunta
-        [projLei]="perguntaSelecionada.projeto_lei"
+        [projLei]="perguntaSelecionada.projetoLei"
         [title]="perguntaSelecionada.titulo"
         [description]="perguntaSelecionada.descricao"
-        [id]="perguntaSelecionada.id_votacao"
+        [id]="perguntaSelecionada.idProposicao"
       ></app-pergunta>
     </div>
 

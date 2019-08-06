@@ -1,0 +1,138 @@
+.parlamentar-wrapper {
+  border: solid 1.5px #20201e;
+  margin-bottom: 1rem;
+  transition: border 0.25s;
+}
+
+.parlamentar-wrapper-no-margin {
+  border: solid 1.5px #fff;
+  margin-bottom: 0;
+}
+
+.parlamentar-card {
+  overflow: hidden;
+}
+
+.parlamentar-card-header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.parlamentar-card-actions {
+  float: right;
+  margin-right: 1rem;
+}
+
+.parlamentar-card-body {
+  padding: 0.5rem;
+
+  @media (min-width: 992px) {
+    padding: 0.5rem 2rem;
+  }
+}
+
+.parlamentar-title {
+  font-weight: 700;
+}
+
+.parlamentar-score {
+  text-align: right;
+
+  @media (min-width: 576px) {
+    font-size: 1.2rem;
+  }
+}
+
+.parlamentar-compatibilidade-text {
+  font-size: 0.8rem;
+  line-height: 1;
+  padding-bottom: 6px;
+}
+
+/*Versão reduzida */
+.parlamentar-card-sm {
+}
+
+.parlamentar-card-sm-body {
+  display: flex;
+  justify-content: space-between;
+}
+
+.parlamentar-card-sm-title {
+  font-size: 0.8rem;
+  text-transform: capitalize;
+  line-height: 1.6rem;
+
+  @media (min-width: 992px) {
+    font-size: 1rem;
+    font-weight: 700;
+  }
+}
+
+.parlamentar-card-sm-subtitle {
+  font-weight: normal;
+  color: #adb5bd;
+}
+
+.parlamentar-card-sm-id {
+  width: 52px;
+  min-width: 42px;
+  background-color: #20201e;
+  padding: 0.25rem 0.5rem;
+  margin-right: 0.5rem;
+  color: #fff;
+  text-align: center;
+  font-size: 0.8rem;
+}
+
+.parlamentar-card-sm-score {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 95px;
+  height: 27px;
+
+  @media (min-width: 992px) {
+    width: 150px;
+  }
+}
+
+.parlamentar-sm-progress {
+  width: 50px;
+
+  @media (min-width: 992px) {
+    width: 100px;
+  }
+}
+
+.parlamentar-sm-score {
+  margin-left: 0.5rem;
+  font-size: 0.8rem;
+}
+
+/* Versão ampliada */
+.parlamentar-card-lg {
+  overflow: hidden;
+}
+
+.parlamentar-img-wrapper {
+  max-width: 80px;
+}
+
+.parlamentar-nome {
+  text-decoration: none;
+}
+
+p>.badge {
+  vertical-align: middle;
+  margin-top: -0.3em;
+}
+
+.sem-alinhamento {
+  cursor: pointer;
+}
+
+.parlamentar-legend {
+  display: flex;
+  flex-wrap: wrap;
+}

@@ -18,10 +18,6 @@ export class PerguntaService {
 
   constructor(private http: HttpClient) { }
 
-  getPerguntas(): Observable<Pergunta[]> {
-    return this.http.get<Pergunta[]>(this.url);
-  }
-
   getProposicoes(): Observable<Proposicao[]> {
     return this.http.get<Proposicao[]>(this.url + '/proposicoes');
   }

@@ -51,7 +51,7 @@
     {
       "name": "api",
       "urls": [
-        "/api\/*/"
+        "/api/*"
       ],
       "cacheConfig": {
         "maxSize": 10,

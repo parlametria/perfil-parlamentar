@@ -1,0 +1,49 @@
+.votacao {
+  border: solid 2px #20201e;
+  margin-bottom: 1rem;
+  padding: 0.5rem;
+}
+
+.votacao-body {
+}
+
+.votacao-title {
+  font-size: 1.2rem;
+  padding-bottom: 0.5rem;
+}
+
+.votos {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.votos-header {
+  width: 50px;
+  text-align: right;
+  font-size: 0.75rem;
+  line-height: 21px;
+
+  @media (min-width: 576px) {
+    width: 105px;
+  }
+}
+
+.votos-box {
+  display: flex;
+  flex-direction: column;
+  padding-right: 2px;
+  margin-bottom: 20px;
+}
+
+.tooltip-votacao {
+  min-width: 300px;
+
+  .text-votante {
+    font-size: 0.75rem;
+  }
+}
+
+.text-date {
+  font-size: 0.8rem;
+  color: #6c757d;
+}

@@ -1,7 +1,10 @@
+import { Tema } from './tema.model';
+
 export interface Proposicao {
-  projeto_lei: string;
-  id_votacao: number;
+  projetoLei: string;
+  idProposicao: number;
   titulo: string;
   descricao: string;
-  tema_id: number;
+  temas: Tema[];
+  proposicaoVotacoes: any[];
 }

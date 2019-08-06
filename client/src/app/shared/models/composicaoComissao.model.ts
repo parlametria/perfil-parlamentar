@@ -1,6 +1,6 @@
 interface ComissaoInfo {
   sigla: string;
-  nome: string;
+  nome?: string;
 }
 
 export interface ComposicaoComissao {

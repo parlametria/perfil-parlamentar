@@ -5,6 +5,8 @@ import { routeAnimation } from './app-routing-animation';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
+import { UpdateService } from './shared/services/update.service';
+
 declare let ga;
 
 @Component({
@@ -19,7 +21,9 @@ export class AppComponent implements OnDestroy {
 
   private unsubscribe = new Subject();
 
-  constructor(public router: Router) {
+  constructor(
+    public router: Router,
+    private updateService: UpdateService) {
 
     // subscribe to router events and send page views to google analytics
     this.router.events
