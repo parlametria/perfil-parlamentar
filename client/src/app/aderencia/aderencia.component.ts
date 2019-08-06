@@ -37,7 +37,7 @@ export class AderenciaComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.view = this.VIEW_LG;
     this.getParlamentares();
-    this.orderBy = 'ASC';
+    this.orderBy = 'DES';
     this.orientador = 'Governo';
   }
 

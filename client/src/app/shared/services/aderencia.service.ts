@@ -27,7 +27,7 @@ export class AderenciaService {
 
   private searchfilters = new BehaviorSubject<any>({});
   private tema: number;
-  private orderBy = 'ASC';
+  private orderBy = 'DES';
   private orientador = 'Governo';
 
   private parlamentaresFiltered = new BehaviorSubject<Array<ParlamentarAderencia>>([]);
@@ -56,11 +56,11 @@ export class AderenciaService {
 
           if (this.orderBy === 'ASC') {
             return parlamentares.sort((a, b) => {
-              return this.sort(a, b, idTema);
+              return this.sort(b, a, idTema);
             });
           } else {
             return parlamentares.sort((a, b) => {
-              return this.sort(b, a, idTema);
+              return this.sort(a, b, idTema);
             });
           }
         }),
