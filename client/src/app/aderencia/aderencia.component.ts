@@ -26,6 +26,7 @@ export class AderenciaComponent implements OnInit, OnDestroy {
   view: string;
   isLoading: boolean;
   filtro: any;
+  orderBy: string;
   orientador: string;
 
   constructor(
@@ -36,6 +37,7 @@ export class AderenciaComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.view = this.VIEW_LG;
     this.getParlamentares();
+    this.orderBy = 'ASC';
     this.orientador = 'Governo';
   }
 
@@ -54,7 +56,7 @@ export class AderenciaComponent implements OnInit, OnDestroy {
   search(filtro: any) {
     this.filtro = filtro;
     this.filtro.orientador = this.orientador;
-    this.aderenciaService.search(this.filtro);
+    this.aderenciaService.search(this.filtro, this.orderBy);
   }
 
   setOrientador(orientador: string) {
@@ -84,6 +86,22 @@ export class AderenciaComponent implements OnInit, OnDestroy {
     const queryParams: Params = Object.assign({}, this.activatedRoute.snapshot.queryParams);
     queryParams.view = view;
     this.router.navigate([], { queryParams });
+  }
+
+  setOrderBy(orderBy: string) {
+    this.orderBy = orderBy;
+
+    const queryParams: Params = Object.assign({}, this.activatedRoute.snapshot.queryParams);
+    queryParams.orderBy = orderBy;
+    this.router.navigate([], { queryParams });
+  }
+
+  toggleOrderBy() {
+    if (this.orderBy === 'ASC') {
+      this.setOrderBy('DSC');
+    } else {
+      this.setOrderBy('ASC');
+    }
   }
 
   ngOnDestroy() {

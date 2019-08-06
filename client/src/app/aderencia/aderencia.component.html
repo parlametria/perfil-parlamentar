@@ -31,6 +31,15 @@
             <span class="icon-th-list"></span>
           </button>
         </div>
+        <span class="d-none d-md-block">Ordernar:</span>
+        <div class="btn-group">
+          <button
+            class="btn btn-light btn-light-icon active"
+            (click)="toggleOrderBy()"
+          >
+            <span [ngClass]="{'icon-chevron-up' : orderBy === 'ASC', 'icon-chevron-down' : orderBy !== 'ASC'}"></span>
+          </button>
+        </div>
       </div>
     </div>
   </div>
