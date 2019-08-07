@@ -33,7 +33,7 @@
             [ngbPopover]="tooltipVotacoes"
             [popoverClass]="'popover-lg'"
             container='body'
-            triggers="mouseenter:mouseleave"
+            triggers="hover:click"
           >
             <div [ngClass]="getClass(parlamentar?.votos[votacao.idVotacao])">
               <span class="d-none">
