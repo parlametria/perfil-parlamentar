@@ -10,6 +10,7 @@ const Partido = models.partido;
 const Tema = models.tema;
 const ComposicaoComissoes = models.composicaoComissoes;
 const Comissoes = models.comissoes;
+const Liderancas = models.liderancas;
 
 const BAD_REQUEST = 400;
 const SUCCESS = 200;
@@ -27,6 +28,7 @@ const attPartido = [["id_partido", "idPartido"], "sigla"]
 const attTema = [["id_tema", "idTema"], "tema", "slug"]
 const attComposicaoComissoes = [["id_comissao_voz", "idComissaoVoz"], "cargo"];
 const attComissoes = ["sigla"];
+const attLideranca = ["cargo"];
 
 /**
  * Recupera informações de aderência dos parlamentares
@@ -91,7 +93,21 @@ router.get("/parlamentar", (req, res) => {
         attributes: attPartido,
         as: "parlamentarPartido",
         required: false
-      }
+      },
+      {
+        model: Liderancas,
+        attributes: attLideranca,
+        as: "parlamentarLiderancas",
+        required: false,
+        include: [
+          {
+            model: Partido,
+            attributes: attPartido,
+            as: "liderancaPartido",
+            required: false
+          }
+        ]
+      },
     ],
     where: {
       em_exercicio: true

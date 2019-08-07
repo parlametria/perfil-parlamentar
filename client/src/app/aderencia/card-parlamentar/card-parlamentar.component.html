@@ -101,16 +101,26 @@
               {{ parlamentar.nomeEleitoral | titlecase }}
             </a>
           </div>
-          <p>
+          <div>
             {{ parlamentar.parlamentarPartido?.sigla }}/{{ parlamentar.uf }}
+          </div>
+          <div *ngIf="comissao !== PADRAO_COMISSAO">
             <span
-              *ngIf="comissao !== PADRAO_COMISSAO"
               class="badge badge-dark align-middle"
               [ngClass]="classeCargoComissao"
             >
-              {{getCargoByComissaoId(comissao)}}
+              {{getComissaoById(comissao)?.cargo}}
             </span>
-          </p>
+            {{getComissaoById(comissao)?.infoComissao.sigla}}
+          </div>
+          <div *ngIf="lideranca !== FILTRO_PADRAO_LIDERANCA">
+            <span
+              class="badge badge-dark align-middle"
+            >
+              {{lideranca}}
+            </span>
+            {{getPartidoLideranca(lideranca)?.liderancaPartido.sigla}}
+          </div>
           <div class="d-none d-lg-block">
             <a
               [routerLink]="['/parlamentar', parlamentar.idParlamentarVoz]"
@@ -203,7 +213,7 @@
         [@openClose]="view !== VIEW_LG ? 'closed' : 'open'"
       >
         <div class="pt-3"></div>
-        <div class="mb-3">
+        <div class="my-3">
           Alinhamento por tema [em nº de votações]
           <div class="parlamentar-legend">
             <div>

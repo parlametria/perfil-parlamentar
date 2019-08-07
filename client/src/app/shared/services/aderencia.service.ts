@@ -95,6 +95,8 @@ export class AderenciaService {
     const nome = filters.nome;
     const partido = filters.partido;
     const comissao = filters.comissao;
+    const lideranca = filters.lideranca;
+    const cargoComissao = filters.cargoComissao;
 
     return parlamentar.filter(p => {
       let filtered;
@@ -112,6 +114,16 @@ export class AderenciaService {
       filtered =
         comissao && comissao !== '-1' && filtered
           ? p.comissoes.filter(com => com.idComissaoVoz === comissao).length > 0
+          : filtered;
+
+      filtered =
+        lideranca && lideranca !== 'Lideranças partidárias' && filtered
+          ? p.parlamentarLiderancas.filter(l => l.cargo === lideranca).length > 0
+          : filtered;
+
+      filtered =
+        cargoComissao && cargoComissao !== 'Cargo em comissões' && filtered
+          ? p.comissoes.filter(c => c.cargo === cargoComissao).length > 0
           : filtered;
 
       filtered =
@@ -135,7 +147,8 @@ export class AderenciaService {
       p.tema === q.tema &&
       p.partido === q.partido &&
       p.orientador === q.orientador &&
-      p.comissao === q.comissao;
+      p.comissao === q.comissao &&
+      p.lideranca === q.lideranca;
   }
 
   /**

@@ -18,6 +18,8 @@ import {
 
 import { ParlamentarAderencia } from 'src/app/shared/models/parlamentarAderencia.model';
 import { getClassCargo } from 'src/app/shared/functions/comissao';
+import { ComposicaoComissao } from 'src/app/shared/models/composicaoComissao.model';
+import { Lideranca } from 'src/app/shared/models/lideranca.model';
 
 @Component({
   selector: 'app-card-parlamentar',
@@ -72,11 +74,15 @@ export class CardParlamentarComponent implements OnChanges, OnInit {
   @Input() tema: number;
   @Input() temaSlug: string;
   @Input() comissao: string;
+  @Input() lideranca: string;
+  @Input() cargoComissao: string;
   @Input() view: any;
   @Output() followChecked = new EventEmitter<boolean>();
 
   readonly FILTRO_PADRAO_TEMA = 99;
   readonly FILTRO_PADRAO_ORIENTADOR = 'Governo';
+  readonly FILTRO_PADRAO_LIDERANCA = 'Lideranças partidárias';
+  readonly FILTRO_PADRAO_CARGO_COMISSAO = 'Cargo em comissões';
 
   aderencia: any;
   aderenciasTemas: any;
@@ -142,21 +148,34 @@ export class CardParlamentarComponent implements OnChanges, OnInit {
     return 0;
   }
 
-  getCargoByComissaoId(id: string) {
+  getComissaoById(id: string): ComposicaoComissao {
     const comissaoFiltrada = this.parlamentar.comissoes.filter(com => com.idComissaoVoz === id);
 
     if (comissaoFiltrada !== undefined && comissaoFiltrada.length > 0) {
-      return comissaoFiltrada[0].cargo;
+      return comissaoFiltrada[0];
     } else {
-      return '';
+      return null;
     }
+  }
 
+  getPartidoLideranca(cargo: string): Lideranca {
+    const partido = this.parlamentar.parlamentarLiderancas.filter(l => l.cargo === cargo);
+
+    if (partido !== undefined && partido.length > 0) {
+      return partido[0];
+    } else {
+      return null;
+    }
   }
 
   // Define a classe que será aplicada ao badge que indica o cargo do parlamentar na comissao
   setClasseCargoComissao() {
-    const cargo = this.getCargoByComissaoId(this.comissao);
-    this.classeCargoComissao = getClassCargo(cargo);
+    const comissao = this.getComissaoById(this.comissao);
+    if (comissao !== undefined && comissao !== null) {
+      this.classeCargoComissao = getClassCargo(comissao.cargo);
+    } else {
+      this.classeCargoComissao = '';
+    }
   }
 
   onAnimationStart(event: AnimationEvent) {

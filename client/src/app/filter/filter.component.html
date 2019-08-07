@@ -132,6 +132,48 @@
       </button>
     </div>
 
+    <div
+      class="btn-group mr-1 mb-1"
+      role="group"
+      aria-label="Filtro de liderança partidária"
+      [hidden]="filtro.lideranca == FILTRO_PADRAO_LIDERANCA"
+    >
+      <button
+        type="button"
+        class="btn btn-primary btn-sm"
+      >
+        {{this.liderancaSelecionada}}
+      </button>
+      <button
+        type="button"
+        class="btn btn-primary btn-sm"
+        (click)="limparFiltroLideranca()"
+      >
+        <span class="icon-x"></span>
+      </button>
+    </div>
+
+    <div
+      class="btn-group mr-1 mb-1"
+      role="group"
+      aria-label="Filtro de Cargo em comissão"
+      [hidden]="filtro.cargoComissao == FILTRO_PADRAO_CARGO_COMISSAO"
+    >
+      <button
+        type="button"
+        class="btn btn-primary btn-sm"
+      >
+        {{this.cargoComissaoSelecionado}}
+      </button>
+      <button
+        type="button"
+        class="btn btn-primary btn-sm"
+        (click)="limparFiltroCargoComissao()"
+      >
+        <span class="icon-x"></span>
+      </button>
+    </div>
+
   </div>
 
 </div>
@@ -190,7 +232,7 @@
       <div class="form-group">
         <select
           class="form-control"
-          id="partido"
+          id="comissao"
           [(ngModel)]="comissaoSelecionada"
           name="comissao"
         >
@@ -200,6 +242,38 @@
           >
             {{comissao.nome}}
             <span *ngIf="comissao.idComissaoVoz !== FILTRO_PADRAO_COMISSAO_VALUE">- {{comissao.sigla}}</span>
+          </option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <select
+          class="form-control"
+          id="lideranca"
+          [(ngModel)]="liderancaSelecionada"
+          name="lideranca"
+        >
+          <option
+            *ngFor="let lideranca of liderancas"
+            [value]="lideranca.cargo"
+          >
+            {{lideranca.cargo}}
+          </option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <select
+          class="form-control"
+          id="cargoComissao"
+          [(ngModel)]="cargoComissaoSelecionado"
+          name="cargoComissao"
+        >
+          <option
+            *ngFor="let cargoComissao of cargosComissao"
+            [value]="cargoComissao.cargo"
+          >
+            {{cargoComissao.cargo}}
           </option>
         </select>
       </div>
