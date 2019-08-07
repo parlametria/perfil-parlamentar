@@ -34,7 +34,7 @@
           class="btn btn-light btn-light-icon active"
           (click)="toggleOrderBy()"
         >
-          <span [ngClass]="{'icon-sort-amount-asc' : orderBy === 'ASC', 'icon-sort-amount-desc' : orderBy !== 'ASC'}"></span>
+          <span [ngClass]="{'icon-sort-amount-asc' : orderBy !== 'DESC', 'icon-sort-amount-desc' : orderBy === 'DESC'}"></span>
         </button>
       </div>
     </div>

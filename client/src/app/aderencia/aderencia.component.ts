@@ -37,7 +37,7 @@ export class AderenciaComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.view = this.VIEW_LG;
     this.getParlamentares();
-    this.orderBy = 'DES';
+    this.orderBy = 'DESC';
     this.orientador = 'Governo';
   }
 
@@ -97,10 +97,10 @@ export class AderenciaComponent implements OnInit, OnDestroy {
   }
 
   toggleOrderBy() {
-    if (this.orderBy === 'ASC') {
-      this.setOrderBy('DSC');
-    } else {
+    if (this.orderBy === 'DESC') {
       this.setOrderBy('ASC');
+    } else {
+      this.setOrderBy('DESC');
     }
   }
 

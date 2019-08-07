@@ -77,7 +77,7 @@ export class CongressoAderenciaComponent implements OnInit, OnDestroy {
   search(filter: any) {
     this.filtro = filter;
     this.filtro.orientador = this.orientador;
-    this.aderenciaService.search(filter, 'ASC');
+    this.aderenciaService.search(filter, 'DESC');
   }
 
   setView(view: string) {
