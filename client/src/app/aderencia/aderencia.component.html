@@ -3,12 +3,12 @@
   <h4 class="title-main">Alinhamento dos deputados ao Governo</h4>
   <app-filter (filterChange)="search($event)"></app-filter>
 
-  <div class="row no-gutters my-3">
-    <div class="col-6 col-md-12 parlamentar-count">
+  <header class="controls row no-gutters my-3">
+    <div class="col-4 col-md-12 parlamentar-count">
       <strong class="strong">{{ parlamentares.length }}</strong>
       deputados
     </div>
-    <div class="col-6 col-md-12">
+    <div class="col-8 col-md-12">
       <div class="btn-toolbar">
         <div class="d-none d-md-block">Exibir:</div>
         <button
@@ -38,7 +38,7 @@
         </button>
       </div>
     </div>
-  </div>
+  </header>
 
   <pagination-template
     #pag="paginationApi"
