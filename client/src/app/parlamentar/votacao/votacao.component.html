@@ -32,8 +32,9 @@
             *ngFor="let votacao of proposicao?.proposicaoVotacoes"
             [ngbPopover]="tooltipVotacoes"
             [popoverClass]="'popover-lg'"
-            container='body'
-            triggers="mouseenter:mouseleave"
+            [container]="'body'"
+            [triggers]="'click'"
+            [autoClose]="'outside'"
           >
             <div [ngClass]="getClass(parlamentar?.votos[votacao.idVotacao])">
               <span class="d-none">

@@ -1,6 +1,7 @@
 import { Partido } from './partido.model';
 import { ComposicaoComissao } from './composicaoComissao.model';
 import { AderenciaDados } from './aderencia.model';
+import { Lideranca } from './lideranca.model';
 
 export class ParlamentarAderencia {
 
@@ -11,6 +12,7 @@ export class ParlamentarAderencia {
   public emExercicio: boolean;
   public aderencia?: AderenciaDados[];
   public comissoes?: ComposicaoComissao[];
+  public parlamentarLiderancas?: Lideranca[];
   public parlamentarPartido: Partido;
 
   constructor(parlamentar: any) {
@@ -22,6 +24,7 @@ export class ParlamentarAderencia {
     this.aderencia = parlamentar.parlamentarAderencia;
     this.comissoes = parlamentar.parlamentarComissoes;
     this.parlamentarPartido = parlamentar.parlamentarPartido;
+    this.parlamentarLiderancas = parlamentar.parlamentarLiderancas;
   }
 
   getFoto(): string {

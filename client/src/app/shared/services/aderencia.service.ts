@@ -27,6 +27,7 @@ export class AderenciaService {
 
   private searchfilters = new BehaviorSubject<any>({});
   private tema: number;
+  private orderBy = 'DESC';
   private orientador = 'Governo';
 
   private parlamentaresFiltered = new BehaviorSubject<Array<ParlamentarAderencia>>([]);
@@ -53,9 +54,15 @@ export class AderenciaService {
             idTema = this.ID_TEMA_GERAL;
           }
 
-          return parlamentares.sort((a, b) => {
-            return this.sort(a, b, idTema);
-          });
+          if (this.orderBy === 'DESC') {
+            return parlamentares.sort((a, b) => {
+              return this.sort(a, b, idTema);
+            });
+          } else {
+            return parlamentares.sort((a, b) => {
+              return this.sort(b, a, idTema);
+            });
+          }
         }),
       )
       .subscribe(res => {
@@ -84,10 +91,11 @@ export class AderenciaService {
       .pipe(map(data => data.map(parlamentar => new ParlamentarAderencia(parlamentar))));
   }
 
-  search(filters: any) {
-    this.searchfilters.next(filters);
+  search(filters: any, orderBy: string) {
     this.tema = filters.tema;
+    this.orderBy = orderBy;
     this.orientador = filters.orientador;
+    this.searchfilters.next(filters);
   }
 
   private filter(parlamentar: ParlamentarAderencia[], filters: any) {
@@ -95,6 +103,8 @@ export class AderenciaService {
     const nome = filters.nome;
     const partido = filters.partido;
     const comissao = filters.comissao;
+    const lideranca = filters.lideranca;
+    const cargoComissao = filters.cargoComissao;
 
     return parlamentar.filter(p => {
       let filtered;
@@ -112,6 +122,16 @@ export class AderenciaService {
       filtered =
         comissao && comissao !== '-1' && filtered
           ? p.comissoes.filter(com => com.idComissaoVoz === comissao).length > 0
+          : filtered;
+
+      filtered =
+        lideranca && lideranca !== 'Lideranças partidárias' && filtered
+          ? p.parlamentarLiderancas.filter(l => l.cargo === lideranca).length > 0
+          : filtered;
+
+      filtered =
+        cargoComissao && cargoComissao !== 'Cargo em comissões' && filtered
+          ? p.comissoes.filter(c => c.cargo === cargoComissao).length > 0
           : filtered;
 
       filtered =
@@ -135,7 +155,8 @@ export class AderenciaService {
       p.tema === q.tema &&
       p.partido === q.partido &&
       p.orientador === q.orientador &&
-      p.comissao === q.comissao;
+      p.comissao === q.comissao &&
+      p.lideranca === q.lideranca;
   }
 
   /**
