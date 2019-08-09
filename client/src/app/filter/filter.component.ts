@@ -7,10 +7,12 @@ import { takeUntil } from 'rxjs/operators';
 
 import { estados } from '../shared/constants/estados';
 import { ParlamentarService } from '../shared/services/parlamentar.service';
-import { TemaService } from '../shared/services/tema.service';
-import { ComissaoService } from '../shared/services/comissao.service';
 import { Tema } from '../shared/models/tema.model';
+import { TemaService } from '../shared/services/tema.service';
 import { Comissao } from '../shared/models/comissao.model';
+import { ComissaoService } from '../shared/services/comissao.service';
+import { Lideranca } from '../shared/models/lideranca.model';
+import { LiderancaService } from '../shared/services/lideranca.service';
 
 @Component({
   selector: 'app-filter',
@@ -27,6 +29,8 @@ export class FilterComponent implements OnInit, OnDestroy {
   readonly FILTRO_PADRAO_COMISSAO_VALUE = '-1';
   readonly FILTRO_PADRAO_TEMA = -1;
   readonly FILTRO_PADRAO_TEMA_SLUG = 'todos';
+  readonly FILTRO_PADRAO_LIDERANCA = 'Lideranças partidárias';
+  readonly FILTRO_PADRAO_CARGO_COMISSAO = 'Cargo em comissões';
 
   filtro: any;
 
@@ -38,12 +42,16 @@ export class FilterComponent implements OnInit, OnDestroy {
   partidosFiltradosPorEstado: string[];
   temas: Tema[];
   comissoes: Comissao[];
+  liderancas: Lideranca[];
+  cargosComissao: Lideranca[];
 
   temaSelecionado: number;
   estadoSelecionado: string;
   nomePesquisado: string;
   partidoSelecionado: string;
   comissaoSelecionada: string;
+  liderancaSelecionada: string;
+  cargoComissaoSelecionado: string;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -51,13 +59,16 @@ export class FilterComponent implements OnInit, OnDestroy {
     private modalService: NgbModal,
     private parlamentarService: ParlamentarService,
     private temaService: TemaService,
-    private comissaoService: ComissaoService
+    private comissaoService: ComissaoService,
+    private liderancaService: LiderancaService
   ) {
     this.estados = estados;
     this.estadoSelecionado = this.FILTRO_PADRAO_ESTADO;
     this.partidoSelecionado = this.FILTRO_PADRAO_PARTIDO;
     this.temaSelecionado = this.FILTRO_PADRAO_TEMA;
     this.comissaoSelecionada = this.FILTRO_PADRAO_COMISSAO_VALUE;
+    this.liderancaSelecionada = this.FILTRO_PADRAO_LIDERANCA;
+    this.cargoComissaoSelecionado = this.FILTRO_PADRAO_CARGO_COMISSAO;
 
     this.filtro = {
       nome: '',
@@ -66,6 +77,8 @@ export class FilterComponent implements OnInit, OnDestroy {
       comissao: this.comissaoSelecionada,
       tema: this.temaSelecionado,
       temaSlug: this.FILTRO_PADRAO_TEMA_SLUG,
+      lideranca: this.liderancaSelecionada,
+      cargoComissao: this.cargoComissaoSelecionado,
       default: true
     };
   }
@@ -82,6 +95,8 @@ export class FilterComponent implements OnInit, OnDestroy {
 
     this.getTemas();
     this.getComissoes();
+    this.getLiderancas();
+    this.getCargosComissao();
   }
 
   open(content) {
@@ -109,6 +124,8 @@ export class FilterComponent implements OnInit, OnDestroy {
       tema: this.temaSelecionado,
       temaSlug: this.temaService.getTemaSlugById(this.temas, this.temaSelecionado),
       orientador: undefined,
+      lideranca: this.liderancaSelecionada,
+      cargoComissao: this.cargoComissaoSelecionado,
       default: this.isFiltroDefault()
     };
 
@@ -124,6 +141,8 @@ export class FilterComponent implements OnInit, OnDestroy {
     this.comissaoSelecionada = this.FILTRO_PADRAO_COMISSAO_VALUE;
     this.nomePesquisado = '';
     this.temaSelecionado = this.FILTRO_PADRAO_TEMA;
+    this.liderancaSelecionada = this.FILTRO_PADRAO_LIDERANCA;
+    this.cargoComissaoSelecionado = this.FILTRO_PADRAO_CARGO_COMISSAO;
 
     this.aplicarFiltro();
   }
@@ -149,6 +168,16 @@ export class FilterComponent implements OnInit, OnDestroy {
     this.aplicarFiltro();
   }
 
+  limparFiltroLideranca() {
+    this.liderancaSelecionada = this.FILTRO_PADRAO_LIDERANCA;
+    this.aplicarFiltro();
+  }
+
+  limparFiltroCargoComissao() {
+    this.cargoComissaoSelecionado = this.FILTRO_PADRAO_CARGO_COMISSAO;
+    this.aplicarFiltro();
+  }
+
   getTemas() {
     this.temaService.getTemas().pipe(takeUntil(this.unsubscribe)).subscribe((temas) => {
       this.temas = temas;
@@ -167,6 +196,20 @@ export class FilterComponent implements OnInit, OnDestroy {
       });
 
       this.comissoes = comissoes;
+    });
+  }
+
+  getLiderancas() {
+    this.liderancaService.getLiderancas().pipe(takeUntil(this.unsubscribe)).subscribe((liderancas) => {
+      this.liderancas = liderancas;
+      this.liderancas.unshift({ cargo: this.FILTRO_PADRAO_LIDERANCA });
+    });
+  }
+
+  getCargosComissao() {
+    this.comissaoService.getCargos().pipe(takeUntil(this.unsubscribe)).subscribe((cargos) => {
+      this.cargosComissao = cargos;
+      this.cargosComissao.unshift({ cargo: this.FILTRO_PADRAO_CARGO_COMISSAO });
     });
   }
 
@@ -193,7 +236,10 @@ export class FilterComponent implements OnInit, OnDestroy {
     return ((this.filtro.nome === '' || typeof this.filtro.nome === 'undefined') &&
       this.filtro.estado === this.FILTRO_PADRAO_ESTADO &&
       this.filtro.partido === this.FILTRO_PADRAO_PARTIDO &&
-      this.filtro.tema === this.FILTRO_PADRAO_TEMA);
+      this.filtro.tema === this.FILTRO_PADRAO_TEMA &&
+      this.filtro.comissao === this.FILTRO_PADRAO_COMISSAO &&
+      this.filtro.lideranca === this.FILTRO_PADRAO_LIDERANCA &&
+      this.filtro.cargoComissao === this.FILTRO_PADRAO_CARGO_COMISSAO);
   }
 
   getComissaoById(id: string) {
@@ -216,6 +262,12 @@ export class FilterComponent implements OnInit, OnDestroy {
 
   private updateUrlFiltro(filtro: any) {
     const queryParams: Params = Object.assign({}, this.activatedRoute.snapshot.queryParams);
+
+    if (filtro.tema !== this.FILTRO_PADRAO_TEMA) {
+      queryParams.tema = filtro.tema;
+    } else {
+      delete queryParams.tema;
+    }
 
     if (filtro.nome !== '' && filtro.nome !== undefined) {
       queryParams.nome = filtro.nome;
@@ -241,10 +293,16 @@ export class FilterComponent implements OnInit, OnDestroy {
       delete queryParams.comissao;
     }
 
-    if (filtro.tema !== this.FILTRO_PADRAO_TEMA) {
-      queryParams.tema = filtro.tema;
+    if (filtro.lideranca !== this.FILTRO_PADRAO_LIDERANCA) {
+      queryParams.lideranca = filtro.lideranca;
     } else {
-      delete queryParams.tema;
+      delete queryParams.lideranca;
+    }
+
+    if (filtro.cargoComissao !== this.FILTRO_PADRAO_CARGO_COMISSAO) {
+      queryParams.cargoComissao = filtro.cargoComissao;
+    } else {
+      delete queryParams.cargoComissao;
     }
 
     this.router.navigate([], { queryParams });
@@ -254,6 +312,9 @@ export class FilterComponent implements OnInit, OnDestroy {
     this.activatedRoute.queryParams.subscribe(
       params => {
         Object.keys(params).forEach(value => {
+          if (value === 'tema') {
+            this.temaSelecionado = Number(params[value]);
+          }
           if (value === 'nome') {
             this.nomePesquisado = params[value];
           }
@@ -266,8 +327,11 @@ export class FilterComponent implements OnInit, OnDestroy {
           if (value === 'comissao') {
             this.comissaoSelecionada = params[value];
           }
-          if (value === 'tema') {
-            this.temaSelecionado = Number(params[value]);
+          if (value === 'lideranca') {
+            this.liderancaSelecionada = params[value];
+          }
+          if (value === 'cargoComissao') {
+            this.cargoComissaoSelecionado = params[value];
           }
         });
 

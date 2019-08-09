@@ -17,6 +17,7 @@ const comissoes = require("./routes/api/comissoes");
 const parlamentares = require("./routes/api/parlamentares");
 const aderencia = require("./routes/api/aderencia");
 const orientacoes = require("./routes/api/orientacoes");
+const liderancas = require("./routes/api/liderancas");
 
 const app = express();
 app.use(forceSsl);
@@ -57,6 +58,7 @@ app.use("/api/comissoes", comissoes);
 app.use("/api/parlamentares", parlamentares);
 app.use("/api/aderencia", aderencia);
 app.use("/api/orientacoes", orientacoes);
+app.use("/api/liderancas", liderancas);
 
 // Set static folder
 app.use(express.static("client/build"));
