@@ -24,7 +24,8 @@ const att = [
   ["nome_eleitoral", "nomeEleitoral"],
   "uf",
   "genero",
-  ["em_exercicio", "emExercicio"]
+  ["em_exercicio", "emExercicio"],
+  "casa"
 ];
 const attComissoes = ["sigla", "nome"];
 const attComposicaoComissoes = [["id_comissao_voz", "idComissaoVoz"], "cargo"];
@@ -92,8 +93,11 @@ router.get("/", (req, res) => {
     include: [{
       model: Partido,
       as: "parlamentarPartido",
-      attributes: attPartido
-    }]
+      attributes: attPartido,
+    }],
+    where: {
+      casa: 'camara'
+    }
   })
     .then(parlamentares => res.json(parlamentares))
     .catch(err => res.status(BAD_REQUEST).json({ err }));
@@ -108,7 +112,8 @@ router.get("/partidos", (req, res) => {
   Parlamentar.findAll({
     attributes: att,
     where: {
-      em_exercicio: true
+      em_exercicio: true,
+      casa: 'camara'
     },
     include: [{
       model: Partido,

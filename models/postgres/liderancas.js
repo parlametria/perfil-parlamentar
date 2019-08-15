@@ -10,7 +10,8 @@ module.exports = (sequelize, type) => {
         type: type.STRING,
         primaryKey: true
       },
-      cargo: type.STRING
+      cargo: type.STRING,
+      casa: type.STRING
     },
     {
       timestamps: false
