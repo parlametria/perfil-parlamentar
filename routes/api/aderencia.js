@@ -110,7 +110,8 @@ router.get("/parlamentar", (req, res) => {
       },
     ],
     where: {
-      em_exercicio: true
+      em_exercicio: true,
+      casa: 'camara'
     }
   })
     .then(parlamentares => res.status(SUCCESS).json(parlamentares))
