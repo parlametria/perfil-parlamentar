@@ -1,7 +1,7 @@
 {
   "name": "Voz Ativa",
   "short_name": "Voz Ativa",
-  "description": "Descubra quais deputados/as são alinhados com você.",
+  "description": "Quem são os alinhados ao Governo na Câmara?",
   "lang": "pt-BR",
   "start_url": "index.html",
   "display": "standalone",
