@@ -1,5 +1,10 @@
 # Changelog
 
+## 3.1.1 (2019-08-16)
+
+- [x] Atualiza descrição do app
+- [x] Resolução de bugs
+
 ## 3.1.0 (2019-08-08)
 
 - [x] Cria filtro de lideranças partidárias
