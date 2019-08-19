@@ -109,4 +109,9 @@ export class VotacaoComponent implements OnInit {
     return textoVoto;
   }
 
+  getId(id: number): string {
+    const str = id + '';
+    return str.substring(1, str.length);
+  }
+
 }
