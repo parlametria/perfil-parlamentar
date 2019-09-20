@@ -16,7 +16,10 @@ const ComposicaoComissoes = models.composicaoComissoes;
 router.get("/", (req, res) => {
   Comissoes.findAll({
     attributes: [["id_comissao_voz", "idComissaoVoz"], "sigla", "nome"],
-    order: ['nome']
+    order: ['nome'],
+    where: {
+      casa: "camara"
+    }
   })
     .then(comissoes => res.status(200).json(comissoes))
     .catch(err => res.status(400).json(err.message));
@@ -66,7 +69,7 @@ router.get("/membros", (req, res) => {
  */
 router.get("/cargos", (req, res) => {
   ComposicaoComissoes.findAll({
-    attributes: [[Sequelize.fn('DISTINCT', Sequelize.col('cargo')) ,'cargo']]
+    attributes: [[Sequelize.fn('DISTINCT', Sequelize.col('cargo')), 'cargo']]
   })
     .then(composicao => res.status(200).json(composicao))
     .catch(err => res.status(400).json(err.message));
