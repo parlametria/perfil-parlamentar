@@ -1,8 +1,10 @@
 const express = require("express");
 const router = express.Router();
+const { validationResult } = require('express-validator');
 
 const models = require("../../models/index");
 const { formataVotacoes } = require("../../utils/functions");
+const casaValidator = require("../../utils/middlewares/casa.validator");
 
 const Parlamentar = models.parlamentar;
 const Votacao = models.votacao;
@@ -106,47 +108,57 @@ router.get("/", (req, res) => {
 /**
  * Pega os partidos distintos de um estado
  * @name get/api/parlamentares/partidos
+ * @param casa Casa de origem do deputado. Pode ser "camara" (default) ou "senado".
  * @memberof module:routes/parlamentares 
  */
-router.get("/partidos", (req, res) => {
-  Parlamentar.findAll({
-    attributes: att,
-    where: {
-      em_exercicio: true,
-      casa: 'camara'
-    },
-    include: [{
-      model: Partido,
-      as: "parlamentarPartido"
-    }]
-  })
-    .then(parlamentares => {
-      let partidosPorEstado = []
+router.get("/partidos", casaValidator.validaParametroCasa, (req, res) => {
 
-      const estados = [...new Set(parlamentares.map(item => item.uf))];
+    const errors = validationResult(req);
 
-      estados.push("Estados");
+    if (!errors.isEmpty()) {
+      return res.status(BAD_REQUEST).json({ errors: errors.array() });
+    }
 
-      estados.forEach(estado => {
-        let parlamentaresFiltered;
-        if (estado !== "Estados")
-          parlamentaresFiltered = parlamentares.filter(value => value.uf === estado);
-        else
-          parlamentaresFiltered = parlamentares;        
-        
-        const partidosSet = new Set();
+    const casa = req.param("casa") || "camara"
 
-        parlamentaresFiltered.forEach(cand => {
-          partidosSet.add(cand.parlamentarPartido.sigla);
-        });
-        
-        partidosPorEstado.push({ estado: estado, partidos: [...partidosSet].sort((a, b) => a.localeCompare(b)) });
-      });      
-
-      res.json(partidosPorEstado);
+    Parlamentar.findAll({
+      attributes: att,
+      where: {
+        em_exercicio: true,
+        casa: casa
+      },
+      include: [{
+        model: Partido,
+        as: "parlamentarPartido"
+      }]
     })
-    .catch(err => res.status(BAD_REQUEST).json({ error: err.message }));
-});
+      .then(parlamentares => {
+        let partidosPorEstado = []
+
+        const estados = [...new Set(parlamentares.map(item => item.uf))];
+
+        estados.push("Estados");
+
+        estados.forEach(estado => {
+          let parlamentaresFiltered;
+          if (estado !== "Estados")
+            parlamentaresFiltered = parlamentares.filter(value => value.uf === estado);
+          else
+            parlamentaresFiltered = parlamentares;
+
+          const partidosSet = new Set();
+
+          parlamentaresFiltered.forEach(cand => {
+            partidosSet.add(cand.parlamentarPartido.sigla);
+          });
+
+          partidosPorEstado.push({ estado: estado, partidos: [...partidosSet].sort((a, b) => a.localeCompare(b)) });
+        });
+
+        res.json(partidosPorEstado);
+      })
+      .catch(err => res.status(BAD_REQUEST).json({ error: err.message }));
+  });
 
 
 /**
@@ -158,7 +170,7 @@ router.get("/partidos", (req, res) => {
 router.get("/mapeamento-id", (req, res) => {
   Parlamentar
     .findAll({
-      attributes: ["id_parlamentar", "id_parlamentar_voz"]      
+      attributes: ["id_parlamentar", "id_parlamentar_voz"]
     })
     .then(parlamentares => res.status(SUCCESS).json(parlamentares))
     .catch(err => res.status(BAD_REQUEST).json({ err: err.message }));
@@ -190,19 +202,19 @@ router.get("/:id", (req, res) => {
 * @param {string} id - id do parlamentar na plataforma Voz Ativa
 */
 router.get("/:id/info", (req, res) => {
- Parlamentar.findOne({
-   attributes: ["id_parlamentar_voz", "id_parlamentar", "casa", "nome_eleitoral","uf", "em_exercicio"],
-   where: {
-     id_parlamentar_voz: req.params.id
-   },
-   include: [{
-    model: Partido,
-    as: "parlamentarPartido",
-    attributes: attPartido
-  }]
- })
-   .then(parlamentar => res.json(parlamentar))
-   .catch(err => res.status(BAD_REQUEST).json({ err }));
+  Parlamentar.findOne({
+    attributes: ["id_parlamentar_voz", "id_parlamentar", "casa", "nome_eleitoral", "uf", "em_exercicio"],
+    where: {
+      id_parlamentar_voz: req.params.id
+    },
+    include: [{
+      model: Partido,
+      as: "parlamentarPartido",
+      attributes: attPartido
+    }]
+  })
+    .then(parlamentar => res.json(parlamentar))
+    .catch(err => res.status(BAD_REQUEST).json({ err }));
 });
 
 /**
@@ -217,7 +229,7 @@ router.get("/:id/posicoes", (req, res) => {
     attributes: [["id_parlamentar_voz", "idParlamentarVoz"], "genero"],
     include: [
       {
-        model: Voto,        
+        model: Voto,
         as: "votos",
         attributes: attVotacao,
         required: false,
@@ -238,9 +250,9 @@ router.get("/:id/posicoes", (req, res) => {
     ],
     where: { id_parlamentar_voz: req.params.id }
   })
-    .then(votacoes => {      
+    .then(votacoes => {
       novaVotacao = formataVotacoes(votacoes);
-      return res.json(novaVotacao[0]);         
+      return res.json(novaVotacao[0]);
     })
     .catch(err => res.status(BAD_REQUEST).json({ err: err.message }));
 });
@@ -257,7 +269,7 @@ router.get("/:id/votos", (req, res) => {
     attributes: [["id_parlamentar_voz", "idParlamentarVoz"], "genero"],
     include: [
       {
-        model: Voto,        
+        model: Voto,
         as: "votos",
         attributes: attVotacao,
         required: false,
@@ -278,9 +290,9 @@ router.get("/:id/votos", (req, res) => {
     ],
     where: { id_parlamentar_voz: req.params.id }
   })
-    .then(votacoes => {      
+    .then(votacoes => {
       novaVotacao = formataVotacoes(votacoes);
-      return res.json(novaVotacao[0]);         
+      return res.json(novaVotacao[0]);
     })
     .catch(err => res.status(BAD_REQUEST).json({ err: err.message }));
 });
@@ -313,7 +325,7 @@ router.get("/:id/comissoes", (req, res) => {
     ],
     where: { id_parlamentar_voz: req.params.id }
   })
-    .then(parlamentar => {      
+    .then(parlamentar => {
       return res.json(parlamentar);
     })
     .catch(err => res.status(BAD_REQUEST).json({ err: err.message }));
@@ -331,7 +343,7 @@ router.get("/:id/liderancas", (req, res) => {
     attributes: [["id_parlamentar_voz", "idParlamentarVoz"]],
     include: [
       {
-        model: Liderancas,  
+        model: Liderancas,
         attributes: ["cargo"],
         as: "parlamentarLiderancas",
         required: false,
@@ -347,7 +359,7 @@ router.get("/:id/liderancas", (req, res) => {
     ],
     where: { id_parlamentar_voz: req.params.id }
   })
-    .then(parlamentar => {      
+    .then(parlamentar => {
       return res.json(parlamentar);
     })
     .catch(err => res.status(BAD_REQUEST).json({ err: err.message }));
