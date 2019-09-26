@@ -108,10 +108,10 @@ router.get("/", (req, res) => {
 /**
  * Pega os partidos distintos de um estado
  * @name get/api/parlamentares/partidos
- * @param casa Casa de origem do deputado. Pode ser "camara" (default) ou "senado".
+ * @apiparam Casa Casa de origem do parlamentar. Pode ser "camara" (default) ou "senado".
  * @memberof module:routes/parlamentares 
  */
-router.get("/partidos", casaValidator.validaParametroCasa, (req, res) => {
+router.get("/partidos", casaValidator.validate, (req, res) => {
 
     const errors = validationResult(req);
 
