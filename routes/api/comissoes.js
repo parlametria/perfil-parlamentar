@@ -10,7 +10,6 @@ const models = require("../../models/index");
 const Comissoes = models.comissoes;
 const ComposicaoComissoes = models.composicaoComissoes;
 
-const sequelize = models.sequelize;
 
 /**
  * Recupera lista de Comissões
