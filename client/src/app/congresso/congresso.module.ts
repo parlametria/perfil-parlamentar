@@ -6,13 +6,13 @@ import { CongressoRoutingModule } from './congresso-routing.module';
 import { FilterModule } from '../filter/filter.module';
 import { SharedModule } from '../shared/components/shared.module';
 
-import { CongressoComponent } from './congresso.component';
+import { CongressoAlinhamentoComponent } from './congresso-alinhamento/congresso-alinhamento.component';
 import { CongressoChartComponent } from './congresso-chart/congresso-chart.component';
 import { CongressoAderenciaComponent } from './congresso-aderencia/congresso-aderencia.component';
 
 @NgModule({
   declarations: [
-    CongressoComponent,
+    CongressoAlinhamentoComponent,
     CongressoChartComponent,
     CongressoAderenciaComponent
   ],

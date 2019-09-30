@@ -1,6 +1,6 @@
 <app-sticky-footer-navbar></app-sticky-footer-navbar>
 <div class="container py-4 container-sticky-footer-navbar">
-  <h4 class="title-main">Alinhamento da câmara ao Governo</h4>
+  <h4 class="title-main">Alinhamento da {{ casa }} ao Governo</h4>
   <app-filter (filterChange)="search($event)"></app-filter>
 
   <div [hidden]="isLoading">

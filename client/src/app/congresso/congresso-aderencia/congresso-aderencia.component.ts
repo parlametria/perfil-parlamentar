@@ -1,7 +1,8 @@
 import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { takeUntil, switchMap } from 'rxjs/operators';
 
 import { AderenciaService } from 'src/app/shared/services/aderencia.service';
 
@@ -24,54 +25,60 @@ export class CongressoAderenciaComponent implements OnInit, OnDestroy {
 
   filtro: any;
   orientador: string;
+  casa: string;
   view: any;
   isLoading: boolean;
-
 
   private unsubscribe = new Subject();
 
   constructor(
+    private activatedroute: ActivatedRoute,
     private aderenciaService: AderenciaService,
     private cdr: ChangeDetectorRef
-    ) { }
+  ) { }
 
   ngOnInit() {
     this.isLoading = true;
     this.view = this.VIEW_ARC;
     this.orientador = 'Governo';
+    this.activatedroute.paramMap
+      .pipe(takeUntil(this.unsubscribe))
+      .subscribe(params => {
+        this.casa = params.get('casa');
+      });
     this.getParlamentares();
     this.getAderencia();
   }
 
   getParlamentares() {
     this.aderenciaService
-    .getAderencia()
-    .pipe(takeUntil(this.unsubscribe))
-    .subscribe(
-      parlamentares => {
-        this.parlamentares = parlamentares;
-      },
-      error => console.log(error)
-    );
+      .getAderencia()
+      .pipe(takeUntil(this.unsubscribe))
+      .subscribe(
+        parlamentares => {
+          this.parlamentares = parlamentares;
+        },
+        error => console.log(error)
+      );
   }
 
   getAderencia() {
     this.aderenciaService
-    .getAderenciaAsObservable()
-    .pipe(takeUntil(this.unsubscribe))
-    .subscribe(
-      parlamentares => {
-        let idTema = this.filtro.tema;
+      .getAderenciaAsObservable()
+      .pipe(takeUntil(this.unsubscribe))
+      .subscribe(
+        parlamentares => {
+          let idTema = this.filtro.tema;
 
-        if (this.filtro.tema === this.FILTRO_PADRAO_TEMA) {
-          idTema = this.ID_TEMA_GERAL;
+          if (this.filtro.tema === this.FILTRO_PADRAO_TEMA) {
+            idTema = this.ID_TEMA_GERAL;
+          }
+
+          this.parlamentaresCompleto = parlamentares.sort((a, b) => {
+            return this.aderenciaService.sort(a, b, idTema);
+          });
         }
-
-        this.parlamentaresCompleto = parlamentares.sort((a, b) => {
-          return this.aderenciaService.sort(a, b, idTema);
-        });
-      }
-    );
+      );
   }
 
   search(filter: any) {
