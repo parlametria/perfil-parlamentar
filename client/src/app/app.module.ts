@@ -25,6 +25,7 @@ import { UserService } from './shared/services/user.service';
 import { AlinhamentoService } from './shared/services/alinhamento.service';
 import { ParlamentarService } from './shared/services/parlamentar.service';
 import { AderenciaService } from './shared/services/aderencia.service';
+import { CasaService } from './shared/services/casa.service';
 import { UpdateService } from './shared/services/update.service';
 import { environment } from '../environments/environment';
 
@@ -53,6 +54,7 @@ import { environment } from '../environments/environment';
     AlinhamentoService,
     ParlamentarService,
     AderenciaService,
+    CasaService,
     UpdateService,
     {
       provide: AuthServiceConfig,
