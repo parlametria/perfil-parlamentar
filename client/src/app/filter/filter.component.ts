@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output, OnDestroy } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, OnDestroy, Input } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -13,6 +13,7 @@ import { Comissao } from '../shared/models/comissao.model';
 import { ComissaoService } from '../shared/services/comissao.service';
 import { Lideranca } from '../shared/models/lideranca.model';
 import { LiderancaService } from '../shared/services/lideranca.service';
+import { CasaService } from '../shared/services/casa.service';
 
 @Component({
   selector: 'app-filter',
@@ -60,7 +61,8 @@ export class FilterComponent implements OnInit, OnDestroy {
     private parlamentarService: ParlamentarService,
     private temaService: TemaService,
     private comissaoService: ComissaoService,
-    private liderancaService: LiderancaService
+    private liderancaService: LiderancaService,
+    private casaService: CasaService
   ) {
     this.estados = estados;
     this.estadoSelecionado = this.FILTRO_PADRAO_ESTADO;
@@ -84,17 +86,22 @@ export class FilterComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.parlamentarService.getPartidosPorEstado().pipe(takeUntil(this.unsubscribe)).subscribe(
-      partidos => {
-        this.partidosPorEstado = partidos;
-        this.onChangeEstado();
-      }
-    );
+    this.parlamentarService
+      .getPartidosPorEstado()
+      .pipe(takeUntil(this.unsubscribe))
+      .subscribe(
+        partidos => {
+          this.partidosPorEstado = partidos;
+          this.onChangeEstado();
+        }
+      );
+    this.casaService.get().subscribe(casa => {
+      this.getComissoes(casa);
+    });
 
     this.updateFiltroViaUrl();
 
     this.getTemas();
-    this.getComissoes();
     this.getLiderancas();
     this.getCargosComissao();
   }
@@ -184,8 +191,8 @@ export class FilterComponent implements OnInit, OnDestroy {
     });
   }
 
-  getComissoes() {
-    this.comissaoService.getComissoes().pipe(takeUntil(this.unsubscribe)).subscribe((comissoes) => {
+  getComissoes(casa: string) {
+    this.comissaoService.getComissoes(casa).pipe(takeUntil(this.unsubscribe)).subscribe((comissoes) => {
 
       comissoes.map(com => com.nome = com.nome.substr(12));
 

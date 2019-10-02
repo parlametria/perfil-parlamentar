@@ -5,8 +5,8 @@ import { Subject } from 'rxjs';
 import { takeUntil, switchMap } from 'rxjs/operators';
 
 import { AderenciaService } from 'src/app/shared/services/aderencia.service';
-
 import { ParlamentarAderencia } from 'src/app/shared/models/parlamentarAderencia.model';
+import { CasaService } from 'src/app/shared/services/casa.service';
 
 @Component({
   selector: 'app-congresso-aderencia',
@@ -34,6 +34,7 @@ export class CongressoAderenciaComponent implements OnInit, OnDestroy {
   constructor(
     private activatedroute: ActivatedRoute,
     private aderenciaService: AderenciaService,
+    private casaService: CasaService,
     private cdr: ChangeDetectorRef
   ) { }
 
@@ -44,6 +45,7 @@ export class CongressoAderenciaComponent implements OnInit, OnDestroy {
     this.activatedroute.paramMap
       .pipe(takeUntil(this.unsubscribe))
       .subscribe(params => {
+        this.casaService.set(params.get('casa'));
         this.casa = params.get('casa');
       });
     this.getParlamentares();
