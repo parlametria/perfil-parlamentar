@@ -8,6 +8,11 @@ const routes: Routes = [
     path: '',
     component: AderenciaComponent,
     data: { animation: 'AderenciaComponent' }
+  },
+  {
+    path: ':casa',
+    component: AderenciaComponent,
+    data: { animation: 'AderenciaComponent' }
   }
 ];
 
