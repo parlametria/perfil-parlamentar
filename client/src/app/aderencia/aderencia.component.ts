@@ -100,6 +100,11 @@ export class AderenciaComponent implements OnInit, OnDestroy {
 
   setView(view: string) {
     this.view = view;
+
+    const queryParams: Params = Object.assign({}, this.activatedRoute.snapshot.queryParams);
+    queryParams.view = view;
+    this.router.navigate([], { queryParams });
+
     this.cdr.detectChanges();
   }
 

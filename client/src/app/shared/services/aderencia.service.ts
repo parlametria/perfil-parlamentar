@@ -105,14 +105,19 @@ export class AderenciaService {
     const comissao = filters.comissao;
     const lideranca = filters.lideranca;
     const cargoComissao = filters.cargoComissao;
+    const casa = filters.casa;
 
     return parlamentar.filter(p => {
       let filtered;
 
       filtered =
-        estado && estado !== 'Estados'
-          ? p.uf.toLowerCase() === estado.toLowerCase()
+        casa ? p.casa.toLowerCase() === casa.toLowerCase()
           : true;
+
+      filtered =
+        estado && estado !== 'Estados' && filtered
+          ? p.uf.toLowerCase() === estado.toLowerCase()
+          : filtered;
 
       filtered =
         partido && partido !== 'Partidos' && filtered

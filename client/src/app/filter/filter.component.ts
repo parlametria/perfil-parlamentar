@@ -53,6 +53,7 @@ export class FilterComponent implements OnInit, OnDestroy {
   comissaoSelecionada: string;
   liderancaSelecionada: string;
   cargoComissaoSelecionado: string;
+  casaSelecionada: string;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -96,7 +97,9 @@ export class FilterComponent implements OnInit, OnDestroy {
         }
       );
     this.casaService.get().subscribe(casa => {
+      this.casaSelecionada = casa;
       this.getComissoes(casa);
+      this.aplicarFiltro();
     });
 
     this.updateFiltroViaUrl();
@@ -133,6 +136,7 @@ export class FilterComponent implements OnInit, OnDestroy {
       orientador: undefined,
       lideranca: this.liderancaSelecionada,
       cargoComissao: this.cargoComissaoSelecionado,
+      casa: this.casaSelecionada,
       default: this.isFiltroDefault()
     };
 
