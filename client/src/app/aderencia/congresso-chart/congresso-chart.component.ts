@@ -30,6 +30,8 @@ export class CongressoChartComponent implements AfterContentInit, OnChanges, OnD
   readonly ID_TEMA_GERAL = 99;
   readonly MODO_ALINHAMENTO = 'alinhamento';
   readonly MODO_ADERENCIA = 'aderencia';
+  readonly CASA_CAMARA = 'camara';
+  readonly CASA_SENADO = 'senado';
 
   drawn = false;
   temaAtual: number;
@@ -79,7 +81,7 @@ export class CongressoChartComponent implements AfterContentInit, OnChanges, OnD
       changes.parlamentaresCompleto.currentValue.length
     ) {
       this.parlamentaresCompleto = JSON.parse(JSON.stringify(changes.parlamentaresCompleto.currentValue));
-      this.drawVis();
+      this.drawVis(this.parlamentaresCompleto[0].casa);
       if (this.modo === this.MODO_ADERENCIA) { this.paint(); }
     }
 
@@ -93,7 +95,7 @@ export class CongressoChartComponent implements AfterContentInit, OnChanges, OnD
         if (this.filter.tema !== this.temaAtual) { // redesenhe a visualização se o tema do alinhamento for alterado
           this.temaAtual = this.filter.tema;
           this.finishEvent.emit(false);
-          this.drawVis();
+          this.drawVis(this.parlamentaresCompleto[0].casa);
         }
         this.hideTooltip();
         this.paint();
@@ -114,9 +116,9 @@ export class CongressoChartComponent implements AfterContentInit, OnChanges, OnD
     }
   }
 
-  drawVis() {
+  drawVis(casa: string): void {
     if (this.svg) {
-      this.draw();
+      this.draw(casa);
       this.viewEvent.emit('arc');
     }
   }
@@ -213,7 +215,7 @@ export class CongressoChartComponent implements AfterContentInit, OnChanges, OnD
     }
   }
 
-  draw() {
+  draw(casa: string): void {
     this.g.selectAll('.circle-parlamentar').remove();
     this.g.selectAll('.clusters').remove();
     this.g.selectAll('.axis').remove();
@@ -221,11 +223,28 @@ export class CongressoChartComponent implements AfterContentInit, OnChanges, OnD
 
     this.svg.call(this.tip);
 
-    const inicioArco = 18;
-    const fimArco = 480;
-    const alturaArco = 190;
-    const distanciaFilas = 12;
-    const angulo = 18;
+    let inicioArco = 0;
+    let fimArco = 0;
+    let alturaArco = 0;
+    let distanciaFilas = 0;
+    let angulo = 0;
+    let quantidadeFilas = 0;
+
+    if (casa === this.CASA_CAMARA) {
+      inicioArco = 18;
+      fimArco = 480;
+      alturaArco = 190;
+      distanciaFilas = 12;
+      angulo = 18;
+      quantidadeFilas = 13;
+    } else if (casa === this.CASA_SENADO) {
+      inicioArco = 68;
+      fimArco = 430;
+      alturaArco = 160;
+      distanciaFilas = 24;
+      angulo = 75;
+      quantidadeFilas = 5;
+    }
 
     const xBeeSwarm = d3.scaleLinear().range([this.width * 0.9, this.width * 0.2]);
     this.g.append('g')
@@ -250,8 +269,8 @@ export class CongressoChartComponent implements AfterContentInit, OnChanges, OnD
 
     // this.drawClusters();
 
-    const camara = this.getFilas(this.parlamentaresCompleto);
-    for (let i = 0; i < 13; i++) {
+    const camara = this.getFilas(this.parlamentaresCompleto, casa);
+    for (let i = 0; i < quantidadeFilas; i++) {
       const [p1, p2, p3] = [
         [inicioArco + (distanciaFilas * i), alturaArco],
         [fimArco - (distanciaFilas * i), alturaArco],
@@ -384,8 +403,13 @@ export class CongressoChartComponent implements AfterContentInit, OnChanges, OnD
       .attr('r', (this.view === 'arc') ? this.r : this.radiusBee);
   }
 
-  private getFilas(parlamentares: Parlamentar[]) {
-    const filas = [60, 57, 53, 50, 46, 43, 39, 36, 33, 29, 25, 23, 19];
+  private getFilas(parlamentares: Parlamentar[], casa: string) {
+    let filas = [];
+    if (casa === this.CASA_CAMARA) {
+      filas = [60, 57, 53, 50, 46, 43, 39, 36, 33, 29, 25, 23, 19];
+    } else if (casa === this.CASA_SENADO) {
+      filas = [21, 19, 16, 14, 11];
+    }
     const camara = new Array();
 
     const grupos = d3.nest()
