@@ -25,6 +25,7 @@ export class AderenciaComponent implements OnInit, OnDestroy {
 
   parlamentares: ParlamentarAderencia[];
   parlamentaresCompleto: ParlamentarAderencia[];
+  parlamentaresCasa: ParlamentarAderencia[];
 
   filtro: any;
   orientador: string;
@@ -52,6 +53,7 @@ export class AderenciaComponent implements OnInit, OnDestroy {
       .subscribe(params => {
         this.casaService.set(params.get('casa'));
         this.casa = params.get('casa');
+        this.getParlamentaresPorCasa();
       });
     this.getParlamentares();
     this.getAderencia();
@@ -84,8 +86,18 @@ export class AderenciaComponent implements OnInit, OnDestroy {
           this.parlamentaresCompleto = parlamentares.sort((a, b) => {
             return this.aderenciaService.sort(a, b, idTema);
           });
+
+          this.getParlamentaresPorCasa();
         }
       );
+  }
+
+  getParlamentaresPorCasa(): void {
+    if (this.parlamentaresCompleto !== undefined && this.parlamentaresCompleto) {
+      this.parlamentaresCasa = this.parlamentaresCompleto.filter(p => {
+        return (p.casa === this.casa);
+      });
+    }
   }
 
   search(filter: any) {
@@ -100,11 +112,8 @@ export class AderenciaComponent implements OnInit, OnDestroy {
 
   setView(view: string) {
     this.view = view;
-
     const queryParams: Params = Object.assign({}, this.activatedRoute.snapshot.queryParams);
     queryParams.view = view;
-    this.router.navigate([], { queryParams });
-
     this.cdr.detectChanges();
   }
 
@@ -114,10 +123,9 @@ export class AderenciaComponent implements OnInit, OnDestroy {
 
   setOrderBy(orderBy: string) {
     this.orderBy = orderBy;
-
     const queryParams: Params = Object.assign({}, this.activatedRoute.snapshot.queryParams);
     queryParams.orderBy = orderBy;
-    this.router.navigate([], { queryParams });
+    this.cdr.detectChanges();
   }
 
   toggleOrderBy() {
