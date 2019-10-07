@@ -3,7 +3,7 @@
     <li class="nav-item sticky-footer-navbar-item">
       <a
         [routerLink]="['/aderencia/camara']"
-        [routerLinkActive]="'active'"
+        [class.active]="isActive('camara')"
         class="nav-link sticky-footer-navbar-link"
         href="#"
       >
@@ -13,7 +13,7 @@
     <li class="nav-item sticky-footer-navbar-item">
       <a
         [routerLink]="['/aderencia/senado']"
-        [routerLinkActive]="'active'"
+        [class.active]="isActive('senado')"
         class="nav-link sticky-footer-navbar-link"
         href="#"
       >

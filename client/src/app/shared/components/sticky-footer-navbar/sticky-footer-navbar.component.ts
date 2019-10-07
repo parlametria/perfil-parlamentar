@@ -1,15 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-sticky-footer-navbar',
   templateUrl: './sticky-footer-navbar.component.html',
   styleUrls: ['./sticky-footer-navbar.component.scss']
 })
-export class StickyFooterNavbarComponent implements OnInit {
+export class StickyFooterNavbarComponent {
 
-  constructor() { }
+  constructor(private router: Router) { }
 
-  ngOnInit() {
+  isActive(casa: string) {
+    return this.router.url.split('/')[2] === casa;
   }
 
 }

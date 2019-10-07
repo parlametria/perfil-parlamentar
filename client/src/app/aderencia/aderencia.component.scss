@@ -8,11 +8,7 @@
 
 .btn-toolbar {
   line-height: 3.2rem;
-  justify-content: flex-end;
-
-  @media (min-width: 992px) {
-    justify-content: center;
-  }
+  justify-content: center;
 
 }
 

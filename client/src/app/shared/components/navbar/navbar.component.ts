@@ -1,4 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -16,7 +17,9 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
   private unsubscribe = new Subject();
 
-  constructor(private loginService: LoginService) { }
+  constructor(
+    private loginService: LoginService,
+    private router: Router) { }
 
   ngOnInit() {
     this.loginService.isLoggedIn().pipe(takeUntil(this.unsubscribe)).subscribe(res => {
@@ -27,6 +30,10 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
   logoutUser() {
     this.loginService.logoutUser();
+  }
+
+  isActive(casa: string) {
+    return this.router.url.split('/')[2] === casa;
   }
 
   ngOnDestroy() {
