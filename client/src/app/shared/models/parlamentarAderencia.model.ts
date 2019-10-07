@@ -30,6 +30,11 @@ export class ParlamentarAderencia {
   }
 
   getFoto(): string {
-    return 'https://www.camara.leg.br/internet/deputado/bandep/' + this.idParlamentar + '.jpg';
+    if (this.casa === 'camara') {
+      return 'https://www.camara.leg.br/internet/deputado/bandep/' + this.idParlamentar + '.jpg';
+    } else if (this.casa === 'senado') {
+      return 'https://www.senado.leg.br/senadores/img/fotos-oficiais/senador' + this.idParlamentar + '.jpg';
+    }
+    return '';
   }
 }
