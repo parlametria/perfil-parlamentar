@@ -25,7 +25,9 @@ export class ComissaoService {
     return this.http.get<Comissao[]>(this.url, { params });
   }
 
-  getCargos(): Observable<Lideranca[]> {
-    return this.http.get<Lideranca[]>(this.url + '/cargos');
+  getCargos(casa: string): Observable<Lideranca[]> {
+    const params = new HttpParams()
+      .set('casa', casa);
+    return this.http.get<Lideranca[]>(this.url + '/cargos', { params });
   }
 }

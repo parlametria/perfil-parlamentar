@@ -99,14 +99,12 @@ export class FilterComponent implements OnInit, OnDestroy {
     this.casaService.get().subscribe(casa => {
       this.casaSelecionada = casa;
       this.getComissoes(casa);
+      this.getLiderancas(casa);
+      this.getCargosComissao(casa);
       this.aplicarFiltro();
     });
-
     this.updateFiltroViaUrl();
-
     this.getTemas();
-    this.getLiderancas();
-    this.getCargosComissao();
   }
 
   open(content) {
@@ -210,15 +208,15 @@ export class FilterComponent implements OnInit, OnDestroy {
     });
   }
 
-  getLiderancas() {
-    this.liderancaService.getLiderancas().pipe(takeUntil(this.unsubscribe)).subscribe((liderancas) => {
+  getLiderancas(casa: string): void {
+    this.liderancaService.getLiderancas(casa).pipe(takeUntil(this.unsubscribe)).subscribe((liderancas) => {
       this.liderancas = liderancas;
       this.liderancas.unshift({ cargo: this.FILTRO_PADRAO_LIDERANCA });
     });
   }
 
-  getCargosComissao() {
-    this.comissaoService.getCargos().pipe(takeUntil(this.unsubscribe)).subscribe((cargos) => {
+  getCargosComissao(casa: string): void {
+    this.comissaoService.getCargos(casa).pipe(takeUntil(this.unsubscribe)).subscribe((cargos) => {
       this.cargosComissao = cargos;
       this.cargosComissao.unshift({ cargo: this.FILTRO_PADRAO_CARGO_COMISSAO });
     });
