@@ -6,7 +6,7 @@
 
   <header class="controls my-3">
     <div class="parlamentar-count">
-      <strong class="strong">{{ parlamentares.length }}</strong>
+      <strong class="strong">{{ parlamentares?.length }}</strong>
       parlamentares
     </div>
     <div>
@@ -70,8 +70,7 @@
   <div [hidden]="getVisaoPlenario()">
     <app-aderencia-parlamentares
       [parlamentares]="parlamentares"
-      [view]="view"
-      [orderBy]="orderBy"
+      [view]="view"      
     ></app-aderencia-parlamentares>
   </div>
 

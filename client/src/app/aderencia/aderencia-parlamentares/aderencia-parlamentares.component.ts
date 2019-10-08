@@ -20,34 +20,17 @@ export class AderenciaParlamentaresComponent implements OnInit, OnDestroy {
 
   @Input() parlamentares: ParlamentarAderencia[];
   @Input() view: string;
-  @Input() orderBy: string;
 
   private unsubscribe = new Subject();
 
   p = 1;
   isLoading: boolean;
-  filtro: any;
-  orientador: string;
 
   constructor(
     private activatedRoute: ActivatedRoute,
-    private aderenciaService: AderenciaService,
     private router: Router) { }
 
-  ngOnInit() {
-    this.orientador = 'Governo';
-  }
-
-  search(filtro: any) {
-    this.filtro = filtro;
-    this.filtro.orientador = this.orientador;
-    this.aderenciaService.search(this.filtro, this.orderBy);
-  }
-
-  setOrientador(orientador: string) {
-    this.orientador = orientador;
-    this.search(this.filtro);
-  }
+  ngOnInit() { }
 
   pageChange(p: number) {
     this.p = p;
