@@ -196,7 +196,7 @@ export class FilterComponent implements OnInit, OnDestroy {
   getComissoes(casa: string) {
     this.comissaoService.getComissoes(casa).pipe(takeUntil(this.unsubscribe)).subscribe((comissoes) => {
 
-      comissoes.map(com => com.nome = com.nome.substr(12));
+      comissoes.map(c => c.nome = c.nome.replace(/Comissão (De|Do)/g, ''));
 
       comissoes.unshift({
         idComissaoVoz: this.FILTRO_PADRAO_COMISSAO_VALUE,
