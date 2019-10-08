@@ -119,7 +119,9 @@ export class CongressoChartComponent implements AfterContentInit, OnChanges, OnD
   drawVis(casa: string): void {
     if (this.svg) {
       this.draw(casa);
-      this.viewEvent.emit('arc');
+      if (this.view === 'bee') {
+        this.viewEvent.emit('arc');
+      }
     }
   }
 

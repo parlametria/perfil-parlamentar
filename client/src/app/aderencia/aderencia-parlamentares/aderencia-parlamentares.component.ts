@@ -35,8 +35,6 @@ export class AderenciaParlamentaresComponent implements OnInit, OnDestroy {
     private router: Router) { }
 
   ngOnInit() {
-    this.view = this.VIEW_LG;
-    this.orderBy = 'DESC';
     this.orientador = 'Governo';
   }
 
