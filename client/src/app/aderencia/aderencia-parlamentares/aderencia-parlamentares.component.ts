@@ -1,8 +1,7 @@
-import { Component, OnInit, OnDestroy, Input } from '@angular/core';
+import { Component, OnDestroy, Input } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 
 import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
 
 import { AderenciaService } from 'src/app/shared/services/aderencia.service';
 
@@ -13,12 +12,13 @@ import { ParlamentarAderencia } from 'src/app/shared/models/parlamentarAderencia
   templateUrl: './aderencia-parlamentares.component.html',
   styleUrls: ['./aderencia-parlamentares.component.scss']
 })
-export class AderenciaParlamentaresComponent implements OnInit, OnDestroy {
+export class AderenciaParlamentaresComponent implements OnDestroy {
   readonly VIEW_SM = 'sm';
   readonly VIEW_MD = 'md';
   readonly VIEW_LG = 'lg';
 
   @Input() parlamentares: ParlamentarAderencia[];
+  @Input() filter: any;
   @Input() view: string;
 
   private unsubscribe = new Subject();
@@ -29,8 +29,6 @@ export class AderenciaParlamentaresComponent implements OnInit, OnDestroy {
   constructor(
     private activatedRoute: ActivatedRoute,
     private router: Router) { }
-
-  ngOnInit() { }
 
   pageChange(p: number) {
     this.p = p;
