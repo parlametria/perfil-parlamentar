@@ -33,7 +33,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   }
 
   isActive(casa: string) {
-    return this.router.url.split('/')[2] === casa;
+    return this.router.url.split(/\/|\?/)[2] === casa;
   }
 
   ngOnDestroy() {

@@ -11,7 +11,7 @@ export class StickyFooterNavbarComponent {
   constructor(private router: Router) { }
 
   isActive(casa: string) {
-    return this.router.url.split('/')[2] === casa;
+    return this.router.url.split(/\/|\?/)[2] === casa;
   }
 
 }
