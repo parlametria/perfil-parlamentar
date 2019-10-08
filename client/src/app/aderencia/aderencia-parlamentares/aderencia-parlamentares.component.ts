@@ -2,7 +2,6 @@ import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 
 import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
 
 import { AderenciaService } from 'src/app/shared/services/aderencia.service';
 
@@ -19,6 +18,7 @@ export class AderenciaParlamentaresComponent implements OnInit, OnDestroy {
   readonly VIEW_LG = 'lg';
 
   @Input() parlamentares: ParlamentarAderencia[];
+  @Input() filter: any;
   @Input() view: string;
   @Input() orderBy: string;
 
@@ -26,7 +26,6 @@ export class AderenciaParlamentaresComponent implements OnInit, OnDestroy {
 
   p = 1;
   isLoading: boolean;
-  filtro: any;
   orientador: string;
 
   constructor(
@@ -39,14 +38,14 @@ export class AderenciaParlamentaresComponent implements OnInit, OnDestroy {
   }
 
   search(filtro: any) {
-    this.filtro = filtro;
-    this.filtro.orientador = this.orientador;
-    this.aderenciaService.search(this.filtro, this.orderBy);
+    this.filter = filtro;
+    this.filter.orientador = this.orientador;
+    this.aderenciaService.search(this.filter, this.orderBy);
   }
 
   setOrientador(orientador: string) {
     this.orientador = orientador;
-    this.search(this.filtro);
+    this.search(this.filter);
   }
 
   pageChange(p: number) {
