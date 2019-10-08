@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, Input } from '@angular/core';
+import { Component, OnDestroy, Input } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 
 import { Subject } from 'rxjs';
@@ -12,7 +12,7 @@ import { ParlamentarAderencia } from 'src/app/shared/models/parlamentarAderencia
   templateUrl: './aderencia-parlamentares.component.html',
   styleUrls: ['./aderencia-parlamentares.component.scss']
 })
-export class AderenciaParlamentaresComponent implements OnInit, OnDestroy {
+export class AderenciaParlamentaresComponent implements OnDestroy {
   readonly VIEW_SM = 'sm';
   readonly VIEW_MD = 'md';
   readonly VIEW_LG = 'lg';
@@ -20,33 +20,15 @@ export class AderenciaParlamentaresComponent implements OnInit, OnDestroy {
   @Input() parlamentares: ParlamentarAderencia[];
   @Input() filter: any;
   @Input() view: string;
-  @Input() orderBy: string;
 
   private unsubscribe = new Subject();
 
   p = 1;
   isLoading: boolean;
-  orientador: string;
 
   constructor(
     private activatedRoute: ActivatedRoute,
-    private aderenciaService: AderenciaService,
     private router: Router) { }
-
-  ngOnInit() {
-    this.orientador = 'Governo';
-  }
-
-  search(filtro: any) {
-    this.filter = filtro;
-    this.filter.orientador = this.orientador;
-    this.aderenciaService.search(this.filter, this.orderBy);
-  }
-
-  setOrientador(orientador: string) {
-    this.orientador = orientador;
-    this.search(this.filter);
-  }
 
   pageChange(p: number) {
     this.p = p;

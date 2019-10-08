@@ -46,7 +46,7 @@ export class AderenciaComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.isLoading = true;
-    this.updateViewViaUrl();
+    this.updateParamsViaUrl();
 
     this.orientador = 'Governo';
     this.activatedRoute.paramMap
@@ -102,9 +102,11 @@ export class AderenciaComponent implements OnInit, OnDestroy {
   }
 
   search(filter: any) {
-    this.filtro = filter;
+    this.filtro = JSON.parse(JSON.stringify(filter));
     this.filtro.orientador = this.orientador;
-    this.aderenciaService.search(filter, 'DESC');
+    this.filtro.orderBy = this.orderBy;
+
+    this.aderenciaService.search(this.filtro, this.orderBy);
   }
 
   getVisaoPlenario() {
@@ -133,6 +135,8 @@ export class AderenciaComponent implements OnInit, OnDestroy {
     this.router.navigate([], {  relativeTo: this.activatedRoute, queryParams });
 
     this.cdr.detectChanges();
+
+    this.search(this.filtro);
   }
 
   toggleOrderBy() {
@@ -143,13 +147,19 @@ export class AderenciaComponent implements OnInit, OnDestroy {
     }
   }
 
-  updateViewViaUrl() {
+  updateParamsViaUrl() {
     this.activatedRoute.queryParams.subscribe(
       param => {
         if (param.view !== undefined) {
           this.view = param.view;
         } else {
           this.view = this.VIEW_ARC;
+        }
+
+        if (param.orderBy !== undefined) {
+          this.setOrderBy(param.orderBy);
+        } else {
+          this.orderBy = 'DESC';
         }
       }
     );

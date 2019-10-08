@@ -27,7 +27,7 @@ export class AderenciaService {
 
   private searchfilters = new BehaviorSubject<any>({});
   private tema: number;
-  private orderBy = 'DESC';
+  private orderBy;
   private orientador = 'Governo';
 
   private parlamentaresFiltered = new BehaviorSubject<Array<ParlamentarAderencia>>([]);
@@ -54,13 +54,13 @@ export class AderenciaService {
             idTema = this.ID_TEMA_GERAL;
           }
 
-          if (this.orderBy === 'DESC') {
+          if (this.orderBy === 'ASC') {
             return parlamentares.sort((a, b) => {
-              return this.sort(a, b, idTema);
+              return this.sort(b, a, idTema);
             });
           } else {
             return parlamentares.sort((a, b) => {
-              return this.sort(b, a, idTema);
+              return this.sort(a, b, idTema);
             });
           }
         }),
@@ -164,7 +164,8 @@ export class AderenciaService {
       p.lideranca === q.lideranca &&
       p.cargoComissao === q.cargoComissao &&
       p.casa === q.casa &&
-      p.temaSlug === q.temaSlug;
+      p.temaSlug === q.temaSlug &&
+      p.orderBy === q.orderBy;
   }
 
   /**
