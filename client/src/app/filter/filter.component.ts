@@ -320,31 +320,41 @@ export class FilterComponent implements OnInit, OnDestroy {
   private updateFiltroViaUrl() {
     this.activatedRoute.queryParams.subscribe(
       params => {
+        let filtroPresente = false;
         Object.keys(params).forEach(value => {
           if (value === 'tema') {
             this.temaSelecionado = Number(params[value]);
+            filtroPresente = true;
           }
           if (value === 'nome') {
             this.nomePesquisado = params[value];
+            filtroPresente = true;
           }
           if (value === 'estado') {
             this.estadoSelecionado = params[value];
+            filtroPresente = true;
           }
           if (value === 'partido') {
             this.partidoSelecionado = params[value];
+            filtroPresente = true;
           }
           if (value === 'comissao') {
             this.comissaoSelecionada = params[value];
+            filtroPresente = true;
           }
           if (value === 'lideranca') {
             this.liderancaSelecionada = params[value];
+            filtroPresente = true;
           }
           if (value === 'cargoComissao') {
             this.cargoComissaoSelecionado = params[value];
+            filtroPresente = true;
           }
         });
 
-        this.aplicarFiltro();
+        if (filtroPresente) {
+          this.aplicarFiltro();
+        }
       }
     );
   }

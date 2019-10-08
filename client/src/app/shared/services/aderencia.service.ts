@@ -39,11 +39,11 @@ export class AderenciaService {
         switchMap(parlamentar =>
           this.searchfilters.pipe(
             debounceTime(400),
-            // distinctUntilChanged(
-            //   (p: any, q: any) => {
-            //     return this.compareFilter(p, q);
-            //   }
-            // ),
+            distinctUntilChanged(
+              (p: any, q: any) => {
+                return this.compareFilter(p, q);
+              }
+            ),
             map(filters => this.filter(parlamentar, filters))
           )
         ),
@@ -161,7 +161,10 @@ export class AderenciaService {
       p.partido === q.partido &&
       p.orientador === q.orientador &&
       p.comissao === q.comissao &&
-      p.lideranca === q.lideranca;
+      p.lideranca === q.lideranca &&
+      p.cargoComissao === q.cargoComissao &&
+      p.casa === q.casa &&
+      p.temaSlug === q.temaSlug;
   }
 
   /**
