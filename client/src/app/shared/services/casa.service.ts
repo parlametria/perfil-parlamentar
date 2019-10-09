@@ -18,4 +18,18 @@ export class CasaService {
     this.casa.next(casa);
   }
 
+  // Recupera casa a partir do id do parlamentar
+  // Ids começados com 1 são da câmara, com 2 são do senado
+  // Retorna undefined se nenhuma dessas condições é satisfeita
+  getCasaFromId(id: string) {
+    if (id !== undefined) {
+      if (id.charAt(0) === '1') {
+        return 'camara';
+      } else if (id.charAt(0) === '2') {
+        return 'senado';
+      }
+    }
+    return undefined;
+  }
+
 }
