@@ -48,7 +48,7 @@
   <app-loading [hidden]="!isLoading"></app-loading>
 
   <div [hidden]="isLoading">
-    <app-congresso-chart
+    <!-- <app-congresso-chart
       [parlamentares]="parlamentares"
       [parlamentaresCompleto]="parlamentaresCompleto"
       [view]="view"
@@ -57,7 +57,7 @@
       class="plot"
       (viewEvent)="setView($event)"
       (finishEvent)="setChartVisibility($event)"
-    ></app-congresso-chart>
+    ></app-congresso-chart> -->
 
     <div class="subtitle-wrapper">
       <div [hidden]="view === VIEW_BEE">
