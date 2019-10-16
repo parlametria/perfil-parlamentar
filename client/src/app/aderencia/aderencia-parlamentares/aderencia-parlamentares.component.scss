@@ -1,0 +1,35 @@
+.parlamentar-count {
+  line-height: 3;
+  font-size: 0.8rem;
+
+  @media (min-width: 992px) {
+    line-height: 2;
+    font-size: 1rem;
+  }
+}
+
+.parlamentar-lista {
+  @media (min-width: 992px) {
+    width: 760px;
+    margin: auto;
+  }
+}
+
+.btn-toolbar {
+  line-height: 2.2rem;
+  justify-content: flex-end;
+
+  @media (min-width: 992px) {
+    justify-content: center;
+  }
+}
+
+.controls {
+  @media (max-width: 575.98px) {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 93px;
+    background-color: #ffffff;
+    z-index: 1050;
+  }
+}

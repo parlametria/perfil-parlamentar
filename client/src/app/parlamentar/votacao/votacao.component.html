@@ -3,7 +3,7 @@
     <div class="votacao-title">
       {{ proposicao?.projetoLei }}
       <a
-        [href]="'https://www.camara.leg.br/proposicoesWeb/fichadetramitacao?idProposicao=' + getId(proposicao?.idProposicao)"
+        [href]="getUrlProposicao(proposicao?.idProposicao, proposicao?.casa)"
         target="_blank"
         class="btn btn-link btn-sm"
       >

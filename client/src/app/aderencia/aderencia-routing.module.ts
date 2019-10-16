@@ -6,6 +6,10 @@ import { AderenciaComponent } from './aderencia.component';
 const routes: Routes = [
   {
     path: '',
+    redirectTo: 'camara'
+  },
+  {
+    path: ':casa',
     component: AderenciaComponent,
     data: { animation: 'AderenciaComponent' }
   }
