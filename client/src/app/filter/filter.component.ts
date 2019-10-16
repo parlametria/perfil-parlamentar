@@ -87,17 +87,9 @@ export class FilterComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.parlamentarService
-      .getPartidosPorEstado()
-      .pipe(takeUntil(this.unsubscribe))
-      .subscribe(
-        partidos => {
-          this.partidosPorEstado = partidos;
-          this.onChangeEstado();
-        }
-      );
     this.casaService.get().subscribe(casa => {
       this.casaSelecionada = casa;
+      this.getPartidoPorEstado(casa);
       this.getComissoes(casa);
       this.getLiderancas(casa);
       this.getCargosComissao(casa);
@@ -191,6 +183,18 @@ export class FilterComponent implements OnInit, OnDestroy {
     this.temaService.getTemas().pipe(takeUntil(this.unsubscribe)).subscribe((temas) => {
       this.temas = temas;
     });
+  }
+
+  getPartidoPorEstado(casa: string) {
+    this.parlamentarService
+    .getPartidosPorEstado(casa)
+    .pipe(takeUntil(this.unsubscribe))
+    .subscribe(
+      partidos => {
+        this.partidosPorEstado = partidos;
+        this.onChangeEstado();
+      }
+    );
   }
 
   getComissoes(casa: string) {
