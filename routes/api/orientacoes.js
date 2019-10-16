@@ -79,7 +79,7 @@ router.get("/proposicoes", casaValidator.validate, (req, res) => {
         model: Votacao,
         attributes: [["id_votacao", "idVotacao"], ["objeto_votacao", "objetoVotacao"], "horario"],
         as: "proposicaoVotacoes",
-        require: true
+        required: true
       }
     ],
     order: [
