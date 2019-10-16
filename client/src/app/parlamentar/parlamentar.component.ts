@@ -44,6 +44,16 @@ export class ParlamentarComponent implements OnInit, OnDestroy {
       );
   }
 
+  getCargoParlamentar(casa: string) {
+    if (casa === 'camara') {
+      return 'Câmara';
+    } else if (casa === 'senado') {
+      return 'Senado';
+    } else {
+      return undefined;
+    }
+  }
+
   ngOnDestroy() {
     this.unsubscribe.next();
     this.unsubscribe.complete();

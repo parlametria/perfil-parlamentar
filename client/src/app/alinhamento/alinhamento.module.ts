@@ -13,11 +13,13 @@ import { FilterModule } from '../filter/filter.module';
 
 import { AlinhamentoComponent } from './alinhamento.component';
 import { CardParlamentarComponent } from './card-parlamentar/card-parlamentar.component';
+import { CongressoAlinhamentoComponent } from './congresso-alinhamento/congresso-alinhamento.component';
 
 @NgModule({
   declarations: [
     AlinhamentoComponent,
-    CardParlamentarComponent
+    CardParlamentarComponent,
+    CongressoAlinhamentoComponent
   ],
   imports: [
     CommonModule,

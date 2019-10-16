@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 
 import { Observable } from 'rxjs';
 
@@ -15,7 +15,9 @@ export class LiderancaService {
 
   constructor(private http: HttpClient) { }
 
-  getLiderancas(): Observable<Lideranca[]> {
-    return this.http.get<Lideranca[]>(this.url);
+  getLiderancas(casa: string): Observable<Lideranca[]> {
+    const params = new HttpParams()
+      .set('casa', casa);
+    return this.http.get<Lideranca[]>(this.url, { params });
   }
 }

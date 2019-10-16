@@ -109,9 +109,20 @@ export class VotacaoComponent implements OnInit {
     return textoVoto;
   }
 
-  getId(id: number): string {
+  getUrlProposicao(id: number, casa: string): string {
+    const camaraUrl = 'https://www.camara.leg.br/proposicoesWeb/fichadetramitacao?idProposicao=';
+    const senadoUrl = 'https://www25.senado.leg.br/web/atividade/materias/-/materia/';
     const str = id + '';
-    return str.substring(1, str.length);
+
+    let url;
+
+    if (casa === 'camara') {
+      url = camaraUrl;
+    } else {
+      url = senadoUrl;
+    }
+
+    return url + str.substring(1, str.length);
   }
 
 }

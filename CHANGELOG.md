@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.2.0 (2019-10-16)
+
+- [x] Expande o aplicativo adicionando dados e visualizações do Senado
+
 ## 3.1.1 (2019-08-16)
 
 - [x] Atualiza descrição do app

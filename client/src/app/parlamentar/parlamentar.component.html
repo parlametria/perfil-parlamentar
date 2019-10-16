@@ -8,7 +8,7 @@
       <div class="col-auto">
         <div class="profile-img">
           <img
-            [defaultImage]="'https://via.placeholder.com/100x130'"
+            [defaultImage]="'assets/imgs/nophoto.png'"
             [lazyLoad]="parlamentar.getFoto()"
             [offset]="100"
             width="100%"
@@ -19,6 +19,7 @@
       <div class="col">
         <div class="parlamentar-title">{{ parlamentar.nomeEleitoral }}</div>
         <p>
+          {{getCargoParlamentar(parlamentar?.casa)}} <br>
           {{ parlamentar.parlamentarPartido.sigla }}/{{ parlamentar.uf }}
         </p>
       </div>

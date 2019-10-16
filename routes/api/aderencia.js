@@ -20,7 +20,8 @@ const attParlamentar = [
   ["id_parlamentar", "idParlamentar"], 
   ["nome_eleitoral", "nomeEleitoral"], 
   "uf",
-  ["em_exercicio", "emExercicio"]
+  ["em_exercicio", "emExercicio"],
+  "casa"
 ];
 
 const attAderencia = ["faltou", ["partido_liberou", "partidoLiberou"], ["nao_seguiu", "naoSeguiu"], "seguiu", "aderencia"];
@@ -110,8 +111,7 @@ router.get("/parlamentar", (req, res) => {
       },
     ],
     where: {
-      em_exercicio: true,
-      casa: 'camara'
+      em_exercicio: true
     }
   })
     .then(parlamentares => res.status(SUCCESS).json(parlamentares))

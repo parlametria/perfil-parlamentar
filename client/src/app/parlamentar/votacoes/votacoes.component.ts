@@ -13,6 +13,7 @@ import { OrientacaoService } from 'src/app/shared/services/orientacao.service';
 import { Orientacao } from 'src/app/shared/models/orientacao.model';
 import { AderenciaService } from 'src/app/shared/services/aderencia.service';
 import { Aderencia } from 'src/app/shared/models/aderencia.model';
+import { CasaService } from 'src/app/shared/services/casa.service';
 
 @Component({
   selector: 'app-votacoes',
@@ -20,6 +21,7 @@ import { Aderencia } from 'src/app/shared/models/aderencia.model';
   styleUrls: ['./votacoes.component.scss']
 })
 export class VotacoesComponent implements OnInit, OnDestroy {
+
   readonly FAVOR = 1;
   readonly CONTRA = -1;
   readonly ID_PADRAO_TEMA_TODOS = '99';
@@ -43,12 +45,16 @@ export class VotacoesComponent implements OnInit, OnDestroy {
     private parlamentarService: ParlamentarService,
     private temaService: TemaService,
     private orientacaoService: OrientacaoService,
-    private aderenciaService: AderenciaService) { }
+    private aderenciaService: AderenciaService,
+    private casaService: CasaService) { }
 
   ngOnInit() {
     this.activatedroute.parent.params.pipe(take(1)).subscribe(params => {
+
+      const casa = this.casaService.getCasaFromId(params.id);
+
       this.getParlamentarById(params.id);
-      this.initializeProposicoes(params.tema, params.id);
+      this.initializeProposicoes(params.tema, params.id, casa);
       this.getOrientacoes();
     });
   }
@@ -67,10 +73,10 @@ export class VotacoesComponent implements OnInit, OnDestroy {
       );
   }
 
-  initializeProposicoes(temaSlug: string, id: string) {
+  initializeProposicoes(temaSlug: string, id: string, casa: string) {
     forkJoin(
       this.temaService.getTemas(),
-      this.orientacaoService.getProposicoesOrientacao(),
+      this.orientacaoService.getProposicoesOrientacao(casa),
       this.aderenciaService.getAderenciaById(id)
     ).pipe(takeUntil(this.unsubscribe)).subscribe(data => {
       const temas = data[0];
