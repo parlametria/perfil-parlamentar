@@ -20,8 +20,8 @@ const LiderancasModel = "./postgres/liderancas.js";
 const ProposicaoTemasModel = "./postgres/proposicao_temas.js";
 const PartidoModel = "./postgres/partidos.js";
 const VotoModel = './postgres/voto.js';
-const OrientacaoModel = './postgres/orientacao.js'
-const InvestimentoPartidarioModel = './postgres/investimento-partidario.js'
+const OrientacaoModel = './postgres/orientacao.js';
+const InvestimentoPartidarioModel = './postgres/investimento-partidario.js';
 
 if (!global.hasOwnProperty("models")) {
   const db = require("../config/keys").postgresURI;
