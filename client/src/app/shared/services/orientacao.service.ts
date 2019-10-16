@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 
 import { Observable } from 'rxjs';
 
@@ -20,8 +20,10 @@ export class OrientacaoService {
       .get<Orientacao>(this.url + '/governo' );
   }
 
-  getProposicoesOrientacao(): Observable<Proposicao[]> {
+  getProposicoesOrientacao(casa: string): Observable<Proposicao[]> {
+    const params = new HttpParams().set('casa', casa);
+
     return this.http
-      .get<Proposicao[]>(this.url + '/proposicoes');
+      .get<Proposicao[]>(this.url + '/proposicoes', { params });
   }
 }

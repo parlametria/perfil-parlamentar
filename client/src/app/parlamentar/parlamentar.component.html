@@ -19,6 +19,7 @@
       <div class="col">
         <div class="parlamentar-title">{{ parlamentar.nomeEleitoral }}</div>
         <p>
+          {{getCargoParlamentar(parlamentar?.casa)}} <br>
           {{ parlamentar.parlamentarPartido.sigla }}/{{ parlamentar.uf }}
         </p>
       </div>
