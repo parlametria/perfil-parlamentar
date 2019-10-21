@@ -1,8 +1,9 @@
 # Changelog
 
-## 3.2.1 (2019-10-21)
+## 3.2.2 (2019-10-21)
 
 - [x] Correção de textos
+- [x] Resolução de bugs
 
 ## 3.2.0 (2019-10-16)
 
