@@ -32,4 +32,15 @@ export class CasaService {
     return undefined;
   }
 
+  getNomeCasa(casa: string, preposicao: boolean): string {
+    if (casa === 'camara') {
+      const prep = (preposicao) ? 'da ' : '';
+      return prep + 'câmara';
+    } else if (casa === 'senado') {
+      const prep = (preposicao) ? 'do ' : '';
+      return prep + 'senado';
+    }
+    return '';
+  }
+
 }

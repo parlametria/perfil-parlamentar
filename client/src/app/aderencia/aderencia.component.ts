@@ -147,6 +147,10 @@ export class AderenciaComponent implements OnInit, OnDestroy {
     }
   }
 
+  getNomeCasa(casa: string, preposicao: boolean): string {
+    return this.casaService.getNomeCasa(casa, preposicao);
+  }
+
   updateParamsViaUrl() {
     this.activatedRoute.queryParams.subscribe(
       param => {
