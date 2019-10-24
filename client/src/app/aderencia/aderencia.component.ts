@@ -1,12 +1,12 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Router, ActivatedRoute, Params } from '@angular/router';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
-import { AderenciaService } from '../shared/services/aderencia.service';
-
-import { ParlamentarAderencia } from '../shared/models/parlamentarAderencia.model';
+import { AderenciaService } from 'src/app/shared/services/aderencia.service';
+import { ParlamentarAderencia } from 'src/app/shared/models/parlamentarAderencia.model';
+import { CasaService } from 'src/app/shared/services/casa.service';
 
 @Component({
   selector: 'app-aderencia',
@@ -14,31 +14,50 @@ import { ParlamentarAderencia } from '../shared/models/parlamentarAderencia.mode
   styleUrls: ['./aderencia.component.scss']
 })
 export class AderenciaComponent implements OnInit, OnDestroy {
+
+  readonly VIEW_ARC = 'arc';
+  readonly VIEW_BEE = 'bee';
   readonly VIEW_SM = 'sm';
   readonly VIEW_MD = 'md';
   readonly VIEW_LG = 'lg';
+  readonly FILTRO_PADRAO_TEMA = -1;
+  readonly ID_TEMA_GERAL = 99;
 
   parlamentares: ParlamentarAderencia[];
+  parlamentaresCompleto: ParlamentarAderencia[];
+  parlamentaresCasa: ParlamentarAderencia[];
+
+  filtro: any;
+  orientador: string;
+  casa: string;
+  view: any;
+  orderBy: string;
+  isLoading: boolean;
 
   private unsubscribe = new Subject();
 
-  p = 1;
-  view: string;
-  isLoading: boolean;
-  filtro: any;
-  orderBy: string;
-  orientador: string;
-
   constructor(
     private activatedRoute: ActivatedRoute,
+    private router: Router,
     private aderenciaService: AderenciaService,
-    private router: Router) { }
+    private casaService: CasaService,
+    private cdr: ChangeDetectorRef
+  ) { }
 
   ngOnInit() {
-    this.view = this.VIEW_LG;
-    this.getParlamentares();
-    this.orderBy = 'DESC';
+    this.isLoading = true;
+    this.updateParamsViaUrl();
+
     this.orientador = 'Governo';
+    this.activatedRoute.paramMap
+      .pipe(takeUntil(this.unsubscribe))
+      .subscribe(params => {
+        this.casaService.set(params.get('casa'));
+        this.casa = params.get('casa');
+        this.getParlamentaresPorCasa();
+      });
+    this.getParlamentares();
+    this.getAderencia();
   }
 
   getParlamentares() {
@@ -53,47 +72,71 @@ export class AderenciaComponent implements OnInit, OnDestroy {
       );
   }
 
-  search(filtro: any) {
-    this.filtro = filtro;
+  getAderencia() {
+    this.aderenciaService
+      .getAderenciaAsObservable()
+      .pipe(takeUntil(this.unsubscribe))
+      .subscribe(
+        parlamentares => {
+          let idTema = this.filtro.tema;
+
+          if (this.filtro.tema === this.FILTRO_PADRAO_TEMA) {
+            idTema = this.ID_TEMA_GERAL;
+          }
+
+          this.parlamentaresCompleto = parlamentares.sort((a, b) => {
+            return this.aderenciaService.sort(a, b, idTema);
+          });
+
+          this.getParlamentaresPorCasa();
+        }
+      );
+  }
+
+  getParlamentaresPorCasa(): void {
+    if (this.parlamentaresCompleto !== undefined && this.parlamentaresCompleto) {
+      this.parlamentaresCasa = this.parlamentaresCompleto.filter(p => {
+        return (p.casa === this.casa);
+      });
+    }
+  }
+
+  search(filter: any) {
+    this.filtro = JSON.parse(JSON.stringify(filter));
     this.filtro.orientador = this.orientador;
+    this.filtro.orderBy = this.orderBy;
+
     this.aderenciaService.search(this.filtro, this.orderBy);
   }
 
-  setOrientador(orientador: string) {
-    this.orientador = orientador;
-    this.search(this.filtro);
-  }
-
-  pageChange(p: number) {
-    this.p = p;
-
-    const queryParams: Params = Object.assign({}, this.activatedRoute.snapshot.queryParams);
-    queryParams.page = p;
-    this.router.navigate([], { queryParams });
-  }
-
-  getParlamentarPosition(
-    index: number,
-    itensPerPage: number,
-    currentPage: number
-  ) {
-    return (itensPerPage * (currentPage - 1)) + index + 1;
+  getVisaoPlenario() {
+    return (this.view === 'arc' || this.view === 'bee');
   }
 
   setView(view: string) {
     this.view = view;
-
     const queryParams: Params = Object.assign({}, this.activatedRoute.snapshot.queryParams);
     queryParams.view = view;
-    this.router.navigate([], { queryParams });
+
+    this.router.navigate([], {  relativeTo: this.activatedRoute, queryParams });
+
+    this.cdr.detectChanges();
+  }
+
+  setChartVisibility(isFinished: boolean) {
+    this.isLoading = !isFinished;
   }
 
   setOrderBy(orderBy: string) {
     this.orderBy = orderBy;
-
     const queryParams: Params = Object.assign({}, this.activatedRoute.snapshot.queryParams);
     queryParams.orderBy = orderBy;
-    this.router.navigate([], { queryParams });
+
+    this.router.navigate([], {  relativeTo: this.activatedRoute, queryParams });
+
+    this.cdr.detectChanges();
+
+    this.search(this.filtro);
   }
 
   toggleOrderBy() {
@@ -102,6 +145,28 @@ export class AderenciaComponent implements OnInit, OnDestroy {
     } else {
       this.setOrderBy('DESC');
     }
+  }
+
+  getNomeCasa(casa: string, preposicao: boolean): string {
+    return this.casaService.getNomeCasa(casa, preposicao);
+  }
+
+  updateParamsViaUrl() {
+    this.activatedRoute.queryParams.subscribe(
+      param => {
+        if (param.view !== undefined) {
+          this.view = param.view;
+        } else {
+          this.view = this.VIEW_ARC;
+        }
+
+        if (param.orderBy !== undefined) {
+          this.setOrderBy(param.orderBy);
+        } else {
+          this.orderBy = 'DESC';
+        }
+      }
+    );
   }
 
   ngOnDestroy() {

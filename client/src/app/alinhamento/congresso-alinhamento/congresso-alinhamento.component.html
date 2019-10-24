@@ -1,6 +1,6 @@
 <app-sticky-footer-navbar></app-sticky-footer-navbar>
 <div class="container py-4 container-sticky-footer-navbar">
-  <h4 class="title-main">Alinhamento da câmara ao Governo</h4>
+  <h4 class="title-main">Seu alinhamento com o congresso</h4>
   <app-filter (filterChange)="search($event)"></app-filter>
 
   <div [hidden]="isLoading">
@@ -11,43 +11,53 @@
           class="parlamentar-count"
         >
           <strong class="strong">{{ parlamentares.length }}</strong>
-          deputados
+          parlamentares
+        </div>
+      </div>
+
+      <div>
+        <div
+          *ngIf="parlamentares"
+          class="parlamentar-count"
+        >
+          <strong class="strong">{{getParlamentaresComAlinhamento()}}</strong>
+          com alinhamento definido
         </div>
       </div>
     </div>
 
-    <div class="btn-toolbar">
-      Exibir:
-      <div class="btn-group">
-        <button
-          [ngClass]="{'btn btn-light btn-light-icon': true, 'active': view === VIEW_ARC}"
-          (click)="setView('arc')"
-        >
-          <span class="icon-arc"></span>
-        </button>
-        <button
-          [ngClass]="{'btn btn-light btn-light-icon': true, 'active': view === VIEW_BEE}"
-          (click)="setView('bee')"
-        >
-          <span class="icon-beeswarm"></span>
-        </button>
+      <div class="btn-toolbar">
+        Exibir:
+        <div class="btn-group">
+          <button
+            [ngClass]="{'btn btn-light btn-light-icon': true, 'active': view === VIEW_ARC}"
+            (click)="setView('arc')"
+          >
+            <span class="icon-arc"></span>
+          </button>
+          <button
+            [ngClass]="{'btn btn-light btn-light-icon': true, 'active': view === VIEW_BEE}"
+            (click)="setView('bee')"
+          >
+            <span class="icon-beeswarm"></span>
+          </button>
+        </div>
       </div>
-    </div>
   </div>
 
   <app-loading [hidden]="!isLoading"></app-loading>
 
   <div [hidden]="isLoading">
-    <app-congresso-chart
+    <!-- <app-congresso-chart
       [parlamentares]="parlamentares"
       [parlamentaresCompleto]="parlamentaresCompleto"
       [view]="view"
-      [filter]="filtro"
-      [modo]="'aderencia'"
+      [filter]="filter"
+      [modo]="'alinhamento'"
       class="plot"
       (viewEvent)="setView($event)"
       (finishEvent)="setChartVisibility($event)"
-    ></app-congresso-chart>
+    ></app-congresso-chart> -->
 
     <div class="subtitle-wrapper">
       <div [hidden]="view === VIEW_BEE">
@@ -94,7 +104,7 @@
           </div>
           <div>
             <app-legend
-              [title]="'não calculado'"
+              [title]="'sem alinhamento'"
               [class]="'alinhamento-indefinido'"
               [striped]="false"
               [rounded]="true"

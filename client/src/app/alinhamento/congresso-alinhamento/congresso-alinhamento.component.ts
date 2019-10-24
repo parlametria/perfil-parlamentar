@@ -3,16 +3,16 @@ import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { Subject } from 'rxjs';
 import { takeUntil, mergeMap, debounceTime } from 'rxjs/operators';
 
-import { UserService } from '../shared/services/user.service';
-import { AlinhamentoService } from '../shared/services/alinhamento.service';
+import { UserService } from 'src/app/shared/services/user.service';
+import { AlinhamentoService } from 'src/app/shared/services/alinhamento.service';
 import { Parlamentar } from 'src/app/shared/models/parlamentar.model';
 
 @Component({
   selector: 'app-congresso',
-  templateUrl: './congresso.component.html',
-  styleUrls: ['./congresso.component.scss']
+  templateUrl: './congresso-alinhamento.component.html',
+  styleUrls: ['./congresso-alinhamento.component.scss']
 })
-export class CongressoComponent implements OnInit, OnDestroy {
+export class CongressoAlinhamentoComponent implements OnInit, OnDestroy {
   readonly VIEW_ARC = 'arc';
   readonly VIEW_BEE = 'bee';
 

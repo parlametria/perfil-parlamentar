@@ -27,7 +27,7 @@ export class AderenciaService {
 
   private searchfilters = new BehaviorSubject<any>({});
   private tema: number;
-  private orderBy = 'DESC';
+  private orderBy;
   private orientador = 'Governo';
 
   private parlamentaresFiltered = new BehaviorSubject<Array<ParlamentarAderencia>>([]);
@@ -39,11 +39,11 @@ export class AderenciaService {
         switchMap(parlamentar =>
           this.searchfilters.pipe(
             debounceTime(400),
-            // distinctUntilChanged(
-            //   (p: any, q: any) => {
-            //     return this.compareFilter(p, q);
-            //   }
-            // ),
+            distinctUntilChanged(
+              (p: any, q: any) => {
+                return this.compareFilter(p, q);
+              }
+            ),
             map(filters => this.filter(parlamentar, filters))
           )
         ),
@@ -54,13 +54,13 @@ export class AderenciaService {
             idTema = this.ID_TEMA_GERAL;
           }
 
-          if (this.orderBy === 'DESC') {
+          if (this.orderBy === 'ASC') {
             return parlamentares.sort((a, b) => {
-              return this.sort(a, b, idTema);
+              return this.sort(b, a, idTema);
             });
           } else {
             return parlamentares.sort((a, b) => {
-              return this.sort(b, a, idTema);
+              return this.sort(a, b, idTema);
             });
           }
         }),
@@ -105,14 +105,19 @@ export class AderenciaService {
     const comissao = filters.comissao;
     const lideranca = filters.lideranca;
     const cargoComissao = filters.cargoComissao;
+    const casa = filters.casa;
 
     return parlamentar.filter(p => {
       let filtered;
 
       filtered =
-        estado && estado !== 'Estados'
-          ? p.uf.toLowerCase() === estado.toLowerCase()
+        casa ? p.casa.toLowerCase() === casa.toLowerCase()
           : true;
+
+      filtered =
+        estado && estado !== 'Estados' && filtered
+          ? p.uf.toLowerCase() === estado.toLowerCase()
+          : filtered;
 
       filtered =
         partido && partido !== 'Partidos' && filtered
@@ -156,7 +161,11 @@ export class AderenciaService {
       p.partido === q.partido &&
       p.orientador === q.orientador &&
       p.comissao === q.comissao &&
-      p.lideranca === q.lideranca;
+      p.lideranca === q.lideranca &&
+      p.cargoComissao === q.cargoComissao &&
+      p.casa === q.casa &&
+      p.temaSlug === q.temaSlug &&
+      p.orderBy === q.orderBy;
   }
 
   /**

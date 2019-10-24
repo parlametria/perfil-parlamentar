@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AderenciaComponent } from './aderencia.component';
+import { PlenarioComponent } from './plenario.component';
 
-describe('AderenciaComponent', () => {
-  let component: AderenciaComponent;
-  let fixture: ComponentFixture<AderenciaComponent>;
+describe('PlenarioComponent', () => {
+  let component: PlenarioComponent;
+  let fixture: ComponentFixture<PlenarioComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AderenciaComponent ]
+      declarations: [ PlenarioComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AderenciaComponent);
+    fixture = TestBed.createComponent(PlenarioComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

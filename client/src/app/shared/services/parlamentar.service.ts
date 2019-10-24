@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -24,8 +24,10 @@ export class ParlamentarService {
     return this.http.get<Parlamentar[]>(this.url + '/votacoes');
   }
 
-  getPartidosPorEstado(): Observable<any[]> {
-    return this.http.get<any[]>(this.url + '/partidos');
+  getPartidosPorEstado(casa: string): Observable<any[]> {
+    const params = new HttpParams()
+      .set('casa', casa);
+    return this.http.get<any[]>(this.url + '/partidos', { params });
   }
 
   getVotacoesParlamentarPorId(id: string): Observable<Parlamentar> {

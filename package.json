@@ -1,6 +1,6 @@
 {
   "name": "voz-ativa",
-  "version": "3.1.1",
+  "version": "3.2.2",
   "description": "Compatibilidade entre eleitor e os candidatos a Deputado Federal com base na Agenda Brasil Sustentável",
   "main": "server.js",
   "scripts": {
