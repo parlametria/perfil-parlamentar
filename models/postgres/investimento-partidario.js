@@ -9,7 +9,7 @@ module.exports = (sequelize, type) => {
       id_partido_atual: type.INTEGER,
       id_partido_eleicao: type.INTEGER,
       total_receita_partido: type.DECIMAL(15, 2),
-      total_receita_candidato: type.DOUBLE(15, 2),
+      total_receita_candidato: type.DECIMAL(15, 2),
       indice_investimento_partido: type.REAL
     },
     {
