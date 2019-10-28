@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output, OnDestroy } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, OnDestroy, Input } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -13,6 +13,7 @@ import { Comissao } from '../shared/models/comissao.model';
 import { ComissaoService } from '../shared/services/comissao.service';
 import { Lideranca } from '../shared/models/lideranca.model';
 import { LiderancaService } from '../shared/services/lideranca.service';
+import { CasaService } from '../shared/services/casa.service';
 
 @Component({
   selector: 'app-filter',
@@ -52,6 +53,7 @@ export class FilterComponent implements OnInit, OnDestroy {
   comissaoSelecionada: string;
   liderancaSelecionada: string;
   cargoComissaoSelecionado: string;
+  casaSelecionada: string;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -60,7 +62,8 @@ export class FilterComponent implements OnInit, OnDestroy {
     private parlamentarService: ParlamentarService,
     private temaService: TemaService,
     private comissaoService: ComissaoService,
-    private liderancaService: LiderancaService
+    private liderancaService: LiderancaService,
+    private casaService: CasaService
   ) {
     this.estados = estados;
     this.estadoSelecionado = this.FILTRO_PADRAO_ESTADO;
@@ -84,19 +87,16 @@ export class FilterComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.parlamentarService.getPartidosPorEstado().pipe(takeUntil(this.unsubscribe)).subscribe(
-      partidos => {
-        this.partidosPorEstado = partidos;
-        this.onChangeEstado();
-      }
-    );
-
+    this.casaService.get().subscribe(casa => {
+      this.casaSelecionada = casa;
+      this.getPartidoPorEstado(casa);
+      this.getComissoes(casa);
+      this.getLiderancas(casa);
+      this.getCargosComissao(casa);
+      this.aplicarFiltro();
+    });
     this.updateFiltroViaUrl();
-
     this.getTemas();
-    this.getComissoes();
-    this.getLiderancas();
-    this.getCargosComissao();
   }
 
   open(content) {
@@ -126,6 +126,7 @@ export class FilterComponent implements OnInit, OnDestroy {
       orientador: undefined,
       lideranca: this.liderancaSelecionada,
       cargoComissao: this.cargoComissaoSelecionado,
+      casa: this.casaSelecionada,
       default: this.isFiltroDefault()
     };
 
@@ -184,10 +185,22 @@ export class FilterComponent implements OnInit, OnDestroy {
     });
   }
 
-  getComissoes() {
-    this.comissaoService.getComissoes().pipe(takeUntil(this.unsubscribe)).subscribe((comissoes) => {
+  getPartidoPorEstado(casa: string) {
+    this.parlamentarService
+    .getPartidosPorEstado(casa)
+    .pipe(takeUntil(this.unsubscribe))
+    .subscribe(
+      partidos => {
+        this.partidosPorEstado = partidos;
+        this.onChangeEstado();
+      }
+    );
+  }
 
-      comissoes.map(com => com.nome = com.nome.substr(12));
+  getComissoes(casa: string) {
+    this.comissaoService.getComissoes(casa).pipe(takeUntil(this.unsubscribe)).subscribe((comissoes) => {
+
+      comissoes.map(c => c.nome = c.nome.replace(/Comissão (De|Do)/g, ''));
 
       comissoes.unshift({
         idComissaoVoz: this.FILTRO_PADRAO_COMISSAO_VALUE,
@@ -199,15 +212,15 @@ export class FilterComponent implements OnInit, OnDestroy {
     });
   }
 
-  getLiderancas() {
-    this.liderancaService.getLiderancas().pipe(takeUntil(this.unsubscribe)).subscribe((liderancas) => {
+  getLiderancas(casa: string): void {
+    this.liderancaService.getLiderancas(casa).pipe(takeUntil(this.unsubscribe)).subscribe((liderancas) => {
       this.liderancas = liderancas;
       this.liderancas.unshift({ cargo: this.FILTRO_PADRAO_LIDERANCA });
     });
   }
 
-  getCargosComissao() {
-    this.comissaoService.getCargos().pipe(takeUntil(this.unsubscribe)).subscribe((cargos) => {
+  getCargosComissao(casa: string): void {
+    this.comissaoService.getCargos(casa).pipe(takeUntil(this.unsubscribe)).subscribe((cargos) => {
       this.cargosComissao = cargos;
       this.cargosComissao.unshift({ cargo: this.FILTRO_PADRAO_CARGO_COMISSAO });
     });
@@ -311,31 +324,41 @@ export class FilterComponent implements OnInit, OnDestroy {
   private updateFiltroViaUrl() {
     this.activatedRoute.queryParams.subscribe(
       params => {
+        let filtroPresente = false;
         Object.keys(params).forEach(value => {
           if (value === 'tema') {
             this.temaSelecionado = Number(params[value]);
+            filtroPresente = true;
           }
           if (value === 'nome') {
             this.nomePesquisado = params[value];
+            filtroPresente = true;
           }
           if (value === 'estado') {
             this.estadoSelecionado = params[value];
+            filtroPresente = true;
           }
           if (value === 'partido') {
             this.partidoSelecionado = params[value];
+            filtroPresente = true;
           }
           if (value === 'comissao') {
             this.comissaoSelecionada = params[value];
+            filtroPresente = true;
           }
           if (value === 'lideranca') {
             this.liderancaSelecionada = params[value];
+            filtroPresente = true;
           }
           if (value === 'cargoComissao') {
             this.cargoComissaoSelecionado = params[value];
+            filtroPresente = true;
           }
         });
 
-        this.aplicarFiltro();
+        if (filtroPresente) {
+          this.aplicarFiltro();
+        }
       }
     );
   }

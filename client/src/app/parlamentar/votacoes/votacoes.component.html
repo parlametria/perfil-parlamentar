@@ -20,44 +20,42 @@
     </div>
   </div>
 
-  <div
-    *ngIf="passoGoverno"
-  >
-  <div class="votacoes-legend">
-    <div>
-      <app-legend
-        [title]="'seguindo'"
-        [class]="'positivo'"
-        [striped]="false"
-      ></app-legend>
+  <div *ngIf="passoGoverno">
+    <div class="votacoes-legend">
+      <div>
+        <app-legend
+          [title]="'seguindo'"
+          [class]="'positivo'"
+          [striped]="false"
+        ></app-legend>
+      </div>
+      <div>
+        <app-legend
+          [title]="'não seguindo'"
+          [class]="'negativo progress-bar-striped'"
+          [striped]="false"
+        ></app-legend>
+      </div>
+      <div>
+        <app-legend
+          [title]="'liberado'"
+          [class]="'neutro progress-bar-striped'"
+          [striped]="false"
+        ></app-legend>
+      </div>
+      <div>
+        <app-legend
+          [title]="'faltou'"
+          [class]="'ausente'"
+          [striped]="false"
+        ></app-legend>
+      </div>
     </div>
-    <div>
-      <app-legend
-        [title]="'não seguindo'"
-        [class]="'negativo progress-bar-striped'"
-        [striped]="false"
-      ></app-legend>
-    </div>
-    <div>
-      <app-legend
-        [title]="'liberado'"
-        [class]="'neutro progress-bar-striped'"
-        [striped]="false"
-      ></app-legend>
-    </div>
-    <div>
-      <app-legend
-        [title]="'faltou'"
-        [class]="'ausente'"
-        [striped]="false"
-      ></app-legend>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-md-6 mt-3">
-      <app-progress-stacked
-        [titulo]="''"
-        [categorias]="[
+    <div class="row">
+      <div class="col-md-6 mt-3">
+        <app-progress-stacked
+          [titulo]="''"
+          [categorias]="[
           {
             'valor': aderenciaFiltrada?.seguiu,
             'classe': 'positivo'
@@ -75,79 +73,87 @@
             'classe': 'ausente'
           }
         ]"
-        [passo]="passoGoverno"
-      ></app-progress-stacked>
-    </div>
-    <div class="col mt-2">
-      <div
-        class="d-flex"
-        *ngIf="aderenciaFiltrada?.aderencia !== -1"
-      >
-        <div class="aderencia-value alinhamento-4-font pr-2">
-          {{ aderenciaFiltrada?.aderencia | percent }}
+          [passo]="passoGoverno"
+        ></app-progress-stacked>
+      </div>
+      <div class="col mt-2">
+        <div
+          class="d-flex"
+          *ngIf="aderenciaFiltrada?.aderencia !== -1"
+        >
+          <div class="aderencia-value alinhamento-4-font pr-2">
+            {{ aderenciaFiltrada?.aderencia | percent }}
+          </div>
+          <div class="aderencia-value-text">de acordo com o Governo</div>
         </div>
-        <div class="aderencia-value-text">de acordo com o Governo</div>
-      </div>
-      <div
-        class="d-flex"
-        *ngIf="aderenciaFiltrada?.aderencia === -1"
-      >
-        <div class="aderencia-value alinhamento-4-font pr-2">--</div>
-        <div class="aderencia-value-text">sem votações suficientes</div>
+        <div
+          class="d-flex"
+          *ngIf="aderenciaFiltrada?.aderencia === -1"
+        >
+          <div class="aderencia-value alinhamento-4-font pr-2">--</div>
+          <div class="aderencia-value-text">sem votações suficientes</div>
+        </div>
       </div>
     </div>
-  </div>
-  <div
-    *ngIf="!passoGoverno"
-    class="row no-gutters mt-3"
-  >
-    Sem votações suficientes para calcular alinhamento
+    <div
+      *ngIf="!passoGoverno"
+      class="row no-gutters mt-3"
+    >
+      Sem votações suficientes para calcular alinhamento
+    </div>
+
+    <div class="votacoes-legend mb-3">
+      <div>
+        <app-legend
+          [title]="'sim'"
+          [class]="'voto-sim'"
+          [striped]="false"
+        ></app-legend>
+      </div>
+      <div>
+        <app-legend
+          [title]="'não'"
+          [class]="'voto-nao'"
+          [striped]="false"
+        ></app-legend>
+      </div>
+      <div>
+        <app-legend
+          [title]="'liberado'"
+          [class]="'voto-liberou'"
+          [striped]="false"
+        ></app-legend>
+      </div>
+      <div>
+        <app-legend
+          [title]="'faltou'"
+          [class]="'voto-faltou'"
+          [striped]="false"
+        ></app-legend>
+      </div>
+      <div>
+        <app-legend
+          [title]="'obstrução'"
+          [class]="'voto-obstrucao'"
+          [striped]="false"
+        ></app-legend>
+      </div>
+    </div>
   </div>
 
-  <div class="votacoes-legend mb-3">
-    <div>
-      <app-legend
-        [title]="'sim'"
-        [class]="'voto-sim'"
-        [striped]="false"
-      ></app-legend>
-    </div>
-    <div>
-      <app-legend
-        [title]="'não'"
-        [class]="'voto-nao'"
-        [striped]="false"
-      ></app-legend>
-    </div>
-    <div>
-      <app-legend
-        [title]="'liberado'"
-        [class]="'voto-liberou'"
-        [striped]="false"
-      ></app-legend>
-    </div>
-    <div>
-      <app-legend
-        [title]="'faltou'"
-        [class]="'voto-faltou'"
-        [striped]="false"
-      ></app-legend>
-    </div>
-    <div>
-      <app-legend
-        [title]="'obstrução'"
-        [class]="'voto-obstrucao'"
-        [striped]="false"
-      ></app-legend>
-    </div>
+  <div class="posicoes container-sm">
+    <app-votacao
+      *ngFor="let proposicao of proposicoesFiltradas"
+      [proposicao]="proposicao"
+      [parlamentar]="parlamentar"
+      [orientacao]="orientacao"
+    ></app-votacao>
   </div>
-</div>
 
-<div class="posicoes container-sm">
-  <app-votacao
-    *ngFor="let proposicao of proposicoesFiltradas"
-    [proposicao]="proposicao"
-    [parlamentar]="parlamentar"
-    [orientacao]="orientacao"
-  ></app-votacao>
+  <div 
+    *ngIf="proposicoesFiltradas?.length === 0" 
+    class="mt-4 d-flex justify-content-center">
+    Ainda não temos votações para esse tema.
+  </div>
+  
 </div>
