@@ -1,6 +1,6 @@
 <app-sticky-footer-navbar></app-sticky-footer-navbar>
 <div class="container py-4 container-sticky-footer-navbar">
-  <h4 class="title-main">Alinhamento da {{ casa }} ao Governo</h4>
+  <h4 class="title-main">Alinhamento {{ getNomeCasa(casa, true) }} ao Governo</h4>
 
   <app-filter (filterChange)="search($event)"></app-filter>
 
@@ -70,7 +70,7 @@
   <div [hidden]="getVisaoPlenario()">
     <app-aderencia-parlamentares
       [parlamentares]="parlamentares"
-      [view]="view"      
+      [view]="view"
       [filter]="filtro"
     ></app-aderencia-parlamentares>
   </div>
