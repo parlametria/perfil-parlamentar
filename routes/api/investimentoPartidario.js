@@ -50,7 +50,7 @@ router.get("/", (req, res) => {
  * @function
  * @memberof module:routes/temas
  */
-router.get("/parlamentar/:id", (req, res) => {
+router.get("/:id", (req, res) => {
   InvestimentoPartidario.findOne({
     attributes: [["id_parlamentar_voz", "idParlamentarVoz"], ["total_receita_partido", "totalReceitaPartido"], ["total_receita_candidato", "totalReceitaCandidato"], ["indice_investimento_partido", "indiceInvestimentoPartido"]],
     include: [
