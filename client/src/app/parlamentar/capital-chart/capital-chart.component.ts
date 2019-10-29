@@ -1,14 +1,18 @@
-import { Component, AfterContentInit } from '@angular/core';
+import { Component, AfterContentInit, Input, OnChanges, SimpleChanges } from '@angular/core';
 
 import * as d3 from 'd3';
 import * as d3Sankey from 'd3-sankey';
+
+import { ParlamentarInvestimento } from 'src/app/shared/models/parlamentarInvestimento.model';
 
 @Component({
   selector: 'app-capital-chart',
   template: '<div id="capital-chart"></div>',
   styleUrls: ['./capital-chart.component.scss']
 })
-export class CapitalChartComponent implements AfterContentInit {
+export class CapitalChartComponent implements AfterContentInit, OnChanges {
+
+  @Input() parlamentar: ParlamentarInvestimento;
 
   svg: any;
   g: any;
@@ -32,7 +36,15 @@ export class CapitalChartComponent implements AfterContentInit {
     this.totalWidth = this.width + this.margin.left + this.margin.right;
     this.totalHeight = this.height + this.margin.top + this.margin.top;
     this.initChart();
-    this.drawVis();
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (
+      typeof changes.parlamentar !== 'undefined' &&
+      typeof changes.parlamentar.currentValue !== 'undefined'
+    ) {
+      this.drawVis(this.parlamentar);
+    }
   }
 
   initChart() {
@@ -53,7 +65,7 @@ export class CapitalChartComponent implements AfterContentInit {
       );
   }
 
-  drawVis() {
+  drawVis(parlamentar: ParlamentarInvestimento) {
     const data = {
       nodes: [
         { name: 'Total investido' },
@@ -61,8 +73,8 @@ export class CapitalChartComponent implements AfterContentInit {
         { name: 'Outros' }
       ],
       links: [
-        { source: 0, target: 1, names: 'asd', value: 500 },
-        { source: 0, target: 2, names: 'ghjgh', value: 500 }
+        { source: 0, target: 1, value: parlamentar.totalReceitaCandidato - parlamentar.totalReceitaPartido },
+        { source: 0, target: 2, value: parlamentar.totalReceitaPartido }
       ]
     };
 
