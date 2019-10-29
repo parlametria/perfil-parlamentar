@@ -21,12 +21,14 @@ export class CapitalChartComponent implements AfterContentInit, OnChanges {
   totalWidth: number;
   totalHeight: number;
   margin: any;
+  format: any;
+  color: any;
 
   constructor() { }
 
   ngAfterContentInit(): void {
     this.width = 300;
-    this.height = 300;
+    this.height = 240;
     this.margin = {
       left: 20,
       right: 20,
@@ -63,9 +65,21 @@ export class CapitalChartComponent implements AfterContentInit, OnChanges {
         'translate(' + this.margin.left + ',' + this.margin.top + ')'
         // 'rotate(90 ' + (this.width * 0.5) + ' ' + (this.height * 0.5) + ')'
       );
+
+    this.format = d3.formatLocale({
+      decimal: ',',
+      thousands: '.',
+      grouping: [3],
+      currency: ['R$', ' ']
+    });
+
+    this.color = d3.scaleOrdinal()
+      .domain(['Total investido', 'Fundo partidário', 'Outros'])
+      .range(['#7f3c8b', '#7f3c8b', '#aaa']);
   }
 
   drawVis(parlamentar: ParlamentarInvestimento) {
+    if (!parlamentar.totalReceitaCandidato) { return; }
     const data = {
       nodes: [
         { name: 'Total investido' },
@@ -73,8 +87,18 @@ export class CapitalChartComponent implements AfterContentInit, OnChanges {
         { name: 'Outros' }
       ],
       links: [
-        { source: 0, target: 1, value: parlamentar.totalReceitaCandidato - parlamentar.totalReceitaPartido },
-        { source: 0, target: 2, value: parlamentar.totalReceitaPartido }
+        {
+          source: 0,
+          target: 1,
+          name: 'Fundo partidário',
+          value: parlamentar.totalReceitaPartido
+        },
+        {
+          source: 0,
+          target: 2,
+          name: 'Outros',
+          value: parlamentar.totalReceitaCandidato - parlamentar.totalReceitaPartido
+        }
       ]
     };
 
@@ -94,16 +118,16 @@ export class CapitalChartComponent implements AfterContentInit, OnChanges {
       .join('path')
       .attr('class', 'link')
       .attr('d', d3Sankey.sankeyLinkHorizontal())
-      .attr('stroke', '#7f3c8b')
+      .attr('stroke', d => this.color(d.name))
       .attr('stroke-width', d => d.width)
-      .attr('opacity', 0.7)
+      .attr('opacity', 0.6)
       .style('mix-blend-mode', 'multiply');
 
     const node = this.g.append('g')
       .selectAll('rect')
       .data(data.nodes)
       .join('rect')
-      .attr('fill', '#7f3c8b')
+      .attr('fill', d => this.color(d.name))
       .attr('x', d => d.x0)
       .attr('y', d => d.y0)
       .attr('height', d => d.y1 - d.y0)
@@ -120,7 +144,7 @@ export class CapitalChartComponent implements AfterContentInit, OnChanges {
       .attr('y', d => (d.y1 + d.y0) / 2)
       .attr('dy', '0.35em')
       .attr('text-anchor', d => d.x0 < this.width / 2 ? 'start' : 'end')
-      .text(d => d.value);
+      .text(d => this.format.format(',.2f')(d.value));
   }
 
 }
