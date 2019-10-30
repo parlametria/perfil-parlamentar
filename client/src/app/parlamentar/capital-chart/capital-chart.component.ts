@@ -28,10 +28,10 @@ export class CapitalChartComponent implements AfterContentInit, OnChanges {
 
   ngAfterContentInit(): void {
     this.width = 300;
-    this.height = 240;
+    this.height = 200;
     this.margin = {
-      left: 20,
-      right: 20,
+      left: 70,
+      right: 70,
       top: 20,
       bottom: 20
     };
@@ -74,8 +74,8 @@ export class CapitalChartComponent implements AfterContentInit, OnChanges {
     });
 
     this.color = d3.scaleOrdinal()
-      .domain(['Total investido', 'Fundo partidário', 'Outros'])
-      .range(['#7f3c8b', '#7f3c8b', '#aaa']);
+      .domain(['Total investido', 'Fundo eleitoral', 'Outros'])
+      .range(['#495057', '#7f3c8b', '#ccc']);
   }
 
   drawVis(parlamentar: ParlamentarInvestimento) {
@@ -83,14 +83,14 @@ export class CapitalChartComponent implements AfterContentInit, OnChanges {
     const data = {
       nodes: [
         { name: 'Total investido' },
-        { name: 'Fundo partidário' },
+        { name: 'Fundo eleitoral' },
         { name: 'Outros' }
       ],
       links: [
         {
           source: 0,
           target: 1,
-          name: 'Fundo partidário',
+          name: 'Fundo eleitoral',
           value: parlamentar.totalReceitaPartido
         },
         {
@@ -140,11 +140,11 @@ export class CapitalChartComponent implements AfterContentInit, OnChanges {
       .data(data.nodes)
       .join('text')
       .attr('class', 'sankey-text')
-      .attr('x', d => (d.x0 < this.width / 2) ? d.x1 + 10 : d.x0 - 10)
+      .attr('x', d => (d.x0 < this.width / 2) ? d.x1 - 20 : d.x0 + 20)
       .attr('y', d => (d.y1 + d.y0) / 2)
       .attr('dy', '0.35em')
-      .attr('text-anchor', d => d.x0 < this.width / 2 ? 'start' : 'end')
-      .text(d => this.format.format(',.2f')(d.value));
+      .attr('text-anchor', d => d.x0 < this.width / 2 ? 'end' : 'start')
+      .text(d => this.format.format('.3s')(d.value).replace('M', ' M').replace('k', ' mil'));
   }
 
 }
