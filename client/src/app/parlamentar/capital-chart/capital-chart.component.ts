@@ -81,31 +81,32 @@ export class CapitalChartComponent implements AfterContentInit, OnChanges {
   drawVis(parlamentar: ParlamentarInvestimento) {
     if (!parlamentar.totalReceitaCandidato) { return; }
     const data = {
-      nodes: [
-        { name: 'Total investido' },
-        { name: 'Fundo eleitoral' },
-        { name: 'Outros' }
-      ],
-      links: [
-        {
-          source: 0,
-          target: 1,
-          name: 'Fundo eleitoral',
-          value: parlamentar.totalReceitaPartido
-        },
-        {
-          source: 0,
-          target: 2,
-          name: 'Outros',
-          value: parlamentar.totalReceitaCandidato - parlamentar.totalReceitaPartido
-        }
-      ]
+      nodes: [{ id: 'total', name: 'Total investido' }],
+      links: []
     };
+
+    if (parlamentar.totalReceitaPartido > 0) {
+      data.nodes.push({ id: 'partido', name: 'Fundo eleitoral' });
+      data.links.push({
+        source: 'total',
+        target: 'partido',
+        name: 'Fundo eleitoral',
+        value: parlamentar.totalReceitaPartido
+      });
+    }
+    data.nodes.push({ id: 'outros', name: 'Outros' });
+    data.links.push({
+      source: 'total',
+      target: 'outros',
+      name: 'Outros',
+      value: parlamentar.totalReceitaCandidato - parlamentar.totalReceitaPartido
+    });
 
     const sankey = d3Sankey.sankey()
       .nodeWidth(10)
       .nodePadding(15)
-      .size([this.width, this.height]);
+      .size([this.width, this.height])
+      .nodeId((d) => d.id);
 
     sankey({
       nodes: data.nodes,
