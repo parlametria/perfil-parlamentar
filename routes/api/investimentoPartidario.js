@@ -22,7 +22,7 @@ router.get("/", (req, res) => {
     attributes: [["id_parlamentar_voz", "idParlamentarVoz"], ["total_receita_partido", "totalReceitaPartido"], ["total_receita_candidato", "totalReceitaCandidato"], ["indice_investimento_partido", "indiceInvestimentoPartido"]],
     include: [
       {
-        attributes: [["nome_eleitoral", "nomeEleitoral"], "uf"],
+        attributes: [["nome_eleitoral", "nomeEleitoral"], "uf", "casa"],
         model: Parlamentar,
         as: "parlamentarInvestimento",
         required: true
@@ -56,7 +56,7 @@ router.get("/parlamentar/:id", (req, res) => {
     attributes: [["id_parlamentar_voz", "idParlamentarVoz"], ["total_receita_partido", "totalReceitaPartido"], ["total_receita_candidato", "totalReceitaCandidato"], ["indice_investimento_partido", "indiceInvestimentoPartido"]],
     include: [
       {
-        attributes: [["nome_eleitoral", "nomeEleitoral"], "uf"],
+        attributes: [["nome_eleitoral", "nomeEleitoral"], "uf", "casa"],
         model: Parlamentar,
         as: "parlamentarInvestimento",
         required: true

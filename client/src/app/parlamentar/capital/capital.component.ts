@@ -6,6 +6,7 @@ import { takeUntil, take } from 'rxjs/operators';
 
 import { ParlamentarService } from 'src/app/shared/services/parlamentar.service';
 import { ParlamentarInvestimento } from 'src/app/shared/models/parlamentarInvestimento.model';
+import { PartidoInvestimento } from 'src/app/shared/models/partidoInvestimento.model';
 
 @Component({
   selector: 'app-capital',
@@ -17,6 +18,7 @@ export class CapitalComponent implements OnInit {
   private unsubscribe = new Subject();
 
   parlamentar: ParlamentarInvestimento;
+  partido: PartidoInvestimento;
 
   constructor(
     private activatedroute: ActivatedRoute,
@@ -35,6 +37,19 @@ export class CapitalComponent implements OnInit {
       .subscribe(
         parlamentar => {
           this.parlamentar = parlamentar;
+
+          this.parlamentarService
+            .getInvestimentoPartido(
+              parlamentar.partidoEleicao.idPartido,
+              parlamentar.parlamentarInvestimento.uf,
+              parlamentar.parlamentarInvestimento.casa)
+            .pipe(takeUntil(this.unsubscribe))
+            .subscribe(
+              partido => {
+                this.partido = partido;
+              }
+            );
+
         },
         error => {
           console.log(error);
