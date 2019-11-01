@@ -27,13 +27,13 @@ export class CapitalChartComponent implements AfterContentInit, OnChanges {
   constructor() { }
 
   ngAfterContentInit(): void {
-    this.width = 300;
+    this.width = 200;
     this.height = 200;
     this.margin = {
-      left: 70,
-      right: 70,
-      top: 20,
-      bottom: 20
+      left: 50,
+      right: 50,
+      top: 50,
+      bottom: 50
     };
     this.totalWidth = this.width + this.margin.left + this.margin.right;
     this.totalHeight = this.height + this.margin.top + this.margin.top;
@@ -62,8 +62,8 @@ export class CapitalChartComponent implements AfterContentInit, OnChanges {
       .append('g')
       .attr(
         'transform',
-        'translate(' + this.margin.left + ',' + this.margin.top + ')'
-        // 'rotate(90 ' + (this.width * 0.5) + ' ' + (this.height * 0.5) + ')'
+        'translate(' + this.margin.left + ',' + this.margin.top + ')' +
+        'rotate(90 ' + (this.width * 0.5) + ' ' + (this.height * 0.5) + ')'
       );
 
     this.format = d3.formatLocale({
@@ -85,6 +85,14 @@ export class CapitalChartComponent implements AfterContentInit, OnChanges {
       links: []
     };
 
+    data.nodes.push({ id: 'outros', name: 'Outros' });
+    data.links.push({
+      source: 'total',
+      target: 'outros',
+      name: 'Outros',
+      value: parlamentar.totalReceitaCandidato - parlamentar.totalReceitaPartido
+    });
+
     if (parlamentar.totalReceitaPartido > 0) {
       data.nodes.push({ id: 'partido', name: 'Fundo eleitoral' });
       data.links.push({
@@ -94,13 +102,6 @@ export class CapitalChartComponent implements AfterContentInit, OnChanges {
         value: parlamentar.totalReceitaPartido
       });
     }
-    data.nodes.push({ id: 'outros', name: 'Outros' });
-    data.links.push({
-      source: 'total',
-      target: 'outros',
-      name: 'Outros',
-      value: parlamentar.totalReceitaCandidato - parlamentar.totalReceitaPartido
-    });
 
     const sankey = d3Sankey.sankey()
       .nodeWidth(10)
@@ -144,8 +145,10 @@ export class CapitalChartComponent implements AfterContentInit, OnChanges {
       .attr('x', d => (d.x0 < this.width / 2) ? d.x1 - 20 : d.x0 + 20)
       .attr('y', d => (d.y1 + d.y0) / 2)
       .attr('dy', '0.35em')
-      .attr('text-anchor', d => d.x0 < this.width / 2 ? 'end' : 'start')
-      .text(d => this.format.format('.3s')(d.value).replace('M', ' M').replace('k', ' mil'));
+      .attr('text-anchor', 'middle')
+      .text(d => this.format.format('.3s')(d.value).replace('M', ' M').replace('k', ' mil'))
+      .attr('transform',
+        d => 'rotate(-90 ' + ((d.x0 < this.width / 2) ? d.x1 - 20 : d.x0 + 20) + ' ' + ((d.y1 + d.y0) / 2) + ')');
   }
 
 }
