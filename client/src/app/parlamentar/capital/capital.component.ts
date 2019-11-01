@@ -36,8 +36,6 @@ export class CapitalComponent implements OnInit {
       .pipe(takeUntil(this.unsubscribe))
       .subscribe(
         parlamentar => {
-          this.parlamentar = parlamentar;
-
           this.parlamentarService
             .getInvestimentoPartido(
               parlamentar.partidoEleicao.idPartido,
@@ -46,7 +44,8 @@ export class CapitalComponent implements OnInit {
             .pipe(takeUntil(this.unsubscribe))
             .subscribe(
               partido => {
-                this.partido = partido;
+                parlamentar.partidoInvestimento = partido;
+                this.parlamentar = parlamentar;
               }
             );
 

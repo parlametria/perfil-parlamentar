@@ -100,7 +100,18 @@ router.get("/partido/:id/:uf/:esfera", (req, res) => {
       esfera: req.params.esfera
     }
   })
-    .then(parlamentares => res.status(SUCCESS).json(parlamentares))
+    .then(investimento => {
+      if (investimento) {
+        res.status(SUCCESS).json(investimento);
+      } else {
+        res.status(SUCCESS).json({
+          "id_partido": req.params.id,
+          "uf": req.params.uf,
+          "esfera": req.params.esfera,
+          "valor": 0
+        });
+      }
+    })
     .catch(err => res.status(BAD_REQUEST).json({ err }));
 });
 

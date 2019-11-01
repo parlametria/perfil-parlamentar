@@ -79,7 +79,7 @@ export class CapitalChartComponent implements AfterContentInit, OnChanges {
   }
 
   drawVis(parlamentar: ParlamentarInvestimento) {
-    if (!parlamentar.totalReceitaCandidato) { return; }
+    if (!parlamentar.partidoInvestimento.valor) { return; }
     const data = {
       nodes: [{ id: 'total', name: 'Total investido' }],
       links: []
@@ -90,7 +90,7 @@ export class CapitalChartComponent implements AfterContentInit, OnChanges {
       source: 'total',
       target: 'outros',
       name: 'Outros',
-      value: parlamentar.totalReceitaCandidato - parlamentar.totalReceitaPartido
+      value: parlamentar.partidoInvestimento.valor - parlamentar.totalReceitaPartido
     });
 
     if (parlamentar.totalReceitaPartido > 0) {
