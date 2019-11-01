@@ -3,6 +3,7 @@ const router = express.Router();
 
 const models = require("../../models/index");
 
+const InvestimentoPartidarioParlamentar = models.investimentoPartidarioParlamentar;
 const InvestimentoPartidario = models.investimentoPartidario;
 const Parlamentar = models.parlamentar;
 const Partido = models.partido;
@@ -17,7 +18,7 @@ const SUCCESS = 200;
  * @memberof module:routes/temas
  */
 router.get("/", (req, res) => {
-  InvestimentoPartidario.findAll({
+  InvestimentoPartidarioParlamentar.findAll({
     attributes: [["id_parlamentar_voz", "idParlamentarVoz"], ["total_receita_partido", "totalReceitaPartido"], ["total_receita_candidato", "totalReceitaCandidato"], ["indice_investimento_partido", "indiceInvestimentoPartido"]],
     include: [
       {
@@ -46,12 +47,12 @@ router.get("/", (req, res) => {
 
 /**
  * Captura dados de investimento partidário a partir do id do parlamentar no Voz Ativa
- * @name get/api/investimento
+ * @name get/api/investimento/parlamentar/:id
  * @function
  * @memberof module:routes/temas
  */
-router.get("/:id", (req, res) => {
-  InvestimentoPartidario.findOne({
+router.get("/parlamentar/:id", (req, res) => {
+  InvestimentoPartidarioParlamentar.findOne({
     attributes: [["id_parlamentar_voz", "idParlamentarVoz"], ["total_receita_partido", "totalReceitaPartido"], ["total_receita_candidato", "totalReceitaCandidato"], ["indice_investimento_partido", "indiceInvestimentoPartido"]],
     include: [
       {
@@ -61,13 +62,13 @@ router.get("/:id", (req, res) => {
         required: true
       },      
       {        
-        attributes: ["sigla"],
+        attributes: [["id_partido", "idPartido"], "sigla"],
         model: Partido,
         as: "partidoAtual",
         required: true
       },
       {
-        attributes: ["sigla"],
+        attributes: [["id_partido", "idPartido"], "sigla"],
         model: Partido,
         as: "partidoEleicao",
         required: true
@@ -75,6 +76,28 @@ router.get("/:id", (req, res) => {
     ],
     where: {
       id_parlamentar_voz: req.params.id
+    }
+  })
+    .then(parlamentares => res.status(SUCCESS).json(parlamentares))
+    .catch(err => res.status(BAD_REQUEST).json({ err }));
+});
+
+
+/**
+ * Recupera total investido pelo partido nas eleições de 2018 em uma UF para um determinada esfera (camara ou senado)
+ * id: id do partido no voz ativa (ex: 36769 (DEM))
+ * uf: uf de investimento (ex: PE, PB, etc)
+ * esfera: camara (para total investido em candidatos a deputados) ou senado (para total investido em  candidatos a deputados e senadores)
+ * @name get/api/investimento/partido/:id/:uf/:esfera
+ * @function
+ * @memberof module:routes/temas
+ */
+router.get("/partido/:id/:uf/:esfera", (req, res) => {  
+  InvestimentoPartidario.findOne({
+    where: {
+      id_partido: req.params.id,
+      uf: req.params.uf,
+      esfera: req.params.esfera
     }
   })
     .then(parlamentares => res.status(SUCCESS).json(parlamentares))

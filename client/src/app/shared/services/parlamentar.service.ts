@@ -69,6 +69,6 @@ export class ParlamentarService {
 
   getInvestimentoById(id: string): Observable<ParlamentarInvestimento> {
     return this.http
-      .get<ParlamentarInvestimento>(environment.apiUrl + 'investimento/' + id);
+      .get<ParlamentarInvestimento>(environment.apiUrl + 'investimento/parlamentar/' + id);
   }
 }

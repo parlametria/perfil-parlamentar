@@ -21,7 +21,8 @@ const ProposicaoTemasModel = "./postgres/proposicao_temas.js";
 const PartidoModel = "./postgres/partidos.js";
 const VotoModel = './postgres/voto.js';
 const OrientacaoModel = './postgres/orientacao.js';
-const InvestimentoPartidarioModel = './postgres/investimento-partidario.js';
+const investimentoPartidarioParlamentarModel = './postgres/investimento-partidario-parlamentar.js';
+const investimentoPartidarioModel = './postgres/investimento-partidario.js';
 
 if (!global.hasOwnProperty("models")) {
   const db = require("../config/keys").postgresURI;
@@ -64,7 +65,8 @@ if (!global.hasOwnProperty("models")) {
     partido: sequelize.import(PartidoModel),
     voto: sequelize.import(VotoModel),
     orientacao: sequelize.import(OrientacaoModel),
-    investimentoPartidario: sequelize.import(InvestimentoPartidarioModel)
+    investimentoPartidarioParlamentar: sequelize.import(investimentoPartidarioParlamentarModel),
+    investimentoPartidario: sequelize.import(investimentoPartidarioModel)
     // add your other models here
   };
 
