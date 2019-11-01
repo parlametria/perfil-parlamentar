@@ -149,6 +149,19 @@ export class CapitalChartComponent implements AfterContentInit, OnChanges {
       .text(d => this.format.format('.3s')(d.value).replace('M', ' M').replace('k', ' mil'))
       .attr('transform',
         d => 'rotate(-90 ' + ((d.x0 < this.width / 2) ? d.x1 - 20 : d.x0 + 20) + ' ' + ((d.y1 + d.y0) / 2) + ')');
+
+    const text = this.g.append('g')
+      .selectAll('text')
+      .data(data.nodes)
+      .join('text')
+      .attr('class', 'sankey-text')
+      .attr('x', d => (d.x0 < this.width / 2) ? d.x1 - 40 : d.x0 + 40)
+      .attr('y', d => (d.y1 + d.y0) / 2)
+      .attr('dy', '0.35em')
+      .attr('text-anchor', 'middle')
+      .text(d => d.name)
+      .attr('transform',
+        d => 'rotate(-90 ' + ((d.x0 < this.width / 2) ? d.x1 - 40 : d.x0 + 40) + ' ' + ((d.y1 + d.y0) / 2) + ')');
   }
 
 }
