@@ -7,8 +7,7 @@ import { ParlamentarInvestimento } from 'src/app/shared/models/parlamentarInvest
 
 @Component({
   selector: 'app-capital-chart',
-  template: '<div id="capital-chart"></div>',
-  styleUrls: ['./capital-chart.component.scss']
+  template: '<div id="capital-chart"></div>'
 })
 export class CapitalChartComponent implements AfterContentInit, OnChanges {
 
@@ -74,18 +73,24 @@ export class CapitalChartComponent implements AfterContentInit, OnChanges {
     });
 
     this.color = d3.scaleOrdinal()
-      .domain(['Total investido', 'Fundo eleitoral', 'Outros'])
+      .domain(['Fundo do partido', 'Parlamentar', 'Outros'])
       .range(['#495057', '#7f3c8b', '#ccc']);
   }
 
   drawVis(parlamentar: ParlamentarInvestimento) {
     if (!parlamentar.partidoInvestimento.valor) { return; }
+    const partido = parlamentar.partidoEleicao.sigla;
+    const uf = parlamentar.parlamentarInvestimento.uf;
     const data = {
-      nodes: [{ id: 'total', name: 'Total investido' }],
+      nodes: [{ id: 'total', name: 'Fundo do partido', perc: 1 }],
       links: []
     };
 
-    data.nodes.push({ id: 'outros', name: 'Outros' });
+    data.nodes.push({
+      id: 'outros',
+      name: 'Outros',
+      perc: (parlamentar.partidoInvestimento.valor - parlamentar.totalReceitaPartido) / parlamentar.partidoInvestimento.valor
+    });
     data.links.push({
       source: 'total',
       target: 'outros',
@@ -94,11 +99,14 @@ export class CapitalChartComponent implements AfterContentInit, OnChanges {
     });
 
     if (parlamentar.totalReceitaPartido > 0) {
-      data.nodes.push({ id: 'partido', name: 'Fundo eleitoral' });
+      data.nodes.push({
+        id: 'partido',
+        name: 'Parlamentar',
+        perc: parlamentar.totalReceitaPartido / parlamentar.partidoInvestimento.valor });
       data.links.push({
         source: 'total',
         target: 'partido',
-        name: 'Fundo eleitoral',
+        name: 'Parlamentar',
         value: parlamentar.totalReceitaPartido
       });
     }
@@ -122,7 +130,7 @@ export class CapitalChartComponent implements AfterContentInit, OnChanges {
       .attr('d', d3Sankey.sankeyLinkHorizontal())
       .attr('stroke', d => this.color(d.name))
       .attr('stroke-width', d => d.width)
-      .attr('opacity', 0.6)
+      .attr('opacity', 0.5)
       .style('mix-blend-mode', 'multiply');
 
     const node = this.g.append('g')
@@ -141,7 +149,7 @@ export class CapitalChartComponent implements AfterContentInit, OnChanges {
       .selectAll('text')
       .data(data.nodes)
       .join('text')
-      .attr('class', 'sankey-text')
+      .attr('style', 'font-size: 0.8rem')
       .attr('x', d => (d.x0 < this.width / 2) ? d.x1 - 20 : d.x0 + 20)
       .attr('y', d => (d.y1 + d.y0) / 2)
       .attr('dy', '0.35em')
@@ -150,18 +158,38 @@ export class CapitalChartComponent implements AfterContentInit, OnChanges {
       .attr('transform',
         d => 'rotate(-90 ' + ((d.x0 < this.width / 2) ? d.x1 - 20 : d.x0 + 20) + ' ' + ((d.y1 + d.y0) / 2) + ')');
 
-    const text = this.g.append('g')
+    const text2 = this.g.append('g')
       .selectAll('text')
       .data(data.nodes)
       .join('text')
-      .attr('class', 'sankey-text')
+      .attr('style', 'font-size: 0.8rem')
       .attr('x', d => (d.x0 < this.width / 2) ? d.x1 - 40 : d.x0 + 40)
       .attr('y', d => (d.y1 + d.y0) / 2)
       .attr('dy', '0.35em')
       .attr('text-anchor', 'middle')
-      .text(d => d.name)
+      .text(d => {
+        if (d.name === 'Fundo do partido') {
+          return 'Fundo do ' + partido + '/' + uf;
+        } else {
+          return d.name;
+        }
+      })
       .attr('transform',
         d => 'rotate(-90 ' + ((d.x0 < this.width / 2) ? d.x1 - 40 : d.x0 + 40) + ' ' + ((d.y1 + d.y0) / 2) + ')');
+
+    const text3 = this.g.append('g')
+      .selectAll('text')
+      .data(data.nodes)
+      .join('text')
+      .attr('style', 'font-size: 0.8rem')
+      .attr('x', d => (d.x0 < this.width / 2) ? d.x1 + 10 : d.x0 - 10)
+      .attr('y', d => (d.y1 + d.y0) / 2)
+      .attr('dy', '0.35em')
+      .attr('text-anchor', 'middle')
+      .text(d => this.format.format('.1%')(d.perc))
+      .attr('opacity', d => (d.name === 'Fundo do partido') ? 0 : 1)
+      .attr('transform',
+        d => 'rotate(-90 ' + ((d.x0 < this.width / 2) ? d.x1 + 10 : d.x0 - 10) + ' ' + ((d.y1 + d.y0) / 2) + ')');
   }
 
 }
