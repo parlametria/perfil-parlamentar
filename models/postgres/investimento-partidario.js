@@ -14,7 +14,8 @@ module.exports = (sequelize, type) => {
         type: type.STRING,
         primaryKey: true
       },
-      valor: type.DECIMAL(15, 2)
+      valor: type.DECIMAL(15, 2),
+      numero_candidatos: type.INTEGER
     },
     {
       timestamps: false,
