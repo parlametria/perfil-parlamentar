@@ -82,14 +82,19 @@ export class CapitalChartComponent implements AfterContentInit, OnChanges {
     const partido = parlamentar.partidoEleicao.sigla;
     const uf = parlamentar.parlamentarInvestimento.uf;
     const data = {
-      nodes: [{ id: 'total', name: 'Fundo do partido', perc: 1 }],
+      nodes: [{
+        id: 'total',
+        name: 'Fundo do partido',
+        perc: 1,
+        desc: 'Gasto do ' + partido + '/' + uf }],
       links: []
     };
 
     data.nodes.push({
       id: 'outros',
       name: 'Outros',
-      perc: (parlamentar.partidoInvestimento.valor - parlamentar.totalReceitaPartido) / parlamentar.partidoInvestimento.valor
+      perc: (parlamentar.partidoInvestimento.valor - parlamentar.totalReceitaPartido) / parlamentar.partidoInvestimento.valor,
+      desc: parlamentar.partidoInvestimento.numero_candidatos + ' outros'
     });
     data.links.push({
       source: 'total',
@@ -102,7 +107,9 @@ export class CapitalChartComponent implements AfterContentInit, OnChanges {
       data.nodes.push({
         id: 'partido',
         name: 'Parlamentar',
-        perc: parlamentar.totalReceitaPartido / parlamentar.partidoInvestimento.valor });
+        perc: parlamentar.totalReceitaPartido / parlamentar.partidoInvestimento.valor,
+        desc: 'Parlamentar'
+      });
       data.links.push({
         source: 'total',
         target: 'partido',
@@ -150,13 +157,13 @@ export class CapitalChartComponent implements AfterContentInit, OnChanges {
       .data(data.nodes)
       .join('text')
       .attr('style', 'font-size: 0.8rem')
-      .attr('x', d => (d.x0 < this.width / 2) ? d.x1 - 20 : d.x0 + 20)
+      .attr('x', d => (d.x0 < this.width / 2) ? d.x1 - 24 : d.x0 + 24)
       .attr('y', d => (d.y1 + d.y0) / 2)
       .attr('dy', '0.35em')
       .attr('text-anchor', 'middle')
       .text(d => this.format.format('.3s')(d.value).replace('M', ' M').replace('k', ' mil'))
       .attr('transform',
-        d => 'rotate(-90 ' + ((d.x0 < this.width / 2) ? d.x1 - 20 : d.x0 + 20) + ' ' + ((d.y1 + d.y0) / 2) + ')');
+        d => 'rotate(-90 ' + ((d.x0 < this.width / 2) ? d.x1 - 24 : d.x0 + 24) + ' ' + ((d.y1 + d.y0) / 2) + ')');
 
     const text2 = this.g.append('g')
       .selectAll('text')
@@ -167,13 +174,7 @@ export class CapitalChartComponent implements AfterContentInit, OnChanges {
       .attr('y', d => (d.y1 + d.y0) / 2)
       .attr('dy', '0.35em')
       .attr('text-anchor', 'middle')
-      .text(d => {
-        if (d.name === 'Fundo do partido') {
-          return 'Fundo do ' + partido + '/' + uf;
-        } else {
-          return d.name;
-        }
-      })
+      .text(d => d.desc)
       .attr('transform',
         d => 'rotate(-90 ' + ((d.x0 < this.width / 2) ? d.x1 - 40 : d.x0 + 40) + ' ' + ((d.y1 + d.y0) / 2) + ')');
 

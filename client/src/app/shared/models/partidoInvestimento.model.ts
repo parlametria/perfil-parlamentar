@@ -3,4 +3,5 @@ export interface PartidoInvestimento {
     uf: string;
     esfera: string;
     valor: number;
+    numero_candidatos: number;
   }
