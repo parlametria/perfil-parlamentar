@@ -1,6 +1,22 @@
 <div class="container-sm my-3">
-  <h4 class="title-main my-4">Investimento partidário na campanha</h4>
-  <div class="capital-chart-wrapper">
-    <app-capital-chart [parlamentar]="parlamentar"></app-capital-chart>
+    <h4 class="title-main my-4">Investimento partidário na campanha</h4>  
+    <div
+      [hidden]="!parlamentar?.partidoInvestimento?.valor"
+      class="capital-chart-wrapper"
+    >
+      <app-capital-chart [parlamentar]="parlamentar"></app-capital-chart>
+    </div>
+    <div
+      *ngIf="!parlamentar?.partidoInvestimento?.valor && parlamentar?.partidoEleicao?.sigla != 'SPART'"
+      class="d-flex justify-content-center mt-5"
+    >
+      Não houveram investimentos do partido nessa UF.
+    </div>
+    <div
+      *ngIf="parlamentar?.partidoEleicao?.sigla == 'SPART'"
+      class="d-flex justify-content-center mt-5"
+    >
+      O parlamentar não participou das eleições em 2018.
+    </div>
   </div>
-</div>
+  
