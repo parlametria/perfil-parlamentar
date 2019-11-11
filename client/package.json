@@ -33,6 +33,7 @@
     "bootstrap": "^4.2.1",
     "core-js": "^2.5.4",
     "d3": "^5.9.2",
+    "d3-sankey": "^0.12.3",
     "d3-tip": "^0.9.1",
     "hare-niemeyer": "^2.0.0",
     "ng-lazyload-image": "^5.0.0",

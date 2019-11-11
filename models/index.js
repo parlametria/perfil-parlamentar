@@ -22,6 +22,8 @@ const PartidoModel = "./postgres/partidos.js";
 const VotoModel = './postgres/voto.js';
 const OrientacaoModel = './postgres/orientacao.js';
 const PerfilMaisModel = './postgres/perfil-mais.js';
+const investimentoPartidarioParlamentarModel = './postgres/investimento-partidario-parlamentar.js';
+const investimentoPartidarioModel = './postgres/investimento-partidario.js';
 
 if (!global.hasOwnProperty("models")) {
   const db = require("../config/keys").postgresURI;
@@ -64,7 +66,9 @@ if (!global.hasOwnProperty("models")) {
     partido: sequelize.import(PartidoModel),
     voto: sequelize.import(VotoModel),
     orientacao: sequelize.import(OrientacaoModel),
-    perfilMais: sequelize.import(PerfilMaisModel)
+    perfilMais: sequelize.import(PerfilMaisModel),
+    investimentoPartidarioParlamentar: sequelize.import(investimentoPartidarioParlamentarModel),
+    investimentoPartidario: sequelize.import(investimentoPartidarioModel)
     // add your other models here
   };
 
@@ -78,5 +82,7 @@ if (!global.hasOwnProperty("models")) {
   sequelize.sync({ force: false }).then(() => {
     console.log("BD sincronizado");
   });
+  // Retorna campos do tipo decimal como float e não como string
+  Sequelize.postgres.DECIMAL.parse = function (value) { return parseFloat(value); };
 }
 module.exports = global.models;

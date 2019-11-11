@@ -19,6 +19,7 @@ const aderencia = require("./routes/api/aderencia");
 const orientacoes = require("./routes/api/orientacoes");
 const liderancas = require("./routes/api/liderancas");
 const perfil = require("./routes/api/perfil");
+const investimentoPartidario = require("./routes/api/investimentoPartidario");
 
 const app = express();
 app.use(forceSsl);
@@ -62,6 +63,7 @@ app.use("/api/aderencia", aderencia);
 app.use("/api/orientacoes", orientacoes);
 app.use("/api/liderancas", liderancas);
 app.use("/api/perfil", perfil);
+app.use("/api/investimento", investimentoPartidario);
 
 // Set static folder
 app.use(express.static("client/build"));
