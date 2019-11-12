@@ -19,11 +19,11 @@ const attPartido = [["id_partido", "idPartido"], "sigla"]
 const attTema = [["id_tema", "idTema"], "tema", "slug"]
 
 /**
- * Recupera informações de um parlamentares e seus índices (incluindo aderência por tema) a partir de seu ID no Voz Ativa
+ * Recupera informações de um parlamentar e seus índices (incluindo aderência por tema) a partir de seu ID no Voz Ativa
  * 
  * @name get/api/perfil/:id
  * @function
- * @memberof module:routes/liderancas
+ * @memberof module:routes/perfil
  */
 router.get("/:id", (req, res) => {
   PerfilMais.findOne({
@@ -66,12 +66,12 @@ router.get("/:id", (req, res) => {
 });
 
 /**
- * Recupera informações de um parlamentares e seus índices (incluindo aderência por tema) a partir de uma lista de ID's 
- * passada no corpo da requisição.
+ * Recupera informações de uma lista de parlamentares e seus índices (incluindo aderência por tema) a partir de uma lista de ID's 
+ * passada no corpo da requisição. Exemplo: { "parlamentares": ["1160508", "1136811"] }
  * 
- * @name get/api/perfil/:id
+ * @name get/api/perfil/lista
  * @function
- * @memberof module:routes/liderancas
+ * @memberof module:routes/perfil
  */
 router.post("/lista", (req, res) => {
 
