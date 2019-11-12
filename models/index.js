@@ -25,6 +25,9 @@ const investimentoPartidarioParlamentarModel = './postgres/investimento-partidar
 const investimentoPartidarioModel = './postgres/investimento-partidario.js';
 const atividadesEconomicasModel = './postgres/atividades-economicas.js';
 const ligacoesEconomicasModel = './postgres/ligacoes-economicas.js';
+const empresasModel = './postgres/empresas.js';
+const empresasParlamentaresModel = './postgres/empresas-parlamentares.js';
+const atividadesEconomicasEmpresasModel = './postgres/atividades-economicas-empresas.js';
 
 if (!global.hasOwnProperty("models")) {
   const db = require("../config/keys").postgresURI;
@@ -70,7 +73,10 @@ if (!global.hasOwnProperty("models")) {
     investimentoPartidarioParlamentar: sequelize.import(investimentoPartidarioParlamentarModel),
     investimentoPartidario: sequelize.import(investimentoPartidarioModel),
     atividadesEconomicas: sequelize.import(atividadesEconomicasModel),
-    ligacoesEconomicas: sequelize.import(ligacoesEconomicasModel)
+    ligacoesEconomicas: sequelize.import(ligacoesEconomicasModel),
+    empresas: sequelize.import(empresasModel),
+    empresasParlamentares: sequelize.import(empresasParlamentaresModel),
+    atividadesEconomicasEmpresas: sequelize.import(atividadesEconomicasEmpresasModel)
     // add your other models here
   };
 
