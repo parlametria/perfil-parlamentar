@@ -48,6 +48,11 @@ module.exports = (sequelize, type) => {
         foreignKey: "id_parlamentar_voz",
         targetKey: "id_parlamentar_voz",      
         as: "parlamentarLiderancas"
+      }),      
+      parlamentar.hasOne(models.perfilMais, {
+        foreignKey: "id_parlamentar_voz",
+        targetKey: "id_parlamentar_voz",      
+        as: "parlamentarPerfilMais"
       }),
       parlamentar.belongsTo(models.partido, {
         foreignKey: "id_partido",
