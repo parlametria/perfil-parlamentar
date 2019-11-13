@@ -22,7 +22,7 @@ module.exports = (sequelize, type) => {
     atividadesEconomicas.hasMany(models.atividadesEconomicasEmpresas, {
       foreignKey: "id_atividade_economica",
       targetKey: "id_atividade_economica",
-      as: "atividadeEconomicaEmpresa"
+      as: "atividadesEconomicasEmpresas"
     })
   };
   return atividadesEconomicas;

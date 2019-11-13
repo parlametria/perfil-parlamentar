@@ -21,12 +21,12 @@ module.exports = (sequelize, type) => {
     atividadesEconomicasEmpresas.belongsTo(models.empresas, {
       foreignKey: "cnpj",
       sourceKey: "cnpj",
-      as: "empresaAtividadeEconomica"
+      as: "empresasAtividadesEconomicas"
     }),
     atividadesEconomicasEmpresas.belongsTo(models.atividadesEconomicas, {
         foreignKey: "id_atividade_economica",
         sourceKey: "id_atividade_economica",
-        as: "atividadeEconomicaEmpresa"
+        as: "atividadesEconomicasEmpresas"
       })
   };
   return atividadesEconomicasEmpresas;

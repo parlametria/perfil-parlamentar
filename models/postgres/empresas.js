@@ -18,12 +18,12 @@ module.exports = (sequelize, type) => {
     empresas.hasMany(models.empresasParlamentares, {
       foreignKey: "cnpj",
       targetKey: "cnpj",      
-      as: "empresaParlamentar"
+      as: "empresasParlamentares"
     }),
     empresas.hasMany(models.atividadesEconomicasEmpresas, {
       foreignKey: "cnpj",
       targetKey: "cnpj",      
-      as: "empresaAtividadeEconomica"
+      as: "empresasAtividadesEconomicas"
     })
   };
   return empresas;
