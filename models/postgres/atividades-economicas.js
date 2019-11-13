@@ -18,6 +18,11 @@ module.exports = (sequelize, type) => {
       foreignKey: "id_atividade_economica",
       targetKey: "id_atividade_economica",
       as: "parlamentarLigacoes"
+    }),
+    atividadesEconomicas.hasMany(models.atividadesEconomicasEmpresas, {
+      foreignKey: "id_atividade_economica",
+      targetKey: "id_atividade_economica",
+      as: "atividadesEconomicasEmpresas"
     })
   };
   return atividadesEconomicas;
