@@ -6,6 +6,7 @@ import { VotacoesComponent } from './votacoes/votacoes.component';
 import { PosicoesComponent } from './posicoes/posicoes.component';
 import { CargosComponent } from './cargos/cargos.component';
 import { AderenciaComponent } from './aderencia/aderencia.component';
+import { CapitalComponent } from './capital/capital.component';
 
 const routes: Routes = [
   {
@@ -33,6 +34,10 @@ const routes: Routes = [
       {
         path: 'aderencia',
         component: AderenciaComponent
+      },
+      {
+        path: 'capital',
+        component: CapitalComponent
       }
     ]
   }
