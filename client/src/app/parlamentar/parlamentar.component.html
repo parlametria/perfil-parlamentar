@@ -19,7 +19,8 @@
       <div class="col">
         <div class="parlamentar-title">{{ parlamentar.nomeEleitoral }}</div>
         <p>
-          {{getCargoParlamentar(parlamentar?.casa)}} <br>
+          {{getCargoParlamentar(parlamentar?.casa)}}
+          <br>
           {{ parlamentar.parlamentarPartido.sigla }}/{{ parlamentar.uf }}
         </p>
       </div>
@@ -28,8 +29,9 @@
 
 </div>
 
-<ul class="nav nav-tabs justify-content-center">
-  <!-- <li class="nav-item">
+<div class="parlementar-subnav">
+  <ul class="nav nav-tabs justify-content-center">
+    <!-- <li class="nav-item">
     <a
       class="nav-link nav-link-parlamentar"
       [routerLink]="['./posicoes']"
@@ -38,34 +40,43 @@
       Posições
     </a>
   </li> -->
-  <li class="nav-item">
-    <a
-      class="nav-link nav-link-parlamentar"
-      [routerLink]="['./votacoes']"
-      [routerLinkActive]="'active'"
-    >
-      Votações
-    </a>
-  </li>
-  <li class="nav-item">
-    <a
-      class="nav-link nav-link-parlamentar"
-      [routerLink]="['./cargos']"
-      [routerLinkActive]="'active'"
-    >
-      Cargos
-    </a>
-  </li>
-  <li class="nav-item">
-    <a
-      class="nav-link nav-link-parlamentar"
-      [routerLink]="['./capital']"
-      [routerLinkActive]="'active'"
-    >
-      Capital político
-    </a>
-  </li>
-  <!-- <li class="nav-item">
+    <li class="nav-item">
+      <a
+        class="nav-link nav-link-parlamentar"
+        [routerLink]="['./votacoes']"
+        [routerLinkActive]="'active'"
+      >
+        Votações
+      </a>
+    </li>
+    <li class="nav-item">
+      <a
+        class="nav-link nav-link-parlamentar"
+        [routerLink]="['./cargos']"
+        [routerLinkActive]="'active'"
+      >
+        Cargos
+      </a>
+    </li>
+    <li class="nav-item">
+      <a
+        class="nav-link nav-link-parlamentar"
+        [routerLink]="['./capital']"
+        [routerLinkActive]="'active'"
+      >
+        Capital político
+      </a>
+    </li>
+    <li class="nav-item">
+      <a
+        class="nav-link nav-link-parlamentar"
+        [routerLink]="['./trajetoria']"
+        [routerLinkActive]="'active'"
+      >
+        Trajetória
+      </a>
+    </li>
+    <!-- <li class="nav-item">
     <a
       class="nav-link nav-link-parlamentar"
       [routerLink]="['./aderencia']"
@@ -74,7 +85,8 @@
       Aderência
     </a>
   </li> -->
-</ul>
+  </ul>
+</div>
 
 <div class="parlamentar-pages container">
   <router-outlet></router-outlet>
