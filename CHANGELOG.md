@@ -1,5 +1,11 @@
 # Changelog
 
+## 3.3.0 (2019-11-13)
+
+- [x] Adiciona investimento partidário dos parlamentares
+- [x] Disponibiliza dados de sócios de empresas e doações via API
+- [x] Resolução de bugs
+
 ## 3.2.2 (2019-10-21)
 
 - [x] Correção de textos
