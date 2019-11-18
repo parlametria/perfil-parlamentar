@@ -114,8 +114,15 @@ router.get("/parlamentar", (req, res) => {
       em_exercicio: true
     }
   })
-    .then(parlamentares => res.status(SUCCESS).json(parlamentares))
-    .catch(err => res.status(BAD_REQUEST).json({ err: err.message }));
+  .then(parlamentares => {
+    const result = parlamentares.map(parlamentar => {
+      let data = parlamentar.toJSON();
+      data['nomeProcessado'] = data['nomeEleitoral'].normalize('NFD').replace(/[\u0300-\u036f]/g, "");
+      return data;
+    });
+    res.status(SUCCESS).json(result);
+  })
+  .catch(err => res.status(BAD_REQUEST).json({ err: err.message }));
 });
 
 /**
