@@ -1,3 +1,14 @@
-<p>
-  busca-parlamentar works!
-</p>
+<app-sticky-footer-navbar></app-sticky-footer-navbar>
+<div class="container py-4 container-sticky-footer-navbar">
+  <h4 class="title-main">busca-parlamentar works!</h4>
+
+  <app-filter (filterChange)="search($event)"></app-filter>
+
+  <header class="controls my-3">
+    <div class="parlamentar-count">
+      <strong class="strong">{{ parlamentares?.length }}</strong>
+      parlamentares
+    </div>
+  </header>
+
+</div>
