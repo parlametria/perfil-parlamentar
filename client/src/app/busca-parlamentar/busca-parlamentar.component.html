@@ -9,6 +9,21 @@
       <strong class="strong">{{ parlamentares?.length }}</strong>
       parlamentares
     </div>
+    <div>
+      <div class="btn-toolbar">
+        <div class="d-none d-md-block">Ordernar:</div>
+        <button
+          class="btn btn-light btn-light-icon active"
+          (click)="toggleOrderBy()"
+        >
+          <span [ngClass]="{'icon-sort-amount-asc' : orderBy !== 'DESC', 'icon-sort-amount-desc' : orderBy === 'DESC'}"></span>
+        </button>
+      </div>
+    </div>
   </header>
+
+  <div *ngFor="let parlamentar of parlamentares"> 
+    {{ parlamentar.nomeEleitoral }}
+  </div>
 
 </div>
