@@ -25,6 +25,7 @@ export class TrajetoriaChartComponent implements AfterContentInit, OnChanges {
   yAxis: any;
   line: any;
   numberFormat: any;
+  parseDate: any;
 
   constructor() { }
 
@@ -84,6 +85,7 @@ export class TrajetoriaChartComponent implements AfterContentInit, OnChanges {
     /* tslint:enable */
 
     this.numberFormat = d3.format('.2f');
+    this.parseDate = d3.timeParse('%Y-%m-%d');
   }
 
   drawVis(trajetoria) {
@@ -128,6 +130,71 @@ export class TrajetoriaChartComponent implements AfterContentInit, OnChanges {
       return '\xa0' + s;
     });
 
+    /**
+     * Mandatos
+     */
+    this.g.append('rect')
+      .attr('x', 0)
+      .attr('y', this.height)
+      .attr('width', this.width)
+      .attr('height', 10)
+      .attr('fill', '#eeedf4');
+    const mandatos = trajetoria.election_history.filter(d => d.elected);
+    this.g.selectAll('.elect-point')
+      .data(mandatos)
+      .enter()
+      .append('rect')
+      .attr('class', 'elect-point')
+      .attr('width', (d) => {
+        const start = this.x(new Date(d.year + 1, 0, 1));
+        let end;
+        if (d.post === 'SENADOR') {
+          end = this.x(new Date(d.year + 8, 11, 30));
+        } else {
+          end = this.x(new Date(d.year + 4, 11, 30));
+        }
+        return end - start;
+      })
+      .attr('height', 10)
+      .attr('x', (d) => this.x(new Date(d.year + 1, 0, 1)))
+      .attr('y', this.height)
+      .attr('fill', '#92cc48');
+    /**
+     * Mandatos FIM
+     */
+
+    /**
+     * Filiações
+     */
+    this.g.selectAll('.affil-point')
+      .data(trajetoria.affiliation_history)
+      .enter()
+      .append('rect')
+      .attr('class', 'affil-point')
+      .attr('width', 10)
+      .attr('height', 10)
+      .attr('x', (d) => this.x(this.parseDate(d.started_in)) - 5)
+      .attr('y', this.height);
+
+    this.g.selectAll('.affil-text')
+      .data(trajetoria.affiliation_history)
+      .enter()
+      .append('text')
+      .attr('class', 'affil-text')
+      .attr('text-anchor', 'middle')
+      .attr('font-family', 'sans-serif')
+      .attr('font-size', 8)
+      .attr('x', (d) => this.x(this.parseDate(d.started_in)))
+      .attr('dy', this.height + 20)
+        .text((d) => d.party);
+    /**
+     * Filiações FIM
+     */
+
+    /**
+     * Patrimônio
+     */
+
     this.g.append('g')
       .call(this.xAxis)
       .call(g => g.select('.domain').remove())
@@ -167,6 +234,9 @@ export class TrajetoriaChartComponent implements AfterContentInit, OnChanges {
         return this.x(date);
       })
       .attr('cy', (d) => this.y(d.value));
+    /**
+     * Patrimônio FIM
+     */
   }
 
 }

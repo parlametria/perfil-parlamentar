@@ -36,7 +36,7 @@ export class TrajetoriaComponent implements OnInit {
       .subscribe(
         parlamentar => {
           this.perfilPoliticoService
-            .get('2310207')
+            .get('2312526')
             .pipe(takeUntil(this.unsubscribe))
             .subscribe(
               trajetoria => this.trajetoria = trajetoria
