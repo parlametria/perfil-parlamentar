@@ -22,8 +22,9 @@
     </div>
   </header>
 
-  <div *ngFor="let parlamentar of parlamentares"> 
-    {{ parlamentar.nomeEleitoral }}
-  </div>
+  <app-lista-parlamentares
+    [parlamentares]="parlamentares"
+    [filter]="filtro"
+  ></app-lista-parlamentares>
 
 </div>

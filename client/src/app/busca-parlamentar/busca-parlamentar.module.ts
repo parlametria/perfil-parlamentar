@@ -10,10 +10,12 @@ import { BuscaParlamentarRoutingModule } from './busca-parlamentar-routing.modul
 import { FilterModule } from '../filter/filter.module';
 
 import { BuscaParlamentarComponent } from './busca-parlamentar.component';
+import { ListaParlamentaresComponent } from './lista-parlamentares/lista-parlamentares.component';
 
 @NgModule({
   declarations: [
-    BuscaParlamentarComponent
+    BuscaParlamentarComponent,
+    ListaParlamentaresComponent
   ],
   imports: [
     CommonModule,
