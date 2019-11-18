@@ -1,8 +1,9 @@
-import { Component, AfterContentInit, OnChanges, SimpleChanges, Input } from '@angular/core';
+import { Component, AfterContentInit, OnChanges, SimpleChanges, Input, ViewEncapsulation } from '@angular/core';
 
 import * as d3 from 'd3';
 
 @Component({
+  encapsulation: ViewEncapsulation.None,
   selector: 'app-trajetoria-chart',
   template: '<div id="trajetoria-chart"></div>',
   styleUrls: ['./trajetoria-chart.component.scss']
@@ -30,8 +31,10 @@ export class TrajetoriaChartComponent implements AfterContentInit, OnChanges {
   constructor() { }
 
   ngAfterContentInit(): void {
-    this.width = 400;
-    this.height = 200;
+    const wrapperWidth = d3.select('.trajetoria-chart-wrapper').node().offsetWidth;
+
+    this.width = (wrapperWidth < 580) ? 300 : 600;
+    this.height = 280;
     this.margin = {
       left: 65,
       right: 30,
@@ -78,11 +81,9 @@ export class TrajetoriaChartComponent implements AfterContentInit, OnChanges {
       .axisRight(this.y)
       .tickSize(this.width);
 
-    /* tslint:disable */
     this.line = d3.line()
       .x((d) => this.x(new Date(d.year, 0, 1)))
       .y((d) => this.y(d.value));
-    /* tslint:enable */
 
     this.numberFormat = d3.format('.2f');
     this.parseDate = d3.timeParse('%Y-%m-%d');
@@ -196,11 +197,27 @@ export class TrajetoriaChartComponent implements AfterContentInit, OnChanges {
      */
 
     this.g.append('g')
+      .attr('class', 'axis axis--x')
       .call(this.xAxis)
       .call(g => g.select('.domain').remove())
-      .call(g => g.selectAll('.tick text').attr('dy', -this.height - 15));
+      .call(g => g.selectAll('.tick text').attr('dy', -this.height - 15))
+      .call(g => g.selectAll('.tick')
+        .attr('class', (d) => {
+          if (maxDate.getFullYear() - minDate.getFullYear() <= 5) {
+            return 'tick opaque';
+          }
+          const yearFrom1962 = d.getFullYear() - 1962;
+          const divBy4 = (yearFrom1962 / 4).toString();
+          if (divBy4.indexOf('.') === -1) {
+            return 'tick normal';
+          } else {
+            return 'tick opaque';
+          }
+        }));
     this.g.append('g')
+      .attr('class', 'axis axis--y')
       .call(this.yAxis)
+      .call(g => g.select('.domain').remove())
       .call(g => g.selectAll('.tick text')
         .attr('text-anchor', 'end')
         .attr('dx', -this.width - 15))

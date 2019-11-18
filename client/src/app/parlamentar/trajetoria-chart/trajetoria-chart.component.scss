@@ -1,0 +1,20 @@
+.tick {
+  > line {
+    stroke: #eeedf4;
+  }
+  &.opaque {
+    opacity: 0.5;
+
+    > text {
+      visibility: hidden;
+    }
+  }
+}
+
+.axis--y {
+  > .tick:first-child {
+    > line {
+      visibility: hidden;
+    }
+  }
+}
