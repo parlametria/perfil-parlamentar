@@ -1,6 +1,7 @@
 import { Component, AfterContentInit, OnChanges, SimpleChanges, Input, ViewEncapsulation } from '@angular/core';
 
 import * as d3 from 'd3';
+import d3Tip from 'd3-tip';
 
 @Component({
   encapsulation: ViewEncapsulation.None,
@@ -26,7 +27,13 @@ export class TrajetoriaChartComponent implements AfterContentInit, OnChanges {
   yAxis: any;
   line: any;
   numberFormat: any;
+  currencyFormat: any;
+  dateFormat: any;
   parseDate: any;
+
+  tipPatrimonio: any;
+  tipFiliacao: any;
+  tipMandato: any;
 
   constructor() { }
 
@@ -44,6 +51,7 @@ export class TrajetoriaChartComponent implements AfterContentInit, OnChanges {
     this.totalWidth = this.width + this.margin.left + this.margin.right;
     this.totalHeight = this.height + this.margin.top + this.margin.top;
     this.initChart();
+    this.initTooltip();
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -85,11 +93,48 @@ export class TrajetoriaChartComponent implements AfterContentInit, OnChanges {
       .x((d: any) => this.x(new Date(d.year, 0, 1)))
       .y((d: any) => this.y(d.value));
 
+    const locale = d3.formatLocale({
+      decimal: ',',
+      thousands: '.',
+      grouping: [3],
+      currency: ['R$ ', ' ']
+    });
+
     this.numberFormat = d3.format('.2f');
+    this.currencyFormat = locale.format('$,.2f');
+    this.dateFormat = d3.timeFormat('%d/%m/%Y');
     this.parseDate = d3.timeParse('%Y-%m-%d');
   }
 
+  private initTooltip() {
+    this.tipPatrimonio = d3Tip()
+      .attr('class', 'tip-trajetoria')
+      .attr('id', 'tooltip-patrimonio')
+      .offset([-10, 0])
+      .html((d: any) => this.currencyFormat(d.value));
+    this.tipFiliacao = d3Tip()
+      .attr('class', 'tip-trajetoria')
+      .attr('id', 'tooltip-filiacao')
+      .offset([-10, 0])
+      .html((d: any) => this.dateFormat(this.parseDate(d.started_in)));
+    this.tipMandato = d3Tip()
+      .attr('class', 'tip-trajetoria')
+      .attr('id', 'tooltip-mandato')
+      .offset([-10, 0])
+      .html((d: any) => {
+        if (d.post === 'SENADOR') {
+          return d.post + ': ' + (d.year + 1) + '- ' + (d.year + 7);
+        } else {
+          return d.post + ': ' + (d.year + 1) + '-' + (d.year + 4);
+        }
+      });
+  }
+
   drawVis(trajetoria) {
+    this.svg.call(this.tipPatrimonio);
+    this.svg.call(this.tipFiliacao);
+    this.svg.call(this.tipMandato);
+
     const earliestYear = +d3.min(trajetoria.asset_history, (d: any) => d.year);
     let max = d3.max(trajetoria.asset_history, (d: any) => +d.value);
     if (max < 900000) {
@@ -159,7 +204,10 @@ export class TrajetoriaChartComponent implements AfterContentInit, OnChanges {
       .attr('height', 10)
       .attr('x', (d) => this.x(new Date(d.year + 1, 0, 1)))
       .attr('y', this.height)
-      .attr('fill', '#92cc48');
+      .attr('fill', '#92cc48')
+      .attr('stroke', '#eeedf4')
+      .on('mouseover.tip', this.tipMandato.show)
+      .on('mouseout.tip', this.tipMandato.hide);
     /**
      * Mandatos FIM
      */
@@ -175,7 +223,9 @@ export class TrajetoriaChartComponent implements AfterContentInit, OnChanges {
       .attr('width', 10)
       .attr('height', 10)
       .attr('x', (d) => this.x(this.parseDate(d.started_in)) - 5)
-      .attr('y', this.height);
+      .attr('y', this.height)
+      .on('mouseover.tip', this.tipFiliacao.show)
+      .on('mouseout.tip', this.tipFiliacao.hide);
 
     this.g.selectAll('.affil-text')
       .data(trajetoria.affiliation_history)
@@ -246,13 +296,16 @@ export class TrajetoriaChartComponent implements AfterContentInit, OnChanges {
       .data(trajetoria.asset_history)
       .enter()
       .append('circle')
+      .attr('class', 'circle-patrimonio')
       .attr('fill', '#5a44a0')
       .attr('r', 5)
       .attr('cx', (d) => {
         const date = new Date(d.year, 0, 1);
         return this.x(date);
       })
-      .attr('cy', (d) => this.y(d.value));
+      .attr('cy', (d) => this.y(d.value))
+      .on('mouseover.tip', this.tipPatrimonio.show)
+      .on('mouseout.tip', this.tipPatrimonio.hide);
     /**
      * Patrimônio FIM
      */
