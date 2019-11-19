@@ -19,6 +19,8 @@ import { VotacoesComponent } from './votacoes/votacoes.component';
 import { VotacaoComponent } from './votacao/votacao.component';
 import { CapitalComponent } from './capital/capital.component';
 import { CapitalChartComponent } from './capital-chart/capital-chart.component';
+import { TrajetoriaComponent } from './trajetoria/trajetoria.component';
+import { TrajetoriaChartComponent } from './trajetoria-chart/trajetoria-chart.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +33,9 @@ import { CapitalChartComponent } from './capital-chart/capital-chart.component';
     VotacoesComponent,
     VotacaoComponent,
     CapitalComponent,
-    CapitalChartComponent
+    CapitalChartComponent,
+    TrajetoriaComponent,
+    TrajetoriaChartComponent
   ],
   imports: [
     CommonModule,

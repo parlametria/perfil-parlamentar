@@ -7,6 +7,7 @@ import { PosicoesComponent } from './posicoes/posicoes.component';
 import { CargosComponent } from './cargos/cargos.component';
 import { AderenciaComponent } from './aderencia/aderencia.component';
 import { CapitalComponent } from './capital/capital.component';
+import { TrajetoriaComponent } from './trajetoria/trajetoria.component';
 
 const routes: Routes = [
   {
@@ -38,6 +39,10 @@ const routes: Routes = [
       {
         path: 'capital',
         component: CapitalComponent
+      },
+      {
+        path: 'trajetoria',
+        component: TrajetoriaComponent
       }
     ]
   }
