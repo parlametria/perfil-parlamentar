@@ -3,7 +3,7 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 
 import { Subject } from 'rxjs';
 
-import { ParlamentarBuscaParlamentar } from 'src/app/shared/models/parlamentarBuscaParlamentar.model';
+import { ParlamentarAderencia } from 'src/app/shared/models/parlamentarAderencia.model';
 
 @Component({
   selector: 'app-lista-parlamentares',
@@ -12,7 +12,7 @@ import { ParlamentarBuscaParlamentar } from 'src/app/shared/models/parlamentarBu
 })
 export class ListaParlamentaresComponent implements OnDestroy {
 
-  @Input() parlamentares: ParlamentarBuscaParlamentar[];
+  @Input() parlamentares: ParlamentarAderencia[];
   @Input() filter: any;
 
   private unsubscribe = new Subject();
