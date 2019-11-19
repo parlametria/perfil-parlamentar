@@ -1,6 +1,9 @@
 <div class="mt-3">
   <div class="d-flex justify-content-center mb-3">
-    <div class="temas-container">
+    <div
+      class="temas-container"
+      [hidden]="!exibirTemas"
+    >
       <div
         *ngFor="let tema of temas"
         class="mr-1"
@@ -16,7 +19,6 @@
         </button>
       </div>
     </div>
-
   </div>
   <div class="row gutters-sm">
     <div class="col-lg-10">

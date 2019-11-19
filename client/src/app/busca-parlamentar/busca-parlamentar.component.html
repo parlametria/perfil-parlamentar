@@ -2,7 +2,10 @@
 <div class="container py-4 container-sticky-footer-navbar">
   <h4 class="title-main">busca-parlamentar works!</h4>
 
-  <app-filter (filterChange)="search($event)"></app-filter>
+  <app-filter
+    [exibirTemas]="false"
+    (filterChange)="search($event)"
+  ></app-filter>
 
   <header class="controls my-3">
     <div class="parlamentar-count">
