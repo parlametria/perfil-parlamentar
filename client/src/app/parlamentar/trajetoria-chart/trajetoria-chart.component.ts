@@ -187,7 +187,7 @@ export class TrajetoriaChartComponent implements AfterContentInit, OnChanges {
       .attr('font-size', 8)
       .attr('x', (d) => this.x(this.parseDate(d.started_in)))
       .attr('dy', this.height + 20)
-        .text((d) => d.party);
+      .text((d) => d.party);
     /**
      * Filiações FIM
      */
@@ -197,7 +197,7 @@ export class TrajetoriaChartComponent implements AfterContentInit, OnChanges {
      */
 
     this.g.append('g')
-      .attr('class', 'axis axis--x')
+      .attr('class', 'axis-trajetoria axis--x')
       .call(this.xAxis)
       .call(g => g.select('.domain').remove())
       .call(g => g.selectAll('.tick text').attr('dy', -this.height - 15))
@@ -215,7 +215,7 @@ export class TrajetoriaChartComponent implements AfterContentInit, OnChanges {
           }
         }));
     this.g.append('g')
-      .attr('class', 'axis axis--y')
+      .attr('class', 'axis-trajetoria axis--y')
       .call(this.yAxis)
       .call(g => g.select('.domain').remove())
       .call(g => g.selectAll('.tick text')
@@ -230,7 +230,9 @@ export class TrajetoriaChartComponent implements AfterContentInit, OnChanges {
             text = ' milhões';
           }
           return 'R$' + text;
-        }));
+        }))
+      .call(g => g.select('.tick:last-of-type line')
+        .attr('opacity', 0));
 
     this.g.append('path')
       .datum(trajetoria.asset_history)

@@ -1,20 +1,28 @@
-.tick {
-  > line {
-    stroke: #eeedf4;
-  }
-  &.opaque {
-    opacity: 0.5;
+.axis-trajetoria {
+  > .tick {
+    > line {
+      stroke-width: 1.5;
+      stroke: #ced4da;
+    }
+    &.opaque {
+      opacity: 0.3;
 
-    > text {
-      visibility: hidden;
+      > text {
+        visibility: hidden;
+      }
     }
   }
 }
 
-.axis--y {
-  > .tick:first-child {
-    > line {
-      visibility: hidden;
+.axis-trajetoria {
+  > .axis--y {
+    > .tick {
+      opacity: 0.3;
+    }
+    > .tick:first-child {
+      > line {
+        visibility: hidden;
+      }
     }
   }
 }
