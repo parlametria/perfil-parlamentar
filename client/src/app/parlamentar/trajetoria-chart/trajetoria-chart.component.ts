@@ -31,9 +31,9 @@ export class TrajetoriaChartComponent implements AfterContentInit, OnChanges {
   constructor() { }
 
   ngAfterContentInit(): void {
-    const wrapperWidth = d3.select('.trajetoria-chart-wrapper').node().offsetWidth;
+    const container: any = d3.select('.trajetoria-chart-wrapper').node();
 
-    this.width = (wrapperWidth < 580) ? 300 : 600;
+    this.width = (container.offsetWidth < 580) ? 300 : 600;
     this.height = 280;
     this.margin = {
       left: 65,
@@ -82,16 +82,16 @@ export class TrajetoriaChartComponent implements AfterContentInit, OnChanges {
       .tickSize(this.width);
 
     this.line = d3.line()
-      .x((d) => this.x(new Date(d.year, 0, 1)))
-      .y((d) => this.y(d.value));
+      .x((d: any) => this.x(new Date(d.year, 0, 1)))
+      .y((d: any) => this.y(d.value));
 
     this.numberFormat = d3.format('.2f');
     this.parseDate = d3.timeParse('%Y-%m-%d');
   }
 
   drawVis(trajetoria) {
-    const earliestYear = +d3.min(trajetoria.asset_history, (d) => d.year);
-    let max = d3.max(trajetoria.asset_history, (d) => +d.value);
+    const earliestYear = +d3.min(trajetoria.asset_history, (d: any) => d.year);
+    let max = d3.max(trajetoria.asset_history, (d: any) => +d.value);
     if (max < 900000) {
       max = 900000;
     } else if (max < 1000000) {
@@ -102,7 +102,7 @@ export class TrajetoriaChartComponent implements AfterContentInit, OnChanges {
 
     let maxDate = new Date(2018, 11, 30);
     let minDate = new Date(
-      d3.min(trajetoria.affiliation_history, (d) => {
+      d3.min(trajetoria.affiliation_history, (d: any) => {
         const date = d3.timeParse('%Y-%M-%d')(d.started_in);
         return new Date(date.getFullYear(), 0, 1);
       })
@@ -116,7 +116,7 @@ export class TrajetoriaChartComponent implements AfterContentInit, OnChanges {
     }
 
     this.x.domain([minDate, maxDate]);
-    this.y.domain([0, d3.max(trajetoria.asset_history, d => d.value)]).nice();
+    this.y.domain([0, d3.max(trajetoria.asset_history, (d: any) => d.value)]).nice();
 
     this.yAxis.tickFormat((d) => {
       let s;
