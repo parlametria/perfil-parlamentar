@@ -1,10 +1,10 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef, ɵConsole } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
-import { ParlamentarBuscaParlamentar } from '../shared/models/parlamentarBuscaParlamentar.model';
+import { ParlamentarAderencia } from '../shared/models/parlamentarAderencia.model';
 import { BuscaParlamentarService } from '../shared/services/busca-parlamentar.service';
 import { CasaService } from '../shared/services/casa.service';
 
@@ -13,11 +13,11 @@ import { CasaService } from '../shared/services/casa.service';
   templateUrl: './busca-parlamentar.component.html',
   styleUrls: ['./busca-parlamentar.component.scss']
 })
-export class BuscaParlamentarComponent implements OnInit {
+export class BuscaParlamentarComponent implements OnInit, OnDestroy {
 
-  parlamentares: ParlamentarBuscaParlamentar[];
-  parlamentaresCompleto: ParlamentarBuscaParlamentar[];
-  parlamentaresCasa: ParlamentarBuscaParlamentar[];
+  parlamentares: ParlamentarAderencia[];
+  parlamentaresCompleto: ParlamentarAderencia[];
+  parlamentaresCasa: ParlamentarAderencia[];
 
   filtro: any;
   orientador: string;
@@ -107,5 +107,10 @@ export class BuscaParlamentarComponent implements OnInit {
         }
       }
     );
+  }
+
+  ngOnDestroy() {
+    this.unsubscribe.next();
+    this.unsubscribe.complete();
   }
 }

@@ -12,7 +12,7 @@ import {
 
 
 import { environment } from '../../../environments/environment';
-import { ParlamentarBuscaParlamentar } from '../models/parlamentarBuscaParlamentar.model';
+import { ParlamentarAderencia } from '../models/parlamentarAderencia.model';
 
 @Injectable({
   providedIn: 'root'
@@ -24,8 +24,8 @@ export class BuscaParlamentarService {
   private searchfilters = new BehaviorSubject<any>({});
   private orderBy;
 
-  private parlamentaresFiltered = new BehaviorSubject<Array<ParlamentarBuscaParlamentar>>([]);
-  private parlamentares = new BehaviorSubject<Array<ParlamentarBuscaParlamentar>>([]);
+  private parlamentaresFiltered = new BehaviorSubject<Array<ParlamentarAderencia>>([]);
+  private parlamentares = new BehaviorSubject<Array<ParlamentarAderencia>>([]);
 
   constructor(private http: HttpClient) {
     this.parlamentares
@@ -60,8 +60,8 @@ export class BuscaParlamentarService {
 
   getParlamentares(): Observable<any> {
     this.http
-      .get<ParlamentarBuscaParlamentar[]>(this.url)
-      .pipe(map(data => data.map(parlamentar => new ParlamentarBuscaParlamentar(parlamentar))))
+      .get<ParlamentarAderencia[]>(this.url)
+      .pipe(map(data => data.map(parlamentar => new ParlamentarAderencia(parlamentar))))
       .subscribe(res => {
         this.parlamentares.next(res);
       });
@@ -74,7 +74,7 @@ export class BuscaParlamentarService {
     this.searchfilters.next(filters);
   }
 
-  filter(parlamentar: ParlamentarBuscaParlamentar[], filters: any) {
+  filter(parlamentar: ParlamentarAderencia[], filters: any) {
     const estado = filters.estado;
     const nome = filters.nome;
     const partido = filters.partido;
@@ -135,7 +135,7 @@ export class BuscaParlamentarService {
       p.orderBy === q.orderBy;
   }
 
-  sort(a: ParlamentarBuscaParlamentar, b: ParlamentarBuscaParlamentar) {
+  sort(a: ParlamentarAderencia, b: ParlamentarAderencia) {
     if (a === undefined) {
       return -1;
     }
