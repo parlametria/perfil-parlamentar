@@ -2,7 +2,7 @@
   <div class="d-flex justify-content-center mb-3">
     <div
       class="temas-container"
-      [hidden]="exibirTemas == false"
+      [hidden]="!exibirTemas"
     >
       <div
         *ngFor="let tema of temas"
