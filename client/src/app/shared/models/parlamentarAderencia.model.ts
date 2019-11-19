@@ -15,6 +15,7 @@ export class ParlamentarAderencia {
   public parlamentarLiderancas?: Lideranca[];
   public parlamentarPartido: Partido;
   public casa: string;
+  public nomeProcessado: string;
 
   constructor(parlamentar: any) {
     this.idParlamentarVoz = parlamentar.idParlamentarVoz;
@@ -27,6 +28,7 @@ export class ParlamentarAderencia {
     this.parlamentarPartido = parlamentar.parlamentarPartido;
     this.parlamentarLiderancas = parlamentar.parlamentarLiderancas;
     this.casa = parlamentar.casa;
+    this.nomeProcessado = parlamentar.nomeProcessado;
   }
 
   getFoto(): string {

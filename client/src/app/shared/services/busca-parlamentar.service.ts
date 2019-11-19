@@ -13,22 +13,16 @@ import {
 
 import { environment } from '../../../environments/environment';
 import { ParlamentarAderencia } from '../models/parlamentarAderencia.model';
-import { Aderencia, AderenciaDados } from '../models/aderencia.model';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AderenciaService {
+export class BuscaParlamentarService {
 
-  private url = environment.apiUrl + 'aderencia';
-
-  readonly FILTRO_PADRAO_TEMA = -1;
-  readonly ID_TEMA_GERAL = 99;
+  private url = environment.apiUrl + 'busca-parlamentar';
 
   private searchfilters = new BehaviorSubject<any>({});
-  private tema: number;
   private orderBy;
-  private orientador = 'Governo';
 
   private parlamentaresFiltered = new BehaviorSubject<Array<ParlamentarAderencia>>([]);
   private parlamentares = new BehaviorSubject<Array<ParlamentarAderencia>>([]);
@@ -48,19 +42,13 @@ export class AderenciaService {
           )
         ),
         tap(parlamentares => {
-          let idTema = this.tema;
-
-          if (this.tema === this.FILTRO_PADRAO_TEMA) {
-            idTema = this.ID_TEMA_GERAL;
-          }
-
           if (this.orderBy === 'ASC') {
             return parlamentares.sort((a, b) => {
-              return this.sort(b, a, idTema);
+              return this.sort(a, b);
             });
           } else {
             return parlamentares.sort((a, b) => {
-              return this.sort(a, b, idTema);
+              return this.sort(b, a);
             });
           }
         }),
@@ -70,13 +58,9 @@ export class AderenciaService {
       });
   }
 
-  getAderenciaById(id: string): Observable<Aderencia> {
-    return this.http.get<Aderencia>(this.url + '/parlamentar/' + id);
-  }
-
-  getAderencia(): Observable<any> {
+  getParlamentares(): Observable<any> {
     this.http
-      .get<ParlamentarAderencia[]>(this.url + '/parlamentar/')
+      .get<ParlamentarAderencia[]>(this.url)
       .pipe(map(data => data.map(parlamentar => new ParlamentarAderencia(parlamentar))))
       .subscribe(res => {
         this.parlamentares.next(res);
@@ -85,20 +69,12 @@ export class AderenciaService {
     return this.parlamentaresFiltered.asObservable();
   }
 
-  getAderenciaAsObservable(): Observable<any> {
-    return this.http
-      .get<ParlamentarAderencia[]>(this.url + '/parlamentar/')
-      .pipe(map(data => data.map(parlamentar => new ParlamentarAderencia(parlamentar))));
-  }
-
   search(filters: any, orderBy: string) {
-    this.tema = filters.tema;
     this.orderBy = orderBy;
-    this.orientador = filters.orientador;
     this.searchfilters.next(filters);
   }
 
-  private filter(parlamentar: ParlamentarAderencia[], filters: any) {
+  filter(parlamentar: ParlamentarAderencia[], filters: any) {
     const estado = filters.estado;
     const nome = filters.nome;
     const partido = filters.partido;
@@ -148,70 +124,31 @@ export class AderenciaService {
     });
   }
 
-  /**
-   * Compara se dois filtros são iguais ou não
-   *
-   * @param p Filtro para comparação
-   * @param q Filtro para comparação
-   */
-  private compareFilter(p: any, q: any) {
+  compareFilter(p: any, q: any) {
     return p.estado === q.estado &&
       p.nome === q.nome &&
-      p.tema === q.tema &&
       p.partido === q.partido &&
-      p.orientador === q.orientador &&
       p.comissao === q.comissao &&
       p.lideranca === q.lideranca &&
       p.cargoComissao === q.cargoComissao &&
       p.casa === q.casa &&
-      p.temaSlug === q.temaSlug &&
       p.orderBy === q.orderBy;
   }
 
-  /**
-   * Ordena o resultado do aderência pelos seguintes critérios:
-   *
-   * 1. Aderência
-   * 2. Seguiu
-   *
-   * @param a Parlamentar para comparação
-   * @param b Parlamentar para comparação
-   */
-  public sort(a: ParlamentarAderencia, b: ParlamentarAderencia, idTema) {
-    let aderenciaA: AderenciaDados;
-    let aderenciaB: AderenciaDados;
-
-    if (this.orientador === 'Governo') {
-      aderenciaA = a.aderencia.filter(aderencia =>
-        aderencia.aderenciaTema.idTema === idTema && aderencia.partido.sigla === this.orientador)[0];
-      aderenciaB = b.aderencia.filter(aderencia =>
-        aderencia.aderenciaTema.idTema === idTema && aderencia.partido.sigla === this.orientador)[0];
-    } else {
-      aderenciaA = a.aderencia.filter(aderencia =>
-        aderencia.aderenciaTema.idTema === idTema && aderencia.partido.idPartido === a.parlamentarPartido.idPartido)[0];
-      aderenciaB = b.aderencia.filter(aderencia =>
-        aderencia.aderenciaTema.idTema === idTema && aderencia.partido.idPartido === b.parlamentarPartido.idPartido)[0];
-    }
-
-    if (aderenciaA === undefined) {
-      return 1;
-    }
-
-    if (aderenciaB === undefined) {
+  sort(a: ParlamentarAderencia, b: ParlamentarAderencia) {
+    if (a === undefined) {
       return -1;
     }
 
-    if (aderenciaA !== undefined && aderenciaB !== undefined) {
-      if (aderenciaA.aderencia > aderenciaB.aderencia) {
-        return -1;
-      } else if (aderenciaA.aderencia < aderenciaB.aderencia) {
-        return 1;
-      }
+    if (b === undefined) {
+      return 1;
+    }
 
-      if (aderenciaA.seguiu > aderenciaB.seguiu) {
-        return -1;
-      } else if (aderenciaA.seguiu < aderenciaB.seguiu) {
+    if (a !== undefined && b !== undefined) {
+      if (a.nomeProcessado > b.nomeProcessado) {
         return 1;
+      } else if (a.nomeProcessado < b.nomeProcessado) {
+        return -1;
       }
     }
     return 0;
