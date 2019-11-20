@@ -17,6 +17,8 @@ export class TrajetoriaComponent implements OnInit {
   private unsubscribe = new Subject();
 
   trajetoria: any;
+  temTrajetoria: boolean;
+  isLoading: boolean;
 
   constructor(
     private activatedroute: ActivatedRoute,
@@ -24,6 +26,8 @@ export class TrajetoriaComponent implements OnInit {
     private perfilPoliticoService: PerfilPoliticoService) { }
 
   ngOnInit() {
+    this.isLoading = true;
+    this.temTrajetoria = false;
     this.activatedroute.parent.params.pipe(take(1)).subscribe(params => {
       this.getPerfilPolitico(params.id);
     });
@@ -35,12 +39,21 @@ export class TrajetoriaComponent implements OnInit {
       .pipe(takeUntil(this.unsubscribe))
       .subscribe(
         parlamentar => {
-          this.perfilPoliticoService
-            .get(parlamentar.idPerfilPolitico)
-            .pipe(takeUntil(this.unsubscribe))
-            .subscribe(
-              trajetoria => this.trajetoria = trajetoria
-            );
+          if (parlamentar.idPerfilPolitico) {
+            this.perfilPoliticoService
+              .get(parlamentar.idPerfilPolitico)
+              .pipe(takeUntil(this.unsubscribe))
+              .subscribe(
+                trajetoria => {
+                  this.trajetoria = trajetoria;
+                  this.isLoading = false;
+                  this.temTrajetoria = true;
+                }
+              );
+          } else {
+            this.temTrajetoria = false;
+            this.isLoading = false;
+          }
         },
         error => {
           console.log(error);
