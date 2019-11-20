@@ -1,5 +1,7 @@
 <div class="container-sm my-3">
-    <h4 class="title-main my-4">Investimento partidário na campanha</h4>  
+  <h4 class="title-main my-4">Investimento partidário na campanha</h4>
+  <app-loading [hidden]="!isLoading"></app-loading>
+  <div [hidden]="isLoading">
     <div
       [hidden]="!parlamentar?.partidoInvestimento?.valor"
       class="capital-chart-wrapper"
@@ -19,4 +21,4 @@
       O parlamentar não participou das eleições em 2018.
     </div>
   </div>
-  
+</div>
