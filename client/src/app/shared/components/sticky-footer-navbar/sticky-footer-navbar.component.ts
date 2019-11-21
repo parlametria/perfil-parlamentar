@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-sticky-footer-navbar',
@@ -8,10 +7,6 @@ import { Router } from '@angular/router';
 })
 export class StickyFooterNavbarComponent {
 
-  constructor(private router: Router) { }
-
-  isActive(casa: string) {
-    return this.router.url.split(/\/|\?/)[2] === casa;
-  }
+  constructor() { }
 
 }
