@@ -15,6 +15,9 @@ import { CasaService } from '../shared/services/casa.service';
 })
 export class BuscaParlamentarComponent implements OnInit, OnDestroy {
 
+  readonly VIEW_SM = 'sm';
+  readonly VIEW_MD = 'md';
+
   parlamentares: ParlamentarAderencia[];
   parlamentaresCompleto: ParlamentarAderencia[];
   parlamentaresCasa: ParlamentarAderencia[];
@@ -97,9 +100,24 @@ export class BuscaParlamentarComponent implements OnInit, OnDestroy {
     this.search(this.filtro);
   }
 
+  setView(view: string) {
+    this.view = view;
+    const queryParams: Params = Object.assign({}, this.activatedRoute.snapshot.queryParams);
+    queryParams.view = view;
+
+    this.router.navigate([], {  relativeTo: this.activatedRoute, queryParams });
+
+    this.cdr.detectChanges();
+  }
+
   updateParamsViaUrl() {
     this.activatedRoute.queryParams.subscribe(
       param => {
+        if (param.view !== undefined) {
+          this.view = param.view;
+        } else {
+          this.view = this.VIEW_MD;
+        }
         if (param.orderBy !== undefined) {
           this.setOrderBy(param.orderBy);
         } else {

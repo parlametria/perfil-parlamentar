@@ -9,7 +9,7 @@ const routes: Routes = [
   { path: 'parlamentar', loadChildren: './parlamentar/parlamentar.module#ParlamentarModule' },
   // { path: 'congresso', loadChildren: './congresso/congresso.module#CongressoModule' },
   { path: 'aderencia', loadChildren: './aderencia/aderencia.module#AderenciaModule' },
-  { path: 'busca-parlamentar', loadChildren: './busca-parlamentar/busca-parlamentar.module#BuscaParlamentarModule' },
+  { path: 'parlamentares', loadChildren: './busca-parlamentar/busca-parlamentar.module#BuscaParlamentarModule' },
   { path: '**', redirectTo: '' }
 ];
 
