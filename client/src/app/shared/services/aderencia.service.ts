@@ -141,7 +141,7 @@ export class AderenciaService {
 
       filtered =
         nome && filtered
-          ? p.nomeEleitoral.toLowerCase().includes(nome.toLowerCase())
+          ? p.nomeProcessado.toLowerCase().includes(nome.toLowerCase())
           : filtered;
 
       return filtered;

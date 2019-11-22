@@ -18,6 +18,7 @@ module.exports = (sequelize, type) => {
         condicao_eleitoral: type.STRING,
         ultima_legislatura: type.STRING,
         em_exercicio: type.BOOLEAN,
+        id_perfil_politico: type.STRING
       },
       {
         timestamps: false

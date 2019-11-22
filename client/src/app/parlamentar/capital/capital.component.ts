@@ -20,11 +20,14 @@ export class CapitalComponent implements OnInit {
   parlamentar: ParlamentarInvestimento;
   partido: PartidoInvestimento;
 
+  isLoading: boolean;
+
   constructor(
     private activatedroute: ActivatedRoute,
     private parlamentarService: ParlamentarService) { }
 
   ngOnInit() {
+    this.isLoading = true;
     this.activatedroute.parent.params.pipe(take(1)).subscribe(params => {
       this.getParlamentarById(params.id);
     });
@@ -46,6 +49,7 @@ export class CapitalComponent implements OnInit {
               partido => {
                 parlamentar.partidoInvestimento = partido;
                 this.parlamentar = parlamentar;
+                this.isLoading = false;
               }
             );
 

@@ -1,15 +1,41 @@
 <app-sticky-footer-navbar></app-sticky-footer-navbar>
 <div class="container py-4 container-sticky-footer-navbar">
-  <h4 class="title-main">Alinhamento {{ getNomeCasa(casa, true) }} ao Governo</h4>
+  <h4 class="title-main">
+    Aderência ao Governo
+  </h4>
 
-  <app-filter (filterChange)="search($event)"></app-filter>
+  <div class="row no-gutters">
+      <div class="col-6 text-right">
+        <a
+          class="btn btn-select"
+          [class.active]="isActive('camara')"
+          [routerLink]="['/aderencia/camara']"
+        >
+          Câmara
+        </a>
+      </div>
+      <div class="col-6">
+        <a
+          class="btn btn-select"
+          [class.active]="isActive('senado')"
+          [routerLink]="['/aderencia/senado']"
+        >
+          Senado
+        </a>
+      </div>
+    </div>
 
-  <header class="controls my-3">
+  <app-filter
+    [exibirTemas]="true"
+    (filterChange)="search($event)"
+  ></app-filter>
+
+  <header class="controls py-2">
     <div class="parlamentar-count">
       <strong class="strong">{{ parlamentares?.length }}</strong>
       parlamentares
     </div>
-    <div>
+    <div class="controls-toolbar">
       <div class="btn-toolbar">
         <div class="d-none d-md-block">Exibir:</div>
         <button

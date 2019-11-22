@@ -1,10 +1,13 @@
-.loading-wrapper {
+.app-loading-wrapper {
   display: flex;
-  height: 80vh;
   justify-content: center;
   align-items: center;
 }
 
-.logo-wrapper {
+.app-loading-wrapper-lg {
+  height: 80vh;
+}
+
+.app-logo-wrapper {
   width: 125px;
 }

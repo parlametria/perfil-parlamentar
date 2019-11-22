@@ -4,6 +4,11 @@
   justify-content: space-between;
 }
 
+.temas-wrapper {
+  display: flex;
+  justify-content: center;
+}
+
 .temas-container {
   display: flex;
   overflow-x: auto;

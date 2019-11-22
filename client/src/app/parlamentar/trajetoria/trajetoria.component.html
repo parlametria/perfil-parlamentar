@@ -1,6 +1,10 @@
 <div class="container-sm my-3">
   <h4 class="title-main my-4">Trajetória política</h4>
-  <div class="trajetoria-chart-wrapper">
+  <app-loading [hidden]="!isLoading"></app-loading>
+  <div [hidden]="isLoading || temTrajetoria" class="text-center">
+    Dados não disponíveis.
+  </div>
+  <div [hidden]="isLoading" class="trajetoria-chart-wrapper">
     <app-trajetoria-chart [trajetoria]="trajetoria"></app-trajetoria-chart>
   </div>
   <div class="py-4"></div>

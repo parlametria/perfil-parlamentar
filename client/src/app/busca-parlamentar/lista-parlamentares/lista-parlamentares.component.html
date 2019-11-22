@@ -1,0 +1,110 @@
+<div>
+  <pagination-template
+    #pag="paginationApi"
+    maxSize="5"
+    (pageChange)="pageChange($event)"
+    [hidden]="pag.isFirstPage()"
+  >
+    <nav
+      aria-label="Paginação"
+      class="pb-1"
+    >
+      <ul class="pagination justify-content-center">
+        <li class="page-item">
+          <button
+            type="button"
+            class="page-link"
+            [disabled]="pag.isFirstPage()"
+            (click)="pag.previous()"
+          >
+            <span class="icon-chevron-left"></span>
+          </button>
+        </li>
+        <li
+          class="page-item"
+          *ngFor="let page of pag.pages"
+          [class.active]="pag.getCurrent() === page.value"
+        >
+          <button
+            type="button"
+            class="page-link"
+            (click)="pag.setCurrent(page.value)"
+          >
+            {{ page.label }}
+          </button>
+        </li>
+        <li class="page-item">
+          <button
+            type="button"
+            class="page-link"
+            [disabled]="pag.isLastPage()"
+            (click)="pag.next()"
+          >
+            <span class="icon-chevron-right"></span>
+          </button>
+        </li>
+      </ul>
+    </nav>
+  </pagination-template>
+
+  <div class="parlamentar-lista py-3">
+    <div class="row no-gutters">
+      <div
+        [ngClass]="{'col-12': view == VIEW_SM, 'col-sm-6 col-md-4 col-lg-3': view == VIEW_MD}"
+        *ngFor="let parlamentar of parlamentares | paginate: { itemsPerPage: 24, currentPage: p }; index as i;"
+      >
+        <app-card-busca-parlamentar
+          [parlamentar]="parlamentar"
+          [view]="view"
+        ></app-card-busca-parlamentar>
+      </div>
+    </div>
+  </div>
+
+  <pagination-template
+    #pag="paginationApi"
+    maxSize="5"
+    (pageChange)="pageChange($event)"
+  >
+    <nav
+      aria-label="Paginação"
+      class="pb-1"
+    >
+      <ul class="pagination justify-content-center">
+        <li class="page-item">
+          <button
+            type="button"
+            class="page-link"
+            [disabled]="pag.isFirstPage()"
+            (click)="pag.previous()"
+          >
+            <span class="icon-chevron-left"></span>
+          </button>
+        </li>
+        <li
+          class="page-item"
+          *ngFor="let page of pag.pages"
+          [class.active]="pag.getCurrent() === page.value"
+        >
+          <button
+            type="button"
+            class="page-link"
+            (click)="pag.setCurrent(page.value)"
+          >
+            {{ page.label }}
+          </button>
+        </li>
+        <li class="page-item">
+          <button
+            type="button"
+            class="page-link"
+            [disabled]="pag.isLastPage()"
+            (click)="pag.next()"
+          >
+            <span class="icon-chevron-right"></span>
+          </button>
+        </li>
+      </ul>
+    </nav>
+  </pagination-template>
+</div>

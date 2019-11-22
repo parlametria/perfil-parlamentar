@@ -1,10 +1,10 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Router } from '@angular/router';
 
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 import { LoginService } from '../../services/login.service';
+import { CasaService } from '../../services/casa.service';
 
 @Component({
   selector: 'app-navbar',
@@ -12,28 +12,31 @@ import { LoginService } from '../../services/login.service';
   styleUrls: ['./navbar.component.scss']
 })
 export class NavbarComponent implements OnInit, OnDestroy {
-  userAuthenticated: boolean;
-  user: any;
 
   private unsubscribe = new Subject();
 
+  userAuthenticated: boolean;
+  user: any;
+  casa: string;
+
   constructor(
     private loginService: LoginService,
-    private router: Router) { }
+    public casaService: CasaService) { }
 
   ngOnInit() {
     this.loginService.isLoggedIn().pipe(takeUntil(this.unsubscribe)).subscribe(res => {
       this.userAuthenticated = res;
       this.user = this.loginService.getCurrentUser();
     });
+    this.casaService.get().pipe(takeUntil(this.unsubscribe)).subscribe(casa => this.casa = casa);
   }
 
   logoutUser() {
     this.loginService.logoutUser();
   }
 
-  isActive(casa: string) {
-    return this.router.url.split(/\/|\?/)[2] === casa;
+  getCasa() {
+    return this.casa;
   }
 
   ngOnDestroy() {

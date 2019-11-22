@@ -1,5 +1,7 @@
 <div class="container-sm my-3">
-    <h4 class="title-main my-4">Investimento partidário na campanha</h4>  
+  <h4 class="title-main my-4">Investimento partidário na campanha</h4>
+  <app-loading [hidden]="!isLoading"></app-loading>
+  <div [hidden]="isLoading">
     <div
       [hidden]="!parlamentar?.partidoInvestimento?.valor"
       class="capital-chart-wrapper"
@@ -8,15 +10,15 @@
     </div>
     <div
       *ngIf="!parlamentar?.partidoInvestimento?.valor && parlamentar?.partidoEleicao?.sigla != 'SPART'"
-      class="d-flex justify-content-center mt-5"
+      class="text-center"
     >
       Não houveram investimentos do partido nessa UF.
     </div>
     <div
       *ngIf="parlamentar?.partidoEleicao?.sigla == 'SPART'"
-      class="d-flex justify-content-center mt-5"
+      class="text-center"
     >
       O parlamentar não participou das eleições em 2018.
     </div>
   </div>
-  
+</div>
