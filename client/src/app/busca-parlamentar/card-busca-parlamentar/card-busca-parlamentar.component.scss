@@ -1,0 +1,89 @@
+.card-parlamentar {
+  border: solid 1.5px #20201e;
+  margin-bottom: 0.5rem;
+  margin-right: 0.5rem;
+  padding: 1rem 0.5rem;
+  // transition: border 0.5s;
+
+  display: flex;
+
+  @media (min-width: 576px) {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+.card-parlamentar-sm {
+  border: solid 1.5px #fff;
+  padding: 0;
+  margin-bottom: 0;
+  flex-direction: row;
+  align-items: flex-start;
+}
+
+.card-parlamentar-col {
+  display: flex;
+
+  @media (min-width: 576px) {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+.card-parlamentar-col-B {
+  @media (max-width: 575.98px) {
+    padding-left: 1rem;
+  }
+
+  @media (min-width: 576px) {
+    height: 108px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+}
+
+.card-parlamentar-col-B-sm {
+  height: auto;
+  padding-left: 0;
+}
+
+.parlamentar-img-wrapper {
+  width: 80px;
+  margin-left: auto;
+  margin-right: auto;
+
+  @media (min-width: 576px) {
+    width: 100px;
+  }
+
+  @media (min-width: 768px) {
+    width: 80px;
+  }
+}
+
+.parlamentar-title {
+  @media (min-width: 576px) {
+    text-align: center;
+    padding-top: 0.5rem;
+  }
+
+  > span {
+    color: #adb5bd;
+  }
+}
+
+.parlamentar-subtitle {
+  @media (min-width: 576px) {
+    text-align: center;
+  }
+}
+
+.parlamentar-nome {
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.parlamentar-subtitle {
+  font-size: 0.8rem;
+}

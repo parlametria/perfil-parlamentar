@@ -11,11 +11,13 @@ import { FilterModule } from '../filter/filter.module';
 
 import { BuscaParlamentarComponent } from './busca-parlamentar.component';
 import { ListaParlamentaresComponent } from './lista-parlamentares/lista-parlamentares.component';
+import { CardBuscaParlamentarComponent } from './card-busca-parlamentar/card-busca-parlamentar.component';
 
 @NgModule({
   declarations: [
     BuscaParlamentarComponent,
-    ListaParlamentaresComponent
+    ListaParlamentaresComponent,
+    CardBuscaParlamentarComponent
   ],
   imports: [
     CommonModule,

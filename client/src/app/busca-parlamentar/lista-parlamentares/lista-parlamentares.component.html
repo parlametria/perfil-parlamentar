@@ -1,5 +1,4 @@
 <div>
-
   <pagination-template
     #pag="paginationApi"
     maxSize="5"
@@ -49,8 +48,16 @@
   </pagination-template>
 
   <div class="parlamentar-lista py-3">
-    <div *ngFor="let parlamentar of parlamentares | paginate: { itemsPerPage: 20, currentPage: p }; index as i;">
-      {{ parlamentar.nomeEleitoral }}
+    <div class="row no-gutters">
+      <div
+        [ngClass]="{'col-12': view == VIEW_SM, 'col-sm-6 col-md-4 col-lg-3': view == VIEW_MD}"
+        *ngFor="let parlamentar of parlamentares | paginate: { itemsPerPage: 24, currentPage: p }; index as i;"
+      >
+        <app-card-busca-parlamentar
+          [parlamentar]="parlamentar"
+          [view]="view"
+        ></app-card-busca-parlamentar>
+      </div>
     </div>
   </div>
 

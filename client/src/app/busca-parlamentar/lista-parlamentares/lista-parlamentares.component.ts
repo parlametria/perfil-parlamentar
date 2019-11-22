@@ -12,8 +12,12 @@ import { ParlamentarAderencia } from 'src/app/shared/models/parlamentarAderencia
 })
 export class ListaParlamentaresComponent implements OnDestroy {
 
+  readonly VIEW_SM = 'sm';
+  readonly VIEW_MD = 'md';
+
   @Input() parlamentares: ParlamentarAderencia[];
   @Input() filter: any;
+  @Input() view: any;
 
   private unsubscribe = new Subject();
 

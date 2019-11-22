@@ -29,6 +29,7 @@ const attLideranca = ["cargo"];
 
 /**
  * Recupera informações da lista de parlamentares (atualmente em exercício) (com informações do parlamentar inclusas)
+ * 
  * @name get/api/busca-parlamentar
  * @function
  * @memberof module:routes/busca-parlamentar

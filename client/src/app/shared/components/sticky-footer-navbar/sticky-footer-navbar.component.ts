@@ -1,17 +1,29 @@
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+
+import { CasaService } from '../../services/casa.service';
 
 @Component({
   selector: 'app-sticky-footer-navbar',
   templateUrl: './sticky-footer-navbar.component.html',
   styleUrls: ['./sticky-footer-navbar.component.scss']
 })
-export class StickyFooterNavbarComponent {
+export class StickyFooterNavbarComponent implements OnInit {
 
-  constructor(private router: Router) { }
+  private unsubscribe = new Subject();
 
-  isActive(casa: string) {
-    return this.router.url.split(/\/|\?/)[2] === casa;
+  casa: string;
+
+  constructor(private casaService: CasaService) { }
+
+  ngOnInit() {
+    this.casaService.get().pipe(takeUntil(this.unsubscribe)).subscribe(casa => this.casa = casa);
+  }
+
+  getCasa() {
+    return this.casa;
   }
 
 }

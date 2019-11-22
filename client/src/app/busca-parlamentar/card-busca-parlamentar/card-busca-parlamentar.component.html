@@ -1,0 +1,39 @@
+<div [ngClass]="{'card-parlamentar': true, 'card-parlamentar-sm': view == VIEW_SM}">
+  <div [ngClass]="{'card-parlamentar-col': true, 'card-parlamentar-col-sm': view == VIEW_SM}">
+    <div
+      class="card-parlamentar-col-A"
+      [hidden]="view == VIEW_SM"
+    >
+      <div class="parlamentar-img-wrapper">
+        <a [routerLink]="['/parlamentar', parlamentar.idParlamentarVoz]">
+          <img
+            [defaultImage]="'assets/imgs/nophoto.png'"
+            [lazyLoad]="parlamentar.getFoto()"
+            [offset]="100"
+            width="100%"
+            class="img-filter"
+          >
+        </a>
+      </div>
+    </div>
+    <div [ngClass]="{'card-parlamentar-col-B': true, 'card-parlamentar-col-B-sm': view == VIEW_SM}">
+      <div class="parlamentar-title">
+        <a
+          [routerLink]="['/parlamentar', parlamentar.idParlamentarVoz]"
+          class="parlamentar-nome"
+        >
+          {{ parlamentar.nomeEleitoral | titlecase }}
+        </a>
+        <span [hidden]="view == VIEW_MD">
+          {{ parlamentar.parlamentarPartido?.sigla }}/{{ parlamentar.uf }}
+        </span>
+      </div>
+      <div
+        class="parlamentar-subtitle"
+        [hidden]="view == VIEW_SM"
+      >
+        {{ parlamentar.parlamentarPartido?.sigla }}/{{ parlamentar.uf }}
+      </div>
+    </div>
+  </div>
+</div>
