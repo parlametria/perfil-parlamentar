@@ -127,6 +127,10 @@ export class BuscaParlamentarComponent implements OnInit, OnDestroy {
     );
   }
 
+  isActive(casa: string) {
+    return this.router.url.split(/\/|\?/)[2] === casa;
+  }
+
   ngOnDestroy() {
     this.unsubscribe.next();
     this.unsubscribe.complete();

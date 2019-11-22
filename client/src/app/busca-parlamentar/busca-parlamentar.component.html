@@ -1,6 +1,26 @@
 <app-sticky-footer-navbar></app-sticky-footer-navbar>
 <div class="container py-4 container-sticky-footer-navbar">
-  <h4 class="title-main">Parlamentares</h4>
+
+  <div class="row no-gutters">
+    <div class="col-6 text-right">
+      <a
+        class="btn btn-select"
+        [class.active]="isActive('camara')"
+        [routerLink]="['/parlamentares/camara']"
+      >
+        Câmara
+      </a>
+    </div>
+    <div class="col-6">
+      <a
+        class="btn btn-select"
+        [class.active]="isActive('senado')"
+        [routerLink]="['/parlamentares/senado']"
+      >
+        Senado
+      </a>
+    </div>
+  </div>
 
   <app-filter
     [exibirTemas]="false"
@@ -16,13 +36,13 @@
       <div class="btn-toolbar">
         <div class="d-none d-sm-block">Exibir:</div>
         <button
-        [ngClass]="{'btn btn-light btn-light-icon': true, 'active': view == VIEW_MD}"
+          [ngClass]="{'btn btn-light btn-light-icon': true, 'active': view == VIEW_MD}"
           (click)="setView('md')"
         >
           <span class="icon-th-sm"></span>
         </button>
         <button
-        [ngClass]="{'btn btn-light btn-light-icon': true, 'active': view == VIEW_SM}"
+          [ngClass]="{'btn btn-light btn-light-icon': true, 'active': view == VIEW_SM}"
           (click)="setView('sm')"
         >
           <span class="icon-th-list"></span>
