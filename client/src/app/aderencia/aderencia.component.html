@@ -1,8 +1,29 @@
 <app-sticky-footer-navbar></app-sticky-footer-navbar>
 <div class="container py-4 container-sticky-footer-navbar">
   <h4 class="title-main">
-    Alinhamento {{ getNomeCasa(casa, true) }} ao Governo
+    Aderência ao Governo
   </h4>
+
+  <div class="row no-gutters">
+      <div class="col-6 text-right">
+        <a
+          class="btn btn-select"
+          [class.active]="isActive('camara')"
+          [routerLink]="['/aderencia/camara']"
+        >
+          Câmara
+        </a>
+      </div>
+      <div class="col-6">
+        <a
+          class="btn btn-select"
+          [class.active]="isActive('senado')"
+          [routerLink]="['/aderencia/senado']"
+        >
+          Senado
+        </a>
+      </div>
+    </div>
 
   <app-filter
     [exibirTemas]="true"
