@@ -17,3 +17,15 @@
     text-decoration: none;
   }
 }
+
+.parlementar-subnav {
+  @media (max-width: 400px) {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+
+    > .nav {
+      flex: 0 0 auto;
+    }
+  }
+}

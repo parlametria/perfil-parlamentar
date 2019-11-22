@@ -1,65 +1,67 @@
 .d3-tip {
-    line-height: 1.25;
-    padding: 10px;
-    background: white;
-    border-radius: 5px;
-    border: 2px solid #20201E;
-    z-index: 999;
+  line-height: 1.25;
+  padding: 10px;
+  background: white;
+  border-radius: 5px;
+  border: 2px solid #20201e;
+  z-index: 999;
 }
 
 .d3-tip strong {
-    font-weight: bold;
-    text-transform: capitalize;
+  font-weight: bold;
+  text-transform: capitalize;
 }
 
 .d3-tip .subtitle {
-    font-weight: normal;
-    color: #adb5bd;
-  }
+  font-weight: normal;
+  color: #adb5bd;
+}
 
 .d3-tip:after {
-    box-sizing: border-box;
-    display: inline-block;
-    font-size: 10px;
-    width: 100%;
-    line-height: 1;
-    color: #20201E;
-    content: "\25BC";
-    position: absolute;
-    text-align: center;
+  box-sizing: border-box;
+  display: inline-block;
+  font-size: 10px;
+  width: 100%;
+  line-height: 1;
+  color: #20201e;
+  content: "\25BC";
+  position: absolute;
+  text-align: center;
 }
 
 .d3-tip.n:after {
-    margin: -1px 0 0 0;
-    top: 100%;
-    left: 0;
+  margin: -1px 0 0 0;
+  top: 100%;
+  left: 0;
 }
 
 @media (min-width: 992px) {
-    .parlamento {
-        padding-left: 150px;
-        padding-right: 150px;
-    }
+  .parlamento {
+    padding-left: 150px;
+    padding-right: 150px;
+  }
 }
 
 @media (min-width: 1200px) {
-    .parlamento {
-        padding-left: 200px;
-        padding-right: 200px;
-    }
+  .parlamento {
+    padding-left: 200px;
+    padding-right: 200px;
+  }
 }
 
 circle:hover {
-    stroke: #515151;
+  stroke: #515151;
 }
 
-.tick {
-  > line {
-    stroke-width: 0.5;
-    stroke-dasharray: 10,2;
-    stroke: #515151;
-  }
-  > text {
-    color: #515151;
+.axis-congresso {
+  > .tick {
+    > line {
+      stroke-width: 0.5;
+      stroke-dasharray: 10, 2;
+      stroke: #515151;
+    }
+    > text {
+      color: #515151;
+    }
   }
 }

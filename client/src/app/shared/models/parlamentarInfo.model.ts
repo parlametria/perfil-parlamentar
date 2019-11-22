@@ -9,6 +9,7 @@ export class ParlamentarInfo {
   public uf: string;
   public parlamentarPartido: Partido;
   public emExercicio: boolean;
+  public idPerfilPolitico: string;
 
   constructor(parlamentar: any) {
     this.idParlamentarVoz = parlamentar.id_parlamentar_voz;
@@ -18,6 +19,7 @@ export class ParlamentarInfo {
     this.uf = parlamentar.uf;
     this.parlamentarPartido = parlamentar.parlamentarPartido;
     this.emExercicio = parlamentar.em_exercicio;
+    this.idPerfilPolitico = parlamentar.id_perfil_politico;
   }
 
   getFoto(): string {
