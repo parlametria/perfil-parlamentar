@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
@@ -41,7 +42,8 @@ export class AderenciaComponent implements OnInit, OnDestroy {
     private router: Router,
     private aderenciaService: AderenciaService,
     private casaService: CasaService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private modalService: NgbModal
   ) { }
 
   ngOnInit() {
@@ -171,6 +173,10 @@ export class AderenciaComponent implements OnInit, OnDestroy {
 
   isActive(casa: string) {
     return this.router.url.split(/\/|\?/)[2] === casa;
+  }
+
+  open(content) {
+    this.modalService.open(content, { ariaLabelledBy: 'Sobre' });
   }
 
   ngOnDestroy() {
