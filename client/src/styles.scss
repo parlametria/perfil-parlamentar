@@ -11,9 +11,10 @@
 
 $top-navbar-height: 50px;
 $top-navbar-lg-height: 71px;
-$sticky-footer-navbar-height: 50px;
+$sticky-footer-navbar-height: 44px;
 
 body {
+  background-color: $gray-100;
   padding-top: $top-navbar-height;
 
   @media (min-width: 992px) {
@@ -32,7 +33,7 @@ body {
   margin-top: $sticky-footer-navbar-height;
 
   @media (min-width: 992px) {
-    margin-top: 0;
+    margin-top: -7px;
   }
 }
 
@@ -265,4 +266,13 @@ body {
     font-weight: 700;
     color: $green;
   }
+}
+
+.icon-btn-help {
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.text-nowrap {
+  white-space: nowrap;
 }
