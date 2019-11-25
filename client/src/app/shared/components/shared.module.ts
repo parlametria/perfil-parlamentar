@@ -10,6 +10,7 @@ import { ProgressComponent } from './progress/progress.component';
 import { ProgressStackedComponent } from './progress-stacked/progress-stacked.component';
 import { LoadingComponent } from './loading/loading.component';
 import { LegendComponent } from './legend/legend.component';
+import { FooterComponent } from './footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { LegendComponent } from './legend/legend.component';
     ProgressComponent,
     ProgressStackedComponent,
     LoadingComponent,
-    LegendComponent
+    LegendComponent,
+    FooterComponent
   ],
   imports: [
     CommonModule,
@@ -31,7 +33,8 @@ import { LegendComponent } from './legend/legend.component';
     ProgressComponent,
     ProgressStackedComponent,
     LoadingComponent,
-    LegendComponent
+    LegendComponent,
+    FooterComponent
   ]
 })
 export class SharedModule { }
