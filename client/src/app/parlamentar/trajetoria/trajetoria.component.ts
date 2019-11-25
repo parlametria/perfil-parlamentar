@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Subject } from 'rxjs';
 import { takeUntil, take } from 'rxjs/operators';
 
@@ -23,7 +24,8 @@ export class TrajetoriaComponent implements OnInit {
   constructor(
     private activatedroute: ActivatedRoute,
     private parlamentarService: ParlamentarService,
-    private perfilPoliticoService: PerfilPoliticoService) { }
+    private perfilPoliticoService: PerfilPoliticoService,
+    private modalService: NgbModal) { }
 
   ngOnInit() {
     this.isLoading = true;
@@ -59,6 +61,10 @@ export class TrajetoriaComponent implements OnInit {
           console.log(error);
         }
       );
+  }
+
+  open(content) {
+    this.modalService.open(content, { ariaLabelledBy: 'Sobre' });
   }
 
 }
