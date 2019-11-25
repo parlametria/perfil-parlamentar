@@ -1,7 +1,7 @@
 {
   "name": "Perfil Parlamentar",
   "short_name": "Perfil Parlamentar",
-  "description": "Conheça o que se passa no congresso.",
+  "description": "Saiba o que se passa no congresso.",
   "lang": "pt-BR",
   "start_url": "index.html",
   "display": "standalone",
