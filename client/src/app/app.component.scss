@@ -1,5 +1,8 @@
-/deep/ .router-outlet    ~ * {
-    position: absolute;
-    width: 100%;
-    height: 100%;
+#page-container {
+    position: relative;
+    min-height: 100vh;
+}
+  
+#content-wrap {
+    padding-bottom: 2.5rem;
 }
