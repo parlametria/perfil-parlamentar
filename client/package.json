@@ -1,6 +1,6 @@
 {
-  "name": "voz-ativa",
-  "version": "3.3.0",
+  "name": "perfil-parlamentar",
+  "version": "3.4.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve --host 0.0.0.0",
