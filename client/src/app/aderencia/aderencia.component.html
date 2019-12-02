@@ -1,15 +1,48 @@
 <app-sticky-footer-navbar></app-sticky-footer-navbar>
 <div class="container py-4 container-sticky-footer-navbar">
-  <h4 class="title-main">Alinhamento {{ getNomeCasa(casa, true) }} ao Governo</h4>
+  <h4 class="title-main">
+    Aderência ao
+    <span class="text-nowrap">
+      Governo
+      <span
+        class="icon-question-circle icon-btn-help"
+        (click)="open(content)"
+      ></span>
+    </span>
+  </h4>
 
-  <app-filter (filterChange)="search($event)"></app-filter>
+  <div class="row no-gutters">
+    <div class="col-6 text-right">
+      <a
+        class="btn btn-select"
+        [class.active]="isActive('camara')"
+        [routerLink]="['/aderencia/camara']"
+      >
+        Câmara
+      </a>
+    </div>
+    <div class="col-6">
+      <a
+        class="btn btn-select"
+        [class.active]="isActive('senado')"
+        [routerLink]="['/aderencia/senado']"
+      >
+        Senado
+      </a>
+    </div>
+  </div>
 
-  <header class="controls my-3">
+  <app-filter
+    [exibirTemas]="true"
+    (filterChange)="search($event)"
+  ></app-filter>
+
+  <header class="controls py-2">
     <div class="parlamentar-count">
       <strong class="strong">{{ parlamentares?.length }}</strong>
       parlamentares
     </div>
-    <div>
+    <div class="controls-toolbar">
       <div class="btn-toolbar">
         <div class="d-none d-md-block">Exibir:</div>
         <button
@@ -76,3 +109,42 @@
   </div>
 
 </div>
+
+<ng-template
+  #content
+  let-modal
+>
+  <div class="modal-header">
+    <h5 class="modal-title">Sobre</h5>
+    <button
+      type="button"
+      class="close"
+      data-dismiss="modal"
+      aria-label="Fechar"
+      (click)="modal.dismiss()"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div>
+      <p>
+        Comparamos o voto parlamentar - "sim", "não" ou abstenção - com a orientação dada pelo governo em relação a cada votação, mostrando o índice de alinhamento, isto é, o quanto este voto acompanha ou não a indicação dada  pela liderança do Governo na Câmara ou no Senado.
+      </p>
+      <p>
+        Consideramos a totalidade de votos de cada parlamentar nas votações nominais em 2019 para verificar  seu alinhamento  (em termos percentuais) com a orientação dada pelo governo, por intermédio de seu líder, ou quem o esteja representando.
+      </p>
+    </div>
+    <div class="text-right">
+
+      <button
+        class="btn btn-primary"
+        (click)="modal.dismiss()"
+      >
+        Fechar
+      </button>
+
+    </div>
+
+  </div>
+</ng-template>

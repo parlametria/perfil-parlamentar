@@ -1,0 +1,67 @@
+<app-sticky-footer-navbar></app-sticky-footer-navbar>
+<div class="container py-4 container-sticky-footer-navbar">
+
+  <div class="row no-gutters">
+    <div class="col-6 text-right">
+      <a
+        class="btn btn-select"
+        [class.active]="isActive('camara')"
+        [routerLink]="['/parlamentares/camara']"
+      >
+        Câmara
+      </a>
+    </div>
+    <div class="col-6">
+      <a
+        class="btn btn-select"
+        [class.active]="isActive('senado')"
+        [routerLink]="['/parlamentares/senado']"
+      >
+        Senado
+      </a>
+    </div>
+  </div>
+
+  <app-filter
+    [exibirTemas]="false"
+    (filterChange)="search($event)"
+  ></app-filter>
+
+  <header class="controls py-2">
+    <div class="parlamentar-count">
+      <strong class="strong">{{ parlamentares?.length }}</strong>
+      parlamentares
+    </div>
+    <div class="controls-toolbar">
+      <div class="btn-toolbar">
+        <div class="d-none d-sm-block">Exibir:</div>
+        <button
+          [ngClass]="{'btn btn-light btn-light-icon': true, 'active': view == VIEW_MD}"
+          (click)="setView('md')"
+        >
+          <span class="icon-th-sm"></span>
+        </button>
+        <button
+          [ngClass]="{'btn btn-light btn-light-icon': true, 'active': view == VIEW_SM}"
+          (click)="setView('sm')"
+        >
+          <span class="icon-th-list"></span>
+        </button>
+        <div class="d-none d-sm-block">Ordernar:</div>
+        <button
+          class="btn btn-light btn-light-icon active"
+          (click)="toggleOrderBy()"
+        >
+          <span [ngClass]="{'icon-sort-alpha-asc' : orderBy !== 'DESC', 'icon-sort-alpha-desc' : orderBy === 'DESC'}"></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <app-lista-parlamentares
+    [parlamentares]="parlamentares"
+    [filter]="filtro"
+    [view]="view"
+  ></app-lista-parlamentares>
+
+</div>

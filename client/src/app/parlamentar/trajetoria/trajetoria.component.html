@@ -1,0 +1,59 @@
+<div class="container-sm my-3">
+  <h4 class="title-main my-4">Trajetória <span class="text-nowrap">
+      política
+      <span
+        class="icon-question-circle icon-btn-help"
+        (click)="open(content)"
+      ></span>
+    </span></h4>
+  <app-loading [hidden]="!isLoading"></app-loading>
+  <div
+    [hidden]="isLoading || temTrajetoria"
+    class="text-center"
+  >
+    Dados não disponíveis.
+  </div>
+  <div
+    [hidden]="isLoading"
+    class="trajetoria-chart-wrapper"
+  >
+    <app-trajetoria-chart [trajetoria]="trajetoria"></app-trajetoria-chart>
+  </div>
+  <div class="py-4"></div>
+</div>
+
+<ng-template
+  #content
+  let-modal
+>
+  <div class="modal-header">
+    <h5 class="modal-title">Sobre</h5>
+    <button
+      type="button"
+      class="close"
+      data-dismiss="modal"
+      aria-label="Fechar"
+      (click)="modal.dismiss()"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div>
+      <p>
+        Mostramos os cargos, funções e outras atividades específicas exercidas pelos parlamentares durante sua vida política, para indicar o grau de vivência, representatividade e peso político de cada um.
+      </p>
+    </div>
+    <div class="text-right">
+
+      <button
+        class="btn btn-primary"
+        (click)="modal.dismiss()"
+      >
+        Fechar
+      </button>
+
+    </div>
+
+  </div>
+</ng-template>

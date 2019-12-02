@@ -11,9 +11,10 @@
 
 $top-navbar-height: 50px;
 $top-navbar-lg-height: 71px;
-$sticky-footer-navbar-height: 50px;
+$sticky-footer-navbar-height: 44px;
 
 body {
+  background-color: $gray-100;
   padding-top: $top-navbar-height;
 
   @media (min-width: 992px) {
@@ -32,7 +33,7 @@ body {
   margin-top: $sticky-footer-navbar-height;
 
   @media (min-width: 992px) {
-    margin-top: 0;
+    margin-top: -7px;
   }
 }
 
@@ -173,7 +174,7 @@ body {
 }
 
 .tema-primary {
-  background-color: #7f3c8b;
+  background-color: $pink;
 }
 
 .voto {
@@ -190,14 +191,14 @@ body {
 }
 
 .voto-sim {
-  background-color: #43a467;
-  border-color: #43a467;
+  background-color: $green;
+  border-color: $green;
   color: white;
 }
 
 .voto-nao {
-  background-color: #7f3c8b;
-  border-color: #7f3c8b;
+  background-color: $pink;
+  border-color: $pink;
   color: white;
 }
 
@@ -251,4 +252,27 @@ body {
   @media (min-width: 576px) {
     max-width: 325px;
   }
+}
+
+.btn-select {
+  padding: 0.5rem 0.25rem;
+  font-size: 1.1rem;
+  line-height: 1.7;
+  color: $gray-500;
+
+  &.active {
+    font-size: 1.25rem;
+    line-height: 1.5;
+    font-weight: 700;
+    color: $green;
+  }
+}
+
+.icon-btn-help {
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.text-nowrap {
+  white-space: nowrap;
 }

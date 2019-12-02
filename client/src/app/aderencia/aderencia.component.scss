@@ -9,7 +9,6 @@
 .btn-toolbar {
   line-height: 3.2rem;
   justify-content: center;
-
 }
 
 .chart-controls-info {
@@ -30,3 +29,39 @@
     order: 2;
   }
 }
+
+.controls {
+  background-color: #ffffff;
+
+  @media (max-width: 575.98px) {
+    display: flex;
+    justify-content: space-between;
+
+    // position: -webkit-sticky;
+    // position: sticky;
+    // top: 93px;
+    z-index: 1050;
+  }
+}
+
+.parlamentar-count {
+  line-height: 40px;
+
+  @media (max-width: 410px) {
+    line-height: 80px;
+  }
+  @media (max-width: 575.98px) {
+    min-width: 120px;
+    font-size: 0.8rem;
+  }
+}
+
+.controls-toolbar {
+  line-height: 36px;
+
+  @media (min-width: 576px) {
+    display: flex;
+    justify-content: center;
+  }
+}
+

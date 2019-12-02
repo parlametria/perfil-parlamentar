@@ -148,7 +148,7 @@ export class CongressoChartComponent implements AfterContentInit, OnChanges, OnD
 
     this.axis = this.svg
       .append('g')
-      .attr('class', 'axis axis--x')
+      .attr('class', 'axis-congresso axis--x')
       .attr('transform', 'translate(0, ' + (this.height - this.margin.bottom) + ')');
   }
 
@@ -220,7 +220,7 @@ export class CongressoChartComponent implements AfterContentInit, OnChanges, OnD
   draw(casa: string): void {
     this.g.selectAll('.circle-parlamentar').remove();
     this.g.selectAll('.clusters').remove();
-    this.g.selectAll('.axis').remove();
+    this.g.selectAll('.axis-congresso').remove();
     this.hideTooltip();
 
     this.svg.call(this.tip);
@@ -250,7 +250,7 @@ export class CongressoChartComponent implements AfterContentInit, OnChanges, OnD
 
     const xBeeSwarm = d3.scaleLinear().range([this.width * 0.9, this.width * 0.2]);
     this.g.append('g')
-      .attr('class', 'axis axis--x')
+      .attr('class', 'axis-congresso axis--x')
       .attr('transform', 'translate(0, -80)')
       .attr('opacity', 0)
       .call(d3.axisBottom(xBeeSwarm)
@@ -350,7 +350,7 @@ export class CongressoChartComponent implements AfterContentInit, OnChanges, OnD
   }
 
   showArc() {
-    this.g.select('.axis')
+    this.g.select('.axis-congresso')
       .transition()
       .duration(500)
       .attr('opacity', 0);
@@ -381,7 +381,7 @@ export class CongressoChartComponent implements AfterContentInit, OnChanges, OnD
   }
 
   showBeeswarm() {
-    this.g.select('.axis')
+    this.g.select('.axis-congresso')
       .transition()
       .duration(500)
       .attr('opacity', 1);

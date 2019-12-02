@@ -2,22 +2,22 @@
   <ul class="nav nav-pills nav-fill">
     <li class="nav-item sticky-footer-navbar-item">
       <a
-        [routerLink]="['/aderencia/camara']"
-        [class.active]="isActive('camara')"
+        [routerLink]="['/parlamentares/' + getCasa()]"
+        routerLinkActive="active"
         class="nav-link sticky-footer-navbar-link"
         href="#"
       >
-        Câmara
+        Parlamentares
       </a>
     </li>
     <li class="nav-item sticky-footer-navbar-item">
       <a
-        [routerLink]="['/aderencia/senado']"
-        [class.active]="isActive('senado')"
+        [routerLink]="['/aderencia/' + getCasa()]"
+        routerLinkActive="active"
         class="nav-link sticky-footer-navbar-link"
         href="#"
       >
-        Senado
+        Aderência
       </a>
     </li>
   </ul>

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Subject } from 'rxjs';
 import { takeUntil, take } from 'rxjs/operators';
 
@@ -20,11 +21,15 @@ export class CapitalComponent implements OnInit {
   parlamentar: ParlamentarInvestimento;
   partido: PartidoInvestimento;
 
+  isLoading: boolean;
+
   constructor(
     private activatedroute: ActivatedRoute,
-    private parlamentarService: ParlamentarService) { }
+    private parlamentarService: ParlamentarService,
+    private modalService: NgbModal) { }
 
   ngOnInit() {
+    this.isLoading = true;
     this.activatedroute.parent.params.pipe(take(1)).subscribe(params => {
       this.getParlamentarById(params.id);
     });
@@ -46,6 +51,7 @@ export class CapitalComponent implements OnInit {
               partido => {
                 parlamentar.partidoInvestimento = partido;
                 this.parlamentar = parlamentar;
+                this.isLoading = false;
               }
             );
 
@@ -54,6 +60,10 @@ export class CapitalComponent implements OnInit {
           console.log(error);
         }
       );
+  }
+
+  open(content) {
+    this.modalService.open(content, { ariaLabelledBy: 'Sobre' });
   }
 
 }
