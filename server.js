@@ -21,6 +21,7 @@ const liderancas = require("./routes/api/liderancas");
 const perfil = require("./routes/api/perfil");
 const investimentoPartidario = require("./routes/api/investimentoPartidario");
 const buscaParlamentar = require("./routes/api/busca-parlamentar");
+const votacoes = require("./routes/api/votacoes");
 
 const app = express();
 app.use(forceSsl);
@@ -66,6 +67,7 @@ app.use("/api/liderancas", liderancas);
 app.use("/api/perfil", perfil);
 app.use("/api/investimento", investimentoPartidario);
 app.use("/api/busca-parlamentar", buscaParlamentar);
+app.use("/api/votacoes", votacoes);
 
 // Set static folder
 app.use(express.static("client/build"));

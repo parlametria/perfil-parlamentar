@@ -27,6 +27,7 @@ import { ParlamentarService } from './shared/services/parlamentar.service';
 import { AderenciaService } from './shared/services/aderencia.service';
 import { CasaService } from './shared/services/casa.service';
 import { UpdateService } from './shared/services/update.service';
+import { VotacaoService } from './shared/services/votacao.service';
 import { environment } from '../environments/environment';
 
 @NgModule({
@@ -56,6 +57,7 @@ import { environment } from '../environments/environment';
     AderenciaService,
     CasaService,
     UpdateService,
+    VotacaoService,
     {
       provide: AuthServiceConfig,
       useFactory: getAuthServiceConfigs

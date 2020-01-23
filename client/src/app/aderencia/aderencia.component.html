@@ -38,9 +38,15 @@
   ></app-filter>
 
   <header class="controls py-2">
-    <div class="parlamentar-count">
-      <strong class="strong">{{ parlamentares?.length }}</strong>
-      parlamentares
+    <div class="count">
+      <div>
+        <strong class="strong">{{ parlamentares?.length }}</strong>
+        parlamentares
+      </div>
+      <div class="votacoes-count">
+        <strong class="strong">{{ countVotacoes }}</strong>
+        votações
+      </div>
     </div>
     <div class="controls-toolbar">
       <div class="btn-toolbar">

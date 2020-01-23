@@ -6,6 +6,7 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 import { AderenciaService } from 'src/app/shared/services/aderencia.service';
+import { VotacaoService } from 'src/app/shared/services/votacao.service';
 import { ParlamentarAderencia } from 'src/app/shared/models/parlamentarAderencia.model';
 import { CasaService } from 'src/app/shared/services/casa.service';
 
@@ -34,6 +35,7 @@ export class AderenciaComponent implements OnInit, OnDestroy {
   view: any;
   orderBy: string;
   isLoading: boolean;
+  countVotacoes: number;
 
   private unsubscribe = new Subject();
 
@@ -41,6 +43,7 @@ export class AderenciaComponent implements OnInit, OnDestroy {
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private aderenciaService: AderenciaService,
+    private votacaoService: VotacaoService,
     private casaService: CasaService,
     private cdr: ChangeDetectorRef,
     private modalService: NgbModal
@@ -57,6 +60,7 @@ export class AderenciaComponent implements OnInit, OnDestroy {
         this.casaService.set(params.get('casa'));
         this.casa = params.get('casa');
         this.getParlamentaresPorCasa();
+        this.getCountVotacoes();
       });
     this.getParlamentares();
     this.getAderencia();
@@ -95,6 +99,15 @@ export class AderenciaComponent implements OnInit, OnDestroy {
       );
   }
 
+  getCountVotacoes() {
+    this.votacaoService
+      .getCountVotacoes(this.casa)
+      .pipe(takeUntil(this.unsubscribe))
+      .subscribe(countVotacao => {
+        this.countVotacoes = countVotacao.numero_votacoes;
+      });
+  }
+
   getParlamentaresPorCasa(): void {
     if (this.parlamentaresCompleto !== undefined && this.parlamentaresCompleto) {
       this.parlamentaresCasa = this.parlamentaresCompleto.filter(p => {
@@ -120,7 +133,7 @@ export class AderenciaComponent implements OnInit, OnDestroy {
     const queryParams: Params = Object.assign({}, this.activatedRoute.snapshot.queryParams);
     queryParams.view = view;
 
-    this.router.navigate([], {  relativeTo: this.activatedRoute, queryParams });
+    this.router.navigate([], { relativeTo: this.activatedRoute, queryParams });
 
     this.cdr.detectChanges();
   }
@@ -134,7 +147,7 @@ export class AderenciaComponent implements OnInit, OnDestroy {
     const queryParams: Params = Object.assign({}, this.activatedRoute.snapshot.queryParams);
     queryParams.orderBy = orderBy;
 
-    this.router.navigate([], {  relativeTo: this.activatedRoute, queryParams });
+    this.router.navigate([], { relativeTo: this.activatedRoute, queryParams });
 
     this.cdr.detectChanges();
 
