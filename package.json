@@ -1,7 +1,7 @@
 {
-  "name": "voz-ativa",
-  "version": "3.3.0",
-  "description": "Compatibilidade entre eleitor e os candidatos a Deputado Federal com base na Agenda Brasil Sustentável",
+  "name": "perfil-parlamentar",
+  "version": "3.4.0",
+  "description": "Saiba o que se passa no Congresso",
   "main": "server.js",
   "scripts": {
     "client-install": "npm install --prefix client",
@@ -21,7 +21,7 @@
     "type": "git",
     "url": "git+https://github.com/analytics-ufcg/voz-ativa.git"
   },
-  "author": "Analytics UFCG",
+  "author": "Laboratório Analytics - UFCG",
   "license": "AGPL-3.0",
   "bugs": {
     "url": "https://github.com/analytics-ufcg/voz-ativa/issues"

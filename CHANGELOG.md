@@ -1,5 +1,12 @@
 # Changelog
 
+## 3.4.0 (2019-11-26)
+
+- [x] Lançamento do Perfil Parlamentar: nova identidade e descrição do aplicativo
+- [x] Adiciona trajetória política do parlamentar com filiações, mandatos e patrimônio
+- [x] Altera a navegação geral do aplicativo
+- [x] Referencia o Parlametria
+
 ## 3.3.0 (2019-11-13)
 
 - [x] Adiciona investimento partidário dos parlamentares
