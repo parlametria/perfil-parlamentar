@@ -14,6 +14,7 @@ import { Orientacao } from 'src/app/shared/models/orientacao.model';
 import { AderenciaService } from 'src/app/shared/services/aderencia.service';
 import { Aderencia } from 'src/app/shared/models/aderencia.model';
 import { CasaService } from 'src/app/shared/services/casa.service';
+import { VotacaoService } from 'src/app/shared/services/votacao.service';
 
 @Component({
   selector: 'app-votacoes',
@@ -38,6 +39,7 @@ export class VotacoesComponent implements OnInit, OnDestroy {
   proposicoesFiltradas: Proposicao[];
   aderenciaFiltrada: any;
   passoGoverno: number;
+  quantidadeVotacoesPorTema: any;
 
   constructor(
     private activatedroute: ActivatedRoute,
@@ -46,7 +48,8 @@ export class VotacoesComponent implements OnInit, OnDestroy {
     private temaService: TemaService,
     private orientacaoService: OrientacaoService,
     private aderenciaService: AderenciaService,
-    private casaService: CasaService) { }
+    private casaService: CasaService,
+    private votacaoService: VotacaoService) { }
 
   ngOnInit() {
     this.activatedroute.parent.params.pipe(take(1)).subscribe(params => {
@@ -77,11 +80,13 @@ export class VotacoesComponent implements OnInit, OnDestroy {
     forkJoin(
       this.temaService.getTemas(),
       this.orientacaoService.getProposicoesOrientacao(casa),
-      this.aderenciaService.getAderenciaById(id)
+      this.aderenciaService.getAderenciaById(id),
+      this.votacaoService.getCountVotacoesPorTema(casa)
     ).pipe(takeUntil(this.unsubscribe)).subscribe(data => {
       const temas = data[0];
       const proposicoes = data[1];
       this.aderencia = data[2];
+      this.quantidadeVotacoesPorTema = data[3];
 
       // Inicia Temas
       this.temas = temas;

@@ -22,4 +22,11 @@ export class VotacaoService {
       .get<CountVotacao>(this.url + '/', { params });
   }
 
+  getCountVotacoesPorTema(casa: string): Observable<any> {
+    const params = new HttpParams().set('casa', casa);
+
+    return this.http
+      .get(this.url + '/temas/', { params });
+  }
+
 }
