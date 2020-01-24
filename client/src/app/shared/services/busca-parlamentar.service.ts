@@ -117,7 +117,7 @@ export class BuscaParlamentarService {
 
       filtered =
         nome && filtered
-          ? p.nomeProcessado.toLowerCase().includes(nome.toLowerCase())
+          ? p.nomeProcessado.toLowerCase().includes(nome.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase())
           : filtered;
 
       return filtered;
