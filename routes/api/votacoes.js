@@ -45,8 +45,8 @@ router.get("/", casaValidator.validate, (req, res) => {
     distinct: true,
     col: 'id_votacao'
   })
-    .then(numero_votacoes => res.status(SUCCESS).json(
-      { numero_votacoes: numero_votacoes }
+    .then(numeroVotacoes => res.status(SUCCESS).json(
+      { numeroVotacoes: numeroVotacoes }
     ))
     .catch(err => res.status(BAD_REQUEST).json({ err }));
 });

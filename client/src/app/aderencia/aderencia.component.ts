@@ -104,7 +104,7 @@ export class AderenciaComponent implements OnInit, OnDestroy {
       .getCountVotacoes(this.casa)
       .pipe(takeUntil(this.unsubscribe))
       .subscribe(countVotacao => {
-        this.countVotacoes = countVotacao.numero_votacoes;
+        this.countVotacoes = countVotacao.numeroVotacoes;
       });
   }
 
