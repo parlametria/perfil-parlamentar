@@ -44,15 +44,21 @@
   }
 }
 
-.parlamentar-count {
-  line-height: 40px;
+.count {
+  display: flex;
 
-  @media (max-width: 410px) {
-    line-height: 80px;
-  }
   @media (max-width: 575.98px) {
+    height: 80px;
+    flex-direction: column;
+    justify-content: center;
     min-width: 120px;
     font-size: 0.8rem;
+  }
+}
+
+.votacoes-count {
+  @media (min-width: 576px) { 
+    margin-left: 2rem;
   }
 }
 
