@@ -37,7 +37,7 @@ const routes: Routes = [
         component: AderenciaComponent
       },
       {
-        path: 'capital',
+        path: 'peso',
         component: CapitalComponent
       },
       {
