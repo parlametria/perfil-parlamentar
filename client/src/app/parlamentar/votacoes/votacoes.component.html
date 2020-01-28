@@ -14,7 +14,7 @@
           *ngFor="let tema of temas"
           [value]="tema.idTema"
         >
-          {{ tema.tema }}
+          {{ tema.tema }} ({{ quantidadeVotacoesPorTema[tema?.idTema] }} votações)          
         </option>
       </select>
     </div>
