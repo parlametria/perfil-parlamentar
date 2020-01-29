@@ -119,6 +119,20 @@
       </div>
       <div>
         <app-legend
+          [title]="'abstenção'"
+          [class]="'voto-abstencao'"
+          [striped]="false"
+        ></app-legend>
+      </div>
+      <div>
+        <app-legend
+          [title]="'obstrução'"
+          [class]="'voto-obstrucao'"
+          [striped]="false"
+        ></app-legend>
+      </div>
+      <div>
+        <app-legend
           [title]="'liberado'"
           [class]="'voto-liberou'"
           [striped]="false"
@@ -128,13 +142,6 @@
         <app-legend
           [title]="'faltou'"
           [class]="'voto-faltou'"
-          [striped]="false"
-        ></app-legend>
-      </div>
-      <div>
-        <app-legend
-          [title]="'obstrução'"
-          [class]="'voto-obstrucao'"
           [striped]="false"
         ></app-legend>
       </div>
