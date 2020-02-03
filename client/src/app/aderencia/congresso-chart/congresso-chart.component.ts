@@ -248,7 +248,7 @@ export class CongressoChartComponent implements AfterContentInit, OnChanges, OnD
       quantidadeFilas = 5;
     }
 
-    const xBeeSwarm = d3.scaleLinear().range([this.width * 0.9, this.width * 0.2]);
+    const xBeeSwarm = d3.scaleLinear().range([this.width * 0.1, this.width * 0.8]);
     this.g.append('g')
       .attr('class', 'axis-congresso axis--x')
       .attr('transform', 'translate(0, -80)')
@@ -421,7 +421,7 @@ export class CongressoChartComponent implements AfterContentInit, OnChanges, OnD
     const colors = this.colorScheme.slice().reverse();
 
     grupos.sort((a, b) => {
-      return colors.indexOf(a.key) - colors.indexOf(b.key);
+      return colors.indexOf(b.key) - colors.indexOf(a.key);
     });
 
     const distribuicao = grupos.map(g => g.values.length);
