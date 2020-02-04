@@ -1,7 +1,10 @@
+.sobre-container {
+  padding-top: 15px;
+}
 .img-step-02 {
     background-size: contain;
     background-position: center;
-    background-repeat: no-repeat;  
+    background-repeat: no-repeat;
 }
 
 .howtoStep01 {
@@ -12,7 +15,7 @@
 }
 
 .howtoStep02 {
-    height: 150px;    
+    height: 150px;
 }
 
 @media (max-width: 767px) {
