@@ -95,6 +95,7 @@
         </div>
       </div>
     </div>
+  </div>
     <div
       *ngIf="!passoGoverno"
       class="row no-gutters mt-3"
@@ -119,15 +120,8 @@
       </div>
       <div>
         <app-legend
-          [title]="'liberado'"
-          [class]="'voto-liberou'"
-          [striped]="false"
-        ></app-legend>
-      </div>
-      <div>
-        <app-legend
-          [title]="'faltou'"
-          [class]="'voto-faltou'"
+          [title]="'abstenção'"
+          [class]="'voto-abstencao'"
           [striped]="false"
         ></app-legend>
       </div>
@@ -138,8 +132,21 @@
           [striped]="false"
         ></app-legend>
       </div>
-    </div>
-  </div>
+      <div>
+        <app-legend
+          [title]="'liberado'"
+          [class]="'voto-liberou'"
+          [striped]="false"
+        ></app-legend>
+      </div>
+      <div>
+        <app-legend
+          [title]="'faltou/não estava em exercício'"
+          [class]="'voto-faltou'"
+          [striped]="false"
+        ></app-legend>
+      </div>
+    </div>  
 
   <div class="posicoes container-sm">
     <app-votacao
