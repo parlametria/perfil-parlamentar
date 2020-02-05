@@ -29,9 +29,9 @@ export class VotacaoComponent implements OnInit {
     this.isCollapsed = true;
   }
 
-  getClass(voto: number): string[] {
+  getClass(voto: number, tipo: string): string[] {
     const classes = ['voto'];
-    return classes.concat(this.getVotacaoClass(voto));
+    return classes.concat(this.getVotacaoClass(voto, tipo));
   }
 
   getClassComparado(votoA: number, votoB: number): string[] {
@@ -50,7 +50,7 @@ export class VotacaoComponent implements OnInit {
     return classes;
   }
 
-  getVotacaoClass(voto: number): string[] {
+  getVotacaoClass(voto: number, tipo: string): string[] {
     const classes = ['voto-lg'];
     switch (voto) {
       case this.SIM:
@@ -72,10 +72,18 @@ export class VotacaoComponent implements OnInit {
         classes.push('voto-abstencao');
         break;
       case undefined:
-        classes.push('voto-liberou');
+        if (tipo === 'governo') {
+          classes.push('voto-liberou');
+          break;
+        }
+        classes.push('voto-sem-exercicio');
         break;
       case null:
-        classes.push('voto-liberou');
+        if (tipo === 'governo') {
+          classes.push('voto-liberou');
+          break;
+        }
+        classes.push('voto-sem-exercicio');
         break;
       default:
         break;
@@ -83,7 +91,7 @@ export class VotacaoComponent implements OnInit {
     return classes;
   }
 
-  getTextoVoto(voto: number): string {
+  getTextoVoto(voto: number, tipo: string): string {
     let textoVoto: string;
     switch (voto) {
       case this.SIM:
@@ -105,10 +113,18 @@ export class VotacaoComponent implements OnInit {
         textoVoto = 'ABSTENÇÃO';
         break;
       case undefined:
-        textoVoto = 'LIBEROU';
+        if (tipo === 'governo') {
+          textoVoto = 'LIBEROU';
+          break;
+        }
+        textoVoto = '--';
         break;
       case null:
-        textoVoto = 'LIBEROU';
+        if (tipo === 'governo') {
+          textoVoto = 'LIBEROU';
+          break;
+        }
+        textoVoto = '--';
         break;
       default:
         break;

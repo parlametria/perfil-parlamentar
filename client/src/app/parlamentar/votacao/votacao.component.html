@@ -36,12 +36,12 @@
             [triggers]="'click'"
             [autoClose]="'outside'"
           >
-            <div [ngClass]="getClass(parlamentar?.votos[votacao.idVotacao])">
+            <div [ngClass]="getClass(parlamentar?.votos[votacao.idVotacao], 'parlamentar')">
               <span class="d-none">
                 {{ parlamentar?.votos[votacao.idVotacao] }}
               </span>
             </div>
-            <div [ngClass]="getClass(orientacao?.orientacoes[votacao.idVotacao])">
+            <div [ngClass]="getClass(orientacao?.orientacoes[votacao.idVotacao], 'governo')">
               <span class="d-none">
                 {{ orientacao?.orientacoes[votacao.idVotacao] }}
               </span>
@@ -65,17 +65,17 @@
                   <div class="col text-center">
                     <div
                       class="py-1"
-                      [ngClass]="getVotacaoClass(parlamentar?.votos[votacao.idVotacao])"
+                      [ngClass]="getVotacaoClass(parlamentar?.votos[votacao.idVotacao], 'parlamentar')"
                     >
-                      {{ getTextoVoto(parlamentar.votos[votacao.idVotacao]) }}
+                      {{ getTextoVoto(parlamentar.votos[votacao.idVotacao], 'parlamentar') }}
                     </div>
                   </div>
                   <div class="col text-center">
                     <div
                       class="py-1"
-                      [ngClass]="getVotacaoClass(orientacao?.orientacoes[votacao.idVotacao])"
+                      [ngClass]="getVotacaoClass(orientacao?.orientacoes[votacao.idVotacao], 'governo')"
                     >
-                      {{ getTextoVoto(orientacao.orientacoes[votacao.idVotacao]) }}
+                      {{ getTextoVoto(orientacao.orientacoes[votacao.idVotacao], 'governo') }}
                     </div>
                   </div>
                 </div>
