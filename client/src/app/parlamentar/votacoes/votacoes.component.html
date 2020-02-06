@@ -95,6 +95,7 @@
         </div>
       </div>
     </div>
+  </div>
     <div
       *ngIf="!passoGoverno"
       class="row no-gutters mt-3"
@@ -140,13 +141,12 @@
       </div>
       <div>
         <app-legend
-          [title]="'faltou'"
+          [title]="'faltou/não estava em exercício'"
           [class]="'voto-faltou'"
           [striped]="false"
         ></app-legend>
       </div>
-    </div>
-  </div>
+    </div>  
 
   <div class="posicoes container-sm">
     <app-votacao

@@ -60,7 +60,7 @@ export class AderenciaComponent implements OnInit, OnDestroy {
         this.casaService.set(params.get('casa'));
         this.casa = params.get('casa');
         this.getParlamentaresPorCasa();
-        this.getCountVotacoes();
+        this.getCountVotacoes(params.get('tema'));
       });
     this.getParlamentares();
     this.getAderencia();
@@ -99,12 +99,17 @@ export class AderenciaComponent implements OnInit, OnDestroy {
       );
   }
 
-  getCountVotacoes() {
+  getCountVotacoes(tema: string) {
+    const idTema = +tema;
     this.votacaoService
-      .getCountVotacoes(this.casa)
+      .getCountVotacoesPorTema(this.casa)
       .pipe(takeUntil(this.unsubscribe))
-      .subscribe(countVotacao => {
-        this.countVotacoes = countVotacao.numeroVotacoes;
+      .subscribe(countVotacaoTemas => {
+        if (idTema === this.FILTRO_PADRAO_TEMA) {
+          this.countVotacoes = countVotacaoTemas[this.ID_TEMA_GERAL];
+        } else {
+          this.countVotacoes = countVotacaoTemas[idTema];
+        }
       });
   }
 
@@ -120,6 +125,7 @@ export class AderenciaComponent implements OnInit, OnDestroy {
     this.filtro = JSON.parse(JSON.stringify(filter));
     this.filtro.orientador = this.orientador;
     this.filtro.orderBy = this.orderBy;
+    this.getCountVotacoes(this.filtro.tema);
 
     this.aderenciaService.search(this.filtro, this.orderBy);
   }
