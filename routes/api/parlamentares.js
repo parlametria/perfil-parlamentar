@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const { validationResult } = require('express-validator');
+const Sequelize = require("sequelize");
 
 const models = require("../../models/index");
 const { formataVotacoes } = require("../../utils/functions");
@@ -14,6 +15,7 @@ const Comissoes = models.comissoes;
 const ComposicaoComissoes = models.composicaoComissoes;
 const Liderancas = models.liderancas;
 const Partido = models.partido;
+const CargosMesa = models.cargosMesa;
 
 const BAD_REQUEST = 400;
 const SUCCESS = 200;
@@ -357,6 +359,25 @@ router.get("/:id/liderancas", (req, res) => {
         }]
       }
     ],
+    where: { id_parlamentar_voz: req.params.id }
+  })
+    .then(parlamentar => {
+      return res.json(parlamentar);
+    })
+    .catch(err => res.status(BAD_REQUEST).json({ err: err.message }));
+});
+
+/**
+ * Recupera informações de cargos na Mesa Diretora para um parlamentar a partir de seu id (no Voz Ativa)
+ * @name get/api/parlamentares/:id/cargos-mesa
+ * @function
+ * @memberof module:routes/parlamentares
+ * @param {string} id - id do parlamentar na plataforma Voz Ativa
+ */
+router.get("/:id/cargos-mesa", (req, res) => {
+  CargosMesa.findOne({
+    attributes: [
+      ["id_parlamentar_voz", "idParlamentarVoz"], "cargo"],
     where: { id_parlamentar_voz: req.params.id }
   })
     .then(parlamentar => {

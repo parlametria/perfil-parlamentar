@@ -7,10 +7,7 @@ module.exports = (sequelize, type) => {
         primaryKey: true
       },
       casa: type.STRING,
-      cargo: type.STRING,
-      data_inicio: type.DATE,
-      data_fim: type.DATE,
-      legislatura: type.INTEGER
+      cargo: type.STRING
     },
     {
       timestamps: false,
