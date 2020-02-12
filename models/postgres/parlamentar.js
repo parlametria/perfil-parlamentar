@@ -75,7 +75,7 @@ module.exports = (sequelize, type) => {
         targetKey: "id_parlamentar_voz",      
         as: "parlamentarEmpresas"
       }),
-      parlamentar.hasMany(models.cargosMesa, {
+      parlamentar.hasOne(models.cargosMesa, {
         foreignKey: "id_parlamentar_voz",
         targetKey: "id_parlamentar_voz",      
         as: "parlamentarCargosMesa"
