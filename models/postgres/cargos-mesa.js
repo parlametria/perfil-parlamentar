@@ -13,7 +13,8 @@ module.exports = (sequelize, type) => {
       legislatura: type.INTEGER
     },
     {
-      timestamps: false
+      timestamps: false,
+      freezeTableName: true
     }
   );
   cargosMesa.associate = function (models) {
