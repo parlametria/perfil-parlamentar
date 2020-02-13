@@ -19,7 +19,7 @@ import {
 import { ParlamentarAderencia } from 'src/app/shared/models/parlamentarAderencia.model';
 import { getClassCargo } from 'src/app/shared/functions/comissao';
 import { ComposicaoComissao } from 'src/app/shared/models/composicaoComissao.model';
-import { Lideranca } from 'src/app/shared/models/lideranca.model';
+import { CargoParlamentar } from 'src/app/shared/models/cargoParlamentar.model';
 
 @Component({
   selector: 'app-card-parlamentar',
@@ -158,7 +158,7 @@ export class CardParlamentarComponent implements OnChanges, OnInit {
     }
   }
 
-  getPartidoLideranca(cargo: string): Lideranca {
+  getPartidoLideranca(cargo: string): CargoParlamentar {
     const partido = this.parlamentar.parlamentarLiderancas.filter(l => l.cargo === cargo);
 
     if (partido !== undefined && partido.length > 0) {

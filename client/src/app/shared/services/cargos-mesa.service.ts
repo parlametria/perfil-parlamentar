@@ -9,9 +9,10 @@ import { environment } from 'src/environments/environment';
 @Injectable({
   providedIn: 'root'
 })
-export class LiderancaService {
 
-  private url = environment.apiUrl + 'liderancas';
+export class CargosMesaService {
+
+  private url = environment.apiUrl + 'cargos-mesa';
 
   constructor(private http: HttpClient) { }
 

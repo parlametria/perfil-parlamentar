@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 
 import { environment } from '../../../environments/environment';
 import { Comissao } from '../models/comissao.model';
-import { Lideranca } from '../models/lideranca.model';
+import { CargoParlamentar } from '../models/cargoParlamentar.model';
 import { CasaService } from './casa.service';
 
 
@@ -25,9 +25,9 @@ export class ComissaoService {
     return this.http.get<Comissao[]>(this.url, { params });
   }
 
-  getCargos(casa: string): Observable<Lideranca[]> {
+  getCargos(casa: string): Observable<CargoParlamentar[]> {
     const params = new HttpParams()
       .set('casa', casa);
-    return this.http.get<Lideranca[]>(this.url + '/cargos', { params });
+    return this.http.get<CargoParlamentar[]>(this.url + '/cargos', { params });
   }
 }

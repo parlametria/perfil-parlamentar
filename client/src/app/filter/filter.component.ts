@@ -11,7 +11,7 @@ import { Tema } from '../shared/models/tema.model';
 import { TemaService } from '../shared/services/tema.service';
 import { Comissao } from '../shared/models/comissao.model';
 import { ComissaoService } from '../shared/services/comissao.service';
-import { Lideranca } from '../shared/models/lideranca.model';
+import { CargoParlamentar } from '../shared/models/cargoParlamentar.model';
 import { LiderancaService } from '../shared/services/lideranca.service';
 import { CasaService } from '../shared/services/casa.service';
 
@@ -44,8 +44,8 @@ export class FilterComponent implements OnInit, OnDestroy {
   partidosFiltradosPorEstado: string[];
   temas: Tema[];
   comissoes: Comissao[];
-  liderancas: Lideranca[];
-  cargosComissao: Lideranca[];
+  liderancas: CargoParlamentar[];
+  cargosComissao: CargoParlamentar[];
 
   temaSelecionado: number;
   estadoSelecionado: string;
