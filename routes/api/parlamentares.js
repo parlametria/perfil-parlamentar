@@ -3,7 +3,7 @@ const router = express.Router();
 const { validationResult } = require('express-validator');
 
 const models = require("../../models/index");
-const { formataVotacoes } = require("../../utils/functions");
+const { formataVotacoes, formataCargosMesaDiretora } = require("../../utils/functions");
 const casaValidator = require("../../utils/middlewares/casa.validator");
 
 const Parlamentar = models.parlamentar;
@@ -379,8 +379,9 @@ router.get("/:id/cargos-mesa", (req, res) => {
       ["id_parlamentar_voz", "idParlamentarVoz"], "cargo"],
     where: { id_parlamentar_voz: req.params.id }
   })
-    .then(parlamentar => {
-      return res.json(parlamentar);
+    .then(cargo => {
+      const cargosMesa = formataCargosMesaDiretora(cargo);
+      return res.json(cargosMesa);
     })
     .catch(err => res.status(BAD_REQUEST).json({ err: err.message }));
 });

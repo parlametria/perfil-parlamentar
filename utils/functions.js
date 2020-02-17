@@ -58,9 +58,19 @@ function formataRespostasUser(resultado) {
   return resultadoNovo;
 }
 
+function formataCargosMesaDiretora(resultado) {
+  let resultadoNovo = {};
+  resultadoNovo.parlamentarCargosMesa = [];
+  if (resultado !== null) {
+    resultadoNovo.parlamentarCargosMesa.push(resultado);
+  }
+  return resultadoNovo;
+}
+
 module.exports = {
   formataRespostas,
   formataVotacoes,
   formataOrientacoes,
-  formataRespostasUser
+  formataRespostasUser,
+  formataCargosMesaDiretora
 };
