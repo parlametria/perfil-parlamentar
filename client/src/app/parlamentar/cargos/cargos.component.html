@@ -1,9 +1,9 @@
 <div class="cargos container-sm my-3">
   <div
-    *ngIf="liderancaLista?.parlamentarLiderancas.length == 0 && comissoesLista?.parlamentarComissoes.length == 0"
+    *ngIf="liderancaLista?.parlamentarLiderancas.length == 0 && comissoesLista?.parlamentarComissoes.length == 0 && cargosMesa?.parlamentarCargosMesa.length == 0"
     class="mt-4 d-flex justify-content-center"
   >
-  Sem lideranças partidárias ou cargos em comissões.
+  Sem lideranças partidárias nem cargos em comissões ou mesa.
   </div>
   <div
     *ngIf="liderancaLista?.parlamentarLiderancas.length > 0"
@@ -25,6 +25,17 @@
     </div>
     <div class="pl-4">
       <app-cargo [cargos]="comissoes"></app-cargo>
+    </div>
+  </div>
+  <div
+    *ngIf="cargosMesa?.parlamentarCargosMesa.length > 0"
+    class="mb-4"
+  >
+    <div class="mb-3">
+      <h5 class="font-italic font-weight-normal">Outros cargos</h5>
+    </div>
+    <div class="pl-4">
+      <app-cargo [cargos]="cargosMesaDiretora"></app-cargo>
     </div>
   </div>
 </div>

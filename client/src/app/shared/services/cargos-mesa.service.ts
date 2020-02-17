@@ -9,13 +9,14 @@ import { environment } from 'src/environments/environment';
 @Injectable({
   providedIn: 'root'
 })
-export class LiderancaService {
 
-  private url = environment.apiUrl + 'liderancas';
+export class CargosMesaService {
+
+  private url = environment.apiUrl + 'cargos-mesa';
 
   constructor(private http: HttpClient) { }
 
-  getLiderancas(casa: string): Observable<CargoParlamentar[]> {
+  getCargosMesa(casa: string): Observable<CargoParlamentar[]> {
     const params = new HttpParams()
       .set('casa', casa);
     return this.http.get<CargoParlamentar[]>(this.url, { params });

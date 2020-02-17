@@ -13,6 +13,7 @@ import { ParlamentarLiderancas } from '../models/parlamentarLiderancas.model';
 import { ParlamentarVotos } from '../models/parlamentarVotos.model';
 import { ParlamentarInvestimento } from '../models/parlamentarInvestimento.model';
 import { PartidoInvestimento } from '../models/partidoInvestimento.model';
+import { ParlamentarCargosMesa } from '../models/parlamentarCargosMesa.model';
 
 @Injectable({
   providedIn: 'root'
@@ -76,5 +77,10 @@ export class ParlamentarService {
   getInvestimentoPartido(idPartido: number, uf: string, esfera: string): Observable<PartidoInvestimento> {
     return this.http
       .get<PartidoInvestimento>(environment.apiUrl + 'investimento/partido/' + idPartido + '/' + uf + '/' + esfera);
+  }
+
+  getCargosMesaById(id: string): Observable<ParlamentarCargosMesa> {
+    return this.http
+    .get<ParlamentarCargosMesa>(this.url + '/' + id + '/cargos-mesa');
   }
 }

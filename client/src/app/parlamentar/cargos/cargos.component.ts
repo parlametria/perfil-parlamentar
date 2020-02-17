@@ -7,7 +7,8 @@ import { takeUntil, take } from 'rxjs/operators';
 import { ParlamentarService } from 'src/app/shared/services/parlamentar.service';
 
 import { ParlamentarComissoes } from 'src/app/shared/models/parlamentarComissoes.model';
-import { ComposicaoComissao } from 'src/app/shared/models/composicaoComissao.model';
+import { ParlamentarLiderancas } from 'src/app/shared/models/parlamentarLiderancas.model';
+import { ParlamentarCargosMesa } from 'src/app/shared/models/parlamentarCargosMesa.model';
 
 @Component({
   selector: 'app-cargos',
@@ -19,11 +20,13 @@ export class CargosComponent implements OnInit, OnDestroy {
 
   private unsubscribe = new Subject();
 
-  comissoesLista: any;
-  liderancaLista: any;
+  comissoesLista: ParlamentarComissoes;
+  liderancaLista: ParlamentarLiderancas;
+  cargosMesa: ParlamentarCargosMesa;
 
   comissoes: {};
   liderancas: {};
+  cargosMesaDiretora: {};
 
   constructor(
     private activatedroute: ActivatedRoute,
@@ -39,16 +42,20 @@ export class CargosComponent implements OnInit, OnDestroy {
   getParlamentarById(id: string) {
     forkJoin(
       this.parlamentarService.getComissoesByid(id),
-      this.parlamentarService.getLiderancasByid(id)
+      this.parlamentarService.getLiderancasByid(id),
+      this.parlamentarService.getCargosMesaById(id)
     ).pipe(takeUntil(this.unsubscribe)).subscribe(data => {
       const comissoes = data[0];
       const liderancas = data[1];
+      const cargosMesa = data[2];
 
       this.comissoesLista = comissoes;
       this.liderancaLista = liderancas;
+      this.cargosMesa = cargosMesa;
 
       this.agrupaComissoes(comissoes.parlamentarComissoes);
       this.agrupaLiderancas(liderancas.parlamentarLiderancas);
+      this.agrupaCargosMesaDiretora(this.cargosMesa.parlamentarCargosMesa);
     },
       error => {
         console.log(error);
@@ -62,6 +69,10 @@ export class CargosComponent implements OnInit, OnDestroy {
 
   agrupaLiderancas(liderancas: any[]) {
     this.liderancas = this.cargosToDict(liderancas, 'lideranca');
+  }
+
+  agrupaCargosMesaDiretora(cargosMesa: any[]) {
+    this.cargosMesaDiretora = this.cargosToDict(cargosMesa, 'cargos-mesa');
   }
 
   cargosToDict(cargos: any[], tipo: string) {
@@ -95,6 +106,12 @@ export class CargosComponent implements OnInit, OnDestroy {
         cargo: cargo.cargo,
         nome: '',
         sigla: cargo.liderancaPartido.sigla
+      };
+    } else if (tipo === 'cargos-mesa') {
+      return {
+        cargo: cargo.cargo,
+        nome: '',
+        sigla: 'Mesa Diretora'
       };
     }
   }

@@ -1,7 +1,7 @@
 import { Partido } from './partido.model';
 import { ComposicaoComissao } from './composicaoComissao.model';
 import { AderenciaDados } from './aderencia.model';
-import { Lideranca } from './lideranca.model';
+import { CargoParlamentar } from './cargoParlamentar.model';
 
 export class ParlamentarAderencia {
 
@@ -12,7 +12,7 @@ export class ParlamentarAderencia {
   public emExercicio: boolean;
   public aderencia?: AderenciaDados[];
   public comissoes?: ComposicaoComissao[];
-  public parlamentarLiderancas?: Lideranca[];
+  public parlamentarLiderancas?: CargoParlamentar[];
   public parlamentarPartido: Partido;
   public casa: string;
   public nomeProcessado: string;
