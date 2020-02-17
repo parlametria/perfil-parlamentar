@@ -16,7 +16,7 @@ export class CargosMesaService {
 
   constructor(private http: HttpClient) { }
 
-  getLiderancas(casa: string): Observable<CargoParlamentar[]> {
+  getCargosMesa(casa: string): Observable<CargoParlamentar[]> {
     const params = new HttpParams()
       .set('casa', casa);
     return this.http.get<CargoParlamentar[]>(this.url, { params });
