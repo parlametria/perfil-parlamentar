@@ -15,6 +15,7 @@ const ComposicaoComissoes = models.composicaoComissoes;
 const Liderancas = models.liderancas;
 const Partido = models.partido;
 const CargosMesa = models.cargosMesa;
+const Mandatos = models.mandatos;
 
 const BAD_REQUEST = 400;
 const SUCCESS = 200;
@@ -114,52 +115,52 @@ router.get("/", (req, res) => {
  */
 router.get("/partidos", casaValidator.validate, (req, res) => {
 
-    const errors = validationResult(req);
+  const errors = validationResult(req);
 
-    if (!errors.isEmpty()) {
-      return res.status(BAD_REQUEST).json({ errors: errors.array() });
-    }
+  if (!errors.isEmpty()) {
+    return res.status(BAD_REQUEST).json({ errors: errors.array() });
+  }
 
-    const casa = req.param("casa") || "camara"
+  const casa = req.param("casa") || "camara"
 
-    Parlamentar.findAll({
-      attributes: att,
-      where: {
-        em_exercicio: true,
-        casa: casa
-      },
-      include: [{
-        model: Partido,
-        as: "parlamentarPartido"
-      }]
-    })
-      .then(parlamentares => {
-        let partidosPorEstado = []
+  Parlamentar.findAll({
+    attributes: att,
+    where: {
+      em_exercicio: true,
+      casa: casa
+    },
+    include: [{
+      model: Partido,
+      as: "parlamentarPartido"
+    }]
+  })
+    .then(parlamentares => {
+      let partidosPorEstado = []
 
-        const estados = [...new Set(parlamentares.map(item => item.uf))];
+      const estados = [...new Set(parlamentares.map(item => item.uf))];
 
-        estados.push("Estados");
+      estados.push("Estados");
 
-        estados.forEach(estado => {
-          let parlamentaresFiltered;
-          if (estado !== "Estados")
-            parlamentaresFiltered = parlamentares.filter(value => value.uf === estado);
-          else
-            parlamentaresFiltered = parlamentares;
+      estados.forEach(estado => {
+        let parlamentaresFiltered;
+        if (estado !== "Estados")
+          parlamentaresFiltered = parlamentares.filter(value => value.uf === estado);
+        else
+          parlamentaresFiltered = parlamentares;
 
-          const partidosSet = new Set();
+        const partidosSet = new Set();
 
-          parlamentaresFiltered.forEach(cand => {
-            partidosSet.add(cand.parlamentarPartido.sigla);
-          });
-
-          partidosPorEstado.push({ estado: estado, partidos: [...partidosSet].sort((a, b) => a.localeCompare(b)) });
+        parlamentaresFiltered.forEach(cand => {
+          partidosSet.add(cand.parlamentarPartido.sigla);
         });
 
-        res.json(partidosPorEstado);
-      })
-      .catch(err => res.status(BAD_REQUEST).json({ error: err.message }));
-  });
+        partidosPorEstado.push({ estado: estado, partidos: [...partidosSet].sort((a, b) => a.localeCompare(b)) });
+      });
+
+      res.json(partidosPorEstado);
+    })
+    .catch(err => res.status(BAD_REQUEST).json({ error: err.message }));
+});
 
 
 /**
@@ -382,6 +383,33 @@ router.get("/:id/cargos-mesa", (req, res) => {
     .then(cargo => {
       const cargosMesa = formataCargosMesaDiretora(cargo);
       return res.json(cargosMesa);
+    })
+    .catch(err => res.status(BAD_REQUEST).json({ err: err.message }));
+});
+
+/**
+ * Recupera informações de mandatos de um parlamentar a partir de seu id.
+ * @name get/api/parlamentares/:id/mandatos
+ * @function
+ * @memberof module:routes/parlamentares
+ * @param {string} id - id do parlamentar na plataforma Voz Ativa
+ */
+router.get("/:id/mandatos", (req, res) => {
+  Mandatos.findAll({
+    where: { id_parlamentar_voz: req.params.id },
+    attributes: [["id_parlamentar_voz", "idParlamentarVoz"], ["ano_eleicao", "anoEleicao"], "cargo", ["unidade_eleitoral", "unidadeEleitoral"],
+    ["uf_eleitoral", "uf"]],
+    include: [{
+      model: Partido,
+      attributes: [["id_partido", "idPartido"], "sigla"],
+      as: "mandatoPartido"
+    }],
+    order: [
+      ['ano_eleicao', 'DESC']
+    ]
+  })
+    .then(mandatos => {
+      return res.status(SUCCESS).json(mandatos);
     })
     .catch(err => res.status(BAD_REQUEST).json({ err: err.message }));
 });
