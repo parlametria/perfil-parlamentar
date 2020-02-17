@@ -30,6 +30,7 @@ const empresasModel = './postgres/empresas.js';
 const empresasParlamentaresModel = './postgres/empresas-parlamentares.js';
 const atividadesEconomicasEmpresasModel = './postgres/atividades-economicas-empresas.js';
 const cargosMesaModel = './postgres/cargos-mesa.js';
+const mandatosModel = './postgres/mandatos.js';
 
 if (!global.hasOwnProperty("models")) {
   const db = require("../config/keys").postgresURI;
@@ -80,7 +81,8 @@ if (!global.hasOwnProperty("models")) {
     empresas: sequelize.import(empresasModel),
     empresasParlamentares: sequelize.import(empresasParlamentaresModel),
     atividadesEconomicasEmpresas: sequelize.import(atividadesEconomicasEmpresasModel),
-    cargosMesa: sequelize.import(cargosMesaModel)
+    cargosMesa: sequelize.import(cargosMesaModel),
+    mandatos: sequelize.import(mandatosModel)
     // add your other models here
   };
 
