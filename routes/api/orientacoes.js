@@ -18,11 +18,24 @@ const SUCCESS = 200;
 const attVotacao = ["voto", ["id_votacao", "idVotacao"]];
 
 /**
- * Recupera informações das orientações dadas pelo governo em votações de plenário
- * @name get/api/orientacoes/governo
- * @function
- * @memberof module:routes/orientacoes 
- */
+* @swagger
+* tags:
+*   name: Orientações
+*   description: Módulo de recuperação das orientações dadas por partidos e pelo Governo em votações.
+*/
+
+
+/**
+* @swagger
+* path:
+*  /api/orientacoes/governo:
+*    get:
+*      summary: Recupera informações das orientações dadas pelo governo em votações de plenário.
+*      tags: [Orientações]
+*      responses:
+*        "200":
+*          description: Lista com as orientações dadas pelo Governo em votações nominais realizadas em plenário.
+*/
 router.get("/governo", (req, res) => {
   const ID_GOVERNO = 0;
 
@@ -49,13 +62,24 @@ router.get("/governo", (req, res) => {
 });
 
 /**
- * Lista proposições consideradas para o cálculo da aderência entre 
- * a orientação do governo e dos partidos e o voto dos parlamentares
- * @name get/api/orientacoes/proposicoes
- * @apiparam casa Casa de origem do parlamentar. Pode ser "camara" (default) ou "senado".
- * @function
- * @memberof module:routes/orientacoes 
- */
+* @swagger
+* path:
+*  /api/orientacoes/proposicoes:
+*    get:
+*      summary: Lista proposições consideradas para o cálculo da aderência entre 
+*               a orientação do governo e dos partidos e o voto dos parlamentares.
+*      tags: [Orientações]
+*      parameters:
+*        - in: query
+*          name: casa
+*          schema:
+*            type: string
+*          required: true
+*          description: Casa de tramitação da proposição. Pode ser "camara" (default) ou "senado".
+*      responses:
+*        "200":
+*          description: Informações das proposições consideradas para o cálculo da aderência (incluindo temas e votações).
+*/
 router.get("/proposicoes", casaValidator.validate, (req, res) => {
 
   const errors = validationResult(req);

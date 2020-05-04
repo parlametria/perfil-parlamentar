@@ -13,13 +13,31 @@ const BAD_REQUEST = 400;
 const SUCCESS = 200;
 
 /**
- * Recupera quantidade de votações selecionadas para o cálculo da aderência
- * 
- * @name get/api/votacoes
- * @apiparam casa Casa de origem da proposição. Pode ser "camara" (default) ou "senado".
- * @function
- * @memberof module:routes/votacoes
- */
+* @swagger
+* tags:
+*   name: Votações
+*   description: Lista de endpoints relacionados às votações capturadas pelo Perfil Parlamentar.
+*/
+
+
+/**
+* @swagger
+* path:
+*  /api/votacoes/:
+*    get:
+*      summary: Recupera quantidade de votações selecionadas para o cálculo da aderência.
+*      tags: [Votações]
+*      parameters:
+*        - in: query
+*          name: casa
+*          schema:
+*            type: string
+*          required: true
+*          description: Casa para filtro (pode ser camara ou senado).
+*      responses:
+*        "200":
+*          description: Retorna objeto com o número de votações usadas no cálculo da aderência.
+*/
 router.get("/", casaValidator.validate, (req, res) => {
 
   const errors = validationResult(req);
@@ -52,13 +70,23 @@ router.get("/", casaValidator.validate, (req, res) => {
 });
 
 /**
- * Recupera quantidade de votações selecionadas por tema para o cálculo da aderência
- * 
- * @name get/api/votacoes/temas
- * @apiparam casa Casa de origem da proposição. Pode ser "camara" (default) ou "senado".
- * @function
- * @memberof module:routes/votacoes
- */
+* @swagger
+* path:
+*  /api/votacoes/temas:
+*    get:
+*      summary: Recupera quantidade de votações selecionadas por tema para o cálculo da aderência.
+*      tags: [Votações]
+*      parameters:
+*        - in: query
+*          name: casa
+*          schema:
+*            type: string
+*          required: true
+*          description: Casa para filtro (pode ser camara ou senado).
+*      responses:
+*        "200":
+*          description: Retorna objeto com o número de votações usadas no cálculo da aderência por tema.
+*/
 router.get("/temas", casaValidator.validate, (req, res) => {
 
   const errors = validationResult(req);

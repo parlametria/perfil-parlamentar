@@ -22,9 +22,25 @@ const authenticate = expressJwt({
   }
 });
 
-// @route   POST api/auth/facebook
-// @desc    Login com facebook
-// @access  Public
+/**
+* @swagger
+* tags:
+*   name: Módulo de Autenticação
+*   description: Módulo com endpoints relacionados à autenticação na API via rede social
+*/
+
+
+/**
+* @swagger
+* path:
+*  /api/facebook/:
+*    post:
+*      summary: Realiza autenticação do usuário usando o Facebook
+*      tags: [Módulo de Autenticação]
+*      responses:
+*        "200":
+*          description: Retorna token de acesso a API mediante a autenticação feita via Facebook
+*/
 router.post(
   "/facebook",
   (req, res, next) => {
@@ -46,9 +62,17 @@ router.post(
   sendToken
 );
 
-// @route   POST api/auth/google
-// @desc    Login com google
-// @access  Public
+/**
+* @swagger
+* path:
+*  /api/google/:
+*    post:
+*      summary: Realiza autenticação do usuário usando o Google.
+*      tags: [Módulo de Autenticação]
+*      responses:
+*        "200":
+*          description: Retorna token de acesso a API mediante a autenticação feita via Google.
+*/
 router.post(
   "/google",
   (req, res, next) => {
@@ -71,10 +95,33 @@ router.post(
   sendToken
 );
 
+/**
+* @swagger
+* path:
+*  /api/test/:
+*    get:
+*      summary: Testa se a autenticação do usuário funcionou.
+*      tags: [Módulo de Autenticação]
+*      responses:
+*        "200":
+*          description: Retorna mensagem confirmando que usuário está autenticado.
+*/
 router.get("/test", authenticate, (req, res) => {
   res.json({ msg: "Tudo certo" });
 });
 
+/**
+* @swagger
+* path:
+*  /api/usingFacebookCode/:
+*    get:
+*      deprecated: true
+*      summary: Reliza autenticação do usuário usando código do Facebook.
+*      tags: [Módulo de Autenticação]
+*      responses:
+*        "200":
+*          description: Retorna resposta do Facebook com informações do usuário autenticado.
+*/
 router.get("/usingFacebookCode", (req, res) => {
   graph.authorize(
     {

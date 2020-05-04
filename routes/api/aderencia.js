@@ -16,9 +16,9 @@ const BAD_REQUEST = 400;
 const SUCCESS = 200;
 
 const attParlamentar = [
-  ["id_parlamentar_voz", "idParlamentarVoz"], 
-  ["id_parlamentar", "idParlamentar"], 
-  ["nome_eleitoral", "nomeEleitoral"], 
+  ["id_parlamentar_voz", "idParlamentarVoz"],
+  ["id_parlamentar", "idParlamentar"],
+  ["nome_eleitoral", "nomeEleitoral"],
   "uf",
   ["em_exercicio", "emExercicio"],
   "casa"
@@ -32,11 +32,25 @@ const attComissoes = ["sigla"];
 const attLideranca = ["cargo"];
 
 /**
- * Recupera informações de aderência dos parlamentares
- * @name get/api/aderencia
- * @function
- * @memberof module:routes/aderencia
- */
+* @swagger
+* tags:
+*   name: Aderência
+*   description: Módulo de recuperação da aderência do Parlamentar. Aderência é a medida de quanto o parlamentar 
+*                segue as orientações de seu partido ou do Governo nas votações nominais em plenário.
+*/
+
+/**
+* @swagger
+* path:
+*  /api/aderencia/:
+*    get:
+*      summary: Recupera aderência de parlamentares aos Partidos e ao Governo.
+*      tags: [Aderência]
+*      responses:
+*        "200":
+*          description: Dados de aderência dos parlamentares aos Partidos e ao Governo em votações nominais de plenário
+*                       monitoradas pelo Perfil Parlamentar.
+*/
 router.get("/", (req, res) => {
   Aderencia.findAll({
     attributes: attAderencia
@@ -46,11 +60,17 @@ router.get("/", (req, res) => {
 });
 
 /**
- * Recupera informações de aderência da lista de parlamentares (atualmente em exercício) (com informações do parlamentar inclusas)
- * @name get/api/aderencia/parlamentar
- * @function
- * @memberof module:routes/aderencia/parlamentar
- */
+* @swagger
+* path:
+*  /api/aderencia/parlamentar:
+*    get:
+*      summary: Recupera informações de aderência da lista de parlamentares (atualmente em exercício) (com informações do parlamentar inclusas).
+*      tags: [Aderência]
+*      responses:
+*        "200":
+*          description: Dados de aderência dos parlamentares aos Partidos e ao Governo em votações nominais de plenário
+*                       monitoradas pelo Perfil Parlamentar. Inclui informações de Comissões e lideranças dos parlamentares.
+*/
 router.get("/parlamentar", (req, res) => {
   Parlamentar.findAll({
     attributes: attParlamentar,
@@ -114,23 +134,35 @@ router.get("/parlamentar", (req, res) => {
       em_exercicio: true
     }
   })
-  .then(parlamentares => {
-    const result = parlamentares.map(parlamentar => {
-      let data = parlamentar.toJSON();
-      data['nomeProcessado'] = data['nomeEleitoral'].normalize('NFD').replace(/[\u0300-\u036f]/g, "");
-      return data;
-    });
-    res.status(SUCCESS).json(result);
-  })
-  .catch(err => res.status(BAD_REQUEST).json({ err: err.message }));
+    .then(parlamentares => {
+      const result = parlamentares.map(parlamentar => {
+        let data = parlamentar.toJSON();
+        data['nomeProcessado'] = data['nomeEleitoral'].normalize('NFD').replace(/[\u0300-\u036f]/g, "");
+        return data;
+      });
+      res.status(SUCCESS).json(result);
+    })
+    .catch(err => res.status(BAD_REQUEST).json({ err: err.message }));
 });
 
 /**
- * Recupera informações de aderência para um parlamentar específico (via id voz ativa)
- * @name get/api/aderencia/parlamentar/:id
- * @function
- * @memberof module:routes/parlamentar/:id
- */
+* @swagger
+* path:
+*  /api/aderencia/parlamentar/{id}:
+*    get:
+*      summary: Recupera informações de aderência para um parlamentar específico (via id voz ativa).
+*      tags: [Aderência]
+*      parameters:
+*        - in: path
+*          name: id
+*          schema:
+*            type: integer
+*          required: true
+*          description: Id do parlamentar
+*      responses:
+*        "200":
+*          description: Dados de aderência de um parlamentar com relação a seu Partido e ao Governo.
+*/
 router.get("/parlamentar/:id", (req, res) => {
   Parlamentar.findOne({
     attributes: attParlamentar,

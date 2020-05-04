@@ -23,10 +23,38 @@ const att = [
 ];
 
 /**
- * @name get/api/alinhamento
- * @function
- * @memberof module:routes/alinhamento
- */
+* @swagger
+* tags:
+*   name: Alinhamento
+*   description: Módulo com endpoints para cálculo do alinhamento com parlamentares 
+*                através da comparação de respostas do questionário Voz Ativa.
+*/
+
+
+/**
+* @swagger
+* path:
+*  /api/alinhamento/:
+*    post:
+*      summary: Calcula o alinhamento entre um conjunto de respostas passado como parâmetro e
+*               as respostas dos parlamentares ao questionário Voz Ativa.
+*      tags: [Alinhamento]
+*      requestBody:
+*        description: Objeto com as respostas para cálculo do alinhamento
+*        required: true
+*        content:
+*         application/json:
+*           schema:
+*             type: object
+*             properties:
+*               respostas:
+*                 type: object
+*             example:
+*               respostas: {"5632": 0, "6043": 0}
+*      responses:
+*        "200":
+*          description: Retorna informações do alinhamento com parlamentares (em geral e por tema).
+*/
 router.post("/", (req, res) => {
   Parlamentar.findAll({
     attributes: att,
