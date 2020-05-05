@@ -50,7 +50,7 @@ const authenticate = expressJwt({
 *      tags: [Usuários]
 *      responses:
 *        "200":
-*          description: Informações das respostas dos usuários ao questionário.
+*          description: Informações das respostas dos usuários ao questionário Voz Ativa.
 */
 router.get("/respostas", (req, res) => {
   Usuario.findAll({

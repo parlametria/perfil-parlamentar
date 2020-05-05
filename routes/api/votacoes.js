@@ -26,6 +26,7 @@ const SUCCESS = 200;
 *  /api/votacoes/:
 *    get:
 *      summary: Recupera quantidade de votações selecionadas para o cálculo da aderência.
+*               A casa é passada como parâmetro e pode ser 'camara' ou 'senado'.
 *      tags: [Votações]
 *      parameters:
 *        - in: query
@@ -75,6 +76,7 @@ router.get("/", casaValidator.validate, (req, res) => {
 *  /api/votacoes/temas:
 *    get:
 *      summary: Recupera quantidade de votações selecionadas por tema para o cálculo da aderência.
+*               A casa é passada como parâmetro e pode ser 'camara' ou 'senado'.
 *      tags: [Votações]
 *      parameters:
 *        - in: query

@@ -97,7 +97,8 @@ router.get("/votacoes", (req, res) => {
 *      tags: [Parlamentares]
 *      responses:
 *        "200":
-*          description: Lista de todos os Deputados Federais analisados pelo Perfil.
+*          description: Lista de todos os Deputados Federais analisados pelo Perfil com informações
+*                       como nome eleitoral, cpf, partido, uf, se está em exercício, dentre outras.
 */
 router.get("/", (req, res) => {
   Parlamentar.findAll({
@@ -120,6 +121,7 @@ router.get("/", (req, res) => {
 *  /api/parlamentares/partidos:
 *    get:
 *      summary: Recupera, para cada UF, a lista de partidos distintos com parlamentares em exercício.
+*               A casa é passada como parâmetro e pode ser 'camara' ou 'senado'.
 *      tags: [Parlamentares]
 *      parameters:
 *        - in: query
@@ -218,7 +220,9 @@ router.get("/mapeamento-id", (req, res) => {
 *          description: Id do parlamentar
 *      responses:
 *        "200":
-*          description: Lista com informações do parlamentar filtrado.
+*          description: Lista com informações do parlamentar filtrado como o nome eleitoral, cpf, 
+*                       situação, condição eleitoral, última legislatura na casa de origem,
+*                       casa de origem, gênero, uf, partido, se está em exercício, dentre outras.
 */
 router.get("/:id", (req, res) => {
   Parlamentar.findAll({
@@ -246,7 +250,8 @@ router.get("/:id", (req, res) => {
 *          description: Id do parlamentar
 *      responses:
 *        "200":
-*          description: Lista com informações básicas do parlamentar filtrado.
+*          description: Lista com informações básicas do parlamentar filtrado como o partido, uf, 
+*                       nome eleitoral, casa, dentre outras.
 */
 router.get("/:id/info", (req, res) => {
   Parlamentar.findOne({
@@ -280,7 +285,7 @@ router.get("/:id/info", (req, res) => {
 *          description: Id do parlamentar
 *      responses:
 *        "200":
-*          description: Lista com as posições do parlamentar em votações.
+*          description: Lista com o posicionamento do parlamentar em votações.
 */
 router.get("/:id/posicoes", (req, res) => {
   Parlamentar.findAll({

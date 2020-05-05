@@ -25,6 +25,7 @@ const SUCCESS = 200;
 *  /api/liderancas/:
 *    get:
 *      summary: Recupera cargos distintos das lideranças partidárias da Câmara ou do Senado.
+*               A casa é passada como parâmetro e pode ser 'camara' ou 'senado'.
 *      tags: [Lideranças]
 *      parameters:
 *        - in: query

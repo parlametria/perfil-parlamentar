@@ -445,7 +445,7 @@ router.get("/estados/:uf/responderam", (req, res) => {
 *  /api/respostas/estados/{uf}/partidos/{sigla}:
 *    get:
 *      deprecated: true
-*      summary: Recupera as respostas ao questionário filtrando por uma UF e um partido.
+*      summary: Recupera as respostas ao questionário Voz Ativa filtrando por uma UF e um partido.
 *      tags: [Respostas]
 *      parameters:
 *        - in: path
@@ -503,7 +503,7 @@ router.get("/estados/:uf/partidos/:sigla", (req, res) => {
 *  /api/respostas/estados/{uf}/partidos/{sigla}/responderam:
 *    get:
 *      deprecated: true
-*      summary: Recupera as respostas ao questionário filtrando por uma UF e um partido (apenas quem respondeu).
+*      summary: Recupera as respostas ao questionário Voz Ativa filtrando por uma UF e um partido (apenas quem respondeu).
 *      tags: [Respostas]
 *      parameters:
 *        - in: path
@@ -520,7 +520,7 @@ router.get("/estados/:uf/partidos/:sigla", (req, res) => {
 *          description: Sigla do partido para o filtro
 *      responses:
 *        "200":
-*          description: Lista com as respostas dos candidatos (que responderam ao questionário) de uma UF e um partido.
+*          description: Lista com as respostas dos candidatos (que responderam ao questionário Voz Ativa) de uma UF e um partido.
 */
 router.get("/estados/:uf/partidos/:sigla/responderam", (req, res) => {
   Candidato.count({
@@ -569,7 +569,7 @@ router.get("/estados/:uf/partidos/:sigla/responderam", (req, res) => {
 *  /api/respostas/estados/{uf}/partidos/{sigla}/naoresponderam:
 *    get:
 *      deprecated: true
-*      summary: Recupera as respostas ao questionário filtrando por uma UF e um partido (apenas quem não respondeu).
+*      summary: Recupera as respostas ao questionário Voz Ativa filtrando por uma UF e um partido (apenas quem não respondeu).
 *      tags: [Respostas]
 *      parameters:
 *        - in: path
@@ -586,7 +586,7 @@ router.get("/estados/:uf/partidos/:sigla/responderam", (req, res) => {
 *          description: Sigla do partido para o filtro
 *      responses:
 *        "200":
-*          description: Lista com as respostas dos candidatos (que não responderam ao questionário) de uma UF e um partido.
+*          description: Lista com as respostas dos candidatos (que não responderam ao questionário Voz Ativa) de uma UF e um partido.
 */
 router.get("/estados/:uf/partidos/:sigla/naoresponderam", (req, res) => {
   Candidato.count({

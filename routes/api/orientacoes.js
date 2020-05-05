@@ -68,6 +68,7 @@ router.get("/governo", (req, res) => {
 *    get:
 *      summary: Lista proposições consideradas para o cálculo da aderência entre 
 *               a orientação do governo e dos partidos e o voto dos parlamentares.
+*               A casa é passada como parâmetro e pode ser 'camara' ou 'senado'.
 *      tags: [Orientações]
 *      parameters:
 *        - in: query

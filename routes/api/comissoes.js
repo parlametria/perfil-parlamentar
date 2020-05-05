@@ -23,7 +23,8 @@ const ComposicaoComissoes = models.composicaoComissoes;
 * path:
 *  /api/comissoes/:
 *    get:
-*      summary: Recupera comissões permanentes da Câmara ou do Senado.
+*      summary: Recupera comissões permanentes da Câmara ou do Senado. 
+*               A casa é passada como parâmetro e pode ser 'camara' ou 'senado'.
 *      tags: [Comissões]
 *      parameters:
 *        - in: query
@@ -63,6 +64,7 @@ router.get("/", casaValidator.validate, (req, res) => {
 *  /api/comissoes/composicao/:
 *    get:
 *      summary: Recupera comoposição das comissões permanentes da Câmara ou do Senado.
+*               A casa é passada como parâmetro e pode ser 'camara' ou 'senado'.
 *      tags: [Comissões]
 *      parameters:
 *        - in: query
@@ -134,6 +136,7 @@ router.get("/membros", (req, res) => {
 *  /api/comissoes/cargos/:
 *    get:
 *      summary: Recupera todos os tipos de cargos em comissões.
+*               A casa é passada como parâmetro e pode ser 'camara' ou 'senado'.
 *      tags: [Comissões]
 *      parameters:
 *        - in: query
