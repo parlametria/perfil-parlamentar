@@ -19,12 +19,31 @@ const attPartido = [["id_partido", "idPartido"], "sigla"]
 const attTema = [["id_tema", "idTema"], "tema", "slug"]
 
 /**
- * Recupera informações de um parlamentar e seus índices (incluindo aderência por tema) a partir de seu ID no Voz Ativa
- * 
- * @name get/api/perfil/:id
- * @function
- * @memberof module:routes/perfil
- */
+* @swagger
+* tags:
+*   name: Perfil (índices)
+*   description: Módulo de recuperação dos índices calculados para o perfil dos parlamentares.
+*/
+
+
+/**
+* @swagger
+* path:
+*  /api/perfil/{id}:
+*    get:
+*      summary: Recupera índices calculados para um parlamentar e também a aderência em votações nominais.
+*      tags: [Perfil (índices)]
+*      parameters:
+*        - in: path
+*          name: id
+*          schema:
+*            type: integer
+*          required: true
+*          description: Id do parlamentar
+*      responses:
+*        "200":
+*          description: Informações dos índices calculados para o parlamentar e seus dados de aderência em votações.
+*/
 router.get("/:id", (req, res) => {
   PerfilMais.findOne({
     attributes: attPerfil,
@@ -66,13 +85,29 @@ router.get("/:id", (req, res) => {
 });
 
 /**
- * Recupera informações de uma lista de parlamentares e seus índices (incluindo aderência por tema) a partir de uma lista de ID's 
- * passada no corpo da requisição. Exemplo: { "parlamentares": ["1160508", "1136811"] }
- * 
- * @name get/api/perfil/lista
- * @function
- * @memberof module:routes/perfil
- */
+* @swagger
+* path:
+*  /api/perfil/lista:
+*    post:
+*      summary: Recupera informações de uma lista de parlamentares e seus índices (incluindo aderência por tema) a partir de uma lista de ID's 
+*               passada no corpo da requisição.
+*      tags: [Perfil (índices)]
+*      requestBody:
+*        description: Objeto com lista de parlamentares para pesquisa dos índices.
+*        required: true
+*        content:
+*         application/json:
+*           schema:
+*             type: object
+*             properties:
+*               parlamentares:
+*                 type: array
+*             example:
+*               parlamentares: ["1160508", "1136811"]
+*      responses:
+*        "200":
+*          description: Informações dos índices calculados para o parlamentar e seus dados de aderência em votações.
+*/
 router.post("/lista", (req, res) => {
 
   console.log(req.body.parlamentares);

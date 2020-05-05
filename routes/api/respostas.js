@@ -1,17 +1,9 @@
-/** Express router
- * @module routes/respostas
- * @requires express
- */
 const Sequelize = require("sequelize");
 const express = require("express");
 const models = require("../../models/index");
 const { formataRespostas } = require("../../utils/functions");
 
 const Op = Sequelize.Op;
-/**
- * Rotas para funções relacionadas às respostas.
- * @namespace module:routes/respostas
- */
 const router = express.Router();
 
 const Resposta = models.resposta;
@@ -40,11 +32,25 @@ const att = [
 ];
 
 /**
- * Pega todas as respostas de uma vez.
- * @name get/api/respostas
- * @function
- * @memberof module:routes/respostas
- */
+* @swagger
+* tags:
+*   name: Respostas
+*   description: Recupera as respostas do questionário do Voz Ativa (antigo nome para o Perfil Parlamentar).
+*/
+
+
+/**
+* @swagger
+* path:
+*  /api/respostas/:
+*    get:
+*      deprecated: true
+*      summary: Recupera as respostas relacionadas ao questionário do Voz Ativa.
+*      tags: [Respostas]
+*      responses:
+*        "200":
+*          description: Lista com as respostas dos candidatos ao questionário do Voz Ativa.
+*/
 router.get("/", (req, res) => {
   const pageNo = Number(req.query.pageNo);
   const size = Number(req.query.size);
@@ -96,13 +102,17 @@ router.get("/", (req, res) => {
 });
 
 /**
- * Pega as respostas de todos os candidatos eleitos
- * @name get/api/respostas/eleitos
- * @function
- * @memberof module:routes/respostas
- * @param {boolean} eleito - Flag eleito true
- */
-
+* @swagger
+* path:
+*  /api/respostas/eleitos:
+*    get:
+*      deprecated: true
+*      summary: Recupera as respostas dos candidatos eleitos no questionário do Voz Ativa.
+*      tags: [Respostas]
+*      responses:
+*        "200":
+*          description: Lista com as respostas dos candidatos ao questionário do Voz Ativa.
+*/
 router.get("/eleitos", (req, res) => {
   Candidato.findAll({
     attributes: att,
@@ -131,13 +141,17 @@ router.get("/eleitos", (req, res) => {
 });
 
 /**
- * Pega todos as respostas de todos que responderam.
- * @name get/api/respostas/candidatos/responderam
- * @function
- * @memberof module:routes/respostas
- * @param {boolean} respondeu - Flag respondeu true
- */
-
+* @swagger
+* path:
+*  /api/respostas/candidatos/responderam:
+*    get:
+*      deprecated: true
+*      summary: Recupera as respostas dos candidatos que responderam ao questionário do Voz Ativa.
+*      tags: [Respostas]
+*      responses:
+*        "200":
+*          description: Lista com as respostas dos candidatos ao questionário do Voz Ativa.
+*/
 router.get("/candidatos/responderam", (req, res) => {
   Candidato.findAll({
     attributes: att,
@@ -158,12 +172,17 @@ router.get("/candidatos/responderam", (req, res) => {
 });
 
 /**
- * Pega todos as respostas de todos que não responderam.
- * @name get/api/respostas/candidatos/naoresponderam
- * @function
- * @memberof module:routes/respostas
- * @param {boolean} respondeu - Flag respondeu false
- */
+* @swagger
+* path:
+*  /api/respostas/candidatos/naoresponderam:
+*    get:
+*      deprecated: true
+*      summary: Recupera as respostas dos candidatos que não responderam ao questionário do Voz Ativa.
+*      tags: [Respostas]
+*      responses:
+*        "200":
+*          description: Lista com as respostas dos candidatos ao questionário do Voz Ativa.
+*/
 router.get("/candidatos/naoresponderam", (req, res) => {
   Candidato.findAll({
     attributes: att,
@@ -184,12 +203,24 @@ router.get("/candidatos/naoresponderam", (req, res) => {
 });
 
 /**
- * Pega as respostas de um candidato dado o seu cpf.
- * @name get/api/respostas/candidatos/<cpf>
- * @function
- * @memberof module:routes/respostas
- * @param {string} cpf - CPF do candidato
- */
+* @swagger
+* path:
+*  /api/respostas/candidatos/{cpf}:
+*    get:
+*      deprecated: true
+*      summary: Recupera as respostas de um candidato ao questionário do Voz Ativa.
+*      tags: [Respostas]
+*      parameters:
+*        - in: path
+*          name: cpf
+*          schema:
+*            type: string
+*          required: true
+*          description: CPF do candidato
+*      responses:
+*        "200":
+*          description: Lista com a resposta do candidato ao questionário do Voz Ativa.
+*/
 router.get("/candidatos/:cpf", (req, res) => {
   Candidato.findAll({
     attributes: att,
@@ -210,12 +241,24 @@ router.get("/candidatos/:cpf", (req, res) => {
 });
 
 /**
- * Pega todos os partidos de um estado.
- * @name get/api/respostas/estados/<uf>/partidos?eleito=<eleito>
- * @function
- * @memberof module:routes/respostas
- * @param {string} uf - Estado
- */
+* @swagger
+* path:
+*  /api/respostas/estados/{uf}/partidos:
+*    get:
+*      deprecated: true
+*      summary: Recupera os partidos distintos presentes em uma UF.
+*      tags: [Respostas]
+*      parameters:
+*        - in: path
+*          name: uf
+*          schema:
+*            type: string
+*          required: true
+*          description: UF para o filtro
+*      responses:
+*        "200":
+*          description: Lista com os partidos distintos com candidatos em uma UF.
+*/
 router.get("/estados/:uf/partidos", (req, res) => {
   const eleito =
     String(req.query.eleito) !== "" && String(req.query.eleito) !== "undefined";
@@ -251,13 +294,24 @@ router.get("/estados/:uf/partidos", (req, res) => {
 });
 
 /**
- * Pega as respostas por estado.
- * @name get/api/respostas/estados/<uf>?partido=<partido>&nome=<nome>&respondeu=<respondeu>&reeleicao=<reeleicao>
- * @function
- * @memberof module:routes/respostas
- * @param {string} uf - Estado
- */
-
+* @swagger
+* path:
+*  /api/respostas/estados/{uf}:
+*    get:
+*      deprecated: true
+*      summary: Recupera as respostas ao questionário Voz Ativa de apenas um estado.
+*      tags: [Respostas]
+*      parameters:
+*        - in: path
+*          name: uf
+*          schema:
+*            type: string
+*          required: true
+*          description: UF para o filtro
+*      responses:
+*        "200":
+*          description: Lista com as respostas de todos os candidatos de um estado
+*/
 router.get("/estados/:uf", (req, res) => {
   const partido = String(req.query.partido);
   const nome = String(req.query.nome);
@@ -333,13 +387,25 @@ router.get("/estados/:uf", (req, res) => {
 });
 
 /**
- * Pega as respostas por estado de quem respondeu.
- * @name get/api/respostas/estados/<uf>/responderam
- * @function
- * @memberof module:routes/respostas
- * @param {string} UF - Estado
- * @param {boolean} respondeu - Flag respondeu true
- */
+* @swagger
+* path:
+*  /api/respostas/estados/{uf}/responderam:
+*    get:
+*      deprecated: true
+*      summary: Recupera as respostas ao questionário Voz Ativa de apenas um estado. 
+*                Filtrando apenas quem respondeu.
+*      tags: [Respostas]
+*      parameters:
+*        - in: path
+*          name: uf
+*          schema:
+*            type: string
+*          required: true
+*          description: UF para o filtro
+*      responses:
+*        "200":
+*          description: Lista com as respostas dos candidatos de um estado
+*/
 router.get("/estados/:uf/responderam", (req, res) => {
   Candidato.count({
     where: { uf: req.params.uf, respondeu: true }
@@ -373,9 +439,31 @@ router.get("/estados/:uf/responderam", (req, res) => {
   });
 });
 
-// @route   GET api/respostas/estados/<uf>/partidos/
-// @desc    Pega as respostas por partido e estado
-// @access  Public
+/**
+* @swagger
+* path:
+*  /api/respostas/estados/{uf}/partidos/{sigla}:
+*    get:
+*      deprecated: true
+*      summary: Recupera as respostas ao questionário Voz Ativa filtrando por uma UF e um partido.
+*      tags: [Respostas]
+*      parameters:
+*        - in: path
+*          name: uf
+*          schema:
+*            type: string
+*          required: true
+*          description: UF para o filtro
+*        - in: path
+*          name: sigla
+*          schema:
+*            type: string
+*          required: true
+*          description: Sigla do partido para o filtro
+*      responses:
+*        "200":
+*          description: Lista com as respostas dos candidatos de uma UF e um partido
+*/
 router.get("/estados/:uf/partidos/:sigla", (req, res) => {
   Candidato.count({
     where: { uf: req.params.uf, sg_partido: req.params.sigla }
@@ -410,13 +498,30 @@ router.get("/estados/:uf/partidos/:sigla", (req, res) => {
 });
 
 /**
- * Pega as respostas por partido e estado de quem respondeu.
- * @name get/api/respostas/estados/<uf>/partidos/<sigla>/responderam
- * @memberof module:routes/respostas
- * @param {string} UF - Estado
- * @param {string} sigla - Sigla do partido
- * @param {boolean} respondeu - Flag respondeu true
- */
+* @swagger
+* path:
+*  /api/respostas/estados/{uf}/partidos/{sigla}/responderam:
+*    get:
+*      deprecated: true
+*      summary: Recupera as respostas ao questionário Voz Ativa filtrando por uma UF e um partido (apenas quem respondeu).
+*      tags: [Respostas]
+*      parameters:
+*        - in: path
+*          name: uf
+*          schema:
+*            type: string
+*          required: true
+*          description: UF para o filtro
+*        - in: path
+*          name: sigla
+*          schema:
+*            type: string
+*          required: true
+*          description: Sigla do partido para o filtro
+*      responses:
+*        "200":
+*          description: Lista com as respostas dos candidatos (que responderam ao questionário Voz Ativa) de uma UF e um partido.
+*/
 router.get("/estados/:uf/partidos/:sigla/responderam", (req, res) => {
   Candidato.count({
     where: {
@@ -459,13 +564,30 @@ router.get("/estados/:uf/partidos/:sigla/responderam", (req, res) => {
 });
 
 /**
- * Pega as respostas por partido e estado de quem NÃO respondeu.
- * @name get/api/respostas/estados/<uf>/partidos/<sigla>/naoresponderam
- * @memberof module:routes/respostas
- * @param {string} UF - Estado
- * @param {string} sigla - Sigla do partido
- * @param {boolean} respondeu - Flag respondeu false
- */
+* @swagger
+* path:
+*  /api/respostas/estados/{uf}/partidos/{sigla}/naoresponderam:
+*    get:
+*      deprecated: true
+*      summary: Recupera as respostas ao questionário Voz Ativa filtrando por uma UF e um partido (apenas quem não respondeu).
+*      tags: [Respostas]
+*      parameters:
+*        - in: path
+*          name: uf
+*          schema:
+*            type: string
+*          required: true
+*          description: UF para o filtro
+*        - in: path
+*          name: sigla
+*          schema:
+*            type: string
+*          required: true
+*          description: Sigla do partido para o filtro
+*      responses:
+*        "200":
+*          description: Lista com as respostas dos candidatos (que não responderam ao questionário Voz Ativa) de uma UF e um partido.
+*/
 router.get("/estados/:uf/partidos/:sigla/naoresponderam", (req, res) => {
   Candidato.count({
     where: {
@@ -508,12 +630,25 @@ router.get("/estados/:uf/partidos/:sigla/naoresponderam", (req, res) => {
 });
 
 /**
- *  Pega as respostas por estado de quem NÃO respondeu.
- * @name get/api/respostas/estados/<uf>
- * @memberof module:routes/respostas
- * @param {string} UF - Estado
- * @param {boolean} respondeu - Flag respondeu false
- */
+* @swagger
+* path:
+*  /api/respostas/estados/{uf}/naoresponderam:
+*    get:
+*      deprecated: true
+*      summary: Recupera as respostas ao questionário Voz Ativa de apenas um estado. 
+*                Filtrando apenas quem não respondeu.
+*      tags: [Respostas]
+*      parameters:
+*        - in: path
+*          name: uf
+*          schema:
+*            type: string
+*          required: true
+*          description: UF para o filtro
+*      responses:
+*        "200":
+*          description: Lista com as respostas dos candidatos (apenas quem não respondeu) de um estado.
+*/
 router.get("/estados/:uf/naoresponderam", (req, res) => {
   const pageNo = Number(req.query.pageNo);
   const size = Number(req.query.size);
@@ -575,11 +710,25 @@ router.get("/estados/:uf/naoresponderam", (req, res) => {
 });
 
 /**
- *  Pega as respostas por estado de quem se elegeu.
- * @name get/api/respostas/estados/<uf>/eleitos
- * @memberof module:routes/respostas
- * @param {string} UF - Estado
- */
+* @swagger
+* path:
+*  /api/respostas/estados/{uf}/eleitos:
+*    get:
+*      deprecated: true
+*      summary: Recupera as respostas ao questionário Voz Ativa de apenas um estado. 
+*                Filtrando apenas quem foi eleito.
+*      tags: [Respostas]
+*      parameters:
+*        - in: path
+*          name: uf
+*          schema:
+*            type: string
+*          required: true
+*          description: UF para o filtro
+*      responses:
+*        "200":
+*          description: Lista com as respostas dos candidatos de um estado (apenas quem foi eleito).
+*/
 router.get("/estados/:uf/eleitos", (req, res) => {
   Candidato.count({
     where: {

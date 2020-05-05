@@ -13,13 +13,31 @@ const BAD_REQUEST = 400;
 const SUCCESS = 200;
 
 /**
- * Recupera todos os tipos de lideranças partidárias.
- * 
- * @name get/api/liderancas
- * @param casa Casa de origem do parlamentar. Pode ser "camara" (default) ou "senado".
- * @function
- * @memberof module:routes/liderancas
- */
+* @swagger
+* tags:
+*   name: Lideranças
+*   description: Módulo de recuperação das lideranças em partidos e blocos partidários.
+*/
+
+/**
+* @swagger
+* path:
+*  /api/liderancas/:
+*    get:
+*      summary: Recupera cargos distintos das lideranças partidárias da Câmara ou do Senado.
+*               A casa é passada como parâmetro e pode ser 'camara' ou 'senado'.
+*      tags: [Lideranças]
+*      parameters:
+*        - in: query
+*          name: casa
+*          schema:
+*            type: string
+*          required: true
+*          description: Casa para recuperação dos cargos. Pode ser "camara" (default) ou "senado".
+*      responses:
+*        "200":
+*          description: Informações dos cargos das lideranças da casa passada como parâmetro.
+*/
 router.get("/", casaValidator.validate, (req, res) => {
 
   const errors = validationResult(req);

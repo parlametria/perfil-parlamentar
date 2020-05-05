@@ -12,12 +12,31 @@ const ComposicaoComissoes = models.composicaoComissoes;
 
 
 /**
- * Recupera lista de Comissões
- * @name get/api/comissoes/
- * @function
- * @apiparam Casa Casa de origem do parlamentar. Pode ser "camara" (default) ou "senado".
- * @memberof module:routes/comissoes
- */
+* @swagger
+* tags:
+*   name: Comissões
+*   description: Recupera comissões permanentes da Câmara e do Senado.
+*/
+
+/**
+* @swagger
+* path:
+*  /api/comissoes/:
+*    get:
+*      summary: Recupera comissões permanentes da Câmara ou do Senado. 
+*               A casa é passada como parâmetro e pode ser 'camara' ou 'senado'.
+*      tags: [Comissões]
+*      parameters:
+*        - in: query
+*          name: casa
+*          schema:
+*            type: string
+*          required: true
+*          description: Casa de origem do parlamentar. Pode ser "camara" (default) ou "senado".
+*      responses:
+*        "200":
+*          description: Informações das comissões permanentes da casa passada como parâmetro.
+*/
 router.get("/", casaValidator.validate, (req, res) => {
 
   const errors = validationResult(req);
@@ -40,12 +59,24 @@ router.get("/", casaValidator.validate, (req, res) => {
 });
 
 /**
- * Recupera lista com parlamentares e Comissões
- * @name get/api/comissoes/composicao
- * @apiparam Casa Casa de origem do parlamentar. Pode ser "camara" (default) ou "senado".
- * @function
- * @memberof module:routes/comissoes
- */
+* @swagger
+* path:
+*  /api/comissoes/composicao/:
+*    get:
+*      summary: Recupera comoposição das comissões permanentes da Câmara ou do Senado.
+*               A casa é passada como parâmetro e pode ser 'camara' ou 'senado'.
+*      tags: [Comissões]
+*      parameters:
+*        - in: query
+*          name: casa
+*          schema:
+*            type: string
+*          required: true
+*          description: Casa de origem do parlamentar. Pode ser "camara" (default) ou "senado".
+*      responses:
+*        "200":
+*          description: Informações da composição das comissões permanentes da casa passada como parâmetro.
+*/
 router.get("/composicao", casaValidator.validate, (req, res) => {
   const errors = validationResult(req);
 
@@ -73,11 +104,16 @@ router.get("/composicao", casaValidator.validate, (req, res) => {
 });
 
 /**
- * Recupera lista de membros das comissões permamentes da Câmara e do Senado
- * @name get/api/comissoes/membros
- * @function
- * @memberof module:routes/comissoes
- */
+* @swagger
+* path:
+*  /api/comissoes/membros/:
+*    get:
+*      summary: Recupera lista de membros das comissões permamentes da Câmara e do Senado.
+*      tags: [Comissões]
+*      responses:
+*        "200":
+*          description: Informações da composição das comissões permanentes da casa passada como parâmetro.
+*/
 router.get("/membros", (req, res) => {
   Comissoes.findAll({
     include: [
@@ -95,13 +131,24 @@ router.get("/membros", (req, res) => {
 });
 
 /**
- * Recupera todos os tipos de cargos em comissões.
- * 
- * @name get/api/comissoes/cargos
- * @apiparam Casa Casa de origem do parlamentar. Pode ser "camara" (default) ou "senado".
- * @function
- * @memberof module:routes/comissoes
- */
+* @swagger
+* path:
+*  /api/comissoes/cargos/:
+*    get:
+*      summary: Recupera todos os tipos de cargos em comissões.
+*               A casa é passada como parâmetro e pode ser 'camara' ou 'senado'.
+*      tags: [Comissões]
+*      parameters:
+*        - in: query
+*          name: casa
+*          schema:
+*            type: string
+*          required: true
+*          description: Casa de origem do parlamentar. Pode ser "camara" (default) ou "senado".
+*      responses:
+*        "200":
+*          description: Informações dos cargos distintos possíveis nas Comissões.
+*/
 router.get("/cargos", casaValidator.validate, (req, res) => {
 
   const errors = validationResult(req);

@@ -12,11 +12,24 @@ const BAD_REQUEST = 400;
 const SUCCESS = 200;
 
 /**
- * Captura dados de investimento partidário
- * @name get/api/investimento
- * @function
- * @memberof module:routes/temas
- */
+* @swagger
+* tags:
+*   name: Investimento Partidário
+*   description: Recupera informações do investimento realizado por partidos nos parlamentares durante a eleição.
+*/
+
+
+/**
+* @swagger
+* path:
+*  /api/investimento/:
+*    get:
+*      summary: Recupera o investimento realizado pelo partido nos Parlamentares durante as eleições de 2018.
+*      tags: [Investimento Partidário]
+*      responses:
+*        "200":
+*          description: Informações do investimento partidário (incluindo partido na eleição e partido atual).
+*/
 router.get("/", (req, res) => {
   InvestimentoPartidarioParlamentar.findAll({
     attributes: [["id_parlamentar_voz", "idParlamentarVoz"], ["total_receita_partido", "totalReceitaPartido"], ["total_receita_candidato", "totalReceitaCandidato"], ["indice_investimento_partido", "indiceInvestimentoPartido"]],
@@ -46,11 +59,23 @@ router.get("/", (req, res) => {
 });
 
 /**
- * Captura dados de investimento partidário a partir do id do parlamentar no Voz Ativa
- * @name get/api/investimento/parlamentar/:id
- * @function
- * @memberof module:routes/temas
- */
+* @swagger
+* path:
+*  /api/investimento/parlamentar/{id}:
+*    get:
+*      summary: Recupera o investimento realizado pelo partido em um parlamentar específico.
+*      tags: [Investimento Partidário]
+*      parameters:
+*        - in: path
+*          name: id
+*          schema:
+*            type: integer
+*          required: true
+*          description: Id do parlamentar
+*      responses:
+*        "200":
+*          description: Informações do investimento partidário (incluindo partido na eleição e partido atual).
+*/
 router.get("/parlamentar/:id", (req, res) => {
   InvestimentoPartidarioParlamentar.findOne({
     attributes: [["id_parlamentar_voz", "idParlamentarVoz"], ["total_receita_partido", "totalReceitaPartido"], ["total_receita_candidato", "totalReceitaCandidato"], ["indice_investimento_partido", "indiceInvestimentoPartido"]],
@@ -82,16 +107,36 @@ router.get("/parlamentar/:id", (req, res) => {
     .catch(err => res.status(BAD_REQUEST).json({ err }));
 });
 
-
 /**
- * Recupera total investido pelo partido nas eleições de 2018 em uma UF para um determinada esfera (camara ou senado)
- * id: id do partido no voz ativa (ex: 36769 (DEM))
- * uf: uf de investimento (ex: PE, PB, etc)
- * esfera: camara (para total investido em candidatos a deputados) ou senado (para total investido em  candidatos a deputados e senadores)
- * @name get/api/investimento/partido/:id/:uf/:esfera
- * @function
- * @memberof module:routes/temas
- */
+* @swagger
+* path:
+*  /api/investimento/partido/{id}/{uf}/{esfera}:
+*    get:
+*      summary: Recupera total investido pelo partido nas eleições de 2018 em uma UF e para uma determinada esfera (camara ou senado).
+*      tags: [Investimento Partidário]
+*      parameters:
+*        - in: path
+*          name: id
+*          schema:
+*            type: integer
+*          required: true
+*          description: Id do partido no voz ativa (exemplo 36769 (DEM))
+*        - in: path
+*          name: uf
+*          schema:
+*            type: string
+*          required: true
+*          description: UF de investimento (exemplo PE, PB, etc)
+*        - in: path
+*          name: esfera
+*          schema:
+*            type: string
+*          required: true
+*          description: camara (para total investido em candidatos a deputados) ou senado (para total investido em  candidatos a deputados e senadores).
+*      responses:
+*        "200":
+*          description: Informações do gasto pelo partido nas eleições de 2018 por UF e esfera.
+*/
 router.get("/partido/:id/:uf/:esfera", (req, res) => {  
   InvestimentoPartidario.findOne({
     where: {
