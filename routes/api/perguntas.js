@@ -1,13 +1,5 @@
-/** Express router
- * @module routes/perguntas
- * @requires express
- */
 const express = require("express");
 
-/**
- * Rotas para funções relacionadas às perguntas.
- * @namespace module:routes/perguntas
- */
 const router = express.Router();
 
 const models = require("../../models/index");
@@ -19,21 +11,24 @@ const Votacao = models.votacao;
 const ProposicaoTemas = models.proposicaoTemas;
 
 /**
- * Testa a rota de perguntas.
- * @name get/api/perguntas/test
- * @function
- * @memberof module:routes/perguntas
- */
-router.get("/test", (req, res) =>
-  res.json({ msg: "Testando a rota de perguntas." })
-);
+* @swagger
+* tags:
+*   name: Perguntas
+*   description: Recupera perguntas do questionário aplicado pelo Voz Ativa (antigo nome para o Perfil Parlamentar).
+*/
+
 
 /**
- * Pega as perguntas do voz Ativa.
- * @name get/api/perguntas/vozativa
- * @function
- * @memberof module:routes/perguntas
- */
+* @swagger
+* path:
+*  /api/perguntas/vozativa:
+*    get:
+*      summary: Recupera as perguntas realizadas no questionário Voz Ativa.
+*      tags: [Perguntas]
+*      responses:
+*        "200":
+*          description: Lista das perguntas do questionário Voz Ativa.
+*/
 router.get("/vozativa", (req, res) => {
   Pergunta.findAll({
     attributes: ["id", "texto"],
@@ -49,11 +44,16 @@ router.get("/vozativa", (req, res) => {
 });
 
 /**
- * Pega as proposições.
- * @name get/api/perguntas/proposicoes
- * @function
- * @memberof module:routes/perguntas
- */
+* @swagger
+* path:
+*  /api/perguntas/proposicoes:
+*    get:
+*      summary: Recupera as proposições relacionadas ao questionário Voz Ativa.
+*      tags: [Perguntas]
+*      responses:
+*        "200":
+*          description: Lista de proposições relacionadas ao questionário Voz Ativa.
+*/
 router.get("/proposicoes", (req, res) => {
   Proposicao.findAll({
     attributes: [["projeto_lei", "projetoLei"], ["id_proposicao", "idProposicao"], "titulo", "descricao"],
@@ -81,11 +81,23 @@ router.get("/proposicoes", (req, res) => {
 });
 
 /**
- * Pega uma proposição específica a partir do id da votação.
- * @name get/api/perguntas/proposicoes/:id
- * @function
- * @memberof module:routes/perguntas/:id
- */
+* @swagger
+* path:
+*  /api/perguntas/proposicoes/{id}:
+*    get:
+*      summary: Recupera uma proposição específica relacionada ao questionário Voz Ativa.
+*      tags: [Perguntas]
+*      parameters:
+*        - in: path
+*          name: id
+*          schema:
+*            type: integer
+*          required: true
+*          description: Id da proposição
+*      responses:
+*        "200":
+*          description: Informações da proposição no questionário Voz Ativa.
+*/
 router.get("/proposicoes/:id", (req, res) => {
   Proposicao.findOne({
     attributes: [["projeto_lei", "projetoLei"], ["id_proposicao", "idProposicao"], "titulo", "descricao"],

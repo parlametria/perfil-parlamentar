@@ -34,21 +34,25 @@ const attComposicaoComissoes = [["id_comissao_voz", "idComissaoVoz"], "cargo"];
 const attPartido = [["id_partido", "idPartido"], "sigla", "tipo"]
 
 /**
- * Testa a rota de parlamentares.
- * @name get/api/parlamentares/test
- * @function
- * @memberof module:routes/parlamentares
- */
-router.get("/test", (req, res) =>
-  res.json({ msg: "Testando a rota de parlamentares." })
-);
+* @swagger
+* tags:
+*   name: Parlamentares
+*   description: Lista de endpoints relacionados aos parlamentares analisados pelo Perfil Parlamentar.
+*/
+
 
 /**
- * Recupera infomações dos parlamentares incluindo suas votações (quando existem)
- * @name get/api/parlamentares/votacoes
- * @function
- * @memberof module:routes/parlamentares
- */
+* @swagger
+* path:
+*  /api/parlamentares/votacoes:
+*    get:
+*      deprecated: true
+*      summary: Recupera informações dos parlamentares incluindo suas votações (quando existem)
+*      tags: [Parlamentares]
+*      responses:
+*        "200":
+*          description: Lista de parlamentares com informações de votações.
+*/
 router.get("/votacoes", (req, res) => {
   Parlamentar.findAll({
     attributes: att,
@@ -85,11 +89,17 @@ router.get("/votacoes", (req, res) => {
 });
 
 /**
- * Recupera informações sobre os parlamentares
- * @name get/api/parlamentares
- * @function
- * @memberof module:routes/parlamentares
- */
+* @swagger
+* path:
+*  /api/parlamentares/:
+*    get:
+*      summary: Recupera informações dos Deputados Federais analisados pelo Perfil Parlamentar.
+*      tags: [Parlamentares]
+*      responses:
+*        "200":
+*          description: Lista de todos os Deputados Federais analisados pelo Perfil com informações
+*                       como nome eleitoral, cpf, partido, uf, se está em exercício, dentre outras.
+*/
 router.get("/", (req, res) => {
   Parlamentar.findAll({
     include: [{
@@ -106,11 +116,24 @@ router.get("/", (req, res) => {
 });
 
 /**
- * Pega os partidos distintos de um estado
- * @name get/api/parlamentares/partidos
- * @apiparam Casa Casa de origem do parlamentar. Pode ser "camara" (default) ou "senado".
- * @memberof module:routes/parlamentares 
- */
+* @swagger
+* path:
+*  /api/parlamentares/partidos:
+*    get:
+*      summary: Recupera, para cada UF, a lista de partidos distintos com parlamentares em exercício.
+*               A casa é passada como parâmetro e pode ser 'camara' ou 'senado'.
+*      tags: [Parlamentares]
+*      parameters:
+*        - in: query
+*          name: casa
+*          schema:
+*            type: string
+*          required: true
+*          description: Casa de origem do parlamentar. Pode ser "camara" (default) ou "senado".
+*      responses:
+*        "200":
+*          description: Lista de partidos distintos (por UF) presentes na casa passada como parâmetro.
+*/
 router.get("/partidos", casaValidator.validate, (req, res) => {
 
     const errors = validationResult(req);
@@ -160,13 +183,18 @@ router.get("/partidos", casaValidator.validate, (req, res) => {
       .catch(err => res.status(BAD_REQUEST).json({ error: err.message }));
   });
 
-
 /**
- * Recupera informações do mapeamento ID do parlamentar e o id na plataforma Voz Ativa
- * @name get/api/parlamentares
- * @function
- * @memberof module:routes/parlamentares
- */
+* @swagger
+* path:
+*  /api/parlamentares/mapeamento-id:
+*    get:
+*      summary: Recupera informações do mapeamento do ID do parlamentar na sua casa de origem e o id na plataforma Perfil Parlamentar.
+*      tags: [Parlamentares]
+*      responses:
+*        "200":
+*          description: Lista com mapeamento entre id_parlamentar e id_parlamentar_voz 
+*                       (id próprio do Perfil Parlamentar).
+*/
 router.get("/mapeamento-id", (req, res) => {
   Parlamentar
     .findAll({
@@ -177,12 +205,25 @@ router.get("/mapeamento-id", (req, res) => {
 });
 
 /**
- * Recupera informações do parlamentar de acordo com o id (no Voz Ativa).
- * @name get/api/parlamentares/:id
- * @function
- * @memberof module:routes/parlamentares
- * @param {string} id - id do parlamentar na plataforma Voz Ativa
- */
+* @swagger
+* path:
+*  /api/parlamentares/{id}:
+*    get:
+*      summary: Recupera todas as informações de um parlamentar específico.
+*      tags: [Parlamentares]
+*      parameters:
+*        - in: path
+*          name: id
+*          schema:
+*            type: integer
+*          required: true
+*          description: Id do parlamentar
+*      responses:
+*        "200":
+*          description: Lista com informações do parlamentar filtrado como o nome eleitoral, cpf, 
+*                       situação, condição eleitoral, última legislatura na casa de origem,
+*                       casa de origem, gênero, uf, partido, se está em exercício, dentre outras.
+*/
 router.get("/:id", (req, res) => {
   Parlamentar.findAll({
     where: {
@@ -193,13 +234,24 @@ router.get("/:id", (req, res) => {
     .catch(err => res.status(BAD_REQUEST).json({ err }));
 });
 
-
 /**
-* Recupera informações básicas do parlamentar de acordo com o id (no Voz Ativa).
-* @name get/api/parlamentares/:id/info
-* @function
-* @memberof module:routes/parlamentares
-* @param {string} id - id do parlamentar na plataforma Voz Ativa
+* @swagger
+* path:
+*  /api/parlamentares/{id}/info:
+*    get:
+*      summary: Recupera informações básicas de um parlamentar específico.
+*      tags: [Parlamentares]
+*      parameters:
+*        - in: path
+*          name: id
+*          schema:
+*            type: integer
+*          required: true
+*          description: Id do parlamentar
+*      responses:
+*        "200":
+*          description: Lista com informações básicas do parlamentar filtrado como o partido, uf, 
+*                       nome eleitoral, casa, dentre outras.
 */
 router.get("/:id/info", (req, res) => {
   Parlamentar.findOne({
@@ -218,12 +270,23 @@ router.get("/:id/info", (req, res) => {
 });
 
 /**
- * Recupera informações de posições do parlamentar a partir de seu id (no Voz Ativa)
- * @name get/api/parlamentares/:id/posicoes
- * @function
- * @memberof module:routes/parlamentares
- * @param {string} id - id do parlamentar na plataforma Voz Ativa
- */
+* @swagger
+* path:
+*  /api/parlamentares/{id}/posicoes:
+*    get:
+*      summary: Recupera informações de posições do parlamentar em votações.
+*      tags: [Parlamentares]
+*      parameters:
+*        - in: path
+*          name: id
+*          schema:
+*            type: integer
+*          required: true
+*          description: Id do parlamentar
+*      responses:
+*        "200":
+*          description: Lista com o posicionamento do parlamentar em votações.
+*/
 router.get("/:id/posicoes", (req, res) => {
   Parlamentar.findAll({
     attributes: [["id_parlamentar_voz", "idParlamentarVoz"], "genero"],
@@ -258,12 +321,23 @@ router.get("/:id/posicoes", (req, res) => {
 });
 
 /**
- * Recupera informações de votos (usados para o cálculo da aderência) do parlamentar a partir de seu id (no Voz Ativa)
- * @name get/api/parlamentares/:id/votos
- * @function
- * @memberof module:routes/parlamentares
- * @param {string} id - id do parlamentar na plataforma Voz Ativa
- */
+* @swagger
+* path:
+*  /api/parlamentares/{id}/votos:
+*    get:
+*      summary: Recupera informações de votos (usados para o cálculo da aderência) do parlamentar.
+*      tags: [Parlamentares]
+*      parameters:
+*        - in: path
+*          name: id
+*          schema:
+*            type: integer
+*          required: true
+*          description: Id do parlamentar
+*      responses:
+*        "200":
+*          description: Objeto com os votos do Parlamentar nas votações capturadas pelo Perfil Parlamentar.
+*/
 router.get("/:id/votos", (req, res) => {
   Parlamentar.findAll({
     attributes: [["id_parlamentar_voz", "idParlamentarVoz"], "genero"],
@@ -298,12 +372,23 @@ router.get("/:id/votos", (req, res) => {
 });
 
 /**
- * Recupera informações de comissões do parlamentar a partir de seu id (no Voz Ativa)
- * @name get/api/parlamentares/:id/comissoes
- * @function
- * @memberof module:routes/parlamentares
- * @param {string} id - id do parlamentar na plataforma Voz Ativa
- */
+* @swagger
+* path:
+*  /api/parlamentares/{id}/comissoes:
+*    get:
+*      summary:  Recupera informações de cargos em comissões para um parlamentar.
+*      tags: [Parlamentares]
+*      parameters:
+*        - in: path
+*          name: id
+*          schema:
+*            type: integer
+*          required: true
+*          description: Id do parlamentar
+*      responses:
+*        "200":
+*          description: Objeto com os cargos em comissões que o parlamentar filtrado participa.
+*/
 router.get("/:id/comissoes", (req, res) => {
   Parlamentar.findOne({
     attributes: [["id_parlamentar_voz", "idParlamentarVoz"]],
@@ -332,12 +417,23 @@ router.get("/:id/comissoes", (req, res) => {
 });
 
 /**
- * Recupera informações de lideranças para um parlamentar a partir de seu id (no Voz Ativa)
- * @name get/api/parlamentares/:id/liderancas
- * @function
- * @memberof module:routes/parlamentares
- * @param {string} id - id do parlamentar na plataforma Voz Ativa
- */
+* @swagger
+* path:
+*  /api/parlamentares/{id}/liderancas:
+*    get:
+*      summary:  Recupera informações de cargos em lideranças de um parlamentar.
+*      tags: [Parlamentares]
+*      parameters:
+*        - in: path
+*          name: id
+*          schema:
+*            type: integer
+*          required: true
+*          description: Id do parlamentar
+*      responses:
+*        "200":
+*          description: Objeto com os cargos em lideranças em partidos e bloco partidários que o parlamentar possui.
+*/
 router.get("/:id/liderancas", (req, res) => {
   Parlamentar.findOne({
     attributes: [["id_parlamentar_voz", "idParlamentarVoz"]],

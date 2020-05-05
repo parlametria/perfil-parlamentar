@@ -34,6 +34,24 @@ const authenticate = expressJwt({
   }
 });
 
+/**
+* @swagger
+* tags:
+*   name: Usuários
+*   description: Módulo com endpoints relacionados aos usuários logados na aplicação Perfil Parlamentar.
+*/
+
+/**
+* @swagger
+* path:
+*  /api/usuarios/respostas/:
+*    get:
+*      summary: Recupera respostas dos usuários ao questionário do Voz Ativa (versão anterior do Perfil Parlamentar).
+*      tags: [Usuários]
+*      responses:
+*        "200":
+*          description: Informações das respostas dos usuários ao questionário Voz Ativa.
+*/
 router.get("/respostas", (req, res) => {
   Usuario.findAll({
     attributes: attSecret,
@@ -57,6 +75,17 @@ router.get("/respostas", (req, res) => {
     .catch(err => res.status(BAD_REQUEST).json({ err }));
 });
 
+/**
+* @swagger
+* path:
+*  /api/usuarios/respostas/eu/:
+*    get:
+*      summary: Recupera respostas do usuário logado (precisa de autenticação).
+*      tags: [Usuários]
+*      responses:
+*        "200":
+*          description: Lista com as respostas do usuário autenticado
+*/
 router.get("/respostas/eu", authenticate, (req, res) => {
   Usuario.findAll({
     attributes: attNone,
@@ -84,6 +113,32 @@ router.get("/respostas/eu", authenticate, (req, res) => {
     .catch(err => res.status(BAD_REQUEST).json({ err }));
 });
 
+/**
+* @swagger
+* path:
+*  /api/usuarios/respostas/eu/:
+*    post:
+*      summary: Salva respostas do usuário logado (precisa de autenticação).
+*      tags: [Usuários]
+*      requestBody:
+*        description: Objeto com as respostas do usuário para salvar
+*        required: true
+*        content:
+*         application/json:
+*           schema:
+*             type: object
+*             properties:
+*               vozAtiva:
+*                 type: object
+*               votacoes:
+*                 type: object
+*             example:
+*               vozAtiva: {"1": 1}
+*               votacoes: {"2": 0}
+*      responses:
+*        "200":
+*          description: Lista com as respostas do usuário autenticado.
+*/
 router.post("/respostas/eu", authenticate, (req, res) => {
   const perfil = {};
   perfil.usuario = req.auth.id;
@@ -119,13 +174,32 @@ router.post("/respostas/eu", authenticate, (req, res) => {
   res.status(SUCCESS).json({ vozAtiva, votacoes });
 });
 
-
 /**
- * Salva todas as respostas
- * @name get/api/usuarios/respostas/eu/todas
- * @function
- * @memberof module:routes/usuarios
- */
+* @swagger
+* path:
+*  /api/usuarios/respostas/eu/todas:
+*    post:
+*      summary: Salva todas as respostas do usuário logado (precisa de autenticação).
+*      tags: [Usuários]
+*      requestBody:
+*        description: Objeto com as respostas do usuário para salvar
+*        required: true
+*        content:
+*         application/json:
+*           schema:
+*             type: object
+*             properties:
+*               vozAtiva:
+*                 type: object
+*               votacoes:
+*                 type: object
+*             example:
+*               vozAtiva: {"1": 1}
+*               votacoes: {"2": 0}
+*      responses:
+*        "200":
+*          description: Lista com as respostas do usuário autenticado.
+*/
 router.post("/respostas/eu/todas", authenticate, (req, res) => {
 
   const vozAtiva = req.body.vozAtiva;
@@ -161,11 +235,16 @@ router.post("/respostas/eu/todas", authenticate, (req, res) => {
 });
 
 /**
- * Recupera todos os temas de preferência de um usuário
- * @name get/api/usuarios/temas/eu
- * @function
- * @memberof module:routes/usuarios
- */
+* @swagger
+* path:
+*  /api/usuarios/temas/eu/:
+*    get:
+*      summary: Salva temas preferidos do usuário logado (precisa de autenticação).
+*      tags: [Usuários]
+*      responses:
+*        "200":
+*          description: Lista com os temas preferidos do usuário autenticado.
+*/
 router.get("/temas/eu", authenticate, (req, res) => {
 
   Usuario.findOne({
@@ -188,11 +267,31 @@ router.get("/temas/eu", authenticate, (req, res) => {
 });
 
 /**
- * Salva os temas de preferência do usuário
- * @name get/api/usuarios/temas/eu
- * @function
- * @memberof module:routes/usuarios
- */
+* @swagger
+* path:
+*  /api/usuarios/temas/eu/:
+*    post:
+*      summary: Salva os temas de preferência do usuário logado (precisa de autenticação).
+*      tags: [Usuários]
+*      requestBody:
+*        description: Objeto com os temas de preferência do usuário.
+*        required: true
+*        content:
+*         application/json:
+*           schema:
+*             type: object
+*             properties:
+*               usuario_id:
+*                 type: integer
+*               temas_preferidos:
+*                 type: array
+*             example:
+*               usuario_id: 1
+*               temas_preferidos: ["Meio Ambiente", "Agenda Nacional"]
+*      responses:
+*        "200":
+*          description: Lista com os temas de preferência do usuário autenticado.
+*/
 router.post("/temas/eu", authenticate, (req, res) => {
 
   const temas = req.body.temas;

@@ -14,9 +14,9 @@ const BAD_REQUEST = 400;
 const SUCCESS = 200;
 
 const attParlamentar = [
-  ["id_parlamentar_voz", "idParlamentarVoz"], 
-  ["id_parlamentar", "idParlamentar"], 
-  ["nome_eleitoral", "nomeEleitoral"], 
+  ["id_parlamentar_voz", "idParlamentarVoz"],
+  ["id_parlamentar", "idParlamentar"],
+  ["nome_eleitoral", "nomeEleitoral"],
   "uf",
   ["em_exercicio", "emExercicio"],
   "casa"
@@ -28,12 +28,23 @@ const attComissoes = ["sigla"];
 const attLideranca = ["cargo"];
 
 /**
- * Recupera informações da lista de parlamentares (atualmente em exercício) (com informações do parlamentar inclusas)
- * 
- * @name get/api/busca-parlamentar
- * @function
- * @memberof module:routes/busca-parlamentar
- */
+* @swagger
+* tags:
+*   name: Parlamentar (busca)
+*   description: Recupera parlamentares capturados pelo Perfil Parlamentar.
+*/
+
+/**
+* @swagger
+* path:
+*  /api/busca-parlamentar/:
+*    get:
+*      summary: Recupera parlamentares em exercício com informações de Comissões e Lideranças.
+*      tags: [Parlamentar (busca)]
+*      responses:
+*        "200":
+*          description: Recupera informações da lista de parlamentares (atualmente em exercício) (com informações do parlamentar inclusas).
+*/
 router.get("/", (req, res) => {
   Parlamentar.findAll({
     attributes: attParlamentar,
@@ -72,20 +83,20 @@ router.get("/", (req, res) => {
           }
         ]
       },
-      ],
-      where: {
-        em_exercicio: true
-      }
-    })
-  .then(parlamentares => {
-    const result = parlamentares.map(parlamentar => {
-      let data = parlamentar.toJSON();
-      data['nomeProcessado'] = data['nomeEleitoral'].normalize('NFD').replace(/[\u0300-\u036f]/g, "");
-      return data;
-    });
-    res.status(SUCCESS).json(result);
+    ],
+    where: {
+      em_exercicio: true
+    }
   })
-  .catch(err => res.status(BAD_REQUEST).json({ err: err.message }));
+    .then(parlamentares => {
+      const result = parlamentares.map(parlamentar => {
+        let data = parlamentar.toJSON();
+        data['nomeProcessado'] = data['nomeEleitoral'].normalize('NFD').replace(/[\u0300-\u036f]/g, "");
+        return data;
+      });
+      res.status(SUCCESS).json(result);
+    })
+    .catch(err => res.status(BAD_REQUEST).json({ err: err.message }));
 });
 
 module.exports = router;

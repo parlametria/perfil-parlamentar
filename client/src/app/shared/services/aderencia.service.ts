@@ -193,15 +193,29 @@ export class AderenciaService {
         aderencia.aderenciaTema.idTema === idTema && aderencia.partido.idPartido === b.parlamentarPartido.idPartido)[0];
     }
 
+    let order = 1;
+    if (this.orderBy === 'DESC') {
+      order = -1;
+    }
+
     if (aderenciaA === undefined) {
-      return 1;
+      return -1 * order;
     }
 
     if (aderenciaB === undefined) {
-      return -1;
+      return 1 * order;
     }
 
     if (aderenciaA !== undefined && aderenciaB !== undefined) {
+
+      if (aderenciaA.aderencia === -1) {
+        return -1 * order;
+      }
+
+      if (aderenciaB.aderencia === -1) {
+        return 1 * order;
+      }
+
       if (aderenciaA.aderencia > aderenciaB.aderencia) {
         return -1;
       } else if (aderenciaA.aderencia < aderenciaB.aderencia) {
