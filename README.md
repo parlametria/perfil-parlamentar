@@ -2,6 +2,8 @@
 
 [![Build Status](https://travis-ci.org/analytics-ufcg/voz-ativa.svg?branch=master)](https://travis-ci.org/analytics-ufcg/voz-ativa)
 
+## [Documentação da API](https://perfil.parlametria.org/api/swagger/docs/)
+
 # Sobre o projeto
 
 O projeto foi desenvolvido utilizando a arquitetura PEAN (Postgres Express Angular e Node). 
