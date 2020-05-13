@@ -86,7 +86,7 @@ Para exportar use, como exemplo, o comando abaixo (no terminal):
 export SECRET_OR_KEY="umsupersegredo"
 ```
 
-Obs: a variável POSTGRESURI deve ter o seguinte formato `postgres://postgres:secret@postgres:5432/vozativa`
+Obs: a variável POSTGRESURI deve ter o seguinte formato `postgres://<username>:<password>@postgres:5432/vozativa`
 
 ## Instalação de dependências
 
