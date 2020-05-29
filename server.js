@@ -8,27 +8,27 @@ const passport = require("passport");
 const compression = require("compression");
 const forceSsl = require('force-ssl-heroku');
 
-const perguntas = require("./routes/api/perguntas");
-const auth = require("./routes/api/auth");
-const usuarios = require("./routes/api/usuarios");
-const temas = require("./routes/api/temas");
-const alinhamento = require("./routes/api/alinhamento");
-const comissoes = require("./routes/api/comissoes");
-const parlamentares = require("./routes/api/parlamentares");
-const aderencia = require("./routes/api/aderencia");
-const orientacoes = require("./routes/api/orientacoes");
-const liderancas = require("./routes/api/liderancas");
-const perfil = require("./routes/api/perfil");
-const investimentoPartidario = require("./routes/api/investimentoPartidario");
-const buscaParlamentar = require("./routes/api/busca-parlamentar");
-const votacoes = require("./routes/api/votacoes");
-const swagger = require("./routes/api/swagger");
+const perguntas = require("./server/routes/api/perguntas");
+const auth = require("./server/routes/api/auth");
+const usuarios = require("./server/routes/api/usuarios");
+const temas = require("./server/routes/api/temas");
+const alinhamento = require("./server/routes/api/alinhamento");
+const comissoes = require("./server/routes/api/comissoes");
+const parlamentares = require("./server/routes/api/parlamentares");
+const aderencia = require("./server/routes/api/aderencia");
+const orientacoes = require("./server/routes/api/orientacoes");
+const liderancas = require("./server/routes/api/liderancas");
+const perfil = require("./server/routes/api/perfil");
+const investimentoPartidario = require("./server/routes/api/investimentoPartidario");
+const buscaParlamentar = require("./server/routes/api/busca-parlamentar");
+const votacoes = require("./server/routes/api/votacoes");
+const swagger = require("./server/routes/api/swagger");
 
 const app = express();
 app.use(forceSsl);
 
 app.use(compression());
-var db = require("./models/index");
+var db = require("./server/models/index");
 
 const corsOptions = {
   origin: ['http://localhost:4200', 'http://localhost:3000', 'https://front.dev.leggo.org.br', 'https://leggo.org.br'],
