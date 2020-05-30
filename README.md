@@ -2,6 +2,8 @@
 
 [![Build Status](https://travis-ci.org/analytics-ufcg/voz-ativa.svg?branch=master)](https://travis-ci.org/analytics-ufcg/voz-ativa)
 
+## [Documentação da API](https://perfil.parlametria.org/api/swagger/docs/)
+
 # Sobre o projeto
 
 O projeto foi desenvolvido utilizando a arquitetura PEAN (Postgres Express Angular e Node). 
@@ -84,7 +86,7 @@ Para exportar use, como exemplo, o comando abaixo (no terminal):
 export SECRET_OR_KEY="umsupersegredo"
 ```
 
-Obs: a variável POSTGRESURI deve ter o seguinte formato "postgres://<username>:<password>@localhost:5432/vozativa"
+Obs: a variável POSTGRESURI deve ter o seguinte formato `postgres://<username>:<password>@postgres:5432/vozativa`
 
 ## Instalação de dependências
 

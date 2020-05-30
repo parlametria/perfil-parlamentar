@@ -1,6 +1,6 @@
 {
   "name": "perfil-parlamentar",
-  "version": "3.4.0",
+  "version": "3.4.1",
   "description": "Saiba o que se passa no Congresso",
   "main": "server.js",
   "scripts": {

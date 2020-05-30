@@ -9,7 +9,7 @@ const options = {
     openapi: "3.0.0",
     info: {
       title: "API Perfil Parlamentar",
-      version: "3.4.0",
+      version: "3.4.1",
       description:
         "Documentação da API do Perfil Parlamentar. Documentação construída usando como base o repositório de <a href='https://github.com/AlexanderKaran/Swagger-Time-to-document-that-API-you-built' target='_blank'>Alexander Karan</a>",
       license: {

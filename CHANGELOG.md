@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.4.1 (2020-05-05)
+
+- [x] Documentação da API
+
 ## 3.4.0 (2019-11-26)
 
 - [x] Lançamento do Perfil Parlamentar: nova identidade e descrição do aplicativo

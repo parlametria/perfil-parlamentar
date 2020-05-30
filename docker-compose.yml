@@ -7,10 +7,7 @@ services:
     env_file:
       - variables.env
     volumes:
-      - ./routes:/app/routes
-      - ./config:/app/config
-      - ./utils:/app/utils
-      - ./models:/app/models
+      - ./server:/app/server
       - ./server.js:/app/server.js
     ports:
       - "5000:5000"
