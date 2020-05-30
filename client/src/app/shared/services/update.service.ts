@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { SwUpdate } from '@angular/service-worker';
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Injectable()
 export class UpdateService {
