@@ -27,7 +27,7 @@
               "src/manifest.json",
               "src/assets/icons",
               "src/assets/imgs",
-              "src/robots.txt"              
+              "src/robots.txt"
             ],
             "styles": [
               "src/styles.scss"
@@ -142,5 +142,8 @@
       }
     }
   },
-  "defaultProject": "vozativa"
+  "defaultProject": "vozativa",
+  "cli": {
+    "analytics": "cfda0bb0-daff-4a52-9413-432b8b590fb0"
+  }
 }
