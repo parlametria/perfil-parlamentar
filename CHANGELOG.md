@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.5.0 (2020-06-01)
+
+- [x] Atualiza Angular e demais pacotes para a versão 9.x
+
 ## 3.4.1 (2020-05-05)
 
 - [x] Documentação da API

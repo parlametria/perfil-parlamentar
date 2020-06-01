@@ -1,14 +1,16 @@
-# [Voz Ativa](https://www.vozativa.org)
+# [Perfil Parlamentar](https://perfil.parlametria.org/)
 
 [![Build Status](https://travis-ci.org/analytics-ufcg/voz-ativa.svg?branch=master)](https://travis-ci.org/analytics-ufcg/voz-ativa)
 
-## [Documentação da API](https://perfil.parlametria.org/api/swagger/docs/)
+[Documentação da API](https://perfil.parlametria.org/api/swagger/docs/)
 
 # Sobre o projeto
 
-O projeto foi desenvolvido utilizando a arquitetura PEAN (Postgres Express Angular e Node). 
+O Perfil Parlamentar exibe informações sobre as pessoas que compõem a Câmara dos Deputados e o Senado do congresso brasileiro.
 
 # Desenvolvimento
+
+O projeto foi desenvolvido utilizando a arquitetura PEAN (Postgres Express Angular e Node).
 
 Instale o [docker](https://docs.docker.com/install/linux/docker-ce/ubuntu/#install-docker-ce) e o [docker-compose](https://docs.docker.com/compose/install/).
 
