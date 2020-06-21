@@ -25,6 +25,24 @@ const attTema = [["id_tema", "idTema"], "tema", "slug"]
 *   description: Módulo de recuperação dos índices calculados para o perfil dos parlamentares.
 */
 
+/**
+* @swagger
+* path:
+*  /api/perfil/lista:
+*    get:
+*      summary: Recupera o peso político para todos os parlamentares.
+*      tags: [Perfil (índices)]
+*      responses:
+*        "200":
+*          description: Informações dos pesos políticos de todos os parlamentares.
+*/
+router.get("/lista", (req, res) => {
+  PerfilMais.findAll({
+      attributes: attPerfil
+  })
+    .then(parlamentares => res.status(SUCCESS).json(parlamentares))
+    .catch(err => res.status(BAD_REQUEST).json({ err }));
+});
 
 /**
 * @swagger
