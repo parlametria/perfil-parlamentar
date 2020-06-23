@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.5.1 (2020-06-23)
+
+- [x] Adiciona endpoint para recuperar peso político para todos os parlamentares
+
 ## 3.5.0 (2020-06-01)
 
 - [x] Atualiza Angular e demais pacotes para a versão 9.x
