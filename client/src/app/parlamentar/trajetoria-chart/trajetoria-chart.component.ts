@@ -44,10 +44,6 @@ export class TrajetoriaChartComponent implements AfterContentInit, OnChanges {
 
   ngAfterContentInit(): void {
     const container: any = d3.select('.trajetoria-chart-wrapper').node();
-    
-    this.assets = this.trajetoria.asset_history
-    this.affillitions = this.trajetoria.affiliation_history
-    this.elections = this.trajetoria.election_history
 
     this.width = (container.offsetWidth < 580) ? 300 : 600;
     this.height = 280;
@@ -73,6 +69,7 @@ export class TrajetoriaChartComponent implements AfterContentInit, OnChanges {
   }
 
   initChart() {
+    
     this.svg = d3
       .select('#trajetoria-chart')
       .append('svg')
@@ -88,17 +85,15 @@ export class TrajetoriaChartComponent implements AfterContentInit, OnChanges {
         'translate(' + this.margin.left + ',' + this.margin.top + ')'
       );
 
-    this.x = d3.scaleTime()
-      .range([0, this.width]);
-    this.y = d3.scaleLinear()
-        .range([this.height, 10]);
+    this.x = d3.scaleTime().range([0, this.width + 10]);
+    this.y = d3.scaleLinear().range([this.height, 10]);
     this.xAxis = d3.axisTop(this.x)
       .tickFormat(d3.timeFormat('%Y'))
       .tickSize(0)
       .ticks(d3.timeYear);
     this.yAxis = d3
       .axisRight(this.y)
-      .tickSize(0);
+      .tickSize(this.width);
 
     this.line = d3.line()
       .x((d: any) => this.x(new Date(d.year, 0, 1)))
@@ -111,7 +106,7 @@ export class TrajetoriaChartComponent implements AfterContentInit, OnChanges {
       "#C8F4FF",
       "#FFBBBB"
     ])
-
+      
     const locale = d3.formatLocale({
       decimal: ',',
       thousands: '.',
@@ -150,12 +145,16 @@ export class TrajetoriaChartComponent implements AfterContentInit, OnChanges {
   }
 
   drawVis(trajetoria) {
+    this.assets = this.trajetoria.asset_history
+    this.affillitions = this.trajetoria.affiliation_history
+    this.elections = this.trajetoria.election_history
+
     this.svg.call(this.tipPatrimonio);
     this.svg.call(this.tipFiliacao);
     this.svg.call(this.tipMandato);
-    
-    const earliestYear = +d3.min(trajetoria.asset_history, (d: any) => d.year);
-    let max = d3.max(trajetoria.asset_history, (d: any) => +d.value);
+
+    const earliestYear = d3.min(this.assets, (d: any) => d.year);
+    let max = d3.max(this.assets, (d: any) => +d.value);
     if (max < 900000) {
       max = 900000;
     } else if (max < 1000000) {
@@ -166,7 +165,7 @@ export class TrajetoriaChartComponent implements AfterContentInit, OnChanges {
 
     let maxDate = new Date(2018, 11, 30);
     let minDate = new Date(
-      d3.min(trajetoria.affiliation_history, (d: any) => {
+      d3.min(this.affillitions, (d: any) => {
         const date = d3.timeParse('%Y-%M-%d')(d.started_in);
         return new Date(date.getFullYear(), 0, 1);
       })
@@ -179,11 +178,11 @@ export class TrajetoriaChartComponent implements AfterContentInit, OnChanges {
       maxDate = new Date(earliestYear, 11, 30);
     }
 
-    this.x.domain([Date.parse(this.affillitions[0].started_in), Date.now()])
-    this.y.domain([0 , d3.max(this.assets, (d: any) => d.value)])
+    this.x.domain([minDate, maxDate]);
+    this.y.domain([0, d3.max(this.assets, (d: any) => d.value)]).nice();
     this.escalaCores.domain([1, 80])
 
-    this.yAxis.tickFormat((d: any) => {
+    this.yAxis.tickFormat((d) => {
       let s;
       if (max <= 900000) {
         s = d / 1000;
@@ -196,25 +195,45 @@ export class TrajetoriaChartComponent implements AfterContentInit, OnChanges {
       return '\xa0' + s;
     });
 
+    
     /**
+     * Filiações
+     */
+    this.g.selectAll('.affil-point')
+      .data(this.affillitions)
+      .enter()
+      .append('rect')
+      .attr('class', 'affil-point')
+      .attr('width', (d: any, i: number) => {
+        const inicio = this.x(Date.parse(this.affillitions[i].started_in));
+        let fim;
+        if (i === this.affillitions.length - 1) {
+          fim = this.x(maxDate);
+        } else {
+          fim = this.x(Date.parse(this.affillitions[i + 1].started_in));
+        }
+
+        return fim - inicio;
+      })
+      .attr('height', this.y(this.height))
+      .attr("fill", (d: any, i: number) => { return this.escalaCores(i) })
+      .attr('x', (d) => this.x(this.parseDate(d.started_in)))
+      .on('mouseover.tip', this.tipFiliacao.show)
+      .on('mouseout.tip', this.tipFiliacao.hide);
+
+    /**
+     * Filiações FIM
+     */
+
+     /**
      * Mandatos
      */
-    this.g.selectAll('.mandatos')
-    .data(this.elections)
-    .enter()
-    .append('rect')
-      .attr('x', (d: any) => this.x(new Date(d.year, 0, 1)))
-      .attr('y', this.height)
-      .attr('width', 1)
-      .attr('height', this.height + 10)
-      .attr('fill', "#353839");
-
     this.g.selectAll('.elect-point')
       .data(this.elections)
       .enter()
       .append('rect')
       .attr('class', 'elect-point')
-      .attr('width', (d: any) => {
+      .attr('width', (d) => {
         const start = this.x(new Date(d.year + 1, 0, 1));
         let end;
         if (d.post === 'SENADOR') {
@@ -224,59 +243,31 @@ export class TrajetoriaChartComponent implements AfterContentInit, OnChanges {
         }
         return end - start;
       })
-      .attr('height', 10)
-      .attr('x', (d: any) => this.x(new Date(d.year, 0, 1)))
+      .attr('height', 5)
+      .attr('x', (d) => this.x(new Date(d.year + 1, 0, 1)))
       .attr('y', this.height)
       .attr('fill', (d: any) => {
-        if(d.elected)
-        return '#43a467'; 
-        else
-        return '#b54142';
-      })
+        if(d.elected) {
+          return '#43a467'; 
+        } else {
+          return '#b54142';
+        }
+      })       
       .on('mouseover.tip', this.tipMandato.show)
       .on('mouseout.tip', this.tipMandato.hide);
-    /**
-     * Mandatos FIM
-     */
 
-    /**
-     * Filiações
-     */
-    this.g.selectAll('.affil-point')
-      .data(this.affillitions)
+      this.g.selectAll('.mandatos')
+      .data(this.elections)
       .enter()
       .append('rect')
-      .attr('class', 'affil-point')
-      .attr('width', (d: any, i) => {
-        const inicio = this.x(Date.parse(this.affillitions[i].started_in));
-        let fim;
-        if (i === this.affillitions.length - 1) {
-          fim = this.x(Date.now());
-        } else {
-          fim = this.x(Date.parse(this.affillitions[i + 1].started_in));
-        }
+        .attr('x', (d: any) => this.x(new Date(d.year + 1, 0, 1)))
+        .attr('y', 0)
+        .attr('width', 0.4)
+        .attr('height', this.height + 5)
+        .attr('fill', '#353839"');
 
-        return fim - inicio;
-      })
-      .attr('height', this.height)
-      .attr("fill", (d: any,i) => { return this.escalaCores(i) })
-      .attr('x', (d: any) => this.x(this.parseDate(d.started_in)) - 5)
-      .on('mouseover.tip', this.tipFiliacao.show)
-      .on('mouseout.tip', this.tipFiliacao.hide);
-
-    this.g.selectAll('.affil-text')
-      .data(this.affillitions)
-      .enter()
-      .append('text')
-      .attr('class', 'affil-text')
-      .attr('text-anchor', 'middle')
-      .attr('font-family', 'sans-serif')
-      .attr('font-size', 8)
-      .attr('x', (d) => this.x(this.parseDate(d.started_in)))
-      .attr('dy', this.height + 20)
-      .text((d) => d.party);
     /**
-     * Filiações FIM
+     * Mandatos FIM
      */
 
     /**
@@ -287,9 +278,9 @@ export class TrajetoriaChartComponent implements AfterContentInit, OnChanges {
       .attr('class', 'axis-trajetoria axis--x')
       .call(this.xAxis)
       .call(g => g.select('.domain').remove())
-      .call(g => g.selectAll('.tick text').attr('dy', -this.height - 15))
+      .call(g => g.selectAll('.tick text').attr('dy', 0))
       .call(g => g.selectAll('.tick')
-        .attr('class', (d: any) => {
+        .attr('class', (d) => {
           if (maxDate.getFullYear() - minDate.getFullYear() <= 5) {
             return 'tick opaque';
           }
@@ -309,15 +300,14 @@ export class TrajetoriaChartComponent implements AfterContentInit, OnChanges {
         .attr('text-anchor', 'end')
         .attr('dx', -this.width - 15))
       .call(g => g.select('.tick:last-of-type text')
-        .text((d: any) => {
-          let legenda = 'R$ ';
-          if(max < 990000) {
-            legenda += '(mil)'
+        .text((d) => {
+          let text = ' mil';
+          if (max <= 900000) {
+            text = ' mil';
           } else {
-          legenda += '(milhões)'
-        }
-        
-        return legenda;
+            text = ' milhões';
+          }
+          return 'R$' + text;
         }))
       .call(g => g.select('.tick:last-of-type line')
         .attr('opacity', 0));
