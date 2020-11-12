@@ -243,7 +243,7 @@ export class TrajetoriaChartComponent implements AfterContentInit, OnChanges {
         }
         return end - start;
       })
-      .attr('height', 5)
+      .attr('height', 7)
       .attr('x', (d) => this.x(new Date(d.year + 1, 0, 1)))
       .attr('y', this.height)
       .attr('fill', (d: any) => {
