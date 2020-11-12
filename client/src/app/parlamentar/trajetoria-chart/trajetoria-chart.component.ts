@@ -85,7 +85,7 @@ export class TrajetoriaChartComponent implements AfterContentInit, OnChanges {
         'translate(' + this.margin.left + ',' + this.margin.top + ')'
       );
 
-    this.x = d3.scaleTime().range([0, this.width + 10]);
+    this.x = d3.scaleTime().range([0, this.width]);
     this.y = d3.scaleLinear().range([this.height, 10]);
     this.xAxis = d3.axisTop(this.x)
       .tickFormat(d3.timeFormat('%Y'))
