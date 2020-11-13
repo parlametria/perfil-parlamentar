@@ -153,8 +153,8 @@ export class TrajetoriaChartComponent implements AfterContentInit, OnChanges {
     this.svg.call(this.tipFiliacao);
     this.svg.call(this.tipMandato);
 
-    const earliestYear = d3.min(this.assets, (d: any) => d.year);
-    let max = d3.max(this.assets, (d: any) => +d.value);
+    const earliestYear = +d3.min(trajetoria.asset_history, (d: any) => d.year);
+    let max = d3.max(trajetoria.asset_history, (d: any) => +d.value);
     if (max < 900000) {
       max = 900000;
     } else if (max < 1000000) {
@@ -165,7 +165,7 @@ export class TrajetoriaChartComponent implements AfterContentInit, OnChanges {
 
     let maxDate = new Date(2018, 11, 30);
     let minDate = new Date(
-      d3.min(this.affillitions, (d: any) => {
+      d3.min(trajetoria.affiliation_history, (d: any) => {
         const date = d3.timeParse('%Y-%M-%d')(d.started_in);
         return new Date(date.getFullYear(), 0, 1);
       })
