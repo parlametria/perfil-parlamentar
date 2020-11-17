@@ -69,7 +69,6 @@ export class TrajetoriaChartComponent implements AfterContentInit, OnChanges {
   }
 
   initChart() {
-    
     this.svg = d3
       .select('#trajetoria-chart')
       .append('svg')
@@ -100,13 +99,12 @@ export class TrajetoriaChartComponent implements AfterContentInit, OnChanges {
       .y((d: any) => this.y(d.value));
 
     this.escalaCores = d3.scaleOrdinal([
-      "#FFFCBB",
-      "#FFC69F",
-      "#CCA9DD",
-      "#C8F4FF",
-      "#FFBBBB"
+      '#FFFCBB',
+      '#FFC69F',
+      '#CCA9DD',
+      '#C8F4FF',
+      '#FFBBBB'
     ])
-      
     const locale = d3.formatLocale({
       decimal: ',',
       thousands: '.',
@@ -130,7 +128,7 @@ export class TrajetoriaChartComponent implements AfterContentInit, OnChanges {
       .attr('class', 'tip-trajetoria')
       .attr('id', 'tooltip-filiacao')
       .offset([-10, 0])
-      .html((d: any) => d.party + ":" + this.dateFormat(this.parseDate(d.started_in)));
+      .html((d: any) => d.party + ':' + this.dateFormat(this.parseDate(d.started_in)));
     this.tipMandato = d3Tip()
       .attr('class', 'tip-trajetoria')
       .attr('id', 'tooltip-mandato')
@@ -195,7 +193,6 @@ export class TrajetoriaChartComponent implements AfterContentInit, OnChanges {
       return '\xa0' + s;
     });
 
-    
     /**
      * Filiações
      */
@@ -216,8 +213,8 @@ export class TrajetoriaChartComponent implements AfterContentInit, OnChanges {
         return fim - inicio;
       })
       .attr('height', this.y(this.height))
-      .attr("fill", (d: any, i: number) => { return this.escalaCores(i) })
-      .attr('x', (d) => this.x(this.parseDate(d.started_in)))
+      .attr('fill', (d: any, i: number) => { return this.escalaCores(i) })
+      .attr('x', (d: any) => this.x(this.parseDate(d.started_in)))
       .on('mouseover.tip', this.tipFiliacao.show)
       .on('mouseout.tip', this.tipFiliacao.hide);
 
@@ -226,8 +223,8 @@ export class TrajetoriaChartComponent implements AfterContentInit, OnChanges {
      */
 
      /**
-     * Mandatos
-     */
+      * Mandatos
+      */
     this.g.selectAll('.elect-point')
       .data(this.elections)
       .enter()
@@ -248,11 +245,11 @@ export class TrajetoriaChartComponent implements AfterContentInit, OnChanges {
       .attr('y', this.height)
       .attr('fill', (d: any) => {
         if(d.elected) {
-          return '#43a467'; 
+          return '#43a467';
         } else {
           return '#b54142';
         }
-      })       
+      })
       .on('mouseover.tip', this.tipMandato.show)
       .on('mouseout.tip', this.tipMandato.hide);
 
