@@ -187,7 +187,7 @@ router.get("/cargos", casaValidator.validate, (req, res) => {
 *  /api/presidentes/:
 *    get:
 *      summary: Recupera parlamentares presidentes em comissões da Câmara e do Senado.
-*      tags: [Parlamentar (comissões)]
+*      tags: [Comissões)]
 *      responses:
 *        "200":
 *          description: Recupera informações da lista de parlamentares presidentes de comissões.
@@ -214,6 +214,56 @@ router.get("/presidentes", (req, res) => {
         required: true
       }
     ]
+  })
+    .then(parlamentares => {
+      res.status(SUCCESS).json(parlamentares);
+    })
+    .catch(err => res.status(BAD_REQUEST).json({ err: err.message }));
+});
+
+/**
+* @swagger
+* path:
+*  /api/presidentes/{id}:
+*    get:
+*      summary: Recupera presidências em comissões de um parlamentar específico
+*      tags: [Comissões]
+*      parameters:
+*        - in: path
+*          name: id
+*          schema:
+*            type: integer
+*          required: true
+*          description: Id do parlamentar
+*      responses:
+*        "200":
+*          description: Recupera informações da lista de parlamentares presidentes de comissões.
+*/
+router.get("/presidentes/:id", (req, res) => {
+  Parlamentar.findAll({
+    attributes: ["id_parlamentar_voz", "casa"],
+    include: [
+      {
+        model: ComposicaoComissoes,
+        attributes: ["cargo"],
+        include: [
+          {
+            model: Comissoes,
+            attributes: ["sigla"],
+            as: "infoComissao",
+            required: false
+          }
+        ],
+        where: {
+          cargo: "Presidente"
+        },
+        as: "parlamentarComissoes",
+        required: true
+      }
+    ],
+    where: {
+      id_parlamentar_voz: req.params.id
+    }
   })
     .then(parlamentares => {
       res.status(SUCCESS).json(parlamentares);
