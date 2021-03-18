@@ -83,7 +83,10 @@ router.post("/", (req, res) => {
           }
         ],
         as: "parlamentarComissoes",
-        required: false
+        required: false,
+        where: {
+          is_membro_atual: true
+        }
       },
     ],
     where: {

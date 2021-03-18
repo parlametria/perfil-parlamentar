@@ -322,7 +322,8 @@ router.get("/presidentes/:id", (req, res) => {
           }
         ],
         where: {
-          cargo: "Presidente"
+          cargo: "Presidente",
+          is_membro_atual: true
         },
         as: "parlamentarComissoes",
         required: true
