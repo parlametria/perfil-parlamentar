@@ -16,7 +16,7 @@ Instale o [docker](https://docs.docker.com/install/linux/docker-ce/ubuntu/#insta
 
 ## Inicialização do banco de dados
 
-No [repositório](https://github.com/analytics-ufcg/vozativa-dados) de dados do projeto siga as instruções do README para inicializar o banco de dados usando docker.
+No [repositório de dados](https://github.com/parlametria/perfil-parlamentar-dados) do projeto siga as instruções do README para inicializar o banco de dados usando docker.
 
 ## Configuração das variáveis de ambiente
 

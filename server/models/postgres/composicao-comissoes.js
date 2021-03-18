@@ -10,8 +10,15 @@ module.exports = (sequelize, type) => {
         type: type.STRING,
         primaryKey: true
       },
+      id_periodo: {
+        type: type.STRING,
+        primaryKey: true
+      },
       cargo: type.STRING,
-      situacao: type.STRING
+      situacao: type.STRING,
+      data_inicio: type.DATE,
+      data_fim: type.DATE,
+      is_membro_atual: type.BOOLEAN
     },
     {
       timestamps: false

@@ -405,7 +405,10 @@ router.get("/:id/comissoes", (req, res) => {
             as: "infoComissao",
             required: false
           }
-        ]
+        ],
+        where: {
+          is_membro_atual: true
+        }
       }
     ],
     where: { id_parlamentar_voz: req.params.id }

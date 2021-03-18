@@ -107,7 +107,10 @@ router.get("/parlamentar", (req, res) => {
           }
         ],
         as: "parlamentarComissoes",
-        required: false
+        required: false,
+        where: {
+          is_membro_atual: true
+        }
       },
       {
         model: Partido,
