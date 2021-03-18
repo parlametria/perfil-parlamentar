@@ -76,6 +76,12 @@ router.get("/", casaValidator.validate, (req, res) => {
 *            type: string
 *          required: true
 *          description: Casa de origem do parlamentar. Pode ser "camara" (default) ou "senado".
+*        - in: query
+*          name: somente_ativos
+*          schema:
+*            type: boolean
+*          required: true
+*          description: Flag indicando se devem ser retornados os membros ativos (default) ou todos.
 *      responses:
 *        "200":
 *          description: Informações da composição das comissões permanentes da casa passada como parâmetro.
@@ -89,6 +95,20 @@ router.get("/composicao", casaValidator.validate, (req, res) => {
 
   const casa = req.param("casa") || "camara"
 
+  let somente_ativos = req.param("somente_ativos")
+
+  if (somente_ativos) {
+    somente_ativos = somente_ativos === 'true'
+  } else {
+    somente_ativos = true
+  }
+
+  let whereCondition = {}
+
+  if (somente_ativos === true) {
+    whereCondition.is_membro_atual = somente_ativos
+  }
+
   ComposicaoComissoes.findAll({
     include: [
       {
@@ -100,7 +120,8 @@ router.get("/composicao", casaValidator.validate, (req, res) => {
           casa: casa
         }
       }
-    ]
+    ],
+    where: whereCondition
   })
     .then(composicao => res.status(200).json(composicao))
     .catch(err => res.status(400).json(err.message));
@@ -113,17 +134,39 @@ router.get("/composicao", casaValidator.validate, (req, res) => {
 *    get:
 *      summary: Recupera lista de membros das comissões permamentes da Câmara e do Senado.
 *      tags: [Comissões]
+*      parameters:
+*        - in: query
+*          name: somente_ativos
+*          schema:
+*            type: boolean
+*          required: true
+*          description: Flag indicando se devem ser retornados os membros ativos (default) ou todos.
 *      responses:
 *        "200":
 *          description: Informações da composição das comissões permanentes da casa passada como parâmetro.
 */
 router.get("/membros", (req, res) => {
+  let somente_ativos = req.param("somente_ativos")
+
+  if (somente_ativos) {
+    somente_ativos = somente_ativos === 'true'
+  } else {
+    somente_ativos = true
+  }
+
+  let whereCondition = {}
+
+  if (somente_ativos === true) {
+    whereCondition.is_membro_atual = somente_ativos
+  }
+
   Comissoes.findAll({
     include: [
       {
         model: ComposicaoComissoes,
         as: "comissaoComp",
-        required: true
+        required: true,
+        where: whereCondition
       }
     ]
   })
@@ -175,7 +218,10 @@ router.get("/cargos", casaValidator.validate, (req, res) => {
         }
       }
     ],
-    raw: true
+    raw: true,
+    where: {
+      is_membro_atual: true
+    }
   })
     .then(composicao => res.status(200).json(composicao))
     .catch(err => res.status(400).json(err.message));
@@ -188,17 +234,40 @@ router.get("/cargos", casaValidator.validate, (req, res) => {
 *    get:
 *      summary: Recupera parlamentares presidentes em comissões da Câmara e do Senado.
 *      tags: [Comissões)]
+*      parameters:
+*        - in: query
+*          name: somente_ativos
+*          schema:
+*            type: boolean
+*          required: true
+*          description: Flag indicando se devem ser retornados os membros ativos (default) ou todos.
 *      responses:
 *        "200":
 *          description: Recupera informações da lista de parlamentares presidentes de comissões.
 */
 router.get("/presidentes", (req, res) => {
+  let somente_ativos = req.param("somente_ativos")
+
+  if (somente_ativos) {
+    somente_ativos = somente_ativos === 'true'
+  } else {
+    somente_ativos = true
+  }
+
+  let whereCondition = {
+    cargo: "Presidente"
+  }
+
+  if (somente_ativos === true) {
+    whereCondition.is_membro_atual = somente_ativos
+  }
+
   Parlamentar.findAll({
     attributes: ["id_parlamentar_voz", "casa"],
     include: [
       {
         model: ComposicaoComissoes,
-        attributes: ["cargo"],
+        attributes: ["cargo", "data_inicio", "data_fim", "is_membro_atual"],
         include: [
           {
             model: Comissoes,
@@ -207,9 +276,7 @@ router.get("/presidentes", (req, res) => {
             required: false
           }
         ],
-        where: {
-          cargo: "Presidente"
-        },
+        where: whereCondition,
         as: "parlamentarComissoes",
         required: true
       }
@@ -239,13 +306,13 @@ router.get("/presidentes", (req, res) => {
 *        "200":
 *          description: Recupera informações da lista de parlamentares presidentes de comissões.
 */
-router.get("/presidentes/:id", (req, res) => {
+router.get("/presidentes/:id", (req, res) => { 
   Parlamentar.findAll({
     attributes: ["id_parlamentar_voz", "casa"],
     include: [
       {
         model: ComposicaoComissoes,
-        attributes: ["cargo"],
+        attributes: ["cargo", "data_inicio", "data_fim", "is_membro_atual"],
         include: [
           {
             model: Comissoes,
@@ -255,7 +322,8 @@ router.get("/presidentes/:id", (req, res) => {
           }
         ],
         where: {
-          cargo: "Presidente"
+          cargo: "Presidente",
+          is_membro_atual: true
         },
         as: "parlamentarComissoes",
         required: true

@@ -129,7 +129,10 @@ router.get("/eleitos", (req, res) => {
           }
         ],
         as: "cpf_comissoes",
-        required: false
+        required: false,
+        where: {
+          is_membro_atual: true
+        }
       }
     ],
     where: { eleito: true }
