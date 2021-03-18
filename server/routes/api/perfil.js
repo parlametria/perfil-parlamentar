@@ -38,7 +38,36 @@ const attTema = [["id_tema", "idTema"], "tema", "slug"]
 */
 router.get("/lista", (req, res) => {
   PerfilMais.findAll({
-      attributes: attPerfil
+    attributes: attPerfil
+  })
+    .then(parlamentares => res.status(SUCCESS).json(parlamentares))
+    .catch(err => res.status(BAD_REQUEST).json({ err }));
+});
+
+/**
+* @swagger
+* path:
+*  /api/perfil/peso/{id}:
+*    get:
+*      summary: Recupera o peso político para um parlamentar específico.
+*      tags: [Perfil (índices)]
+*      parameters:
+*        - in: path
+*          name: id
+*          schema:
+*            type: integer
+*          required: true
+*          description: Id do parlamentar
+*      responses:
+*        "200":
+*          description: Informações do peso político para um parlamentar específico.
+*/
+router.get("/peso/:id", (req, res) => {
+  PerfilMais.findAll({
+    attributes: attPerfil,
+    where: {
+      id_parlamentar_voz: req.params.id
+    }
   })
     .then(parlamentares => res.status(SUCCESS).json(parlamentares))
     .catch(err => res.status(BAD_REQUEST).json({ err }));
