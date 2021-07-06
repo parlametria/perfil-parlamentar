@@ -13,6 +13,10 @@ export class TrajetoriaChartComponent implements AfterContentInit, OnChanges {
 
   @Input() trajetoria: any;
 
+  assets: any;
+  affillitions: any;
+  elections: any;
+
   width: number;
   height: number;
   totalWidth: number;
@@ -26,6 +30,7 @@ export class TrajetoriaChartComponent implements AfterContentInit, OnChanges {
   xAxis: any;
   yAxis: any;
   line: any;
+  escalaCores: any;
   numberFormat: any;
   currencyFormat: any;
   dateFormat: any;
@@ -80,10 +85,10 @@ export class TrajetoriaChartComponent implements AfterContentInit, OnChanges {
       );
 
     this.x = d3.scaleTime().range([0, this.width]);
-    this.y = d3.scaleLinear().range([this.height, 0]);
-    this.xAxis = d3.axisBottom(this.x)
+    this.y = d3.scaleLinear().range([this.height, 10]);
+    this.xAxis = d3.axisTop(this.x)
       .tickFormat(d3.timeFormat('%Y'))
-      .tickSize(this.height)
+      .tickSize(0)
       .ticks(d3.timeYear);
     this.yAxis = d3
       .axisRight(this.y)
@@ -93,6 +98,13 @@ export class TrajetoriaChartComponent implements AfterContentInit, OnChanges {
       .x((d: any) => this.x(new Date(d.year, 0, 1)))
       .y((d: any) => this.y(d.value));
 
+    this.escalaCores = d3.scaleOrdinal([
+      '#FFFCBB',
+      '#FFC69F',
+      '#CCA9DD',
+      '#C8F4FF',
+      '#FFBBBB'
+    ])
     const locale = d3.formatLocale({
       decimal: ',',
       thousands: '.',
@@ -116,7 +128,7 @@ export class TrajetoriaChartComponent implements AfterContentInit, OnChanges {
       .attr('class', 'tip-trajetoria')
       .attr('id', 'tooltip-filiacao')
       .offset([-10, 0])
-      .html((d: any) => this.dateFormat(this.parseDate(d.started_in)));
+      .html((d: any) => d.party + ':' + this.dateFormat(this.parseDate(d.started_in)));
     this.tipMandato = d3Tip()
       .attr('class', 'tip-trajetoria')
       .attr('id', 'tooltip-mandato')
@@ -131,6 +143,10 @@ export class TrajetoriaChartComponent implements AfterContentInit, OnChanges {
   }
 
   drawVis(trajetoria) {
+    this.assets = this.trajetoria.asset_history
+    this.affillitions = this.trajetoria.affiliation_history
+    this.elections = this.trajetoria.election_history
+
     this.svg.call(this.tipPatrimonio);
     this.svg.call(this.tipFiliacao);
     this.svg.call(this.tipMandato);
@@ -161,7 +177,8 @@ export class TrajetoriaChartComponent implements AfterContentInit, OnChanges {
     }
 
     this.x.domain([minDate, maxDate]);
-    this.y.domain([0, d3.max(trajetoria.asset_history, (d: any) => d.value)]).nice();
+    this.y.domain([0, d3.max(this.assets, (d: any) => d.value)]).nice();
+    this.escalaCores.domain([1, 80])
 
     this.yAxis.tickFormat((d) => {
       let s;
@@ -177,17 +194,39 @@ export class TrajetoriaChartComponent implements AfterContentInit, OnChanges {
     });
 
     /**
-     * Mandatos
+     * Filiações
      */
-    this.g.append('rect')
-      .attr('x', 0)
-      .attr('y', this.height)
-      .attr('width', this.width)
-      .attr('height', 10)
-      .attr('fill', '#eeedf4');
-    const mandatos = trajetoria.election_history.filter(d => d.elected);
+    this.g.selectAll('.affil-point')
+      .data(this.affillitions)
+      .enter()
+      .append('rect')
+      .attr('class', 'affil-point')
+      .attr('width', (d: any, i: number) => {
+        const inicio = this.x(Date.parse(this.affillitions[i].started_in));
+        let fim;
+        if (i === this.affillitions.length - 1) {
+          fim = this.x(maxDate);
+        } else {
+          fim = this.x(Date.parse(this.affillitions[i + 1].started_in));
+        }
+
+        return fim - inicio;
+      })
+      .attr('height', this.y(this.height))
+      .attr('fill', (d: any, i: number) => { return this.escalaCores(i) })
+      .attr('x', (d: any) => this.x(this.parseDate(d.started_in)))
+      .on('mouseover.tip', this.tipFiliacao.show)
+      .on('mouseout.tip', this.tipFiliacao.hide);
+
+    /**
+     * Filiações FIM
+     */
+
+     /**
+      * Mandatos
+      */
     this.g.selectAll('.elect-point')
-      .data(mandatos)
+      .data(this.elections)
       .enter()
       .append('rect')
       .attr('class', 'elect-point')
@@ -201,45 +240,31 @@ export class TrajetoriaChartComponent implements AfterContentInit, OnChanges {
         }
         return end - start;
       })
-      .attr('height', 10)
+      .attr('height', 7)
       .attr('x', (d) => this.x(new Date(d.year + 1, 0, 1)))
       .attr('y', this.height)
-      .attr('fill', '#92cc48')
-      .attr('stroke', '#eeedf4')
+      .attr('fill', (d: any) => {
+        if(d.elected) {
+          return '#43a467';
+        } else {
+          return '#b54142';
+        }
+      })
       .on('mouseover.tip', this.tipMandato.show)
       .on('mouseout.tip', this.tipMandato.hide);
-    /**
-     * Mandatos FIM
-     */
 
-    /**
-     * Filiações
-     */
-    this.g.selectAll('.affil-point')
-      .data(trajetoria.affiliation_history)
+      this.g.selectAll('.mandatos')
+      .data(this.elections)
       .enter()
       .append('rect')
-      .attr('class', 'affil-point')
-      .attr('width', 10)
-      .attr('height', 10)
-      .attr('x', (d) => this.x(this.parseDate(d.started_in)) - 5)
-      .attr('y', this.height)
-      .on('mouseover.tip', this.tipFiliacao.show)
-      .on('mouseout.tip', this.tipFiliacao.hide);
+        .attr('x', (d: any) => this.x(new Date(d.year + 1, 0, 1)))
+        .attr('y', 0)
+        .attr('width', 0.4)
+        .attr('height', this.height + 5)
+        .attr('fill', '#353839"');
 
-    this.g.selectAll('.affil-text')
-      .data(trajetoria.affiliation_history)
-      .enter()
-      .append('text')
-      .attr('class', 'affil-text')
-      .attr('text-anchor', 'middle')
-      .attr('font-family', 'sans-serif')
-      .attr('font-size', 8)
-      .attr('x', (d) => this.x(this.parseDate(d.started_in)))
-      .attr('dy', this.height + 20)
-      .text((d) => d.party);
     /**
-     * Filiações FIM
+     * Mandatos FIM
      */
 
     /**
@@ -250,7 +275,7 @@ export class TrajetoriaChartComponent implements AfterContentInit, OnChanges {
       .attr('class', 'axis-trajetoria axis--x')
       .call(this.xAxis)
       .call(g => g.select('.domain').remove())
-      .call(g => g.selectAll('.tick text').attr('dy', -this.height - 15))
+      .call(g => g.selectAll('.tick text').attr('dy', 0))
       .call(g => g.selectAll('.tick')
         .attr('class', (d) => {
           if (maxDate.getFullYear() - minDate.getFullYear() <= 5) {
@@ -285,7 +310,7 @@ export class TrajetoriaChartComponent implements AfterContentInit, OnChanges {
         .attr('opacity', 0));
 
     this.g.append('path')
-      .datum(trajetoria.asset_history)
+      .datum(this.assets)
       .attr('fill', 'none')
       .attr('stroke', '#5a44a0')
       .attr('stroke-width', 3)
@@ -293,7 +318,7 @@ export class TrajetoriaChartComponent implements AfterContentInit, OnChanges {
       .attr('stroke-linecap', 'round')
       .attr('d', this.line);
     this.g.selectAll('circle')
-      .data(trajetoria.asset_history)
+      .data(this.assets)
       .enter()
       .append('circle')
       .attr('class', 'circle-patrimonio')
