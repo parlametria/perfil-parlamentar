@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { take } from 'rxjs/operators';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ParlamentarService } from '../../shared/services/parlamentar.service';
 import { PerfilPoliticoService } from '../../shared/services/perfil-politico.service';
 
@@ -19,6 +20,7 @@ export class PatrimonioComponent implements OnInit {
     private activatedroute: ActivatedRoute,
     private perfilPoliticoService: PerfilPoliticoService,
     private parlamentarService: ParlamentarService,
+    private modalService: NgbModal,
   ) { }
 
   ngOnInit(): void {
@@ -60,5 +62,9 @@ export class PatrimonioComponent implements OnInit {
     console.log('Erro ao buscar parlamentar: ', error);
     this.temPatrimonio = false;
     this.isLoading = false;
+  }
+
+  onClickModal(content): void {
+    this.modalService.open(content, {ariaLabelledBy: 'Sobre'});
   }
 }
