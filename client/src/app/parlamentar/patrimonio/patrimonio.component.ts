@@ -51,7 +51,6 @@ export class PatrimonioComponent implements OnInit {
   }
 
   handleRequestResponse(resp) {
-    console.log(resp);
     const patrimonio = resp.asset_history || [];
     this.patrimonio = patrimonio;
     this.temPatrimonio = patrimonio.length > 0;

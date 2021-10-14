@@ -3,22 +3,16 @@
     Evolução de Patrimônio
     <span (click)="onClickModal(modalContent)" class="icon-question-circle icon-btn-help"></span>
   </h4>
-  <div *ngIf="isLoading; then loadingComponent else tabContent"></div>
-</div>
 
-<ng-template #loadingComponent>
-  <app-loading></app-loading>
-</ng-template>
-
-<ng-template #tabContent>
-  <div *ngIf="temPatrimonio; else emptyState">
-    <p class="text-center">Todo: adicionar gráfico aqui: {{patrimonio}}</p>
+  <app-loading [hidden]="!isLoading"></app-loading>
+  <div [hidden]="isLoading || temPatrimonio" class="text-center">
+    Dados não disponíveis.
   </div>
-</ng-template>
-
-<ng-template #emptyState>
-  <p class="text-center">Dados não disponíveis.</p>
-</ng-template>
+  <div [hidden]="isLoading || !temPatrimonio" class="patrimonio-chart-wrapper">
+    <app-patrimonio-chart [patrimonio]="patrimonio"></app-patrimonio-chart>
+  </div>
+  <div class="py-4"></div>
+</div>
 
 <ng-template #modalContent let-modal>
   <div class="modal-header">
