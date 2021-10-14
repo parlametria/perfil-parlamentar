@@ -1,1 +1,20 @@
-<p class="text-center">patrimonio works!</p>
+<div class="container-sm my-3">
+  <h4 class="title-main my-4">
+    Evolução de Patrimônio
+  </h4>
+  <div *ngIf="isLoading; then loadingComponent else tabContent"></div>
+</div>
+
+<ng-template #loadingComponent>
+  <app-loading></app-loading>
+</ng-template>
+
+<ng-template #tabContent>
+  <div *ngIf="temPatrimonio; else emptyState">
+    <p class="text-center">Todo: adicionar gráfico aqui: {{patrimonio}}</p>
+  </div>
+</ng-template>
+
+<ng-template #emptyState>
+  <p class="text-center">Dados não disponíveis.</p>
+</ng-template>
