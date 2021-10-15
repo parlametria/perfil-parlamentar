@@ -9,7 +9,10 @@
     Dados não disponíveis.
   </div>
   <div [hidden]="isLoading || !temPatrimonio" class="patrimonio-chart-wrapper">
-    <app-patrimonio-chart [patrimonio]="patrimonio"></app-patrimonio-chart>
+    <app-patrimonio-chart
+      [patrimonio]="patrimonio"
+      [medianaPatrimonio]="medianaPatrimonio"
+    ></app-patrimonio-chart>
   </div>
   <div class="py-4"></div>
 </div>
