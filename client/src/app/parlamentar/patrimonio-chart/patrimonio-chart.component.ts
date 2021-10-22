@@ -151,6 +151,7 @@ export class PatrimonioChartComponent implements AfterContentInit, OnChanges {
     this.plotAxisX();
     this.plotAxisY();
 
+    this.addAuxilliarVerticalLine();
     this.plotPatrimonio();
     this.addLegend();
   }
@@ -349,5 +350,33 @@ export class PatrimonioChartComponent implements AfterContentInit, OnChanges {
       .style('fill', pickColor)
       .style('font-size', '0.55em')
       .on('click', onClickLegend);
+  }
+
+  private addAuxilliarVerticalLine() {
+    this.g.append('g')
+      .attr('class', 'mouse-over-effects')
+      .append('path')
+      .attr('class', 'auxiliary-vertical-line')
+      .style('opacity', '0');
+
+    const height = this.height;
+    this.g.attr('pointer-events', 'all')
+      .on('mouseout', () => {
+        d3.select('.auxiliary-vertical-line')
+          .style('opacity', '0');
+      })
+      .on('mouseover', () => {
+        d3.select('.auxiliary-vertical-line')
+          .style('opacity', '1');
+      })
+      .on('mousemove', function() {
+        const mouse = d3.mouse(this);
+        d3.select('.auxiliary-vertical-line')
+          .attr('d', () => {
+            let d = 'M' + mouse[0] + ',' + height;
+            d += ' ' + mouse[0] + ',' + 0;
+            return d;
+          });
+      });
   }
 }
