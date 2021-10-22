@@ -78,7 +78,7 @@ export class PatrimonioChartComponent implements AfterContentInit, OnChanges {
         visible: true,
       },
       {
-        name: 'Mediana do patrimônio de todos os parlamentares',
+        name: 'Mediana do patrimônio de todos os candidatos eleitos',
         values: this.medianaPatrimonio.filter((d) => d.year >= minYear && d.year <= maxYear),
         color: '#43A467',
         visible: true,
