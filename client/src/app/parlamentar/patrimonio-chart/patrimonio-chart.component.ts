@@ -170,10 +170,9 @@ export class PatrimonioChartComponent implements AfterContentInit, OnChanges {
         .style('font-size', '0.95em'))
       .call(g => g.selectAll('.tick')
         .attr('class', (d) => {
-          for (const asset of this.patrimonio) {
-            if (d.getFullYear() === asset.year) return 'tick normal'
-          }
-          return 'tick opaque';
+          const isOddYear = d.getFullYear() % 2;
+          if (isOddYear) return 'tick opaque';
+          return 'tick normal';
         }));
     this.drawArrowOnAxisX();
   }
