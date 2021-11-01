@@ -1,0 +1,83 @@
+<div>
+  <ng-container *ngTemplateOutlet="timelineHeader"></ng-container>
+  <div class="timeline arrow-up">
+    <div class="events-container">
+      <div class="evento mandato">
+        <div class="mandato-description">
+          <p class="cargo">Prefeito</p>
+          <p class="periodo">2012 - 2016</p>
+        </div>
+      </div>
+    </div>
+    <div class="evento candidatura">
+      <div class="diamond-badge" id="candidatura-badge"></div>
+      <div class="candidatura-description" id="candidatura-description">
+        <div>
+          <div class="cargo">Concorreu a Prefeito</div>
+          <div class="ano">Não eleito (2014)</div>
+        </div>
+      </div>
+    </div>
+    <div class="evento filiacao">
+      <div class="circle-badge"></div>
+      <div class="filiacao-description">
+        <span class="partido">PP</span>
+        <span class="data-inicio">(10.01.2020)</span>
+      </div>
+    </div>
+    <div class="evento filiacao">
+      <div class="circle-badge"></div>
+      <div class="filiacao-description">
+        <span class="partido">PP</span>
+        <span class="data-inicio">(10.01.2020)</span>
+      </div>
+    </div>
+    <div class="evento filiacao">
+      <div class="circle-badge"></div>
+      <div class="filiacao-description">
+        <span class="partido">PP</span>
+        <span class="data-inicio">(10.01.2020)</span>
+      </div>
+    </div>
+    <div class="evento filiacao">
+      <div class="circle-badge"></div>
+      <div class="filiacao-description">
+        <span class="partido">PP</span>
+        <span class="data-inicio">(10.01.2020)</span>
+      </div>
+    </div>
+    <div class="evento filiacao">
+      <div class="circle-badge"></div>
+      <div class="filiacao-description">
+        <span class="partido">PP</span>
+        <span class="data-inicio">(10.01.2020)</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #timelineHeader>
+  <div class="timeline-label large-screen">
+    <h5>Mandatos <span class="icon-ajuda"></span></h5>
+    <h5>Filiações
+      <span>
+        <sup class="icon-ajuda" >&#9432;</sup>
+        <span class="filiacao-hint">
+          Os dados sobre afiliações partidárias foram restringidos pelo Tribunal Superior Eleitoral,
+          então não possuímos informações sobre afiliações de 2020 em diante.
+        </span>
+      </span>
+    </h5>
+  </div>
+  <div class="timeline-label small-screen">
+    <h5>Mandatos e Filiações
+      <span>
+        <sup class="icon-ajuda" >&#9432;</sup>
+        <span class="filiacao-hint">
+          Os dados sobre afiliações partidárias foram restringidos pelo Tribunal Superior Eleitoral,
+          então não possuímos informações sobre afiliações de 2020 em diante.
+        </span>
+      </span>
+    </h5>
+  </div>
+</ng-template>
