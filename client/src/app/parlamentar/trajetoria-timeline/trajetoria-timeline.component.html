@@ -1,60 +1,58 @@
 <div>
   <ng-container *ngTemplateOutlet="timelineHeader"></ng-container>
-  <div class="timeline arrow-up">
+  <div class="timeline arrow-up" *ngIf="temTrajetoria; else noData">
     <div class="events-container">
-      <div class="evento mandato">
-        <div class="mandato-description">
-          <p class="cargo">Prefeito</p>
-          <p class="periodo">2012 - 2016</p>
+      <div *ngFor="let mandato of listaMandatos">
+        <div [ngSwitch]="mandato.type">
+          <div class="evento mandato"
+               *ngSwitchCase="EVENTO_MANDATO"
+               [style.background-color]="mandato.color"
+               [style.height]="mandato.yearsDuration * yearSize + 'rem'"
+          >
+            <div class="mandato-description">
+              <p class="cargo">{{mandato.post}}</p>
+              <p class="periodo">{{mandato.startYear}} - {{mandato.projectedEndYear}}</p>
+            </div>
+          </div>
+          <div class="evento vazio"
+               *ngSwitchDefault
+               [style.height]="mandato.semestersDuration * semesterSize + 'rem'"
+          ></div>
         </div>
       </div>
     </div>
-    <div class="evento candidatura">
-      <div class="diamond-badge" id="candidatura-badge"></div>
-      <div class="candidatura-description" id="candidatura-description">
-        <div>
-          <div class="cargo">Concorreu a Prefeito</div>
-          <div class="ano">Não eleito (2014)</div>
+    <div *ngFor="let event of eventosPontuais">
+      <div [ngSwitch]="event.type">
+        <div *ngSwitchCase="EVENTO_CANDIDATURA" class="evento candidatura" [style.height]="semesterSize + 'rem'">
+          <div class="diamond-badge" id="candidatura-badge"></div>
+          <div class="candidatura-description" id="candidatura-description">
+            <div>
+              <div class="cargo">Concorreu a {{event.post}}</div>
+              <div class="ano">Não eleito ({{event.year}})</div>
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
-    <div class="evento filiacao">
-      <div class="circle-badge"></div>
-      <div class="filiacao-description">
-        <span class="partido">PP</span>
-        <span class="data-inicio">(10.01.2020)</span>
-      </div>
-    </div>
-    <div class="evento filiacao">
-      <div class="circle-badge"></div>
-      <div class="filiacao-description">
-        <span class="partido">PP</span>
-        <span class="data-inicio">(10.01.2020)</span>
-      </div>
-    </div>
-    <div class="evento filiacao">
-      <div class="circle-badge"></div>
-      <div class="filiacao-description">
-        <span class="partido">PP</span>
-        <span class="data-inicio">(10.01.2020)</span>
-      </div>
-    </div>
-    <div class="evento filiacao">
-      <div class="circle-badge"></div>
-      <div class="filiacao-description">
-        <span class="partido">PP</span>
-        <span class="data-inicio">(10.01.2020)</span>
-      </div>
-    </div>
-    <div class="evento filiacao">
-      <div class="circle-badge"></div>
-      <div class="filiacao-description">
-        <span class="partido">PP</span>
-        <span class="data-inicio">(10.01.2020)</span>
+        <div *ngSwitchCase="EVENTO_FILIACAO" class="evento filiacao" [style.height]="semesterSize + 'rem'">
+          <div class="circle-badge"></div>
+          <div class="filiacao-description">
+            <span class="partido">{{event.party}}</span>
+            <span class="data-inicio">({{event.fullDate}})</span>
+          </div>
+        </div>
+        <div class="evento vazio"
+             *ngSwitchDefault
+             [style.height]="event.semestersDuration * semesterSize + 'rem'"
+        ></div>
       </div>
     </div>
   </div>
 </div>
+
+<ng-template #noData>
+  <div class="text-center">
+    Dados não disponíveis.
+  </div>
+</ng-template>
 
 <ng-template #timelineHeader>
   <div class="timeline-label large-screen">
@@ -63,8 +61,9 @@
       <span>
         <sup class="icon-ajuda" >&#9432;</sup>
         <span class="filiacao-hint">
-          Os dados sobre afiliações partidárias foram restringidos pelo Tribunal Superior Eleitoral,
-          então não possuímos informações sobre afiliações de 2020 em diante.
+          Não possuímos informações sobre afiliações partidárias de 2020 em
+          diante pois os dados desse período foram restringidos pelo
+          Tribunal Superior Eleitoral.
         </span>
       </span>
     </h5>
@@ -74,8 +73,9 @@
       <span>
         <sup class="icon-ajuda" >&#9432;</sup>
         <span class="filiacao-hint">
-          Os dados sobre afiliações partidárias foram restringidos pelo Tribunal Superior Eleitoral,
-          então não possuímos informações sobre afiliações de 2020 em diante.
+          Não possuímos informações sobre afiliações partidárias de 2020 em
+          diante pois os dados desse período foram restringidos pelo
+          Tribunal Superior Eleitoral.
         </span>
       </span>
     </h5>

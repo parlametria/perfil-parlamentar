@@ -137,6 +137,10 @@
   align-items: center;
   display: flex;
   clear: both;
+
+  &.vazio {
+   content: "";
+  }
 }
 
 .evento:before,
@@ -147,7 +151,7 @@
 
 .mandato {
   height: 6rem;
-  background-color: purple;
+  background-color: grey;
   border-radius: 5px 0 0 5px;
   padding: 10px 20px 10px 20px;
   margin-left: -1px;
@@ -252,7 +256,7 @@
 @media (max-width: 767px) {
   .arrow-up:after,
   .timeline:before {
-    left: 40px;
+    left: 30px;
   }
 
   .diamond-badge{
@@ -267,7 +271,7 @@
       display: inline;
     }
     > h5:first-child {
-      margin-left: 40px;
+      margin-left: 30px;
       width: fit-content;
       text-align: center;
     }
@@ -283,13 +287,13 @@
   }
 
   .evento {
-    width: 90%;
-    margin-left: 40px;
+    width: 85%;
+    padding-left: 30px;
     right: auto;
   }
 
   .mandato {
-    margin-left: 42px;
+    margin-left: 32px;
     border-radius: 0 5px 5px 0;
     > .mandato-description {
       text-align: end;
@@ -310,7 +314,7 @@
     align-items: end;
 
     .candidatura-description {
-      right: -8px;
+      right: -38px;
 
       > div {
         float: left;
