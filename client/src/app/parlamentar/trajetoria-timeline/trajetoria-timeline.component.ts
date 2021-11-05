@@ -16,6 +16,10 @@ function getYearDurationForPost(post) {
   return 4;
 }
 
+function lastElement(arr){
+  return arr.length > 0 ? arr.slice(-1)[0] : undefined;
+}
+
 @Component({
   selector: 'app-trajetoria-timeline',
   templateUrl: './trajetoria-timeline.component.html',
@@ -49,8 +53,7 @@ export class TrajetoriaTimelineComponent implements OnChanges {
     ) {
       this.temTrajetoria = isNotEmpty(this.trajetoria.affiliation_history) || isNotEmpty(this.trajetoria.election_history);
       this.buildTimeline();
-      this.fillTimelineGaps();
-      // todo -> adjust overlaping years
+      this.fillTimelineGapsAndFixOverlappingYears();
     }
   }
 
@@ -120,7 +123,6 @@ export class TrajetoriaTimelineComponent implements OnChanges {
     }
 
     let lastYear = mostRecentYear;
-    const lastElement = (arr) => arr.slice(-1)[0];
     if(lastElement(this.eventosPontuais) && lastElement(this.eventosPontuais).year < lastYear) {
       lastYear = lastElement(this.eventosPontuais).year;
     }
@@ -131,7 +133,7 @@ export class TrajetoriaTimelineComponent implements OnChanges {
     return [mostRecentYear, lastYear]
   }
 
-  fillTimelineGaps() {
+  fillTimelineGapsAndFixOverlappingYears() {
     const [mostRecentYear, lastYear] = this.calculateTimelineBoundaries();
     const newEmptySpace = TrajetoriaTimelineComponent.buildEmptyTimelineSpace;
     const calcSemestersBetween = (startingYear, endingYear, startingSemester=null, endingSemester=null) => {
@@ -142,6 +144,7 @@ export class TrajetoriaTimelineComponent implements OnChanges {
     };
 
     const filledEventsTimeline = [];
+    let extraSpaceToRemove = 0;
     this.eventosPontuais.forEach((currentEvent, index, allEvents) => {
       const nextEvent = allEvents[index + 1];
       let semestersDiff = 0;
@@ -152,19 +155,42 @@ export class TrajetoriaTimelineComponent implements OnChanges {
         );
         filledEventsTimeline.push(newEmptySpace(semestersDiff));
       }
+
+      if (nextEvent && nextEvent.year === currentEvent.year) {
+        if (currentEvent.type === this.EVENTO_CANDIDATURA && nextEvent.type === this.EVENTO_CANDIDATURA) {
+          // if we have 2 events of type "candidatura" for the same year, they are actually the same but from
+          // different turns, so we skip adding one in the timeline because we don't need it duplicated
+          return;
+        }
+        if (currentEvent.semester === nextEvent.semester) {
+          const previousEmptySpace = lastElement(filledEventsTimeline);
+          if (previousEmptySpace.semestersDuration > 0) {
+            previousEmptySpace.semestersDuration--;
+          } else {
+            extraSpaceToRemove++;
+          }
+        }
+      }
+
       filledEventsTimeline.push(currentEvent);
       if (nextEvent) {
         semestersDiff = calcSemestersBetween(
           nextEvent.year, currentEvent.year,
           nextEvent.semester, currentEvent.semester,
         );
+        if (extraSpaceToRemove) {
+          semestersDiff -= extraSpaceToRemove;
+          extraSpaceToRemove = semestersDiff < 0 ? -semestersDiff : 0;
+          semestersDiff = semestersDiff < 0 ? 0 : semestersDiff;
+        }
+        filledEventsTimeline.push(newEmptySpace(semestersDiff));
       } else {
         semestersDiff = calcSemestersBetween(
           lastYear, currentEvent.year,
           1, currentEvent.semester,
         );
+        filledEventsTimeline.push(newEmptySpace(semestersDiff + 1));
       }
-      filledEventsTimeline.push(newEmptySpace(semestersDiff + 1));
     });
     this.eventosPontuais = filledEventsTimeline;
 
@@ -178,6 +204,12 @@ export class TrajetoriaTimelineComponent implements OnChanges {
       }
       filledMandatosTimeline.push(currentEvent);
       if (nextEvent) {
+        if (nextEvent.endYear > currentEvent.startYear) {
+          const adjustedDuration = currentEvent.startYear - nextEvent.startYear;
+          nextEvent.yearsDuration = adjustedDuration;
+          nextEvent.projectedEndYear = nextEvent.startYear + adjustedDuration;
+          nextEvent.endYear = nextEvent.startYear + adjustedDuration;
+        }
         semestersDiff = calcSemestersBetween(nextEvent.endYear, currentEvent.startYear);
         filledMandatosTimeline.push(newEmptySpace(semestersDiff));
       }
