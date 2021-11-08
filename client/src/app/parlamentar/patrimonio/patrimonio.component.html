@@ -5,8 +5,11 @@
   </h4>
 
   <app-loading [hidden]="!isLoading"></app-loading>
-  <div [hidden]="isLoading || temPatrimonio" class="text-center">
-    Dados não disponíveis.
+  <div [hidden]="isLoading || !requestError" class="text-center">
+    Falha ao buscar informações.
+  </div>
+  <div [hidden]="isLoading || temPatrimonio || requestError" class="text-center">
+    Não foram encontrados dados de patrimônio declarado pelo parlamentar.
   </div>
   <div [hidden]="isLoading || !temPatrimonio" class="patrimonio-chart-wrapper">
     <app-patrimonio-chart

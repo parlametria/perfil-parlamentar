@@ -15,6 +15,7 @@ export class PatrimonioComponent implements OnInit {
   medianaPatrimonio: any;
   patrimonio: any;
   temPatrimonio: boolean;
+  requestError: boolean;
   isLoading: boolean;
 
   constructor(
@@ -53,6 +54,7 @@ export class PatrimonioComponent implements OnInit {
 
   handleRequestResponse(resp) {
     const patrimonio = resp.asset_history || [];
+    this.requestError = false;
     this.patrimonio = patrimonio;
     this.temPatrimonio = patrimonio.length > 0;
     this.isLoading = false;
@@ -70,6 +72,7 @@ export class PatrimonioComponent implements OnInit {
   handleRequestError(error) {
     console.log('Erro ao buscar parlamentar: ', error);
     this.temPatrimonio = false;
+    this.requestError = true;
     this.isLoading = false;
   }
 
