@@ -74,14 +74,20 @@ export class PatrimonioChartComponent implements AfterContentInit, OnChanges {
       {
         name: 'Patrimônio do parlamentar',
         values: this.patrimonio,
-        color: '#5a44a0',
         visible: true,
+        style: {
+          color: '#5a44a0',
+          dotSize: 6.5,
+        }
       },
       {
         name: 'Mediana do patrimônio de todos os candidatos eleitos',
         values: this.medianaPatrimonio.filter((d) => d.year >= minYear && d.year <= maxYear),
-        color: '#43A467',
         visible: true,
+        style: {
+          color: '#43A467',
+          dotSize: 5,
+        }
       },
     ]
   }
@@ -263,7 +269,7 @@ export class PatrimonioChartComponent implements AfterContentInit, OnChanges {
       .append('path')
       .attr('class', (d) => d.name + 'patrimonio-data')
       .attr('d', (d) => line(d.values))
-      .attr('stroke', (d) => d.color)
+      .attr('stroke', (d) => d.style.color)
       .attr('stroke-linejoin', 'round')
       .attr('stroke-linecap', 'round')
       .style('stroke-width', 3)
@@ -281,7 +287,7 @@ export class PatrimonioChartComponent implements AfterContentInit, OnChanges {
       .data(this.formattedAssetsData)
       .enter()
       .append('g')
-      .style('fill', (d) => d.color)
+      .style('fill', (d) => d.style.color)
       .attr('class', (d) => d.name + 'patrimonio-data')
       .style('visibility', (d) => {
         if (d.visible) {
@@ -290,7 +296,7 @@ export class PatrimonioChartComponent implements AfterContentInit, OnChanges {
         return 'hidden';
       })
       .selectAll('myPoints')
-      .data((d) => d.values)
+      .data((d) => d.values.map((value) => ({...value, dotSize: d.style.dotSize})))
       .enter()
       .append('circle')
       .attr('cx', (d) => {
@@ -298,7 +304,7 @@ export class PatrimonioChartComponent implements AfterContentInit, OnChanges {
         return this.x(date);
       })
       .attr('cy', (d) => this.y(d.value) )
-      .attr('r', 5)
+      .attr('r', (d) => d.dotSize)
       .attr('stroke', 'white')
       .on('mouseover.tip', this.tipPatrimonio.show)
       .on('mouseout.tip', this.tipPatrimonio.hide);
@@ -307,7 +313,7 @@ export class PatrimonioChartComponent implements AfterContentInit, OnChanges {
   private addLegend() {
     const pickColor = (d: any) => {
       if (d.visible) {
-        return d.color;
+        return d.style.color;
       }
       return '#adb5bd';
     };
