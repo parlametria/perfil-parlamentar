@@ -21,6 +21,7 @@ import { CapitalComponent } from './capital/capital.component';
 import { CapitalChartComponent } from './capital-chart/capital-chart.component';
 import { TrajetoriaComponent } from './trajetoria/trajetoria.component';
 import { TrajetoriaChartComponent } from './trajetoria-chart/trajetoria-chart.component';
+import { GastosCotaParlamentarComponent } from './gastos-cota-parlamentar/gastos-cota-parlamentar.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { TrajetoriaChartComponent } from './trajetoria-chart/trajetoria-chart.co
     CapitalComponent,
     CapitalChartComponent,
     TrajetoriaComponent,
-    TrajetoriaChartComponent
+    TrajetoriaChartComponent,
+    GastosCotaParlamentarComponent,
   ],
   imports: [
     CommonModule,
