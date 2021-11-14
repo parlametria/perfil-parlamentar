@@ -1,1 +1,61 @@
-<p>gastos-cota-parlamentar works!</p>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<div class="container">
+  <app-loading [hidden]="!isFirstTimeLoading"></app-loading>
+
+  <div *ngIf="!isFirstTimeLoading">
+
+    <div class="filters-container">
+      <a *ngIf="parlamentarInfo.idParlamentar !== null"
+         href="{{parlamentarInfo.getExpensesReportUrl()}}"
+         target="_blank" rel="noreferrer noopener" class="btn btn-dark">
+        Compilado no portal da câmara ↗
+      </a>
+    </div>
+
+    <div class="count" [hidden]="totalExpenses == null">
+      <div *ngIf="totalExpenses > 0">
+        <strong>{{ totalVisibleExpenses }}</strong> de <strong>{{ totalExpenses }}</strong> documentos encontrados
+      </div>
+      <div *ngIf="totalExpenses==0">
+        Não foram encontrados documentos :(
+      </div>
+    </div>
+
+  <!-- To do: adicionar lista de "expenses" -->
+
+    <button
+      *ngIf="enableRetry"
+      (click)="onClickRetryButton()"
+      [disabled]="isLoading"
+      class="btn btn-danger fetch-button page-centered">
+      <span [ngStyle]="{'visibility': isLoading ? 'hidden' : 'visible'}">
+        Erro ao carregar dados. <br/>
+        Clique para tentar novamente ⤴
+      </span>
+      <i
+        class="fa fa-refresh fa-spin"
+        [ngStyle]="{'visibility': isLoading ? 'visible' : 'hidden'}"></i>
+    </button>
+
+    <button
+      *ngIf="hasMoreExpenses && !enableRetry"
+      (click)="onClickLoadMoreButton()"
+      [disabled]="isLoading"
+      class="btn btn-primary fetch-button page-centered">
+      <span [ngStyle]="{'visibility': isLoading ? 'hidden' : 'visible'}">
+        + Carregar Mais
+      </span>
+      <i
+        class="fa fa-refresh fa-spin"
+        [ngStyle]="{'visibility': isLoading ? 'visible' : 'hidden'}"></i>
+    </button>
+
+    <p
+      class="text-center"
+      *ngIf="!hasMoreExpenses && !enableRetry && totalVisibleExpenses > 0">
+      Não há mais resultados
+    </p>
+
+  </div>
+</div>

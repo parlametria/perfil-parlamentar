@@ -1,0 +1,35 @@
+.container {
+  margin: 16px 0;
+}
+
+.filters-container {
+  margin-bottom: 20px;
+}
+
+.count {
+  margin-bottom: 20px;
+  font-size: 1.1rem;
+}
+
+.page-centered {
+  margin: 0 auto;
+}
+
+.fetch-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &.btn-primary{
+    text-transform: uppercase;
+  }
+
+  > span {
+    position: relative;
+    text-align: center;
+  }
+  > i {
+    position: absolute;
+    font-size: 1.5rem;
+  }
+}
