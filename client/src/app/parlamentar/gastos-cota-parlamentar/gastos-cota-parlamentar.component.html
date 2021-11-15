@@ -8,7 +8,8 @@
     <div class="filters-container">
       <a *ngIf="parlamentarInfo.idParlamentar !== null"
          href="{{parlamentarInfo.getExpensesReportUrl()}}"
-         target="_blank" rel="noreferrer noopener" class="btn btn-dark">
+         target="_blank" rel="noreferrer noopener"
+         class="btn btn-dark">
         Compilado no portal da câmara ↗
       </a>
     </div>
@@ -22,7 +23,10 @@
       </div>
     </div>
 
-  <!-- To do: adicionar lista de "expenses" -->
+    <app-card-reembolso
+      *ngFor="let expense of expenses; trackBy: trackById"
+      [expenseDetails]="expense"
+    ></app-card-reembolso>
 
     <button
       *ngIf="enableRetry"

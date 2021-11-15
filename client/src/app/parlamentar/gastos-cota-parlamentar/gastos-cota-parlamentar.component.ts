@@ -116,4 +116,8 @@ export class GastosCotaParlamentarComponent implements OnInit {
     this.isLoading = true;
     this.fetchExpensesBatch();
   }
+
+  trackById(item) {
+    return item.documentId;
+  }
 }

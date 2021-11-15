@@ -1,0 +1,56 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<div class="container">
+
+  <div class="expense-date">
+    {{getFormattedDate()}}
+  </div>
+
+  <p class="expense-total-value">
+    R$ {{getFormattedTotalNetValue()}}
+  </p>
+  <p class="expense-description">
+    <strong>Tipo de despesa: </strong>{{expenseDetails.subquotaTypeDescription}}
+  </p>
+  <p class="supplier-description">
+    <strong>Fornecedor: </strong>{{expenseDetails.supplierName}} <span>({{getFormattedSupplierTaxpayerId()}})</span>
+  </p>
+  <p class="state-description">
+    <strong>Estado: </strong>{{expenseDetails.state}}
+  </p>
+
+  <div class="jarbas-dashboard">
+    <a *ngIf="expenseDetails.documentId !== null"
+       href="{{expenseDetails.getJarbasPanelUrl()}}"
+       class="btn btn-dark"
+       target="_blank" rel="noreferrer noopener">
+      Painel com mais informações ↗
+    </a>
+    <span>
+      <span class="icon-ajuda" >&#9432;</span>
+      <span class="hint">
+        Redireciona para o painel do JARBAS.
+        <div class="text-right">
+          <a href="https://serenata.ai/" target="_blank" rel="noreferrer noopener">+ detalhes</a>
+        </div>
+      </span>
+    </span>
+  </div>
+
+  <!-- Todo: verificar se vamos exibir apenas suspeitas de refeição -->
+  <div *ngIf="expenseDetails.suspicions.length > 0"
+       class="rosie-suspicion">
+    <span class="ribbon">
+      Suspeita: {{expenseDetails.suspicions.join(', ')}}
+    </span>
+    <span>
+      <span class="icon-ajuda" >&#9432;</span>
+      <span class="hint">
+        Suspeita de acordo com a ROSIE.
+        <div class="text-right">
+          <a href="https://serenata.ai/" target="_blank" rel="noreferrer noopener">+ detalhes</a>
+        </div>
+      </span>
+    </span>
+  </div>
+</div>
