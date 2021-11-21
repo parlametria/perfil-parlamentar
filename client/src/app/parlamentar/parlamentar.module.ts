@@ -25,6 +25,7 @@ import { PatrimonioChartComponent } from './patrimonio-chart/patrimonio-chart.co
 import { TrajetoriaTimelineComponent } from './trajetoria-timeline/trajetoria-timeline.component';
 import { DespesasCotaParlamentarComponent } from './despesas-cota-parlamentar/despesas-cota-parlamentar.component';
 import { CardReembolsoComponent } from './card-reembolso/card-reembolso.component';
+import { VinculosComponent } from './vinculos/vinculos.component';
 
 @NgModule({
   declarations: [
@@ -44,6 +45,7 @@ import { CardReembolsoComponent } from './card-reembolso/card-reembolso.componen
     TrajetoriaTimelineComponent,
     DespesasCotaParlamentarComponent,
     CardReembolsoComponent,
+    VinculosComponent,
   ],
   imports: [
     CommonModule,
