@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-vinculos',
@@ -7,9 +8,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class VinculosComponent implements OnInit {
 
-  constructor() { }
+  isLoading = false; // todo -> change value according to the state of data request
+  requestError = false; // todo -> change value according to the state of data request
+
+  constructor(
+    private modalService: NgbModal,
+  ) { }
 
   ngOnInit() {
   }
 
+  onClickModal(content): void {
+    this.modalService.open(content, {ariaLabelledBy: 'Sobre'});
+  }
 }
