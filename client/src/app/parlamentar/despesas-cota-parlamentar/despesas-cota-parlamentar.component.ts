@@ -7,11 +7,11 @@ import { ParlamentarInfo } from '../../shared/models/parlamentarInfo.model';
 import { ExpenseModel } from '../../shared/models/jarbas.models';
 
 @Component({
-  selector: 'app-gastos-cota-parlamentar',
-  templateUrl: './gastos-cota-parlamentar.component.html',
-  styleUrls: ['./gastos-cota-parlamentar.component.scss']
+  selector: 'app-despesas-cota-parlamentar',
+  templateUrl: './despesas-cota-parlamentar.component.html',
+  styleUrls: ['./despesas-cota-parlamentar.component.scss']
 })
-export class GastosCotaParlamentarComponent implements OnInit {
+export class DespesasCotaParlamentarComponent implements OnInit {
 
   isFirstTimeLoading: boolean;
   isLoading: boolean;

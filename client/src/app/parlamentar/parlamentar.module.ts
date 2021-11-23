@@ -21,7 +21,7 @@ import { CapitalComponent } from './capital/capital.component';
 import { CapitalChartComponent } from './capital-chart/capital-chart.component';
 import { TrajetoriaComponent } from './trajetoria/trajetoria.component';
 import { TrajetoriaChartComponent } from './trajetoria-chart/trajetoria-chart.component';
-import { GastosCotaParlamentarComponent } from './gastos-cota-parlamentar/gastos-cota-parlamentar.component';
+import { DespesasCotaParlamentarComponent } from './despesas-cota-parlamentar/despesas-cota-parlamentar.component';
 import { CardReembolsoComponent } from './card-reembolso/card-reembolso.component';
 
 @NgModule({
@@ -38,7 +38,7 @@ import { CardReembolsoComponent } from './card-reembolso/card-reembolso.componen
     CapitalChartComponent,
     TrajetoriaComponent,
     TrajetoriaChartComponent,
-    GastosCotaParlamentarComponent,
+    DespesasCotaParlamentarComponent,
     CardReembolsoComponent,
   ],
   imports: [
