@@ -19,6 +19,22 @@
     <strong>Estado: </strong>{{expenseDetails.state}}
   </p>
 
+  <div *ngIf="expenseDetails.suspicions.length > 0"
+       class="rosie-suspicion">
+    <span class="ribbon">
+      Suspeita: {{expenseDetails.suspicions.join(', ')}}
+    </span>
+    <span>
+      <span class="icon-ajuda" >&#9432;</span>
+      <span class="hint">
+        Suspeita de acordo com a ROSIE.
+        <div class="text-right">
+          <a href="https://serenata.ai/" target="_blank" rel="noreferrer noopener">+ detalhes</a>
+        </div>
+      </span>
+    </span>
+  </div>
+
   <div class="jarbas-dashboard">
     <a *ngIf="expenseDetails.documentId !== null"
        href="{{expenseDetails.getJarbasPanelUrl()}}"
@@ -30,23 +46,6 @@
       <span class="icon-ajuda" >&#9432;</span>
       <span class="hint">
         Redireciona para o painel do JARBAS.
-        <div class="text-right">
-          <a href="https://serenata.ai/" target="_blank" rel="noreferrer noopener">+ detalhes</a>
-        </div>
-      </span>
-    </span>
-  </div>
-
-  <!-- Todo: verificar se vamos exibir apenas suspeitas de refeição -->
-  <div *ngIf="expenseDetails.suspicions.length > 0"
-       class="rosie-suspicion">
-    <span class="ribbon">
-      Suspeita: {{expenseDetails.suspicions.join(', ')}}
-    </span>
-    <span>
-      <span class="icon-ajuda" >&#9432;</span>
-      <span class="hint">
-        Suspeita de acordo com a ROSIE.
         <div class="text-right">
           <a href="https://serenata.ai/" target="_blank" rel="noreferrer noopener">+ detalhes</a>
         </div>
