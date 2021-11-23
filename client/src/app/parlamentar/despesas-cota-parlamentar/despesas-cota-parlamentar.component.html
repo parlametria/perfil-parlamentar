@@ -3,14 +3,14 @@
 <div class="container">
   <app-loading [hidden]="!isFirstTimeLoading"></app-loading>
 
-  <div *ngIf="!isFirstTimeLoading">
+  <div class="content" *ngIf="!isFirstTimeLoading">
 
     <div class="filters-container">
       <a *ngIf="parlamentarInfo.idParlamentar !== null"
          href="{{parlamentarInfo.getExpensesReportUrl()}}"
          target="_blank" rel="noreferrer noopener"
          class="btn btn-dark">
-        Compilado no portal da câmara ↗
+        Mais informações sobre esse perfil ↗
       </a>
     </div>
 

@@ -1,5 +1,11 @@
 .container {
   margin: 16px 0;
+  align-self: center;
+}
+
+.content {
+  max-width: 900px;
+  margin: 0 auto;
 }
 
 .filters-container {
