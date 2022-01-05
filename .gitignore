@@ -1,4 +1,18 @@
 node_modules
 config/keys_dev.js
-.vscode
 variables.env
+
+# IDE
+.idea
+.vscode/
+*.iml
+
+# Vim
+[._]*.s[a-v][a-z]
+[._]*.sw[a-p]
+[._]s[a-rt-v][a-z]
+[._]ss[a-gi-z]
+[._]sw[a-p]
+
+Session.vim
+Sessionx.vim

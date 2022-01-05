@@ -1,0 +1,47 @@
+<div class="container-sm my-3">
+  <h4 class="title-main my-4">
+    Evolução de Patrimônio
+    <span (click)="onClickModal(modalContent)" class="icon-question-circle icon-btn-help"></span>
+  </h4>
+
+  <app-loading [hidden]="!isLoading"></app-loading>
+  <div [hidden]="isLoading || !requestError" class="text-center">
+    Falha ao buscar informações.
+  </div>
+  <div [hidden]="isLoading || temPatrimonio || requestError" class="text-center">
+    Não foram encontrados dados de patrimônio declarado pelo parlamentar.
+  </div>
+  <div [hidden]="isLoading || !temPatrimonio" class="patrimonio-chart-wrapper">
+    <app-patrimonio-chart
+      [patrimonio]="patrimonio"
+      [medianaPatrimonio]="medianaPatrimonio"
+    ></app-patrimonio-chart>
+  </div>
+  <div class="py-4"></div>
+</div>
+
+<ng-template #modalContent let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title">Sobre</h5>
+    <button
+      type="button"
+      class="close"
+      data-dismiss="modal"
+      aria-label="Fechar"
+      (click)="modal.dismiss()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <p>
+      Apresentamos a evolução do patrimônio declarado pelo parlamentar
+      em conjunto à mediana do patrimônio declarado por todos os candidatos
+      eleitos para cada ano.
+    </p>
+    <div class="text-right">
+      <button (click)="modal.dismiss()" class="btn btn-primary">
+        Fechar
+      </button>
+    </div>
+  </div>
+</ng-template>
