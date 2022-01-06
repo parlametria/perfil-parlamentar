@@ -20,9 +20,9 @@ import { VotacaoComponent } from './votacao/votacao.component';
 import { CapitalComponent } from './capital/capital.component';
 import { CapitalChartComponent } from './capital-chart/capital-chart.component';
 import { TrajetoriaComponent } from './trajetoria/trajetoria.component';
-import { TrajetoriaChartComponent } from './trajetoria-chart/trajetoria-chart.component';
 import { PatrimonioComponent } from './patrimonio/patrimonio.component';
 import { PatrimonioChartComponent } from './patrimonio-chart/patrimonio-chart.component';
+import { TrajetoriaTimelineComponent } from './trajetoria-timeline/trajetoria-timeline.component';
 
 @NgModule({
   declarations: [
@@ -37,9 +37,9 @@ import { PatrimonioChartComponent } from './patrimonio-chart/patrimonio-chart.co
     CapitalComponent,
     CapitalChartComponent,
     TrajetoriaComponent,
-    TrajetoriaChartComponent,
     PatrimonioComponent,
     PatrimonioChartComponent,
+    TrajetoriaTimelineComponent,
   ],
   imports: [
     CommonModule,

@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TrajetoriaChartComponent } from './trajetoria-chart.component';
+import { TrajetoriaTimelineComponent } from './trajetoria-timeline.component';
 
-describe('TrajetoriaChartComponent', () => {
-  let component: TrajetoriaChartComponent;
-  let fixture: ComponentFixture<TrajetoriaChartComponent>;
+describe('TrajetoriaTimelineComponent', () => {
+  let component: TrajetoriaTimelineComponent;
+  let fixture: ComponentFixture<TrajetoriaTimelineComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ TrajetoriaChartComponent ]
+      declarations: [ TrajetoriaTimelineComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(TrajetoriaChartComponent);
+    fixture = TestBed.createComponent(TrajetoriaTimelineComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

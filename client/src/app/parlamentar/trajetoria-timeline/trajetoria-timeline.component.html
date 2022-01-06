@@ -1,0 +1,83 @@
+<div>
+  <ng-container *ngTemplateOutlet="timelineHeader"></ng-container>
+  <div class="timeline arrow-up" *ngIf="temTrajetoria; else noData">
+    <div class="events-container">
+      <div *ngFor="let mandato of listaMandatos">
+        <div [ngSwitch]="mandato.type">
+          <div class="evento mandato"
+               *ngSwitchCase="EVENTO_MANDATO"
+               [style.background-color]="mandato.color"
+               [style.height]="mandato.yearsDuration * yearSize + 'rem'"
+          >
+            <div class="mandato-description">
+              <p class="cargo">{{mandato.post}}</p>
+              <p class="periodo">{{mandato.startYear}} - {{mandato.projectedEndYear}}</p>
+            </div>
+          </div>
+          <div class="evento vazio"
+               *ngSwitchDefault
+               [style.height]="mandato.semestersDuration * semesterSize + 'rem'"
+          ></div>
+        </div>
+      </div>
+    </div>
+    <div *ngFor="let event of eventosPontuais">
+      <div [ngSwitch]="event.type">
+        <div *ngSwitchCase="EVENTO_CANDIDATURA" class="evento candidatura" [style.height]="semesterSize + 'rem'">
+          <div class="diamond-badge" id="candidatura-badge"></div>
+          <div class="candidatura-description" id="candidatura-description">
+            <div>
+              <div class="cargo">Concorreu a {{event.post}}</div>
+              <div class="ano">Não eleito ({{event.year}})</div>
+            </div>
+          </div>
+        </div>
+        <div *ngSwitchCase="EVENTO_FILIACAO" class="evento filiacao" [style.height]="semesterSize + 'rem'">
+          <div class="circle-badge"></div>
+          <div class="filiacao-description">
+            <span class="partido">{{event.party}}</span>
+            <span class="data-inicio">({{event.fullDate}})</span>
+          </div>
+        </div>
+        <div class="evento vazio"
+             *ngSwitchDefault
+             [style.height]="event.semestersDuration * semesterSize + 'rem'"
+        ></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #noData>
+  <div class="text-center">
+    Não foram encontrados dados de afiliações e mandatos do parlamentar.
+  </div>
+</ng-template>
+
+<ng-template #timelineHeader>
+  <div class="timeline-label large-screen">
+    <h5>Mandatos <span class="icon-ajuda"></span></h5>
+    <h5>Filiações
+      <span>
+        <sup class="icon-ajuda" >&#9432;</sup>
+        <span class="filiacao-hint">
+          Não possuímos informações sobre afiliações partidárias de 2020 em
+          diante pois os dados desse período foram restringidos pelo
+          Tribunal Superior Eleitoral.
+        </span>
+      </span>
+    </h5>
+  </div>
+  <div class="timeline-label small-screen">
+    <h5>Mandatos e Filiações
+      <span>
+        <sup class="icon-ajuda" >&#9432;</sup>
+        <span class="filiacao-hint">
+          Não possuímos informações sobre afiliações partidárias de 2020 em
+          diante pois os dados desse período foram restringidos pelo
+          Tribunal Superior Eleitoral.
+        </span>
+      </span>
+    </h5>
+  </div>
+</ng-template>
