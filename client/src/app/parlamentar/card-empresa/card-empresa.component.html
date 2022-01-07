@@ -1,0 +1,38 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<div class="container">
+  <p class="company-description">
+    {{company.companyName}} <span>(CNPJ: {{getFormattedSupplierTaxpayerId()}})</span>
+  </p>
+
+  <div>
+    <div class="ribbon"
+         [style.color]="checkIfNeedsMoreContrast() ? '#212529' : 'white'"
+         [style.--ribbon-color]="economicSectorColor">
+      <strong>Setor econômico: </strong>{{company.economicSector}}
+    </div>
+    <span>
+      <span class="icon-ajuda" >&#9432;</span>
+      <span class="hint">
+        O setor econômico foi definido através de um mapeamento baseado no CNAE primário da empresa.<br>
+        Clique no link abaixo para mais informações de como cada setor é composto.
+        <div class="text-right">
+          <a href="https://github.com/parlametria/perfil-parlamentar/blob/master/client/src/app/shared/constants/economicSectors.js"
+             target="_blank" rel="noreferrer noopener">
+            + detalhes
+          </a>
+        </div>
+      </span>
+    </span>
+  </div>
+  <div class="py-1"></div>
+  <p class="company-info">
+    <strong>Início das atividades da empresa: </strong>{{company.foundationDate}}
+  </p>
+  <p class="company-info">
+    <strong>Entrada do parlamentar na sociedade: </strong>{{company.politicianParticipationStartDate}}
+  </p>
+  <p class="company-info">
+    <strong>Localização: </strong> {{company.uf}}
+  </p>
+</div>

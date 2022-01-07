@@ -1,0 +1,26 @@
+ul#legend {
+  list-style-type: none;
+}
+
+li.legendItem {
+  display:inline-block;
+  margin-right: 16px;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+@media (max-width: 767px) {
+  ul#legend {
+    padding: 0;
+    margin-left: 16px;
+    margin-right: 16px;
+    margin-bottom: 10px;
+  }
+
+  li.legendItem {
+    font-size: 0.7rem;
+    display: inline;
+  }
+}
