@@ -30,4 +30,10 @@ export class ParlamentarInfo {
     }
     return '';
   }
+
+  getExpensesReportUrl(): string {
+    if (this.idParlamentar) {
+      return 'https://www.camara.leg.br/deputados/' + this.idParlamentar + '#gastos-section'
+    }
+  }
 }

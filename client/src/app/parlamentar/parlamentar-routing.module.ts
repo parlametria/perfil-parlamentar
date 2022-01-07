@@ -9,6 +9,8 @@ import { AderenciaComponent } from './aderencia/aderencia.component';
 import { CapitalComponent } from './capital/capital.component';
 import { TrajetoriaComponent } from './trajetoria/trajetoria.component';
 import { PatrimonioComponent } from './patrimonio/patrimonio.component';
+import { DespesasCotaParlamentarComponent } from './despesas-cota-parlamentar/despesas-cota-parlamentar.component';
+
 
 const routes: Routes = [
   {
@@ -48,7 +50,11 @@ const routes: Routes = [
       {
         path: 'patrimonio',
         component: PatrimonioComponent
-      }
+      },
+      {
+        path: 'despesas',
+        component: DespesasCotaParlamentarComponent
+      },
     ]
   }
 ];
