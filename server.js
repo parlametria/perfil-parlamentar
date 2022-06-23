@@ -32,13 +32,9 @@ var db = require("./server/models/index");
 
 const corsOptions = {
   origin: [
-    'http://localhost:4200', 'http://localhost:3000',
-    'https://front.dev.leggo.org.br', 'https://leggo.org.br',
-    'https://leggo-painel.herokuapp.com',
-    'https://leggo-painel-validacao.herokuapp.com',
-    'https://leggo-painel.parlametria.org.br',
-    'https://painel.parlametria.org',
-    'https://painel.parlametria.org.br'],
+    /localhost:.*/,
+    /.*\.parlametria\.org\.br$/
+  ],
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
   credentials: true,
   allowedHeaders: ["Content-Type", "Authorization"],
