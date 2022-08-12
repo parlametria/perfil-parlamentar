@@ -22,6 +22,9 @@ export class PerfilPoliticoService {
     return this.http.get<EmpresasRelacionadas>(this.url + endpointPath + idPerfilPolitico + '/')
       .pipe(take(1))
       .pipe(map(resp => new EmpresasRelacionadas(resp)));
+  }
 
+  getAssetStats(): Observable<any>{
+    return this.http.get<[]>(this.url + 'asset-stats');
   }
 }
