@@ -37,7 +37,6 @@ export class EmpresasRelacionadas {
   getEconomicSectorFullName = getEconomicSectorFullName;
 
   constructor(requestResponse: any) {
-    requestResponse = this.mockData(); // todo -> remove mock once the endpoint is properly integrated
     this.formatCompaniesOwnedByPolitician(requestResponse.companies_associated_with_politician);
     this.formatDonationsByYear(requestResponse.election_income_history);
     this.generateColorPalette();
@@ -104,63 +103,4 @@ export class EmpresasRelacionadas {
       .range(colorPalette);
   }
 
-  mockData() {
-    return {
-      companies_associated_with_politician: [
-        {cnpj: '34.290.618/0001-55', company_name: 'Débora Atanes super evil corporation', foundation_date: '12/05/2018', participation_start_date: '12/05/2019', uf: 'SP', main_cnae: '01'},
-        {cnpj: '34290618000155', company_name: 'Débora Atanes super evil corporation', foundation_date: '12/05/2018', participation_start_date: '12/05/2019', uf: 'SP', main_cnae: '12'},
-        {cnpj: '34290618000155', company_name: 'Débora Atanes super evil corporation', foundation_date: '12/05/2018', participation_start_date: '12/05/2019', uf: 'SP', main_cnae: 'C'},
-        {cnpj: '34290618000155', company_name: 'Débora Atanes super evil corporation', foundation_date: '12/05/2018', participation_start_date: '12/05/2019', uf: 'SP', main_cnae: '01'},
-        {cnpj: '34290618000155', company_name: 'Débora Atanes super evil corporation', foundation_date: '12/05/2018', participation_start_date: '12/05/2019', uf: 'SP', main_cnae: 'F'},
-        {cnpj: '34290618000155', company_name: 'Débora Atanes super evil corporation', foundation_date: '12/05/2018', participation_start_date: '12/05/2019', uf: 'SP', main_cnae: '05'},
-        {cnpj: '34290618000155', company_name: 'Débora Atanes super evil corporation', foundation_date: '12/05/2018', participation_start_date: '12/05/2019', uf: 'SP', main_cnae: 'S'},
-      ],
-      election_income_history: [
-        {
-          year: 2018,
-          value: 123.66,
-          donor_economic_sector_code: '01',
-        },
-        {
-          year: 2018,
-          value: 253,
-          donor_economic_sector_code: '01',
-        },
-        {
-          year: 2008,
-          value: 54,
-          donor_economic_sector_code: '02',
-        },
-        {
-          year: 2008,
-          value: 154,
-          donor_economic_sector_code: '12',
-        },
-        {
-          year: 2017,
-          value: 367,
-          donor_economic_sector_code: '12',
-        },
-        {
-          year: 2017,
-          value: 854.90,
-          donor_economic_sector_code: '09',
-        },
-        {
-          year: 2017,
-          value: 327,
-          donor_economic_sector_code: '13',
-        },
-        {
-          year: 2015,
-          value: 167.45,
-          donor_economic_sector_code: '01',
-        },
-        {
-          year: 2015,
-          value: 167.45,
-        },
-      ]
-    }
-  }
 }

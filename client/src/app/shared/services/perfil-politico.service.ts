@@ -18,8 +18,7 @@ export class PerfilPoliticoService {
   }
 
   getEconomicBonds(idPerfilPolitico: string): Observable<EmpresasRelacionadas>{
-    // const endpointPath = '/api/economic-bonds/candidate/';
-    const endpointPath = 'candidate/'; // todo -> unmock this
+    const endpointPath = 'economic-bonds/candidate/';
     return this.http.get<EmpresasRelacionadas>(this.url + endpointPath + idPerfilPolitico + '/')
       .pipe(take(1))
       .pipe(map(resp => new EmpresasRelacionadas(resp)));
