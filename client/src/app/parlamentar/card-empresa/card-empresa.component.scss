@@ -1,0 +1,109 @@
+.container {
+  border: solid 3px #20201e;
+  margin-bottom: 16px;
+  max-width: 900px;
+  padding: 16px;
+}
+
+.company-description {
+  font-size: 1.3rem;
+  font-weight: bold;
+  margin-bottom: 8px;
+
+  > span {
+    font-size: 1.2rem;
+    font-weight: normal;
+    color: #666666;
+  }
+}
+
+.company-info {
+  font-size: 1rem;
+  font-weight: normal;
+  margin-bottom: 4px;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+> strong {
+  font-weight: 600;
+}
+
+.ribbon{
+  display: inline;
+  white-space:pre-wrap;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  margin-right: 18px;
+  position: relative;
+  background-color: var(--ribbon-color, #212529);
+  color: white;
+  box-shadow: 10px 0 0 var(--ribbon-color, #212529), -16px 0 0 var(--ribbon-color, #212529);
+  box-decoration-break: clone;
+
+  &:after {
+    content: " ";
+    position: absolute;
+    height: 0;
+    width: 0;
+    bottom:0.1px;
+    border-top: 13.5px solid transparent;
+    border-bottom: 13.5px solid transparent;
+    border-left: 8px solid var(--ribbon-color,  #212529);
+    right: -18px;
+  }
+}
+
+.icon-ajuda {
+  margin-left: 4px;
+  &:before {
+    height: 0.5rem;
+  }
+  &:hover {
+    cursor: default;
+  }
+}
+
+.hint {
+  visibility: hidden;
+  margin-left: -135px;
+  margin-top: -160px;
+  max-width: 250px;
+  position: absolute;
+  text-align: left;
+  font-weight: normal;
+  font-size: 0.85rem;
+  color: #212529;
+  background-color: white;
+  padding: 5px;
+  border: 2px solid #b7b7b7;
+  border-radius: 2px;
+  z-index: 1000;
+  -webkit-box-shadow: 0 1px 5px rgba(0, 0, 0, 0.175);
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.175);
+
+  > a {
+    margin-top: 4px;
+  }
+
+  &:after {
+    content: " ";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 8px;
+    border-style: solid;
+    border-color: #b7b7b7 transparent transparent transparent;
+  }
+
+  &:hover {
+    visibility: visible;
+  }
+}
+
+.icon-ajuda:hover~.hint {
+  visibility: visible;
+}

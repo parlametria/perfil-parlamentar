@@ -1,0 +1,95 @@
+<div class="container-sm my-3">
+  <h4 class="title-main my-4">
+    Vínculos Econômicos
+    <span (click)="onClickModal(modalContent)" class="icon-question-circle icon-btn-help"></span>
+  </h4>
+
+  <app-loading [hidden]="!isLoading"></app-loading>
+
+  <div [hidden]="isLoading">
+    <div [hidden]="!requestError" class="text-center">
+      Falha ao buscar informações.
+    </div>
+
+    <div [hidden]="requestError">
+      <div class="vinculo-chart-wrapper">
+        <h5 class="section-title">
+          Doações de campanha por ano e setores<br>econômicos relacionados
+          <span class="icon-ajuda" >&#9432;</span>
+          <span class="hint">
+            O setor econômico é mapeado através do CNAE do CNPJ doador ou CNAE da empresa possuída pelo CPF doador.<br>
+            Clique no link abaixo para mais informações de como cada setor é composto.
+            <div class="text-right">
+              <a href="https://github.com/parlametria/perfil-parlamentar/blob/master/client/src/app/shared/constants/economicSectors.js"
+                 target="_blank" rel="noreferrer noopener">
+                + detalhes
+              </a>
+            </div>
+          </span>
+        </h5>
+        <app-vinculos-chart
+          [hidden]="!hasElectoralDonations()"
+          [relatedCompanies]="relatedCompanies"></app-vinculos-chart>
+        <div
+          class="empty-state-text extra-margin"
+          [hidden]="hasElectoralDonations()">
+          Não foram encontradas doações de campanha
+        </div>
+      </div>
+      <hr class="divider">
+
+      <div class="companies-owned-wrapper">
+        <h5 class="section-title">
+          O(a) parlamentar é sócio(a) da(s) empresa(s)
+          <span class="icon-ajuda" >&#9432;</span>
+          <span class="hint small-balloon">
+            A última atualização das informações do quadro societário de empresas e características
+            das mesmas foi em 18/11/2021.
+          </span>
+        </h5>
+        <app-card-empresa
+          *ngFor="let company of companiesOwnedByPolitician"
+          [hidden]="!hasAssociatedCompanies()"
+          [company]="company"
+          [economicSectorColor]="relatedCompanies.getEconomicSectorColor(company.economicSectorAbbrev)"
+        ></app-card-empresa>
+        <div
+          class="empty-state-text"
+          [hidden]="hasAssociatedCompanies()">
+          Não foram encontradas empresas
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="py-4"></div>
+</div>
+
+<ng-template #modalContent let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title">Sobre</h5>
+    <button
+      type="button"
+      class="close"
+      data-dismiss="modal"
+      aria-label="Fechar"
+      (click)="modal.dismiss()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <p>
+      Apresentamos as quantidades de dinheiro arrecadadas por meio de doações de campanha
+      separados por setor econômico da empresa ou pessoa física que realizou
+      a doação. O objetivo é dar visibilidade a qual setor o parlamentar está mais vinculado.
+      <br>
+      <br>
+      Além disso, listamos as empresas cujo(a) parlamentar integra o quadro societário
+      para que seja possível identificar seus possíveis interesses no setor.
+    </p>
+    <div class="text-right">
+      <button (click)="modal.dismiss()" class="btn btn-primary">
+        Fechar
+      </button>
+    </div>
+  </div>
+</ng-template>

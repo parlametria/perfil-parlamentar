@@ -1,0 +1,74 @@
+hr.divider {
+  border-top: 3px solid #343a40;
+  border-radius: 5px;
+}
+
+.section-title {
+  text-align: center;
+  font-weight: 600;
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+
+.empty-state-text {
+  text-align: center;
+  color: #666666;
+  &.extra-margin {
+    margin-bottom: 40px;
+  }
+}
+
+.icon-ajuda {
+  font-size: 0.8rem;
+  vertical-align: top;
+  &:hover {
+    cursor: default;
+  }
+}
+
+.hint {
+  visibility: hidden;
+  margin-left: -135px;
+  margin-top: -152px;
+  max-width: 250px;
+  position: absolute;
+  text-align: left;
+  font-weight: normal;
+  font-size: 0.85rem;
+  color: #212529;
+  background-color: white;
+  padding: 5px;
+  border: 2px solid #b7b7b7;
+  border-radius: 2px;
+  z-index: 1000;
+  -webkit-box-shadow: 0 1px 5px rgba(0, 0, 0, 0.175);
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.175);
+
+  &.small-balloon {
+    margin-top: -85px;
+  }
+
+  > a {
+    margin-top: 4px;
+  }
+
+  &:after {
+    content: " ";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    margin-top: 1px;
+    border-width: 8px;
+    border-style: solid;
+    border-color: #b7b7b7 transparent transparent transparent;
+  }
+
+  &:hover {
+    visibility: visible;
+  }
+}
+
+.icon-ajuda:hover~.hint {
+  visibility: visible;
+}
