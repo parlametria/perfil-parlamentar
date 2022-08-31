@@ -53,20 +53,18 @@ export class PatrimonioComponent implements OnInit {
   }
 
   handleRequestResponse(resp) {
-    const patrimonio = resp.asset_history || [];
-    this.requestError = false;
-    this.patrimonio = patrimonio;
-    this.temPatrimonio = patrimonio.length > 0;
-    this.isLoading = false;
-    // todo -> buscar da api ao invés de deixar hardcoded
-    this.medianaPatrimonio = [
-      {year: 2006, value: 22711.75},
-      {year: 2008, value: 20000},
-      {year: 2010, value: 30000},
-      {year: 2012, value: 25000},
-      {year: 2014, value: 39338.68},
-      {year: 2016, value: 25000},
-    ];
+    this.perfilPoliticoService.getAssetStats()
+      .pipe(take(1))
+      .subscribe(
+        stats => {
+          const patrimonio = resp.asset_history || [];
+          this.requestError = false;
+          this.patrimonio = patrimonio;
+          this.temPatrimonio = patrimonio.length > 0;
+          this.medianaPatrimonio = stats.mediana_patrimonios;
+          this.isLoading = false;
+        }
+      );
   }
 
   handleRequestError(error) {
