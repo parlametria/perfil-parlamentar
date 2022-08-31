@@ -14,20 +14,6 @@ class JarbasApplicantModel {
   congressperson_name: string;
 }
 
-export class ExpensesResponse {
-  count: number;
-  next: string;
-  previous: string;
-  results: Array<ExpenseModel>;
-
-  constructor(jarbasResponse: any) {
-    this.count = jarbasResponse.count;
-    this.next = jarbasResponse.next;
-    this.previous = jarbasResponse.previous;
-    this.results = jarbasResponse.results.map(result => new ExpenseModel(result));
-  }
-}
-
 export class ExpenseModel {
 
   documentId: number;
@@ -145,3 +131,17 @@ export class ExpenseModel {
     return 'https://jarbas.serenata.ai/layers/#/documentId/' + this.documentId
   }
 }
+export class ExpensesResponse {
+  count: number;
+  next: string;
+  previous: string;
+  results: Array<ExpenseModel>;
+
+  constructor(jarbasResponse: any) {
+    this.count = jarbasResponse.count;
+    this.next = jarbasResponse.next;
+    this.previous = jarbasResponse.previous;
+    this.results = jarbasResponse.results.map(result => new ExpenseModel(result));
+  }
+}
+
