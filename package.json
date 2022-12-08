@@ -36,7 +36,7 @@
     "concurrently": "^4.0.1",
     "cors": "^2.8.4",
     "expand-range": "^2.0.2",
-    "express": "^4.16.3",
+    "express": "^4.17.3",
     "express-jwt": "^6.0.0",
     "express-validator": "^6.2.0",
     "fbgraph": "^1.4.4",
